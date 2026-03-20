@@ -31,23 +31,8 @@ exports.handler = async (event) => {
       session: {
         type: 'realtime',
         model: 'gpt-4o-realtime-preview',
-        instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.',
-        audio: {
-          output: {
-            voice: 'ash'
-          },
-          input: {
-            transcription: {
-              model: 'gpt-4o-mini-transcribe'
-            },
-            turn_detection: {
-              type: 'server_vad',
-              threshold: 0.5,
-              prefix_padding_ms: 300,
-              silence_duration_ms: 600
-            }
-          }
-        }
+        voice: 'ash',
+        instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.'
       }
     };
 
