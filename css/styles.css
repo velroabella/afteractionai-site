@@ -81,6 +81,7 @@ a:hover { color: #000; }
 }
 
 /* ── LANDING SCREEN ────────────────────────────────── */
+/* ── LANDING / HERO ────────────────────────────────── */
 .screen--landing {
   position: relative;
   background: #000;
@@ -103,14 +104,15 @@ a:hover { color: #000; }
   min-height: 100dvh;
 }
 
+/* Left-to-right gradient for text readability */
 .screen--landing::after {
   content: '';
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  width: 100%;
-  height: 40%;
-  background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.6) 50%, transparent 100%);
   z-index: 0;
   pointer-events: none;
 }
@@ -119,71 +121,81 @@ a:hover { color: #000; }
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 80px 20px 8px;
-  text-align: center;
-  max-width: 520px;
-  margin: 0 auto;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 100px 20px 32px;
+  padding-left: 12%;
+  text-align: left;
+  max-width: 600px;
   position: relative;
   z-index: 1;
 }
 
-.landing__logo { margin-bottom: 100px; }
+.landing__logo { margin-bottom: 24px; }
 
 .logo-mark {
-  width: 64px;
-  height: 64px;
-  background: #000;
+  width: 56px;
+  height: 56px;
+  background: rgba(0,0,0,0.6);
   color: var(--white);
-  border-radius: 16px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 32px;
-  margin: 0 auto 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
-  border: 2px solid rgba(255,255,255,0.2);
+  font-size: 28px;
+  margin: 0 0 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  border: 1px solid rgba(255,255,255,0.15);
 }
 
 .landing h1 {
-  font-size: 1.75rem;
+  font-size: 2.4rem;
   font-weight: 800;
   color: var(--white);
   letter-spacing: -0.5px;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  line-height: 1.1;
 }
 
 .landing__tagline {
-  font-size: 0.95rem;
-  color: rgba(255,255,255,0.7);
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.55);
   font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
   white-space: nowrap;
 }
 
 .landing__hero-tagline {
   white-space: nowrap;
+  font-weight: 600;
 }
 
 .landing__mission {
-  margin-bottom: 20px;
+  margin-bottom: 28px;
+  margin-top: 20px;
 }
 
 .landing__actions {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   gap: 12px;
   flex-wrap: nowrap;
   width: 100%;
-  margin-bottom: 12px;
+  margin-bottom: 0;
 }
+
 .landing__mission p {
-  font-size: 1.1rem;
-  color: rgba(255,255,255,0.9);
-  line-height: 1.7;
+  font-size: 1.05rem;
+  color: rgba(255,255,255,0.85);
+  line-height: 1.6;
+  margin: 0;
+}
+.landing__mission p + p {
+  margin-top: 4px;
+  font-size: 0.95rem;
+  color: rgba(255,255,255,0.6);
 }
 
 .landing__start { width: 100%; }
@@ -198,7 +210,7 @@ a:hover { color: #000; }
 .landing__buttons {
   display: flex;
   gap: 12px;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 12px;
 }
 
@@ -207,21 +219,21 @@ a:hover { color: #000; }
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 16px 32px;
+  padding: 14px 28px;
   border: none;
   border-radius: var(--radius);
   font-family: var(--font);
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  min-height: 56px;
+  min-height: 50px;
 }
 
 .btn--voice {
   background: var(--white);
   color: #000;
-  flex: 1;
+  flex: unset;
 }
 .btn--voice:hover { background: rgba(255,255,255,0.9); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
 .btn--voice:active { transform: translateY(0); }
@@ -229,8 +241,8 @@ a:hover { color: #000; }
 .btn--text {
   background: transparent;
   color: var(--white);
-  border: 2px solid rgba(255,255,255,0.4);
-  flex: 1;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  flex: unset;
 }
 .btn--text:hover { border-color: var(--white); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
 .btn--text:active { transform: translateY(0); }
@@ -238,8 +250,9 @@ a:hover { color: #000; }
 .btn--cc {
   background: transparent;
   color: var(--white);
-  border: 2px solid rgba(255,255,255,0.4);
-  flex: 1;
+  border: 1.5px solid rgba(255,255,255,0.35);
+  flex: unset;
+  padding: 14px 20px;
 }
 .btn--cc:hover { border-color: var(--white); transform: translateY(-1px); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
 .btn--cc:active { transform: translateY(0); }
@@ -251,13 +264,14 @@ a:hover { color: #000; }
 }
 
 .landing__footer {
-  margin-top: 16px;
+  margin-top: 28px;
   padding-top: 0;
-  font-size: 0.8rem;
-  color: rgba(255,255,255,0.5);
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  text-align: left;
 }
-.landing__footer a { color: rgba(255,255,255,0.6); text-decoration: underline; }
-.landing__crisis-link { margin-top: 8px; }
+.landing__footer a { color: rgba(255,255,255,0.5); text-decoration: underline; }
+.landing__crisis-link { margin-top: 6px; }
 .landing__crisis-link a { color: #FF6B6B; font-weight: 600; }
 
 /* ── CHAT SCREEN ───────────────────────────────────── */
@@ -622,9 +636,27 @@ a:hover { color: #000; }
 .btn-voice-switch:hover { background: var(--gray-200); }
 
 /* ── RESPONSIVE ────────────────────────────────────── */
+/* Mobile: center the hero content */
+@media (max-width: 767px) {
+  .landing {
+    padding-left: 20px;
+    padding-right: 20px;
+    align-items: center;
+    text-align: center;
+    max-width: 100%;
+  }
+  .logo-mark { margin: 0 auto 14px; }
+  .landing__actions { justify-content: center; }
+  .landing__footer { text-align: center; }
+  .screen--landing::after {
+    width: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+  }
+}
+
 @media (min-width: 768px) {
-  .landing h1 { font-size: 2.25rem; }
-  .landing__mission p { font-size: 1.2rem; }
+  .landing h1 { font-size: 2.6rem; }
+  .landing__mission p { font-size: 1.1rem; }
   .message { max-width: 65%; }
   .chat-messages { padding: 24px; }
 }
