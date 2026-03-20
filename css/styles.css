@@ -94,8 +94,8 @@ a:hover { color: #000; }
   right: 0;
   bottom: 0;
   background-image: url('../images/hero-bg.jpg');
-  background-size: 115%;
-  background-position: center 60%;
+  background-size: cover;
+  background-position: center center;
   background-repeat: no-repeat;
   opacity: 0.45;
   z-index: 0;
@@ -120,8 +120,8 @@ a:hover { color: #000; }
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 80px 20px 24px;
+  justify-content: flex-end;
+  padding: 80px 20px 8px;
   text-align: center;
   max-width: 520px;
   margin: 0 auto;
@@ -129,7 +129,7 @@ a:hover { color: #000; }
   z-index: 1;
 }
 
-.landing__logo { margin-bottom: 16px; }
+.landing__logo { margin-bottom: 100px; }
 
 .logo-mark {
   width: 64px;
