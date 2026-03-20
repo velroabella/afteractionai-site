@@ -121,7 +121,7 @@ a:hover { color: #000; }
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  padding: 80px 20px 24px;
+  padding: 80px 20px 8px;
   text-align: center;
   max-width: 520px;
   margin: 0 auto;
@@ -129,7 +129,7 @@ a:hover { color: #000; }
   z-index: 1;
 }
 
-.landing__logo { margin-bottom: 32px; }
+.landing__logo { margin-bottom: 16px; }
 
 .logo-mark {
   width: 64px;
@@ -168,7 +168,7 @@ a:hover { color: #000; }
 }
 
 .landing__mission {
-  margin-bottom: 32px;
+  margin-bottom: 20px;
 }
 
 .landing__actions {
@@ -251,8 +251,8 @@ a:hover { color: #000; }
 }
 
 .landing__footer {
-  margin-top: auto;
-  padding-top: 40px;
+  margin-top: 16px;
+  padding-top: 0;
   font-size: 0.8rem;
   color: rgba(255,255,255,0.5);
 }
