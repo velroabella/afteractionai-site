@@ -30,7 +30,7 @@ exports.handler = async (event) => {
     const requestBody = {
       session: {
         type: 'realtime',
-        model: 'gpt-realtime',
+        model: 'gpt-4o-realtime-preview',
         instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.',
         audio: {
           output: {
