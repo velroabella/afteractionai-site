@@ -131,7 +131,16 @@ a:hover { color: #000; }
   z-index: 1;
 }
 
-.landing__logo { margin-bottom: 24px; }
+.landing__logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  align-self: center;
+  position: relative;
+  top: -40px;
+  margin-bottom: 20px;
+}
 
 .logo-mark {
   width: 56px;
@@ -143,7 +152,7 @@ a:hover { color: #000; }
   align-items: center;
   justify-content: center;
   font-size: 28px;
-  margin: 0 0 14px;
+  margin: 0 auto 14px;
   box-shadow: 0 4px 20px rgba(0,0,0,0.4);
   border: 1px solid rgba(255,255,255,0.15);
 }
