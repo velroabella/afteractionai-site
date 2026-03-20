@@ -2305,6 +2305,17 @@ a:hover { color: #000; }
   overflow: hidden;
 }
 
+/* About page hero — taller to show more image */
+.page-hero-image--about {
+  min-height: 75vh;
+  background-position: center 30%;
+}
+.page-hero-image--about .page-hero-image__content {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-45%);
+}
+
 .page-hero-image::before {
   content: '';
   position: absolute;
@@ -2378,6 +2389,7 @@ a:hover { color: #000; }
 
 @media (min-width: 768px) {
   .page-hero-image { min-height: 560px; }
+  .page-hero-image--about { min-height: 75vh; }
   .page-hero-image__title { font-size: 3.75rem; }
   .page-hero-image__subtitle { font-size: 1.25rem; }
   .page-hero-image__content { padding: 100px 40px; }
