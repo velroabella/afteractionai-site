@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Contact Us — AfterAction AI</title>
+  <meta name="description" content="Get in touch with AfterAction AI. Questions, partnerships, media inquiries, or board interest." />
+  <meta name="keywords" content="contact, veteran support, partnerships, inquiry" />
+  <meta property="og:title" content="Contact Us — AfterAction AI" />
+  <meta property="og:description" content="Reach out to the AfterAction AI team." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/contact" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <div class="navbar__logo-mark">★</div>
+      <span>AfterAction AI</span>
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="board.html">Board</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- CONTACT HERO -->
+<section class="page-hero-bar">
+  <h1 class="page-hero-bar__title">Get In Touch</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">We'd love to hear from you. Questions, partnerships, or just want to say hello? <a href="faq.html">Check our FAQ</a> or <a href="about.html">learn about us</a>.</p>
+</section>
+
+<!-- PAGE CONTENT -->
+<div class="page">
+  <div class="page__content">
+
+    <section class="section">
+      <div class="contact-container">
+        <!-- CONTACT FORM -->
+        <div class="contact-form">
+          <h2 class="contact-form__title">Send us a Message</h2>
+          <form id="contactForm">
+            <div class="form-group">
+              <label for="contactName">Name</label>
+              <input type="text" id="contactName" name="name" required />
+            </div>
+
+            <div class="form-group">
+              <label for="contactEmail">Email</label>
+              <input type="email" id="contactEmail" name="email" required />
+            </div>
+
+            <div class="form-group">
+              <label for="contactSubject">Subject</label>
+              <select id="contactSubject" name="subject" required>
+                <option value="">-- Select Subject --</option>
+                <option value="general">General Inquiry</option>
+                <option value="partnership">Organization Partnership</option>
+                <option value="board">Board Interest</option>
+                <option value="media">Media Inquiry</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="contactMessage">Message</label>
+              <textarea id="contactMessage" name="message" placeholder="Tell us more..." required></textarea>
+            </div>
+
+            <button type="submit" class="form-group__submit">Send Message</button>
+          </form>
+        </div>
+
+        <!-- CONTACT INFO -->
+        <div class="contact-info">
+          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 24px;">Direct Contact</h3>
+
+          <div class="contact-info__item">
+            <p class="contact-info__label">Email</p>
+            <p class="contact-info__value"><a href="mailto:hello@afteractionai.org">hello@afteractionai.org</a></p>
+          </div>
+
+          <div class="contact-info__item">
+            <p class="contact-info__label">Location</p>
+            <p class="contact-info__value">Fort Lauderdale, FL</p>
+          </div>
+
+          <div class="contact-info__item">
+            <p class="contact-info__label">Website</p>
+            <p class="contact-info__value"><a href="https://afteractionai.org">AfterActionAI.org</a></p>
+          </div>
+
+          <div class="contact-info__item">
+            <p class="contact-info__label">Resources</p>
+            <p class="contact-info__value"><a href="resources.html" style="color: var(--blue); font-weight: 600;">Browse partner organizations</a> or <a href="faq.html" style="color: var(--blue); font-weight: 600;">view frequently asked questions</a></p>
+          </div>
+
+          <div class="contact-info__item" style="margin-bottom: 0;">
+            <p class="contact-info__label">Follow Us</p>
+            <div class="contact-social">
+              <a href="#" aria-label="Facebook">f</a>
+              <a href="#" aria-label="Instagram">📷</a>
+              <a href="#" aria-label="YouTube">▶</a>
+              <a href="#" aria-label="TikTok">♪</a>
+              <a href="#" aria-label="LinkedIn">in</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- EMERGENCY BANNER -->
+        <div class="contact-emergency">
+          <strong>For Emergencies:</strong> Call <a href="tel:911">911</a>. For veteran crisis support, call <a href="tel:988">988</a> (Press 1).
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section">
+          <h3>Navigate</h3>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="board.html">Board</a>
+          <a href="resources.html">Resources</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="Facebook" title="Facebook">f</a>
+            <a href="#" aria-label="Instagram" title="Instagram">📷</a>
+            <a href="#" aria-label="YouTube" title="YouTube">▶</a>
+            <a href="#" aria-label="TikTok" title="TikTok">♪</a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const formData = {
+    name: document.getElementById('contactName').value,
+    email: document.getElementById('contactEmail').value,
+    subject: document.getElementById('contactSubject').value,
+    message: document.getElementById('contactMessage').value,
+    timestamp: new Date().toISOString()
+  };
+
+  // Save to localStorage for MVP
+  let submissions = JSON.parse(localStorage.getItem('contactSubmissions') || '[]');
+  submissions.push(formData);
+  localStorage.setItem('contactSubmissions', JSON.stringify(submissions));
+
+  alert('Thank you for reaching out! We\'ll get back to you as soon as possible.');
+  this.reset();
+});
+
+function toggleMenu() {
+  const menu = document.getElementById('navMenu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+
+document.querySelectorAll('.navbar__nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth < 768) {
+      document.getElementById('navMenu').style.display = 'none';
+    }
+  });
+});
+</script>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo">★ AfterAction AI</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>

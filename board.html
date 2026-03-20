@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Board of Directors — AfterAction AI</title>
+  <meta name="description" content="Meet the board of directors at AfterAction AI. We're building a diverse leadership team of veteran advocates and nonprofit experts." />
+  <meta name="keywords" content="board of directors, nonprofit leadership, veteran advocacy" />
+  <meta property="og:title" content="Board of Directors — AfterAction AI" />
+  <meta property="og:description" content="Our board is composed of veterans, nonprofit leaders, and mission-driven advocates." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/board" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <div class="navbar__logo-mark">★</div>
+      <span>AfterAction AI</span>
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="board.html" class="active">Board</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- BOARD HERO -->
+<section class="page-hero-bar">
+  <h1 class="page-hero-bar__title">Board of Directors</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">Building a diverse, mission-driven leadership team for veteran advocacy.</p>
+</section>
+
+<!-- PAGE CONTENT -->
+<div class="page">
+  <div class="page__content">
+
+    <!-- BOARD MEMBERS GRID -->
+    <section class="section">
+      <div class="board-grid">
+        <!-- Mike Jackson - Co-Founder -->
+        <div class="board-card">
+          <img src="images/mike-jackson.png" alt="Mike Jackson" style="width:120px;height:120px;border-radius:50%;object-fit:cover;">
+          <h3 class="board-card__name">Mike Jackson</h3>
+          <p class="board-card__title">Co-Founder & Board Chair</p>
+          <p class="board-card__bio">
+            Senior Master Sergeant (Ret.), USAF with 25 years of service. Senior aviation leader with expertise in operations, training systems, and enterprise program management. Co-Founder of AfterAction AI.
+          </p>
+        </div>
+
+        <!-- Board Seat Open #1 -->
+        <div class="board-card">
+          <div class="board-card__photo">▭</div>
+          <h3 class="board-card__name">Board Seat Open</h3>
+          <p class="board-card__title">Nonprofit Operations or VSO Leadership</p>
+          <p class="board-card__bio">
+            We're seeking a board member with deep expertise in nonprofit operations, fundraising strategy, or leadership experience within a Veteran Service Organization (VSO). Ideally based in or connected to the Southeast.
+          </p>
+        </div>
+
+        <!-- Board Seat Open #2 -->
+        <div class="board-card">
+          <div class="board-card__photo">▭</div>
+          <h3 class="board-card__name">Board Seat Open</h3>
+          <p class="board-card__title">Veteran Community Network</p>
+          <p class="board-card__bio">
+            We're looking for a mission-driven veteran with strong connections to the veteran community — either through direct service, advocacy networks, or veteran-founded organizations. Your network will help us reach veterans in need.
+          </p>
+        </div>
+      </div>
+
+      <div class="board-note">
+        <p><strong>We're Hiring.</strong> AfterAction AI is building a board of directors with diverse expertise in veteran services, nonprofit governance, technology, and fundraising. If you align with our mission and bring relevant experience, we'd love to hear from you. <a href="contact.html" style="color: var(--blue); font-weight: 600;">Contact us to learn more.</a></p>
+      </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="section cta-banner">
+      <div class="cta-banner__inner">
+        <h3 class="cta-banner__title">Learn about our mission</h3>
+        <p class="cta-banner__text"><a href="about.html" class="cta-banner__link">Read our story</a> and discover how we're changing veteran support.</p>
+        <a href="index.html" class="cta-banner__button">Start Your Free Conversation</a>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section">
+          <h3>Navigate</h3>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="board.html">Board</a>
+          <a href="resources.html">Resources</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="Facebook" title="Facebook">f</a>
+            <a href="#" aria-label="Instagram" title="Instagram">📷</a>
+            <a href="#" aria-label="YouTube" title="YouTube">▶</a>
+            <a href="#" aria-label="TikTok" title="TikTok">♪</a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('navMenu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+
+// Close menu on smaller screens after clicking
+document.querySelectorAll('.navbar__nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth < 768) {
+      document.getElementById('navMenu').style.display = 'none';
+    }
+  });
+});
+</script>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo">★ AfterAction AI</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>

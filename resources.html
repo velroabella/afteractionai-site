@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Partner Organizations & Resources — AfterAction AI</title>
+  <meta name="description" content="Discover partner organizations and veteran resources. VA.gov, VSOs, mental health support, employment help, and more." />
+  <meta name="keywords" content="veteran resources, VA benefits, VSO, veteran organizations, employment, housing, education" />
+  <meta property="og:title" content="Partner Organizations & Resources — AfterAction AI" />
+  <meta property="og:description" content="A comprehensive directory of veteran-focused organizations and resources." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/resources" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <div class="navbar__logo-mark">★</div>
+      <span>AfterAction AI</span>
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="board.html">Board</a></li>
+      <li><a href="resources.html" class="active">Resources</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- RESOURCES HERO -->
+<section class="page-hero-bar">
+  <h1 class="page-hero-bar__title">Partner Organizations & Resources</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">Trusted veteran organizations, benefits navigators, and support services.</p>
+</section>
+
+<!-- PAGE CONTENT -->
+<div class="page">
+  <div class="page__content">
+
+    <!-- ADD YOUR ORGANIZATION CTA BUTTON -->
+    <div style="text-align:center;margin-bottom:24px;">
+      <a href="#submit-org" class="resources-cta__button" onclick="toggleSubmissionForm();document.getElementById('submit-org').scrollIntoView({behavior:'smooth'});return false;">+ Add Your Organization</a>
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="resources-search">
+      <input
+        type="text"
+        class="resources-search__input"
+        id="searchInput"
+        placeholder="Search by organization name or keyword..."
+        onkeyup="filterResources()"
+      />
+    </div>
+
+    <!-- FILTER BUTTONS -->
+    <div class="resources-filters">
+      <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
+      <button class="filter-btn" onclick="filterByCategory('crisis-mental-health')">Crisis / Mental Health</button>
+      <button class="filter-btn" onclick="filterByCategory('federal')">Federal Benefits</button>
+      <button class="filter-btn" onclick="filterByCategory('vso')">VSOs</button>
+      <button class="filter-btn" onclick="filterByCategory('employment')">Employment / Career</button>
+      <button class="filter-btn" onclick="filterByCategory('housing')">Housing / Homelessness</button>
+      <button class="filter-btn" onclick="filterByCategory('financial')">Financial / Emergency</button>
+      <button class="filter-btn" onclick="filterByCategory('education')">Education</button>
+      <button class="filter-btn" onclick="filterByCategory('legal')">Legal</button>
+      <button class="filter-btn" onclick="filterByCategory('tech')">AI / Tech Tools</button>
+      <button class="filter-btn" onclick="filterByCategory('women')">Women Veterans</button>
+      <button class="filter-btn" onclick="filterByCategory('family')">Family / Spouse</button>
+    </div>
+
+    <!-- RESOURCES GRID -->
+    <section class="section">
+      <div class="resources-grid" id="resourcesGrid">
+        <!-- Resources will populate here -->
+      </div>
+    </section>
+
+    <!-- ADD YOUR ORGANIZATION CTA -->
+    <section class="section">
+      <div class="resources-cta">
+        <h3 class="resources-cta__title">Know a Veteran Organization We Should Include?</h3>
+        <p class="resources-cta__text">We're building a comprehensive directory for the veteran community. If you know an organization making a difference, submit it below and we'll review it for inclusion.</p>
+        <button class="resources-cta__button" onclick="toggleSubmissionForm()">Add Your Organization</button>
+      </div>
+
+      <!-- SUBMISSION FORM -->
+      <form class="submission-form" id="submissionForm">
+        <div class="form-group">
+          <label for="orgName">Organization Name</label>
+          <input type="text" id="orgName" name="orgName" required />
+        </div>
+        <div class="form-group">
+          <label for="orgWebsite">Website</label>
+          <input type="url" id="orgWebsite" name="orgWebsite" placeholder="https://..." required />
+        </div>
+        <div class="form-group">
+          <label for="orgDescription">Description</label>
+          <textarea id="orgDescription" name="orgDescription" placeholder="What does this organization do?" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="orgEmail">Your Email</label>
+          <input type="email" id="orgEmail" name="orgEmail" required />
+        </div>
+        <div class="form-group">
+          <label for="orgCategory">Category (select all that apply)</label>
+          <select id="orgCategory" name="orgCategory" required>
+            <option value="">-- Select Category --</option>
+            <option value="crisis-mental-health">Crisis / Mental Health</option>
+            <option value="federal">Federal Benefits</option>
+            <option value="vso">VSO</option>
+            <option value="employment">Employment / Career</option>
+            <option value="housing">Housing / Homelessness</option>
+            <option value="financial">Financial / Emergency</option>
+            <option value="education">Education</option>
+            <option value="legal">Legal</option>
+            <option value="tech">AI / Tech Tools</option>
+            <option value="women">Women Veterans</option>
+            <option value="family">Family / Spouse</option>
+          </select>
+        </div>
+        <button type="submit" class="form-group__submit">Submit Organization</button>
+      </form>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section">
+          <h3>Navigate</h3>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="board.html">Board</a>
+          <a href="resources.html">Resources</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="Facebook" title="Facebook">f</a>
+            <a href="#" aria-label="Instagram" title="Instagram">📷</a>
+            <a href="#" aria-label="YouTube" title="YouTube">▶</a>
+            <a href="#" aria-label="TikTok" title="TikTok">♪</a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Resource database
+const resources = [
+  // CRISIS / MENTAL HEALTH
+  {
+    name: 'Veterans Crisis Line',
+    description: '24/7 confidential crisis support.',
+    category: 'crisis-mental-health',
+    website: 'https://www.veteranscrisisline.net',
+    featured: true
+  },
+  {
+    name: 'Cohen Veterans Network',
+    description: 'Free mental health clinics for post-9/11 veterans and families.',
+    category: 'crisis-mental-health',
+    website: 'https://cohenveteransnetwork.org',
+    featured: false
+  },
+  {
+    name: 'Headstrong Project',
+    description: '30 free therapy sessions for veterans with PTSD.',
+    category: 'crisis-mental-health',
+    website: 'https://getheadstrong.org',
+    featured: false
+  },
+  {
+    name: 'Give an Hour',
+    description: 'Free mental health services from volunteer professionals.',
+    category: 'crisis-mental-health',
+    website: 'https://giveanhour.org',
+    featured: false
+  },
+  {
+    name: 'Emory Healthcare Veterans Program',
+    description: 'Free 2-week intensive PTSD treatment.',
+    category: 'crisis-mental-health',
+    website: 'https://emoryhealthcare.org/veterans-program',
+    featured: false
+  },
+
+  // FEDERAL BENEFITS
+  {
+    name: 'VA.gov',
+    description: 'Official portal for all federal VA benefits and services.',
+    category: 'federal',
+    website: 'https://www.va.gov',
+    featured: true
+  },
+  {
+    name: 'VA Health Care',
+    description: 'Enroll in VA healthcare.',
+    category: 'federal',
+    website: 'https://va.gov/health-care',
+    featured: false
+  },
+  {
+    name: 'VA Disability Compensation',
+    description: 'File or check disability claims.',
+    category: 'federal',
+    website: 'https://va.gov/disability',
+    featured: false
+  },
+  {
+    name: 'GI Bill / Education Benefits',
+    description: 'Education and training benefits.',
+    category: 'federal',
+    website: 'https://va.gov/education',
+    featured: false
+  },
+  {
+    name: 'VA Home Loans',
+    description: 'Home loan guaranty program.',
+    category: 'federal',
+    website: 'https://va.gov/housing-assistance/home-loans',
+    featured: false
+  },
+  {
+    name: 'Military OneSource',
+    description: 'Free 24/7 support for service members and families.',
+    category: 'federal',
+    website: 'https://militaryonesource.mil',
+    featured: false
+  },
+
+  // VETERAN SERVICE ORGANIZATIONS (VSOs)
+  {
+    name: 'DAV (Disabled American Veterans)',
+    description: 'Free claims assistance and advocacy.',
+    category: 'vso',
+    website: 'https://www.dav.org',
+    featured: true
+  },
+  {
+    name: 'VFW (Veterans of Foreign Wars)',
+    description: 'Advocacy, community, and claims help.',
+    category: 'vso',
+    website: 'https://www.vfw.org',
+    featured: true
+  },
+  {
+    name: 'American Legion',
+    description: 'Largest veteran org. Community, advocacy, benefits.',
+    category: 'vso',
+    website: 'https://www.legion.org',
+    featured: true
+  },
+  {
+    name: 'AMVETS',
+    description: 'Advocacy and community service for all veterans.',
+    category: 'vso',
+    website: 'https://www.amvets.org',
+    featured: false
+  },
+  {
+    name: 'Paralyzed Veterans of America',
+    description: 'Advocacy for spinal cord injured veterans.',
+    category: 'vso',
+    website: 'https://www.pva.org',
+    featured: false
+  },
+  {
+    name: 'Vietnam Veterans of America',
+    description: 'Advocacy for Vietnam-era and all veterans.',
+    category: 'vso',
+    website: 'https://www.vva.org',
+    featured: false
+  },
+
+  // EMPLOYMENT / CAREER
+  {
+    name: 'Hire Heroes USA',
+    description: 'Free job search assistance for veterans and spouses.',
+    category: 'employment',
+    website: 'https://www.hireheroesusa.org',
+    featured: false
+  },
+  {
+    name: 'Hiring Our Heroes',
+    description: 'U.S. Chamber of Commerce veteran employment program.',
+    category: 'employment',
+    website: 'https://www.hiringourheroes.org',
+    featured: false
+  },
+  {
+    name: 'RecruitMilitary',
+    description: 'Job fairs and hiring solutions for veterans.',
+    category: 'employment',
+    website: 'https://www.recruitmilitary.com',
+    featured: false
+  },
+  {
+    name: 'American Corporate Partners (ACP)',
+    description: 'Free mentorship for transitioning veterans.',
+    category: 'employment',
+    website: 'https://www.acp-usa.org',
+    featured: false
+  },
+  {
+    name: 'SkillBridge (DoD)',
+    description: 'Civilian work experience during last 180 days of service.',
+    category: 'employment',
+    website: 'https://www.skillbridge.osd.mil',
+    featured: false
+  },
+  {
+    name: 'Veterati',
+    description: 'Free mentorship platform connecting veterans with professionals.',
+    category: 'employment',
+    website: 'https://www.veterati.com',
+    featured: false
+  },
+
+  // HOUSING / HOMELESSNESS
+  {
+    name: 'U.S.VETS',
+    description: 'Largest nonprofit focused on ending veteran homelessness.',
+    category: 'housing',
+    website: 'https://www.usvets.org',
+    featured: false
+  },
+  {
+    name: 'Fisher House Foundation',
+    description: 'Free housing for families during VA medical treatment.',
+    category: 'housing',
+    website: 'https://www.fisherhouse.org',
+    featured: false
+  },
+  {
+    name: 'HUD-VASH',
+    description: 'VA supportive housing vouchers for homeless veterans.',
+    category: 'housing',
+    website: 'https://va.gov/homeless/hud-vash.asp',
+    featured: false
+  },
+  {
+    name: 'Volunteers of America',
+    description: 'Veteran housing and supportive services.',
+    category: 'housing',
+    website: 'https://www.voa.org',
+    featured: false
+  },
+  {
+    name: 'National Coalition for Homeless Veterans',
+    description: 'Advocacy and provider directory.',
+    category: 'housing',
+    website: 'https://www.nchv.org',
+    featured: false
+  },
+
+  // FINANCIAL / EMERGENCY ASSISTANCE
+  {
+    name: 'Wounded Warrior Project',
+    description: 'Programs and emergency grants for post-9/11 veterans.',
+    category: 'financial',
+    website: 'https://www.woundedwarriorproject.org',
+    featured: false
+  },
+  {
+    name: 'Gary Sinise Foundation',
+    description: 'Smart homes, emergency relief, and family support.',
+    category: 'financial',
+    website: 'https://www.garysinisefoundation.org',
+    featured: false
+  },
+  {
+    name: 'Bob Woodruff Foundation',
+    description: 'Grants to veteran-serving nonprofits.',
+    category: 'financial',
+    website: 'https://www.bobwoodrufffoundation.org',
+    featured: false
+  },
+  {
+    name: 'PenFed Foundation',
+    description: 'Emergency financial assistance for veterans and families.',
+    category: 'financial',
+    website: 'https://www.penfedfoundation.org',
+    featured: false
+  },
+  {
+    name: 'Operation Homefront',
+    description: 'Emergency financial assistance and housing.',
+    category: 'financial',
+    website: 'https://www.operationhomefront.org',
+    featured: false
+  },
+  {
+    name: 'Team Rubicon',
+    description: 'Veteran disaster response and community service.',
+    category: 'financial',
+    website: 'https://www.teamrubicon.org',
+    featured: false
+  },
+
+  // EDUCATION
+  {
+    name: 'Pat Tillman Foundation',
+    description: 'Scholarships for military veterans and spouses.',
+    category: 'education',
+    website: 'https://www.pattillmanfoundation.org',
+    featured: false
+  },
+  {
+    name: 'Student Veterans of America',
+    description: 'Campus community and advocacy.',
+    category: 'education',
+    website: 'https://www.studentveterans.org',
+    featured: false
+  },
+  {
+    name: 'Post80.AI',
+    description: 'AI-powered education benefits calculator.',
+    category: 'education',
+    website: 'https://www.post80.ai',
+    featured: false
+  },
+  {
+    name: 'FourBlock',
+    description: 'Career readiness program for transitioning veterans.',
+    category: 'education',
+    website: 'https://www.fourblock.org',
+    featured: false
+  },
+
+  // LEGAL
+  {
+    name: 'National Veterans Legal Services Program (NVLSP)',
+    description: 'Free legal aid for disability claims and appeals.',
+    category: 'legal',
+    website: 'https://www.nvlsp.org',
+    featured: false
+  },
+  {
+    name: 'Veterans Consortium Pro Bono Program',
+    description: 'Free legal representation at CAVC. 83% success rate.',
+    category: 'legal',
+    website: 'https://www.vetsprobono.org',
+    featured: false
+  },
+  {
+    name: 'Veterans Legal Institute',
+    description: 'Pro bono legal services for homeless and low-income veterans.',
+    category: 'legal',
+    website: 'https://www.veteranslegalinstitute.com',
+    featured: false
+  },
+  {
+    name: 'Stateside Legal',
+    description: 'Free legal help directory for military members.',
+    category: 'legal',
+    website: 'https://www.statesidelegal.org',
+    featured: false
+  },
+
+  // AI / TECHNOLOGY TOOLS
+  {
+    name: 'VeteranAI',
+    description: 'AI assistant for disability claims and nexus letters.',
+    category: 'tech',
+    website: 'https://www.veteranai.co',
+    featured: false
+  },
+  {
+    name: 'VA Wayfinder',
+    description: 'Plain English guides for VA processes.',
+    category: 'tech',
+    website: 'https://www.vawayfinder.org',
+    featured: false
+  },
+  {
+    name: 'Navigator USA Corp',
+    description: 'AI Benefits Coach for disability claims.',
+    category: 'tech',
+    website: 'https://www.nav-usa.org',
+    featured: false
+  },
+  {
+    name: 'AfterAction AI',
+    description: 'Free AI veteran navigator (that\'s us).',
+    category: 'tech',
+    website: 'https://www.afteractionai.org',
+    featured: false
+  },
+
+  // WOMEN VETERANS
+  {
+    name: 'Women Veterans Alliance',
+    description: 'Community and advocacy for women who served.',
+    category: 'women',
+    website: 'https://www.womenveteransalliance.org',
+    featured: false
+  },
+  {
+    name: 'Final Salute Inc',
+    description: 'Housing for homeless women veterans.',
+    category: 'women',
+    website: 'https://www.finalsaluteinc.org',
+    featured: false
+  },
+
+  // FAMILY / SPOUSE
+  {
+    name: 'Blue Star Families',
+    description: 'Programs and community for military families.',
+    category: 'family',
+    website: 'https://www.bluestarfam.org',
+    featured: false
+  },
+  {
+    name: 'National Military Family Association',
+    description: 'Education, camps, and family support.',
+    category: 'family',
+    website: 'https://www.militaryfamily.org',
+    featured: false
+  }
+];
+
+let currentFilter = 'all';
+
+function renderResources(resourcesToShow) {
+  const grid = document.getElementById('resourcesGrid');
+  grid.innerHTML = '';
+
+  if (resourcesToShow.length === 0) {
+    grid.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--gray-500);">No organizations found. Try a different search or category.</p>';
+    return;
+  }
+
+  resourcesToShow.forEach(resource => {
+    const card = document.createElement('div');
+    card.className = 'resource-card';
+    card.innerHTML = `
+      <h3 class="resource-card__name">${resource.name}</h3>
+      <p class="resource-card__description">${resource.description}</p>
+      <span class="resource-card__category">${formatCategory(resource.category)}</span>
+      <a href="${resource.website}" target="_blank" rel="noopener noreferrer" class="resource-card__button">Visit Organization</a>
+    `;
+    grid.appendChild(card);
+  });
+}
+
+function formatCategory(category) {
+  const map = {
+    'crisis-mental-health': 'Crisis / Mental Health',
+    'federal': 'Federal Benefits',
+    'vso': 'VSO',
+    'employment': 'Employment / Career',
+    'housing': 'Housing / Homelessness',
+    'financial': 'Financial / Emergency',
+    'education': 'Education',
+    'legal': 'Legal',
+    'tech': 'AI / Tech Tools',
+    'women': 'Women Veterans',
+    'family': 'Family / Spouse'
+  };
+  return map[category] || category;
+}
+
+function filterByCategory(category) {
+  currentFilter = category;
+
+  // Update button states
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+
+  // Filter and display
+  const filtered = category === 'all' ? resources : resources.filter(r => r.category === category);
+  renderResources(filtered);
+}
+
+function filterResources() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  let filtered = resources.filter(r =>
+    r.name.toLowerCase().includes(search) ||
+    r.description.toLowerCase().includes(search)
+  );
+
+  if (currentFilter !== 'all') {
+    filtered = filtered.filter(r => r.category === currentFilter);
+  }
+
+  renderResources(filtered);
+}
+
+function toggleSubmissionForm() {
+  const form = document.getElementById('submissionForm');
+  form.classList.toggle('visible');
+  if (form.classList.contains('visible')) {
+    form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+document.getElementById('submissionForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const submission = {
+    name: document.getElementById('orgName').value,
+    website: document.getElementById('orgWebsite').value,
+    description: document.getElementById('orgDescription').value,
+    email: document.getElementById('orgEmail').value,
+    category: document.getElementById('orgCategory').value,
+    timestamp: new Date().toISOString()
+  };
+
+  // Save to localStorage for MVP
+  let submissions = JSON.parse(localStorage.getItem('orgSubmissions') || '[]');
+  submissions.push(submission);
+  localStorage.setItem('orgSubmissions', JSON.stringify(submissions));
+
+  alert('Thank you! Your organization submission has been received. We\'ll review it and follow up within 5 business days.');
+  this.reset();
+  toggleSubmissionForm();
+});
+
+function toggleMenu() {
+  const menu = document.getElementById('navMenu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+
+document.querySelectorAll('.navbar__nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth < 768) {
+      document.getElementById('navMenu').style.display = 'none';
+    }
+  });
+});
+
+// Initialize on page load
+renderResources(resources);
+
+// Apply category colors to tags
+const colorMap = {
+  'crisis': 'crisis', 'mental health': 'crisis',
+  'federal': 'federal', 'federal benefits': 'federal',
+  'vso': 'vso', 'vsos': 'vso',
+  'employment': 'employment', 'career': 'employment',
+  'housing': 'housing', 'homelessness': 'housing',
+  'financial': 'financial', 'emergency': 'financial',
+  'education': 'education',
+  'legal': 'legal',
+  'ai': 'ai', 'tech': 'ai', 'technology': 'ai',
+  'women': 'women', 'women veterans': 'women',
+  'family': 'family', 'spouse': 'family'
+};
+document.querySelectorAll('.resource-card__category').forEach(tag => {
+  const text = tag.textContent.trim().toLowerCase();
+  for (const [key, color] of Object.entries(colorMap)) {
+    if (text.includes(key)) { tag.setAttribute('data-color', color); break; }
+  }
+});
+</script>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo">★ AfterAction AI</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>

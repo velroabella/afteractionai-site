@@ -1,0 +1,5 @@
+# AfterAction AI — Netlify Redirects
+# Maps clean API paths to Netlify Functions
+
+/api/chat    /.netlify/functions/chat    200
+/api/realtime-token  /.netlify/functions/realtime-token  200

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — AfterAction AI</title>
+  <meta name="description" content="Your AfterAction AI profile — track your mission progress, view reports, and manage your veteran benefits plan." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <div class="navbar__logo-mark">★</div>
+      <span>AfterAction AI</span>
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('navMenu').style.display = document.getElementById('navMenu').style.display === 'flex' ? 'none' : 'flex'">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="board.html">Board</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li><a href="profile.html" class="active">Profile</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboardContent">
+  <div class="dashboard__header">
+    <h1 class="dashboard__greeting" id="dashGreeting">Welcome back</h1>
+    <button class="dashboard__signout auth-signout-btn" onclick="AAAI.auth.signOut().then(()=>window.location='index.html')">Sign Out</button>
+  </div>
+
+  <!-- Progress Overview -->
+  <div class="dashboard__card">
+    <h3>Mission Progress</h3>
+    <div class="dashboard__stat">
+      <div class="dashboard__stat-item">
+        <div class="dashboard__stat-number" id="statTotal">0</div>
+        <div class="dashboard__stat-label">Total Tasks</div>
+      </div>
+      <div class="dashboard__stat-item">
+        <div class="dashboard__stat-number" id="statCompleted">0</div>
+        <div class="dashboard__stat-label">Completed</div>
+      </div>
+      <div class="dashboard__stat-item">
+        <div class="dashboard__stat-number" id="statProgress">0%</div>
+        <div class="dashboard__stat-label">Progress</div>
+      </div>
+    </div>
+    <div style="margin-top:16px;">
+      <a href="index.html" style="color:var(--gold);font-weight:600;font-size:0.9rem;">Continue Mission →</a>
+    </div>
+  </div>
+
+  <!-- Goals -->
+  <div class="dashboard__card">
+    <h3>My Direction</h3>
+    <div class="dashboard__goals" id="dashGoals">
+      <span class="dashboard__goal-tag" style="opacity:0.5;">No goals set yet</span>
+    </div>
+    <p style="font-size:0.85rem;color:var(--gray-500);margin-top:12px;">
+      Goals are set based on your AI conversation. Start or continue a chat to update.
+    </p>
+  </div>
+
+  <!-- Latest Report -->
+  <div class="dashboard__card">
+    <h3>Latest Report</h3>
+    <div id="dashReport">
+      <p style="font-size:0.9rem;color:var(--gray-500);">No report generated yet. <a href="index.html" style="color:var(--gold);">Start a conversation</a> to get your personalized plan.</p>
+    </div>
+  </div>
+
+  <!-- Template Outputs -->
+  <div class="dashboard__card">
+    <h3>My Outputs</h3>
+    <div id="dashOutputs">
+      <p style="font-size:0.9rem;color:var(--gray-500);">No templates completed yet. Start a task from your Mission Checklist to generate outputs.</p>
+    </div>
+  </div>
+
+  <!-- Uploaded Documents -->
+  <div class="dashboard__card">
+    <h3>Uploaded Documents</h3>
+    <div id="dashDocuments">
+      <p style="font-size:0.9rem;color:var(--gray-500);">No documents uploaded yet. Upload during your AI conversation to personalize your plan.</p>
+    </div>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="newsletter-cta">
+    <h3>Stay on mission</h3>
+    <p>Weekly veteran benefits updates, transition tips, and new tools.</p>
+    <form class="newsletter-form" onsubmit="event.preventDefault();AAAI.newsletter.subscribe(this)">
+      <input type="email" name="email" placeholder="your@email.com" required />
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="newsletter-note">Free. No spam. Unsubscribe anytime.</p>
+  </div>
+</div>
+
+<!-- NOT LOGGED IN STATE -->
+<div class="dashboard" id="dashboardLogin" style="display:none;">
+  <div style="text-align:center;padding:60px 20px;">
+    <div style="font-size:3rem;margin-bottom:16px;">★</div>
+    <h1 style="font-size:1.5rem;margin-bottom:12px;">Sign in to view your profile</h1>
+    <p style="color:var(--gray-500);margin-bottom:24px;">Track your mission progress, view your reports, and manage your plan.</p>
+    <button class="auth-submit" style="max-width:280px;margin:0 auto;" onclick="AAAI.auth.openAuthModal('login')">Sign In</button>
+    <p style="margin-top:12px;font-size:0.85rem;color:var(--gray-500);">
+      Don't have an account? <a href="#" style="color:var(--gold);" onclick="event.preventDefault();AAAI.auth.openAuthModal('signup')">Create one free</a>
+    </p>
+  </div>
+</div>
+
+<!-- AUTH MODAL (same as index) -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo">★ AfterAction AI</div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+<script>
+// Profile page logic
+(function() {
+  window.addEventListener('authStateChanged', function(e) {
+    const { user, profile } = e.detail;
+    const content = document.getElementById('dashboardContent');
+    const login = document.getElementById('dashboardLogin');
+
+    if (user) {
+      content.style.display = 'block';
+      login.style.display = 'none';
+
+      // Greeting
+      const name = profile?.display_name || user.email.split('@')[0];
+      document.getElementById('dashGreeting').textContent = 'Welcome back, ' + name;
+
+      // Load checklist stats
+      AAAI.auth.loadChecklist().then(function(result) {
+        if (result.data) {
+          const total = result.data.length;
+          const completed = result.data.filter(function(i) { return i.is_completed; }).length;
+          const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+          document.getElementById('statTotal').textContent = total;
+          document.getElementById('statCompleted').textContent = completed;
+          document.getElementById('statProgress').textContent = pct + '%';
+        }
+      });
+
+      // Load goals
+      if (profile?.goals && profile.goals.length > 0) {
+        var goalsEl = document.getElementById('dashGoals');
+        goalsEl.innerHTML = profile.goals.map(function(g) {
+          return '<span class="dashboard__goal-tag">' + g + '</span>';
+        }).join('');
+      }
+
+      // Load template outputs
+      if (AAAI.auth.loadTemplateOutputs) {
+        AAAI.auth.loadTemplateOutputs().then(function(result) {
+          if (result.data && result.data.length > 0) {
+            var outputsEl = document.getElementById('dashOutputs');
+            outputsEl.innerHTML = result.data.map(function(o) {
+              var preview = o.content ? o.content.substring(0, 150).replace(/</g, '&lt;') + '...' : '';
+              var date = new Date(o.created_at).toLocaleDateString();
+              return '<div class="template-output-card">' +
+                '<div class="template-output-card__header">' +
+                  '<span class="template-output-card__title">' + (o.title || o.template_type) + '</span>' +
+                  '<span class="template-output-card__date">' + date + '</span>' +
+                '</div>' +
+                '<div class="template-output-card__preview">' + preview + '</div>' +
+                '<div class="template-output-card__actions">' +
+                  '<button class="template-output-card__btn" onclick="navigator.clipboard.writeText(this.closest(\'.template-output-card\').dataset.content).then(function(){alert(\'Copied!\')});" data-content="">Copy</button>' +
+                  '<button class="template-output-card__btn" onclick="var b=new Blob([this.closest(\'.template-output-card\').dataset.content],{type:\'text/plain\'});var u=URL.createObjectURL(b);var a=document.createElement(\'a\');a.href=u;a.download=\'' + (o.template_type || 'output') + '.txt\';a.click();">Download</button>' +
+                '</div>' +
+              '</div>';
+            }).join('');
+            // Store full content in data attributes
+            var cards = outputsEl.querySelectorAll('.template-output-card');
+            result.data.forEach(function(o, i) {
+              if (cards[i]) cards[i].dataset.content = o.content || '';
+            });
+          }
+        });
+      }
+
+      // Load latest report
+      if (AAAI.auth.loadReports) {
+        AAAI.auth.loadReports().then(function(result) {
+          if (result.data && result.data.length > 0) {
+            var reportEl = document.getElementById('dashReport');
+            var latest = result.data[0];
+            var preview = latest.report_content ? latest.report_content.substring(0, 300).replace(/</g, '&lt;') + '...' : '';
+            var date = new Date(latest.created_at).toLocaleDateString();
+            reportEl.innerHTML = '<p style="font-size:0.8rem;color:var(--gray-500);margin-bottom:8px;">Generated ' + date + '</p>' +
+              '<div style="font-size:0.85rem;color:var(--gray-700);line-height:1.6;max-height:200px;overflow-y:auto;">' + preview + '</div>' +
+              '<div style="margin-top:12px;display:flex;gap:8px;">' +
+                '<a href="index.html" style="color:var(--gold);font-size:0.85rem;font-weight:600;">Continue Conversation →</a>' +
+              '</div>';
+          }
+        });
+      }
+    } else {
+      content.style.display = 'none';
+      login.style.display = 'block';
+    }
+  });
+})();
+</script>
+</body>
+</html>

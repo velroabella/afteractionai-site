@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>FAQ — AfterAction AI</title>
+  <meta name="description" content="Frequently asked questions about AfterAction AI, veteran benefits, data privacy, and partnerships." />
+  <meta name="keywords" content="FAQ, questions, veteran benefits, privacy, data security" />
+  <meta property="og:title" content="FAQ — AfterAction AI" />
+  <meta property="og:description" content="Find answers to common questions." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/faq" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <div class="navbar__logo-mark">★</div>
+      <span>AfterAction AI</span>
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="board.html">Board</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- PAGE CONTENT -->
+<div class="page">
+  <div class="page__content">
+    <div class="page-hero">
+      <h1 class="page-hero__title">Frequently Asked Questions</h1>
+      <p class="page-hero__subtitle">Got questions? We've got answers.</p>
+    </div>
+
+    <section class="section">
+      <div class="faq-container">
+        <div class="faq-accordion">
+          <!-- FAQ Item 1 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>Is AfterAction AI really free?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                Yes. Completely free. No subscription, no paywall, no hidden fees. Veterans earned benefits through service — we believe the tools to claim them should be free. We're supported by grants and mission-aligned partnerships, not by charging veterans.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>What do you do with my data?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                We don't sell your data, store it permanently, or share it without your consent. Documents you upload are processed to generate your benefits plan, then securely deleted. We use anonymous analytics to improve the service. Crisis information is routed to the Veterans Crisis Line but never stored in our system. See our <a href="privacy.html" style="color: var(--blue); font-weight: 600;">Privacy Policy</a> for full details.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>Are you affiliated with the VA?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                No. AfterAction AI is an independent nonprofit. We're not affiliated with the U.S. Department of Veterans Affairs or the Department of Defense. However, we work with the VA system and complement (not replace) official VA resources. Always verify benefits information directly with VA.gov or your local VA office.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>Who built this?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                AfterAction AI was founded by Mike Jackson, a retired Senior Master Sergeant in the U.S. Air Force with 25 years of service. After years working with transitioning servicemembers, he saw how many veterans missed out on benefits they'd earned. He built this tool to change that. <a href="about.html" style="color: var(--blue); font-weight: 600;">Learn more about us</a>.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 5 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>Can I upload my DD-214 safely?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                Yes. Your documents are encrypted in transit and at rest, processed securely to extract relevant information, and then deleted from our servers. We don't retain a copy of your DD-214 or other military documents. That said, we recommend redacting sensitive personal information (SSN, account numbers) before uploading any document to any service.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 6 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>How accurate is the benefits matching?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                Our AI matches your service history and profile to thousands of known benefits and programs. But we're not perfect — and benefits rules change. Always verify recommendations with official sources (VA.gov, state veteran agencies, VSOs). Think of us as a starting point, not a final word. If you believe we've missed a benefit you qualify for, tell us.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 7 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>Can veteran organizations partner with you?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                Absolutely. We're actively building partnerships with VSOs, nonprofits, federal agencies, and state veteran programs. If your organization helps veterans and you'd like to explore collaboration, <a href="contact.html" style="color: var(--blue); font-weight: 600;">get in touch</a>. We can discuss data integration, co-marketing, or joint initiatives.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 8 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>How do I join the board?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                We're actively recruiting board members with expertise in nonprofit operations, fundraising, technology, or strong ties to the veteran community. If you're interested in joining our leadership, <a href="contact.html" style="color: var(--blue); font-weight: 600;">contact us</a> with a brief description of your background and why you want to serve. <a href="board.html" style="color: var(--blue); font-weight: 600;">See current board info</a>.
+              </p>
+            </div>
+          </div>
+
+          <!-- FAQ Item 9 -->
+          <div class="faq-item">
+            <button class="faq-item__button" onclick="toggleFAQ(event)">
+              <span>How can I support the mission?</span>
+              <span class="faq-item__toggle">⋯</span>
+            </button>
+            <div class="faq-item__content">
+              <p class="faq-item__text">
+                We're grateful for your support. You can help by: (1) Spreading the word to veterans in your network, (2) Partnering with us if you run a veteran organization, (3) Contributing your expertise on our board or as a volunteer, (4) Providing feedback to improve the platform. <a href="contact.html" style="color: var(--blue); font-weight: 600;">Reach out with how you'd like to help</a>.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section">
+          <h3>Navigate</h3>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="board.html">Board</a>
+          <a href="resources.html">Resources</a>
+          <a href="blog.html">Blog</a>
+          <a href="contact.html">Contact</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="Facebook" title="Facebook">f</a>
+            <a href="#" aria-label="Instagram" title="Instagram">📷</a>
+            <a href="#" aria-label="YouTube" title="YouTube">▶</a>
+            <a href="#" aria-label="TikTok" title="TikTok">♪</a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+function toggleFAQ(event) {
+  const button = event.currentTarget;
+  const content = button.nextElementSibling;
+
+  // Close other open items
+  document.querySelectorAll('.faq-item__content.visible').forEach(item => {
+    if (item !== content) {
+      item.classList.remove('visible');
+      item.previousElementSibling.classList.remove('active');
+    }
+  });
+
+  // Toggle current item
+  button.classList.toggle('active');
+  content.classList.toggle('visible');
+}
+
+function toggleMenu() {
+  const menu = document.getElementById('navMenu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+
+document.querySelectorAll('.navbar__nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth < 768) {
+      document.getElementById('navMenu').style.display = 'none';
+    }
+  });
+});
+</script>
+
+</body>
+</html>
