@@ -2308,7 +2308,7 @@ a:hover { color: #000; }
 /* About page hero — taller to show more image */
 .page-hero-image--about {
   min-height: 75vh;
-  background-position: center center;
+  background-position: center 70%;
 }
 .page-hero-image--about .page-hero-image__content {
   position: absolute;
