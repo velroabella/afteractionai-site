@@ -866,7 +866,7 @@ a:hover { color: #000; }
 }
 
 .footer__section--nav h3 {
-  text-align: center;
+  text-align: left;
 }
 
 .footer__section a {
@@ -916,10 +916,10 @@ a:hover { color: #000; }
 }
 
 .footer__crisis {
-  background: rgba(230, 50, 60, 0.25);
-  border: 1px solid rgba(255, 60, 70, 0.7);
-  border-radius: var(--radius);
-  padding: 16px;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0 0 16px;
   margin-bottom: 24px;
   font-size: 0.9rem;
   text-align: center;
