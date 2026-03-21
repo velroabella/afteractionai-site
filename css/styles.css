@@ -3837,6 +3837,39 @@ a, button, input, select, textarea {
   background: #DC3545;
 }
 
+/* ── AUTH MODAL DARK THEME ─────────────────────────── */
+.auth-modal__box {
+  background: #111;
+  color: #fff;
+}
+.auth-modal__close { color: rgba(255,255,255,0.5); }
+.auth-modal__close:hover { color: #fff; }
+.auth-tabs { border-bottom-color: rgba(255,255,255,0.15); }
+.auth-tab { color: rgba(255,255,255,0.5); }
+.auth-tab.active { color: #fff; border-bottom-color: var(--gold); }
+.auth-tab:hover { color: rgba(255,255,255,0.8); }
+.auth-field label { color: rgba(255,255,255,0.75); }
+.auth-field input {
+  background: rgba(255,255,255,0.08);
+  border-color: rgba(255,255,255,0.15);
+  color: #fff;
+}
+.auth-field input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(197,165,90,0.2);
+}
+.auth-field input::placeholder { color: rgba(255,255,255,0.35); }
+.auth-submit { background: var(--gold); color: #111; }
+.auth-submit:hover { background: #d4b44a; }
+.auth-forgot { color: rgba(255,255,255,0.5); }
+.auth-note { color: rgba(255,255,255,0.5); }
+.auth-error {
+  background: rgba(185,28,28,0.15); border-color: rgba(185,28,28,0.3); color: #FCA5A5;
+}
+.auth-success {
+  background: rgba(22,101,52,0.15); border-color: rgba(22,101,52,0.3); color: #86EFAC;
+}
+
 /* ── FAQ PREMIUM ───────────────────────────────────── */
 .faq-accordion {
   border-radius: 16px;
