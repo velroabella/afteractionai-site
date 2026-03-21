@@ -195,10 +195,11 @@
 
 <script>
 // ══════════════════════════════════════════════
-// VETERAN RESOURCE DATABASE — 90 Resources / 10 Categories
+// UNIFIED VETERAN RESOURCE DATABASE
+// 138 Resources / 10 Categories / 3 Source Types
 // ══════════════════════════════════════════════
 
-// 90 resources across 10 categories
+// 138 resources across 10 categories (unified database)
 const resources = [
   {
     "name": "VA Vocational Rehabilitation & Employment (VR&E / Chapter 31)",
@@ -206,7 +207,8 @@ const resources = [
     "description": "Comprehensive employment services including job training, resume development, job accommodation support, and self-employment assistance for veterans with service-connected disabilities.",
     "eligibility": "Veterans with service-connected disability rating of 10%+ with employment barrier, or 20%+ without employment barrier. Must have received honorable or other than dishonorable discharge.",
     "website": "https://www.va.gov/careers-employment/vocational-rehabilitation/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Hire Heroes USA",
@@ -214,7 +216,8 @@ const resources = [
     "description": "Free career coaching, resume writing, mentoring, and job placement assistance. Provides personalized one-on-one support from dedicated transition specialists.",
     "eligibility": "All veterans, transitioning service members, and military spouses. No disability rating or discharge status requirement.",
     "website": "https://www.hireheroesusa.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "American Corporate Partners (ACP)",
@@ -222,7 +225,8 @@ const resources = [
     "description": "Year-long mentoring program pairing veterans with corporate professionals. Provides career guidance, networking, and professional development through Fortune 500 mentors.",
     "eligibility": "Post-9/11 veterans and active duty within 12 months of transition. Must have honorable discharge.",
     "website": "https://www.acp-usa.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Veterans Employment and Training Service (VETS)",
@@ -230,7 +234,8 @@ const resources = [
     "description": "DOL program providing employment resources, job training grants, and enforcement of USERRA rights.",
     "eligibility": "All veterans, transitioning service members, and eligible spouses.",
     "website": "https://www.dol.gov/agencies/vets",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Helmets to Hardhats",
@@ -238,7 +243,8 @@ const resources = [
     "description": "Connects veterans with careers in the building and construction trades. Provides apprenticeship placement in union trades.",
     "eligibility": "All military members, veterans, and National Guard/Reserve. No disability requirement.",
     "website": "https://helmetstohardhats.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "RecruitMilitary",
@@ -246,7 +252,8 @@ const resources = [
     "description": "Operates the largest veteran-specific job board and hosts career fairs nationwide.",
     "eligibility": "All veterans, transitioning service members, National Guard, Reserves, and military spouses.",
     "website": "https://recruitmilitary.com/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "FourBlock",
@@ -254,7 +261,8 @@ const resources = [
     "description": "Career readiness program offered through universities. Provides career transition curriculum, networking events, and employer connections.",
     "eligibility": "Transitioning service members and recently separated veterans within 5 years of discharge.",
     "website": "https://fourblock.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "USO Pathfinder",
@@ -262,7 +270,8 @@ const resources = [
     "description": "Transition assistance program providing career preparation, employment readiness, and connections to local resources.",
     "eligibility": "Transitioning service members and military spouses starting 12 months before separation.",
     "website": "https://www.uso.org/programs/uso-pathfinder",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Orion Talent",
@@ -270,7 +279,8 @@ const resources = [
     "description": "Military recruiting firm that matches veterans with careers in manufacturing, engineering, maintenance, and technical fields.",
     "eligibility": "Transitioning military (E-4 to O-5) and veterans with technical/leadership backgrounds.",
     "website": "https://www.oriontalent.com/",
-    "cost": "Free for candidates"
+    "cost": "Free for candidates",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "SkillBridge (DOD)",
@@ -278,7 +288,8 @@ const resources = [
     "description": "Allows active duty service members to participate in civilian work experiences during their last 180 days of service while receiving military pay.",
     "eligibility": "Active duty service members within last 180 days of service. Commander approval required.",
     "website": "https://skillbridge.osd.mil/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Wounded Warrior Project Warriors to Work",
@@ -286,7 +297,8 @@ const resources = [
     "description": "Career counseling, job placement, and networking for wounded veterans.",
     "eligibility": "Post-9/11 veterans who incurred physical or mental injury during military service.",
     "website": "https://www.woundedwarriorproject.org/programs/warriors-to-work",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Post-9/11 GI Bill (Chapter 33)",
@@ -294,7 +306,8 @@ const resources = [
     "description": "Covers tuition and fees at public schools, provides monthly housing allowance (BAH E-5 rate), and $1,000/year book stipend. Transferable to dependents. Up to 36 months.",
     "eligibility": "Served at least 90 days aggregate active duty after 9/10/2001. Benefits scale 50-100% based on service length. Honorable discharge required.",
     "website": "https://www.va.gov/education/about-gi-bill-benefits/post-9-11/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Montgomery GI Bill (Chapter 30)",
@@ -302,7 +315,8 @@ const resources = [
     "description": "Up to 36 months of education benefits for degree and certificate programs, flight training, apprenticeship/OJT, and correspondence courses.",
     "eligibility": "Served at least 2 years active duty. Must have contributed $1,200 during service. Honorable discharge.",
     "website": "https://www.va.gov/education/about-gi-bill-benefits/montgomery-active-duty/",
-    "cost": "$1,200 buy-in"
+    "cost": "$1,200 buy-in",
+    "sourceType": "Government"
   },
   {
     "name": "VET TEC Program",
@@ -310,7 +324,8 @@ const resources = [
     "description": "Covers tuition for high-tech training in computer software, data processing, and programming. Includes housing allowance. Does NOT use GI Bill entitlement.",
     "eligibility": "At least one day of unexpired GI Bill benefits. Must be accepted to a VET TEC approved training provider.",
     "website": "https://www.va.gov/education/about-gi-bill-benefits/how-to-use-benefits/vettec-high-tech-program/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Yellow Ribbon Program",
@@ -318,7 +333,8 @@ const resources = [
     "description": "Participating schools cover tuition above the GI Bill cap. VA matches the school's contribution. Eliminates out-of-pocket costs at private schools.",
     "eligibility": "Must be eligible for 100% Post-9/11 GI Bill benefits. School must participate.",
     "website": "https://www.va.gov/education/about-gi-bill-benefits/post-9-11/yellow-ribbon-program/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Survivors & Dependents Educational Assistance (DEA / Chapter 35)",
@@ -326,7 +342,8 @@ const resources = [
     "description": "Up to 36 months of education benefits for dependents of veterans who are permanently/totally disabled or who died from service-connected conditions.",
     "eligibility": "Spouse and children of veterans with permanent/total service-connected disability, or who died from service-connected condition.",
     "website": "https://www.va.gov/education/survivor-dependent-benefits/dependents-education-assistance/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Scholarships for Military Children",
@@ -334,7 +351,8 @@ const resources = [
     "description": "Annual $2,000 scholarship through the Defense Commissary Agency for children of military members.",
     "eligibility": "Dependent unmarried children under 21 (23 if full-time) of military members with commissary privileges.",
     "website": "https://www.militaryscholar.org/",
-    "cost": "Free to apply"
+    "cost": "Free to apply",
+    "sourceType": "Government"
   },
   {
     "name": "Pat Tillman Foundation Scholarships",
@@ -342,7 +360,8 @@ const resources = [
     "description": "Scholarship covering tuition, books, and living expenses. Average award $10,000+. Strong alumni network.",
     "eligibility": "Veterans, active duty, and military spouses pursuing higher education. Must demonstrate service leadership.",
     "website": "https://pattillmanfoundation.org/",
-    "cost": "Free to apply"
+    "cost": "Free to apply",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "AMVETS National Scholarships",
@@ -350,7 +369,8 @@ const resources = [
     "description": "Multiple scholarship programs for veterans and families. Awards range from $1,000 to $12,000.",
     "eligibility": "Veterans, active duty, National Guard/Reserve, and JROTC cadets. Some include family members.",
     "website": "https://amvets.org/scholarships/",
-    "cost": "Free to apply"
+    "cost": "Free to apply",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Folds of Honor Scholarships",
@@ -358,7 +378,8 @@ const resources = [
     "description": "Educational scholarships up to $5,000/semester for spouses and children of fallen and disabled service members.",
     "eligibility": "Spouses and children of service members killed or disabled while serving.",
     "website": "https://www.foldsofhonor.org/",
-    "cost": "Free to apply"
+    "cost": "Free to apply",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Syracuse University IVMF — Onward to Opportunity",
@@ -366,7 +387,8 @@ const resources = [
     "description": "Free career skills training in IT, business management, customer service, and cybersecurity. Includes industry certifications.",
     "eligibility": "Transitioning service members, veterans (within 5 years), and military spouses.",
     "website": "https://ivmf.syracuse.edu/programs/career-training/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "VA Disability Compensation",
@@ -374,7 +396,8 @@ const resources = [
     "description": "Tax-free monthly payment for service-connected disabilities. Rates from $171/month (10%) to $3,737+/month (100%). Additional for dependents at 30%+.",
     "eligibility": "Must have disability caused or worsened by military service. Requires medical evidence and VA rating. Any discharge except dishonorable.",
     "website": "https://www.va.gov/disability/",
-    "cost": "Free to file"
+    "cost": "Free to file",
+    "sourceType": "Government"
   },
   {
     "name": "VA Pension (Non-Service-Connected)",
@@ -382,7 +405,8 @@ const resources = [
     "description": "Tax-free monthly benefit for wartime veterans with limited income who are 65+ or permanently disabled.",
     "eligibility": "Served during wartime period, 90+ days active duty (1 during wartime), limited income. Not dishonorably discharged.",
     "website": "https://www.va.gov/pension/",
-    "cost": "Free to file"
+    "cost": "Free to file",
+    "sourceType": "Government"
   },
   {
     "name": "Aid & Attendance / Housebound Benefits",
@@ -390,7 +414,8 @@ const resources = [
     "description": "Additional monthly payment for veterans who need help with daily activities or are substantially confined to their home.",
     "eligibility": "Must receive VA Pension or Disability Compensation and meet criteria for needing regular aid.",
     "website": "https://www.va.gov/pension/aid-attendance-housebound/",
-    "cost": "Free to file"
+    "cost": "Free to file",
+    "sourceType": "Government"
   },
   {
     "name": "Dependency and Indemnity Compensation (DIC)",
@@ -398,7 +423,8 @@ const resources = [
     "description": "Tax-free monthly payment to surviving spouse, children, or parents of service members who died in the line of duty.",
     "eligibility": "Surviving spouse (not remarried before 57), unmarried children under 18 (23 in school), or dependent parents.",
     "website": "https://www.va.gov/survivors/dependency-indemnity-compensation/",
-    "cost": "Free to file"
+    "cost": "Free to file",
+    "sourceType": "Government"
   },
   {
     "name": "Special Monthly Compensation (SMC)",
@@ -406,7 +432,8 @@ const resources = [
     "description": "Additional tax-free compensation beyond standard rates for severe disabilities including loss of limbs or blindness.",
     "eligibility": "Veterans with 100% rating plus additional qualifying conditions.",
     "website": "https://www.va.gov/disability/compensation-rates/special-monthly-compensation-rates/",
-    "cost": "Free to file"
+    "cost": "Free to file",
+    "sourceType": "Government"
   },
   {
     "name": "Combat-Related Special Compensation (CRSC)",
@@ -414,7 +441,8 @@ const resources = [
     "description": "Tax-free payment that restores retired pay offset by VA disability for combat-related disabilities.",
     "eligibility": "Military retirees with 10+ years and combat-related disabilities. Apply through branch of service.",
     "website": "https://www.va.gov/disability/",
-    "cost": "Free to file"
+    "cost": "Free to file",
+    "sourceType": "Government"
   },
   {
     "name": "Concurrent Retirement & Disability Pay (CRDP)",
@@ -422,7 +450,8 @@ const resources = [
     "description": "Receive both full military retirement pay and VA disability compensation without offset.",
     "eligibility": "Military retirees (20+ years or medical) with 50%+ VA disability rating. Automatic enrollment.",
     "website": "https://www.dfas.mil/retiredmilitary/disability/crdp/",
-    "cost": "Free/automatic"
+    "cost": "Free/automatic",
+    "sourceType": "Government"
   },
   {
     "name": "VA Claims Insider (VACI)",
@@ -430,7 +459,8 @@ const resources = [
     "description": "Veteran-owned company providing education, coaching, and medical evidence development for VA disability claims.",
     "eligibility": "Any veteran or active duty pursuing VA disability claim.",
     "website": "https://vaclaimsinsider.com/",
-    "cost": "Varies"
+    "cost": "Varies",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "Veterans Benefits Banking Program (VBBP)",
@@ -438,7 +468,8 @@ const resources = [
     "description": "Partners with banks to provide financial services tailored to veterans receiving VA benefits.",
     "eligibility": "Veterans receiving VA benefits who are unbanked or underbanked.",
     "website": "https://www.benefits.va.gov/benefits/banking.asp",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Camp Lejeune Justice Act Claims",
@@ -446,7 +477,8 @@ const resources = [
     "description": "Allows those who lived/worked at Camp Lejeune (1953-1987) to file claims for harm from contaminated water.",
     "eligibility": "Anyone at Camp Lejeune for 30+ days between August 1953 and December 1987.",
     "website": "https://www.va.gov/disability/eligibility/hazardous-materials-exposure/camp-lejeune-water-contamination/",
-    "cost": "Free to file"
+    "cost": "Free to file",
+    "sourceType": "Government"
   },
   {
     "name": "VA Health Care",
@@ -454,7 +486,8 @@ const resources = [
     "description": "Comprehensive system with 1,298 facilities covering primary care, mental health, specialty care, prescriptions, and preventive services.",
     "eligibility": "Served 24+ months active duty (exceptions for combat veterans, disability). Enrollment based on priority groups.",
     "website": "https://www.va.gov/health-care/",
-    "cost": "Free to low-cost copays"
+    "cost": "Free to low-cost copays",
+    "sourceType": "Government"
   },
   {
     "name": "Community Care (VA MISSION Act)",
@@ -462,7 +495,8 @@ const resources = [
     "description": "Allows eligible veterans to receive care from community providers when VA can't provide timely access.",
     "eligibility": "Enrolled in VA health care and meet access standards (drive/wait time thresholds).",
     "website": "https://www.va.gov/communitycare/",
-    "cost": "Same as VA copays"
+    "cost": "Same as VA copays",
+    "sourceType": "Government"
   },
   {
     "name": "Veterans Crisis Line",
@@ -470,7 +504,8 @@ const resources = [
     "description": "24/7 crisis intervention and support. Available by phone, text, and online chat. Dial 988, Press 1.",
     "eligibility": "Any veteran, service member, or concerned family member. No enrollment required.",
     "website": "https://www.veteranscrisisline.net/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Vet Centers (Readjustment Counseling)",
@@ -478,7 +513,8 @@ const resources = [
     "description": "Community-based counseling for PTSD, MST, bereavement, and group therapy in a non-clinical setting.",
     "eligibility": "Combat veterans, drone crew, MST survivors, bereaved families. No VA enrollment needed.",
     "website": "https://www.vetcenter.va.gov/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Give an Hour",
@@ -486,7 +522,8 @@ const resources = [
     "description": "Network of 7,000+ licensed mental health professionals providing free therapy to veterans and families.",
     "eligibility": "All veterans, active duty, and family members. No VA enrollment. No paperwork or insurance required.",
     "website": "https://giveanhour.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Cohen Veterans Network (CVN)",
@@ -494,7 +531,8 @@ const resources = [
     "description": "Steven A. Cohen Military Family Clinics providing mental health care for post-9/11 veterans and families.",
     "eligibility": "Post-9/11 veterans, active duty, National Guard, Reserves, and families. No VA enrollment required.",
     "website": "https://www.cohenveteransnetwork.org/",
-    "cost": "Free to sliding scale"
+    "cost": "Free to sliding scale",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "TRICARE (Retiree & Reserve)",
@@ -502,7 +540,8 @@ const resources = [
     "description": "Military health insurance for retirees and Reserve/Guard. Multiple plan options including Prime, Select, and For Life.",
     "eligibility": "Military retirees, their families, Reserve/Guard members and families.",
     "website": "https://www.tricare.mil/",
-    "cost": "Varies by plan"
+    "cost": "Varies by plan",
+    "sourceType": "Government"
   },
   {
     "name": "VA Caregiver Support Program",
@@ -510,7 +549,8 @@ const resources = [
     "description": "Training, support, and financial stipend for family caregivers. Includes health insurance, mental health, and respite care.",
     "eligibility": "Primary caregivers of veterans needing personal care due to serious injury. Enhanced benefits for post-9/11.",
     "website": "https://www.caregiver.va.gov/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Headstrong Project",
@@ -518,7 +558,8 @@ const resources = [
     "description": "Free, confidential, stigma-free mental health treatment. Partners with licensed therapists in communities nationwide.",
     "eligibility": "Post-9/11 veterans and active duty. No insurance, copays, or VA enrollment required.",
     "website": "https://getheadstrong.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "PatientsLikeMe Veterans Platform",
@@ -526,7 +567,8 @@ const resources = [
     "description": "Online health community to track symptoms, share experiences, and learn from others managing similar conditions.",
     "eligibility": "Open to all veterans and service members.",
     "website": "https://www.patientslikeme.com/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "VA Prosthetic and Sensory Aids",
@@ -534,7 +576,8 @@ const resources = [
     "description": "Provides prosthetic limbs, hearing aids, eyeglasses, wheelchairs, home oxygen, and other durable medical equipment.",
     "eligibility": "Veterans enrolled in VA health care with clinical need. Priority for service-connected conditions.",
     "website": "https://www.prosthetics.va.gov/",
-    "cost": "Free through VA"
+    "cost": "Free through VA",
+    "sourceType": "Government"
   },
   {
     "name": "DAV Transportation",
@@ -542,7 +585,8 @@ const resources = [
     "description": "Free rides to and from VA medical facilities. Fleet of vehicles driven by volunteer drivers.",
     "eligibility": "Any veteran with VA medical appointments who lacks transportation.",
     "website": "https://www.dav.org/veterans/i-need-a-ride/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Adaptive Sports Grant Program (VA)",
@@ -550,7 +594,8 @@ const resources = [
     "description": "Funding for adaptive sports activities and equipment for disabled veterans.",
     "eligibility": "Veterans with disabilities including visual impairments, amputations, spinal cord injuries, and PTSD.",
     "website": "https://www.va.gov/adaptivesports/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Homes for Our Troops",
@@ -558,7 +603,8 @@ const resources = [
     "description": "Builds and donates mortgage-free specially adapted custom homes for severely injured post-9/11 veterans.",
     "eligibility": "Severely injured post-9/11 veterans recommended by VA for Specially Adapted Housing.",
     "website": "https://www.hfotusa.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Specially Adapted Housing (SAH) Grant",
@@ -566,7 +612,8 @@ const resources = [
     "description": "VA grant up to $109,986 to build, buy, or modify a home to meet adaptive needs.",
     "eligibility": "Veterans with service-connected disabilities including loss of use of both legs or blindness.",
     "website": "https://www.va.gov/housing-assistance/disability-housing-grants/",
-    "cost": "Free grant"
+    "cost": "Free grant",
+    "sourceType": "Government"
   },
   {
     "name": "Special Housing Adaptation (SHA) Grant",
@@ -574,7 +621,8 @@ const resources = [
     "description": "VA grant up to $44,299 to modify an existing home for veterans with specific disabilities.",
     "eligibility": "Veterans with blindness in both eyes, loss of use of both hands, or severe burn injuries.",
     "website": "https://www.va.gov/housing-assistance/disability-housing-grants/",
-    "cost": "Free grant"
+    "cost": "Free grant",
+    "sourceType": "Government"
   },
   {
     "name": "Automobile Allowance & Adaptive Equipment",
@@ -582,7 +630,8 @@ const resources = [
     "description": "One-time payment up to $22,036 toward a vehicle plus adaptive equipment (hand controls, wheelchair lifts, etc.).",
     "eligibility": "Veterans with service-connected loss of use of hand or foot, or permanent visual impairment.",
     "website": "https://www.va.gov/disability/eligibility/special-claims/automobile-allowance-adaptive-equipment/",
-    "cost": "Free grant"
+    "cost": "Free grant",
+    "sourceType": "Government"
   },
   {
     "name": "Assistive Technology for Veterans",
@@ -590,7 +639,8 @@ const resources = [
     "description": "Screen readers, voice recognition, environmental controls, and cognitive aids through VA rehabilitation services.",
     "eligibility": "Veterans enrolled in VA health care or VR&E with documented need.",
     "website": "https://www.rehab.va.gov/",
-    "cost": "Free through VA"
+    "cost": "Free through VA",
+    "sourceType": "Government"
   },
   {
     "name": "SBA Veterans Advantage Loan Program",
@@ -598,7 +648,8 @@ const resources = [
     "description": "SBA-backed loans with reduced fees. Includes 7(a) loans up to $5M and Express loans up to $500K with faster processing.",
     "eligibility": "Veteran-owned businesses (51%+ veteran ownership). Additional fee reductions for service-disabled.",
     "website": "https://www.sba.gov/funding-programs/loans/lender-match",
-    "cost": "Standard loan interest"
+    "cost": "Standard loan interest",
+    "sourceType": "Government"
   },
   {
     "name": "Boots to Business (SBA)",
@@ -606,7 +657,8 @@ const resources = [
     "description": "Two-day entrepreneurship course covering business fundamentals, feasibility analysis, and business plan development.",
     "eligibility": "Active duty (including Guard/Reserve), veterans, and military spouses.",
     "website": "https://www.sba.gov/sba-learning-platform/boots-business",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "V-WISE",
@@ -614,7 +666,8 @@ const resources = [
     "description": "Three-phase entrepreneurship training for women veterans: online coursework, 3-day conference, and ongoing mentorship.",
     "eligibility": "Women veterans, active duty, and female military spouses interested in business.",
     "website": "https://ivmf.syracuse.edu/programs/entrepreneurship/start-up/v-wise/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Bunker Labs",
@@ -622,7 +675,8 @@ const resources = [
     "description": "Network, programming, and resources for veteran entrepreneurs. Launch Lab accelerator and CEOcircle for scaling.",
     "eligibility": "All veterans, active duty, and military spouses.",
     "website": "https://bunkerlabs.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "StreetShares Foundation Awards",
@@ -630,7 +684,8 @@ const resources = [
     "description": "Quarterly business grants of $15,000, $6,000, and $4,000 for veteran small business owners.",
     "eligibility": "Veteran-owned or military spouse-owned businesses in the US.",
     "website": "https://streetshares.com/foundation",
-    "cost": "Free to apply"
+    "cost": "Free to apply",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "SCORE Mentoring for Veterans",
@@ -638,7 +693,8 @@ const resources = [
     "description": "Free business mentoring from experienced entrepreneurs with veteran-focused mentors.",
     "eligibility": "All veterans and military spouses starting or growing a business.",
     "website": "https://www.score.org/content/veteran-resources",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "VetFran (IFA)",
@@ -646,7 +702,8 @@ const resources = [
     "description": "Franchise discounts — reduced fees, special financing, and mentoring for veteran franchise owners. 1,200+ brands.",
     "eligibility": "Honorably discharged veterans and military spouses.",
     "website": "https://www.vetfran.org/",
-    "cost": "Discounted fees"
+    "cost": "Discounted fees",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Dog Tag Bakery Fellowship",
@@ -654,7 +711,8 @@ const resources = [
     "description": "Five-month fellowship: Georgetown MBA coursework plus hands-on bakery business experience.",
     "eligibility": "Post-9/11 veterans, military spouses, and caregivers in DC area.",
     "website": "https://www.dogtagbakery.com/fellowship",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "VA Home Loan (Chapter 37)",
@@ -662,7 +720,8 @@ const resources = [
     "description": "Mortgage loan guaranteed by VA — no down payment, no PMI, competitive rates. Available for purchase, refinance, and adapted housing.",
     "eligibility": "Veterans with qualifying service, active duty, Guard/Reserve with 6+ years, and surviving spouses.",
     "website": "https://www.va.gov/housing-assistance/home-loans/",
-    "cost": "No down payment"
+    "cost": "No down payment",
+    "sourceType": "Government"
   },
   {
     "name": "Native American Direct Loan (NADL)",
@@ -670,7 +729,8 @@ const resources = [
     "description": "VA direct home loan for Native American veterans on Federal Trust Land. No down payment or PMI.",
     "eligibility": "Native American veterans with valid COE on Federal Trust Land.",
     "website": "https://www.va.gov/housing-assistance/home-loans/loan-types/native-american-direct-loan/",
-    "cost": "No down payment"
+    "cost": "No down payment",
+    "sourceType": "Government"
   },
   {
     "name": "HUD-VASH",
@@ -678,7 +738,8 @@ const resources = [
     "description": "Combines HUD voucher rental assistance with VA supportive services including health care and counseling.",
     "eligibility": "Homeless veterans or those at imminent risk. Must be eligible for VA health care.",
     "website": "https://www.va.gov/homeless/hud-vash.asp",
-    "cost": "Free/subsidized"
+    "cost": "Free/subsidized",
+    "sourceType": "Government"
   },
   {
     "name": "SSVF (Supportive Services for Veteran Families)",
@@ -686,7 +747,8 @@ const resources = [
     "description": "Rapid re-housing and prevention: rental assistance, utility payments, moving costs, and case management.",
     "eligibility": "Very low-income veteran families who are homeless or at risk (income at or below 50% area median).",
     "website": "https://www.va.gov/homeless/ssvf/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Habitat for Humanity Veterans Build",
@@ -694,7 +756,8 @@ const resources = [
     "description": "Builds and repairs homes for veteran families. Affordable mortgage with 0% interest.",
     "eligibility": "Veterans and veteran families in need. Must meet income guidelines and contribute sweat equity.",
     "website": "https://www.habitat.org/our-work/veterans-build",
-    "cost": "Affordable mortgage"
+    "cost": "Affordable mortgage",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Operation Homefront — Transitional Housing",
@@ -702,7 +765,8 @@ const resources = [
     "description": "Transitional housing for wounded veterans and critical financial assistance for rent and mortgage.",
     "eligibility": "Wounded/injured service members and military families facing financial hardship.",
     "website": "https://www.operationhomefront.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "National Veterans Foundation",
@@ -710,7 +774,8 @@ const resources = [
     "description": "Emergency financial assistance for housing, utilities, and basic needs. Lifeline for Vets: 1-888-777-4443.",
     "eligibility": "All veterans in crisis or financial need.",
     "website": "https://www.nvf.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Veterans Inc.",
@@ -718,7 +783,8 @@ const resources = [
     "description": "Comprehensive housing from emergency shelter through permanent supportive housing (New England).",
     "eligibility": "Homeless or at-risk veterans in New England.",
     "website": "https://www.veteransinc.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Veterans Advantage",
@@ -726,7 +792,8 @@ const resources = [
     "description": "Membership with 400+ brand discounts including Amtrak (15%), Dell, Under Armour, and more.",
     "eligibility": "All veterans, active duty, Guard, Reserve, and families. Verified through ID.me.",
     "website": "https://www.veteransadvantage.com/",
-    "cost": "$59.95/year"
+    "cost": "$59.95/year",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "ID.me Military Verification",
@@ -734,7 +801,8 @@ const resources = [
     "description": "Free military verification unlocking 500+ retailer discounts: Apple (10%), Samsung, Nike, T-Mobile, and more.",
     "eligibility": "All veterans, active duty, Guard, Reserve, spouses, dependents, and Gold Star families.",
     "website": "https://www.id.me/government/military",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "Home Depot / Lowe's Military Discount",
@@ -742,7 +810,8 @@ const resources = [
     "description": "10% military discount on eligible purchases. In-store and online.",
     "eligibility": "All veterans, active duty, Guard, Reserve, and spouses.",
     "website": "https://www.homedepot.com/c/military",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "National Park Service — America the Beautiful Pass",
@@ -750,7 +819,8 @@ const resources = [
     "description": "Free lifetime access to all national parks, forests, wildlife refuges, and federal recreation lands.",
     "eligibility": "All US veterans with DD-214 and Gold Star family members.",
     "website": "https://www.nps.gov/planyourvisit/veterans-and-gold-star-families-free-access.htm",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "Space Available (Space-A) Travel",
@@ -758,7 +828,8 @@ const resources = [
     "description": "Free military flights worldwide on DOD aircraft when seats are available.",
     "eligibility": "Retired military, 100% disabled veterans, and dependents with valid ID.",
     "website": "https://www.amc.af.mil/AMC-Travel-Site/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "USAA Financial Services",
@@ -766,7 +837,8 @@ const resources = [
     "description": "Full-service banking, insurance, and investments designed for military. Competitive rates, no fees.",
     "eligibility": "All veterans, active duty, and families.",
     "website": "https://www.usaa.com/",
-    "cost": "Varies"
+    "cost": "Varies",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "Verizon / AT&T / T-Mobile Military Plans",
@@ -774,7 +846,8 @@ const resources = [
     "description": "15-40% off standard wireless plans for military and veterans.",
     "eligibility": "Active duty, veterans, Guard, Reserve, and family members.",
     "website": "https://www.verizon.com/military/",
-    "cost": "Discounted"
+    "cost": "Discounted",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "GovX Military Discount Marketplace",
@@ -782,7 +855,8 @@ const resources = [
     "description": "Exclusive military pricing on tactical gear, apparel, electronics, and event tickets. 20-50% savings.",
     "eligibility": "Active duty, veterans, Guard, Reserve, first responders, and government employees.",
     "website": "https://www.govx.com/",
-    "cost": "Free membership"
+    "cost": "Free membership",
+    "sourceType": "Civilian Company"
   },
   {
     "name": "Team Rubicon",
@@ -790,7 +864,8 @@ const resources = [
     "description": "Veteran-led disaster response organization. Veterans deploy for relief domestically and internationally.",
     "eligibility": "All veterans, active duty, and civilians. Free to join. Training provided.",
     "website": "https://teamrubiconusa.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Team Red White & Blue (RWB)",
@@ -798,7 +873,8 @@ const resources = [
     "description": "Community connecting through physical and social activities — runs, yoga, social events, and service.",
     "eligibility": "Open to all — veterans, active duty, and community members.",
     "website": "https://www.teamrwb.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "The Mission Continues",
@@ -806,7 +882,8 @@ const resources = [
     "description": "Empowers veterans to continue serving through fellowships, service platoons, and community projects.",
     "eligibility": "All veterans and active duty interested in community service.",
     "website": "https://missioncontinues.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Iraq and Afghanistan Veterans of America (IAVA)",
@@ -814,7 +891,8 @@ const resources = [
     "description": "Largest post-9/11 veteran advocacy org. Policy advocacy, community, mental health, and peer support.",
     "eligibility": "Post-9/11 veterans and supporters.",
     "website": "https://iava.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "VFW (Veterans of Foreign Wars)",
@@ -822,7 +900,8 @@ const resources = [
     "description": "6,000+ posts nationwide. Camaraderie, legislative advocacy, community service, and free claims help.",
     "eligibility": "Veterans who served overseas. Associate membership available.",
     "website": "https://www.vfw.org/",
-    "cost": "$45/year dues"
+    "cost": "$45/year dues",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "American Legion",
@@ -830,7 +909,8 @@ const resources = [
     "description": "12,000+ posts. Community activities, youth programs, advocacy, and VA claims assistance.",
     "eligibility": "Veterans who served during wartime eras and active duty.",
     "website": "https://www.legion.org/",
-    "cost": "$45/year dues"
+    "cost": "$45/year dues",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Disabled American Veterans (DAV)",
@@ -838,7 +918,8 @@ const resources = [
     "description": "1.3M+ members. Free claims assistance, transportation, employment resources, and legislative advocacy.",
     "eligibility": "All veterans with service-connected disabilities. Associate membership for supporters.",
     "website": "https://www.dav.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Travis Manion Foundation",
@@ -846,7 +927,8 @@ const resources = [
     "description": "Character development programs, community leadership, and mentoring for veterans and families of the fallen.",
     "eligibility": "Veterans, families of fallen, and community members committed to service.",
     "website": "https://www.travismanion.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Vet Tix (Veteran Ticket Foundation)",
@@ -854,7 +936,8 @@ const resources = [
     "description": "Free event tickets — sporting events, concerts, performing arts, and family events.",
     "eligibility": "All veterans, active duty, Guard, Reserve, and families.",
     "website": "https://www.vettix.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Veterans Legal Services Organizations",
@@ -862,7 +945,8 @@ const resources = [
     "description": "Free legal clinics and representation at VA regional offices and Board of Veterans' Appeals.",
     "eligibility": "All veterans with VA claims, appeals, or benefits-related legal issues.",
     "website": "https://www.va.gov/vso/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
   },
   {
     "name": "National Veterans Legal Services Program (NVLSP)",
@@ -870,7 +954,8 @@ const resources = [
     "description": "Free legal representation before the VA and federal courts. Trains attorneys in veterans law.",
     "eligibility": "Veterans and dependents needing legal help with VA claims and appeals.",
     "website": "https://www.nvlsp.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Stateside Legal",
@@ -878,7 +963,8 @@ const resources = [
     "description": "Online resource connecting military members with free legal help — legal aid orgs, JAG offices, pro bono attorneys.",
     "eligibility": "All service members, veterans, and military families.",
     "website": "https://statesidelegal.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Veterans Consortium Pro Bono Program",
@@ -886,7 +972,8 @@ const resources = [
     "description": "Free legal representation at the US Court of Appeals for Veterans Claims. 83% success rate.",
     "eligibility": "Veterans with appeals at the CAVC.",
     "website": "https://www.vetsprobono.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Legal Services Corporation (Military/Veteran)",
@@ -894,7 +981,8 @@ const resources = [
     "description": "Nationwide network of legal aid for civil issues including housing, family law, and consumer issues.",
     "eligibility": "Low-income veterans meeting income guidelines (generally 125% federal poverty level).",
     "website": "https://www.lsc.gov/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "ABA Military Pro Bono Project",
@@ -902,7 +990,8 @@ const resources = [
     "description": "ABA program connecting active duty with free legal representation for civil issues.",
     "eligibility": "Active duty service members (including Guard/Reserve on active orders).",
     "website": "https://www.militaryprobono.org/",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "Veterans Defense Program (NVLSP)",
@@ -910,7 +999,8 @@ const resources = [
     "description": "Helps veterans with less-than-honorable discharges upgrade their discharge status.",
     "eligibility": "Veterans with OTH, general, or bad conduct discharges seeking upgrades.",
     "website": "https://www.nvlsp.org/what-we-do/veterans-defense-program",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   },
   {
     "name": "USERRA Rights Enforcement",
@@ -918,7 +1008,440 @@ const resources = [
     "description": "Protects reemployment rights after military service. DOL investigates complaints.",
     "eligibility": "Any service member or veteran whose employment rights were violated due to military service.",
     "website": "https://www.dol.gov/agencies/vets/programs/userra",
-    "cost": "Free"
+    "cost": "Free",
+    "sourceType": "Government"
+  },
+  {
+    "name": "Apple Military Pricing",
+    "category": "discounts",
+    "description": "Exclusive military pricing on Mac, iPad, and accessories. Typically 6-10% off retail through Apple's military store.",
+    "eligibility": "Active duty, veterans, Guard, Reserve, and family members. ID.me verification.",
+    "website": "https://www.apple.com/shop/browse/home/shop_veterans_military",
+    "cost": "6-10% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Samsung Military Discount",
+    "category": "discounts",
+    "description": "Up to 30% off select Samsung TVs, Galaxy phones, tablets, appliances, and wearables.",
+    "eligibility": "Active duty, veterans, Guard, Reserve, and immediate family. ID.me verification.",
+    "website": "https://www.samsung.com/us/offer/military-discount/",
+    "cost": "Up to 30% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Nike Military Discount",
+    "category": "discounts",
+    "description": "10% off most items online and in-store — footwear, apparel, and equipment.",
+    "eligibility": "Active duty, veterans, retirees, Guard, Reserve, and spouses. SheerID verification.",
+    "website": "https://www.nike.com/help/a/military-discount",
+    "cost": "10% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Under Armour Military Discount",
+    "category": "discounts",
+    "description": "20% off full-price items and 10% off sale items through UA's dedicated military store.",
+    "eligibility": "Active duty, veterans, retirees, Guard, Reserve, and military families. ID.me verification.",
+    "website": "https://www.underarmour.com/en-us/t/military.html",
+    "cost": "10-20% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "The North Face Military Discount",
+    "category": "discounts",
+    "description": "10% off online and in-store on outerwear, gear, and accessories year-round.",
+    "eligibility": "Active duty, veterans, and retirees. ID.me verification.",
+    "website": "https://www.thenorthface.com/en-us/help/military-discount",
+    "cost": "10% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Lululemon Military Discount",
+    "category": "discounts",
+    "description": "15% off in-store purchases on full-price items at all locations.",
+    "eligibility": "Active duty, veterans, retirees, and military spouses. Valid military ID at checkout.",
+    "website": "https://shop.lululemon.com/story/military-discount",
+    "cost": "15% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Verizon Military Plans",
+    "category": "discounts",
+    "description": "Up to $25/line off select unlimited plans. Also partnered with ForgiveCo for veteran medical debt relief.",
+    "eligibility": "Active duty, veterans, Guard, Reserve, and military families.",
+    "website": "https://www.verizon.com/military/",
+    "cost": "Up to $25/line off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "T-Mobile Military Plans",
+    "category": "discounts",
+    "description": "Up to 50% off family wireless plans with Go5G Military. Most aggressive wireless military discount.",
+    "eligibility": "Active duty, veterans, Guard, Reserve, and Gold Star families.",
+    "website": "https://www.t-mobile.com/military",
+    "cost": "Up to 50% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "AT&T Military Discount",
+    "category": "discounts",
+    "description": "25% off unlimited wireless plans plus $150 per line activation credit on select plans.",
+    "eligibility": "Active duty, veterans, Guard, Reserve, and their families.",
+    "website": "https://www.att.com/offers/military/",
+    "cost": "25% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Chevrolet Military Discount",
+    "category": "discounts",
+    "description": "Military appreciation cash allowance on eligible new Chevy vehicles. Typically $500-$1,000+.",
+    "eligibility": "Active duty, reserves, Guard, veterans within 3 years of discharge, and retirees.",
+    "website": "https://www.chevrolet.com/current-deals/military-discount",
+    "cost": "$500-$1,000+ off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Ford Military Bonus Cash",
+    "category": "discounts",
+    "description": "Up to $500 bonus cash on eligible new Ford vehicles. Stackable with dealer incentives.",
+    "eligibility": "Active duty, reserves, Guard, veterans within 2 years, retirees, and spouses.",
+    "website": "https://www.ford.com/trucks/f-150/offers/military/",
+    "cost": "Up to $500 off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Caesars Military Discount",
+    "category": "discounts",
+    "description": "Up to 30% off hotels, resorts, and entertainment at Caesars properties nationwide. Year-round.",
+    "eligibility": "Active duty, veterans, Guard, Reserve, and families. ID.me verification.",
+    "website": "https://www.caesars.com/deals/salute",
+    "cost": "Up to 30% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Amtrak Military Discount",
+    "category": "discounts",
+    "description": "10% off most train tickets. 15% off on select California routes.",
+    "eligibility": "Active duty, veterans, and spouses/dependents with valid military ID.",
+    "website": "https://www.amtrak.com/deals-discounts/everyday-military-discount.html",
+    "cost": "10-15% off",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Amazon Military Hiring",
+    "category": "employment",
+    "description": "Employs 40,000+ veterans. Military Fellowship and Apprenticeship programs. Pledged 100,000 veteran hires by 2026.",
+    "eligibility": "Veterans, active duty transitioning, and military spouses. Various roles.",
+    "website": "https://www.amazonmilitaryrecruiting.com/",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "JPMorgan Chase Veterans",
+    "category": "employment",
+    "description": "Hired 20,000 service members since 2011. Co-founded Veteran Jobs Mission coalition (1M+ total veteran hires).",
+    "eligibility": "Veterans, transitioning service members, Guard, Reserve, and military spouses.",
+    "website": "https://www.jpmorganchase.com/impact/people/veterans",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Lockheed Martin Veteran Hiring",
+    "category": "employment",
+    "description": "1 in 5 of 114,000 employees are veterans. Dedicated recruiting team, military skills translator, and veteran ERG.",
+    "eligibility": "Veterans with technical, engineering, or leadership backgrounds.",
+    "website": "https://www.lockheedmartinjobs.com/veterans",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Starbucks Military Commitment",
+    "category": "employment",
+    "description": "Committed to 25,000 veteran/spouse hires. Military Family Stores near bases with pro bono legal support.",
+    "eligibility": "Veterans, active duty spouses, and transitioning service members.",
+    "website": "https://www.starbucks.com/careers/military/",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Salesforce Military Alliance",
+    "category": "employment",
+    "description": "#1 Forbes 2025 Best Employer for Veterans. Dedicated military hiring, veteran ERG, and career coaching.",
+    "eligibility": "Veterans, active duty transitioning, and military spouses.",
+    "website": "https://www.salesforce.com/company/careers/military/",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Boeing Veteran Hiring",
+    "category": "employment",
+    "description": "15% veteran workforce. Military Skills Translator and SkillBridge partnerships for transition roles.",
+    "eligibility": "Veterans with aerospace, engineering, IT, or leadership experience.",
+    "website": "https://jobs.boeing.com/veterans",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Walmart Guaranteed Veteran Hire",
+    "category": "employment",
+    "description": "Guaranteed employment for any honorably discharged veteran within 12 months. 265,000+ hired since 2013.",
+    "eligibility": "Honorably discharged veterans within 12 months of separation.",
+    "website": "https://corporate.walmart.com/purpose/opportunity/military-support",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Booz Allen Hamilton Veterans",
+    "category": "employment",
+    "description": "30%+ veteran workforce. Extensive SkillBridge program and dedicated veteran transition team.",
+    "eligibility": "Transitioning service members, veterans, and military spouses.",
+    "website": "https://www.boozallen.com/careers/military-veteran-careers.html",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Deloitte CORE Program",
+    "category": "employment",
+    "description": "Career Opportunity Readiness & Employment program with mentoring, skills translation, and veteran recruiters.",
+    "eligibility": "Veterans with consulting, tech, or business backgrounds.",
+    "website": "https://www2.deloitte.com/us/en/pages/about-deloitte/articles/military-veteran-initiatives.html",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Google Veteran Hiring",
+    "category": "employment",
+    "description": "Dedicated military hiring team, VetNet ERG, and Hiring Our Heroes partnerships. Career certificate pipeline.",
+    "eligibility": "Veterans and military spouses. Tech, operations, and sales roles.",
+    "website": "https://about.google/belonging/veterans/",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Hiring Our Heroes Corporate Fellowship",
+    "category": "employment",
+    "description": "12-week fellowship placing service members at Fortune 500 companies. Five days/week plus Friday professional development.",
+    "eligibility": "Active duty within last 180 days through SkillBridge. Three cohorts per year.",
+    "website": "https://www.hiringourheroes.org/career-services/fellowships/",
+    "cost": "Free (military pay continues)",
+    "sourceType": "Nonprofit"
+  },
+  {
+    "name": "McKinsey Military Fellowship",
+    "category": "employment",
+    "description": "10-week consulting internship through SkillBridge at the world's top consulting firm. High conversion to full-time.",
+    "eligibility": "Active duty within last 180 days. Competitive application.",
+    "website": "https://www.mckinsey.com/careers/mckinsey-military-fellowship",
+    "cost": "Free (military pay continues)",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Northrop Grumman Veteran Hiring",
+    "category": "employment",
+    "description": "20%+ veteran workforce. SkillBridge, veteran mentorship, military spouse hiring, and VETS ERG.",
+    "eligibility": "Veterans, transitioning service members, and military spouses.",
+    "website": "https://www.northropgrumman.com/careers/military-veterans/",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Bank of America Military Hiring",
+    "category": "employment",
+    "description": "10,000+ veteran hires since 2014. Military Support ERG, dedicated military talent acquisition.",
+    "eligibility": "Veterans, transitioning service members, and military spouses.",
+    "website": "https://about.bankofamerica.com/en/making-an-impact/supporting-military-families",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Capital One Military Initiatives",
+    "category": "employment",
+    "description": "Salute ERG, military skills translation, mentorship programs, and veteran hiring partnerships.",
+    "eligibility": "Veterans, transitioning service members, and military spouses.",
+    "website": "https://www.capitalonecareers.com/military",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Delta Air Lines Veteran Hiring",
+    "category": "employment",
+    "description": "FREEDOM ERG, military leave policies, and pilot career pathway for veteran aviators.",
+    "eligibility": "Veterans and transitioning service members. Aviation, operations, and corporate roles.",
+    "website": "https://www.delta.com/us/en/about-delta/military",
+    "cost": "Paid positions",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Salesforce Trailhead Military",
+    "category": "education",
+    "description": "Free self-paced Salesforce certification training. Leads to in-demand Admin and Developer certifications.",
+    "eligibility": "Veterans, active duty, Guard, Reserve, and military spouses.",
+    "website": "https://trailhead.salesforce.com/military",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Microsoft MSSA",
+    "category": "education",
+    "description": "Free 17-week intensive training in cloud development or server administration. Microsoft certifications. Guaranteed interviews.",
+    "eligibility": "Active duty within last 180 days.",
+    "website": "https://military.microsoft.com/mssa/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "AWS Military Training",
+    "category": "education",
+    "description": "Free cloud computing courses and labs. Certification exam reimbursement. Cloud Practitioner to Solutions Architect.",
+    "eligibility": "Veterans, active duty, and military spouses.",
+    "website": "https://aws.amazon.com/education/awseducate/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "IBM SkillsBuild for Veterans",
+    "category": "education",
+    "description": "1,000+ free courses in AI, cybersecurity, cloud, data science, and business. Includes digital credentials.",
+    "eligibility": "All veterans, service members, and military spouses.",
+    "website": "https://skillsbuild.org/veterans",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Google Career Certificates (Military)",
+    "category": "education",
+    "description": "Free certificates in IT Support, Data Analytics, UX Design, Project Management, and Cybersecurity.",
+    "eligibility": "Veterans and military spouses via military scholarships.",
+    "website": "https://grow.google/intl/en_us/programs/certificates/",
+    "cost": "Free via scholarships",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Cisco Networking Academy for Veterans",
+    "category": "education",
+    "description": "Free networking and cybersecurity training leading to CCNA and CyberOps certifications.",
+    "eligibility": "Veterans and transitioning service members.",
+    "website": "https://www.netacad.com/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Fortinet Veterans Cybersecurity Program",
+    "category": "education",
+    "description": "Free NSE (Network Security Expert) certification training levels 1-3. Cybersecurity career pathway.",
+    "eligibility": "Veterans, transitioning service members, and military spouses.",
+    "website": "https://www.fortinet.com/corporate/about-us/social-responsibility/cybersecurity-veterans-program",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Splunk Work+ for Veterans",
+    "category": "education",
+    "description": "Free Splunk certification training and exam vouchers. Data analytics and cybersecurity pathway.",
+    "eligibility": "Veterans and transitioning service members.",
+    "website": "https://www.splunk.com/en_us/careers/veterans.html",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "LinkedIn Premium for Veterans",
+    "category": "education",
+    "description": "One year free LinkedIn Premium including 16,000+ LinkedIn Learning courses, InMail, and job search tools.",
+    "eligibility": "Veterans and military spouses. One-time benefit.",
+    "website": "https://socialimpact.linkedin.com/programs/veterans",
+    "cost": "Free for 1 year",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Coursera Veteran Access",
+    "category": "education",
+    "description": "Free access to 7,000+ courses and professional certificates from Google, IBM, Meta, and top universities.",
+    "eligibility": "Veterans through VTS (Veterans Transition Support) partnership.",
+    "website": "https://www.coursera.org/for/veterans",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "SANS VetSuccess Academy",
+    "category": "education",
+    "description": "Free cybersecurity training and GIAC certification preparation. One of the most prestigious cybersecurity programs.",
+    "eligibility": "Veterans and transitioning service members. Competitive application.",
+    "website": "https://www.sans.org/scholarship-academies/vetsuccess/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Tooling U-SME Manufacturing Training",
+    "category": "education",
+    "description": "Free manufacturing skills training and certifications. 500+ courses in CNC, welding, quality, and automation.",
+    "eligibility": "Transitioning service members through Orion Talent SkillBridge.",
+    "website": "https://www.toolingu.com/",
+    "cost": "Free via SkillBridge",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Veterati",
+    "category": "community",
+    "description": "Unlimited free 1-hour career mentorship calls with successful professionals across industries.",
+    "eligibility": "All veterans and military spouses. No time limit.",
+    "website": "https://www.veterati.com/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "RallyPoint",
+    "category": "community",
+    "description": "Military professional networking platform with 2M+ members. Job board, mentoring, and community forums.",
+    "eligibility": "All veterans, active duty, Guard, Reserve, and military families.",
+    "website": "https://www.rallypoint.com/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Blue Star Families",
+    "category": "community",
+    "description": "Career development resources, community connections, and family support. Annual Military Family Lifestyle Survey.",
+    "eligibility": "Military families, veterans, and caregivers.",
+    "website": "https://bluestarfam.org/",
+    "cost": "Free",
+    "sourceType": "Nonprofit"
+  },
+  {
+    "name": "50strong",
+    "category": "community",
+    "description": "Free digital platform connecting veterans with employers. Transition guidance, industry insights, and employer matching.",
+    "eligibility": "Veterans, transitioning service members, and military spouses.",
+    "website": "https://www.50strong.co/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "OpenAI ChatGPT Plus for Veterans",
+    "category": "community",
+    "description": "One-year free ChatGPT Plus subscription ($240 value). AI assistant for resume building, job search, and research.",
+    "eligibility": "Veterans. Veteran verification required.",
+    "website": "https://openai.com/chatgpt/",
+    "cost": "Free for 1 year",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "Purepost Military Skills Translator",
+    "category": "employment",
+    "description": "AI platform translating military skills into civilian job qualifications and matching veterans with careers.",
+    "eligibility": "Veterans and transitioning service members.",
+    "website": "https://www.purepost.co/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
+  },
+  {
+    "name": "ResuMade",
+    "category": "employment",
+    "description": "AI-powered resume builder designed for military-to-civilian translation. Converts military experience to civilian language.",
+    "eligibility": "All veterans and transitioning service members.",
+    "website": "https://resumade.com/",
+    "cost": "Free",
+    "sourceType": "Civilian Company"
   }
 ];
 
@@ -937,6 +1460,13 @@ const CATEGORY_META = {
   legal:            { label: 'Legal',            color: 'legal' }
 };
 
+// ── Source type icons ──
+const SOURCE_ICONS = {
+  'Government': '&#9733;',
+  'Nonprofit': '&#9825;',
+  'Civilian Company': '&#9670;'
+};
+
 let currentFilter = 'all';
 
 // ── Render resource cards ──
@@ -945,7 +1475,7 @@ function renderResources(list) {
   grid.innerHTML = '';
 
   if (list.length === 0) {
-    grid.innerHTML = '<p style="text-align:center;padding:48px 24px;color:rgba(255,255,255,0.4);font-size:0.95rem;">No resources found. Try a different search or category.</p>';
+    grid.innerHTML = '<p style="text-align:center;padding:48px 24px;color:rgba(0,0,0,0.35);font-size:0.95rem;">No resources found. Try a different search or category.</p>';
     return;
   }
 
@@ -958,6 +1488,12 @@ function renderResources(list) {
     // Website link (hide if missing)
     const linkHTML = r.website
       ? `<a href="${escapeHTML(r.website)}" target="_blank" rel="noopener noreferrer" class="resource-card__button">Visit Website &#8599;</a>`
+      : '';
+
+    // Source type label (metadata only — no badge color)
+    const sourceIcon = SOURCE_ICONS[r.sourceType] || '';
+    const sourceHTML = r.sourceType
+      ? `<div class="resource-card__meta-row"><span class="resource-card__meta-label">Source</span><span class="resource-card__meta-value">${sourceIcon} ${escapeHTML(r.sourceType)}</span></div>`
       : '';
 
     card.innerHTML = `
@@ -973,13 +1509,14 @@ function renderResources(list) {
           <span class="resource-card__meta-label">Cost</span>
           <span class="resource-card__meta-value">${escapeHTML(r.cost || 'Unknown')}</span>
         </div>
+        ${sourceHTML}
       </div>
       ${linkHTML}
     `;
     grid.appendChild(card);
   });
 
-  // Update count badge
+  // Update count
   const countEl = document.getElementById('countAll');
   if (countEl) countEl.textContent = list.length;
 }
@@ -992,11 +1529,8 @@ function escapeHTML(str) {
 // ── Filter by category (show/hide only) ──
 function filterByCategory(category, btn) {
   currentFilter = category;
-
-  // Update active button
   document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
-
   applyFilters();
 }
 
@@ -1019,7 +1553,8 @@ function applyFilters() {
       r.name.toLowerCase().includes(search) ||
       r.description.toLowerCase().includes(search) ||
       (r.eligibility && r.eligibility.toLowerCase().includes(search)) ||
-      (r.category && r.category.toLowerCase().includes(search))
+      (r.category && r.category.toLowerCase().includes(search)) ||
+      (r.sourceType && r.sourceType.toLowerCase().includes(search))
     );
   }
 
