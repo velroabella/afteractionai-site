@@ -875,6 +875,16 @@ a:hover { color: #000; }
 }
 .footer__section a:hover { color: var(--white); }
 
+.footer__nav-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 24px;
+}
+.footer__nav-col {
+  display: flex;
+  flex-direction: column;
+}
+
 .footer__social {
   display: flex;
   gap: 12px;
