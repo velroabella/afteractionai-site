@@ -142,28 +142,20 @@ a:hover { color: #000; }
   margin-bottom: 20px;
 }
 
-.logo-mark {
-  width: 56px;
-  height: 56px;
-  background: rgba(0,0,0,0.6);
-  color: var(--white);
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
+/* Legacy logo-mark - replaced by image */
+.logo-mark { display: none; }
+
+.landing__logo-img {
+  max-width: 420px;
+  width: 90%;
+  height: auto;
   margin: 0 auto 14px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-  border: 1px solid rgba(255,255,255,0.15);
+  display: block;
+  filter: drop-shadow(0 4px 20px rgba(0,0,0,0.5));
 }
 
 .landing h1 {
-  font-size: 2.4rem;
-  font-weight: 800;
-  color: var(--white);
-  letter-spacing: -0.5px;
-  margin-bottom: 6px;
-  line-height: 1.1;
+  display: none; /* Replaced by logo image */
 }
 
 .landing__tagline {
@@ -307,16 +299,12 @@ a:hover { color: #000; }
   gap: 10px;
 }
 
-.chat-header__logo {
+.chat-header__logo { display: none; }
+.chat-header__logo-img {
   width: 32px;
   height: 32px;
-  background: rgba(255,255,255,0.15);
-  color: var(--gold);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 16px;
+  object-fit: contain;
+  border-radius: 6px;
 }
 
 .chat-header__title {
@@ -654,7 +642,7 @@ a:hover { color: #000; }
     text-align: center;
     max-width: 100%;
   }
-  .logo-mark { margin: 0 auto 14px; }
+  .landing__logo-img { margin: 0 auto 14px; }
   .landing__actions { justify-content: center; }
   .landing__footer { text-align: center; }
   .screen--landing::after {
@@ -664,7 +652,7 @@ a:hover { color: #000; }
 }
 
 @media (min-width: 768px) {
-  .landing h1 { font-size: 2.6rem; }
+  .landing__logo-img { max-width: 480px; }
   .landing__mission p { font-size: 1.1rem; }
   .message { max-width: 65%; }
   .chat-messages { padding: 24px; }
@@ -715,7 +703,7 @@ a:hover { color: #000; }
   right: 0;
 }
 .navbar--landing .navbar__logo { color: var(--white); }
-.navbar--landing .navbar__logo-mark { background: rgba(255,255,255,0.15); }
+/* navbar--landing logo-mark no longer needed (image logo) */
 .navbar--landing .navbar__nav a { color: rgba(255,255,255,0.8); }
 .navbar--landing .navbar__nav a:hover { color: var(--white); }
 .navbar--landing .navbar__nav a.active { color: var(--white); font-weight: 700; }
@@ -744,24 +732,18 @@ a:hover { color: #000; }
 .navbar__logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-weight: 700;
-  color: var(--gray-900);
   text-decoration: none;
-  font-size: 1.1rem;
 }
 
+.navbar__logo-img {
+  height: 38px;
+  width: auto;
+  display: block;
+}
+
+/* Legacy fallback - no longer used */
 .navbar__logo-mark {
-  width: 40px;
-  height: 40px;
-  background: #000000;
-  color: var(--white);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  font-weight: 700;
+  display: none;
 }
 
 .navbar__nav {
@@ -1842,8 +1824,11 @@ a:hover { color: #000; }
 }
 .auth-modal__close:hover { color: var(--gray-900); }
 .auth-modal__logo {
-  text-align: center; font-size: 1.2rem; font-weight: 700;
-  color: var(--gray-900); margin-bottom: 20px;
+  text-align: center; margin-bottom: 20px;
+}
+.auth-modal__logo-img {
+  height: 36px;
+  width: auto;
 }
 .auth-tabs {
   display: flex; border-bottom: 2px solid var(--gray-200); margin-bottom: 20px;
@@ -2599,19 +2584,9 @@ a:hover { color: #000; }
   transition: box-shadow 0.3s ease;
 }
 
-.navbar__logo {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-}
-
-.navbar__logo-mark {
-  width: 38px;
-  height: 38px;
-  background: #111;
-  border-radius: 10px;
-  font-size: 18px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+.navbar__logo-img {
+  height: 36px;
+  width: auto;
 }
 
 .navbar__nav a {
@@ -3212,19 +3187,10 @@ img {
   background: rgba(255,255,255,0.95);
 }
 
-.navbar__logo span {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-}
-
-.navbar__logo-mark {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  font-size: 16px;
-  background: #111;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+/* navbar__logo span and logo-mark overrides removed - using image logo */
+.navbar__logo-img {
+  height: 34px;
+  width: auto;
 }
 
 .navbar__nav a {
@@ -3277,7 +3243,7 @@ body.no-scroll .navbar {
   box-shadow: 0 1px 0 rgba(255,255,255,0.08);
 }
 body.no-scroll .navbar__logo { color: #fff; }
-body.no-scroll .navbar__logo-mark { background: rgba(255,255,255,0.15); box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+body.no-scroll .navbar__logo-img { filter: brightness(1.2); }
 body.no-scroll .navbar__nav a { color: rgba(255,255,255,0.8); }
 body.no-scroll .navbar__nav a:hover { color: #fff; }
 body.no-scroll .navbar__nav a.active { color: #fff; font-weight: 700; }
