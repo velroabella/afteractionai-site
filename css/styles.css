@@ -694,9 +694,9 @@ a:hover { color: #000; }
 }
 
 .navbar--landing {
-  background: rgba(0,0,0,0.6);
+  background: rgba(0,0,0,0.6) !important;
   border-bottom: 1px solid rgba(255,255,255,0.1);
-  box-shadow: none;
+  box-shadow: none !important;
   position: absolute;
   top: 0;
   left: 0;
@@ -3231,6 +3231,29 @@ img {
   }
 }
 
+/* ── DARK NAVBAR — black background, white text on all non-homepage pages ── */
+.navbar {
+  background: #111 !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+.navbar__logo { color: #fff; }
+.navbar__nav a { color: rgba(255,255,255,0.75) !important; }
+.navbar__nav a:hover { color: #fff !important; }
+.navbar__nav a.active { color: #fff !important; font-weight: 700; }
+.navbar__menu-toggle { color: #fff; }
+@media (max-width: 767px) {
+  .navbar__nav {
+    background: rgba(17,17,17,0.98) !important;
+    backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+  }
+  .navbar__nav a { color: rgba(255,255,255,0.8) !important; }
+  .navbar__nav a:hover { color: #fff !important; }
+  .navbar__nav li { border-bottom: 1px solid rgba(255,255,255,0.08); }
+}
+
 /* ── HOMEPAGE NAV — overlay on dark hero, matches global style ── */
 body.no-scroll .navbar {
   position: absolute;
@@ -3238,9 +3261,9 @@ body.no-scroll .navbar {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(255,255,255,0.12);
+  background: rgba(0,0,0,0.6) !important;
   backdrop-filter: blur(16px);
-  box-shadow: 0 1px 0 rgba(255,255,255,0.08);
+  box-shadow: 0 1px 0 rgba(255,255,255,0.08) !important;
 }
 body.no-scroll .navbar__logo { color: #fff; }
 body.no-scroll .navbar__logo-img { filter: brightness(1.2); }
