@@ -79,19 +79,18 @@
     </div>
 
     <!-- FILTER BUTTONS -->
-    <div class="resources-filters">
-      <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
-      <button class="filter-btn" onclick="filterByCategory('crisis-mental-health')">Crisis / Mental Health</button>
-      <button class="filter-btn" onclick="filterByCategory('federal')">Federal Benefits</button>
-      <button class="filter-btn" onclick="filterByCategory('vso')">VSOs</button>
-      <button class="filter-btn" onclick="filterByCategory('employment')">Employment / Career</button>
-      <button class="filter-btn" onclick="filterByCategory('housing')">Housing / Homelessness</button>
-      <button class="filter-btn" onclick="filterByCategory('financial')">Financial / Emergency</button>
-      <button class="filter-btn" onclick="filterByCategory('education')">Education</button>
-      <button class="filter-btn" onclick="filterByCategory('legal')">Legal</button>
-      <button class="filter-btn" onclick="filterByCategory('tech')">AI / Tech Tools</button>
-      <button class="filter-btn" onclick="filterByCategory('women')">Women Veterans</button>
-      <button class="filter-btn" onclick="filterByCategory('family')">Family / Spouse</button>
+    <div class="resources-filters" id="filterBtns">
+      <button class="filter-btn active" onclick="filterByCategory('all',this)">All <span class="filter-btn__count" id="countAll"></span></button>
+      <button class="filter-btn" onclick="filterByCategory('employment',this)">Employment</button>
+      <button class="filter-btn" onclick="filterByCategory('education',this)">Education</button>
+      <button class="filter-btn" onclick="filterByCategory('benefits',this)">Benefits</button>
+      <button class="filter-btn" onclick="filterByCategory('medical',this)">Medical</button>
+      <button class="filter-btn" onclick="filterByCategory('equipment',this)">Equipment</button>
+      <button class="filter-btn" onclick="filterByCategory('entrepreneurship',this)">Entrepreneurship</button>
+      <button class="filter-btn" onclick="filterByCategory('housing',this)">Housing</button>
+      <button class="filter-btn" onclick="filterByCategory('discounts',this)">Discounts</button>
+      <button class="filter-btn" onclick="filterByCategory('community',this)">Community</button>
+      <button class="filter-btn" onclick="filterByCategory('legal',this)">Legal</button>
     </div>
 
     <!-- RESOURCES GRID -->
@@ -131,17 +130,16 @@
           <label for="orgCategory">Category (select all that apply)</label>
           <select id="orgCategory" name="orgCategory" required>
             <option value="">-- Select Category --</option>
-            <option value="crisis-mental-health">Crisis / Mental Health</option>
-            <option value="federal">Federal Benefits</option>
-            <option value="vso">VSO</option>
-            <option value="employment">Employment / Career</option>
-            <option value="housing">Housing / Homelessness</option>
-            <option value="financial">Financial / Emergency</option>
+            <option value="employment">Employment</option>
             <option value="education">Education</option>
+            <option value="benefits">Benefits</option>
+            <option value="medical">Medical</option>
+            <option value="equipment">Equipment</option>
+            <option value="entrepreneurship">Entrepreneurship</option>
+            <option value="housing">Housing</option>
+            <option value="discounts">Discounts</option>
+            <option value="community">Community</option>
             <option value="legal">Legal</option>
-            <option value="tech">AI / Tech Tools</option>
-            <option value="women">Women Veterans</option>
-            <option value="family">Family / Spouse</option>
           </select>
         </div>
         <button type="submit" class="form-group__submit">Submit Organization</button>
@@ -196,450 +194,839 @@
 </div>
 
 <script>
-// Resource database
+// ══════════════════════════════════════════════
+// VETERAN RESOURCE DATABASE — 90 Resources / 10 Categories
+// ══════════════════════════════════════════════
+
+// 90 resources across 10 categories
 const resources = [
-  // CRISIS / MENTAL HEALTH
   {
-    name: 'Veterans Crisis Line',
-    description: '24/7 confidential crisis support.',
-    category: 'crisis-mental-health',
-    website: 'https://www.veteranscrisisline.net',
-    featured: true
+    "name": "VA Vocational Rehabilitation & Employment (VR&E / Chapter 31)",
+    "category": "employment",
+    "description": "Comprehensive employment services including job training, resume development, job accommodation support, and self-employment assistance for veterans with service-connected disabilities.",
+    "eligibility": "Veterans with service-connected disability rating of 10%+ with employment barrier, or 20%+ without employment barrier. Must have received honorable or other than dishonorable discharge.",
+    "website": "https://www.va.gov/careers-employment/vocational-rehabilitation/",
+    "cost": "Free"
   },
   {
-    name: 'Cohen Veterans Network',
-    description: 'Free mental health clinics for post-9/11 veterans and families.',
-    category: 'crisis-mental-health',
-    website: 'https://cohenveteransnetwork.org',
-    featured: false
+    "name": "Hire Heroes USA",
+    "category": "employment",
+    "description": "Free career coaching, resume writing, mentoring, and job placement assistance. Provides personalized one-on-one support from dedicated transition specialists.",
+    "eligibility": "All veterans, transitioning service members, and military spouses. No disability rating or discharge status requirement.",
+    "website": "https://www.hireheroesusa.org/",
+    "cost": "Free"
   },
   {
-    name: 'Headstrong Project',
-    description: '30 free therapy sessions for veterans with PTSD.',
-    category: 'crisis-mental-health',
-    website: 'https://getheadstrong.org',
-    featured: false
+    "name": "American Corporate Partners (ACP)",
+    "category": "employment",
+    "description": "Year-long mentoring program pairing veterans with corporate professionals. Provides career guidance, networking, and professional development through Fortune 500 mentors.",
+    "eligibility": "Post-9/11 veterans and active duty within 12 months of transition. Must have honorable discharge.",
+    "website": "https://www.acp-usa.org/",
+    "cost": "Free"
   },
   {
-    name: 'Give an Hour',
-    description: 'Free mental health services from volunteer professionals.',
-    category: 'crisis-mental-health',
-    website: 'https://giveanhour.org',
-    featured: false
+    "name": "Veterans Employment and Training Service (VETS)",
+    "category": "employment",
+    "description": "DOL program providing employment resources, job training grants, and enforcement of USERRA rights.",
+    "eligibility": "All veterans, transitioning service members, and eligible spouses.",
+    "website": "https://www.dol.gov/agencies/vets",
+    "cost": "Free"
   },
   {
-    name: 'Emory Healthcare Veterans Program',
-    description: 'Free 2-week intensive PTSD treatment.',
-    category: 'crisis-mental-health',
-    website: 'https://emoryhealthcare.org/veterans-program',
-    featured: false
-  },
-
-  // FEDERAL BENEFITS
-  {
-    name: 'VA.gov',
-    description: 'Official portal for all federal VA benefits and services.',
-    category: 'federal',
-    website: 'https://www.va.gov',
-    featured: true
+    "name": "Helmets to Hardhats",
+    "category": "employment",
+    "description": "Connects veterans with careers in the building and construction trades. Provides apprenticeship placement in union trades.",
+    "eligibility": "All military members, veterans, and National Guard/Reserve. No disability requirement.",
+    "website": "https://helmetstohardhats.org/",
+    "cost": "Free"
   },
   {
-    name: 'VA Health Care',
-    description: 'Enroll in VA healthcare.',
-    category: 'federal',
-    website: 'https://va.gov/health-care',
-    featured: false
+    "name": "RecruitMilitary",
+    "category": "employment",
+    "description": "Operates the largest veteran-specific job board and hosts career fairs nationwide.",
+    "eligibility": "All veterans, transitioning service members, National Guard, Reserves, and military spouses.",
+    "website": "https://recruitmilitary.com/",
+    "cost": "Free"
   },
   {
-    name: 'VA Disability Compensation',
-    description: 'File or check disability claims.',
-    category: 'federal',
-    website: 'https://va.gov/disability',
-    featured: false
+    "name": "FourBlock",
+    "category": "employment",
+    "description": "Career readiness program offered through universities. Provides career transition curriculum, networking events, and employer connections.",
+    "eligibility": "Transitioning service members and recently separated veterans within 5 years of discharge.",
+    "website": "https://fourblock.org/",
+    "cost": "Free"
   },
   {
-    name: 'GI Bill / Education Benefits',
-    description: 'Education and training benefits.',
-    category: 'federal',
-    website: 'https://va.gov/education',
-    featured: false
+    "name": "USO Pathfinder",
+    "category": "employment",
+    "description": "Transition assistance program providing career preparation, employment readiness, and connections to local resources.",
+    "eligibility": "Transitioning service members and military spouses starting 12 months before separation.",
+    "website": "https://www.uso.org/programs/uso-pathfinder",
+    "cost": "Free"
   },
   {
-    name: 'VA Home Loans',
-    description: 'Home loan guaranty program.',
-    category: 'federal',
-    website: 'https://va.gov/housing-assistance/home-loans',
-    featured: false
+    "name": "Orion Talent",
+    "category": "employment",
+    "description": "Military recruiting firm that matches veterans with careers in manufacturing, engineering, maintenance, and technical fields.",
+    "eligibility": "Transitioning military (E-4 to O-5) and veterans with technical/leadership backgrounds.",
+    "website": "https://www.oriontalent.com/",
+    "cost": "Free for candidates"
   },
   {
-    name: 'Military OneSource',
-    description: 'Free 24/7 support for service members and families.',
-    category: 'federal',
-    website: 'https://militaryonesource.mil',
-    featured: false
-  },
-
-  // VETERAN SERVICE ORGANIZATIONS (VSOs)
-  {
-    name: 'DAV (Disabled American Veterans)',
-    description: 'Free claims assistance and advocacy.',
-    category: 'vso',
-    website: 'https://www.dav.org',
-    featured: true
+    "name": "SkillBridge (DOD)",
+    "category": "employment",
+    "description": "Allows active duty service members to participate in civilian work experiences during their last 180 days of service while receiving military pay.",
+    "eligibility": "Active duty service members within last 180 days of service. Commander approval required.",
+    "website": "https://skillbridge.osd.mil/",
+    "cost": "Free"
   },
   {
-    name: 'VFW (Veterans of Foreign Wars)',
-    description: 'Advocacy, community, and claims help.',
-    category: 'vso',
-    website: 'https://www.vfw.org',
-    featured: true
+    "name": "Wounded Warrior Project Warriors to Work",
+    "category": "employment",
+    "description": "Career counseling, job placement, and networking for wounded veterans.",
+    "eligibility": "Post-9/11 veterans who incurred physical or mental injury during military service.",
+    "website": "https://www.woundedwarriorproject.org/programs/warriors-to-work",
+    "cost": "Free"
   },
   {
-    name: 'American Legion',
-    description: 'Largest veteran org. Community, advocacy, benefits.',
-    category: 'vso',
-    website: 'https://www.legion.org',
-    featured: true
+    "name": "Post-9/11 GI Bill (Chapter 33)",
+    "category": "education",
+    "description": "Covers tuition and fees at public schools, provides monthly housing allowance (BAH E-5 rate), and $1,000/year book stipend. Transferable to dependents. Up to 36 months.",
+    "eligibility": "Served at least 90 days aggregate active duty after 9/10/2001. Benefits scale 50-100% based on service length. Honorable discharge required.",
+    "website": "https://www.va.gov/education/about-gi-bill-benefits/post-9-11/",
+    "cost": "Free"
   },
   {
-    name: 'AMVETS',
-    description: 'Advocacy and community service for all veterans.',
-    category: 'vso',
-    website: 'https://www.amvets.org',
-    featured: false
+    "name": "Montgomery GI Bill (Chapter 30)",
+    "category": "education",
+    "description": "Up to 36 months of education benefits for degree and certificate programs, flight training, apprenticeship/OJT, and correspondence courses.",
+    "eligibility": "Served at least 2 years active duty. Must have contributed $1,200 during service. Honorable discharge.",
+    "website": "https://www.va.gov/education/about-gi-bill-benefits/montgomery-active-duty/",
+    "cost": "$1,200 buy-in"
   },
   {
-    name: 'Paralyzed Veterans of America',
-    description: 'Advocacy for spinal cord injured veterans.',
-    category: 'vso',
-    website: 'https://www.pva.org',
-    featured: false
+    "name": "VET TEC Program",
+    "category": "education",
+    "description": "Covers tuition for high-tech training in computer software, data processing, and programming. Includes housing allowance. Does NOT use GI Bill entitlement.",
+    "eligibility": "At least one day of unexpired GI Bill benefits. Must be accepted to a VET TEC approved training provider.",
+    "website": "https://www.va.gov/education/about-gi-bill-benefits/how-to-use-benefits/vettec-high-tech-program/",
+    "cost": "Free"
   },
   {
-    name: 'Vietnam Veterans of America',
-    description: 'Advocacy for Vietnam-era and all veterans.',
-    category: 'vso',
-    website: 'https://www.vva.org',
-    featured: false
-  },
-
-  // EMPLOYMENT / CAREER
-  {
-    name: 'Hire Heroes USA',
-    description: 'Free job search assistance for veterans and spouses.',
-    category: 'employment',
-    website: 'https://www.hireheroesusa.org',
-    featured: false
+    "name": "Yellow Ribbon Program",
+    "category": "education",
+    "description": "Participating schools cover tuition above the GI Bill cap. VA matches the school's contribution. Eliminates out-of-pocket costs at private schools.",
+    "eligibility": "Must be eligible for 100% Post-9/11 GI Bill benefits. School must participate.",
+    "website": "https://www.va.gov/education/about-gi-bill-benefits/post-9-11/yellow-ribbon-program/",
+    "cost": "Free"
   },
   {
-    name: 'Hiring Our Heroes',
-    description: 'U.S. Chamber of Commerce veteran employment program.',
-    category: 'employment',
-    website: 'https://www.hiringourheroes.org',
-    featured: false
+    "name": "Survivors & Dependents Educational Assistance (DEA / Chapter 35)",
+    "category": "education",
+    "description": "Up to 36 months of education benefits for dependents of veterans who are permanently/totally disabled or who died from service-connected conditions.",
+    "eligibility": "Spouse and children of veterans with permanent/total service-connected disability, or who died from service-connected condition.",
+    "website": "https://www.va.gov/education/survivor-dependent-benefits/dependents-education-assistance/",
+    "cost": "Free"
   },
   {
-    name: 'RecruitMilitary',
-    description: 'Job fairs and hiring solutions for veterans.',
-    category: 'employment',
-    website: 'https://www.recruitmilitary.com',
-    featured: false
+    "name": "Scholarships for Military Children",
+    "category": "education",
+    "description": "Annual $2,000 scholarship through the Defense Commissary Agency for children of military members.",
+    "eligibility": "Dependent unmarried children under 21 (23 if full-time) of military members with commissary privileges.",
+    "website": "https://www.militaryscholar.org/",
+    "cost": "Free to apply"
   },
   {
-    name: 'American Corporate Partners (ACP)',
-    description: 'Free mentorship for transitioning veterans.',
-    category: 'employment',
-    website: 'https://www.acp-usa.org',
-    featured: false
+    "name": "Pat Tillman Foundation Scholarships",
+    "category": "education",
+    "description": "Scholarship covering tuition, books, and living expenses. Average award $10,000+. Strong alumni network.",
+    "eligibility": "Veterans, active duty, and military spouses pursuing higher education. Must demonstrate service leadership.",
+    "website": "https://pattillmanfoundation.org/",
+    "cost": "Free to apply"
   },
   {
-    name: 'SkillBridge (DoD)',
-    description: 'Civilian work experience during last 180 days of service.',
-    category: 'employment',
-    website: 'https://www.skillbridge.osd.mil',
-    featured: false
+    "name": "AMVETS National Scholarships",
+    "category": "education",
+    "description": "Multiple scholarship programs for veterans and families. Awards range from $1,000 to $12,000.",
+    "eligibility": "Veterans, active duty, National Guard/Reserve, and JROTC cadets. Some include family members.",
+    "website": "https://amvets.org/scholarships/",
+    "cost": "Free to apply"
   },
   {
-    name: 'Veterati',
-    description: 'Free mentorship platform connecting veterans with professionals.',
-    category: 'employment',
-    website: 'https://www.veterati.com',
-    featured: false
-  },
-
-  // HOUSING / HOMELESSNESS
-  {
-    name: 'U.S.VETS',
-    description: 'Largest nonprofit focused on ending veteran homelessness.',
-    category: 'housing',
-    website: 'https://www.usvets.org',
-    featured: false
+    "name": "Folds of Honor Scholarships",
+    "category": "education",
+    "description": "Educational scholarships up to $5,000/semester for spouses and children of fallen and disabled service members.",
+    "eligibility": "Spouses and children of service members killed or disabled while serving.",
+    "website": "https://www.foldsofhonor.org/",
+    "cost": "Free to apply"
   },
   {
-    name: 'Fisher House Foundation',
-    description: 'Free housing for families during VA medical treatment.',
-    category: 'housing',
-    website: 'https://www.fisherhouse.org',
-    featured: false
+    "name": "Syracuse University IVMF — Onward to Opportunity",
+    "category": "education",
+    "description": "Free career skills training in IT, business management, customer service, and cybersecurity. Includes industry certifications.",
+    "eligibility": "Transitioning service members, veterans (within 5 years), and military spouses.",
+    "website": "https://ivmf.syracuse.edu/programs/career-training/",
+    "cost": "Free"
   },
   {
-    name: 'HUD-VASH',
-    description: 'VA supportive housing vouchers for homeless veterans.',
-    category: 'housing',
-    website: 'https://va.gov/homeless/hud-vash.asp',
-    featured: false
+    "name": "VA Disability Compensation",
+    "category": "benefits",
+    "description": "Tax-free monthly payment for service-connected disabilities. Rates from $171/month (10%) to $3,737+/month (100%). Additional for dependents at 30%+.",
+    "eligibility": "Must have disability caused or worsened by military service. Requires medical evidence and VA rating. Any discharge except dishonorable.",
+    "website": "https://www.va.gov/disability/",
+    "cost": "Free to file"
   },
   {
-    name: 'Volunteers of America',
-    description: 'Veteran housing and supportive services.',
-    category: 'housing',
-    website: 'https://www.voa.org',
-    featured: false
+    "name": "VA Pension (Non-Service-Connected)",
+    "category": "benefits",
+    "description": "Tax-free monthly benefit for wartime veterans with limited income who are 65+ or permanently disabled.",
+    "eligibility": "Served during wartime period, 90+ days active duty (1 during wartime), limited income. Not dishonorably discharged.",
+    "website": "https://www.va.gov/pension/",
+    "cost": "Free to file"
   },
   {
-    name: 'National Coalition for Homeless Veterans',
-    description: 'Advocacy and provider directory.',
-    category: 'housing',
-    website: 'https://www.nchv.org',
-    featured: false
-  },
-
-  // FINANCIAL / EMERGENCY ASSISTANCE
-  {
-    name: 'Wounded Warrior Project',
-    description: 'Programs and emergency grants for post-9/11 veterans.',
-    category: 'financial',
-    website: 'https://www.woundedwarriorproject.org',
-    featured: false
+    "name": "Aid & Attendance / Housebound Benefits",
+    "category": "benefits",
+    "description": "Additional monthly payment for veterans who need help with daily activities or are substantially confined to their home.",
+    "eligibility": "Must receive VA Pension or Disability Compensation and meet criteria for needing regular aid.",
+    "website": "https://www.va.gov/pension/aid-attendance-housebound/",
+    "cost": "Free to file"
   },
   {
-    name: 'Gary Sinise Foundation',
-    description: 'Smart homes, emergency relief, and family support.',
-    category: 'financial',
-    website: 'https://www.garysinisefoundation.org',
-    featured: false
+    "name": "Dependency and Indemnity Compensation (DIC)",
+    "category": "benefits",
+    "description": "Tax-free monthly payment to surviving spouse, children, or parents of service members who died in the line of duty.",
+    "eligibility": "Surviving spouse (not remarried before 57), unmarried children under 18 (23 in school), or dependent parents.",
+    "website": "https://www.va.gov/survivors/dependency-indemnity-compensation/",
+    "cost": "Free to file"
   },
   {
-    name: 'Bob Woodruff Foundation',
-    description: 'Grants to veteran-serving nonprofits.',
-    category: 'financial',
-    website: 'https://www.bobwoodrufffoundation.org',
-    featured: false
+    "name": "Special Monthly Compensation (SMC)",
+    "category": "benefits",
+    "description": "Additional tax-free compensation beyond standard rates for severe disabilities including loss of limbs or blindness.",
+    "eligibility": "Veterans with 100% rating plus additional qualifying conditions.",
+    "website": "https://www.va.gov/disability/compensation-rates/special-monthly-compensation-rates/",
+    "cost": "Free to file"
   },
   {
-    name: 'PenFed Foundation',
-    description: 'Emergency financial assistance for veterans and families.',
-    category: 'financial',
-    website: 'https://www.penfedfoundation.org',
-    featured: false
+    "name": "Combat-Related Special Compensation (CRSC)",
+    "category": "benefits",
+    "description": "Tax-free payment that restores retired pay offset by VA disability for combat-related disabilities.",
+    "eligibility": "Military retirees with 10+ years and combat-related disabilities. Apply through branch of service.",
+    "website": "https://www.va.gov/disability/",
+    "cost": "Free to file"
   },
   {
-    name: 'Operation Homefront',
-    description: 'Emergency financial assistance and housing.',
-    category: 'financial',
-    website: 'https://www.operationhomefront.org',
-    featured: false
+    "name": "Concurrent Retirement & Disability Pay (CRDP)",
+    "category": "benefits",
+    "description": "Receive both full military retirement pay and VA disability compensation without offset.",
+    "eligibility": "Military retirees (20+ years or medical) with 50%+ VA disability rating. Automatic enrollment.",
+    "website": "https://www.dfas.mil/retiredmilitary/disability/crdp/",
+    "cost": "Free/automatic"
   },
   {
-    name: 'Team Rubicon',
-    description: 'Veteran disaster response and community service.',
-    category: 'financial',
-    website: 'https://www.teamrubicon.org',
-    featured: false
-  },
-
-  // EDUCATION
-  {
-    name: 'Pat Tillman Foundation',
-    description: 'Scholarships for military veterans and spouses.',
-    category: 'education',
-    website: 'https://www.pattillmanfoundation.org',
-    featured: false
+    "name": "VA Claims Insider (VACI)",
+    "category": "benefits",
+    "description": "Veteran-owned company providing education, coaching, and medical evidence development for VA disability claims.",
+    "eligibility": "Any veteran or active duty pursuing VA disability claim.",
+    "website": "https://vaclaimsinsider.com/",
+    "cost": "Varies"
   },
   {
-    name: 'Student Veterans of America',
-    description: 'Campus community and advocacy.',
-    category: 'education',
-    website: 'https://www.studentveterans.org',
-    featured: false
+    "name": "Veterans Benefits Banking Program (VBBP)",
+    "category": "benefits",
+    "description": "Partners with banks to provide financial services tailored to veterans receiving VA benefits.",
+    "eligibility": "Veterans receiving VA benefits who are unbanked or underbanked.",
+    "website": "https://www.benefits.va.gov/benefits/banking.asp",
+    "cost": "Free"
   },
   {
-    name: 'Post80.AI',
-    description: 'AI-powered education benefits calculator.',
-    category: 'education',
-    website: 'https://www.post80.ai',
-    featured: false
+    "name": "Camp Lejeune Justice Act Claims",
+    "category": "benefits",
+    "description": "Allows those who lived/worked at Camp Lejeune (1953-1987) to file claims for harm from contaminated water.",
+    "eligibility": "Anyone at Camp Lejeune for 30+ days between August 1953 and December 1987.",
+    "website": "https://www.va.gov/disability/eligibility/hazardous-materials-exposure/camp-lejeune-water-contamination/",
+    "cost": "Free to file"
   },
   {
-    name: 'FourBlock',
-    description: 'Career readiness program for transitioning veterans.',
-    category: 'education',
-    website: 'https://www.fourblock.org',
-    featured: false
-  },
-
-  // LEGAL
-  {
-    name: 'National Veterans Legal Services Program (NVLSP)',
-    description: 'Free legal aid for disability claims and appeals.',
-    category: 'legal',
-    website: 'https://www.nvlsp.org',
-    featured: false
+    "name": "VA Health Care",
+    "category": "medical",
+    "description": "Comprehensive system with 1,298 facilities covering primary care, mental health, specialty care, prescriptions, and preventive services.",
+    "eligibility": "Served 24+ months active duty (exceptions for combat veterans, disability). Enrollment based on priority groups.",
+    "website": "https://www.va.gov/health-care/",
+    "cost": "Free to low-cost copays"
   },
   {
-    name: 'Veterans Consortium Pro Bono Program',
-    description: 'Free legal representation at CAVC. 83% success rate.',
-    category: 'legal',
-    website: 'https://www.vetsprobono.org',
-    featured: false
+    "name": "Community Care (VA MISSION Act)",
+    "category": "medical",
+    "description": "Allows eligible veterans to receive care from community providers when VA can't provide timely access.",
+    "eligibility": "Enrolled in VA health care and meet access standards (drive/wait time thresholds).",
+    "website": "https://www.va.gov/communitycare/",
+    "cost": "Same as VA copays"
   },
   {
-    name: 'Veterans Legal Institute',
-    description: 'Pro bono legal services for homeless and low-income veterans.',
-    category: 'legal',
-    website: 'https://www.veteranslegalinstitute.com',
-    featured: false
+    "name": "Veterans Crisis Line",
+    "category": "medical",
+    "description": "24/7 crisis intervention and support. Available by phone, text, and online chat. Dial 988, Press 1.",
+    "eligibility": "Any veteran, service member, or concerned family member. No enrollment required.",
+    "website": "https://www.veteranscrisisline.net/",
+    "cost": "Free"
   },
   {
-    name: 'Stateside Legal',
-    description: 'Free legal help directory for military members.',
-    category: 'legal',
-    website: 'https://www.statesidelegal.org',
-    featured: false
-  },
-
-  // AI / TECHNOLOGY TOOLS
-  {
-    name: 'VeteranAI',
-    description: 'AI assistant for disability claims and nexus letters.',
-    category: 'tech',
-    website: 'https://www.veteranai.co',
-    featured: false
+    "name": "Vet Centers (Readjustment Counseling)",
+    "category": "medical",
+    "description": "Community-based counseling for PTSD, MST, bereavement, and group therapy in a non-clinical setting.",
+    "eligibility": "Combat veterans, drone crew, MST survivors, bereaved families. No VA enrollment needed.",
+    "website": "https://www.vetcenter.va.gov/",
+    "cost": "Free"
   },
   {
-    name: 'VA Wayfinder',
-    description: 'Plain English guides for VA processes.',
-    category: 'tech',
-    website: 'https://www.vawayfinder.org',
-    featured: false
+    "name": "Give an Hour",
+    "category": "medical",
+    "description": "Network of 7,000+ licensed mental health professionals providing free therapy to veterans and families.",
+    "eligibility": "All veterans, active duty, and family members. No VA enrollment. No paperwork or insurance required.",
+    "website": "https://giveanhour.org/",
+    "cost": "Free"
   },
   {
-    name: 'Navigator USA Corp',
-    description: 'AI Benefits Coach for disability claims.',
-    category: 'tech',
-    website: 'https://www.nav-usa.org',
-    featured: false
+    "name": "Cohen Veterans Network (CVN)",
+    "category": "medical",
+    "description": "Steven A. Cohen Military Family Clinics providing mental health care for post-9/11 veterans and families.",
+    "eligibility": "Post-9/11 veterans, active duty, National Guard, Reserves, and families. No VA enrollment required.",
+    "website": "https://www.cohenveteransnetwork.org/",
+    "cost": "Free to sliding scale"
   },
   {
-    name: 'AfterAction AI',
-    description: 'Free AI veteran navigator (that\'s us).',
-    category: 'tech',
-    website: 'https://www.afteractionai.org',
-    featured: false
-  },
-
-  // WOMEN VETERANS
-  {
-    name: 'Women Veterans Alliance',
-    description: 'Community and advocacy for women who served.',
-    category: 'women',
-    website: 'https://www.womenveteransalliance.org',
-    featured: false
+    "name": "TRICARE (Retiree & Reserve)",
+    "category": "medical",
+    "description": "Military health insurance for retirees and Reserve/Guard. Multiple plan options including Prime, Select, and For Life.",
+    "eligibility": "Military retirees, their families, Reserve/Guard members and families.",
+    "website": "https://www.tricare.mil/",
+    "cost": "Varies by plan"
   },
   {
-    name: 'Final Salute Inc',
-    description: 'Housing for homeless women veterans.',
-    category: 'women',
-    website: 'https://www.finalsaluteinc.org',
-    featured: false
-  },
-
-  // FAMILY / SPOUSE
-  {
-    name: 'Blue Star Families',
-    description: 'Programs and community for military families.',
-    category: 'family',
-    website: 'https://www.bluestarfam.org',
-    featured: false
+    "name": "VA Caregiver Support Program",
+    "category": "medical",
+    "description": "Training, support, and financial stipend for family caregivers. Includes health insurance, mental health, and respite care.",
+    "eligibility": "Primary caregivers of veterans needing personal care due to serious injury. Enhanced benefits for post-9/11.",
+    "website": "https://www.caregiver.va.gov/",
+    "cost": "Free"
   },
   {
-    name: 'National Military Family Association',
-    description: 'Education, camps, and family support.',
-    category: 'family',
-    website: 'https://www.militaryfamily.org',
-    featured: false
+    "name": "Headstrong Project",
+    "category": "medical",
+    "description": "Free, confidential, stigma-free mental health treatment. Partners with licensed therapists in communities nationwide.",
+    "eligibility": "Post-9/11 veterans and active duty. No insurance, copays, or VA enrollment required.",
+    "website": "https://getheadstrong.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "PatientsLikeMe Veterans Platform",
+    "category": "medical",
+    "description": "Online health community to track symptoms, share experiences, and learn from others managing similar conditions.",
+    "eligibility": "Open to all veterans and service members.",
+    "website": "https://www.patientslikeme.com/",
+    "cost": "Free"
+  },
+  {
+    "name": "VA Prosthetic and Sensory Aids",
+    "category": "equipment",
+    "description": "Provides prosthetic limbs, hearing aids, eyeglasses, wheelchairs, home oxygen, and other durable medical equipment.",
+    "eligibility": "Veterans enrolled in VA health care with clinical need. Priority for service-connected conditions.",
+    "website": "https://www.prosthetics.va.gov/",
+    "cost": "Free through VA"
+  },
+  {
+    "name": "DAV Transportation",
+    "category": "equipment",
+    "description": "Free rides to and from VA medical facilities. Fleet of vehicles driven by volunteer drivers.",
+    "eligibility": "Any veteran with VA medical appointments who lacks transportation.",
+    "website": "https://www.dav.org/veterans/i-need-a-ride/",
+    "cost": "Free"
+  },
+  {
+    "name": "Adaptive Sports Grant Program (VA)",
+    "category": "equipment",
+    "description": "Funding for adaptive sports activities and equipment for disabled veterans.",
+    "eligibility": "Veterans with disabilities including visual impairments, amputations, spinal cord injuries, and PTSD.",
+    "website": "https://www.va.gov/adaptivesports/",
+    "cost": "Free"
+  },
+  {
+    "name": "Homes for Our Troops",
+    "category": "equipment",
+    "description": "Builds and donates mortgage-free specially adapted custom homes for severely injured post-9/11 veterans.",
+    "eligibility": "Severely injured post-9/11 veterans recommended by VA for Specially Adapted Housing.",
+    "website": "https://www.hfotusa.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Specially Adapted Housing (SAH) Grant",
+    "category": "equipment",
+    "description": "VA grant up to $109,986 to build, buy, or modify a home to meet adaptive needs.",
+    "eligibility": "Veterans with service-connected disabilities including loss of use of both legs or blindness.",
+    "website": "https://www.va.gov/housing-assistance/disability-housing-grants/",
+    "cost": "Free grant"
+  },
+  {
+    "name": "Special Housing Adaptation (SHA) Grant",
+    "category": "equipment",
+    "description": "VA grant up to $44,299 to modify an existing home for veterans with specific disabilities.",
+    "eligibility": "Veterans with blindness in both eyes, loss of use of both hands, or severe burn injuries.",
+    "website": "https://www.va.gov/housing-assistance/disability-housing-grants/",
+    "cost": "Free grant"
+  },
+  {
+    "name": "Automobile Allowance & Adaptive Equipment",
+    "category": "equipment",
+    "description": "One-time payment up to $22,036 toward a vehicle plus adaptive equipment (hand controls, wheelchair lifts, etc.).",
+    "eligibility": "Veterans with service-connected loss of use of hand or foot, or permanent visual impairment.",
+    "website": "https://www.va.gov/disability/eligibility/special-claims/automobile-allowance-adaptive-equipment/",
+    "cost": "Free grant"
+  },
+  {
+    "name": "Assistive Technology for Veterans",
+    "category": "equipment",
+    "description": "Screen readers, voice recognition, environmental controls, and cognitive aids through VA rehabilitation services.",
+    "eligibility": "Veterans enrolled in VA health care or VR&E with documented need.",
+    "website": "https://www.rehab.va.gov/",
+    "cost": "Free through VA"
+  },
+  {
+    "name": "SBA Veterans Advantage Loan Program",
+    "category": "entrepreneurship",
+    "description": "SBA-backed loans with reduced fees. Includes 7(a) loans up to $5M and Express loans up to $500K with faster processing.",
+    "eligibility": "Veteran-owned businesses (51%+ veteran ownership). Additional fee reductions for service-disabled.",
+    "website": "https://www.sba.gov/funding-programs/loans/lender-match",
+    "cost": "Standard loan interest"
+  },
+  {
+    "name": "Boots to Business (SBA)",
+    "category": "entrepreneurship",
+    "description": "Two-day entrepreneurship course covering business fundamentals, feasibility analysis, and business plan development.",
+    "eligibility": "Active duty (including Guard/Reserve), veterans, and military spouses.",
+    "website": "https://www.sba.gov/sba-learning-platform/boots-business",
+    "cost": "Free"
+  },
+  {
+    "name": "V-WISE",
+    "category": "entrepreneurship",
+    "description": "Three-phase entrepreneurship training for women veterans: online coursework, 3-day conference, and ongoing mentorship.",
+    "eligibility": "Women veterans, active duty, and female military spouses interested in business.",
+    "website": "https://ivmf.syracuse.edu/programs/entrepreneurship/start-up/v-wise/",
+    "cost": "Free"
+  },
+  {
+    "name": "Bunker Labs",
+    "category": "entrepreneurship",
+    "description": "Network, programming, and resources for veteran entrepreneurs. Launch Lab accelerator and CEOcircle for scaling.",
+    "eligibility": "All veterans, active duty, and military spouses.",
+    "website": "https://bunkerlabs.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "StreetShares Foundation Awards",
+    "category": "entrepreneurship",
+    "description": "Quarterly business grants of $15,000, $6,000, and $4,000 for veteran small business owners.",
+    "eligibility": "Veteran-owned or military spouse-owned businesses in the US.",
+    "website": "https://streetshares.com/foundation",
+    "cost": "Free to apply"
+  },
+  {
+    "name": "SCORE Mentoring for Veterans",
+    "category": "entrepreneurship",
+    "description": "Free business mentoring from experienced entrepreneurs with veteran-focused mentors.",
+    "eligibility": "All veterans and military spouses starting or growing a business.",
+    "website": "https://www.score.org/content/veteran-resources",
+    "cost": "Free"
+  },
+  {
+    "name": "VetFran (IFA)",
+    "category": "entrepreneurship",
+    "description": "Franchise discounts — reduced fees, special financing, and mentoring for veteran franchise owners. 1,200+ brands.",
+    "eligibility": "Honorably discharged veterans and military spouses.",
+    "website": "https://www.vetfran.org/",
+    "cost": "Discounted fees"
+  },
+  {
+    "name": "Dog Tag Bakery Fellowship",
+    "category": "entrepreneurship",
+    "description": "Five-month fellowship: Georgetown MBA coursework plus hands-on bakery business experience.",
+    "eligibility": "Post-9/11 veterans, military spouses, and caregivers in DC area.",
+    "website": "https://www.dogtagbakery.com/fellowship",
+    "cost": "Free"
+  },
+  {
+    "name": "VA Home Loan (Chapter 37)",
+    "category": "housing",
+    "description": "Mortgage loan guaranteed by VA — no down payment, no PMI, competitive rates. Available for purchase, refinance, and adapted housing.",
+    "eligibility": "Veterans with qualifying service, active duty, Guard/Reserve with 6+ years, and surviving spouses.",
+    "website": "https://www.va.gov/housing-assistance/home-loans/",
+    "cost": "No down payment"
+  },
+  {
+    "name": "Native American Direct Loan (NADL)",
+    "category": "housing",
+    "description": "VA direct home loan for Native American veterans on Federal Trust Land. No down payment or PMI.",
+    "eligibility": "Native American veterans with valid COE on Federal Trust Land.",
+    "website": "https://www.va.gov/housing-assistance/home-loans/loan-types/native-american-direct-loan/",
+    "cost": "No down payment"
+  },
+  {
+    "name": "HUD-VASH",
+    "category": "housing",
+    "description": "Combines HUD voucher rental assistance with VA supportive services including health care and counseling.",
+    "eligibility": "Homeless veterans or those at imminent risk. Must be eligible for VA health care.",
+    "website": "https://www.va.gov/homeless/hud-vash.asp",
+    "cost": "Free/subsidized"
+  },
+  {
+    "name": "SSVF (Supportive Services for Veteran Families)",
+    "category": "housing",
+    "description": "Rapid re-housing and prevention: rental assistance, utility payments, moving costs, and case management.",
+    "eligibility": "Very low-income veteran families who are homeless or at risk (income at or below 50% area median).",
+    "website": "https://www.va.gov/homeless/ssvf/",
+    "cost": "Free"
+  },
+  {
+    "name": "Habitat for Humanity Veterans Build",
+    "category": "housing",
+    "description": "Builds and repairs homes for veteran families. Affordable mortgage with 0% interest.",
+    "eligibility": "Veterans and veteran families in need. Must meet income guidelines and contribute sweat equity.",
+    "website": "https://www.habitat.org/our-work/veterans-build",
+    "cost": "Affordable mortgage"
+  },
+  {
+    "name": "Operation Homefront — Transitional Housing",
+    "category": "housing",
+    "description": "Transitional housing for wounded veterans and critical financial assistance for rent and mortgage.",
+    "eligibility": "Wounded/injured service members and military families facing financial hardship.",
+    "website": "https://www.operationhomefront.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "National Veterans Foundation",
+    "category": "housing",
+    "description": "Emergency financial assistance for housing, utilities, and basic needs. Lifeline for Vets: 1-888-777-4443.",
+    "eligibility": "All veterans in crisis or financial need.",
+    "website": "https://www.nvf.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Veterans Inc.",
+    "category": "housing",
+    "description": "Comprehensive housing from emergency shelter through permanent supportive housing (New England).",
+    "eligibility": "Homeless or at-risk veterans in New England.",
+    "website": "https://www.veteransinc.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Veterans Advantage",
+    "category": "discounts",
+    "description": "Membership with 400+ brand discounts including Amtrak (15%), Dell, Under Armour, and more.",
+    "eligibility": "All veterans, active duty, Guard, Reserve, and families. Verified through ID.me.",
+    "website": "https://www.veteransadvantage.com/",
+    "cost": "$59.95/year"
+  },
+  {
+    "name": "ID.me Military Verification",
+    "category": "discounts",
+    "description": "Free military verification unlocking 500+ retailer discounts: Apple (10%), Samsung, Nike, T-Mobile, and more.",
+    "eligibility": "All veterans, active duty, Guard, Reserve, spouses, dependents, and Gold Star families.",
+    "website": "https://www.id.me/government/military",
+    "cost": "Free"
+  },
+  {
+    "name": "Home Depot / Lowe's Military Discount",
+    "category": "discounts",
+    "description": "10% military discount on eligible purchases. In-store and online.",
+    "eligibility": "All veterans, active duty, Guard, Reserve, and spouses.",
+    "website": "https://www.homedepot.com/c/military",
+    "cost": "Free"
+  },
+  {
+    "name": "National Park Service — America the Beautiful Pass",
+    "category": "discounts",
+    "description": "Free lifetime access to all national parks, forests, wildlife refuges, and federal recreation lands.",
+    "eligibility": "All US veterans with DD-214 and Gold Star family members.",
+    "website": "https://www.nps.gov/planyourvisit/veterans-and-gold-star-families-free-access.htm",
+    "cost": "Free"
+  },
+  {
+    "name": "Space Available (Space-A) Travel",
+    "category": "discounts",
+    "description": "Free military flights worldwide on DOD aircraft when seats are available.",
+    "eligibility": "Retired military, 100% disabled veterans, and dependents with valid ID.",
+    "website": "https://www.amc.af.mil/AMC-Travel-Site/",
+    "cost": "Free"
+  },
+  {
+    "name": "USAA Financial Services",
+    "category": "discounts",
+    "description": "Full-service banking, insurance, and investments designed for military. Competitive rates, no fees.",
+    "eligibility": "All veterans, active duty, and families.",
+    "website": "https://www.usaa.com/",
+    "cost": "Varies"
+  },
+  {
+    "name": "Verizon / AT&T / T-Mobile Military Plans",
+    "category": "discounts",
+    "description": "15-40% off standard wireless plans for military and veterans.",
+    "eligibility": "Active duty, veterans, Guard, Reserve, and family members.",
+    "website": "https://www.verizon.com/military/",
+    "cost": "Discounted"
+  },
+  {
+    "name": "GovX Military Discount Marketplace",
+    "category": "discounts",
+    "description": "Exclusive military pricing on tactical gear, apparel, electronics, and event tickets. 20-50% savings.",
+    "eligibility": "Active duty, veterans, Guard, Reserve, first responders, and government employees.",
+    "website": "https://www.govx.com/",
+    "cost": "Free membership"
+  },
+  {
+    "name": "Team Rubicon",
+    "category": "community",
+    "description": "Veteran-led disaster response organization. Veterans deploy for relief domestically and internationally.",
+    "eligibility": "All veterans, active duty, and civilians. Free to join. Training provided.",
+    "website": "https://teamrubiconusa.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Team Red White & Blue (RWB)",
+    "category": "community",
+    "description": "Community connecting through physical and social activities — runs, yoga, social events, and service.",
+    "eligibility": "Open to all — veterans, active duty, and community members.",
+    "website": "https://www.teamrwb.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "The Mission Continues",
+    "category": "community",
+    "description": "Empowers veterans to continue serving through fellowships, service platoons, and community projects.",
+    "eligibility": "All veterans and active duty interested in community service.",
+    "website": "https://missioncontinues.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Iraq and Afghanistan Veterans of America (IAVA)",
+    "category": "community",
+    "description": "Largest post-9/11 veteran advocacy org. Policy advocacy, community, mental health, and peer support.",
+    "eligibility": "Post-9/11 veterans and supporters.",
+    "website": "https://iava.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "VFW (Veterans of Foreign Wars)",
+    "category": "community",
+    "description": "6,000+ posts nationwide. Camaraderie, legislative advocacy, community service, and free claims help.",
+    "eligibility": "Veterans who served overseas. Associate membership available.",
+    "website": "https://www.vfw.org/",
+    "cost": "$45/year dues"
+  },
+  {
+    "name": "American Legion",
+    "category": "community",
+    "description": "12,000+ posts. Community activities, youth programs, advocacy, and VA claims assistance.",
+    "eligibility": "Veterans who served during wartime eras and active duty.",
+    "website": "https://www.legion.org/",
+    "cost": "$45/year dues"
+  },
+  {
+    "name": "Disabled American Veterans (DAV)",
+    "category": "community",
+    "description": "1.3M+ members. Free claims assistance, transportation, employment resources, and legislative advocacy.",
+    "eligibility": "All veterans with service-connected disabilities. Associate membership for supporters.",
+    "website": "https://www.dav.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Travis Manion Foundation",
+    "category": "community",
+    "description": "Character development programs, community leadership, and mentoring for veterans and families of the fallen.",
+    "eligibility": "Veterans, families of fallen, and community members committed to service.",
+    "website": "https://www.travismanion.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Vet Tix (Veteran Ticket Foundation)",
+    "category": "community",
+    "description": "Free event tickets — sporting events, concerts, performing arts, and family events.",
+    "eligibility": "All veterans, active duty, Guard, Reserve, and families.",
+    "website": "https://www.vettix.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Veterans Legal Services Organizations",
+    "category": "legal",
+    "description": "Free legal clinics and representation at VA regional offices and Board of Veterans' Appeals.",
+    "eligibility": "All veterans with VA claims, appeals, or benefits-related legal issues.",
+    "website": "https://www.va.gov/vso/",
+    "cost": "Free"
+  },
+  {
+    "name": "National Veterans Legal Services Program (NVLSP)",
+    "category": "legal",
+    "description": "Free legal representation before the VA and federal courts. Trains attorneys in veterans law.",
+    "eligibility": "Veterans and dependents needing legal help with VA claims and appeals.",
+    "website": "https://www.nvlsp.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Stateside Legal",
+    "category": "legal",
+    "description": "Online resource connecting military members with free legal help — legal aid orgs, JAG offices, pro bono attorneys.",
+    "eligibility": "All service members, veterans, and military families.",
+    "website": "https://statesidelegal.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Veterans Consortium Pro Bono Program",
+    "category": "legal",
+    "description": "Free legal representation at the US Court of Appeals for Veterans Claims. 83% success rate.",
+    "eligibility": "Veterans with appeals at the CAVC.",
+    "website": "https://www.vetsprobono.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Legal Services Corporation (Military/Veteran)",
+    "category": "legal",
+    "description": "Nationwide network of legal aid for civil issues including housing, family law, and consumer issues.",
+    "eligibility": "Low-income veterans meeting income guidelines (generally 125% federal poverty level).",
+    "website": "https://www.lsc.gov/",
+    "cost": "Free"
+  },
+  {
+    "name": "ABA Military Pro Bono Project",
+    "category": "legal",
+    "description": "ABA program connecting active duty with free legal representation for civil issues.",
+    "eligibility": "Active duty service members (including Guard/Reserve on active orders).",
+    "website": "https://www.militaryprobono.org/",
+    "cost": "Free"
+  },
+  {
+    "name": "Veterans Defense Program (NVLSP)",
+    "category": "legal",
+    "description": "Helps veterans with less-than-honorable discharges upgrade their discharge status.",
+    "eligibility": "Veterans with OTH, general, or bad conduct discharges seeking upgrades.",
+    "website": "https://www.nvlsp.org/what-we-do/veterans-defense-program",
+    "cost": "Free"
+  },
+  {
+    "name": "USERRA Rights Enforcement",
+    "category": "legal",
+    "description": "Protects reemployment rights after military service. DOL investigates complaints.",
+    "eligibility": "Any service member or veteran whose employment rights were violated due to military service.",
+    "website": "https://www.dol.gov/agencies/vets/programs/userra",
+    "cost": "Free"
   }
 ];
 
+
+// ── Category display names & data-color mapping ──
+const CATEGORY_META = {
+  employment:       { label: 'Employment',       color: 'employment' },
+  education:        { label: 'Education',        color: 'education' },
+  benefits:         { label: 'Benefits',         color: 'benefits' },
+  medical:          { label: 'Medical',          color: 'medical' },
+  equipment:        { label: 'Equipment',        color: 'equipment' },
+  entrepreneurship: { label: 'Entrepreneurship', color: 'entrepreneurship' },
+  housing:          { label: 'Housing',          color: 'housing' },
+  discounts:        { label: 'Discounts',        color: 'discounts' },
+  community:        { label: 'Community',        color: 'community' },
+  legal:            { label: 'Legal',            color: 'legal' }
+};
+
 let currentFilter = 'all';
 
-function renderResources(resourcesToShow) {
+// ── Render resource cards ──
+function renderResources(list) {
   const grid = document.getElementById('resourcesGrid');
   grid.innerHTML = '';
 
-  if (resourcesToShow.length === 0) {
-    grid.innerHTML = '<p style="text-align: center; padding: 40px; color: var(--gray-500);">No organizations found. Try a different search or category.</p>';
+  if (list.length === 0) {
+    grid.innerHTML = '<p style="text-align:center;padding:48px 24px;color:rgba(255,255,255,0.4);font-size:0.95rem;">No resources found. Try a different search or category.</p>';
     return;
   }
 
-  resourcesToShow.forEach(resource => {
+  list.forEach(r => {
+    const meta = CATEGORY_META[r.category] || { label: r.category, color: '' };
     const card = document.createElement('div');
     card.className = 'resource-card';
+    card.setAttribute('data-category', r.category);
+
+    // Website link (hide if missing)
+    const linkHTML = r.website
+      ? `<a href="${escapeHTML(r.website)}" target="_blank" rel="noopener noreferrer" class="resource-card__button">Visit Website &#8599;</a>`
+      : '';
+
     card.innerHTML = `
-      <h3 class="resource-card__name">${resource.name}</h3>
-      <p class="resource-card__description">${resource.description}</p>
-      <span class="resource-card__category">${formatCategory(resource.category)}</span>
-      <a href="${resource.website}" target="_blank" rel="noopener noreferrer" class="resource-card__button">Visit Organization</a>
+      <span class="resource-card__category" data-color="${meta.color}">${escapeHTML(meta.label)}</span>
+      <h3 class="resource-card__name">${escapeHTML(r.name)}</h3>
+      <p class="resource-card__description">${escapeHTML(r.description)}</p>
+      <div class="resource-card__meta">
+        <div class="resource-card__meta-row">
+          <span class="resource-card__meta-label">Eligibility</span>
+          <span class="resource-card__meta-value">${escapeHTML(r.eligibility || 'See website for details')}</span>
+        </div>
+        <div class="resource-card__meta-row">
+          <span class="resource-card__meta-label">Cost</span>
+          <span class="resource-card__meta-value">${escapeHTML(r.cost || 'Unknown')}</span>
+        </div>
+      </div>
+      ${linkHTML}
     `;
     grid.appendChild(card);
   });
+
+  // Update count badge
+  const countEl = document.getElementById('countAll');
+  if (countEl) countEl.textContent = list.length;
 }
 
-function formatCategory(category) {
-  const map = {
-    'crisis-mental-health': 'Crisis / Mental Health',
-    'federal': 'Federal Benefits',
-    'vso': 'VSO',
-    'employment': 'Employment / Career',
-    'housing': 'Housing / Homelessness',
-    'financial': 'Financial / Emergency',
-    'education': 'Education',
-    'legal': 'Legal',
-    'tech': 'AI / Tech Tools',
-    'women': 'Women Veterans',
-    'family': 'Family / Spouse'
-  };
-  return map[category] || category;
+function escapeHTML(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-function filterByCategory(category) {
+// ── Filter by category (show/hide only) ──
+function filterByCategory(category, btn) {
   currentFilter = category;
 
-  // Update button states
-  document.querySelectorAll('.filter-btn').forEach(btn => {
-    btn.classList.remove('active');
-  });
-  event.target.classList.add('active');
+  // Update active button
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
 
-  // Filter and display
-  const filtered = category === 'all' ? resources : resources.filter(r => r.category === category);
-  renderResources(filtered);
+  applyFilters();
 }
 
+// ── Search filter ──
 function filterResources() {
-  const search = document.getElementById('searchInput').value.toLowerCase();
-  let filtered = resources.filter(r =>
-    r.name.toLowerCase().includes(search) ||
-    r.description.toLowerCase().includes(search)
-  );
+  applyFilters();
+}
+
+// ── Combined filter logic ──
+function applyFilters() {
+  const search = document.getElementById('searchInput').value.toLowerCase().trim();
+  let filtered = resources;
 
   if (currentFilter !== 'all') {
     filtered = filtered.filter(r => r.category === currentFilter);
   }
 
+  if (search) {
+    filtered = filtered.filter(r =>
+      r.name.toLowerCase().includes(search) ||
+      r.description.toLowerCase().includes(search) ||
+      (r.eligibility && r.eligibility.toLowerCase().includes(search)) ||
+      (r.category && r.category.toLowerCase().includes(search))
+    );
+  }
+
   renderResources(filtered);
 }
 
+// ── Submission form ──
 function toggleSubmissionForm() {
   const form = document.getElementById('submissionForm');
   form.classList.toggle('visible');
@@ -650,7 +1037,6 @@ function toggleSubmissionForm() {
 
 document.getElementById('submissionForm').addEventListener('submit', function(e) {
   e.preventDefault();
-
   const submission = {
     name: document.getElementById('orgName').value,
     website: document.getElementById('orgWebsite').value,
@@ -659,53 +1045,27 @@ document.getElementById('submissionForm').addEventListener('submit', function(e)
     category: document.getElementById('orgCategory').value,
     timestamp: new Date().toISOString()
   };
-
-  // Save to localStorage for MVP
   let submissions = JSON.parse(localStorage.getItem('orgSubmissions') || '[]');
   submissions.push(submission);
   localStorage.setItem('orgSubmissions', JSON.stringify(submissions));
-
-  alert('Thank you! Your organization submission has been received. We\'ll review it and follow up within 5 business days.');
+  alert('Thank you! Your submission has been received. We\'ll review it within 5 business days.');
   this.reset();
   toggleSubmissionForm();
 });
 
+// ── Nav toggle ──
 function toggleMenu() {
   const menu = document.getElementById('navMenu');
   menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
 }
-
 document.querySelectorAll('.navbar__nav a').forEach(link => {
   link.addEventListener('click', () => {
-    if (window.innerWidth < 768) {
-      document.getElementById('navMenu').style.display = 'none';
-    }
+    if (window.innerWidth < 768) document.getElementById('navMenu').style.display = 'none';
   });
 });
 
-// Initialize on page load
+// ── Initialize ──
 renderResources(resources);
-
-// Apply category colors to tags
-const colorMap = {
-  'crisis': 'crisis', 'mental health': 'crisis',
-  'federal': 'federal', 'federal benefits': 'federal',
-  'vso': 'vso', 'vsos': 'vso',
-  'employment': 'employment', 'career': 'employment',
-  'housing': 'housing', 'homelessness': 'housing',
-  'financial': 'financial', 'emergency': 'financial',
-  'education': 'education',
-  'legal': 'legal',
-  'ai': 'ai', 'tech': 'ai', 'technology': 'ai',
-  'women': 'women', 'women veterans': 'women',
-  'family': 'family', 'spouse': 'family'
-};
-document.querySelectorAll('.resource-card__category').forEach(tag => {
-  const text = tag.textContent.trim().toLowerCase();
-  for (const [key, color] of Object.entries(colorMap)) {
-    if (text.includes(key)) { tag.setAttribute('data-color', color); break; }
-  }
-});
 </script>
 
 <!-- AUTH MODAL -->
