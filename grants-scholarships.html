@@ -182,10 +182,15 @@ fetch('data/grants-scholarships.json').then(function(response) {
 
   // Render card function for grants and scholarships
   function renderGrantCard(grant) {
-    var appLink = grant.application_link ? '<a href="' + ResourceHub.escapeHtml(grant.application_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Apply Now</a>' : '';
-    var moreLink = grant.website ? '<a href="' + ResourceHub.escapeHtml(grant.website) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
+    var deadlineText = grant.deadline ? ResourceHub.formatDate(grant.deadline) : 'Rolling';
 
-    var deadlineText = grant.deadline ? 'Deadline: ' + ResourceHub.formatDate(grant.deadline) : 'Rolling applications';
+    var actions = '';
+    if (grant.application_link) {
+      actions += '<a href="' + ResourceHub.escapeHtml(grant.application_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Apply Now</a>';
+    }
+    if (grant.website) {
+      actions += '<a href="' + ResourceHub.escapeHtml(grant.website) + '" class="hub-card__link hub-card__link--outline" target="_blank" rel="noopener noreferrer">Learn More</a>';
+    }
 
     return '<div class="hub-card">' +
       '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(grant.program_name || '') + '</h3>' +
@@ -193,13 +198,9 @@ fetch('data/grants-scholarships.json').then(function(response) {
       '<div class="hub-card__details">' +
       '<strong>Amount:</strong> ' + ResourceHub.escapeHtml(grant.amount || 'Varies') + '<br />' +
       '<strong>Eligibility:</strong> ' + ResourceHub.escapeHtml(grant.eligibility || '') + '<br />' +
-      '<strong>Deadline:</strong> ' + deadlineText + '<br />' +
+      '<strong>Deadline:</strong> ' + deadlineText +
       '</div>' +
-      '<div class="hub-card__links">' +
-      appLink +
-      (appLink && moreLink ? ' • ' : '') +
-      moreLink +
-      '</div>' +
+      '<div class="hub-card__links">' + actions + '</div>' +
       '</div>';
   }
 

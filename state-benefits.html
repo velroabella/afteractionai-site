@@ -190,24 +190,25 @@ fetch('data/state-benefits.json').then(function(response) {
 
   // Render card function for state benefits
   function renderBenefitCard(benefit) {
-    var officialLink = benefit.official_link ? '<a href="' + ResourceHub.escapeHtml(benefit.official_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Official Info</a>' : '';
-    var applicationLink = benefit.application_link ? '<a href="' + ResourceHub.escapeHtml(benefit.application_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Apply</a>' : '';
+    var categoryLabel = (benefit.category || '').replace(/_/g, ' ');
 
-    var disabilityText = benefit.disability_threshold ? 'Disability: ' + ResourceHub.escapeHtml(benefit.disability_threshold) : '';
+    var actions = '';
+    if (benefit.official_link) {
+      actions += '<a href="' + ResourceHub.escapeHtml(benefit.official_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Official Info</a>';
+    }
+    if (benefit.application_link) {
+      actions += '<a href="' + ResourceHub.escapeHtml(benefit.application_link) + '" class="hub-card__link hub-card__link--outline" target="_blank" rel="noopener noreferrer">Apply</a>';
+    }
 
     return '<div class="hub-card">' +
       '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(benefit.benefit_name || '') + '</h3>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(benefit.state || '') + ' • ' + ResourceHub.escapeHtml(benefit.category || '') + '</p>' +
+      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(benefit.state || '') + ' &middot; ' + categoryLabel + '</p>' +
       '<p class="hub-card__description">' + ResourceHub.escapeHtml(benefit.summary || '') + '</p>' +
       '<div class="hub-card__details">' +
-      '<strong>Who Qualifies:</strong> ' + ResourceHub.escapeHtml(benefit.who_qualifies || '') + '<br />' +
-      (disabilityText ? '<strong>' + disabilityText + '</strong><br />' : '') +
+      '<strong>Who Qualifies:</strong> ' + ResourceHub.escapeHtml(benefit.who_qualifies || '') +
+      (benefit.disability_threshold ? '<br /><strong>Disability:</strong> ' + ResourceHub.escapeHtml(benefit.disability_threshold) : '') +
       '</div>' +
-      '<div class="hub-card__links">' +
-      officialLink +
-      (officialLink && applicationLink ? ' • ' : '') +
-      applicationLink +
-      '</div>' +
+      '<div class="hub-card__links">' + actions + '</div>' +
       '</div>';
   }
 

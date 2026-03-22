@@ -188,27 +188,31 @@ fetch('data/hotlines-escalation.json').then(function(response) {
 
   // Render card function for hotlines and escalation
   function renderHotlineCard(hotline) {
-    // Crisis lines get red accent styling
     var isCrisis = hotline.issue_type === 'crisis';
     var cardClass = isCrisis ? 'hub-card hub-card--crisis' : 'hub-card';
 
-    var phoneLink = hotline.phone ? '<a href="tel:' + ResourceHub.escapeHtml(hotline.phone) + '" class="hub-card__link" style="font-weight: 600;">' + ResourceHub.escapeHtml(hotline.phone) + '</a>' : 'N/A';
-    var complaintLink = hotline.complaint_form_url ? '<a href="' + ResourceHub.escapeHtml(hotline.complaint_form_url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Submit Complaint</a>' : '';
-    var moreLink = hotline.website ? '<a href="' + ResourceHub.escapeHtml(hotline.website) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
+    var issueLabel = (hotline.issue_type || '').replace(/_/g, ' ');
+    var phoneHtml = hotline.phone
+      ? '<a href="tel:' + ResourceHub.escapeHtml(hotline.phone) + '" class="hub-card__phone">' + ResourceHub.escapeHtml(hotline.phone) + '</a>'
+      : '';
+
+    var actions = '';
+    if (hotline.complaint_form_url) {
+      actions += '<a href="' + ResourceHub.escapeHtml(hotline.complaint_form_url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Submit Complaint</a>';
+    }
+    if (hotline.website) {
+      actions += '<a href="' + ResourceHub.escapeHtml(hotline.website) + '" class="hub-card__link hub-card__link--outline" target="_blank" rel="noopener noreferrer">Learn More</a>';
+    }
 
     return '<div class="' + cardClass + '">' +
       '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(hotline.name || '') + '</h3>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(hotline.issue_type || '') + '</p>' +
+      '<p class="hub-card__meta">' + issueLabel + '</p>' +
+      (phoneHtml ? '<div style="margin-bottom:12px;">' + phoneHtml + '</div>' : '') +
       '<div class="hub-card__details">' +
-      '<strong>Phone:</strong> ' + phoneLink + '<br />' +
       '<strong>Hours:</strong> ' + ResourceHub.escapeHtml(hotline.hours || '24/7') + '<br />' +
-      '<strong>Description:</strong> ' + ResourceHub.escapeHtml(hotline.description || '') + '<br />' +
+      ResourceHub.escapeHtml(hotline.description || '') +
       '</div>' +
-      '<div class="hub-card__links">' +
-      complaintLink +
-      (complaintLink && moreLink ? ' • ' : '') +
-      moreLink +
-      '</div>' +
+      '<div class="hub-card__links">' + actions + '</div>' +
       '</div>';
   }
 
