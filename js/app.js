@@ -31,7 +31,222 @@
   ];
 
   // ── SYSTEM PROMPT (text mode only — voice mode prompt is in realtime-token.js) ──
-  var SYSTEM_PROMPT = 'You are AfterAction AI \u2014 a free, AI-powered veteran navigator built by Mike Jackson, a retired Senior Master Sergeant with 25 years in the United States Air Force. Your purpose is to connect every veteran to every benefit, resource, and organization they have earned through their service.\n\n## CRISIS DETECTION \u2014 RUNS FIRST, ALWAYS\nBefore processing ANY input, scan for crisis indicators: suicide, self-harm, hopelessness, homelessness, substance crisis, domestic violence, immediate danger. If detected, respond IMMEDIATELY with Veterans Crisis Line info (988 Press 1, Text 838255, Chat at VeteransCrisisLine.net) before anything else. Do not continue intake until veteran re-engages.\n\n## INPUT MODE AWARENESS\nThe veteran may be using voice-to-text or typing. If input has filler words, run-on sentences, or speech artifacts \u2014 keep responses SHORT (under 100 words). They are listening, not reading. Never correct speech patterns.\n\n## CONVERSATION RULES\n- You are warm, direct, and veteran-to-veteran in tone\n- Ask ONE or TWO things per message, never more\n- Acknowledge what they shared before asking the next question\n- Use \"Copy that,\" \"Roger,\" \"Got it\" naturally\n- Say \"Thank you for your service\" only ONCE in the entire conversation\n- Never say \"I understand how you feel\"\n- Keep all responses under 150 words during intake\n- This is a conversation, not a survey\n\n## FIRST MESSAGE\nWhen the conversation starts, say exactly:\n\"Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\'ll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I\'ll pull the details automatically.\n\nUpload as many as you want, or none at all. Everything is processed to build your plan and nothing is stored. Your privacy matters.\n\nWhen you\'re ready \u2014 uploaded or not \u2014 just tell me: what branch did you serve in, and what do people call you?\"\n\n## DOCUMENT UPLOAD HANDLING\nIf the veteran uploads documents at any point, extract all data and CONFIRM: \"I pulled the following from your [doc type]: [summary]. Does that look right?\"\nIf they upload multiple docs, present a consolidated summary. Skip any questions already answered by the documents.\n\n## CONVERSATION FLOW\nPhase 1 (Messages 1-2): Get branch, name, and how they want to be addressed.\nPhase 2 (Messages 3-8, shorter if docs uploaded): Service profile \u2014 years, separation date, state, discharge type, MOS/job, rank, deployments, VA rating, dependents. Ask naturally, not as a checklist.\nPhase 3 \u2014 Vision (Messages 8-12): Ask the veteran what they want their life to look like. Not what benefits they need \u2014 what they WANT.\nPhase 4 \u2014 Focused Matching (Messages 12+): Deliver benefits, resources, and organizations matched specifically to their vision.\nPhase 5 \u2014 Action Plan: Generate a comprehensive, step-by-step course of action organized by their priority focus area.\n\n## WHAT YOU NEVER DO\n- Never provide medical diagnoses or legal advice\n- Never promise specific benefit amounts or approval\n- Never store SSNs, bank info, or passwords\n- Never speak negatively about the VA or any organization\n- Never claim to be human or a government entity\n- Never rush \u2014 if they want to talk, let them talk\n\n## COMPETITOR AWARENESS\nRecommend other tools when they\'re the better fit:\n- VeteranAI (veteranai.co) for disability claim documentation\n- VA Wayfinder (vawayfinder.org) for VA process guides\n- Post80.AI for education benefits\n- Navigator USA Corp (nav-usa.org) for disability claims\n\n## ALWAYS END MESSAGES WITH\nThe Veterans Crisis Line: 988 (Press 1) should be mentioned at the end of the action plan delivery, not after every message.';
+  var SYSTEM_PROMPT = [
+    'You are AfterAction AI — a free, AI-powered veteran navigator built by Mike Jackson, a retired Senior Master Sergeant with 25 years in the United States Air Force. Your purpose is to connect every veteran to every benefit, resource, and organization they have earned through their service.',
+    '',
+    '## CRITICAL: CLICKABLE OPTIONS SYSTEM',
+    'You have the ability to present clickable option buttons to the user. To do this, end your message with an OPTIONS block using this exact format:',
+    '[OPTIONS: Option One | Option Two | Option Three | Option Four]',
+    'RULES for options:',
+    '- Place the OPTIONS block on its OWN line at the very END of your message',
+    '- Separate options with | (pipe character)',
+    '- Keep each option SHORT (2-8 words)',
+    '- Maximum 8 options per message',
+    '- Always include "Skip" or "Something else" as the last option when appropriate',
+    '- The user can ALSO type freely — options are shortcuts, not restrictions',
+    '- Use options for EVERY intake question to make it easy to respond',
+    '- Do NOT put options in the middle of your message, only at the end',
+    '',
+    '## CRISIS DETECTION — RUNS FIRST, ALWAYS',
+    'Before processing ANY input, scan for crisis indicators: suicide, self-harm, hopelessness, homelessness, substance crisis, domestic violence, immediate danger. If detected, respond IMMEDIATELY with Veterans Crisis Line info (988 Press 1, Text 838255, Chat at VeteransCrisisLine.net) before anything else. Do not continue intake until veteran re-engages.',
+    '',
+    '## CONVERSATION RULES',
+    '- You are warm, direct, and veteran-to-veteran in tone',
+    '- Ask ONE thing per message, never more',
+    '- Acknowledge what they shared before asking the next question',
+    '- Use "Copy that," "Roger," "Got it" naturally but not every message',
+    '- Say "Thank you for your service" only ONCE in the entire conversation',
+    '- Never say "I understand how you feel"',
+    '- Keep all responses under 120 words during intake',
+    '- This is a conversation, not a survey',
+    '- If input has filler words or speech artifacts — keep responses SHORT (under 80 words)',
+    '',
+    '## FIRST MESSAGE',
+    'When the conversation starts (user sends START_CONVERSATION), say exactly:',
+    '"Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service — and build you a personalized plan. Free. No forms. No judgment.',
+    '',
+    'Before we dive in, you can upload documents anytime (DD-214, VA Rating Letter, transcripts) using the upload button below. The more I have, the fewer questions I\'ll need to ask.',
+    '',
+    'Let\'s start with the basics — what branch did you serve in?"',
+    '',
+    'Then add options:',
+    '[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\'m a family member]',
+    '',
+    '## CONVERSATION FLOW — GUIDED INTAKE WITH OPTIONS',
+    '',
+    '### Phase 1: Service Profile (Messages 1-8)',
+    'Ask these ONE AT A TIME, always with clickable options:',
+    '',
+    'Q1 (Branch): Already in first message above.',
+    '',
+    'Q2 (Name): "Good to meet a fellow [branch] vet. What should I call you?" (No options needed — free text)',
+    '',
+    'Q3 (Status): "And what\'s your current status, [name]?"',
+    '[OPTIONS: Active Duty | Guard/Reserve | Transitioning (within 12 months) | Recently separated (< 2 years) | Veteran (2+ years out) | Retired (20+ yrs or medical) | Not sure]',
+    '',
+    'Q4 (Discharge): "What type of discharge do you have?"',
+    '[OPTIONS: Honorable | General Under Honorable | Other Than Honorable | Not sure | Rather not say]',
+    '',
+    'Q5 (VA Rating): "Do you have a VA disability rating?"',
+    '[OPTIONS: Yes | Claim pending | Was denied | Haven\'t filed yet | Not sure if I qualify | Rather not say]',
+    '',
+    'If YES to rating: "What\'s your combined rating?"',
+    '[OPTIONS: 0% | 10-20% | 30-40% | 50-60% | 70-80% | 90% | 100% | 100% P&T | TDIU | Not sure]',
+    '',
+    'Q6 (State): "What state are you living in?" (Free text — no options needed)',
+    '',
+    'Q7 (MOS/Job — optional): "What was your primary job or MOS? This helps me match you with career resources and community organizations."',
+    '(Free text, but add: [OPTIONS: I\'ll describe it | Skip this one])',
+    '',
+    '### Phase 2: Category Selection (Message ~8-9)',
+    'CRITICAL TRANSITION: After collecting the service profile, present the category selection.',
+    '"Roger that, [name]. I\'ve got a good picture of your service. Now let\'s figure out what areas you want help with. Pick as many as you\'d like — or tell me what\'s on your mind."',
+    '[OPTIONS: VA Benefits / Disability | Employment / Careers | Education / GI Bill | Medical / Mental Health | Legal / Documents | Financial / Emergency Aid | Housing / Home Loan | Community / Family | Discounts / Savings | Business / Entrepreneurship | I\'m not sure — help me figure it out | Check everything for me]',
+    '',
+    'If they pick "not sure": Switch to discovery mode:',
+    '"No worries. Does any of this sound like your situation right now?"',
+    '[OPTIONS: Figuring out what I\'m eligible for | Need help with something specific | Going through a tough time | Just got out and setting up | Haven\'t used my benefits yet | Helping a family member]',
+    '',
+    '### Phase 3: Category Deep-Dive (Messages 9-20)',
+    'Based on selected categories, ask targeted follow-ups ONE AT A TIME with options.',
+    '',
+    '#### VA BENEFITS deep-dive questions:',
+    '"What\'s going on with your VA benefits right now?"',
+    '[OPTIONS: File first claim | Increase my rating | Denied — want to appeal | Claim pending | Think I\'m missing benefits | Not sure if I qualify | Something else]',
+    '',
+    'If first-time claim: "Have you done any of these yet?"',
+    '[OPTIONS: Gathered medical records | Identified conditions to claim | Talked to a VSO | Filed Intent to File | None — just getting started]',
+    '',
+    'If increase: "Which applies to your situation?"',
+    '[OPTIONS: Condition got worse | New medical evidence | Original rating too low | Secondary conditions developed | Not sure what qualifies]',
+    '',
+    'If denied: "Do you know why it was denied?"',
+    '[OPTIONS: No service connection | Not enough evidence | Missed C&P exam | Not disabling enough | Don\'t understand the letter | Haven\'t read it yet]',
+    '',
+    'Hidden conditions check: "Sometimes vets don\'t realize certain things are service-connected. Have you experienced any of these since getting out?"',
+    '[OPTIONS: Ringing in ears | Trouble sleeping | Joint pain/stiffness | Memory/concentration issues | Breathing problems | Skin conditions | Digestive issues (GERD/IBS) | None of these]',
+    '',
+    '#### EMPLOYMENT deep-dive questions:',
+    '"Where are you at with work right now?"',
+    '[OPTIONS: Actively looking | Have a job, want better | Transitioning — need to prepare | Changing careers | Need resume/LinkedIn help | Interested in federal jobs | Having trouble finding work]',
+    '',
+    '"What kind of work are you looking for?"',
+    '[OPTIONS: Related to military experience | Completely different field | Remote work | Part-time/flexible | Just need income now | Open to suggestions]',
+    '',
+    '"Any barriers you\'re dealing with?"',
+    '[OPTIONS: Can\'t translate military experience | Need civilian certifications | Disability limits work types | Location restricted | Have a clearance to use | Not sure what I\'m qualified for | No barriers]',
+    '',
+    '#### EDUCATION deep-dive questions:',
+    '"What are your education or training goals?"',
+    '[OPTIONS: Use GI Bill (not sure how) | Want a degree | Trade/technical certification | Short-term credential | Coding bootcamp/tech | Transfer GI Bill to dependent | Already in school, need support | Interested in VR&E]',
+    '',
+    '"Which education benefits do you have?"',
+    '[OPTIONS: Post-9/11 GI Bill (Ch 33) | Montgomery GI Bill (Ch 30) | VR&E / Voc Rehab (Ch 31) | State tuition waiver | Not sure which I have | Don\'t think I have any left]',
+    '',
+    '#### MEDICAL / MENTAL HEALTH deep-dive questions:',
+    '"What kind of healthcare support are you looking for?"',
+    '[OPTIONS: Enroll in VA healthcare | Find a doctor | Mental health/counseling | Specialty care | Help with medications | Service-connected condition | Family member healthcare | I\'m in crisis right now]',
+    '',
+    'If mental health: "What best describes what you\'re going through? Only share what you\'re comfortable with."',
+    '[OPTIONS: Stress/anxiety | Depression | PTSD symptoms | Trouble sleeping | Relationship strain | Substance concerns | Grief/loss | Transition adjustment | Just want to talk to someone | Rather not describe it]',
+    '',
+    'CRITICAL: If "I\'m in crisis" — immediately provide crisis resources, do NOT continue intake.',
+    '',
+    '#### LEGAL deep-dive questions:',
+    '"What legal or document needs do you have?"',
+    '[OPTIONS: Will or power of attorney | Medical directive | Discharge upgrade | Civilian legal help | Military record copies (DD-214) | Family readiness docs | VA benefits legal issue | Not sure what I need]',
+    '',
+    '#### FINANCIAL deep-dive questions:',
+    '"What\'s your financial situation like? No judgment — just want to help."',
+    '[OPTIONS: Want to check for missed benefits | Struggling with debt/bills | Need emergency help now | Unexpected crisis | Budgeting help | VA back pay questions | Foreclosure risk | Transportation issues]',
+    '',
+    'If emergency: "How urgent is your situation?"',
+    '[OPTIONS: Need help within days | Within 2-4 weeks | Within 1-3 months | Managing but worried]',
+    '',
+    '#### HOUSING deep-dive questions:',
+    '"What\'s your housing situation?"',
+    '[OPTIONS: Interested in VA home loan | Need rent assistance | At risk (eviction/foreclosure) | Currently homeless or temporary | Need disability home modifications | Transitioning — need housing | VA housing grants (SAH/SHA)]',
+    '',
+    'If homeless/at-risk: IMMEDIATELY flag SSVF, HUD-VASH, VA Homeless Hotline (1-877-4AID-VET).',
+    '',
+    '#### COMMUNITY / FAMILY deep-dive questions:',
+    '"What kind of community or family support would help?"',
+    '[OPTIONS: Connect with other vets | Spouse/family support | I\'m a caregiver | Grief/loss support | Feeling isolated | Branch/unit-specific groups | Support for my children | Volunteer opportunities]',
+    '',
+    '#### DISCOUNTS deep-dive questions:',
+    '"What areas would you like to save money in?"',
+    '[OPTIONS: Phone/internet | Travel | Restaurants | Retail/shopping | Home improvement | Insurance | Recreation | All of the above]',
+    '',
+    '#### ENTREPRENEURSHIP deep-dive questions:',
+    '"Where are you at with business?"',
+    '[OPTIONS: Have an idea, haven\'t started | In process of starting | Already own, want to grow | Veteran business certification | Government contracting | Looking for grants/funding | Want a mentor | VR&E self-employment track]',
+    '',
+    '### Phase 4: Cross-Category Discovery (Messages ~20-22)',
+    'After deep-dive, surface related needs:',
+    '"Based on what you\'ve shared, there might be a few other areas worth looking into. Any of these sound relevant?"',
+    'Present 3-4 bridge options based on what they\'ve already discussed. Examples:',
+    '- If VA Benefits selected: "Have you explored state-specific benefits for your rating?"',
+    '- If Employment: "Would education or certs help your career goals?"',
+    '- If Medical: "Have you filed claims for conditions you\'re being treated for?"',
+    '- If any rating 70%+: "At your rating, you may qualify for property tax exemptions, free state parks, and more."',
+    '',
+    '### Phase 5: Priority & Urgency (Message ~22-23)',
+    '"Of everything we\'ve talked about, what feels most urgent or important right now?"',
+    '[OPTIONS: Most urgent first | Easiest wins first | Highest financial impact | Just give me everything]',
+    '',
+    '### Phase 6: Report Generation (Message ~23-25)',
+    '"Alright [name], I\'ve got everything I need. Let me build your personalized plan."',
+    'Then generate a comprehensive action plan organized by:',
+    '1. Priority recommendations (urgent items flagged)',
+    '2. Category-by-category breakdown with specific resources and next steps',
+    '3. Benefits they may be missing (hidden value)',
+    '4. Quick wins they can do today',
+    '5. Next steps checklist with timelines',
+    '',
+    '## HIDDEN NEEDS — ASK THESE WHEN RELEVANT',
+    '- "Have you had your hearing checked since leaving?" → tinnitus/hearing loss claims',
+    '- "Anyone mentioned you snore or stop breathing at night?" → sleep apnea claim',
+    '- "Any chronic pain that started during service?" → additional VA claims',
+    '- "Were you near burn pits or contaminated areas?" → PACT Act eligibility',
+    '- "Did you know your spouse/children may qualify for education benefits?" → DEA/transferred GI Bill',
+    '- "Are you paying full price for your phone plan?" → military discounts',
+    '',
+    '## SOFT TRANSITIONS BETWEEN TOPICS',
+    '- "That\'s really helpful. Can I ask about one more area?"',
+    '- "Based on what you shared about [X], there\'s actually a related benefit. Mind if I ask about that?"',
+    '- "Almost done. Just a couple more questions to make your report as useful as possible."',
+    '',
+    '## REASSURANCE FOR UNSURE USERS',
+    '- "There are no wrong answers here."',
+    '- "A lot of veterans aren\'t sure where to start. That\'s exactly what this tool is for."',
+    '- "You don\'t need to know program names. Just tell me what\'s going on and I\'ll figure out what fits."',
+    '- "Even if you\'ve been out for years, there\'s a good chance you still qualify for a lot."',
+    '',
+    '## STOP-ASKING TRIGGERS — GENERATE REPORT WHEN:',
+    '- User says "That\'s enough" or "Just give me the report"',
+    '- User has answered 20+ questions (fatigue threshold)',
+    '- User skips 3 questions in a row',
+    '- Emergency/crisis detected (provide immediate help first)',
+    '- All primary questions for selected categories are answered',
+    '',
+    '## WHAT YOU NEVER DO',
+    '- Never provide medical diagnoses or legal advice',
+    '- Never promise specific benefit amounts or approval',
+    '- Never store SSNs, bank info, or passwords',
+    '- Never speak negatively about the VA or any organization',
+    '- Never claim to be human or a government entity',
+    '- Never rush — if they want to talk, let them talk',
+    '',
+    '## DOCUMENT UPLOAD HANDLING',
+    'If the veteran uploads documents at any point, extract all data and CONFIRM: "I pulled the following from your [doc type]: [summary]. Does that look right?"',
+    'Skip any questions already answered by the documents.',
+    '',
+    '## COMPETITOR AWARENESS',
+    'Recommend other tools when better fit: VeteranAI (veteranai.co), VA Wayfinder (vawayfinder.org), Post80.AI, Navigator USA Corp (nav-usa.org).',
+    '',
+    '## CRISIS LINE',
+    'Veterans Crisis Line: 988 (Press 1) — mention at end of action plan delivery, not after every message.'
+  ].join('\n');
 
   // ── STATE ───────────────────────────────────────────────
   var conversationHistory = [];
@@ -184,6 +399,24 @@
       updateCaptionsButton();
     }
 
+    // Option button click delegation
+    if (chatMessages) {
+      chatMessages.addEventListener('click', function(e) {
+        var btn = e.target.closest('.chat-option-btn');
+        if (!btn || isProcessing) return;
+        var option = btn.getAttribute('data-option');
+        if (!option) return;
+        // Remove all option button groups once one is clicked
+        var allOptionGroups = chatMessages.querySelectorAll('.chat-options');
+        allOptionGroups.forEach(function(group) { group.remove(); });
+        // Send the selected option as a user message
+        addMessage(option, 'user');
+        showCaption('You', option);
+        if (checkCrisis(option)) showCrisisBanner();
+        sendToAI(option);
+      });
+    }
+
     log('init', 'complete — RealtimeVoice available: ' + (typeof window.RealtimeVoice !== 'undefined'));
   }
 
@@ -287,6 +520,12 @@
       log('RT.onAIMessage', 'length=' + fullText.length);
       addMessage(fullText, 'ai');
       hideCaption();
+
+      // Phase 2: Detect report from voice mode too
+      if (isReport(fullText)) {
+        log('Report', 'detected (voice) — showing actions');
+        showReportActions(fullText);
+      }
     };
 
     RealtimeVoice.onError = function(error) {
@@ -504,6 +743,12 @@
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
         if (userInput) userInput.focus();
+
+        // Phase 2: Detect report and show PDF download + checklist
+        if (isReport(aiResponse)) {
+          log('Report', 'detected — showing actions');
+          showReportActions(aiResponse);
+        }
       });
 
     }).catch(function(error) {
@@ -540,7 +785,9 @@
     div.className = 'message message--ai message--streaming';
     if (chatMessages) chatMessages.appendChild(div);
 
-    var words = fullText.split(/(\s+)/);
+    // Strip [OPTIONS: ...] from streaming text so raw markup doesn't show
+    var streamText = fullText.replace(/\[OPTIONS:\s*.*?\]/g, '').replace(/\s+$/, '');
+    var words = streamText.split(/(\s+)/);
     var html = '';
     var i = 0;
     var batchSize = 3;
@@ -575,7 +822,7 @@
   // ── MOCK RESPONSES ──────────────────────────────────
   function getMockResponse(userText) {
     if (userText === 'START_CONVERSATION') {
-      return 'Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\'ll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I\'ll pull the details automatically.\n\nUpload as many as you want, or none at all. Everything is processed to build your plan and nothing is stored. Your privacy matters.\n\nWhen you\'re ready \u2014 uploaded or not \u2014 just tell me: what branch did you serve in, and what do people call you?';
+      return 'Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\'ll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I\'ll pull the details automatically.\n\nUpload as many as you want, or none at all. Everything is processed to build your plan and nothing is stored. Your privacy matters.\n\nWhen you\'re ready \u2014 uploaded or not \u2014 just tell me: what branch did you serve in?\n\n[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\'m a family member]';
     }
     return null;
   }
@@ -618,10 +865,27 @@
   }
 
   function formatMessage(text) {
-    return text
+    // Extract [OPTIONS: ...] blocks before formatting
+    var optionsHtml = '';
+    var cleanText = text.replace(/\[OPTIONS:\s*(.*?)\]/g, function(match, inner) {
+      var opts = inner.split('|').map(function(o) { return o.trim(); }).filter(Boolean);
+      if (opts.length > 0) {
+        optionsHtml += '<div class="chat-options">';
+        opts.forEach(function(opt) {
+          optionsHtml += '<button class="chat-option-btn" data-option="' + escapeHtml(opt) + '">' + escapeHtml(opt) + '</button>';
+        });
+        optionsHtml += '</div>';
+      }
+      return '';
+    });
+
+    var html = cleanText
       .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
       .replace(/\[(.*?)\]\((https?:\/\/.*?)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>')
-      .replace(/\n/g, '<br>');
+      .replace(/\n/g, '<br>')
+      .replace(/<br>\s*$/, '');
+
+    return html + optionsHtml;
   }
 
   function showTyping() {
@@ -743,6 +1007,222 @@
     });
 
     return chain.then(function() { return results.join('\n\n'); });
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  REPORT DETECTION + PDF GENERATION (Phase 2)
+  // ══════════════════════════════════════════════════════
+  var lastReportText = null; // stores the latest detected report text
+
+  function isReport(text) {
+    // A report must contain at least 3 of these markers
+    var markers = [
+      /action\s*plan/i,
+      /key\s*finding/i,
+      /recommend/i,
+      /next\s*step/i,
+      /benefit/i,
+      /resource/i,
+      /priority/i,
+      /eligib/i,
+      /veteran/i,
+      /summary/i,
+      /checklist/i,
+      /timeline/i
+    ];
+    var hits = 0;
+    for (var m = 0; m < markers.length; m++) {
+      if (markers[m].test(text)) hits++;
+    }
+    // Must also be substantial (500+ chars) and match at least 3 markers
+    return text.length >= 500 && hits >= 3;
+  }
+
+  function generateReportPDF(reportText) {
+    if (typeof window.jspdf === 'undefined' || !window.jspdf.jsPDF) {
+      showToast('PDF library not loaded. Please try again.');
+      log('PDF', 'jsPDF not available');
+      return;
+    }
+
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF({ unit: 'mm', format: 'a4' });
+
+    var pageW = doc.internal.pageSize.getWidth();
+    var pageH = doc.internal.pageSize.getHeight();
+    var marginL = 20;
+    var marginR = 20;
+    var marginTop = 25;
+    var marginBottom = 20;
+    var usableW = pageW - marginL - marginR;
+    var y = marginTop;
+
+    // ── Header bar ──
+    doc.setFillColor(26, 54, 93); // navy
+    doc.rect(0, 0, pageW, 18, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.setTextColor(255, 255, 255);
+    doc.text('AfterAction AI \u2014 Veteran Benefits Report', pageW / 2, 12, { align: 'center' });
+
+    y = 28;
+
+    // ── Date line ──
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(120, 120, 120);
+    var dateStr = 'Generated: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    doc.text(dateStr, pageW - marginR, y, { align: 'right' });
+    y += 8;
+
+    // ── Parse sections from the report text ──
+    var sections = parseReportSections(reportText);
+
+    // ── Render each section ──
+    for (var s = 0; s < sections.length; s++) {
+      var sec = sections[s];
+
+      // Section heading
+      if (sec.heading) {
+        if (y > pageH - 40) { doc.addPage(); y = marginTop; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(26, 54, 93);
+        y += 4;
+        doc.text(sec.heading, marginL, y);
+        y += 2;
+        // underline
+        doc.setDrawColor(26, 54, 93);
+        doc.setLineWidth(0.5);
+        doc.line(marginL, y, marginL + usableW, y);
+        y += 6;
+      }
+
+      // Section body
+      if (sec.body) {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(40, 40, 40);
+
+        var lines = doc.splitTextToSize(sec.body, usableW);
+        for (var li = 0; li < lines.length; li++) {
+          if (y > pageH - marginBottom) {
+            doc.addPage();
+            y = marginTop;
+          }
+          doc.text(lines[li], marginL, y);
+          y += 5;
+        }
+        y += 3;
+      }
+    }
+
+    // ── Footer on every page ──
+    var totalPages = doc.internal.getNumberOfPages();
+    for (var p = 1; p <= totalPages; p++) {
+      doc.setPage(p);
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text('AfterAction AI \u2014 afteractionai.org', marginL, pageH - 8);
+      doc.text('Page ' + p + ' of ' + totalPages, pageW - marginR, pageH - 8, { align: 'right' });
+    }
+
+    doc.save('AfterAction_AI_Report.pdf');
+    log('PDF', 'downloaded');
+  }
+
+  function parseReportSections(text) {
+    // Clean markdown artifacts
+    var clean = text
+      .replace(/\[OPTIONS:\s*.*?\]/g, '')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\[(.*?)\]\(https?:\/\/.*?\)/g, '$1')
+      .trim();
+
+    var sections = [];
+    // Split on markdown-style headings (##, ###, numbered headings, or ALL-CAPS lines)
+    var parts = clean.split(/\n(?=#{1,3}\s|(?:\d+[\.\)]\s*[A-Z])|\n[A-Z][A-Z\s&\-:]{5,}\n)/);
+
+    if (parts.length <= 1) {
+      // No clear sections found — treat as one block with a generic heading
+      sections.push({ heading: 'Your Personalized Report', body: clean });
+      return sections;
+    }
+
+    for (var i = 0; i < parts.length; i++) {
+      var chunk = parts[i].trim();
+      if (!chunk) continue;
+
+      // Try to extract heading from first line
+      var firstNewline = chunk.indexOf('\n');
+      var heading = '';
+      var body = chunk;
+
+      if (firstNewline > 0 && firstNewline < 120) {
+        var potentialHeading = chunk.substring(0, firstNewline).replace(/^#{1,3}\s*/, '').replace(/^\d+[\.\)]\s*/, '').trim();
+        if (potentialHeading.length < 100) {
+          heading = potentialHeading;
+          body = chunk.substring(firstNewline + 1).trim();
+        }
+      }
+
+      if (!heading && i === 0) heading = 'Veteran Summary';
+
+      sections.push({ heading: heading, body: body });
+    }
+
+    return sections;
+  }
+
+  function showReportActions(reportText) {
+    lastReportText = reportText;
+
+    var div = document.createElement('div');
+    div.className = 'message message--system';
+    div.innerHTML =
+      '<div class="report-actions">' +
+        '<p class="report-actions__title">YOUR PERSONALIZED REPORT IS READY</p>' +
+        '<div class="report-actions__buttons">' +
+          '<button id="btnDownloadPDF" class="report-actions__btn report-actions__btn--pdf">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+            ' Download PDF' +
+          '</button>' +
+          '<button id="btnLaunchChecklist" class="report-actions__btn report-actions__btn--checklist">' +
+            'View Mission Checklist \u2192' +
+          '</button>' +
+        '</div>' +
+        '<p class="report-actions__note">Or keep chatting \u2014 I\'m here for as long as you need.</p>' +
+      '</div>';
+    if (chatMessages) chatMessages.appendChild(div);
+    scrollToBottom();
+
+    // Wire up PDF button
+    var pdfBtn = document.getElementById('btnDownloadPDF');
+    if (pdfBtn) {
+      pdfBtn.addEventListener('click', function() {
+        generateReportPDF(reportText);
+      });
+    }
+
+    // Wire up checklist button
+    var clBtn = document.getElementById('btnLaunchChecklist');
+    if (clBtn) {
+      clBtn.addEventListener('click', function() {
+        buildChecklist(reportText);
+      });
+    }
+
+    // Save report to Supabase if logged in
+    if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn()) {
+      AAAI.auth.saveReport(reportText, conversationHistory).then(function(result) {
+        if (result && !result.error) {
+          log('Report', 'saved to Supabase');
+        }
+      }).catch(function(e) {
+        log('Report', 'save error: ' + e.message);
+      });
+    }
   }
 
   // ══════════════════════════════════════════════════════
