@@ -198,39 +198,58 @@ Promise.all([
   // Render card function for officials
   function renderOfficialCard(official) {
     var chamberLabel = (official.chamber || '').toLowerCase() === 'senate' ? 'Senator' : 'Representative';
-    var phoneLink = official.phone ? '<a href="tel:' + ResourceHub.escapeHtml(official.phone) + '" class="hub-card__link">' + ResourceHub.escapeHtml(official.phone) + '</a>' : 'N/A';
-    var websiteLink = official.website ? '<a href="' + ResourceHub.escapeHtml(official.website) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Visit Website</a>' : '';
-    var contactLink = official.contact_form ? '<a href="' + ResourceHub.escapeHtml(official.contact_form) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Contact Form</a>' : '';
+    var partyMap = { 'R': 'Republican', 'D': 'Democrat', 'I': 'Independent' };
+    var partyFull = partyMap[official.party] || official.party || '';
 
-    return '<div class="hub-card">' +
-      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(official.full_name || official.name || '') + '</h3>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(chamberLabel) + ' • ' + ResourceHub.escapeHtml(official.state) + ' • ' + ResourceHub.escapeHtml(official.party) + '</p>' +
-      '<p class="hub-card__description">' + ResourceHub.escapeHtml(official.title || '') + '</p>' +
-      '<div class="hub-card__details">' +
-      '<strong>Phone:</strong> ' + phoneLink + '<br />' +
+    // Build contact details — only include what exists
+    var details = '';
+    if (official.phone) {
+      details += '<div class="hub-card__detail-row">' +
+        '<span class="hub-card__detail-label">Office</span>' +
+        '<a href="tel:' + ResourceHub.escapeHtml(official.phone) + '" class="hub-card__detail-value hub-card__detail-phone">' + ResourceHub.escapeHtml(official.phone) + '</a>' +
+        '</div>';
+    }
+
+    // Build action buttons — only include what exists
+    var actions = '';
+    if (official.website) {
+      actions += '<a href="' + ResourceHub.escapeHtml(official.website) + '" class="hub-card__action" target="_blank" rel="noopener noreferrer">Website</a>';
+    }
+    if (official.contact_form) {
+      actions += '<a href="' + ResourceHub.escapeHtml(official.contact_form) + '" class="hub-card__action hub-card__action--outline" target="_blank" rel="noopener noreferrer">Contact</a>';
+    }
+
+    return '<div class="hub-card hub-card--official">' +
+      '<div class="hub-card__header">' +
+        '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(official.full_name || official.name || '') + '</h3>' +
+        '<span class="hub-card__badge">' + ResourceHub.escapeHtml(chamberLabel) + '</span>' +
       '</div>' +
-      '<div class="hub-card__links">' +
-      websiteLink +
-      (websiteLink && contactLink ? ' • ' : '') +
-      contactLink +
-      '</div>' +
+      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(official.state) + ' &bull; ' + ResourceHub.escapeHtml(partyFull) + '</p>' +
+      (details ? '<div class="hub-card__contact">' + details + '</div>' : '') +
+      '<div class="hub-card__actions">' + actions + '</div>' +
       '</div>';
   }
 
   // Render card function for committees
   function renderCommitteeCard(committee) {
-    var chairLink = committee.chair_contact ? '<a href="' + ResourceHub.escapeHtml(committee.chair_contact) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Contact Chair</a>' : '';
-    var websiteLink = committee.website ? '<a href="' + ResourceHub.escapeHtml(committee.website) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Committee Page</a>' : '';
+    var desc = committee.jurisdiction || '';
 
-    return '<div class="hub-card">' +
-      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(committee.name) + '</h3>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(committee.chamber) + ' • ' + ResourceHub.escapeHtml(committee.chair || '') + '</p>' +
-      '<p class="hub-card__description">' + ResourceHub.escapeHtml(committee.jurisdiction || '') + '</p>' +
-      '<div class="hub-card__links">' +
-      websiteLink +
-      (websiteLink && chairLink ? ' • ' : '') +
-      chairLink +
+    var actions = '';
+    if (committee.website) {
+      actions += '<a href="' + ResourceHub.escapeHtml(committee.website) + '" class="hub-card__action" target="_blank" rel="noopener noreferrer">Committee Page</a>';
+    }
+    if (committee.chair_contact) {
+      actions += '<a href="' + ResourceHub.escapeHtml(committee.chair_contact) + '" class="hub-card__action hub-card__action--outline" target="_blank" rel="noopener noreferrer">Contact Chair</a>';
+    }
+
+    return '<div class="hub-card hub-card--committee">' +
+      '<div class="hub-card__header">' +
+        '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(committee.name) + '</h3>' +
+        '<span class="hub-card__badge hub-card__badge--chamber">' + ResourceHub.escapeHtml(committee.chamber || '') + '</span>' +
       '</div>' +
+      (committee.chair ? '<p class="hub-card__meta">Chair: ' + ResourceHub.escapeHtml(committee.chair) + '</p>' : '') +
+      (desc ? '<p class="hub-card__body">' + ResourceHub.escapeHtml(desc) + '</p>' : '') +
+      '<div class="hub-card__actions">' + actions + '</div>' +
       '</div>';
   }
 

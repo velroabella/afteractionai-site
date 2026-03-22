@@ -96,6 +96,19 @@
       <button class="filter-btn" data-filter="coast_guard">Coast Guard</button>
     </div>
 
+    <!-- COOL PROGRAM LINKS -->
+    <div class="cool-links">
+      <h3 class="cool-links__title">Credentialing Opportunities On-Line (COOL)</h3>
+      <p class="cool-links__subtitle">Official DoD programs that help service members find civilian credentials matching their military training.</p>
+      <div class="cool-links__grid">
+        <a href="https://www.cool.osd.mil/army/" class="cool-links__item" target="_blank" rel="noopener noreferrer">Army COOL</a>
+        <a href="https://www.cool.osd.mil/navy/" class="cool-links__item" target="_blank" rel="noopener noreferrer">Navy COOL</a>
+        <a href="https://www.cool.osd.mil/usaf/" class="cool-links__item" target="_blank" rel="noopener noreferrer">Air Force COOL</a>
+        <a href="https://www.cool.osd.mil/usmc/" class="cool-links__item" target="_blank" rel="noopener noreferrer">Marine Corps COOL</a>
+        <a href="https://www.cool.osd.mil/uscg/" class="cool-links__item" target="_blank" rel="noopener noreferrer">Coast Guard COOL</a>
+      </div>
+    </div>
+
     <!-- PATHWAYS GRID -->
     <section class="section">
       <div class="resources-grid" id="pathwaysGrid">
@@ -184,22 +197,58 @@ fetch('data/licensure.json').then(function(response) {
   // Render card function for licensure pathways
   function renderPathwayCard(pathway) {
     var examLinks = Array.isArray(pathway.school_or_exam_links) ? pathway.school_or_exam_links : [];
-    var certLink = examLinks.length > 0 ? '<a href="' + ResourceHub.escapeHtml(examLinks[0]) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
-    var fundingOpts = Array.isArray(pathway.benefit_funding_options) ? pathway.benefit_funding_options.join(', ') : (pathway.benefit_funding_options || '');
-    var fundingLink = fundingOpts ? '<span class="hub-card__tag">' + ResourceHub.escapeHtml(fundingOpts) + '</span>' : '';
+    var officialLinks = Array.isArray(pathway.official_links) ? pathway.official_links : [];
+    var fundingOpts = Array.isArray(pathway.benefit_funding_options) ? pathway.benefit_funding_options : [];
+    var testingRequired = pathway.additional_testing_required;
+
+    // Build exam/resource links
+    var linkHtml = '';
+    examLinks.forEach(function(url) {
+      var domain = '';
+      try { domain = new URL(url).hostname.replace('www.', ''); } catch(e) { domain = url; }
+      linkHtml += '<a href="' + ResourceHub.escapeHtml(url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">' + ResourceHub.escapeHtml(domain) + '</a>';
+    });
+    officialLinks.forEach(function(url) {
+      var domain = '';
+      try { domain = new URL(url).hostname.replace('www.', ''); } catch(e) { domain = url; }
+      linkHtml += '<a href="' + ResourceHub.escapeHtml(url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">' + ResourceHub.escapeHtml(domain) + ' (Official)</a>';
+    });
+
+    // Testing badge
+    var testBadge = testingRequired ? '<span class="hub-card__exam-badge">Exam Required</span>' : '<span class="hub-card__exam-badge" style="background:rgba(80,200,120,0.15);color:rgba(80,200,120,0.9);">No Additional Testing</span>';
+
+    // Funding tags
+    var fundingHtml = '';
+    if (fundingOpts.length > 0) {
+      fundingHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">';
+      fundingOpts.forEach(function(f) {
+        fundingHtml += '<span class="hub-card__tag">' + ResourceHub.escapeHtml(f) + '</span>';
+      });
+      fundingHtml += '</div>';
+    }
+
+    // Requirements / next steps
+    var reqSummary = pathway.requirements_summary || '';
+    var nextSteps = '';
+    if (reqSummary) {
+      nextSteps = '<div class="hub-card__next-steps"><strong>Next Steps:</strong> ' + ResourceHub.escapeHtml(reqSummary) + '</div>';
+    } else {
+      nextSteps = '<div class="hub-card__next-steps" style="color:rgba(255,255,255,0.45);font-style:italic;">Official requirements link not yet added. Additional manual review required.</div>';
+    }
 
     return '<div class="hub-card">' +
-      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(pathway.certification_name || pathway.civilian_certification || '') + '</h3>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(pathway.branch || '') + ' • ' + ResourceHub.escapeHtml(pathway.civilian_pathway || '') + '</p>' +
+      '<div class="hub-card__header">' +
+        '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(pathway.certification_name || pathway.civilian_certification || '') + '</h3>' +
+        testBadge +
+      '</div>' +
+      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(pathway.branch || '') + ' &bull; ' + ResourceHub.escapeHtml(pathway.civilian_pathway || '') + '</p>' +
       '<div class="hub-card__details">' +
-      '<strong>Military Role:</strong> ' + ResourceHub.escapeHtml(pathway.military_job_title || '') + ' (' + ResourceHub.escapeHtml(pathway.military_job_code || '') + ')<br />' +
-      '<strong>Issuing Agency:</strong> ' + ResourceHub.escapeHtml(pathway.issuing_agency || '') + '<br />' +
-      '<strong>Requirements:</strong> ' + ResourceHub.escapeHtml(pathway.requirements_summary || '') + '<br />' +
+        '<strong>Military Role:</strong> ' + ResourceHub.escapeHtml(pathway.military_job_title || '') + ' (' + ResourceHub.escapeHtml(pathway.military_job_code || '') + ')<br />' +
+        '<strong>Issuing Agency:</strong> ' + ResourceHub.escapeHtml(pathway.issuing_agency || '') +
       '</div>' +
-      '<div class="hub-card__links">' +
-      certLink +
-      '</div>' +
-      (fundingLink ? '<div style="margin-top:10px">' + fundingLink + '</div>' : '') +
+      nextSteps +
+      (linkHtml ? '<div class="hub-card__link-list" style="margin-top:12px;">' + linkHtml + '</div>' : '') +
+      fundingHtml +
       '</div>';
   }
 
