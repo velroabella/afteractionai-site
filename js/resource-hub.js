@@ -183,10 +183,12 @@ var ResourceHub = (function() {
    */
   function _applyFilters() {
     _filtered = _data.filter(function(item) {
-      // Category filter
+      // Category filter (case-insensitive, treat data value "All" as wildcard)
       var categoryKey = _config.filterKey || 'category';
       if (_activeFilters.category !== 'all') {
-        if (item[categoryKey] !== _activeFilters.category) {
+        var itemVal = (item[categoryKey] || '').toString().toLowerCase().replace(/[\s_-]+/g, '_');
+        var filterVal = _activeFilters.category.toLowerCase().replace(/[\s_-]+/g, '_');
+        if (itemVal !== 'all' && itemVal !== filterVal) {
           return false;
         }
       }

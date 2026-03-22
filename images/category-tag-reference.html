@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AfterAction AI — Category Tag System Reference</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #111;
+      color: #eee;
+      padding: 40px;
+      line-height: 1.6;
+    }
+    h1 { font-size: 1.8rem; font-weight: 700; margin-bottom: 8px; color: #C5A55A; }
+    .subtitle { color: #888; margin-bottom: 40px; font-size: 0.95rem; }
+
+    .section-title { font-size: 1.1rem; font-weight: 600; margin: 32px 0 16px; color: #ccc; border-bottom: 1px solid #333; padding-bottom: 8px; }
+
+    .tag-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+    .tag-demo {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .tag-demo__label { color: #888; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+    .tag-demo__name { color: #bbb; font-size: 0.85rem; font-weight: 500; }
+
+    /* ── THE ACTUAL TAG STYLES (copy these to your project) ── */
+    .category-tag {
+      display: inline-block;
+      color: #fff;
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      width: fit-content;
+      background: #6C757D;
+      border: 1px solid rgba(255,255,255,0.08);
+      white-space: nowrap;
+    }
+
+    .category-tag--employment      { background: rgba(22,128,109,0.25);  color: #5BC4A8; border-color: rgba(22,128,109,0.35); }
+    .category-tag--education       { background: rgba(106,54,160,0.25);  color: #B48EDB; border-color: rgba(106,54,160,0.35); }
+    .category-tag--benefits        { background: rgba(183,149,11,0.25);  color: #D4B84A; border-color: rgba(183,149,11,0.35); }
+    .category-tag--medical         { background: rgba(168,50,50,0.25);   color: #D47272; border-color: rgba(168,50,50,0.35); }
+    .category-tag--equipment       { background: rgba(180,100,40,0.25);  color: #D4A06A; border-color: rgba(180,100,40,0.35); }
+    .category-tag--entrepreneurship{ background: rgba(190,120,20,0.25);  color: #D4B060; border-color: rgba(190,120,20,0.35); }
+    .category-tag--housing         { background: rgba(130,95,60,0.25);   color: #C4A47A; border-color: rgba(130,95,60,0.35); }
+    .category-tag--discounts       { background: rgba(60,90,130,0.25);   color: #7BA3C8; border-color: rgba(60,90,130,0.35); }
+    .category-tag--community       { background: rgba(45,110,65,0.25);   color: #6DB87E; border-color: rgba(45,110,65,0.35); }
+    .category-tag--legal           { background: rgba(75,90,105,0.25);   color: #9AABB8; border-color: rgba(75,90,105,0.35); }
+
+    /* ── data-color attribute style (for resource cards) ── */
+    .resource-card__category { display: inline-block; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; background: #6C757D; border: 1px solid rgba(255,255,255,0.08); }
+    .resource-card__category[data-color="employment"]      { background: rgba(22,128,109,0.25);  color: #5BC4A8; border-color: rgba(22,128,109,0.35); }
+    .resource-card__category[data-color="education"]       { background: rgba(106,54,160,0.25);  color: #B48EDB; border-color: rgba(106,54,160,0.35); }
+    .resource-card__category[data-color="benefits"]        { background: rgba(183,149,11,0.25);  color: #D4B84A; border-color: rgba(183,149,11,0.35); }
+    .resource-card__category[data-color="medical"]         { background: rgba(168,50,50,0.25);   color: #D47272; border-color: rgba(168,50,50,0.35); }
+    .resource-card__category[data-color="equipment"]       { background: rgba(180,100,40,0.25);  color: #D4A06A; border-color: rgba(180,100,40,0.35); }
+    .resource-card__category[data-color="entrepreneurship"]{ background: rgba(190,120,20,0.25);  color: #D4B060; border-color: rgba(190,120,20,0.35); }
+    .resource-card__category[data-color="housing"]         { background: rgba(130,95,60,0.25);   color: #C4A47A; border-color: rgba(130,95,60,0.35); }
+    .resource-card__category[data-color="discounts"]       { background: rgba(60,90,130,0.25);   color: #7BA3C8; border-color: rgba(60,90,130,0.35); }
+    .resource-card__category[data-color="community"]       { background: rgba(45,110,65,0.25);   color: #6DB87E; border-color: rgba(45,110,65,0.35); }
+    .resource-card__category[data-color="legal"]           { background: rgba(75,90,105,0.25);   color: #9AABB8; border-color: rgba(75,90,105,0.35); }
+
+    /* ── USAGE EXAMPLES SECTION ── */
+    .code-block {
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-family: 'SF Mono', 'Fira Code', monospace;
+      font-size: 0.8rem;
+      color: #aaa;
+      overflow-x: auto;
+      margin-bottom: 16px;
+      line-height: 1.7;
+      white-space: pre;
+    }
+    .code-block .tag-name { color: #D47272; }
+    .code-block .attr-name { color: #D4B84A; }
+    .code-block .attr-value { color: #5BC4A8; }
+    .code-block .comment { color: #555; }
+
+    .example-card {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .example-card h3 { font-size: 0.95rem; color: #ddd; margin-bottom: 4px; }
+    .example-card p { font-size: 0.8rem; color: #888; margin-bottom: 12px; }
+    .example-card .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <h1>★ Category Tag System</h1>
+  <p class="subtitle">AfterAction AI — 10 resource categories with dark-theme compatible badges</p>
+
+  <!-- ── ALL 10 TAGS ── -->
+  <div class="section-title">All Categories</div>
+  <div class="tag-grid">
+    <div class="tag-demo">
+      <span class="category-tag category-tag--employment">Employment</span>
+      <span class="tag-demo__name">Steel Teal</span>
+      <span class="tag-demo__label">.category-tag--employment</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--education">Education</span>
+      <span class="tag-demo__name">Deep Violet</span>
+      <span class="tag-demo__label">.category-tag--education</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--benefits">Benefits</span>
+      <span class="tag-demo__name">Burnished Gold</span>
+      <span class="tag-demo__label">.category-tag--benefits</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--medical">Medical</span>
+      <span class="tag-demo__name">Muted Crimson</span>
+      <span class="tag-demo__label">.category-tag--medical</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--equipment">Equipment</span>
+      <span class="tag-demo__name">Warm Copper</span>
+      <span class="tag-demo__label">.category-tag--equipment</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--entrepreneurship">Entrepreneurship</span>
+      <span class="tag-demo__name">Deep Amber</span>
+      <span class="tag-demo__label">.category-tag--entrepreneurship</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--housing">Housing</span>
+      <span class="tag-demo__name">Earth Brown</span>
+      <span class="tag-demo__label">.category-tag--housing</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--discounts">Discounts</span>
+      <span class="tag-demo__name">Slate Blue</span>
+      <span class="tag-demo__label">.category-tag--discounts</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--community">Community</span>
+      <span class="tag-demo__name">Forest Green</span>
+      <span class="tag-demo__label">.category-tag--community</span>
+    </div>
+    <div class="tag-demo">
+      <span class="category-tag category-tag--legal">Legal</span>
+      <span class="tag-demo__name">Gunmetal</span>
+      <span class="tag-demo__label">.category-tag--legal</span>
+    </div>
+  </div>
+
+  <!-- ── USAGE EXAMPLES ── -->
+  <div class="section-title">Usage: CSS Class Method</div>
+  <div class="code-block"><span class="comment">&lt;!-- Use .category-tag + .category-tag--{name} --&gt;</span>
+<span class="tag-name">&lt;span</span> <span class="attr-name">class</span>=<span class="attr-value">"category-tag category-tag--employment"</span><span class="tag-name">&gt;</span>Employment<span class="tag-name">&lt;/span&gt;</span>
+<span class="tag-name">&lt;span</span> <span class="attr-name">class</span>=<span class="attr-value">"category-tag category-tag--medical"</span><span class="tag-name">&gt;</span>Medical<span class="tag-name">&lt;/span&gt;</span>
+<span class="tag-name">&lt;span</span> <span class="attr-name">class</span>=<span class="attr-value">"category-tag category-tag--legal"</span><span class="tag-name">&gt;</span>Legal<span class="tag-name">&lt;/span&gt;</span></div>
+
+  <div class="section-title">Usage: Data Attribute Method (Resource Cards)</div>
+  <div class="code-block"><span class="comment">&lt;!-- Use data-color attribute on .resource-card__category --&gt;</span>
+<span class="tag-name">&lt;span</span> <span class="attr-name">class</span>=<span class="attr-value">"resource-card__category"</span> <span class="attr-name">data-color</span>=<span class="attr-value">"employment"</span><span class="tag-name">&gt;</span>Employment<span class="tag-name">&lt;/span&gt;</span>
+<span class="tag-name">&lt;span</span> <span class="attr-name">class</span>=<span class="attr-value">"resource-card__category"</span> <span class="attr-name">data-color</span>=<span class="attr-value">"medical"</span><span class="tag-name">&gt;</span>Medical<span class="tag-name">&lt;/span&gt;</span>
+<span class="tag-name">&lt;span</span> <span class="attr-name">class</span>=<span class="attr-value">"resource-card__category"</span> <span class="attr-name">data-color</span>=<span class="attr-value">"legal"</span><span class="tag-name">&gt;</span>Legal<span class="tag-name">&lt;/span&gt;</span></div>
+
+  <!-- ── EXAMPLE CARDS ── -->
+  <div class="section-title">Example: Resource Card Preview</div>
+  <div class="example-card">
+    <span class="resource-card__category" data-color="employment">Employment</span>
+    <h3>Hire Heroes USA</h3>
+    <p>Free career coaching and job placement for transitioning service members and veterans.</p>
+  </div>
+  <div class="example-card">
+    <span class="resource-card__category" data-color="medical">Medical</span>
+    <h3>VA Health Care</h3>
+    <p>Comprehensive health care services for enrolled veterans through the VA system.</p>
+  </div>
+  <div class="example-card">
+    <span class="resource-card__category" data-color="benefits">Benefits</span>
+    <h3>VA Claims Insider</h3>
+    <p>Expert coaching to help veterans maximize their VA disability compensation.</p>
+  </div>
+  <div class="example-card">
+    <span class="resource-card__category" data-color="housing">Housing</span>
+    <h3>SSVF Program</h3>
+    <p>Supportive Services for Veteran Families — rapid rehousing and prevention.</p>
+  </div>
+
+  <!-- ── MIXED TAG BAR ── -->
+  <div class="section-title">All Tags Inline</div>
+  <div style="display: flex; flex-wrap: wrap; gap: 8px; padding: 20px 0;">
+    <span class="category-tag category-tag--employment">Employment</span>
+    <span class="category-tag category-tag--education">Education</span>
+    <span class="category-tag category-tag--benefits">Benefits</span>
+    <span class="category-tag category-tag--medical">Medical</span>
+    <span class="category-tag category-tag--equipment">Equipment</span>
+    <span class="category-tag category-tag--entrepreneurship">Entrepreneurship</span>
+    <span class="category-tag category-tag--housing">Housing</span>
+    <span class="category-tag category-tag--discounts">Discounts</span>
+    <span class="category-tag category-tag--community">Community</span>
+    <span class="category-tag category-tag--legal">Legal</span>
+  </div>
+
+</body>
+</html>
