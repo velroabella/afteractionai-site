@@ -38,9 +38,24 @@
     </button>
     <ul class="navbar__nav" id="navMenu">
       <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="board.html">Board</a></li>
-      <li><a href="resources.html">Resources</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
+          <li><a href="licensure.html">Licensure & Certifications</a></li>
+          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li><a href="state-benefits.html">State Benefits</a></li>
+        </ul>
+      </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -85,6 +100,10 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 12h2"/><path d="M15 12h2"/><path d="M7 16h10"/></svg>
         CC
       </button>
+      <a href="#donate" class="btn btn--donate" id="btnDonate">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        Donate
+      </a>
     </div>
 
     <div class="landing__footer">

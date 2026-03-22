@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Hotlines & Escalation — AfterAction AI</title>
+  <meta name="description" content="Crisis hotlines, inspector general contacts, complaint channels, and fraud reporting for veterans. 24/7 support." />
+  <meta name="keywords" content="veterans crisis line, hotline, complaint, escalation, inspector general, fraud reporting, veteran support" />
+  <meta property="og:title" content="Hotlines & Escalation — AfterAction AI" />
+  <meta property="og:description" content="Crisis lines, complaint channels, and escalation resources for veterans." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/hotlines-escalation" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
+          <li><a href="licensure.html">Licensure & Certifications</a></li>
+          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
+          <li><a href="hotlines-escalation.html" class="active">Hotlines & Escalation</a></li>
+          <li><a href="state-benefits.html">State Benefits</a></li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="page-hero-bar">
+  <h1 class="page-hero-bar__title">Hotlines, Inspector General & Escalation Channels</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">When you need help NOW — crisis lines, complaint channels, and fraud reporting.</p>
+</section>
+
+<!-- PAGE CONTENT -->
+<div class="page">
+  <div class="page__content">
+
+    <!-- CRISIS ALERT -->
+    <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 16px; margin-bottom: 24px; border-radius: 4px;">
+      <strong style="color: #856404;">In Crisis?</strong> Call <a href="tel:988" style="font-weight: 600; color: #856404;">988</a> (press 1) for the Veterans Crisis Line. Available 24/7.
+    </div>
+
+    <!-- SEARCH BAR -->
+    <div class="resources-search">
+      <input
+        type="text"
+        class="resources-search__input"
+        id="searchInput"
+        placeholder="Search by issue type or organization..."
+      />
+    </div>
+
+    <!-- ISSUE TYPE FILTER -->
+    <div class="resources-filters" id="filterBtns">
+      <button class="filter-btn active" data-filter="all">All Issues</button>
+      <button class="filter-btn" data-filter="crisis">Crisis Support</button>
+      <button class="filter-btn" data-filter="benefits_complaint">Benefits Complaint</button>
+      <button class="filter-btn" data-filter="fraud">Fraud Reporting</button>
+      <button class="filter-btn" data-filter="ig">Inspector General</button>
+      <button class="filter-btn" data-filter="legal">Legal Assistance</button>
+    </div>
+
+    <!-- HOTLINES GRID -->
+    <section class="section">
+      <div class="resources-grid" id="hotlinesGrid">
+        <!-- Hotlines and escalation resources will populate here -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section footer__section--nav">
+          <h3>Navigate</h3>
+          <div class="footer__nav-columns">
+            <div class="footer__nav-col">
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="board.html">Board</a>
+            </div>
+            <div class="footer__nav-col">
+              <a href="resources.html">Resources</a>
+              <a href="blog.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__section">
+          <h3>Resource Hub</h3>
+          <a href="elected-officials.html">Elected Officials</a>
+          <a href="licensure.html">Licensure & Certifications</a>
+          <a href="grants-scholarships.html">Grants & Scholarships</a>
+          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
+          <a href="state-benefits.html">State Benefits</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="Facebook" title="Facebook">f</a>
+            <a href="#" aria-label="Instagram" title="Instagram">📷</a>
+            <a href="#" aria-label="YouTube" title="YouTube">▶</a>
+            <a href="#" aria-label="TikTok" title="TikTok">♪</a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__nonprofit">
+        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="js/resource-hub.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// HOTLINES & ESCALATION PAGE — ResourceHub Integration
+// Crisis lines, complaint channels, fraud reporting
+// ══════════════════════════════════════════════════════════
+
+function toggleMenu() {
+  var menu = document.getElementById('navMenu');
+  menu.classList.toggle('active');
+}
+
+fetch('data/hotlines-escalation.json').then(function(response) {
+  return response.json();
+}).then(function(hotlinesData) {
+
+  // Render card function for hotlines and escalation
+  function renderHotlineCard(hotline) {
+    // Crisis lines get red accent styling
+    var isCrisis = hotline.issue_type === 'crisis';
+    var cardClass = isCrisis ? 'hub-card hub-card--crisis' : 'hub-card';
+
+    var phoneLink = hotline.phone ? '<a href="tel:' + ResourceHub.escapeHtml(hotline.phone) + '" class="hub-card__link" style="font-weight: 600;">' + ResourceHub.escapeHtml(hotline.phone) + '</a>' : 'N/A';
+    var complaintLink = hotline.complaint_form ? '<a href="' + ResourceHub.escapeHtml(hotline.complaint_form) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Submit Complaint</a>' : '';
+    var moreLink = hotline.info_link ? '<a href="' + ResourceHub.escapeHtml(hotline.info_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
+
+    return '<div class="' + cardClass + '">' +
+      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(hotline.name || '') + '</h3>' +
+      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(hotline.issue_type_label || '') + '</p>' +
+      '<div class="hub-card__details">' +
+      '<strong>Phone:</strong> ' + phoneLink + '<br />' +
+      '<strong>Hours:</strong> ' + ResourceHub.escapeHtml(hotline.hours || '24/7') + '<br />' +
+      '<strong>Description:</strong> ' + ResourceHub.escapeHtml(hotline.description || '') + '<br />' +
+      '</div>' +
+      '<div class="hub-card__links">' +
+      complaintLink +
+      (complaintLink && moreLink ? ' • ' : '') +
+      moreLink +
+      '</div>' +
+      '</div>';
+  }
+
+  // Initialize ResourceHub for hotlines
+  ResourceHub.init({
+    containerId: 'hotlinesGrid',
+    searchInputId: 'searchInput',
+    filterContainerId: 'filterBtns',
+    data: hotlinesData,
+    renderCard: renderHotlineCard,
+    filterKey: 'issue_type',
+    searchFields: ['name', 'description', 'issue_type_label'],
+    stateField: null
+  });
+
+  // Build issue type filter buttons
+  ResourceHub.buildFilterButtons([
+    { key: 'all', label: 'All Issues' },
+    { key: 'crisis', label: 'Crisis Support' },
+    { key: 'benefits_complaint', label: 'Benefits Complaint' },
+    { key: 'fraud', label: 'Fraud Reporting' },
+    { key: 'ig', label: 'Inspector General' },
+    { key: 'legal', label: 'Legal Assistance' }
+  ]);
+
+}).catch(function(err) {
+  console.error('Error loading hotlines data:', err);
+  document.getElementById('hotlinesGrid').innerHTML = '<div class="hub-no-results"><p>Error loading hotlines. Please try again later.</p></div>';
+});
+</script>
+
+</body>
+</html>

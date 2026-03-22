@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Veteran Grants & Scholarships — AfterAction AI</title>
+  <meta name="description" content="Education funding, entrepreneurship grants, and financial assistance for veterans. Find scholarships, grants, and aid programs." />
+  <meta name="keywords" content="veteran grants, scholarships, education funding, entrepreneurship, veteran aid, financial assistance" />
+  <meta property="og:title" content="Veteran Grants & Scholarships — AfterAction AI" />
+  <meta property="og:description" content="Education funding, grants, and financial assistance for veterans." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/grants-scholarships" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
+          <li><a href="licensure.html">Licensure & Certifications</a></li>
+          <li><a href="grants-scholarships.html" class="active">Grants & Scholarships</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li><a href="state-benefits.html">State Benefits</a></li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="page-hero-bar">
+  <h1 class="page-hero-bar__title">Veteran Grants & Scholarships</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">Education funding, entrepreneurship grants, and financial assistance.</p>
+</section>
+
+<!-- PAGE CONTENT -->
+<div class="page">
+  <div class="page__content">
+
+    <!-- SEARCH BAR -->
+    <div class="resources-search">
+      <input
+        type="text"
+        class="resources-search__input"
+        id="searchInput"
+        placeholder="Search by program name or provider..."
+      />
+    </div>
+
+    <!-- CATEGORY FILTER -->
+    <div class="resources-filters" id="filterBtns">
+      <button class="filter-btn active" data-filter="all">All Categories</button>
+      <button class="filter-btn" data-filter="education">Education</button>
+      <button class="filter-btn" data-filter="entrepreneurship">Entrepreneurship</button>
+      <button class="filter-btn" data-filter="hardship">Hardship Assistance</button>
+      <button class="filter-btn" data-filter="housing">Housing</button>
+      <button class="filter-btn" data-filter="disability">Disability Support</button>
+    </div>
+
+    <!-- GRANTS GRID -->
+    <section class="section">
+      <div class="resources-grid" id="grantsGrid">
+        <!-- Grants and scholarships will populate here -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section footer__section--nav">
+          <h3>Navigate</h3>
+          <div class="footer__nav-columns">
+            <div class="footer__nav-col">
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="board.html">Board</a>
+            </div>
+            <div class="footer__nav-col">
+              <a href="resources.html">Resources</a>
+              <a href="blog.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__section">
+          <h3>Resource Hub</h3>
+          <a href="elected-officials.html">Elected Officials</a>
+          <a href="licensure.html">Licensure & Certifications</a>
+          <a href="grants-scholarships.html">Grants & Scholarships</a>
+          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
+          <a href="state-benefits.html">State Benefits</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="Facebook" title="Facebook">f</a>
+            <a href="#" aria-label="Instagram" title="Instagram">📷</a>
+            <a href="#" aria-label="YouTube" title="YouTube">▶</a>
+            <a href="#" aria-label="TikTok" title="TikTok">♪</a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__nonprofit">
+        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="js/resource-hub.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// GRANTS & SCHOLARSHIPS PAGE — ResourceHub Integration
+// ══════════════════════════════════════════════════════════
+
+function toggleMenu() {
+  var menu = document.getElementById('navMenu');
+  menu.classList.toggle('active');
+}
+
+fetch('data/grants-scholarships.json').then(function(response) {
+  return response.json();
+}).then(function(grantsData) {
+
+  // Render card function for grants and scholarships
+  function renderGrantCard(grant) {
+    var appLink = grant.application_link ? '<a href="' + ResourceHub.escapeHtml(grant.application_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Apply Now</a>' : '';
+    var moreLink = grant.info_link ? '<a href="' + ResourceHub.escapeHtml(grant.info_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
+
+    var deadlineText = grant.deadline ? 'Deadline: ' + ResourceHub.formatDate(grant.deadline) : 'Rolling applications';
+
+    return '<div class="hub-card">' +
+      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(grant.program_name || '') + '</h3>' +
+      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(grant.provider || '') + '</p>' +
+      '<div class="hub-card__details">' +
+      '<strong>Amount:</strong> ' + ResourceHub.escapeHtml(grant.amount || 'Varies') + '<br />' +
+      '<strong>Eligibility:</strong> ' + ResourceHub.escapeHtml(grant.eligibility || '') + '<br />' +
+      '<strong>Deadline:</strong> ' + deadlineText + '<br />' +
+      '</div>' +
+      '<div class="hub-card__links">' +
+      appLink +
+      (appLink && moreLink ? ' • ' : '') +
+      moreLink +
+      '</div>' +
+      '</div>';
+  }
+
+  // Initialize ResourceHub for grants
+  ResourceHub.init({
+    containerId: 'grantsGrid',
+    searchInputId: 'searchInput',
+    filterContainerId: 'filterBtns',
+    data: grantsData,
+    renderCard: renderGrantCard,
+    filterKey: 'category',
+    searchFields: ['program_name', 'provider', 'eligibility'],
+    stateField: null
+  });
+
+  // Build category filter buttons
+  ResourceHub.buildFilterButtons([
+    { key: 'all', label: 'All Categories' },
+    { key: 'education', label: 'Education' },
+    { key: 'entrepreneurship', label: 'Entrepreneurship' },
+    { key: 'hardship', label: 'Hardship Assistance' },
+    { key: 'housing', label: 'Housing' },
+    { key: 'disability', label: 'Disability Support' }
+  ]);
+
+}).catch(function(err) {
+  console.error('Error loading grants data:', err);
+  document.getElementById('grantsGrid').innerHTML = '<div class="hub-no-results"><p>Error loading grants and scholarships. Please try again later.</p></div>';
+});
+</script>
+
+</body>
+</html>

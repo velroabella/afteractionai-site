@@ -37,9 +37,24 @@
     </button>
     <ul class="navbar__nav" id="navMenu">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="board.html">Board</a></li>
-      <li><a href="resources.html" class="active">Resources</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html" class="active">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
+          <li><a href="licensure.html">Licensure & Certifications</a></li>
+          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li><a href="state-benefits.html">State Benefits</a></li>
+        </ul>
+      </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
@@ -169,6 +184,14 @@
           </div>
         </div>
         <div class="footer__section">
+          <h3>Resource Hub</h3>
+          <a href="elected-officials.html">Elected Officials</a>
+          <a href="licensure.html">Licensure & Certifications</a>
+          <a href="grants-scholarships.html">Grants & Scholarships</a>
+          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
+          <a href="state-benefits.html">State Benefits</a>
+        </div>
+        <div class="footer__section">
           <h3>Legal</h3>
           <a href="privacy.html">Privacy Policy</a>
           <a href="terms.html">Terms of Service</a>
@@ -184,6 +207,9 @@
             <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
           </div>
         </div>
+      </div>
+      <div class="footer__nonprofit">
+        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
       </div>
       <div class="footer__bottom">
         <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>

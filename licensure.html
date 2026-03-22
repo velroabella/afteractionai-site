@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Military-to-Civilian Licensure — AfterAction AI</title>
+  <meta name="description" content="Find the civilian credentials that match your military training. Military-to-civilian licensure and certification pathways." />
+  <meta name="keywords" content="military credentials, certification, licensure, veteran training, career transition, military skills" />
+  <meta property="og:title" content="Military-to-Civilian Licensure — AfterAction AI" />
+  <meta property="og:description" content="Find civilian credentials matching your military training." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/licensure" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="index.html">Home</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
+          <li><a href="licensure.html" class="active">Licensure & Certifications</a></li>
+          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li><a href="state-benefits.html">State Benefits</a></li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="education.html">Education</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO SECTION -->
+<section class="page-hero-bar">
+  <h1 class="page-hero-bar__title">Military-to-Civilian Licensure & Certifications</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">Find the civilian credentials that match your military training.</p>
+</section>
+
+<!-- PAGE CONTENT -->
+<div class="page">
+  <div class="page__content">
+
+    <!-- SEARCH BAR -->
+    <div class="resources-search">
+      <input
+        type="text"
+        class="resources-search__input"
+        id="searchInput"
+        placeholder="Search by military job, skill, or certification..."
+      />
+    </div>
+
+    <!-- BRANCH FILTER -->
+    <div class="resources-filters" id="filterBtns">
+      <button class="filter-btn active" data-filter="all">All Branches</button>
+      <button class="filter-btn" data-filter="army">Army</button>
+      <button class="filter-btn" data-filter="navy">Navy</button>
+      <button class="filter-btn" data-filter="air_force">Air Force</button>
+      <button class="filter-btn" data-filter="marines">Marines</button>
+      <button class="filter-btn" data-filter="coast_guard">Coast Guard</button>
+    </div>
+
+    <!-- PATHWAYS GRID -->
+    <section class="section">
+      <div class="resources-grid" id="pathwaysGrid">
+        <!-- Licensure pathways will populate here -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section footer__section--nav">
+          <h3>Navigate</h3>
+          <div class="footer__nav-columns">
+            <div class="footer__nav-col">
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="board.html">Board</a>
+            </div>
+            <div class="footer__nav-col">
+              <a href="resources.html">Resources</a>
+              <a href="blog.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__section">
+          <h3>Resource Hub</h3>
+          <a href="elected-officials.html">Elected Officials</a>
+          <a href="licensure.html">Licensure & Certifications</a>
+          <a href="grants-scholarships.html">Grants & Scholarships</a>
+          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
+          <a href="state-benefits.html">State Benefits</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+          <div class="footer__social">
+            <a href="#" aria-label="Facebook" title="Facebook">f</a>
+            <a href="#" aria-label="Instagram" title="Instagram">📷</a>
+            <a href="#" aria-label="YouTube" title="YouTube">▶</a>
+            <a href="#" aria-label="TikTok" title="TikTok">♪</a>
+            <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__nonprofit">
+        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script src="js/resource-hub.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// LICENSURE PAGE — ResourceHub Integration
+// Military-to-civilian credential pathways
+// ══════════════════════════════════════════════════════════
+
+function toggleMenu() {
+  var menu = document.getElementById('navMenu');
+  menu.classList.toggle('active');
+}
+
+fetch('data/licensure.json').then(function(response) {
+  return response.json();
+}).then(function(licensureData) {
+
+  // Render card function for licensure pathways
+  function renderPathwayCard(pathway) {
+    var fundingLink = pathway.funding_info ? '<a href="' + ResourceHub.escapeHtml(pathway.funding_info) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Funding Options</a>' : '';
+    var certLink = pathway.cert_link ? '<a href="' + ResourceHub.escapeHtml(pathway.cert_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
+
+    return '<div class="hub-card">' +
+      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(pathway.civilian_certification || '') + '</h3>' +
+      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(pathway.branch || '') + '</p>' +
+      '<div class="hub-card__details">' +
+      '<strong>Military Role:</strong> ' + ResourceHub.escapeHtml(pathway.military_job_title || '') + ' (' + ResourceHub.escapeHtml(pathway.military_code || '') + ')<br />' +
+      '<strong>Issuing Agency:</strong> ' + ResourceHub.escapeHtml(pathway.issuing_agency || '') + '<br />' +
+      '<strong>Requirements:</strong> ' + ResourceHub.escapeHtml(pathway.requirements || '') + '<br />' +
+      '</div>' +
+      '<div class="hub-card__links">' +
+      certLink +
+      (certLink && fundingLink ? ' • ' : '') +
+      fundingLink +
+      '</div>' +
+      '</div>';
+  }
+
+  // Initialize ResourceHub for licensure
+  ResourceHub.init({
+    containerId: 'pathwaysGrid',
+    searchInputId: 'searchInput',
+    filterContainerId: 'filterBtns',
+    data: licensureData,
+    renderCard: renderPathwayCard,
+    filterKey: 'branch',
+    searchFields: ['military_job_title', 'civilian_certification', 'issuing_agency'],
+    stateField: null
+  });
+
+  // Build branch filter buttons
+  ResourceHub.buildFilterButtons([
+    { key: 'all', label: 'All Branches' },
+    { key: 'army', label: 'Army' },
+    { key: 'navy', label: 'Navy' },
+    { key: 'air_force', label: 'Air Force' },
+    { key: 'marines', label: 'Marines' },
+    { key: 'coast_guard', label: 'Coast Guard' }
+  ]);
+
+}).catch(function(err) {
+  console.error('Error loading licensure data:', err);
+  document.getElementById('pathwaysGrid').innerHTML = '<div class="hub-no-results"><p>Error loading licensure information. Please try again later.</p></div>';
+});
+</script>
+
+</body>
+</html>
