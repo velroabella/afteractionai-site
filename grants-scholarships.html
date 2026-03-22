@@ -183,7 +183,7 @@ fetch('data/grants-scholarships.json').then(function(response) {
   // Render card function for grants and scholarships
   function renderGrantCard(grant) {
     var appLink = grant.application_link ? '<a href="' + ResourceHub.escapeHtml(grant.application_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Apply Now</a>' : '';
-    var moreLink = grant.info_link ? '<a href="' + ResourceHub.escapeHtml(grant.info_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
+    var moreLink = grant.website ? '<a href="' + ResourceHub.escapeHtml(grant.website) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
 
     var deadlineText = grant.deadline ? 'Deadline: ' + ResourceHub.formatDate(grant.deadline) : 'Rolling applications';
 

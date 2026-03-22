@@ -183,22 +183,23 @@ fetch('data/licensure.json').then(function(response) {
 
   // Render card function for licensure pathways
   function renderPathwayCard(pathway) {
-    var fundingLink = pathway.funding_info ? '<a href="' + ResourceHub.escapeHtml(pathway.funding_info) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Funding Options</a>' : '';
-    var certLink = pathway.cert_link ? '<a href="' + ResourceHub.escapeHtml(pathway.cert_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
+    var examLinks = Array.isArray(pathway.school_or_exam_links) ? pathway.school_or_exam_links : [];
+    var certLink = examLinks.length > 0 ? '<a href="' + ResourceHub.escapeHtml(examLinks[0]) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Learn More</a>' : '';
+    var fundingOpts = Array.isArray(pathway.benefit_funding_options) ? pathway.benefit_funding_options.join(', ') : (pathway.benefit_funding_options || '');
+    var fundingLink = fundingOpts ? '<span class="hub-card__tag">' + ResourceHub.escapeHtml(fundingOpts) + '</span>' : '';
 
     return '<div class="hub-card">' +
-      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(pathway.civilian_certification || '') + '</h3>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(pathway.branch || '') + '</p>' +
+      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(pathway.certification_name || pathway.civilian_certification || '') + '</h3>' +
+      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(pathway.branch || '') + ' • ' + ResourceHub.escapeHtml(pathway.civilian_pathway || '') + '</p>' +
       '<div class="hub-card__details">' +
-      '<strong>Military Role:</strong> ' + ResourceHub.escapeHtml(pathway.military_job_title || '') + ' (' + ResourceHub.escapeHtml(pathway.military_code || '') + ')<br />' +
+      '<strong>Military Role:</strong> ' + ResourceHub.escapeHtml(pathway.military_job_title || '') + ' (' + ResourceHub.escapeHtml(pathway.military_job_code || '') + ')<br />' +
       '<strong>Issuing Agency:</strong> ' + ResourceHub.escapeHtml(pathway.issuing_agency || '') + '<br />' +
-      '<strong>Requirements:</strong> ' + ResourceHub.escapeHtml(pathway.requirements || '') + '<br />' +
+      '<strong>Requirements:</strong> ' + ResourceHub.escapeHtml(pathway.requirements_summary || '') + '<br />' +
       '</div>' +
       '<div class="hub-card__links">' +
       certLink +
-      (certLink && fundingLink ? ' • ' : '') +
-      fundingLink +
       '</div>' +
+      (fundingLink ? '<div style="margin-top:10px">' + fundingLink + '</div>' : '') +
       '</div>';
   }
 
@@ -210,7 +211,7 @@ fetch('data/licensure.json').then(function(response) {
     data: licensureData,
     renderCard: renderPathwayCard,
     filterKey: 'branch',
-    searchFields: ['military_job_title', 'civilian_certification', 'issuing_agency'],
+    searchFields: ['military_job_title', 'certification_name', 'civilian_pathway', 'issuing_agency', 'military_job_code'],
     stateField: null
   });
 
