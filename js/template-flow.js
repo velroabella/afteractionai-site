@@ -76,7 +76,10 @@
     html += '<h1 class="tmpl-flow__title">' + escapeHtml(t.title) + '</h1>';
     html += '<p class="tmpl-flow__desc">' + escapeHtml(t.description) + '</p>';
     if (t.legal_disclaimer) {
-      html += '<div class="tmpl-flow__disclaimer">' + escapeHtml(t.legal_disclaimer) + '</div>';
+      html += '<div class="tmpl-disclaimer">';
+      html += '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+      html += '<span>' + escapeHtml(t.legal_disclaimer) + '</span>';
+      html += '</div>';
     }
     html += '</div>';
 
@@ -724,6 +727,14 @@
     html += '<h1 class="tmpl-flow__title">' + escapeHtml(output.title) + '</h1>';
     html += '</div>';
 
+    // Legal disclaimer banner
+    if (templateData.legal_disclaimer) {
+      html += '<div class="tmpl-disclaimer">';
+      html += '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
+      html += '<span>' + escapeHtml(templateData.legal_disclaimer) + '</span>';
+      html += '</div>';
+    }
+
     // Output document
     html += '<div class="tmpl-output" id="outputContent">';
     output.sections.forEach(function(sec) {
@@ -858,6 +869,24 @@
     doc.setTextColor(120, 120, 120);
     doc.text('Generated: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }), pageW - mR, y, { align: 'right' });
     y += 10;
+
+    // Legal disclaimer in PDF
+    if (templateData.legal_disclaimer) {
+      doc.setFillColor(255, 248, 220);
+      doc.roundedRect(mL, y - 3, usableW, 14, 2, 2, 'F');
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      doc.setTextColor(120, 80, 0);
+      var discLines = doc.splitTextToSize(templateData.legal_disclaimer, usableW - 6);
+      var discH = discLines.length * 4 + 4;
+      doc.setFillColor(255, 248, 220);
+      doc.roundedRect(mL, y - 3, usableW, discH + 2, 2, 2, 'F');
+      discLines.forEach(function(dLine) {
+        doc.text(dLine, mL + 3, y + 1);
+        y += 4;
+      });
+      y += 6;
+    }
 
     // Sections
     output.sections.forEach(function(sec) {

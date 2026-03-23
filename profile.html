@@ -19,7 +19,7 @@
     <a href="index.html" class="navbar__logo">
       <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
-    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="document.getElementById('navMenu').style.display = document.getElementById('navMenu').style.display === 'flex' ? 'none' : 'flex'">
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
       </svg>
@@ -49,7 +49,8 @@
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="education.html">Education</a></li>
-      <li><a href="profile.html" class="active">Profile</a></li>
+      <li class="auth-profile-btn"><a href="profile.html" class="active">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
     </ul>
   </div>
 </nav>
@@ -199,6 +200,11 @@
 <script src="js/auth.js"></script>
 <script src="js/newsletter.js"></script>
 <script>
+function toggleMenu() {
+  var menu = document.getElementById('navMenu');
+  menu.classList.toggle('active');
+}
+
 // Profile page logic — Dashboard 2.0
 (function() {
   var CAT_LABELS = { immediate: 'Immediate', short_term: 'Short-Term', strategic: 'Strategic', optional: 'Optional' };

@@ -5309,6 +5309,27 @@ a, button, input, select, textarea {
   font-weight: 500;
 }
 
+.tmpl-disclaimer {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 16px 0;
+  padding: 14px 18px;
+  background: #fef3c7;
+  border: 1px solid #f59e0b;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #78350f;
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+.tmpl-disclaimer svg {
+  flex-shrink: 0;
+  color: #d97706;
+  margin-top: 1px;
+}
+
 /* ── Upload Area ────────────────────────────────────── */
 
 .tmpl-flow__upload {

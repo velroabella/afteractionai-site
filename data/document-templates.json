@@ -6,16 +6,71 @@
     "category": "career",
     "phase": 1,
     "state_sensitive": false,
-    "upload_suggestions": ["DD-214", "prior resume", "job description you're targeting", "transcripts", "certificates"],
-    "suggested_next": ["linkedin-profile-builder", "interview-prep-script", "federal-resume"],
+    "upload_suggestions": [
+      "DD-214",
+      "prior resume",
+      "job description you're targeting",
+      "transcripts",
+      "certificates"
+    ],
+    "suggested_next": [
+      "linkedin-profile-builder",
+      "interview-prep-script",
+      "federal-resume"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
-      {"id": "targetRole", "label": "What civilian job or role are you targeting?", "type": "text", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "mos", "label": "MOS / Rating / AFSC (job code)", "type": "text", "required": true},
-      {"id": "yearsService", "label": "Years of service", "type": "text", "required": true},
-      {"id": "keySkills", "label": "Top 3-5 skills or accomplishments to highlight", "type": "textarea", "required": true},
-      {"id": "education", "label": "Education (degrees, certifications, schools)", "type": "textarea", "required": false}
+      {
+        "id": "fullName",
+        "label": "Full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "targetRole",
+        "label": "What civilian job or role are you targeting?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "mos",
+        "label": "MOS / Rating / AFSC (job code)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "yearsService",
+        "label": "Years of service",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "keySkills",
+        "label": "Top 3-5 skills or accomplishments to highlight",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "education",
+        "label": "Education (degrees, certifications, schools)",
+        "type": "textarea",
+        "required": false
+      }
     ]
   },
   {
@@ -25,15 +80,62 @@
     "category": "career",
     "phase": 1,
     "state_sensitive": false,
-    "upload_suggestions": ["prior resume", "DD-214", "LinkedIn profile screenshot"],
-    "suggested_next": ["resume-builder", "interview-prep-script"],
+    "upload_suggestions": [
+      "prior resume",
+      "DD-214",
+      "LinkedIn profile screenshot"
+    ],
+    "suggested_next": [
+      "resume-builder",
+      "interview-prep-script"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
-      {"id": "targetIndustry", "label": "What industry or role are you pursuing?", "type": "text", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "mos", "label": "MOS / Rating / AFSC", "type": "text", "required": true},
-      {"id": "highlights", "label": "Key accomplishments or leadership experiences", "type": "textarea", "required": true},
-      {"id": "personalBrand", "label": "How do you want to be perceived? (e.g., leader, problem-solver, technical expert)", "type": "text", "required": false}
+      {
+        "id": "fullName",
+        "label": "Full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "targetIndustry",
+        "label": "What industry or role are you pursuing?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "mos",
+        "label": "MOS / Rating / AFSC",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "highlights",
+        "label": "Key accomplishments or leadership experiences",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "personalBrand",
+        "label": "How do you want to be perceived? (e.g., leader, problem-solver, technical expert)",
+        "type": "text",
+        "required": false
+      }
     ]
   },
   {
@@ -43,16 +145,58 @@
     "category": "legal",
     "phase": 1,
     "state_sensitive": true,
-    "upload_suggestions": ["prior POA document", "ID documents"],
-    "suggested_next": ["durable-power-of-attorney", "medical-power-of-attorney", "last-will-and-testament"],
+    "upload_suggestions": [
+      "prior POA document",
+      "ID documents"
+    ],
+    "suggested_next": [
+      "durable-power-of-attorney",
+      "medical-power-of-attorney",
+      "last-will-and-testament"
+    ],
     "legal_disclaimer": "This template provides a starting framework only. It is NOT legal advice. Have an attorney review before signing.",
     "intake": [
-      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
-      {"id": "principalName", "label": "Your full legal name (the principal)", "type": "text", "required": true},
-      {"id": "agentName", "label": "Full legal name of the person you're granting power to (the agent)", "type": "text", "required": true},
-      {"id": "agentRelation", "label": "Relationship to agent (spouse, parent, sibling, friend, etc.)", "type": "text", "required": true},
-      {"id": "powers", "label": "What powers are you granting? (financial, property, legal, all)", "type": "textarea", "required": true},
-      {"id": "effective", "label": "When should this take effect?", "type": "select", "options": ["Immediately","Upon my incapacity","Specific date"], "required": true}
+      {
+        "id": "state",
+        "label": "What state do you live in?",
+        "type": "state_select",
+        "required": true
+      },
+      {
+        "id": "principalName",
+        "label": "Your full legal name (the principal)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "agentName",
+        "label": "Full legal name of the person you're granting power to (the agent)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "agentRelation",
+        "label": "Relationship to agent (spouse, parent, sibling, friend, etc.)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "powers",
+        "label": "What powers are you granting? (financial, property, legal, all)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "effective",
+        "label": "When should this take effect?",
+        "type": "select",
+        "options": [
+          "Immediately",
+          "Upon my incapacity",
+          "Specific date"
+        ],
+        "required": true
+      }
     ]
   },
   {
@@ -62,17 +206,68 @@
     "category": "legal",
     "phase": 1,
     "state_sensitive": true,
-    "upload_suggestions": ["prior will", "property deeds", "insurance documents", "list of assets"],
-    "suggested_next": ["living-will", "medical-power-of-attorney", "emergency-contact-family-care-plan"],
+    "upload_suggestions": [
+      "prior will",
+      "property deeds",
+      "insurance documents",
+      "list of assets"
+    ],
+    "suggested_next": [
+      "living-will",
+      "medical-power-of-attorney",
+      "emergency-contact-family-care-plan"
+    ],
     "legal_disclaimer": "This template provides a starting framework only. It is NOT legal advice. State laws vary. Have an attorney review before signing.",
     "intake": [
-      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
-      {"id": "fullName", "label": "Your full legal name", "type": "text", "required": true},
-      {"id": "maritalStatus", "label": "Marital status", "type": "select", "options": ["Single","Married","Divorced","Widowed","Domestic Partnership"], "required": true},
-      {"id": "children", "label": "Names and ages of children (if any)", "type": "textarea", "required": false},
-      {"id": "executor", "label": "Who should be your executor (the person who carries out your will)?", "type": "text", "required": true},
-      {"id": "beneficiaries", "label": "Who should receive your assets? List names and what each should receive.", "type": "textarea", "required": true},
-      {"id": "guardian", "label": "If you have minor children, who should be their guardian?", "type": "text", "required": false}
+      {
+        "id": "state",
+        "label": "What state do you live in?",
+        "type": "state_select",
+        "required": true
+      },
+      {
+        "id": "fullName",
+        "label": "Your full legal name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "maritalStatus",
+        "label": "Marital status",
+        "type": "select",
+        "options": [
+          "Single",
+          "Married",
+          "Divorced",
+          "Widowed",
+          "Domestic Partnership"
+        ],
+        "required": true
+      },
+      {
+        "id": "children",
+        "label": "Names and ages of children (if any)",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "executor",
+        "label": "Who should be your executor (the person who carries out your will)?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "beneficiaries",
+        "label": "Who should receive your assets? List names and what each should receive.",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "guardian",
+        "label": "If you have minor children, who should be their guardian?",
+        "type": "text",
+        "required": false
+      }
     ]
   },
   {
@@ -82,16 +277,68 @@
     "category": "legal",
     "phase": 1,
     "state_sensitive": true,
-    "upload_suggestions": ["prior living will or advance directive", "medical records"],
-    "suggested_next": ["medical-power-of-attorney", "hipaa-authorization-form", "last-will-and-testament"],
+    "upload_suggestions": [
+      "prior living will or advance directive",
+      "medical records"
+    ],
+    "suggested_next": [
+      "medical-power-of-attorney",
+      "hipaa-authorization-form",
+      "last-will-and-testament"
+    ],
     "legal_disclaimer": "This template provides a starting framework only. It is NOT legal advice. State requirements vary. Have an attorney or healthcare provider review.",
     "intake": [
-      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
-      {"id": "fullName", "label": "Your full legal name", "type": "text", "required": true},
-      {"id": "lifeSustaining", "label": "If you are terminally ill or permanently unconscious, do you want life-sustaining treatment?", "type": "select", "options": ["Yes, use all available treatment","No, I want comfort care only","I want treatment tried for a limited time, then comfort care"], "required": true},
-      {"id": "nutrition", "label": "Do you want artificial nutrition and hydration (feeding tube/IV)?", "type": "select", "options": ["Yes","No","Only for a limited time"], "required": true},
-      {"id": "painManagement", "label": "Pain management preferences", "type": "select", "options": ["Keep me comfortable even if it may hasten death","Only standard pain medication","I want to remain as alert as possible"], "required": true},
-      {"id": "otherWishes", "label": "Any other specific medical wishes?", "type": "textarea", "required": false}
+      {
+        "id": "state",
+        "label": "What state do you live in?",
+        "type": "state_select",
+        "required": true
+      },
+      {
+        "id": "fullName",
+        "label": "Your full legal name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "lifeSustaining",
+        "label": "If you are terminally ill or permanently unconscious, do you want life-sustaining treatment?",
+        "type": "select",
+        "options": [
+          "Yes, use all available treatment",
+          "No, I want comfort care only",
+          "I want treatment tried for a limited time, then comfort care"
+        ],
+        "required": true
+      },
+      {
+        "id": "nutrition",
+        "label": "Do you want artificial nutrition and hydration (feeding tube/IV)?",
+        "type": "select",
+        "options": [
+          "Yes",
+          "No",
+          "Only for a limited time"
+        ],
+        "required": true
+      },
+      {
+        "id": "painManagement",
+        "label": "Pain management preferences",
+        "type": "select",
+        "options": [
+          "Keep me comfortable even if it may hasten death",
+          "Only standard pain medication",
+          "I want to remain as alert as possible"
+        ],
+        "required": true
+      },
+      {
+        "id": "otherWishes",
+        "label": "Any other specific medical wishes?",
+        "type": "textarea",
+        "required": false
+      }
     ]
   },
   {
@@ -101,16 +348,67 @@
     "category": "va_benefits",
     "phase": 1,
     "state_sensitive": false,
-    "upload_suggestions": ["DD-214", "VA disability rating letter", "medical records", "service treatment records", "buddy statements"],
-    "suggested_next": ["va-appeal-letter", "nexus-letter-prep", "records-request-letter"],
+    "upload_suggestions": [
+      "DD-214",
+      "VA disability rating letter",
+      "medical records",
+      "service treatment records",
+      "buddy statements"
+    ],
+    "suggested_next": [
+      "va-appeal-letter",
+      "nexus-letter-prep",
+      "records-request-letter"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "condition", "label": "What condition(s) are you claiming?", "type": "textarea", "required": true},
-      {"id": "inServiceEvent", "label": "Describe the in-service event, injury, or exposure that caused or worsened this condition", "type": "textarea", "required": true},
-      {"id": "currentImpact", "label": "How does this condition affect your daily life and work today?", "type": "textarea", "required": true},
-      {"id": "treatment", "label": "What treatment have you received (military and civilian)?", "type": "textarea", "required": false}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "condition",
+        "label": "What condition(s) are you claiming?",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "inServiceEvent",
+        "label": "Describe the in-service event, injury, or exposure that caused or worsened this condition",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "currentImpact",
+        "label": "How does this condition affect your daily life and work today?",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "treatment",
+        "label": "What treatment have you received (military and civilian)?",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "legal_disclaimer": "This statement is a template to help organize your thoughts. It is NOT legal advice. Consider working with a VA-accredited claims agent or Veterans Service Organization (VSO) for best results."
   },
   {
     "id": "debt-hardship-letter",
@@ -119,17 +417,74 @@
     "category": "financial",
     "phase": 1,
     "state_sensitive": false,
-    "upload_suggestions": ["debt notices", "income statements", "VA disability rating letter", "medical bills"],
-    "suggested_next": ["credit-dispute-letter", "budget-financial-recovery-plan"],
+    "upload_suggestions": [
+      "debt notices",
+      "income statements",
+      "VA disability rating letter",
+      "medical bills"
+    ],
+    "suggested_next": [
+      "credit-dispute-letter",
+      "budget-financial-recovery-plan"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "creditorName", "label": "Who is the creditor or debt collector?", "type": "text", "required": true},
-      {"id": "accountNumber", "label": "Account number (optional — helps identify your account)", "type": "text", "required": false},
-      {"id": "amountOwed", "label": "Approximate amount owed", "type": "text", "required": true},
-      {"id": "hardshipReason", "label": "What caused the hardship? (medical emergency, job loss, disability, transition, etc.)", "type": "textarea", "required": true},
-      {"id": "requestedRelief", "label": "What are you asking for? (lower payments, settlement, deferment, forgiveness)", "type": "select", "options": ["Lower monthly payments","One-time settlement for less","Payment deferment/pause","Partial forgiveness","Other"], "required": true},
-      {"id": "veteranStatus", "label": "Are you a veteran or active service member?", "type": "select", "options": ["Yes — veteran","Yes — active duty","Yes — Guard/Reserve","No"], "required": true}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "creditorName",
+        "label": "Who is the creditor or debt collector?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "accountNumber",
+        "label": "Account number (optional \u2014 helps identify your account)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "amountOwed",
+        "label": "Approximate amount owed",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "hardshipReason",
+        "label": "What caused the hardship? (medical emergency, job loss, disability, transition, etc.)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "requestedRelief",
+        "label": "What are you asking for? (lower payments, settlement, deferment, forgiveness)",
+        "type": "select",
+        "options": [
+          "Lower monthly payments",
+          "One-time settlement for less",
+          "Payment deferment/pause",
+          "Partial forgiveness",
+          "Other"
+        ],
+        "required": true
+      },
+      {
+        "id": "veteranStatus",
+        "label": "Are you a veteran or active service member?",
+        "type": "select",
+        "options": [
+          "Yes \u2014 veteran",
+          "Yes \u2014 active duty",
+          "Yes \u2014 Guard/Reserve",
+          "No"
+        ],
+        "required": true
+      }
+    ],
+    "legal_disclaimer": "This letter is a template starting point. Results vary by creditor. Consider consulting a nonprofit credit counselor (NFCC.org) or legal aid for your situation."
   },
   {
     "id": "durable-power-of-attorney",
@@ -138,17 +493,58 @@
     "category": "legal",
     "phase": 2,
     "state_sensitive": true,
-    "upload_suggestions": ["prior POA document", "ID documents"],
-    "suggested_next": ["medical-power-of-attorney", "living-will"],
+    "upload_suggestions": [
+      "prior POA document",
+      "ID documents"
+    ],
+    "suggested_next": [
+      "medical-power-of-attorney",
+      "living-will"
+    ],
     "legal_disclaimer": "This template provides a starting framework only. It is NOT legal advice. Have an attorney review before signing.",
     "intake": [
-      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
-      {"id": "principalName", "label": "Your full legal name (the principal)", "type": "text", "required": true},
-      {"id": "agentName", "label": "Full legal name of your agent (attorney-in-fact)", "type": "text", "required": true},
-      {"id": "agentRelation", "label": "Relationship to agent", "type": "text", "required": true},
-      {"id": "successorAgent", "label": "Successor agent (backup if primary agent cannot serve)", "type": "text", "required": false},
-      {"id": "powers", "label": "What powers are you granting? (financial, property, legal, healthcare, all)", "type": "textarea", "required": true},
-      {"id": "limitations", "label": "Any limitations or restrictions on the agent's powers?", "type": "textarea", "required": false}
+      {
+        "id": "state",
+        "label": "What state do you live in?",
+        "type": "state_select",
+        "required": true
+      },
+      {
+        "id": "principalName",
+        "label": "Your full legal name (the principal)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "agentName",
+        "label": "Full legal name of your agent (attorney-in-fact)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "agentRelation",
+        "label": "Relationship to agent",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "successorAgent",
+        "label": "Successor agent (backup if primary agent cannot serve)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "powers",
+        "label": "What powers are you granting? (financial, property, legal, healthcare, all)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "limitations",
+        "label": "Any limitations or restrictions on the agent's powers?",
+        "type": "textarea",
+        "required": false
+      }
     ]
   },
   {
@@ -158,18 +554,70 @@
     "category": "legal",
     "phase": 2,
     "state_sensitive": true,
-    "upload_suggestions": ["prior medical POA", "living will", "current medication list"],
-    "suggested_next": ["living-will", "hipaa-authorization-form"],
+    "upload_suggestions": [
+      "prior medical POA",
+      "living will",
+      "current medication list"
+    ],
+    "suggested_next": [
+      "living-will",
+      "hipaa-authorization-form"
+    ],
     "legal_disclaimer": "This template provides a starting framework only. It is NOT legal advice. Have an attorney or healthcare provider review.",
     "intake": [
-      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
-      {"id": "principalName", "label": "Your full legal name", "type": "text", "required": true},
-      {"id": "agentName", "label": "Full legal name of your healthcare agent", "type": "text", "required": true},
-      {"id": "agentRelation", "label": "Relationship to agent", "type": "text", "required": true},
-      {"id": "agentPhone", "label": "Agent's phone number", "type": "text", "required": true},
-      {"id": "alternateAgent", "label": "Alternate agent (backup if primary cannot serve)", "type": "text", "required": false},
-      {"id": "specialInstructions", "label": "Any specific medical instructions or preferences for your agent?", "type": "textarea", "required": false},
-      {"id": "mentalHealth", "label": "Should your agent have authority over mental health treatment decisions?", "type": "select", "options": ["Yes","No","Only in specific circumstances"], "required": true}
+      {
+        "id": "state",
+        "label": "What state do you live in?",
+        "type": "state_select",
+        "required": true
+      },
+      {
+        "id": "principalName",
+        "label": "Your full legal name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "agentName",
+        "label": "Full legal name of your healthcare agent",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "agentRelation",
+        "label": "Relationship to agent",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "agentPhone",
+        "label": "Agent's phone number",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "alternateAgent",
+        "label": "Alternate agent (backup if primary cannot serve)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "specialInstructions",
+        "label": "Any specific medical instructions or preferences for your agent?",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "mentalHealth",
+        "label": "Should your agent have authority over mental health treatment decisions?",
+        "type": "select",
+        "options": [
+          "Yes",
+          "No",
+          "Only in specific circumstances"
+        ],
+        "required": true
+      }
     ]
   },
   {
@@ -180,17 +628,76 @@
     "phase": 2,
     "state_sensitive": false,
     "upload_suggestions": [],
-    "suggested_next": ["medical-power-of-attorney", "living-will"],
+    "suggested_next": [
+      "medical-power-of-attorney",
+      "living-will"
+    ],
     "intake": [
-      {"id": "patientName", "label": "Your full legal name (the patient)", "type": "text", "required": true},
-      {"id": "dob", "label": "Date of birth", "type": "text", "required": true},
-      {"id": "authorizedPerson", "label": "Who are you authorizing to receive your health information? (name and relationship)", "type": "text", "required": true},
-      {"id": "providerName", "label": "Healthcare provider or facility that holds your records", "type": "text", "required": true},
-      {"id": "infoType", "label": "What type of information can be released?", "type": "select", "options": ["All medical records","Mental health records only","Specific treatment records","Lab/test results only","Billing records only","Other (specify in notes)"], "required": true},
-      {"id": "purpose", "label": "Purpose of the release (legal, personal, VA claim, insurance, etc.)", "type": "text", "required": true},
-      {"id": "expiration", "label": "When should this authorization expire?", "type": "select", "options": ["6 months","1 year","2 years","Upon completion of specific purpose","No expiration"], "required": true},
-      {"id": "notes", "label": "Additional notes or restrictions", "type": "textarea", "required": false}
-    ]
+      {
+        "id": "patientName",
+        "label": "Your full legal name (the patient)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "dob",
+        "label": "Date of birth",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "authorizedPerson",
+        "label": "Who are you authorizing to receive your health information? (name and relationship)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "providerName",
+        "label": "Healthcare provider or facility that holds your records",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "infoType",
+        "label": "What type of information can be released?",
+        "type": "select",
+        "options": [
+          "All medical records",
+          "Mental health records only",
+          "Specific treatment records",
+          "Lab/test results only",
+          "Billing records only",
+          "Other (specify in notes)"
+        ],
+        "required": true
+      },
+      {
+        "id": "purpose",
+        "label": "Purpose of the release (legal, personal, VA claim, insurance, etc.)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "expiration",
+        "label": "When should this authorization expire?",
+        "type": "select",
+        "options": [
+          "6 months",
+          "1 year",
+          "2 years",
+          "Upon completion of specific purpose",
+          "No expiration"
+        ],
+        "required": true
+      },
+      {
+        "id": "notes",
+        "label": "Additional notes or restrictions",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "legal_disclaimer": "This is a template only and does NOT constitute legal authorization. Consult a healthcare provider or attorney to ensure compliance with your state HIPAA requirements."
   },
   {
     "id": "emergency-contact-family-care-plan",
@@ -199,18 +706,65 @@
     "category": "legal",
     "phase": 2,
     "state_sensitive": false,
-    "upload_suggestions": ["current family care plan", "insurance documents"],
-    "suggested_next": ["last-will-and-testament", "living-will"],
+    "upload_suggestions": [
+      "current family care plan",
+      "insurance documents"
+    ],
+    "suggested_next": [
+      "last-will-and-testament",
+      "living-will"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "dependents", "label": "Names and ages of dependents (children, elderly parents, pets, etc.)", "type": "textarea", "required": true},
-      {"id": "primaryContact", "label": "Primary emergency contact (name, phone, relationship)", "type": "text", "required": true},
-      {"id": "secondaryContact", "label": "Secondary emergency contact (name, phone, relationship)", "type": "text", "required": true},
-      {"id": "caregiver", "label": "Designated caregiver for dependents if you are unavailable (name, phone)", "type": "text", "required": true},
-      {"id": "medicalInfo", "label": "Important medical info (allergies, medications, conditions for you or dependents)", "type": "textarea", "required": false},
-      {"id": "financialInfo", "label": "Key financial info (bank name, insurance provider — no account numbers)", "type": "textarea", "required": false},
-      {"id": "specialNeeds", "label": "Special instructions (school pickup, pet care, religious preferences, etc.)", "type": "textarea", "required": false}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "dependents",
+        "label": "Names and ages of dependents (children, elderly parents, pets, etc.)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "primaryContact",
+        "label": "Primary emergency contact (name, phone, relationship)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "secondaryContact",
+        "label": "Secondary emergency contact (name, phone, relationship)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "caregiver",
+        "label": "Designated caregiver for dependents if you are unavailable (name, phone)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "medicalInfo",
+        "label": "Important medical info (allergies, medications, conditions for you or dependents)",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "financialInfo",
+        "label": "Key financial info (bank name, insurance provider \u2014 no account numbers)",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "specialNeeds",
+        "label": "Special instructions (school pickup, pet care, religious preferences, etc.)",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "legal_disclaimer": "This plan is for personal preparedness purposes. Review with your chain of command or an attorney if it will be used for official military family care plan requirements."
   },
   {
     "id": "va-appeal-letter",
@@ -219,18 +773,84 @@
     "category": "va_benefits",
     "phase": 2,
     "state_sensitive": false,
-    "upload_suggestions": ["VA denial letter", "medical records", "buddy statements", "nexus letter", "C&P exam results"],
-    "suggested_next": ["nexus-letter-prep", "records-request-letter"],
+    "upload_suggestions": [
+      "VA denial letter",
+      "medical records",
+      "buddy statements",
+      "nexus letter",
+      "C&P exam results"
+    ],
+    "suggested_next": [
+      "nexus-letter-prep",
+      "records-request-letter"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "claimNumber", "label": "VA claim or file number", "type": "text", "required": false},
-      {"id": "deniedCondition", "label": "What condition(s) were denied?", "type": "textarea", "required": true},
-      {"id": "denialReason", "label": "What reason did the VA give for the denial? (copy from denial letter if possible)", "type": "textarea", "required": true},
-      {"id": "denialDate", "label": "Date of the denial decision", "type": "text", "required": true},
-      {"id": "newEvidence", "label": "What new or additional evidence do you have since the denial?", "type": "textarea", "required": true},
-      {"id": "appealLane", "label": "Which appeal pathway are you choosing?", "type": "select", "options": ["Supplemental Claim (new evidence)","Higher-Level Review (same evidence, different reviewer)","Board of Veterans Appeals (judge review)","Not sure yet"], "required": true}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "claimNumber",
+        "label": "VA claim or file number",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "deniedCondition",
+        "label": "What condition(s) were denied?",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "denialReason",
+        "label": "What reason did the VA give for the denial? (copy from denial letter if possible)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "denialDate",
+        "label": "Date of the denial decision",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "newEvidence",
+        "label": "What new or additional evidence do you have since the denial?",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "appealLane",
+        "label": "Which appeal pathway are you choosing?",
+        "type": "select",
+        "options": [
+          "Supplemental Claim (new evidence)",
+          "Higher-Level Review (same evidence, different reviewer)",
+          "Board of Veterans Appeals (judge review)",
+          "Not sure yet"
+        ],
+        "required": true
+      }
+    ],
+    "legal_disclaimer": "This letter is a template starting point. VA appeals have strict deadlines and requirements. Strongly consider working with a VA-accredited attorney or VSO representative."
   },
   {
     "id": "records-request-letter",
@@ -239,18 +859,83 @@
     "category": "va_benefits",
     "phase": 2,
     "state_sensitive": false,
-    "upload_suggestions": ["DD-214", "prior records request responses"],
-    "suggested_next": ["va-claim-personal-statement", "va-appeal-letter"],
+    "upload_suggestions": [
+      "DD-214",
+      "prior records request responses"
+    ],
+    "suggested_next": [
+      "va-claim-personal-statement",
+      "va-appeal-letter"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full legal name (as it appears on military records)", "type": "text", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "serviceDates", "label": "Approximate dates of service (e.g., 2005-2012)", "type": "text", "required": true},
-      {"id": "ssn_last4", "label": "Last 4 of SSN (for record matching — optional)", "type": "text", "required": false},
-      {"id": "recordType", "label": "What type of records are you requesting?", "type": "select", "options": ["Service Treatment Records (STRs)","Personnel Records (201 file)","DD-214 / Discharge Papers","Medical Records from VA facility","Complete Military Service Record","Other"], "required": true},
-      {"id": "recordsFrom", "label": "Which agency or facility holds these records?", "type": "text", "required": true},
-      {"id": "reason", "label": "Why do you need these records? (VA claim, employment, personal, legal)", "type": "text", "required": true},
-      {"id": "additionalDetails", "label": "Any additional identifying information or special instructions", "type": "textarea", "required": false}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full legal name (as it appears on military records)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "serviceDates",
+        "label": "Approximate dates of service (e.g., 2005-2012)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "ssn_last4",
+        "label": "Last 4 of SSN (for record matching \u2014 optional)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "recordType",
+        "label": "What type of records are you requesting?",
+        "type": "select",
+        "options": [
+          "Service Treatment Records (STRs)",
+          "Personnel Records (201 file)",
+          "DD-214 / Discharge Papers",
+          "Medical Records from VA facility",
+          "Complete Military Service Record",
+          "Other"
+        ],
+        "required": true
+      },
+      {
+        "id": "recordsFrom",
+        "label": "Which agency or facility holds these records?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "reason",
+        "label": "Why do you need these records? (VA claim, employment, personal, legal)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "additionalDetails",
+        "label": "Any additional identifying information or special instructions",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "legal_disclaimer": "This is a template request. Processing times vary. For urgent needs, contact the National Personnel Records Center directly at 314-801-0800."
   },
   {
     "id": "federal-resume",
@@ -259,25 +944,135 @@
     "category": "career",
     "phase": 2,
     "state_sensitive": false,
-    "upload_suggestions": ["DD-214", "prior resume", "job announcement", "transcripts", "SF-50"],
-    "suggested_next": ["resume-builder", "interview-prep-script"],
+    "upload_suggestions": [
+      "DD-214",
+      "prior resume",
+      "job announcement",
+      "transcripts",
+      "SF-50"
+    ],
+    "suggested_next": [
+      "resume-builder",
+      "interview-prep-script"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
-      {"id": "address", "label": "Mailing address (city, state, zip)", "type": "text", "required": true},
-      {"id": "email", "label": "Email address", "type": "text", "required": true},
-      {"id": "phone", "label": "Phone number", "type": "text", "required": true},
-      {"id": "citizenship", "label": "U.S. citizenship status", "type": "select", "options": ["U.S. Citizen","U.S. National","Permanent Resident"], "required": true},
-      {"id": "vetPref", "label": "Veterans' preference claim", "type": "select", "options": ["5-point (TP)","10-point (CP/CPS/XP)","None","Not sure"], "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "mos", "label": "MOS / Rating / AFSC", "type": "text", "required": true},
-      {"id": "rank", "label": "Highest rank held", "type": "text", "required": true},
-      {"id": "serviceDates", "label": "Dates of service (start — end)", "type": "text", "required": true},
-      {"id": "hoursPerWeek", "label": "Average hours per week during service", "type": "text", "required": true},
-      {"id": "duties", "label": "Key duties, accomplishments, and responsibilities (be detailed — federal resumes are long)", "type": "textarea", "required": true},
-      {"id": "targetJob", "label": "Job title and announcement number you're applying for (if known)", "type": "text", "required": false},
-      {"id": "education", "label": "Education (degrees, schools, dates, GPA if 3.0+)", "type": "textarea", "required": true},
-      {"id": "certs", "label": "Certifications, licenses, and training", "type": "textarea", "required": false},
-      {"id": "clearance", "label": "Security clearance (type and status)", "type": "text", "required": false}
+      {
+        "id": "fullName",
+        "label": "Full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "address",
+        "label": "Mailing address (city, state, zip)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "email",
+        "label": "Email address",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "phone",
+        "label": "Phone number",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "citizenship",
+        "label": "U.S. citizenship status",
+        "type": "select",
+        "options": [
+          "U.S. Citizen",
+          "U.S. National",
+          "Permanent Resident"
+        ],
+        "required": true
+      },
+      {
+        "id": "vetPref",
+        "label": "Veterans' preference claim",
+        "type": "select",
+        "options": [
+          "5-point (TP)",
+          "10-point (CP/CPS/XP)",
+          "None",
+          "Not sure"
+        ],
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "mos",
+        "label": "MOS / Rating / AFSC",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "rank",
+        "label": "Highest rank held",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "serviceDates",
+        "label": "Dates of service (start \u2014 end)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "hoursPerWeek",
+        "label": "Average hours per week during service",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "duties",
+        "label": "Key duties, accomplishments, and responsibilities (be detailed \u2014 federal resumes are long)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "targetJob",
+        "label": "Job title and announcement number you're applying for (if known)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "education",
+        "label": "Education (degrees, schools, dates, GPA if 3.0+)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "certs",
+        "label": "Certifications, licenses, and training",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "clearance",
+        "label": "Security clearance (type and status)",
+        "type": "text",
+        "required": false
+      }
     ]
   },
   {
@@ -287,17 +1082,73 @@
     "category": "career",
     "phase": 2,
     "state_sensitive": false,
-    "upload_suggestions": ["job description", "resume"],
-    "suggested_next": ["resume-builder", "salary-negotiation-script"],
+    "upload_suggestions": [
+      "job description",
+      "resume"
+    ],
+    "suggested_next": [
+      "resume-builder",
+      "salary-negotiation-script"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
-      {"id": "targetRole", "label": "What role are you interviewing for?", "type": "text", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "mos", "label": "MOS / Rating / AFSC", "type": "text", "required": true},
-      {"id": "leadershipExample", "label": "Describe a time you led a team or project (what happened, what you did, what resulted)", "type": "textarea", "required": true},
-      {"id": "challengeExample", "label": "Describe a major challenge you overcame during service", "type": "textarea", "required": true},
-      {"id": "teamworkExample", "label": "Describe a time you worked with a difficult team or resolved a conflict", "type": "textarea", "required": true},
-      {"id": "additionalStrengths", "label": "Any other strengths or experiences you want to highlight?", "type": "textarea", "required": false}
+      {
+        "id": "fullName",
+        "label": "Full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "targetRole",
+        "label": "What role are you interviewing for?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "mos",
+        "label": "MOS / Rating / AFSC",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "leadershipExample",
+        "label": "Describe a time you led a team or project (what happened, what you did, what resulted)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "challengeExample",
+        "label": "Describe a major challenge you overcame during service",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "teamworkExample",
+        "label": "Describe a time you worked with a difficult team or resolved a conflict",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "additionalStrengths",
+        "label": "Any other strengths or experiences you want to highlight?",
+        "type": "textarea",
+        "required": false
+      }
     ]
   },
   {
@@ -307,18 +1158,86 @@
     "category": "financial",
     "phase": 2,
     "state_sensitive": false,
-    "upload_suggestions": ["credit report", "supporting documents"],
-    "suggested_next": ["debt-hardship-letter", "budget-financial-recovery-plan"],
+    "upload_suggestions": [
+      "credit report",
+      "supporting documents"
+    ],
+    "suggested_next": [
+      "debt-hardship-letter",
+      "budget-financial-recovery-plan"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full legal name", "type": "text", "required": true},
-      {"id": "address", "label": "Your current mailing address", "type": "text", "required": true},
-      {"id": "bureau", "label": "Which credit bureau are you disputing with?", "type": "select", "options": ["Equifax","Experian","TransUnion","All three bureaus"], "required": true},
-      {"id": "accountName", "label": "Name of the creditor or account being disputed", "type": "text", "required": true},
-      {"id": "accountNumber", "label": "Account number (partial is fine)", "type": "text", "required": false},
-      {"id": "disputeReason", "label": "Why is this item inaccurate?", "type": "select", "options": ["Not my account / identity theft","Account paid but still showing balance","Incorrect balance or payment history","Account included in bankruptcy","Duplicate entry","Account past statute of limitations","Other"], "required": true},
-      {"id": "explanation", "label": "Explain the inaccuracy in detail", "type": "textarea", "required": true},
-      {"id": "veteranStatus", "label": "Are you a veteran or active service member?", "type": "select", "options": ["Yes — veteran","Yes — active duty","Yes — Guard/Reserve","No"], "required": true}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full legal name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "address",
+        "label": "Your current mailing address",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "bureau",
+        "label": "Which credit bureau are you disputing with?",
+        "type": "select",
+        "options": [
+          "Equifax",
+          "Experian",
+          "TransUnion",
+          "All three bureaus"
+        ],
+        "required": true
+      },
+      {
+        "id": "accountName",
+        "label": "Name of the creditor or account being disputed",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "accountNumber",
+        "label": "Account number (partial is fine)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "disputeReason",
+        "label": "Why is this item inaccurate?",
+        "type": "select",
+        "options": [
+          "Not my account / identity theft",
+          "Account paid but still showing balance",
+          "Incorrect balance or payment history",
+          "Account included in bankruptcy",
+          "Duplicate entry",
+          "Account past statute of limitations",
+          "Other"
+        ],
+        "required": true
+      },
+      {
+        "id": "explanation",
+        "label": "Explain the inaccuracy in detail",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "veteranStatus",
+        "label": "Are you a veteran or active service member?",
+        "type": "select",
+        "options": [
+          "Yes \u2014 veteran",
+          "Yes \u2014 active duty",
+          "Yes \u2014 Guard/Reserve",
+          "No"
+        ],
+        "required": true
+      }
+    ],
+    "legal_disclaimer": "This letter follows FCRA dispute guidelines but is NOT legal advice. If disputes are complex, consider consulting a consumer rights attorney."
   },
   {
     "id": "budget-financial-recovery-plan",
@@ -327,19 +1246,80 @@
     "category": "financial",
     "phase": 2,
     "state_sensitive": false,
-    "upload_suggestions": ["bank statements", "debt notices", "income statements"],
-    "suggested_next": ["debt-hardship-letter", "credit-dispute-letter"],
+    "upload_suggestions": [
+      "bank statements",
+      "debt notices",
+      "income statements"
+    ],
+    "suggested_next": [
+      "debt-hardship-letter",
+      "credit-dispute-letter"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your name", "type": "text", "required": true},
-      {"id": "monthlyIncome", "label": "Total monthly income (take-home pay, VA disability, etc.)", "type": "text", "required": true},
-      {"id": "incomeSources", "label": "List your income sources (employment, VA disability %, GI Bill, etc.)", "type": "textarea", "required": true},
-      {"id": "housing", "label": "Monthly housing cost (rent/mortgage + utilities)", "type": "text", "required": true},
-      {"id": "transportation", "label": "Monthly transportation cost (car payment, insurance, gas)", "type": "text", "required": true},
-      {"id": "food", "label": "Monthly food/groceries cost", "type": "text", "required": true},
-      {"id": "debts", "label": "List your debts (creditor name, balance, minimum payment for each)", "type": "textarea", "required": true},
-      {"id": "otherExpenses", "label": "Other monthly expenses (phone, insurance, childcare, subscriptions, etc.)", "type": "textarea", "required": false},
-      {"id": "financialGoal", "label": "What is your primary financial goal?", "type": "select", "options": ["Get out of debt","Build emergency fund","Save for a home","Reduce spending","Create a budget I can stick to","All of the above"], "required": true}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "monthlyIncome",
+        "label": "Total monthly income (take-home pay, VA disability, etc.)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "incomeSources",
+        "label": "List your income sources (employment, VA disability %, GI Bill, etc.)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "housing",
+        "label": "Monthly housing cost (rent/mortgage + utilities)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "transportation",
+        "label": "Monthly transportation cost (car payment, insurance, gas)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "food",
+        "label": "Monthly food/groceries cost",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "debts",
+        "label": "List your debts (creditor name, balance, minimum payment for each)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "otherExpenses",
+        "label": "Other monthly expenses (phone, insurance, childcare, subscriptions, etc.)",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "financialGoal",
+        "label": "What is your primary financial goal?",
+        "type": "select",
+        "options": [
+          "Get out of debt",
+          "Build emergency fund",
+          "Save for a home",
+          "Reduce spending",
+          "Create a budget I can stick to",
+          "All of the above"
+        ],
+        "required": true
+      }
+    ],
+    "legal_disclaimer": "This budget plan is for educational purposes. Consult a certified financial counselor for personalized financial advice. Free counseling is available through Military OneSource."
   },
   {
     "id": "nexus-letter-prep",
@@ -348,19 +1328,82 @@
     "category": "va_benefits",
     "phase": 3,
     "state_sensitive": false,
-    "upload_suggestions": ["medical records", "service treatment records", "VA rating decision"],
-    "suggested_next": ["va-claim-personal-statement", "va-appeal-letter"],
+    "upload_suggestions": [
+      "medical records",
+      "service treatment records",
+      "VA rating decision"
+    ],
+    "suggested_next": [
+      "va-claim-personal-statement",
+      "va-appeal-letter"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "serviceDates", "label": "Dates of service", "type": "text", "required": true},
-      {"id": "condition", "label": "What condition do you need the nexus letter for?", "type": "text", "required": true},
-      {"id": "inServiceEvent", "label": "What in-service event, injury, or exposure caused or contributed to this condition?", "type": "textarea", "required": true},
-      {"id": "firstSymptoms", "label": "When did symptoms first appear? (during service, shortly after, years later)", "type": "text", "required": true},
-      {"id": "currentDiagnosis", "label": "Current diagnosis (if you have one) and treating doctor's name", "type": "text", "required": false},
-      {"id": "currentTreatment", "label": "What treatment are you currently receiving?", "type": "textarea", "required": false},
-      {"id": "priorClaims", "label": "Have you filed a VA claim for this condition before? If denied, what was the reason?", "type": "textarea", "required": false}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "serviceDates",
+        "label": "Dates of service",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "condition",
+        "label": "What condition do you need the nexus letter for?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "inServiceEvent",
+        "label": "What in-service event, injury, or exposure caused or contributed to this condition?",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "firstSymptoms",
+        "label": "When did symptoms first appear? (during service, shortly after, years later)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "currentDiagnosis",
+        "label": "Current diagnosis (if you have one) and treating doctor's name",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "currentTreatment",
+        "label": "What treatment are you currently receiving?",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "priorClaims",
+        "label": "Have you filed a VA claim for this condition before? If denied, what was the reason?",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "legal_disclaimer": "This prep sheet helps organize information for your medical provider. The final nexus letter MUST be written and signed by a qualified medical professional."
   },
   {
     "id": "benefits-eligibility-summary",
@@ -369,21 +1412,146 @@
     "category": "va_benefits",
     "phase": 3,
     "state_sensitive": true,
-    "upload_suggestions": ["DD-214", "VA disability rating letter"],
-    "suggested_next": ["va-claim-personal-statement", "records-request-letter"],
+    "upload_suggestions": [
+      "DD-214",
+      "VA disability rating letter"
+    ],
+    "suggested_next": [
+      "va-claim-personal-statement",
+      "records-request-letter"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "serviceEra", "label": "Service era", "type": "select", "options": ["Post-9/11 (after Sep 10, 2001)","Gulf War (Aug 1990 – Sep 2001)","Vietnam Era (1964–1975)","Korean War (1950–1955)","Peacetime","Other"], "required": true},
-      {"id": "dischargeType", "label": "Discharge type", "type": "select", "options": ["Honorable","General (Under Honorable Conditions)","Other Than Honorable","Bad Conduct","Dishonorable","Uncharacterized","Not yet discharged"], "required": true},
-      {"id": "disabilityRating", "label": "Current VA disability rating (if any)", "type": "select", "options": ["None / Not yet rated","0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%","100% P&T (Permanent & Total)"], "required": true},
-      {"id": "yearsService", "label": "Total years of service", "type": "text", "required": true},
-      {"id": "maritalStatus", "label": "Marital status", "type": "select", "options": ["Single","Married","Divorced","Widowed"], "required": true},
-      {"id": "dependents", "label": "Number of dependents (children, spouse, parents)", "type": "text", "required": false},
-      {"id": "education", "label": "Have you used GI Bill benefits?", "type": "select", "options": ["No — haven't used any","Partially used","Fully used","Not eligible"], "required": true},
-      {"id": "employment", "label": "Current employment status", "type": "select", "options": ["Employed full-time","Employed part-time","Unemployed — looking","Unemployed — not looking","Retired","Student","Self-employed"], "required": true}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "state",
+        "label": "What state do you live in?",
+        "type": "state_select",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "serviceEra",
+        "label": "Service era",
+        "type": "select",
+        "options": [
+          "Post-9/11 (after Sep 10, 2001)",
+          "Gulf War (Aug 1990 \u2013 Sep 2001)",
+          "Vietnam Era (1964\u20131975)",
+          "Korean War (1950\u20131955)",
+          "Peacetime",
+          "Other"
+        ],
+        "required": true
+      },
+      {
+        "id": "dischargeType",
+        "label": "Discharge type",
+        "type": "select",
+        "options": [
+          "Honorable",
+          "General (Under Honorable Conditions)",
+          "Other Than Honorable",
+          "Bad Conduct",
+          "Dishonorable",
+          "Uncharacterized",
+          "Not yet discharged"
+        ],
+        "required": true
+      },
+      {
+        "id": "disabilityRating",
+        "label": "Current VA disability rating (if any)",
+        "type": "select",
+        "options": [
+          "None / Not yet rated",
+          "0%",
+          "10%",
+          "20%",
+          "30%",
+          "40%",
+          "50%",
+          "60%",
+          "70%",
+          "80%",
+          "90%",
+          "100%",
+          "100% P&T (Permanent & Total)"
+        ],
+        "required": true
+      },
+      {
+        "id": "yearsService",
+        "label": "Total years of service",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "maritalStatus",
+        "label": "Marital status",
+        "type": "select",
+        "options": [
+          "Single",
+          "Married",
+          "Divorced",
+          "Widowed"
+        ],
+        "required": true
+      },
+      {
+        "id": "dependents",
+        "label": "Number of dependents (children, spouse, parents)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "education",
+        "label": "Have you used GI Bill benefits?",
+        "type": "select",
+        "options": [
+          "No \u2014 haven't used any",
+          "Partially used",
+          "Fully used",
+          "Not eligible"
+        ],
+        "required": true
+      },
+      {
+        "id": "employment",
+        "label": "Current employment status",
+        "type": "select",
+        "options": [
+          "Employed full-time",
+          "Employed part-time",
+          "Unemployed \u2014 looking",
+          "Unemployed \u2014 not looking",
+          "Retired",
+          "Student",
+          "Self-employed"
+        ],
+        "required": true
+      }
+    ],
+    "legal_disclaimer": "This summary is generated from the information you provided and general eligibility rules. Actual eligibility is determined by the VA. Verify with VA.gov or a VSO."
   },
   {
     "id": "military-civilian-skills-translator",
@@ -392,18 +1560,80 @@
     "category": "career",
     "phase": 3,
     "state_sensitive": false,
-    "upload_suggestions": ["DD-214", "VMET", "transcripts"],
-    "suggested_next": ["resume-builder", "linkedin-profile-builder"],
+    "upload_suggestions": [
+      "DD-214",
+      "VMET",
+      "transcripts"
+    ],
+    "suggested_next": [
+      "resume-builder",
+      "linkedin-profile-builder"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
-      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
-      {"id": "mos", "label": "MOS / Rating / AFSC (job code)", "type": "text", "required": true},
-      {"id": "mosTitle", "label": "Official military job title", "type": "text", "required": true},
-      {"id": "rank", "label": "Highest rank held", "type": "text", "required": true},
-      {"id": "duties", "label": "Describe your primary duties and responsibilities", "type": "textarea", "required": true},
-      {"id": "equipment", "label": "Equipment, systems, or technology you used", "type": "textarea", "required": false},
-      {"id": "leadership", "label": "Number of people you supervised or led", "type": "text", "required": false},
-      {"id": "targetIndustry", "label": "What civilian industry or role are you interested in? (or 'not sure')", "type": "text", "required": false}
+      {
+        "id": "fullName",
+        "label": "Full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "branch",
+        "label": "Military branch",
+        "type": "select",
+        "options": [
+          "Army",
+          "Navy",
+          "Air Force",
+          "Marines",
+          "Coast Guard",
+          "Space Force",
+          "National Guard",
+          "Reserve"
+        ],
+        "required": true
+      },
+      {
+        "id": "mos",
+        "label": "MOS / Rating / AFSC (job code)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "mosTitle",
+        "label": "Official military job title",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "rank",
+        "label": "Highest rank held",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "duties",
+        "label": "Describe your primary duties and responsibilities",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "equipment",
+        "label": "Equipment, systems, or technology you used",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "leadership",
+        "label": "Number of people you supervised or led",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "targetIndustry",
+        "label": "What civilian industry or role are you interested in? (or 'not sure')",
+        "type": "text",
+        "required": false
+      }
     ]
   },
   {
@@ -413,18 +1643,75 @@
     "category": "career",
     "phase": 3,
     "state_sensitive": false,
-    "upload_suggestions": ["job offer letter", "resume"],
-    "suggested_next": ["interview-prep-script", "resume-builder"],
+    "upload_suggestions": [
+      "job offer letter",
+      "resume"
+    ],
+    "suggested_next": [
+      "interview-prep-script",
+      "resume-builder"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
-      {"id": "targetRole", "label": "Job title you're negotiating for", "type": "text", "required": true},
-      {"id": "companyName", "label": "Company name", "type": "text", "required": true},
-      {"id": "offeredSalary", "label": "Salary they offered (or expected range)", "type": "text", "required": true},
-      {"id": "desiredSalary", "label": "What salary do you want?", "type": "text", "required": true},
-      {"id": "yearsExperience", "label": "Total years of relevant experience (military + civilian)", "type": "text", "required": true},
-      {"id": "uniqueValue", "label": "What unique value do you bring? (clearance, specialized training, leadership, certifications)", "type": "textarea", "required": true},
-      {"id": "otherOffers", "label": "Do you have competing offers or alternative options?", "type": "select", "options": ["Yes — another offer","Yes — current job is fine","No — this is my only option","Prefer not to say"], "required": true},
-      {"id": "benefits", "label": "Are there non-salary items you'd also negotiate? (signing bonus, remote work, PTO, relocation, etc.)", "type": "textarea", "required": false}
+      {
+        "id": "fullName",
+        "label": "Full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "targetRole",
+        "label": "Job title you're negotiating for",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "companyName",
+        "label": "Company name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "offeredSalary",
+        "label": "Salary they offered (or expected range)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "desiredSalary",
+        "label": "What salary do you want?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "yearsExperience",
+        "label": "Total years of relevant experience (military + civilian)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "uniqueValue",
+        "label": "What unique value do you bring? (clearance, specialized training, leadership, certifications)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "otherOffers",
+        "label": "Do you have competing offers or alternative options?",
+        "type": "select",
+        "options": [
+          "Yes \u2014 another offer",
+          "Yes \u2014 current job is fine",
+          "No \u2014 this is my only option",
+          "Prefer not to say"
+        ],
+        "required": true
+      },
+      {
+        "id": "benefits",
+        "label": "Are there non-salary items you'd also negotiate? (signing bonus, remote work, PTO, relocation, etc.)",
+        "type": "textarea",
+        "required": false
+      }
     ]
   },
   {
@@ -434,20 +1721,111 @@
     "category": "financial",
     "phase": 3,
     "state_sensitive": true,
-    "upload_suggestions": ["DD-214", "Certificate of Eligibility", "credit report"],
-    "suggested_next": ["budget-financial-recovery-plan"],
+    "upload_suggestions": [
+      "DD-214",
+      "Certificate of Eligibility",
+      "credit report"
+    ],
+    "suggested_next": [
+      "budget-financial-recovery-plan"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "state", "label": "What state are you buying in?", "type": "state_select", "required": true},
-      {"id": "serviceStatus", "label": "Current service status", "type": "select", "options": ["Veteran (separated)","Active duty","Guard/Reserve (activated 90+ days)","Guard/Reserve (never activated)","Surviving spouse"], "required": true},
-      {"id": "hasCOE", "label": "Do you have your Certificate of Eligibility (COE)?", "type": "select", "options": ["Yes","No — need to get one","Not sure"], "required": true},
-      {"id": "creditScore", "label": "Approximate credit score range", "type": "select", "options": ["Below 580","580-619","620-659","660-699","700-739","740+","Don't know"], "required": true},
-      {"id": "monthlyIncome", "label": "Total monthly gross income", "type": "text", "required": true},
-      {"id": "monthlyDebts", "label": "Total monthly debt payments (car, credit cards, loans, etc.)", "type": "text", "required": true},
-      {"id": "savings", "label": "Approximate savings available for closing costs", "type": "text", "required": true},
-      {"id": "firstTimeBuyer", "label": "Is this your first home purchase?", "type": "select", "options": ["Yes","No — first time using VA loan","No — have used VA loan before"], "required": true},
-      {"id": "propertyType", "label": "What type of property are you looking at?", "type": "select", "options": ["Single family home","Condo","Townhouse","Multi-unit (2-4 units)","Manufactured home","Not sure yet"], "required": true}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "state",
+        "label": "What state are you buying in?",
+        "type": "state_select",
+        "required": true
+      },
+      {
+        "id": "serviceStatus",
+        "label": "Current service status",
+        "type": "select",
+        "options": [
+          "Veteran (separated)",
+          "Active duty",
+          "Guard/Reserve (activated 90+ days)",
+          "Guard/Reserve (never activated)",
+          "Surviving spouse"
+        ],
+        "required": true
+      },
+      {
+        "id": "hasCOE",
+        "label": "Do you have your Certificate of Eligibility (COE)?",
+        "type": "select",
+        "options": [
+          "Yes",
+          "No \u2014 need to get one",
+          "Not sure"
+        ],
+        "required": true
+      },
+      {
+        "id": "creditScore",
+        "label": "Approximate credit score range",
+        "type": "select",
+        "options": [
+          "Below 580",
+          "580-619",
+          "620-659",
+          "660-699",
+          "700-739",
+          "740+",
+          "Don't know"
+        ],
+        "required": true
+      },
+      {
+        "id": "monthlyIncome",
+        "label": "Total monthly gross income",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "monthlyDebts",
+        "label": "Total monthly debt payments (car, credit cards, loans, etc.)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "savings",
+        "label": "Approximate savings available for closing costs",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "firstTimeBuyer",
+        "label": "Is this your first home purchase?",
+        "type": "select",
+        "options": [
+          "Yes",
+          "No \u2014 first time using VA loan",
+          "No \u2014 have used VA loan before"
+        ],
+        "required": true
+      },
+      {
+        "id": "propertyType",
+        "label": "What type of property are you looking at?",
+        "type": "select",
+        "options": [
+          "Single family home",
+          "Condo",
+          "Townhouse",
+          "Multi-unit (2-4 units)",
+          "Manufactured home",
+          "Not sure yet"
+        ],
+        "required": true
+      }
+    ],
+    "legal_disclaimer": "This checklist is for preparation purposes only. VA loan requirements may change. Work with a VA-approved lender for current guidelines."
   },
   {
     "id": "rental-application-packet",
@@ -456,22 +1834,95 @@
     "category": "financial",
     "phase": 3,
     "state_sensitive": false,
-    "upload_suggestions": ["prior rental references", "income verification", "DD-214"],
-    "suggested_next": ["budget-financial-recovery-plan"],
+    "upload_suggestions": [
+      "prior rental references",
+      "income verification",
+      "DD-214"
+    ],
+    "suggested_next": [
+      "budget-financial-recovery-plan"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "phone", "label": "Phone number", "type": "text", "required": true},
-      {"id": "email", "label": "Email address", "type": "text", "required": true},
-      {"id": "monthlyIncome", "label": "Monthly gross income", "type": "text", "required": true},
-      {"id": "incomeSource", "label": "Income sources (employment, VA disability, GI Bill, etc.)", "type": "textarea", "required": true},
-      {"id": "currentAddress", "label": "Current address", "type": "text", "required": true},
-      {"id": "reasonForMoving", "label": "Reason for moving (PCS, transition, lease ending, etc.)", "type": "text", "required": true},
-      {"id": "veteranStatus", "label": "Veteran or active duty?", "type": "select", "options": ["Veteran","Active duty","Guard/Reserve","Military spouse"], "required": true},
-      {"id": "pets", "label": "Do you have pets? (type and number)", "type": "text", "required": false},
-      {"id": "reference1", "label": "Reference 1 (name, phone, relationship — e.g., former landlord, supervisor)", "type": "text", "required": true},
-      {"id": "reference2", "label": "Reference 2 (name, phone, relationship)", "type": "text", "required": true},
-      {"id": "additionalInfo", "label": "Anything else you'd like the landlord to know?", "type": "textarea", "required": false}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "phone",
+        "label": "Phone number",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "email",
+        "label": "Email address",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "monthlyIncome",
+        "label": "Monthly gross income",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "incomeSource",
+        "label": "Income sources (employment, VA disability, GI Bill, etc.)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "currentAddress",
+        "label": "Current address",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "reasonForMoving",
+        "label": "Reason for moving (PCS, transition, lease ending, etc.)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "veteranStatus",
+        "label": "Veteran or active duty?",
+        "type": "select",
+        "options": [
+          "Veteran",
+          "Active duty",
+          "Guard/Reserve",
+          "Military spouse"
+        ],
+        "required": true
+      },
+      {
+        "id": "pets",
+        "label": "Do you have pets? (type and number)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "reference1",
+        "label": "Reference 1 (name, phone, relationship \u2014 e.g., former landlord, supervisor)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "reference2",
+        "label": "Reference 2 (name, phone, relationship)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "additionalInfo",
+        "label": "Anything else you'd like the landlord to know?",
+        "type": "textarea",
+        "required": false
+      }
+    ],
+    "legal_disclaimer": "This packet helps organize your application materials. Landlord requirements vary. This does NOT guarantee application approval."
   },
   {
     "id": "personal-emergency-action-plan",
@@ -480,19 +1931,85 @@
     "category": "legal",
     "phase": 3,
     "state_sensitive": false,
-    "upload_suggestions": ["current emergency contacts", "insurance documents"],
-    "suggested_next": ["emergency-contact-family-care-plan", "living-will"],
+    "upload_suggestions": [
+      "current emergency contacts",
+      "insurance documents"
+    ],
+    "suggested_next": [
+      "emergency-contact-family-care-plan",
+      "living-will"
+    ],
     "intake": [
-      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
-      {"id": "householdSize", "label": "How many people in your household?", "type": "text", "required": true},
-      {"id": "householdMembers", "label": "Household members (names, ages, any special needs)", "type": "textarea", "required": true},
-      {"id": "address", "label": "Home address", "type": "text", "required": true},
-      {"id": "primaryRisks", "label": "What emergencies are you most concerned about?", "type": "select", "options": ["Natural disaster (hurricane, tornado, earthquake, flood)","Fire","Power outage / infrastructure failure","Medical emergency","Active threat / security","Financial emergency","All of the above"], "required": true},
-      {"id": "emergencyContact1", "label": "Emergency contact 1 (name, phone, relationship)", "type": "text", "required": true},
-      {"id": "emergencyContact2", "label": "Emergency contact 2 (name, phone, relationship)", "type": "text", "required": true},
-      {"id": "meetingPoint", "label": "Family meeting point if you need to evacuate (address or landmark)", "type": "text", "required": false},
-      {"id": "medicalNeeds", "label": "Any critical medical needs in your household? (medications, equipment, conditions)", "type": "textarea", "required": false},
-      {"id": "pets", "label": "Pets that need to be included in the plan (type and number)", "type": "text", "required": false}
-    ]
+      {
+        "id": "fullName",
+        "label": "Your full name",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "householdSize",
+        "label": "How many people in your household?",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "householdMembers",
+        "label": "Household members (names, ages, any special needs)",
+        "type": "textarea",
+        "required": true
+      },
+      {
+        "id": "address",
+        "label": "Home address",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "primaryRisks",
+        "label": "What emergencies are you most concerned about?",
+        "type": "select",
+        "options": [
+          "Natural disaster (hurricane, tornado, earthquake, flood)",
+          "Fire",
+          "Power outage / infrastructure failure",
+          "Medical emergency",
+          "Active threat / security",
+          "Financial emergency",
+          "All of the above"
+        ],
+        "required": true
+      },
+      {
+        "id": "emergencyContact1",
+        "label": "Emergency contact 1 (name, phone, relationship)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "emergencyContact2",
+        "label": "Emergency contact 2 (name, phone, relationship)",
+        "type": "text",
+        "required": true
+      },
+      {
+        "id": "meetingPoint",
+        "label": "Family meeting point if you need to evacuate (address or landmark)",
+        "type": "text",
+        "required": false
+      },
+      {
+        "id": "medicalNeeds",
+        "label": "Any critical medical needs in your household? (medications, equipment, conditions)",
+        "type": "textarea",
+        "required": false
+      },
+      {
+        "id": "pets",
+        "label": "Pets that need to be included in the plan (type and number)",
+        "type": "text",
+        "required": false
+      }
+    ],
+    "legal_disclaimer": "This plan is for personal preparedness purposes only. Verify all contact information and procedures with relevant authorities."
   }
 ]
