@@ -94,15 +94,7 @@
     </div>
 
     <!-- CATEGORY FILTER -->
-    <div class="resources-filters" id="filterBtns">
-      <button class="filter-btn active" data-filter="all">All Categories</button>
-      <button class="filter-btn" data-filter="property_tax">Property Tax</button>
-      <button class="filter-btn" data-filter="education">Education</button>
-      <button class="filter-btn" data-filter="recreation">Recreation</button>
-      <button class="filter-btn" data-filter="employment">Employment</button>
-      <button class="filter-btn" data-filter="healthcare">Healthcare</button>
-      <button class="filter-btn" data-filter="housing">Housing</button>
-    </div>
+    <div class="resources-filters" id="filterBtns"></div>
 
     <!-- BENEFITS GRID -->
     <section class="section">
@@ -190,26 +182,65 @@ fetch('data/state-benefits.json').then(function(response) {
   return response.json();
 }).then(function(benefitsData) {
 
+  // Category display labels
+  var CAT_LABELS = {
+    property_tax: 'Property Tax', education: 'Education', recreation: 'Recreation',
+    employment: 'Employment', healthcare: 'Healthcare', housing: 'Housing',
+    vehicle: 'Vehicle / Registration', burial: 'Burial / Cemetery',
+    licensing: 'Professional Licensing', business: 'Business / Entrepreneurship',
+    long_term_care: 'Long-Term Care', disabled_veteran: 'Disabled Veteran',
+    dependent: 'Spouse / Dependent / Survivor'
+  };
+
   // Render card function for state benefits
   function renderBenefitCard(benefit) {
-    var categoryLabel = (benefit.category || '').replace(/_/g, ' ');
+    var categoryLabel = CAT_LABELS[benefit.category] || (benefit.category || '').replace(/_/g, ' ');
+    var esc = ResourceHub.escapeHtml;
 
+    // Build details section
+    var details = '';
+    if (benefit.eligibility) {
+      details += '<strong>Eligibility:</strong> ' + esc(benefit.eligibility);
+    } else if (benefit.who_qualifies) {
+      details += '<strong>Who Qualifies:</strong> ' + esc(benefit.who_qualifies);
+    }
+    if (benefit.disability_threshold) {
+      details += '<br><strong>Disability:</strong> ' + esc(benefit.disability_threshold);
+    }
+    if (benefit.applies_to) {
+      var tags = (Array.isArray(benefit.applies_to) ? benefit.applies_to : [benefit.applies_to])
+        .map(function(t) { return t.replace(/_/g, ' '); }).join(', ');
+      details += '<br><strong>Applies to:</strong> ' + esc(tags);
+    }
+    if (benefit.guard_reserve_eligible === true) {
+      details += '<br><strong>Guard/Reserve:</strong> Eligible';
+    } else if (benefit.guard_reserve_eligible === false) {
+      details += '<br><strong>Guard/Reserve:</strong> Not eligible';
+    }
+    if (benefit.spouse_survivor_eligible === true) {
+      details += '<br><strong>Spouse/Survivor:</strong> Eligible';
+    }
+    if (benefit.administering_agency) {
+      details += '<br><strong>Agency:</strong> ' + esc(benefit.administering_agency);
+    }
+
+    // Actions
     var actions = '';
     if (benefit.official_link) {
-      actions += '<a href="' + ResourceHub.escapeHtml(benefit.official_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Official Info</a>';
+      actions += '<a href="' + esc(benefit.official_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Official Info</a>';
     }
     if (benefit.application_link) {
-      actions += '<a href="' + ResourceHub.escapeHtml(benefit.application_link) + '" class="hub-card__link hub-card__link--outline" target="_blank" rel="noopener noreferrer">Apply</a>';
+      actions += '<a href="' + esc(benefit.application_link) + '" class="hub-card__link hub-card__link--outline" target="_blank" rel="noopener noreferrer">Apply</a>';
     }
 
+    // Manual review badge
+    var reviewBadge = benefit.manual_review ? '<span style="display:inline-block;margin-top:8px;font-size:0.72rem;color:rgba(255,255,255,0.4);font-style:italic;">Verify details with official source</span>' : '';
+
     return '<div class="hub-card">' +
-      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(benefit.benefit_name || '') + '</h3>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(benefit.state || '') + ' &middot; ' + categoryLabel + '</p>' +
-      '<p class="hub-card__description">' + ResourceHub.escapeHtml(benefit.summary || '') + '</p>' +
-      '<div class="hub-card__details">' +
-      '<strong>Who Qualifies:</strong> ' + ResourceHub.escapeHtml(benefit.who_qualifies || '') +
-      (benefit.disability_threshold ? '<br /><strong>Disability:</strong> ' + ResourceHub.escapeHtml(benefit.disability_threshold) : '') +
-      '</div>' +
+      '<h3 class="hub-card__title">' + esc(benefit.benefit_name || '') + '</h3>' +
+      '<p class="hub-card__meta">' + esc(benefit.state || '') + ' &middot; ' + categoryLabel + '</p>' +
+      '<p class="hub-card__description">' + esc(benefit.summary || '') + '</p>' +
+      '<div class="hub-card__details">' + details + reviewBadge + '</div>' +
       '<div class="hub-card__links">' + actions + '</div>' +
       '</div>';
   }
@@ -223,7 +254,7 @@ fetch('data/state-benefits.json').then(function(response) {
     data: benefitsData,
     renderCard: renderBenefitCard,
     filterKey: 'category',
-    searchFields: ['benefit_name', 'summary', 'who_qualifies'],
+    searchFields: ['benefit_name', 'summary', 'eligibility', 'who_qualifies', 'administering_agency'],
     stateField: 'state'
   });
 
@@ -234,11 +265,16 @@ fetch('data/state-benefits.json').then(function(response) {
   ResourceHub.buildFilterButtons([
     { key: 'all', label: 'All Categories' },
     { key: 'property_tax', label: 'Property Tax' },
+    { key: 'vehicle', label: 'Vehicle' },
     { key: 'education', label: 'Education' },
-    { key: 'recreation', label: 'Recreation' },
     { key: 'employment', label: 'Employment' },
+    { key: 'recreation', label: 'Recreation' },
+    { key: 'housing', label: 'Housing' },
     { key: 'healthcare', label: 'Healthcare' },
-    { key: 'housing', label: 'Housing' }
+    { key: 'burial', label: 'Burial' },
+    { key: 'licensing', label: 'Licensing' },
+    { key: 'disabled_veteran', label: 'Disabled Vet' },
+    { key: 'dependent', label: 'Spouse/Dependent' }
   ]);
 
 }).catch(function(err) {
