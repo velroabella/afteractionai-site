@@ -1571,12 +1571,18 @@ a:hover { color: #000; }
 .blog-card__image {
   width: 100%;
   height: 200px;
-  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--white);
-  font-size: 3rem;
+  overflow: hidden;
+}
+
+.blog-card__thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .blog-card__content {
@@ -1592,6 +1598,21 @@ a:hover { color: #000; }
   text-transform: uppercase;
   letter-spacing: 0.5px;
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.blog-card__category {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--navy);
+  color: var(--white);
+  border-radius: 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
 }
 
 .blog-card__title {
@@ -1617,6 +1638,13 @@ a:hover { color: #000; }
   font-size: 0.95rem;
 }
 .blog-card__link:hover { text-decoration: underline; }
+
+.blog-card__link--disabled {
+  color: var(--gray-400);
+  cursor: default;
+  font-weight: 500;
+}
+.blog-card__link--disabled:hover { text-decoration: none; }
 
 /* ══════════════════════════════════════════════════════════
    CONTACT PAGE
@@ -4993,6 +5021,460 @@ a, button, input, select, textarea {
 
 .hub-card--crisis .hub-card__title {
   color: #ff6b6b;
+}
+
+/* ══════════════════════════════════════════════════════════
+   DOCUMENT TEMPLATE CARDS (extends .hub-card)
+   ══════════════════════════════════════════════════════════ */
+
+.tmpl-card {
+  gap: 10px;
+}
+
+.tmpl-card--locked {
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+.tmpl-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.tmpl-card__icon {
+  display: flex;
+  align-items: center;
+  color: var(--gold);
+}
+
+.tmpl-card__icon svg {
+  stroke: var(--gold);
+}
+
+.tmpl-card__cat {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gold);
+}
+
+.tmpl-card__phase {
+  margin-left: auto;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+
+.tmpl-card__footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: auto;
+  padding-top: 14px;
+}
+
+.tmpl-card__badge {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: rgba(197,165,90,0.15);
+  color: var(--gold);
+  white-space: nowrap;
+}
+
+.tmpl-card__btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  background: var(--white);
+  color: var(--gray-900);
+  border: 1px solid var(--white);
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font);
+  white-space: nowrap;
+}
+
+.tmpl-card__btn:hover {
+  background: rgba(255,255,255,0.85);
+  color: var(--gray-900);
+}
+
+.tmpl-card__btn--disabled {
+  background: transparent;
+  color: rgba(255,255,255,0.35);
+  border-color: rgba(255,255,255,0.15);
+  cursor: default;
+}
+
+.tmpl-card__btn--disabled:hover {
+  background: transparent;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ══════════════════════════════════════════════════════════
+   TEMPLATE FLOW — Guided Intake + Output Pages
+   ══════════════════════════════════════════════════════════ */
+
+.tmpl-flow {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.tmpl-flow__header {
+  margin-bottom: 32px;
+}
+
+.tmpl-flow__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--gold);
+  text-decoration: none;
+  margin-bottom: 16px;
+}
+
+.tmpl-flow__back:hover {
+  color: var(--gold-light);
+  text-decoration: underline;
+}
+
+.tmpl-flow__title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--gray-900);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+
+.tmpl-flow__desc {
+  font-size: 0.95rem;
+  color: var(--gray-500);
+  line-height: 1.55;
+}
+
+.tmpl-flow__disclaimer {
+  margin-top: 14px;
+  padding: 14px 18px;
+  background: var(--red-bg);
+  border: 1px solid rgba(220,53,69,0.25);
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  color: var(--gray-900);
+  line-height: 1.5;
+  font-weight: 500;
+}
+
+/* ── Upload Area ────────────────────────────────────── */
+
+.tmpl-flow__upload {
+  margin-bottom: 28px;
+}
+
+.tmpl-flow__upload-area {
+  border: 2px dashed var(--gray-300);
+  border-radius: var(--radius);
+  padding: 28px 24px;
+  text-align: center;
+  background: var(--white);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.tmpl-flow__upload-area:hover,
+.tmpl-flow__upload-area.dragover {
+  border-color: var(--gold);
+  background: rgba(197,165,90,0.04);
+}
+
+.tmpl-flow__upload-hint {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+  margin-bottom: 12px;
+  line-height: 1.5;
+}
+
+.tmpl-flow__upload-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 20px;
+  background: var(--gray-900);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: var(--font);
+}
+
+.tmpl-flow__upload-btn:hover {
+  background: var(--gray-700);
+}
+
+.tmpl-flow__uploaded-files {
+  margin-top: 12px;
+  font-size: 0.82rem;
+  color: var(--green);
+  font-weight: 500;
+}
+
+.tmpl-flow__uploaded-label {
+  margin: 0;
+}
+
+/* ── Intake Form ────────────────────────────────────── */
+
+.tmpl-flow__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.tmpl-flow__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.tmpl-flow__field label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.tmpl-flow__field .tmpl-required {
+  color: var(--red);
+  margin-left: 2px;
+}
+
+.tmpl-flow__field input[type="text"],
+.tmpl-flow__field select,
+.tmpl-flow__field textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  font-size: 0.92rem;
+  font-family: var(--font);
+  color: var(--gray-900);
+  background: var(--white);
+  transition: border-color 0.2s;
+  line-height: 1.5;
+}
+
+.tmpl-flow__field input[type="text"]:focus,
+.tmpl-flow__field select:focus,
+.tmpl-flow__field textarea:focus {
+  outline: none;
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(197,165,90,0.15);
+}
+
+.tmpl-flow__field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.tmpl-flow__field select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236C757D' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+.tmpl-flow__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 14px 24px;
+  background: var(--gray-900);
+  color: var(--white);
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  font-family: var(--font);
+  margin-top: 8px;
+}
+
+.tmpl-flow__submit:hover {
+  background: #000;
+}
+
+/* ── Output Display ─────────────────────────────────── */
+
+.tmpl-output {
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius);
+  padding: 32px 28px;
+  margin-bottom: 24px;
+}
+
+.tmpl-output__heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-top: 24px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--gold);
+}
+
+.tmpl-output__heading:first-child {
+  margin-top: 0;
+}
+
+.tmpl-output__text {
+  font-size: 0.92rem;
+  color: var(--gray-700);
+  line-height: 1.65;
+  margin-bottom: 6px;
+}
+
+/* ── Action Buttons (Download, Copy, Save, Edit) ───── */
+
+.tmpl-flow__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 32px;
+}
+
+.tmpl-flow__action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  background: var(--gray-900);
+  color: var(--white);
+  border: 1px solid var(--gray-900);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font);
+  text-decoration: none;
+}
+
+.tmpl-flow__action-btn:hover {
+  background: #000;
+  border-color: #000;
+}
+
+.tmpl-flow__action-btn--outline {
+  background: transparent;
+  color: var(--gray-900);
+  border-color: var(--gray-300);
+}
+
+.tmpl-flow__action-btn--outline:hover {
+  background: var(--gray-100);
+  border-color: var(--gray-500);
+}
+
+/* ── Suggested Next Templates ───────────────────────── */
+
+.tmpl-flow__next {
+  padding-top: 24px;
+  border-top: 1px solid var(--gray-200);
+}
+
+.tmpl-flow__next h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--gray-900);
+  margin-bottom: 14px;
+}
+
+.tmpl-flow__next-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tmpl-flow__next-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  text-decoration: none;
+  color: var(--gray-900);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.tmpl-flow__next-link:hover {
+  border-color: var(--gold);
+  background: rgba(197,165,90,0.04);
+  color: var(--gray-900);
+}
+
+.tmpl-flow__next-link--disabled {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+/* ── Template Flow Responsive ───────────────────────── */
+
+@media (max-width: 600px) {
+  .tmpl-flow {
+    padding: 0 4px;
+  }
+
+  .tmpl-flow__title {
+    font-size: 1.3rem;
+  }
+
+  .tmpl-output {
+    padding: 20px 16px;
+  }
+
+  .tmpl-flow__actions {
+    flex-direction: column;
+  }
+
+  .tmpl-flow__action-btn {
+    width: 100%;
+  }
+
+  .tmpl-card__footer {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .tmpl-card__btn {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
 }
 
 .hub-card__verified {

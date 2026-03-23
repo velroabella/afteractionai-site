@@ -1,0 +1,323 @@
+[
+  {
+    "id": "resume-builder",
+    "title": "Resume Builder",
+    "description": "Build a civilian-ready, ATS-optimized resume from your military experience.",
+    "category": "career",
+    "phase": 1,
+    "state_sensitive": false,
+    "upload_suggestions": ["DD-214", "prior resume", "job description you're targeting", "transcripts", "certificates"],
+    "suggested_next": ["linkedin-profile-builder", "interview-prep-script", "federal-resume"],
+    "intake": [
+      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
+      {"id": "targetRole", "label": "What civilian job or role are you targeting?", "type": "text", "required": true},
+      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
+      {"id": "mos", "label": "MOS / Rating / AFSC (job code)", "type": "text", "required": true},
+      {"id": "yearsService", "label": "Years of service", "type": "text", "required": true},
+      {"id": "keySkills", "label": "Top 3-5 skills or accomplishments to highlight", "type": "textarea", "required": true},
+      {"id": "education", "label": "Education (degrees, certifications, schools)", "type": "textarea", "required": false}
+    ]
+  },
+  {
+    "id": "linkedin-profile-builder",
+    "title": "LinkedIn Profile Builder",
+    "description": "Create a compelling LinkedIn headline, summary, and experience section translated for civilian audiences.",
+    "category": "career",
+    "phase": 1,
+    "state_sensitive": false,
+    "upload_suggestions": ["prior resume", "DD-214", "LinkedIn profile screenshot"],
+    "suggested_next": ["resume-builder", "interview-prep-script"],
+    "intake": [
+      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
+      {"id": "targetIndustry", "label": "What industry or role are you pursuing?", "type": "text", "required": true},
+      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
+      {"id": "mos", "label": "MOS / Rating / AFSC", "type": "text", "required": true},
+      {"id": "highlights", "label": "Key accomplishments or leadership experiences", "type": "textarea", "required": true},
+      {"id": "personalBrand", "label": "How do you want to be perceived? (e.g., leader, problem-solver, technical expert)", "type": "text", "required": false}
+    ]
+  },
+  {
+    "id": "general-power-of-attorney",
+    "title": "General Power of Attorney",
+    "description": "Generate a general power of attorney document designating someone to act on your behalf.",
+    "category": "legal",
+    "phase": 1,
+    "state_sensitive": true,
+    "upload_suggestions": ["prior POA document", "ID documents"],
+    "suggested_next": ["durable-power-of-attorney", "medical-power-of-attorney", "last-will-and-testament"],
+    "legal_disclaimer": "This template provides a starting framework only. It is NOT legal advice. Have an attorney review before signing.",
+    "intake": [
+      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
+      {"id": "principalName", "label": "Your full legal name (the principal)", "type": "text", "required": true},
+      {"id": "agentName", "label": "Full legal name of the person you're granting power to (the agent)", "type": "text", "required": true},
+      {"id": "agentRelation", "label": "Relationship to agent (spouse, parent, sibling, friend, etc.)", "type": "text", "required": true},
+      {"id": "powers", "label": "What powers are you granting? (financial, property, legal, all)", "type": "textarea", "required": true},
+      {"id": "effective", "label": "When should this take effect?", "type": "select", "options": ["Immediately","Upon my incapacity","Specific date"], "required": true}
+    ]
+  },
+  {
+    "id": "last-will-and-testament",
+    "title": "Last Will and Testament",
+    "description": "Create a basic will outlining how your assets and responsibilities should be handled.",
+    "category": "legal",
+    "phase": 1,
+    "state_sensitive": true,
+    "upload_suggestions": ["prior will", "property deeds", "insurance documents", "list of assets"],
+    "suggested_next": ["living-will", "medical-power-of-attorney", "emergency-contact-family-care-plan"],
+    "legal_disclaimer": "This template provides a starting framework only. It is NOT legal advice. State laws vary. Have an attorney review before signing.",
+    "intake": [
+      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
+      {"id": "fullName", "label": "Your full legal name", "type": "text", "required": true},
+      {"id": "maritalStatus", "label": "Marital status", "type": "select", "options": ["Single","Married","Divorced","Widowed","Domestic Partnership"], "required": true},
+      {"id": "children", "label": "Names and ages of children (if any)", "type": "textarea", "required": false},
+      {"id": "executor", "label": "Who should be your executor (the person who carries out your will)?", "type": "text", "required": true},
+      {"id": "beneficiaries", "label": "Who should receive your assets? List names and what each should receive.", "type": "textarea", "required": true},
+      {"id": "guardian", "label": "If you have minor children, who should be their guardian?", "type": "text", "required": false}
+    ]
+  },
+  {
+    "id": "living-will",
+    "title": "Living Will (Advance Directive)",
+    "description": "Document your healthcare wishes in case you become unable to communicate them yourself.",
+    "category": "legal",
+    "phase": 1,
+    "state_sensitive": true,
+    "upload_suggestions": ["prior living will or advance directive", "medical records"],
+    "suggested_next": ["medical-power-of-attorney", "hipaa-authorization-form", "last-will-and-testament"],
+    "legal_disclaimer": "This template provides a starting framework only. It is NOT legal advice. State requirements vary. Have an attorney or healthcare provider review.",
+    "intake": [
+      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
+      {"id": "fullName", "label": "Your full legal name", "type": "text", "required": true},
+      {"id": "lifeSustaining", "label": "If you are terminally ill or permanently unconscious, do you want life-sustaining treatment?", "type": "select", "options": ["Yes, use all available treatment","No, I want comfort care only","I want treatment tried for a limited time, then comfort care"], "required": true},
+      {"id": "nutrition", "label": "Do you want artificial nutrition and hydration (feeding tube/IV)?", "type": "select", "options": ["Yes","No","Only for a limited time"], "required": true},
+      {"id": "painManagement", "label": "Pain management preferences", "type": "select", "options": ["Keep me comfortable even if it may hasten death","Only standard pain medication","I want to remain as alert as possible"], "required": true},
+      {"id": "otherWishes", "label": "Any other specific medical wishes?", "type": "textarea", "required": false}
+    ]
+  },
+  {
+    "id": "va-claim-personal-statement",
+    "title": "VA Claim Personal Statement",
+    "description": "Write a structured personal statement to support your VA disability claim.",
+    "category": "va_benefits",
+    "phase": 1,
+    "state_sensitive": false,
+    "upload_suggestions": ["DD-214", "VA disability rating letter", "medical records", "service treatment records", "buddy statements"],
+    "suggested_next": ["va-appeal-letter", "nexus-letter-prep", "records-request-letter"],
+    "intake": [
+      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
+      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
+      {"id": "condition", "label": "What condition(s) are you claiming?", "type": "textarea", "required": true},
+      {"id": "inServiceEvent", "label": "Describe the in-service event, injury, or exposure that caused or worsened this condition", "type": "textarea", "required": true},
+      {"id": "currentImpact", "label": "How does this condition affect your daily life and work today?", "type": "textarea", "required": true},
+      {"id": "treatment", "label": "What treatment have you received (military and civilian)?", "type": "textarea", "required": false}
+    ]
+  },
+  {
+    "id": "debt-hardship-letter",
+    "title": "Debt Hardship Letter",
+    "description": "Write a professional hardship letter to creditors requesting modified payment terms or debt relief.",
+    "category": "financial",
+    "phase": 1,
+    "state_sensitive": false,
+    "upload_suggestions": ["debt notices", "income statements", "VA disability rating letter", "medical bills"],
+    "suggested_next": ["credit-dispute-letter", "budget-financial-recovery-plan"],
+    "intake": [
+      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
+      {"id": "creditorName", "label": "Who is the creditor or debt collector?", "type": "text", "required": true},
+      {"id": "accountNumber", "label": "Account number (optional — helps identify your account)", "type": "text", "required": false},
+      {"id": "amountOwed", "label": "Approximate amount owed", "type": "text", "required": true},
+      {"id": "hardshipReason", "label": "What caused the hardship? (medical emergency, job loss, disability, transition, etc.)", "type": "textarea", "required": true},
+      {"id": "requestedRelief", "label": "What are you asking for? (lower payments, settlement, deferment, forgiveness)", "type": "select", "options": ["Lower monthly payments","One-time settlement for less","Payment deferment/pause","Partial forgiveness","Other"], "required": true},
+      {"id": "veteranStatus", "label": "Are you a veteran or active service member?", "type": "select", "options": ["Yes — veteran","Yes — active duty","Yes — Guard/Reserve","No"], "required": true}
+    ]
+  },
+  {
+    "id": "durable-power-of-attorney",
+    "title": "Durable Power of Attorney",
+    "description": "Create a durable POA that remains valid even if you become incapacitated.",
+    "category": "legal",
+    "phase": 2,
+    "state_sensitive": true,
+    "upload_suggestions": ["prior POA document"],
+    "suggested_next": ["medical-power-of-attorney", "living-will"],
+    "legal_disclaimer": "This template provides a starting framework only. Have an attorney review.",
+    "intake": []
+  },
+  {
+    "id": "medical-power-of-attorney",
+    "title": "Medical Power of Attorney",
+    "description": "Designate someone to make healthcare decisions on your behalf if you cannot.",
+    "category": "legal",
+    "phase": 2,
+    "state_sensitive": true,
+    "upload_suggestions": ["prior medical POA", "living will"],
+    "suggested_next": ["living-will", "hipaa-authorization-form"],
+    "legal_disclaimer": "This template provides a starting framework only. Have an attorney review.",
+    "intake": []
+  },
+  {
+    "id": "hipaa-authorization-form",
+    "title": "HIPAA Authorization Form",
+    "description": "Authorize specific individuals or organizations to access your protected health information.",
+    "category": "legal",
+    "phase": 2,
+    "state_sensitive": false,
+    "upload_suggestions": [],
+    "suggested_next": ["medical-power-of-attorney", "living-will"],
+    "intake": []
+  },
+  {
+    "id": "emergency-contact-family-care-plan",
+    "title": "Emergency Contact & Family Care Plan",
+    "description": "Create a comprehensive emergency contact sheet and family care plan for deployment or crisis situations.",
+    "category": "legal",
+    "phase": 2,
+    "state_sensitive": false,
+    "upload_suggestions": ["current family care plan"],
+    "suggested_next": ["last-will-and-testament", "living-will"],
+    "intake": []
+  },
+  {
+    "id": "va-appeal-letter",
+    "title": "VA Appeal Letter",
+    "description": "Draft a structured appeal letter for a denied VA disability claim.",
+    "category": "va_benefits",
+    "phase": 2,
+    "state_sensitive": false,
+    "upload_suggestions": ["VA denial letter", "medical records", "buddy statements", "nexus letter"],
+    "suggested_next": ["nexus-letter-prep", "records-request-letter"],
+    "intake": []
+  },
+  {
+    "id": "records-request-letter",
+    "title": "Records Request Letter",
+    "description": "Generate a formal request letter for military, medical, or government records.",
+    "category": "va_benefits",
+    "phase": 2,
+    "state_sensitive": false,
+    "upload_suggestions": ["DD-214", "prior records request responses"],
+    "suggested_next": ["va-claim-personal-statement", "va-appeal-letter"],
+    "intake": []
+  },
+  {
+    "id": "federal-resume",
+    "title": "Federal Resume (USAJobs)",
+    "description": "Build a detailed federal resume formatted for USAJobs applications.",
+    "category": "career",
+    "phase": 2,
+    "state_sensitive": false,
+    "upload_suggestions": ["DD-214", "prior resume", "job announcement", "transcripts", "SF-50"],
+    "suggested_next": ["resume-builder", "interview-prep-script"],
+    "intake": []
+  },
+  {
+    "id": "interview-prep-script",
+    "title": "Interview Prep Script (STAR Method)",
+    "description": "Prepare structured interview responses using the STAR method tailored to your military experience.",
+    "category": "career",
+    "phase": 2,
+    "state_sensitive": false,
+    "upload_suggestions": ["job description", "resume"],
+    "suggested_next": ["resume-builder", "salary-negotiation-script"],
+    "intake": []
+  },
+  {
+    "id": "credit-dispute-letter",
+    "title": "Credit Dispute Letter",
+    "description": "Draft a formal dispute letter to credit bureaus for inaccurate items on your credit report.",
+    "category": "financial",
+    "phase": 2,
+    "state_sensitive": false,
+    "upload_suggestions": ["credit report", "supporting documents"],
+    "suggested_next": ["debt-hardship-letter", "budget-financial-recovery-plan"],
+    "intake": []
+  },
+  {
+    "id": "budget-financial-recovery-plan",
+    "title": "Budget / Financial Recovery Plan",
+    "description": "Create a structured monthly budget and financial recovery roadmap.",
+    "category": "financial",
+    "phase": 2,
+    "state_sensitive": false,
+    "upload_suggestions": ["bank statements", "debt notices", "income statements"],
+    "suggested_next": ["debt-hardship-letter", "credit-dispute-letter"],
+    "intake": []
+  },
+  {
+    "id": "nexus-letter-prep",
+    "title": "Nexus Letter Prep Template",
+    "description": "Prepare the supporting information your doctor needs to write a nexus letter connecting your condition to service.",
+    "category": "va_benefits",
+    "phase": 3,
+    "state_sensitive": false,
+    "upload_suggestions": ["medical records", "service treatment records", "VA rating decision"],
+    "suggested_next": ["va-claim-personal-statement", "va-appeal-letter"],
+    "intake": []
+  },
+  {
+    "id": "benefits-eligibility-summary",
+    "title": "Benefits Eligibility Summary",
+    "description": "Generate a personalized summary of federal and state benefits you may be eligible for.",
+    "category": "va_benefits",
+    "phase": 3,
+    "state_sensitive": true,
+    "upload_suggestions": ["DD-214", "VA disability rating letter"],
+    "suggested_next": ["va-claim-personal-statement", "records-request-letter"],
+    "intake": []
+  },
+  {
+    "id": "military-civilian-skills-translator",
+    "title": "Military to Civilian Skills Translator",
+    "description": "Translate your military job code, training, and experience into civilian-friendly language.",
+    "category": "career",
+    "phase": 3,
+    "state_sensitive": false,
+    "upload_suggestions": ["DD-214", "VMET", "transcripts"],
+    "suggested_next": ["resume-builder", "linkedin-profile-builder"],
+    "intake": []
+  },
+  {
+    "id": "salary-negotiation-script",
+    "title": "Salary Negotiation Script",
+    "description": "Build a confident salary negotiation script based on your experience and market data.",
+    "category": "career",
+    "phase": 3,
+    "state_sensitive": false,
+    "upload_suggestions": ["job offer letter", "resume"],
+    "suggested_next": ["interview-prep-script", "resume-builder"],
+    "intake": []
+  },
+  {
+    "id": "va-loan-readiness-checklist",
+    "title": "VA Loan Readiness Checklist",
+    "description": "Generate a personalized checklist of everything you need to apply for a VA home loan.",
+    "category": "financial",
+    "phase": 3,
+    "state_sensitive": true,
+    "upload_suggestions": ["DD-214", "Certificate of Eligibility", "credit report"],
+    "suggested_next": ["budget-financial-recovery-plan"],
+    "intake": []
+  },
+  {
+    "id": "rental-application-packet",
+    "title": "Rental Application Packet",
+    "description": "Prepare a complete rental application packet including cover letter and reference sheet.",
+    "category": "financial",
+    "phase": 3,
+    "state_sensitive": false,
+    "upload_suggestions": ["prior rental references", "income verification", "DD-214"],
+    "suggested_next": ["budget-financial-recovery-plan"],
+    "intake": []
+  },
+  {
+    "id": "personal-emergency-action-plan",
+    "title": "Personal Emergency Action Plan",
+    "description": "Create a comprehensive personal emergency preparedness plan for you and your family.",
+    "category": "legal",
+    "phase": 3,
+    "state_sensitive": false,
+    "upload_suggestions": ["current emergency contacts", "insurance documents"],
+    "suggested_next": ["emergency-contact-family-care-plan", "living-will"],
+    "intake": []
+  }
+]

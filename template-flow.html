@@ -3,24 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Gallery — AfterAction AI</title>
-  <meta name="description" content="Real stories. Real veterans. Real impact. Explore stories of veterans we've helped." />
-  <meta name="keywords" content="veteran stories, veteran success, veteran support, impact" />
-  <meta property="og:title" content="Gallery — AfterAction AI" />
-  <meta property="og:description" content="Real stories. Real veterans. Real impact." />
-  <meta property="og:type" content="website" />
-  <link rel="canonical" href="https://afteractionai.org/gallery" />
+  <title>Template Builder — AfterAction AI</title>
+  <meta name="description" content="Guided document builder for veterans. Answer a few questions, get a download-ready document." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
-  <meta property="og:image:width" content="1536" />
-  <meta property="og:image:height" content="1024" />
-  <meta property="og:site_name" content="AfterAction AI" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
@@ -53,11 +43,11 @@
           <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
           <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
-          <li><a href="document-templates.html">Document Templates</a></li>
+          <li><a href="document-templates.html" class="active">Document Templates</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
-      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
@@ -66,60 +56,12 @@
   </div>
 </nav>
 
-<!-- GALLERY HERO -->
-<section class="page-hero-image" style="background-image: url('images/05_Gallery.jpg');">
-  <div class="page-hero-image__content">
-    <span class="page-hero-image__eyebrow">The Gallery</span>
-    <h1 class="page-hero-image__title">Honoring Service Through Images</h1>
-    <div class="page-hero-image__divider"></div>
-    <p class="page-hero-image__subtitle">Real stories. Real veterans. Real impact.</p>
-  </div>
-</section>
-
 <!-- PAGE CONTENT -->
 <div class="page">
   <div class="page__content">
-
-    <!-- GALLERY GRID -->
     <section class="section">
-      <div class="gallery-grid">
-        <div class="gallery-card">
-          <div class="gallery-card__image">Story photo</div>
-          <div class="gallery-card__body">
-            <h3 class="gallery-card__title">Veteran Story Title</h3>
-            <p class="gallery-card__text">A brief caption or excerpt sharing the impact of AfterAction AI on a veteran's life and journey.</p>
-          </div>
-        </div>
-        <div class="gallery-card">
-          <div class="gallery-card__image">Story photo</div>
-          <div class="gallery-card__body">
-            <h3 class="gallery-card__title">Veteran Story Title</h3>
-            <p class="gallery-card__text">A brief caption or excerpt sharing the impact of AfterAction AI on a veteran's life and journey.</p>
-          </div>
-        </div>
-        <div class="gallery-card">
-          <div class="gallery-card__image">Story photo</div>
-          <div class="gallery-card__body">
-            <h3 class="gallery-card__title">Veteran Story Title</h3>
-            <p class="gallery-card__text">A brief caption or excerpt sharing the impact of AfterAction AI on a veteran's life and journey.</p>
-          </div>
-        </div>
-        <div class="gallery-card">
-          <div class="gallery-card__image">Story photo</div>
-          <div class="gallery-card__body">
-            <h3 class="gallery-card__title">Veteran Story Title</h3>
-            <p class="gallery-card__text">A brief caption or excerpt sharing the impact of AfterAction AI on a veteran's life and journey.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA SECTION -->
-    <section class="section cta-banner">
-      <div class="cta-banner__inner">
-        <h3 class="cta-banner__title">Want to share your story?</h3>
-        <p class="cta-banner__text">Contact us and let us know how AfterAction AI helped you.</p>
-        <a href="contact.html" class="cta-banner__button">Get in Touch</a>
+      <div class="tmpl-flow" id="templateFlow">
+        <div style="text-align:center;padding:60px;color:var(--gray-500);">Loading template&hellip;</div>
       </div>
     </section>
   </div>
@@ -134,16 +76,8 @@
         <div class="footer__section footer__section--nav">
           <h3>Navigate</h3>
           <div class="footer__nav-columns">
-            <div class="footer__nav-col">
-              <a href="index.html">Home</a>
-              <a href="about.html">About</a>
-              <a href="board.html">Board</a>
-            </div>
-            <div class="footer__nav-col">
-              <a href="resources.html">Resources</a>
-              <a href="blog.html">Blog</a>
-              <a href="contact.html">Contact</a>
-            </div>
+            <div class="footer__nav-col"><a href="index.html">Home</a><a href="about.html">About</a><a href="board.html">Board</a></div>
+            <div class="footer__nav-col"><a href="resources.html">Resources</a><a href="blog.html">Blog</a><a href="contact.html">Contact</a></div>
           </div>
         </div>
         <div class="footer__section">
@@ -155,48 +89,18 @@
           <a href="state-benefits.html">State Benefits</a>
           <a href="document-templates.html">Document Templates</a>
         </div>
-        <div class="footer__section">
-          <h3>Legal</h3>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="disclaimer.html">Disclaimer</a>
-        </div>
-        <div class="footer__section">
-          <h3>Connect</h3>
-          <div class="footer__social">
-            <a href="#" aria-label="Facebook" title="Facebook">f</a>
-            <a href="#" aria-label="Instagram" title="Instagram">📷</a>
-            <a href="#" aria-label="YouTube" title="YouTube">▶</a>
-            <a href="#" aria-label="TikTok" title="TikTok">♪</a>
-            <a href="#" aria-label="LinkedIn" title="LinkedIn">in</a>
-          </div>
-        </div>
+        <div class="footer__section"><h3>Legal</h3><a href="privacy.html">Privacy Policy</a><a href="terms.html">Terms of Service</a><a href="disclaimer.html">Disclaimer</a></div>
+        <div class="footer__section"><h3>Connect</h3><div class="footer__social"><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="Instagram">📷</a><a href="#" aria-label="YouTube">▶</a><a href="#" aria-label="TikTok">♪</a><a href="#" aria-label="LinkedIn">in</a></div></div>
       </div>
-      <div class="footer__nonprofit">
-        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
-      </div>
-      <div class="footer__bottom">
-        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
-      </div>
+      <div class="footer__nonprofit">AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.</div>
+      <div class="footer__bottom"><p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p></div>
     </div>
   </footer>
 </div>
 
-<script>
-function toggleMenu() {
-  const menu = document.getElementById('navMenu');
-  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-}
-
-// Close menu on smaller screens after clicking
-document.querySelectorAll('.navbar__nav a').forEach(link => {
-  link.addEventListener('click', () => {
-    if (window.innerWidth < 768) {
-      document.getElementById('navMenu').style.display = 'none';
-    }
-  });
-});
-</script>
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+<script src="js/template-flow.js"></script>
 
 <!-- AUTH MODAL -->
 <div class="auth-modal" id="authModal" style="display:none;">
@@ -226,7 +130,6 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
     </form>
   </div>
 </div>
-<script src="js/auth.js"></script>
-<script src="js/newsletter.js"></script>
+
 </body>
 </html>

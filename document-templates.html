@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Blog — AfterAction AI</title>
-  <meta name="description" content="Stories, guides, and updates about veteran benefits, resources, and the transition experience." />
-  <meta name="keywords" content="veteran blog, benefits guide, veteran resources, military transition" />
-  <meta property="og:title" content="Blog — AfterAction AI" />
-  <meta property="og:description" content="Veteran issues and resources that matter to the community." />
+  <title>Document Templates — AfterAction AI</title>
+  <meta name="description" content="Free document templates for veterans: resumes, legal documents, VA claims, financial letters, and more. Guided intake, instant download." />
+  <meta name="keywords" content="veteran templates, resume builder, power of attorney, VA claim statement, debt hardship letter, veteran documents" />
+  <meta property="og:title" content="Document Templates — AfterAction AI" />
+  <meta property="og:description" content="Free guided document templates for veterans — resumes, legal docs, VA claims, and more." />
   <meta property="og:type" content="website" />
-  <link rel="canonical" href="https://afteractionai.org/blog" />
+  <link rel="canonical" href="https://afteractionai.org/document-templates" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -53,10 +53,10 @@
           <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
           <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
-          <li><a href="document-templates.html">Document Templates</a></li>
+          <li><a href="document-templates.html" class="active">Document Templates</a></li>
         </ul>
       </li>
-      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
       <li><a href="education.html">Education</a></li>
@@ -66,26 +66,32 @@
   </div>
 </nav>
 
-<!-- BLOG HERO -->
-<section class="page-hero-image" style="background-image: url('images/04_Blog.jpg');">
-  <div class="page-hero-image__content">
-    <span class="page-hero-image__eyebrow">The Blog</span>
-    <h1 class="page-hero-image__title">Veteran Issues &amp; Resources</h1>
-    <div class="page-hero-image__divider"></div>
-    <p class="page-hero-image__subtitle">Stories, guides, and updates that matter to the veteran community.</p>
-  </div>
+<!-- HERO SECTION -->
+<section class="page-hero-bar">
+  <h1 class="page-hero-bar__title">Document Templates</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">Free guided templates for resumes, legal documents, VA claims, financial letters, and more. Answer a few questions, get a download-ready document.</p>
 </section>
 
 <!-- PAGE CONTENT -->
 <div class="page">
   <div class="page__content">
 
-    <!-- BLOG GRID — loaded dynamically from data/blog-posts.json -->
+    <!-- SEARCH BAR -->
+    <div class="resources-search">
+      <input type="text" class="resources-search__input" id="searchInput" placeholder="Search templates..." />
+    </div>
+
+    <!-- CATEGORY FILTER -->
+    <div class="resources-filters" id="filterBtns"></div>
+
+    <!-- TEMPLATES GRID -->
     <section class="section">
-      <div class="blog-grid" id="blogGrid">
-        <div class="blog-loading" style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-500);">Loading posts&hellip;</div>
+      <div class="resources-grid" id="templatesGrid">
+        <div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-500);">Loading templates&hellip;</div>
       </div>
     </section>
+
   </div>
 
   <!-- FOOTER -->
@@ -146,36 +152,34 @@
   </footer>
 </div>
 
+<script src="js/resource-hub.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/newsletter.js"></script>
+
 <script>
+// ══════════════════════════════════════════════════════════
+// DOCUMENT TEMPLATES HUB — Card Grid + Filter
+// ══════════════════════════════════════════════════════════
+
 function toggleMenu() {
   var menu = document.getElementById('navMenu');
-  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  menu.classList.toggle('active');
 }
 
-document.querySelectorAll('.navbar__nav a').forEach(function(link) {
-  link.addEventListener('click', function() {
-    if (window.innerWidth < 768) {
-      document.getElementById('navMenu').style.display = 'none';
-    }
-  });
-});
-
-// ══════════════════════════════════════════════════════════
-// BLOG — Date-based publish logic
-// Posts appear when their publish_date <= now.
-// The next unpublished post shows as a "coming soon" teaser.
-// ══════════════════════════════════════════════════════════
-
 (function() {
-  var grid = document.getElementById('blogGrid');
-  var DEFAULT_THUMB = 'images/blog/default-thumbnail.svg';
+  var CATEGORY_LABELS = {
+    'career': 'Career',
+    'legal': 'Legal / Life',
+    'va_benefits': 'VA / Benefits',
+    'financial': 'Financial'
+  };
 
-  function formatDate(isoStr) {
-    var d = new Date(isoStr);
-    var months = ['January','February','March','April','May','June',
-                  'July','August','September','October','November','December'];
-    return months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
-  }
+  var CATEGORY_ICONS = {
+    'career': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>',
+    'legal': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>',
+    'va_benefits': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+    'financial': '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>'
+  };
 
   function escapeHtml(str) {
     var el = document.createElement('span');
@@ -183,71 +187,92 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
     return el.innerHTML;
   }
 
-  function renderCard(post, isPublished) {
-    var thumb = post.thumbnail || DEFAULT_THUMB;
-    var dateText = isPublished ? formatDate(post.publish_date) : 'Coming Soon';
-    var linkHtml = '';
+  function renderTemplateCard(t) {
+    var catLabel = CATEGORY_LABELS[t.category] || t.category;
+    var catIcon = CATEGORY_ICONS[t.category] || '';
+    var isAvailable = t.phase === 1;
+    var phaseLabel = isAvailable ? '' : '<span class="tmpl-card__phase">Coming Soon</span>';
+    var btnClass = isAvailable ? 'tmpl-card__btn' : 'tmpl-card__btn tmpl-card__btn--disabled';
+    var btnText = isAvailable ? 'Start Template' : 'Coming Soon';
+    var btnHref = isAvailable ? 'template-flow.html?id=' + encodeURIComponent(t.id) : '#';
+    var onclick = isAvailable ? '' : ' onclick="event.preventDefault();"';
+    var stateBadge = t.state_sensitive ? '<span class="tmpl-card__badge">State-Specific</span>' : '';
 
-    if (isPublished && post.url) {
-      linkHtml = '<a href="' + escapeHtml(post.url) + '" class="blog-card__link">Read More \u2192</a>';
-    } else if (isPublished) {
-      linkHtml = '<span class="blog-card__link blog-card__link--disabled">Full article coming soon</span>';
-    } else {
-      linkHtml = '<span class="blog-card__link blog-card__link--disabled">Check back soon</span>';
-    }
-
-    var opacity = isPublished ? '' : ' style="opacity:0.55;"';
-
-    return '<div class="blog-card"' + opacity + '>' +
-      '<div class="blog-card__image">' +
-        '<img src="' + escapeHtml(thumb) + '" alt="' + escapeHtml(post.title) + '" class="blog-card__thumb" />' +
+    return '<div class="hub-card tmpl-card' + (isAvailable ? '' : ' tmpl-card--locked') + '">' +
+      '<div class="tmpl-card__header">' +
+        '<span class="tmpl-card__icon">' + catIcon + '</span>' +
+        '<span class="tmpl-card__cat">' + escapeHtml(catLabel) + '</span>' +
+        phaseLabel +
       '</div>' +
-      '<div class="blog-card__content">' +
-        '<p class="blog-card__date">' + escapeHtml(dateText) +
-          (post.category ? ' <span class="blog-card__category">' + escapeHtml(post.category) + '</span>' : '') +
-        '</p>' +
-        '<h3 class="blog-card__title">' + escapeHtml(post.title) + '</h3>' +
-        '<p class="blog-card__excerpt">' + escapeHtml(post.excerpt) + '</p>' +
-        linkHtml +
+      '<h3 class="hub-card__title">' + escapeHtml(t.title) + '</h3>' +
+      '<p class="hub-card__description">' + escapeHtml(t.description) + '</p>' +
+      '<div class="tmpl-card__footer">' +
+        stateBadge +
+        '<a href="' + btnHref + '" class="' + btnClass + '"' + onclick + '>' + btnText + '</a>' +
       '</div>' +
     '</div>';
   }
 
-  fetch('data/blog-posts.json').then(function(res) {
+  fetch('data/document-templates.json').then(function(res) {
     return res.json();
-  }).then(function(posts) {
-    var now = new Date();
-    var html = '';
-    var publishedCount = 0;
-    var teaserShown = false;
+  }).then(function(templates) {
+    var grid = document.getElementById('templatesGrid');
+    var filterContainer = document.getElementById('filterBtns');
+    var searchInput = document.getElementById('searchInput');
+    var activeFilter = 'all';
 
-    // Sort by publish_date descending (newest first)
-    posts.sort(function(a, b) {
-      return new Date(b.publish_date) - new Date(a.publish_date);
+    // Build filter buttons
+    var filterHtml = '<button class="filter-btn active" data-filter="all">All Templates</button>';
+    var cats = ['career', 'legal', 'va_benefits', 'financial'];
+    cats.forEach(function(c) {
+      filterHtml += '<button class="filter-btn" data-filter="' + c + '">' + CATEGORY_LABELS[c] + '</button>';
     });
+    filterContainer.innerHTML = filterHtml;
 
-    posts.forEach(function(post) {
-      var pubDate = new Date(post.publish_date);
-      if (pubDate <= now) {
-        html += renderCard(post, true);
-        publishedCount++;
-      } else if (!teaserShown) {
-        // Show one upcoming teaser card
-        html += renderCard(post, false);
-        teaserShown = true;
+    function render() {
+      var query = (searchInput.value || '').toLowerCase().trim();
+      var html = '';
+      var count = 0;
+
+      // Sort: phase 1 first, then alphabetical
+      var sorted = templates.slice().sort(function(a, b) {
+        if (a.phase !== b.phase) return a.phase - b.phase;
+        return a.title.localeCompare(b.title);
+      });
+
+      sorted.forEach(function(t) {
+        if (activeFilter !== 'all' && t.category !== activeFilter) return;
+        if (query) {
+          var searchable = (t.title + ' ' + t.description + ' ' + t.category).toLowerCase();
+          if (searchable.indexOf(query) === -1) return;
+        }
+        html += renderTemplateCard(t);
+        count++;
+      });
+
+      if (count === 0) {
+        html = '<div class="hub-no-results"><h3 class="hub-no-results__title">No templates found</h3><p class="hub-no-results__text">Try a different search or category.</p></div>';
+      }
+      grid.innerHTML = html;
+    }
+
+    // Filter click handlers
+    filterContainer.addEventListener('click', function(e) {
+      if (e.target.classList.contains('filter-btn')) {
+        filterContainer.querySelectorAll('.filter-btn').forEach(function(b) { b.classList.remove('active'); });
+        e.target.classList.add('active');
+        activeFilter = e.target.getAttribute('data-filter');
+        render();
       }
     });
 
-    if (publishedCount === 0 && !teaserShown) {
-      html = '<div style="grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--gray-500);">' +
-        '<h3 style="margin-bottom:12px;color:var(--gray-700);">Blog posts are on the way</h3>' +
-        '<p>We publish new veteran resources and guides every 48 hours. Check back soon.</p></div>';
-    }
+    // Search handler
+    searchInput.addEventListener('input', render);
 
-    grid.innerHTML = html;
+    render();
   }).catch(function(err) {
-    console.error('Error loading blog posts:', err);
-    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--gray-500);">Unable to load blog posts. Please try again later.</div>';
+    console.error('Error loading templates:', err);
+    document.getElementById('templatesGrid').innerHTML = '<div class="hub-no-results"><p>Error loading templates. Please try again later.</p></div>';
   });
 })();
 </script>
@@ -280,7 +305,6 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
     </form>
   </div>
 </div>
-<script src="js/auth.js"></script>
-<script src="js/newsletter.js"></script>
+
 </body>
 </html>
