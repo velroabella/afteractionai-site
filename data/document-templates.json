@@ -350,7 +350,17 @@
     "state_sensitive": false,
     "upload_suggestions": ["medical records", "service treatment records", "VA rating decision"],
     "suggested_next": ["va-claim-personal-statement", "va-appeal-letter"],
-    "intake": []
+    "intake": [
+      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
+      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
+      {"id": "serviceDates", "label": "Dates of service", "type": "text", "required": true},
+      {"id": "condition", "label": "What condition do you need the nexus letter for?", "type": "text", "required": true},
+      {"id": "inServiceEvent", "label": "What in-service event, injury, or exposure caused or contributed to this condition?", "type": "textarea", "required": true},
+      {"id": "firstSymptoms", "label": "When did symptoms first appear? (during service, shortly after, years later)", "type": "text", "required": true},
+      {"id": "currentDiagnosis", "label": "Current diagnosis (if you have one) and treating doctor's name", "type": "text", "required": false},
+      {"id": "currentTreatment", "label": "What treatment are you currently receiving?", "type": "textarea", "required": false},
+      {"id": "priorClaims", "label": "Have you filed a VA claim for this condition before? If denied, what was the reason?", "type": "textarea", "required": false}
+    ]
   },
   {
     "id": "benefits-eligibility-summary",
@@ -361,7 +371,19 @@
     "state_sensitive": true,
     "upload_suggestions": ["DD-214", "VA disability rating letter"],
     "suggested_next": ["va-claim-personal-statement", "records-request-letter"],
-    "intake": []
+    "intake": [
+      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
+      {"id": "state", "label": "What state do you live in?", "type": "state_select", "required": true},
+      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
+      {"id": "serviceEra", "label": "Service era", "type": "select", "options": ["Post-9/11 (after Sep 10, 2001)","Gulf War (Aug 1990 – Sep 2001)","Vietnam Era (1964–1975)","Korean War (1950–1955)","Peacetime","Other"], "required": true},
+      {"id": "dischargeType", "label": "Discharge type", "type": "select", "options": ["Honorable","General (Under Honorable Conditions)","Other Than Honorable","Bad Conduct","Dishonorable","Uncharacterized","Not yet discharged"], "required": true},
+      {"id": "disabilityRating", "label": "Current VA disability rating (if any)", "type": "select", "options": ["None / Not yet rated","0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%","100% P&T (Permanent & Total)"], "required": true},
+      {"id": "yearsService", "label": "Total years of service", "type": "text", "required": true},
+      {"id": "maritalStatus", "label": "Marital status", "type": "select", "options": ["Single","Married","Divorced","Widowed"], "required": true},
+      {"id": "dependents", "label": "Number of dependents (children, spouse, parents)", "type": "text", "required": false},
+      {"id": "education", "label": "Have you used GI Bill benefits?", "type": "select", "options": ["No — haven't used any","Partially used","Fully used","Not eligible"], "required": true},
+      {"id": "employment", "label": "Current employment status", "type": "select", "options": ["Employed full-time","Employed part-time","Unemployed — looking","Unemployed — not looking","Retired","Student","Self-employed"], "required": true}
+    ]
   },
   {
     "id": "military-civilian-skills-translator",
@@ -372,7 +394,17 @@
     "state_sensitive": false,
     "upload_suggestions": ["DD-214", "VMET", "transcripts"],
     "suggested_next": ["resume-builder", "linkedin-profile-builder"],
-    "intake": []
+    "intake": [
+      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
+      {"id": "branch", "label": "Military branch", "type": "select", "options": ["Army","Navy","Air Force","Marines","Coast Guard","Space Force","National Guard","Reserve"], "required": true},
+      {"id": "mos", "label": "MOS / Rating / AFSC (job code)", "type": "text", "required": true},
+      {"id": "mosTitle", "label": "Official military job title", "type": "text", "required": true},
+      {"id": "rank", "label": "Highest rank held", "type": "text", "required": true},
+      {"id": "duties", "label": "Describe your primary duties and responsibilities", "type": "textarea", "required": true},
+      {"id": "equipment", "label": "Equipment, systems, or technology you used", "type": "textarea", "required": false},
+      {"id": "leadership", "label": "Number of people you supervised or led", "type": "text", "required": false},
+      {"id": "targetIndustry", "label": "What civilian industry or role are you interested in? (or 'not sure')", "type": "text", "required": false}
+    ]
   },
   {
     "id": "salary-negotiation-script",
@@ -383,7 +415,17 @@
     "state_sensitive": false,
     "upload_suggestions": ["job offer letter", "resume"],
     "suggested_next": ["interview-prep-script", "resume-builder"],
-    "intake": []
+    "intake": [
+      {"id": "fullName", "label": "Full name", "type": "text", "required": true},
+      {"id": "targetRole", "label": "Job title you're negotiating for", "type": "text", "required": true},
+      {"id": "companyName", "label": "Company name", "type": "text", "required": true},
+      {"id": "offeredSalary", "label": "Salary they offered (or expected range)", "type": "text", "required": true},
+      {"id": "desiredSalary", "label": "What salary do you want?", "type": "text", "required": true},
+      {"id": "yearsExperience", "label": "Total years of relevant experience (military + civilian)", "type": "text", "required": true},
+      {"id": "uniqueValue", "label": "What unique value do you bring? (clearance, specialized training, leadership, certifications)", "type": "textarea", "required": true},
+      {"id": "otherOffers", "label": "Do you have competing offers or alternative options?", "type": "select", "options": ["Yes — another offer","Yes — current job is fine","No — this is my only option","Prefer not to say"], "required": true},
+      {"id": "benefits", "label": "Are there non-salary items you'd also negotiate? (signing bonus, remote work, PTO, relocation, etc.)", "type": "textarea", "required": false}
+    ]
   },
   {
     "id": "va-loan-readiness-checklist",
@@ -394,7 +436,18 @@
     "state_sensitive": true,
     "upload_suggestions": ["DD-214", "Certificate of Eligibility", "credit report"],
     "suggested_next": ["budget-financial-recovery-plan"],
-    "intake": []
+    "intake": [
+      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
+      {"id": "state", "label": "What state are you buying in?", "type": "state_select", "required": true},
+      {"id": "serviceStatus", "label": "Current service status", "type": "select", "options": ["Veteran (separated)","Active duty","Guard/Reserve (activated 90+ days)","Guard/Reserve (never activated)","Surviving spouse"], "required": true},
+      {"id": "hasCOE", "label": "Do you have your Certificate of Eligibility (COE)?", "type": "select", "options": ["Yes","No — need to get one","Not sure"], "required": true},
+      {"id": "creditScore", "label": "Approximate credit score range", "type": "select", "options": ["Below 580","580-619","620-659","660-699","700-739","740+","Don't know"], "required": true},
+      {"id": "monthlyIncome", "label": "Total monthly gross income", "type": "text", "required": true},
+      {"id": "monthlyDebts", "label": "Total monthly debt payments (car, credit cards, loans, etc.)", "type": "text", "required": true},
+      {"id": "savings", "label": "Approximate savings available for closing costs", "type": "text", "required": true},
+      {"id": "firstTimeBuyer", "label": "Is this your first home purchase?", "type": "select", "options": ["Yes","No — first time using VA loan","No — have used VA loan before"], "required": true},
+      {"id": "propertyType", "label": "What type of property are you looking at?", "type": "select", "options": ["Single family home","Condo","Townhouse","Multi-unit (2-4 units)","Manufactured home","Not sure yet"], "required": true}
+    ]
   },
   {
     "id": "rental-application-packet",
@@ -405,7 +458,20 @@
     "state_sensitive": false,
     "upload_suggestions": ["prior rental references", "income verification", "DD-214"],
     "suggested_next": ["budget-financial-recovery-plan"],
-    "intake": []
+    "intake": [
+      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
+      {"id": "phone", "label": "Phone number", "type": "text", "required": true},
+      {"id": "email", "label": "Email address", "type": "text", "required": true},
+      {"id": "monthlyIncome", "label": "Monthly gross income", "type": "text", "required": true},
+      {"id": "incomeSource", "label": "Income sources (employment, VA disability, GI Bill, etc.)", "type": "textarea", "required": true},
+      {"id": "currentAddress", "label": "Current address", "type": "text", "required": true},
+      {"id": "reasonForMoving", "label": "Reason for moving (PCS, transition, lease ending, etc.)", "type": "text", "required": true},
+      {"id": "veteranStatus", "label": "Veteran or active duty?", "type": "select", "options": ["Veteran","Active duty","Guard/Reserve","Military spouse"], "required": true},
+      {"id": "pets", "label": "Do you have pets? (type and number)", "type": "text", "required": false},
+      {"id": "reference1", "label": "Reference 1 (name, phone, relationship — e.g., former landlord, supervisor)", "type": "text", "required": true},
+      {"id": "reference2", "label": "Reference 2 (name, phone, relationship)", "type": "text", "required": true},
+      {"id": "additionalInfo", "label": "Anything else you'd like the landlord to know?", "type": "textarea", "required": false}
+    ]
   },
   {
     "id": "personal-emergency-action-plan",
@@ -416,6 +482,17 @@
     "state_sensitive": false,
     "upload_suggestions": ["current emergency contacts", "insurance documents"],
     "suggested_next": ["emergency-contact-family-care-plan", "living-will"],
-    "intake": []
+    "intake": [
+      {"id": "fullName", "label": "Your full name", "type": "text", "required": true},
+      {"id": "householdSize", "label": "How many people in your household?", "type": "text", "required": true},
+      {"id": "householdMembers", "label": "Household members (names, ages, any special needs)", "type": "textarea", "required": true},
+      {"id": "address", "label": "Home address", "type": "text", "required": true},
+      {"id": "primaryRisks", "label": "What emergencies are you most concerned about?", "type": "select", "options": ["Natural disaster (hurricane, tornado, earthquake, flood)","Fire","Power outage / infrastructure failure","Medical emergency","Active threat / security","Financial emergency","All of the above"], "required": true},
+      {"id": "emergencyContact1", "label": "Emergency contact 1 (name, phone, relationship)", "type": "text", "required": true},
+      {"id": "emergencyContact2", "label": "Emergency contact 2 (name, phone, relationship)", "type": "text", "required": true},
+      {"id": "meetingPoint", "label": "Family meeting point if you need to evacuate (address or landmark)", "type": "text", "required": false},
+      {"id": "medicalNeeds", "label": "Any critical medical needs in your household? (medications, equipment, conditions)", "type": "textarea", "required": false},
+      {"id": "pets", "label": "Pets that need to be included in the plan (type and number)", "type": "text", "required": false}
+    ]
   }
 ]

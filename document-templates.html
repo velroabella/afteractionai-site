@@ -190,7 +190,7 @@ function toggleMenu() {
   function renderTemplateCard(t) {
     var catLabel = CATEGORY_LABELS[t.category] || t.category;
     var catIcon = CATEGORY_ICONS[t.category] || '';
-    var isAvailable = t.phase <= 2;
+    var isAvailable = t.phase <= 3;
     var phaseLabel = isAvailable ? '' : '<span class="tmpl-card__phase">Coming Soon</span>';
     var btnClass = isAvailable ? 'tmpl-card__btn' : 'tmpl-card__btn tmpl-card__btn--disabled';
     var btnText = isAvailable ? 'Start Template' : 'Coming Soon';

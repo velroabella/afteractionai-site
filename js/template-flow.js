@@ -54,7 +54,7 @@
       container.innerHTML = '<div style="text-align:center;padding:60px;"><h2>Template not found</h2><p><a href="document-templates.html">Browse all templates</a></p></div>';
       return;
     }
-    if (templateData.phase > 2) {
+    if (templateData.phase > 3) {
       container.innerHTML = '<div style="text-align:center;padding:60px;"><h2>' + escapeHtml(templateData.title) + '</h2><p>This template is coming soon. <a href="document-templates.html">Browse available templates</a></p></div>';
       return;
     }
@@ -213,7 +213,14 @@
       'federal-resume': generateFederalResume,
       'interview-prep-script': generateInterviewPrep,
       'credit-dispute-letter': generateCreditDispute,
-      'budget-financial-recovery-plan': generateBudgetPlan
+      'budget-financial-recovery-plan': generateBudgetPlan,
+      'nexus-letter-prep': generateNexusLetterPrep,
+      'benefits-eligibility-summary': generateBenefitsEligibility,
+      'military-civilian-skills-translator': generateSkillsTranslator,
+      'salary-negotiation-script': generateSalaryNegotiation,
+      'va-loan-readiness-checklist': generateVALoanChecklist,
+      'rental-application-packet': generateRentalPacket,
+      'personal-emergency-action-plan': generateEmergencyPlan
     };
 
     var gen = generators[templateId];
@@ -517,6 +524,197 @@
     };
   }
 
+  // ── Phase 3 Generators ────────────────────────────────
+
+  function generateNexusLetterPrep(d) {
+    return {
+      title: 'Nexus Letter Prep — ' + d.fullName,
+      sections: [
+        { heading: 'NEXUS LETTER PREPARATION DOCUMENT', content: 'Prepared for: ' + d.fullName + '\nBranch: ' + d.branch + '\nDates of Service: ' + d.serviceDates + '\nDate: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) },
+        { heading: 'What is a Nexus Letter?', content: 'A nexus letter is a medical opinion from a qualified healthcare provider stating that your current condition is "at least as likely as not" connected to your military service. It is one of the most important pieces of evidence in a VA disability claim.' },
+        { heading: 'Condition Being Claimed', content: d.condition },
+        { heading: 'In-Service Event / Injury / Exposure', content: d.inServiceEvent },
+        { heading: 'Symptom Timeline', content: 'First symptoms appeared: ' + d.firstSymptoms + '\n\nThis timeline is critical. The closer symptoms appear to the in-service event, the stronger the connection. Even if symptoms appeared years later, a medical professional can still establish a nexus if there is a plausible medical explanation.' },
+        { heading: 'Current Diagnosis & Treatment', content: (d.currentDiagnosis ? 'Current diagnosis: ' + d.currentDiagnosis : 'No formal diagnosis noted — getting a current diagnosis is an important step before requesting a nexus letter.') + '\n\n' + (d.currentTreatment ? 'Current treatment:\n' + d.currentTreatment : 'No current treatment listed.') },
+        { heading: 'Prior VA Claims', content: d.priorClaims || 'No prior claims for this condition.' },
+        { heading: 'What to Give Your Doctor', content: 'When you ask your doctor for a nexus letter, provide:\n\n1. This preparation document\n2. Your service treatment records (STRs) showing the in-service event\n3. Any medical records showing a timeline of symptoms since service\n4. Your DD-214\n5. A clear description of how the condition affects you daily\n\nAsk your doctor to include this specific language:\n"It is my medical opinion that [condition] is at least as likely as not (50% or greater probability) caused by or related to [in-service event/exposure] during the veteran\'s military service."' },
+        { heading: 'Nexus Letter Template for Your Doctor', content: '[Doctor\'s Letterhead]\n\nDate: _______________\n\nRE: Nexus Letter for ' + d.fullName + '\n\nTo Whom It May Concern,\n\nI am [Doctor Name], [credentials]. I have [treated/reviewed the records of] ' + d.fullName + ' for [condition].\n\nAfter reviewing the veteran\'s military service records, medical history, and current condition, it is my medical opinion that ' + d.condition + ' is at least as likely as not (50% or greater probability) caused by or aggravated by the veteran\'s military service, specifically [in-service event].\n\nMy rationale is based on: [medical reasoning]\n\nSincerely,\n[Doctor Name, Credentials]\n[License Number]\n[Contact Information]' },
+        { heading: 'Next Steps', content: '1. Get a current diagnosis if you don\'t have one\n2. Gather your service treatment records and medical records\n3. Schedule an appointment with your treating physician or an independent medical examiner\n4. Bring this prep document and supporting records to the appointment\n5. Once you have the nexus letter, submit it with your VA claim using the AfterAction AI VA Claim Personal Statement template\n6. If previously denied, use the VA Appeal Letter template with the nexus letter as new evidence' }
+      ]
+    };
+  }
+
+  function generateBenefitsEligibility(d) {
+    var rating = d.disabilityRating;
+    var ratingNum = parseInt(rating) || 0;
+    var isPT = rating.indexOf('P&T') >= 0;
+    var hasHonorable = d.dischargeType === 'Honorable' || d.dischargeType === 'General (Under Honorable Conditions)';
+
+    var healthcareSec = 'VA Healthcare: ';
+    if (!hasHonorable) {
+      healthcareSec += 'Your discharge type (' + d.dischargeType + ') may limit VA healthcare eligibility. Apply anyway — the VA makes individual determinations. You can also request a Character of Discharge review.';
+    } else if (ratingNum >= 50) {
+      healthcareSec += 'ELIGIBLE — Priority Group 1. No copays for service-connected conditions. You likely qualify for free VA healthcare.';
+    } else if (ratingNum >= 10) {
+      healthcareSec += 'ELIGIBLE — Priority Group 2-3. Low or no copays for service-connected conditions.';
+    } else {
+      healthcareSec += 'LIKELY ELIGIBLE — Priority Group 5-8 based on income. Apply at va.gov/health-care/apply.';
+    }
+
+    var educationSec = 'GI Bill Education Benefits: ';
+    if (d.education === 'Fully used') {
+      educationSec += 'You\'ve fully used your GI Bill benefits. Check if you qualify for VR&E (Chapter 31) if you have a service-connected disability.';
+    } else if (d.education === 'Partially used') {
+      educationSec += 'You have remaining GI Bill benefits. Check your balance at va.gov. Benefits expire 15 years after discharge for Post-9/11 GI Bill (some exceptions apply).';
+    } else if (d.education === 'No — haven\'t used any') {
+      educationSec += 'You have unused GI Bill benefits. Post-9/11 GI Bill provides tuition, housing allowance, and book stipend. Apply at va.gov/education.';
+    } else {
+      educationSec += 'Review your eligibility at va.gov/education.';
+    }
+
+    var disabilitySec = '';
+    if (ratingNum === 0 && rating !== 'None / Not yet rated') {
+      disabilitySec = 'You have a 0% rating. While this doesn\'t provide monthly compensation, it gives you access to VA healthcare and may qualify you for other benefits. Consider filing for an increase if your condition has worsened.';
+    } else if (ratingNum >= 30) {
+      disabilitySec = 'At ' + ratingNum + '% disability' + (isPT ? ' (Permanent & Total)' : '') + ', you are eligible for:\n• Monthly tax-free compensation\n• Additional compensation for dependents (' + (d.dependents || '0') + ' listed)\n• VA healthcare (Priority Group 1)\n• CHAMPVA for dependents (if 100% P&T)\n' + (ratingNum >= 100 ? '• Individual Unemployability consideration\n• Commissary and exchange privileges\n• Space-A travel eligibility\n• Property tax exemptions (varies by state)' : '• State-specific tax benefits (varies by state)');
+    } else if (ratingNum >= 10) {
+      disabilitySec = 'At ' + ratingNum + '% disability, you receive monthly compensation and VA healthcare access. Consider whether conditions have worsened — you may be underrated.';
+    } else {
+      disabilitySec = 'No current disability rating. If you have conditions related to service, consider filing a claim using the AfterAction AI VA Claim Personal Statement template.';
+    }
+
+    var employmentSec = 'Employment Benefits:\n';
+    if (d.employment === 'Unemployed — looking') {
+      employmentSec += '• VOW to Hire Heroes Act: Priority job referrals at American Job Centers\n• Veterans\' preference for federal jobs\n• Veteran Readiness & Employment (VR&E/Chapter 31) if service-connected disability\n• State employment offices often have dedicated veteran representatives\n• Homeless Veterans\' Reintegration Program (if applicable)';
+    } else {
+      employmentSec += '• Veterans\' preference for federal jobs (if applicable)\n• Veteran Readiness & Employment (VR&E/Chapter 31) for career development\n• Self-employment and small business resources through SBA Veterans programs';
+    }
+
+    return {
+      title: 'Benefits Eligibility Summary — ' + d.fullName,
+      sections: [
+        { heading: 'PERSONALIZED BENEFITS ELIGIBILITY SUMMARY', content: 'Name: ' + d.fullName + '\nState: ' + d.state + '\nBranch: ' + d.branch + '\nService Era: ' + d.serviceEra + '\nYears of Service: ' + d.yearsService + '\nDischarge: ' + d.dischargeType + '\nDisability Rating: ' + d.disabilityRating + '\nDate Generated: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) },
+        { heading: 'VA Healthcare', content: healthcareSec },
+        { heading: 'VA Disability Compensation', content: disabilitySec },
+        { heading: 'Education Benefits', content: educationSec },
+        { heading: 'Employment', content: employmentSec },
+        { heading: 'Home Loan Benefits', content: 'VA Home Loan: Most veterans with honorable or general discharge are eligible for VA-backed home loans with no down payment and no PMI. Check your eligibility at va.gov/housing-assistance. Use the AfterAction AI VA Loan Readiness Checklist for a step-by-step guide.' },
+        { heading: 'State Benefits — ' + d.state, content: 'Your state (' + d.state + ') likely offers additional benefits including:\n• Property tax exemptions or reductions\n• State veteran bonus or grant programs\n• Hunting/fishing license discounts or exemptions\n• Vehicle registration benefits\n• State education benefits beyond GI Bill\n\nCheck the AfterAction AI State Benefits page for ' + d.state + '-specific details.' },
+        { heading: 'IMPORTANT NOTE', content: 'This is an informational summary based on the information you provided. Actual eligibility is determined by the VA and individual state agencies. Apply directly to confirm your eligibility. When in doubt, apply — you may qualify for more than you think.' },
+        { heading: 'Next Steps', content: '1. If no disability rating: consider filing a claim (VA Claim Personal Statement template)\n2. If underrated: file for increase\n3. Enroll in VA healthcare if not already: va.gov/health-care/apply\n4. Check state benefits on AfterAction AI\n5. Contact your county Veterans Service Officer for free local help' }
+      ]
+    };
+  }
+
+  function generateSkillsTranslator(d) {
+    var translatedDuties = d.duties
+      .replace(/MOS/gi, 'specialized role')
+      .replace(/deployed/gi, 'assigned to high-priority operations')
+      .replace(/platoon/gi, 'team of 20-40 professionals')
+      .replace(/squad/gi, 'team of 9-13 professionals')
+      .replace(/fire team/gi, 'small specialized team')
+      .replace(/battalion/gi, 'organization of 300-1000 personnel')
+      .replace(/company/gi, 'department of 60-200 personnel')
+      .replace(/briefed/gi, 'presented to')
+      .replace(/OPORD/gi, 'operational plan')
+      .replace(/AOR/gi, 'area of responsibility')
+      .replace(/SOP/gi, 'standard operating procedures')
+      .replace(/PT/gi, 'physical readiness program')
+      .replace(/NCOER/gi, 'performance evaluation')
+      .replace(/OER/gi, 'performance evaluation')
+      .replace(/TDY/gi, 'temporary assignment')
+      .replace(/PCS/gi, 'organizational relocation');
+
+    return {
+      title: 'Skills Translation — ' + d.fullName,
+      sections: [
+        { heading: 'MILITARY TO CIVILIAN SKILLS TRANSLATION', content: 'Name: ' + d.fullName + '\nBranch: ' + d.branch + '\nMilitary Job Code: ' + d.mos + '\nMilitary Job Title: ' + d.mosTitle + '\nHighest Rank: ' + d.rank + (d.targetIndustry ? '\nTarget Industry: ' + d.targetIndustry : '') },
+        { heading: 'Civilian-Friendly Job Title Equivalents', content: 'Your military role (' + d.mosTitle + ') translates to civilian titles such as:\n\n• Operations Manager / Operations Coordinator\n• Project Manager / Program Manager\n• Logistics Manager / Supply Chain Coordinator\n• Training Manager / Instructional Coordinator\n• Security Manager / Risk Analyst\n• Technical Specialist / Systems Administrator\n\nNote: Use the title that best matches the specific job you\'re applying for. Research the target company\'s job titles on LinkedIn or their careers page.' },
+        { heading: 'Duties — Translated', content: 'Original:\n' + d.duties + '\n\nCivilian Translation:\n' + translatedDuties },
+        { heading: 'Equipment & Technology — Translated', content: d.equipment ? 'Military: ' + d.equipment + '\n\nFor your resume, translate specific systems to general categories:\n• Communication systems → "enterprise communication platforms"\n• Navigation equipment → "GPS/GIS systems"\n• Weapons systems → "complex technical systems" or "safety-critical equipment"\n• Military vehicles → "fleet management" or "heavy equipment operation"\n• Encryption/COMSEC → "cybersecurity" or "information security"\n• Military software → name civilian equivalents (SAP, Oracle, etc.) if applicable' : 'No equipment listed. Consider adding equipment and systems you used — technical skills are highly valued.' },
+        { heading: 'Leadership Translation', content: d.leadership ? 'You supervised ' + d.leadership + ' personnel.\n\nCivilian translation: "Managed and developed a team of ' + d.leadership + ' professionals, including performance evaluations, training, scheduling, and professional development."\n\nIf you managed equipment or budgets, include dollar amounts and quantities.' : 'Consider quantifying your leadership experience — number of people supervised, budget managed, equipment valued at.' },
+        { heading: 'Universal Military-to-Civilian Skill Translations', content: '• Leadership under pressure → Crisis management and decision-making\n• Mission planning → Project planning and execution\n• After Action Reviews → Performance analysis and continuous improvement\n• Security clearance → Trusted with sensitive information\n• Training new personnel → Staff development and onboarding\n• Operating in diverse environments → Cross-cultural competency\n• Following/giving orders → Clear communication in hierarchical organizations\n• Adapting to changing situations → Agile methodology and change management\n• Maintaining equipment → Asset management and preventive maintenance\n• Logistics coordination → Supply chain management' },
+        { heading: 'Words to Avoid on Your Resume', content: 'AVOID → USE INSTEAD\n• Combat → High-stakes operations\n• Troops → Team members, personnel\n• Warfare → Strategic operations\n• Killed/destroyed → Neutralized, resolved\n• Weapons → Systems, equipment\n• Enemy → Opposing force, competitor\n• Mission → Project, objective, initiative\n• Barracks → Facility\n• Chow → Meals, food service\n• Roger/Copy → Acknowledged, confirmed' },
+        { heading: 'Next Steps', content: '1. Use the AfterAction AI Resume Builder with these translated skills\n2. Update your LinkedIn profile with the LinkedIn Profile Builder\n3. Practice explaining your experience in civilian terms with the Interview Prep template\n4. Use O*NET (onetonline.org) to find civilian jobs matching your military code' }
+      ]
+    };
+  }
+
+  function generateSalaryNegotiation(d) {
+    var offered = parseFloat(d.offeredSalary.replace(/[^0-9.]/g, '')) || 0;
+    var desired = parseFloat(d.desiredSalary.replace(/[^0-9.]/g, '')) || 0;
+    var gap = desired - offered;
+    var askAmount = Math.round(desired * 1.05);
+
+    return {
+      title: 'Salary Negotiation Script — ' + d.fullName,
+      sections: [
+        { heading: 'SALARY NEGOTIATION PREPARATION', content: 'Candidate: ' + d.fullName + '\nRole: ' + d.targetRole + '\nCompany: ' + d.companyName + '\nOffered: $' + offered.toLocaleString() + '\nYour Target: $' + desired.toLocaleString() + '\nGap: $' + gap.toLocaleString() + '\n\nStrategy: Ask for $' + askAmount.toLocaleString() + ' (5% above target) to leave room to settle at your target.' },
+        { heading: 'Opening Script — The Ask', content: '"Thank you so much for the offer — I\'m genuinely excited about this opportunity at ' + d.companyName + '. I\'ve done some research on the market rate for ' + d.targetRole + ' positions, and given my ' + d.yearsExperience + ' years of experience and the specific value I bring, I was hoping we could discuss the compensation.\n\nI\'d be looking for something in the range of $' + askAmount.toLocaleString() + '. Here\'s why I think that\'s justified..."' },
+        { heading: 'Your Value Proposition', content: 'Key points to make:\n\n' + d.uniqueValue + '\n\nFrame each point as value to the company, not what you need. Example:\n\n"My security clearance alone saves the company $10,000-50,000 in processing time and costs."\n"My experience managing teams of [X] means I can hit the ground running with no ramp-up time."' },
+        { heading: 'If They Push Back', content: '"I understand there may be constraints. I\'m flexible on how we get to a number that works for both of us. Could we explore:\n\n• A signing bonus to bridge the gap?\n• A salary review after 6 months based on performance?\n• Additional PTO or flexible work arrangements?\n' + (d.benefits ? '• ' + d.benefits.split('\n').join('\n• ') : '• Other benefits that might be available?') + '"' },
+        { heading: 'Leverage Points', content: d.otherOffers === 'Yes — another offer' ? 'You have a competing offer. Use it carefully:\n\n"I want to be transparent — I do have another offer I\'m considering. I\'d prefer to work with ' + d.companyName + ', but I want to make sure the compensation is competitive."\n\nNever bluff about competing offers. If asked for specifics, you can say you\'d rather not share details but can confirm it\'s competitive.' : d.otherOffers === 'Yes — current job is fine' ? 'Your current position is your leverage:\n\n"I\'m in a good position in my current role, so I want to make sure any move is the right one financially as well as professionally."' : 'Without competing offers, lean harder on your unique value and market research. You can also say:\n\n"I\'ve researched the market rate for this role extensively, and I want to make sure we\'re aligned with what the position commands."' },
+        { heading: 'Never Say', content: '• "I need this much because of my bills/mortgage/expenses" (keep it about value, not need)\n• "This is my final offer / take it or leave it" (always leave room)\n• "I\'ll take anything" (this eliminates your leverage)\n• Specific numbers from competing offers (if you don\'t have one)\n• "The minimum I\'d accept is..." (never reveal your floor)' },
+        { heading: 'If They Say "This is the Best We Can Do"', content: '"I appreciate you working with me on this. Before I accept, can I take 24-48 hours to review the full package? I want to make a thoughtful decision."\n\nUse this time to:\n1. Evaluate the total compensation (salary + benefits + growth potential)\n2. Consider whether non-salary items close the gap\n3. Decide your true walk-away point\n4. Come back with one final, specific ask if needed' },
+        { heading: 'Closing Script — Accepting', content: '"I\'m excited to accept. Thank you for working with me on the compensation. I\'m looking forward to contributing to the team at ' + d.companyName + '. Could you send over the updated offer letter so I can sign?"\n\nAlways get the final agreement in writing before your start date.' }
+      ]
+    };
+  }
+
+  function generateVALoanChecklist(d) {
+    var income = parseFloat(d.monthlyIncome.replace(/[^0-9.]/g, '')) || 0;
+    var debts = parseFloat(d.monthlyDebts.replace(/[^0-9.]/g, '')) || 0;
+    var dti = income > 0 ? Math.round((debts / income) * 100) : 0;
+    var maxMortgage = Math.round((income * 0.41 - debts) * 1);
+    var dtiStatus = dti <= 41 ? '✓ Good — within VA guidelines' : '⚠ Above 41% — may need compensating factors';
+
+    return {
+      title: 'VA Loan Readiness Checklist — ' + d.fullName,
+      sections: [
+        { heading: 'VA LOAN READINESS CHECKLIST', content: 'Name: ' + d.fullName + '\nState: ' + d.state + '\nDate: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) },
+        { heading: 'Eligibility Status', content: 'Service Status: ' + d.serviceStatus + '\n' + (d.serviceStatus === 'Guard/Reserve (never activated)' ? '⚠ Guard/Reserve members who were never activated for 90+ days may have limited VA loan eligibility. Check with the VA.' : '✓ Your service status typically qualifies for VA loan benefits.') + '\n\nCertificate of Eligibility (COE): ' + d.hasCOE + '\n' + (d.hasCOE === 'Yes' ? '✓ You have your COE — you\'re ready for this step.' : '→ ACTION NEEDED: Request your COE at va.gov/housing-assistance/home-loans/how-to-request-coe or through your lender.') },
+        { heading: 'Financial Snapshot', content: 'Monthly Gross Income: $' + income.toLocaleString() + '\nMonthly Debt Payments: $' + debts.toLocaleString() + '\nDebt-to-Income Ratio (DTI): ' + dti + '% ' + dtiStatus + '\nEstimated Maximum Monthly Mortgage Payment: $' + maxMortgage.toLocaleString() + ' (based on 41% DTI guideline)\nSavings for Closing Costs: $' + d.savings },
+        { heading: 'Credit Score Assessment', content: 'Your Range: ' + d.creditScore + '\n\n' + (d.creditScore === '740+' ? '✓ Excellent — you\'ll qualify for the best rates.' : d.creditScore === '700-739' ? '✓ Good — you should have no issues qualifying.' : d.creditScore === '660-699' ? '✓ Fair — most VA lenders will approve. Shop around for best rates.' : d.creditScore === '620-659' ? '⚠ Marginal — VA has no minimum, but most lenders want 620+. You\'ll likely qualify but may have higher rates.' : d.creditScore === '580-619' ? '⚠ Below average — some VA lenders will work with you. Consider credit repair first. Use the AfterAction AI Credit Dispute Letter if needed.' : d.creditScore === 'Below 580' ? '→ ACTION NEEDED: Focus on credit improvement before applying. Dispute errors, pay down balances, make all payments on time for 6-12 months.' : '→ ACTION NEEDED: Check your credit score at annualcreditreport.com (free).') },
+        { heading: 'VA Loan Benefits Recap', content: '• NO down payment required (up to conforming loan limits)\n• NO private mortgage insurance (PMI)\n• Competitive interest rates (typically lower than conventional)\n• Limited closing costs (VA limits what veterans can be charged)\n• No prepayment penalties\n• VA funding fee: ' + (d.firstTimeBuyer === 'No — have used VA loan before' ? '3.3% (subsequent use) — can be financed into loan' : '2.15% (first use) — can be financed into loan') + '\n• Funding fee is WAIVED if you have 10%+ VA disability rating\n\nProperty Type: ' + d.propertyType + '\n' + (d.propertyType === 'Condo' ? '→ The condo must be on the VA-approved list. Check va.gov/gi-bill-comparison-tool.' : d.propertyType === 'Multi-unit (2-4 units)' ? '→ VA allows up to 4-unit properties if you live in one unit. Rental income from other units can count toward qualifying.' : d.propertyType === 'Manufactured home' ? '→ Must be on a permanent foundation and meet VA standards.' : '') },
+        { heading: 'Your Readiness Checklist', content: '□ Certificate of Eligibility obtained\n□ Credit score reviewed (target 620+)\n□ Debt-to-income ratio under 41%\n□ Stable income for 2+ years documented\n□ Savings for closing costs ($' + d.savings + ' available)\n□ DD-214 or proof of service ready\n□ Recent pay stubs (30 days)\n□ W-2s and tax returns (2 years)\n□ Bank statements (2 months)\n□ Pre-approval from VA-approved lender\n□ Real estate agent selected (consider a veteran-friendly agent)\n□ ' + d.state + ' state veteran housing benefits researched' },
+        { heading: 'Next Steps', content: '1. Get your COE if you don\'t have it\n2. Check and improve your credit if below 620\n3. Get pre-approved by 2-3 VA-approved lenders (compare rates)\n4. Find a veteran-friendly real estate agent\n5. Start house hunting within your budget\n6. Remember: VA appraisal is required and protects you from overpaying\n7. Use the AfterAction AI Budget/Financial Recovery Plan to plan monthly costs' }
+      ]
+    };
+  }
+
+  function generateRentalPacket(d) {
+    return {
+      title: 'Rental Application Packet — ' + d.fullName,
+      sections: [
+        { heading: 'RENTAL APPLICATION COVER LETTER', content: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '\n\nDear Property Manager,\n\nMy name is ' + d.fullName + ' and I am writing to express my interest in renting the property at [address]. I am a ' + d.veteranStatus.toLowerCase() + ' and I am relocating due to ' + d.reasonForMoving.toLowerCase() + '.\n\nI have a stable monthly income of $' + d.monthlyIncome + ' from ' + d.incomeSource.split('\n')[0] + '. I have a strong rental history, reliable references, and a track record of maintaining properties in excellent condition.\n\n' + (d.additionalInfo ? d.additionalInfo + '\n\n' : '') + 'I would welcome the opportunity to discuss my application with you. I am available at ' + d.phone + ' or ' + d.email + '.\n\nThank you for your consideration.\n\nSincerely,\n' + d.fullName },
+        { heading: 'APPLICANT INFORMATION', content: 'Name: ' + d.fullName + '\nPhone: ' + d.phone + '\nEmail: ' + d.email + '\nCurrent Address: ' + d.currentAddress + '\nReason for Moving: ' + d.reasonForMoving + '\nVeteran Status: ' + d.veteranStatus + (d.pets ? '\nPets: ' + d.pets : '\nPets: None') },
+        { heading: 'INCOME VERIFICATION', content: 'Monthly Gross Income: $' + d.monthlyIncome + '\n\nIncome Sources:\n' + d.incomeSource + '\n\nDocumentation provided:\n• Recent pay stubs (30 days)\n• ' + (d.veteranStatus === 'Veteran' || d.veteranStatus === 'Active duty' ? 'VA benefits award letter\n• ' : '') + 'Bank statements (2 months)\n• Employment verification letter' },
+        { heading: 'REFERENCES', content: 'Reference 1: ' + d.reference1 + '\nReference 2: ' + d.reference2 },
+        { heading: 'SUPPORTING DOCUMENTS CHECKLIST', content: '□ This cover letter\n□ Completed rental application (landlord\'s form)\n□ Copy of government-issued photo ID\n□ Proof of income (pay stubs, VA award letter, bank statements)\n□ Prior landlord references\n□ ' + (d.veteranStatus !== 'Military spouse' ? 'Copy of DD-214 or military ID (establishes credibility)' : 'Copy of military spouse ID') + '\n□ Credit report (optional — shows proactive transparency)\n□ Employment verification letter' },
+        { heading: 'Tips for Veterans Renting', content: '• The Servicemembers Civil Relief Act (SCRA) provides protections for military tenants including early lease termination for PCS orders or deployment\n• Many landlords view military service favorably — mention it prominently\n• VA disability income counts as income and cannot be discriminated against\n• If you have a service dog, it is not a "pet" under the Fair Housing Act and cannot be subject to pet deposits\n• Consider asking for a military clause in your lease allowing early termination with orders' }
+      ]
+    };
+  }
+
+  function generateEmergencyPlan(d) {
+    return {
+      title: 'Personal Emergency Action Plan — ' + d.fullName,
+      sections: [
+        { heading: 'PERSONAL EMERGENCY ACTION PLAN', content: 'Prepared by: ' + d.fullName + '\nHousehold Size: ' + d.householdSize + '\nAddress: ' + d.address + '\nPrimary Risk Focus: ' + d.primaryRisks + '\nDate: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) },
+        { heading: 'Household Members', content: d.householdMembers },
+        { heading: 'Emergency Contacts', content: 'Contact 1: ' + d.emergencyContact1 + '\nContact 2: ' + d.emergencyContact2 + '\n\nLocal Emergency: 911\nPoison Control: 1-800-222-1222\nVA Crisis Line: 988 (press 1)\nRed Cross: 1-800-733-2767' },
+        { heading: 'Evacuation Plan', content: 'Meeting Point: ' + (d.meetingPoint || '[ASSIGN A MEETING POINT — a neighbor\'s house, nearby landmark, or community center]') + '\n\nEvacuation Routes:\n• Route 1 (primary): [Map out your main route from home to meeting point]\n• Route 2 (alternate): [Map out a backup route in case primary is blocked]\n\nTransportation:\n• Vehicle 1: [Make, model, keep at least half tank of gas]\n• Backup: [Know your local evacuation bus routes or shelters]' },
+        { heading: 'Go-Bag Checklist (72-Hour Kit)', content: 'Prepare one for each household member:\n\n□ Water (1 gallon per person per day × 3 days)\n□ Non-perishable food (3 days)\n□ First aid kit\n□ Flashlight + extra batteries\n□ Phone charger (portable battery pack)\n□ Cash ($200+ in small bills)\n□ Copies of important documents (in waterproof bag):\n  — IDs and passports\n  — Insurance policies\n  — DD-214\n  — VA disability rating letter\n  — Medication list\n  — Bank account info\n□ Change of clothes and sturdy shoes\n□ Blankets or sleeping bags\n□ Prescription medications (7-day supply)\n□ Personal hygiene items\n' + (d.medicalNeeds ? '□ Medical equipment/supplies: ' + d.medicalNeeds : '') + '\n' + (d.pets ? '□ Pet supplies: food, leash, carrier, vet records for ' + d.pets : '') },
+        { heading: 'Medical Needs', content: d.medicalNeeds || 'No critical medical needs listed. Consider documenting:\n• Current medications and dosages\n• Allergies\n• Blood types\n• Doctor and pharmacy contact info\n• Medical device requirements (CPAP, insulin, etc.)' },
+        { heading: 'Communication Plan', content: 'In an emergency:\n1. Text first (texts get through when calls can\'t)\n2. Call emergency contacts in order\n3. Check in at meeting point\n4. Post status on family group chat or social media\n5. Designate an out-of-area contact (someone far from your area who can relay information)\n\nOut-of-area contact: [Assign someone — a relative in another state is ideal]' },
+        { heading: 'Shelter-in-Place Plan', content: 'If you cannot evacuate:\n• Safest room in home: [identify — usually interior room, no windows, lowest floor]\n• Water shutoff location: [document]\n• Gas shutoff location: [document]\n• Electrical panel location: [document]\n• Emergency supplies stored at: [document]' },
+        { heading: 'Financial Preparedness', content: '□ Emergency fund covers 1-3 months of expenses\n□ Insurance policies reviewed and adequate (home/renters, auto, health, life)\n□ Important financial documents accessible or in cloud storage\n□ At least one credit card with available credit for emergencies\n□ Know how to access VA emergency assistance if needed' },
+        { heading: 'Review Schedule', content: 'Review and update this plan:\n• Every 6 months\n• When household members change\n• When you move to a new home\n• At the start of severe weather season\n• After any real emergency (lessons learned)\n\nPractice drill: Walk through your evacuation plan with all household members at least once per year.' },
+        { heading: 'Veteran-Specific Resources', content: '• VA Crisis Line: 988 (press 1) — 24/7 for any veteran in crisis\n• VA Emergency Financial Assistance: Contact your local VA social worker\n• Red Cross Military Services: redcross.org/military\n• FEMA Resources: ready.gov\n• Salvation Army Veteran Services: Contact local chapter' }
+      ]
+    };
+  }
+
   // ── Render Output ──────────────────────────────────────
   function renderOutput(output, formData) {
     var html = '';
@@ -590,9 +788,9 @@
         templateData.suggested_next.forEach(function(nextId) {
           var next = all.find(function(t) { return t.id === nextId; });
           if (next) {
-            var href = next.phase <= 2 ? 'template-flow.html?id=' + next.id : '#';
-            var cls = next.phase <= 2 ? 'tmpl-flow__next-link' : 'tmpl-flow__next-link tmpl-flow__next-link--disabled';
-            nextHtml += '<a href="' + href + '" class="' + cls + '">' + escapeHtml(next.title) + (next.phase > 2 ? ' (Coming Soon)' : '') + '</a>';
+            var href = next.phase <= 3 ? 'template-flow.html?id=' + next.id : '#';
+            var cls = next.phase <= 3 ? 'tmpl-flow__next-link' : 'tmpl-flow__next-link tmpl-flow__next-link--disabled';
+            nextHtml += '<a href="' + href + '" class="' + cls + '">' + escapeHtml(next.title) + (next.phase > 3 ? ' (Coming Soon)' : '') + '</a>';
           }
         });
         linksDiv.innerHTML = nextHtml;
