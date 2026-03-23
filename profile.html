@@ -110,6 +110,14 @@
     </div>
   </div>
 
+  <!-- Next Recommended Actions -->
+  <div class="dashboard__card dashboard__actions-panel">
+    <h3>Next Recommended Actions</h3>
+    <div id="dashActions">
+      <p style="font-size:0.9rem;color:var(--gray-500);">Complete a conversation to get personalized action recommendations.</p>
+    </div>
+  </div>
+
   <!-- Uploaded Documents -->
   <div class="dashboard__card">
     <h3>Uploaded Documents</h3>
@@ -172,6 +180,7 @@
   </div>
 </div>
 
+<script src="js/action-engine.js"></script>
 <script src="js/auth.js"></script>
 <script src="js/newsletter.js"></script>
 <script>
@@ -239,7 +248,7 @@
         });
       }
 
-      // Load latest report
+      // Load latest report + generate action recommendations
       if (AAAI.auth.loadReports) {
         AAAI.auth.loadReports().then(function(result) {
           if (result.data && result.data.length > 0) {
@@ -252,6 +261,22 @@
               '<div style="margin-top:12px;display:flex;gap:8px;">' +
                 '<a href="index.html" style="color:var(--gold);font-size:0.85rem;font-weight:600;">Continue Conversation →</a>' +
               '</div>';
+
+            // Action Engine — analyze latest report for recommendations
+            if (typeof AAAI !== 'undefined' && AAAI.actions && latest.report_content) {
+              try {
+                var actionPlan = AAAI.actions.getActionPlan(latest.report_content, profile);
+                var actionsEl = document.getElementById('dashActions');
+                if (actionPlan.issues.length > 0) {
+                  var panelHtml = AAAI.actions.renderActionPanel(actionPlan, { maxTemplates: 5, maxResources: 4 });
+                  actionsEl.innerHTML = panelHtml;
+                } else {
+                  actionsEl.innerHTML = '<p style="font-size:0.9rem;color:var(--gray-500);">No specific action items detected from your latest report. <a href="index.html" style="color:var(--gold);">Start a new conversation</a> to get recommendations.</p>';
+                }
+              } catch(e) {
+                console.error('ActionEngine dashboard error:', e);
+              }
+            }
           }
         });
       }

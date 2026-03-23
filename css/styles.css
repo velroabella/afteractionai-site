@@ -5868,3 +5868,209 @@ a, button, input, select, textarea {
     font-size: 1.15rem;
   }
 }
+
+
+/* ══════════════════════════════════════════════════════════
+   ACTION PANEL — Recommended next actions from action-engine
+   ══════════════════════════════════════════════════════════ */
+
+.action-panel {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.08), rgba(212, 175, 55, 0.03));
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  border-radius: 12px;
+  padding: 24px;
+  margin: 24px 0;
+}
+
+.action-panel__title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin: 0 0 16px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-panel__title svg {
+  flex-shrink: 0;
+}
+
+.action-panel__section {
+  margin-bottom: 16px;
+}
+
+.action-panel__section:last-child {
+  margin-bottom: 0;
+}
+
+.action-panel__heading {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--gray-500);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px 0;
+}
+
+.action-panel__items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.action-panel__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  background: rgba(212, 175, 55, 0.12);
+  color: var(--gold);
+  border: 1px solid rgba(212, 175, 55, 0.2);
+}
+
+.action-panel__link:hover {
+  background: rgba(212, 175, 55, 0.22);
+  border-color: var(--gold);
+  transform: translateY(-1px);
+}
+
+.action-panel__link--resource {
+  background: rgba(59, 130, 246, 0.1);
+  color: #60a5fa;
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.action-panel__link--resource:hover {
+  background: rgba(59, 130, 246, 0.2);
+  border-color: #60a5fa;
+}
+
+.action-panel__link--engine {
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border-color: rgba(16, 185, 129, 0.2);
+}
+
+.action-panel__link--engine:hover {
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #34d399;
+}
+
+/* Checklist section within action panel */
+.action-panel__checklist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.action-panel__checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 0.85rem;
+  color: var(--gray-300);
+}
+
+.action-panel__checklist-item:last-child {
+  border-bottom: none;
+}
+
+.action-panel__checklist-marker {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  margin-top: 2px;
+}
+
+.action-panel__checklist-marker--done {
+  background: var(--gold);
+}
+
+.action-panel__checklist-title {
+  font-weight: 600;
+  color: var(--gray-100);
+}
+
+.action-panel__checklist-desc {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+
+/* Dashboard-specific action panel wrapper */
+.dashboard__actions-panel {
+  margin-top: 0;
+}
+
+.dashboard__actions-panel .action-panel {
+  margin: 0;
+}
+
+/* Compact variant for inline use */
+.action-panel--compact {
+  padding: 16px;
+}
+
+.action-panel--compact .action-panel__heading {
+  font-size: 0.75rem;
+  margin-bottom: 8px;
+}
+
+.action-panel--compact .action-panel__link {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+}
+
+/* Post-template completion banner */
+.tmpl-completion-actions {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.03));
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: 12px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.tmpl-completion-actions__title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #34d399;
+  margin: 0 0 12px 0;
+}
+
+.tmpl-completion-actions .action-panel__items {
+  gap: 8px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .action-panel {
+    padding: 16px;
+  }
+
+  .action-panel__items {
+    flex-direction: column;
+  }
+
+  .action-panel__link {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .action-panel--compact .action-panel__items {
+    flex-direction: row;
+  }
+
+  .action-panel--compact .action-panel__link {
+    width: auto;
+  }
+}

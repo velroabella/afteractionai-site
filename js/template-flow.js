@@ -753,6 +753,9 @@
       html += '</div>';
     }
 
+    // Action engine recommendations placeholder
+    html += '<div id="actionEnginePanel"></div>';
+
     container.innerHTML = html;
 
     // Wire actions
@@ -795,6 +798,30 @@
         });
         linksDiv.innerHTML = nextHtml;
       });
+    }
+
+    // Action Engine — analyze completed output for related recommendations
+    if (typeof AAAI !== 'undefined' && AAAI.actions) {
+      try {
+        var fullText = output.sections.map(function(s) { return (s.heading || '') + ' ' + (s.content || ''); }).join(' ');
+        var actionPlan = AAAI.actions.getActionPlan(fullText);
+        // Remove the current template from recommendations
+        var currentId = templateData.id;
+        actionPlan.templates.flow = actionPlan.templates.flow.filter(function(id) { return id !== currentId; });
+        var panelHtml = AAAI.actions.renderActionPanel(actionPlan, { maxTemplates: 3, maxResources: 3, compact: true });
+        if (panelHtml) {
+          var panelEl = document.getElementById('actionEnginePanel');
+          if (panelEl) {
+            panelEl.innerHTML =
+              '<div class="tmpl-completion-actions">' +
+                '<div class="tmpl-completion-actions__title">Related Actions Based on Your Document</div>' +
+                panelHtml +
+              '</div>';
+          }
+        }
+      } catch(e) {
+        console.error('ActionEngine template completion error:', e);
+      }
     }
 
     window.scrollTo(0, 0);

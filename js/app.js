@@ -1213,6 +1213,34 @@
       });
     }
 
+    // Action Engine — show recommended next actions based on report content
+    if (typeof AAAI !== 'undefined' && AAAI.actions) {
+      try {
+        var userProfile = null;
+        if (AAAI.auth && AAAI.auth.getProfile) {
+          userProfile = AAAI.auth.getProfile();
+        }
+        var actionPlan = AAAI.actions.getActionPlan(reportText, userProfile);
+        var panelHtml = AAAI.actions.renderActionPanel(actionPlan, { maxTemplates: 4, maxResources: 3 });
+        if (panelHtml) {
+          var actionDiv = document.createElement('div');
+          actionDiv.className = 'message message--system';
+          actionDiv.innerHTML =
+            '<div class="action-panel__title">' +
+              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' +
+              ' Recommended Next Actions' +
+            '</div>' + panelHtml;
+          if (chatMessages) chatMessages.appendChild(actionDiv);
+          scrollToBottom();
+          log('ActionEngine', 'showed ' + actionPlan.issues.length + ' issues, ' +
+              actionPlan.templates.flow.length + ' templates, ' +
+              actionPlan.resources.length + ' resources');
+        }
+      } catch(e) {
+        log('ActionEngine', 'render error: ' + e.message);
+      }
+    }
+
     // Save report to Supabase if logged in
     if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn()) {
       AAAI.auth.saveReport(reportText, conversationHistory).then(function(result) {
