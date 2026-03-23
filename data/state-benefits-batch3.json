@@ -1,0 +1,5127 @@
+[
+  {
+    "id": "ak-education",
+    "state": "AK",
+    "benefit_name": "University of Alaska Resident Tuition",
+    "category": "education",
+    "summary": "All veterans qualify for resident tuition rates at University of Alaska system institutions regardless of domicile.",
+    "eligibility": "Must be a veteran of the U.S. Armed Forces enrolled at a University of Alaska institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "University of Alaska System",
+    "official_link": "https://veterans.alaska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.alaska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AK",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ak-employment-pref",
+    "state": "AK",
+    "benefit_name": "Veterans Employment Preference",
+    "category": "employment",
+    "summary": "Veterans receive preference points in state government hiring. Disabled veterans receive additional preference.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Alaska state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Alaska Division of Personnel and Labor Relations",
+    "official_link": "https://veterans.alaska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.alaska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AK",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ak-hunting-fishing",
+    "state": "AK",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Alaska resident veterans with 50% or greater service-connected disability.",
+    "eligibility": "Must be an Alaska resident with 50% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Alaska Department of Fish and Game",
+    "official_link": "https://veterans.alaska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.alaska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AK",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ak-land-discount",
+    "state": "AK",
+    "benefit_name": "Veteran Land Purchase Discount",
+    "category": "housing",
+    "summary": "Alaska offers discounted state land purchases to eligible veterans through periodic land sales.",
+    "eligibility": "Must be an Alaska resident veteran with honorable discharge.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Alaska Department of Natural Resources",
+    "official_link": "https://veterans.alaska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.alaska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AK",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ak-state-parks",
+    "state": "AK",
+    "benefit_name": "Free State Park Access",
+    "category": "recreation",
+    "summary": "Free camping and day-use passes at Alaska State Parks for disabled veterans.",
+    "eligibility": "Must be an Alaska resident with a VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Alaska Department of Natural Resources",
+    "official_link": "https://veterans.alaska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.alaska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AK",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "al-education-dependents",
+    "state": "AL",
+    "benefit_name": "G.I. Dependents Scholarship Program",
+    "category": "education",
+    "summary": "Provides free tuition, fees, and book allowance at Alabama state-supported colleges for dependents of disabled veterans, POWs, or those killed in action.",
+    "eligibility": "Must be a dependent child or spouse of an Alabama veteran who is 100% disabled, was a POW, or was killed in action.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Alabama Department of Veterans Affairs",
+    "official_link": "https://va.alabama.gov/",
+    "application_link": null,
+    "source_url": "https://va.alabama.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AL",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "al-employment-pref",
+    "state": "AL",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Veterans receive 5-10 preference points on state civil service examinations for Alabama state government positions.",
+    "eligibility": "Must be a veteran of the U.S. Armed Forces with an honorable discharge seeking Alabama state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Alabama State Personnel Department",
+    "official_link": "https://va.alabama.gov/",
+    "application_link": null,
+    "source_url": "https://va.alabama.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AL",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "al-hunting-fishing",
+    "state": "AL",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing license for Alabama resident veterans with 100% permanent and total disability.",
+    "eligibility": "Must be an Alabama resident with 100% P&T VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Alabama Department of Conservation and Natural Resources",
+    "official_link": "https://va.alabama.gov/",
+    "application_link": null,
+    "source_url": "https://va.alabama.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "al-property-tax",
+    "state": "AL",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Veterans with 100% permanent and total service-connected disability are exempt from all state, county, and municipal property taxes on their primary residence.",
+    "eligibility": "Must be an Alabama resident with 100% permanent and total VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Alabama Department of Revenue",
+    "official_link": "https://va.alabama.gov/",
+    "application_link": null,
+    "source_url": "https://va.alabama.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "al-vehicle-tag",
+    "state": "AL",
+    "benefit_name": "Disabled Veteran License Plate",
+    "category": "vehicle",
+    "summary": "Free special license plate for service-connected disabled veterans providing recognition and parking benefits.",
+    "eligibility": "Must be an Alabama resident with a VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Alabama Department of Revenue",
+    "official_link": "https://va.alabama.gov/",
+    "application_link": null,
+    "source_url": "https://va.alabama.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ar-education-dependents",
+    "state": "AR",
+    "benefit_name": "Military Dependents Scholarship",
+    "category": "education",
+    "summary": "Tuition waivers at Arkansas state-supported colleges for dependents of veterans killed in action, MIA, POW, or 100% disabled.",
+    "eligibility": "Must be a dependent of an Arkansas veteran who was killed in action, declared MIA/POW, or is 100% disabled.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Arkansas Department of Higher Education",
+    "official_link": "https://www.veterans.arkansas.gov/",
+    "application_link": null,
+    "source_url": "https://www.veterans.arkansas.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AR",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "ar-employment-pref",
+    "state": "AR",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive preference in Arkansas state government hiring. Disabled veterans receive enhanced preference.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Arkansas state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Arkansas Division of Workforce Services",
+    "official_link": "https://www.veterans.arkansas.gov/",
+    "application_link": null,
+    "source_url": "https://www.veterans.arkansas.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AR",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ar-income-tax",
+    "state": "AR",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is fully exempt from Arkansas state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Arkansas state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Arkansas Department of Finance and Administration",
+    "official_link": "https://www.veterans.arkansas.gov/",
+    "application_link": null,
+    "source_url": "https://www.veterans.arkansas.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AR",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ar-property-tax",
+    "state": "AR",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "100% disabled veterans are exempt from property taxes on their homestead. Surviving spouses may also qualify.",
+    "eligibility": "Must be an Arkansas resident with 100% permanent and total VA-rated disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Arkansas Assessment Coordination Department",
+    "official_link": "https://www.veterans.arkansas.gov/",
+    "application_link": null,
+    "source_url": "https://www.veterans.arkansas.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AR",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ar-vehicle-tag",
+    "state": "AR",
+    "benefit_name": "Disabled Veteran License Plate",
+    "category": "vehicle",
+    "summary": "Free special license plate for disabled veterans with registration fee waiver.",
+    "eligibility": "Must be an Arkansas resident with a VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Arkansas Department of Finance and Administration",
+    "official_link": "https://www.veterans.arkansas.gov/",
+    "application_link": null,
+    "source_url": "https://www.veterans.arkansas.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "AR",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "co-education",
+    "state": "CO",
+    "benefit_name": "Tuition Assistance for Colorado National Guard",
+    "category": "education",
+    "summary": "100% tuition waiver at Colorado state colleges and universities for active Colorado National Guard members.",
+    "eligibility": "Must be an active member of the Colorado Army or Air National Guard enrolled at a state institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Colorado Department of Military and Veterans Affairs",
+    "official_link": "https://vets.colorado.gov/",
+    "application_link": null,
+    "source_url": "https://vets.colorado.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CO",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "co-hunting-fishing",
+    "state": "CO",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free lifetime combination small game hunting and fishing license for veterans with 60% or greater disability.",
+    "eligibility": "Must be a Colorado resident with 60% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "60%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Colorado Parks and Wildlife",
+    "official_link": "https://vets.colorado.gov/",
+    "application_link": null,
+    "source_url": "https://vets.colorado.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CO",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "co-property-tax",
+    "state": "CO",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "50% property tax exemption on the first $200,000 of actual value for veterans with 100% permanent disability or individual unemployability rating.",
+    "eligibility": "Must be a Colorado resident with 100% permanent VA disability rating or TDIU and own property in Colorado.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% or TDIU",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Colorado Division of Property Taxation",
+    "official_link": "https://vets.colorado.gov/",
+    "application_link": null,
+    "source_url": "https://vets.colorado.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CO",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "co-state-parks",
+    "state": "CO",
+    "benefit_name": "Disabled Veteran State Parks Pass",
+    "category": "recreation",
+    "summary": "Free Columbine Annual State Parks Pass for disabled veterans, providing unlimited day-use access to all state parks.",
+    "eligibility": "Must be a Colorado resident with 60% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "60%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Colorado Parks and Wildlife",
+    "official_link": "https://vets.colorado.gov/",
+    "application_link": null,
+    "source_url": "https://vets.colorado.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CO",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "co-vehicle-tag",
+    "state": "CO",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran and disabled veteran license plates available. Disabled veteran plates exempt from registration fees.",
+    "eligibility": "Must be a Colorado resident veteran. Disabled veteran plates require VA-rated disability.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Colorado Division of Motor Vehicles",
+    "official_link": "https://vets.colorado.gov/",
+    "application_link": null,
+    "source_url": "https://vets.colorado.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CO",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ct-education",
+    "state": "CT",
+    "benefit_name": "Tuition Waiver for Veterans",
+    "category": "education",
+    "summary": "Free tuition at Connecticut state colleges and universities for qualifying veterans.",
+    "eligibility": "Must be a Connecticut resident veteran attending a state public institution of higher education.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Connecticut Board of Regents for Higher Education",
+    "official_link": "https://portal.ct.gov/dva",
+    "application_link": null,
+    "source_url": "https://portal.ct.gov/dva",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ct-employment-pref",
+    "state": "CT",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive 5 preference points on state examinations. Disabled veterans receive 10 points.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Connecticut state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Connecticut Department of Administrative Services",
+    "official_link": "https://portal.ct.gov/dva",
+    "application_link": null,
+    "source_url": "https://portal.ct.gov/dva",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ct-housing",
+    "state": "CT",
+    "benefit_name": "Veterans Residential Services",
+    "category": "housing",
+    "summary": "Residential services and temporary housing for veterans at the state veterans home campus in Rocky Hill.",
+    "eligibility": "Must be a Connecticut resident veteran in need of temporary housing or residential services.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Connecticut Department of Veterans Affairs",
+    "official_link": "https://portal.ct.gov/dva",
+    "application_link": null,
+    "source_url": "https://portal.ct.gov/dva",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ct-income-tax",
+    "state": "CT",
+    "benefit_name": "Military Retirement Pay Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is fully exempt from Connecticut state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Connecticut state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Connecticut Department of Revenue Services",
+    "official_link": "https://portal.ct.gov/dva",
+    "application_link": null,
+    "source_url": "https://portal.ct.gov/dva",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ct-property-tax",
+    "state": "CT",
+    "benefit_name": "Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Veterans receive a $1,500 property tax exemption. Totally disabled veterans receive full property tax exemption on their primary residence.",
+    "eligibility": "Must be a Connecticut resident veteran with honorable discharge. Higher exemptions for disabled veterans.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Connecticut Office of Policy and Management",
+    "official_link": "https://portal.ct.gov/dva",
+    "application_link": null,
+    "source_url": "https://portal.ct.gov/dva",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "CT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "dc-education",
+    "state": "DC",
+    "benefit_name": "DC Tuition Assistance Grant",
+    "category": "education",
+    "summary": "Tuition assistance for DC residents attending eligible colleges nationwide, available to veteran residents.",
+    "eligibility": "Must be a DC resident enrolled at an eligible institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "DC Office of the State Superintendent of Education",
+    "official_link": "https://ovs.dc.gov/",
+    "application_link": null,
+    "source_url": "https://ovs.dc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DC",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "dc-employment-pref",
+    "state": "DC",
+    "benefit_name": "Veterans Preference in DC Employment",
+    "category": "employment",
+    "summary": "Veterans receive 5 points preference on DC government civil service examinations. Disabled veterans receive 10.",
+    "eligibility": "Must be a veteran seeking DC government employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "DC Department of Human Resources",
+    "official_link": "https://ovs.dc.gov/",
+    "application_link": null,
+    "source_url": "https://ovs.dc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DC",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "dc-income-tax",
+    "state": "DC",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from DC income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing DC income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "DC Office of Tax and Revenue",
+    "official_link": "https://ovs.dc.gov/",
+    "application_link": null,
+    "source_url": "https://ovs.dc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DC",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "dc-property-tax",
+    "state": "DC",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for DC resident veterans with service-connected disability.",
+    "eligibility": "Must be a DC resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "DC Office of Tax and Revenue",
+    "official_link": "https://ovs.dc.gov/",
+    "application_link": null,
+    "source_url": "https://ovs.dc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DC",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "dc-vehicle-tag",
+    "state": "DC",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Veteran and disabled veteran plates. Free plates for Purple Heart recipients.",
+    "eligibility": "Must be a DC resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "DC Department of Motor Vehicles",
+    "official_link": "https://ovs.dc.gov/",
+    "application_link": null,
+    "source_url": "https://ovs.dc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DC",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "de-education-dependents",
+    "state": "DE",
+    "benefit_name": "Dependents Education Benefits",
+    "category": "education",
+    "summary": "Free college tuition at Delaware state institutions for children of service members killed in action or who died from service-connected causes.",
+    "eligibility": "Must be a dependent child of a Delaware service member killed in action or deceased from service-connected disability.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Delaware Department of Education",
+    "official_link": "https://vets.delaware.gov/",
+    "application_link": null,
+    "source_url": "https://vets.delaware.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DE",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "de-hunting-fishing",
+    "state": "DE",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "No-fee hunting, trapping, and fishing licenses for veterans with 60% or greater service-connected disability.",
+    "eligibility": "Must be a Delaware resident with 60% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "60%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Delaware Division of Fish and Wildlife",
+    "official_link": "https://vets.delaware.gov/",
+    "application_link": null,
+    "source_url": "https://vets.delaware.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DE",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "de-property-tax",
+    "state": "DE",
+    "benefit_name": "Disabled Veteran Property Tax Credit",
+    "category": "property_tax",
+    "summary": "100% school property tax credit on primary residence for veterans with 100% permanent disability.",
+    "eligibility": "Must be a Delaware resident with 100% permanent VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Delaware Division of Revenue",
+    "official_link": "https://vets.delaware.gov/",
+    "application_link": null,
+    "source_url": "https://vets.delaware.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DE",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "de-state-parks",
+    "state": "DE",
+    "benefit_name": "Veteran State Park Discount",
+    "category": "recreation",
+    "summary": "50% discount on annual park entrance fees at Delaware State Parks for all veterans.",
+    "eligibility": "Must be a Delaware resident veteran with valid military ID or DD-214.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Delaware Division of Parks and Recreation",
+    "official_link": "https://vets.delaware.gov/",
+    "application_link": null,
+    "source_url": "https://vets.delaware.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DE",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "de-vehicle-tag",
+    "state": "DE",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran and disabled veteran license plates available. Multiple military service designations offered.",
+    "eligibility": "Must be a Delaware resident veteran with DD-214 or VA documentation.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Delaware Division of Motor Vehicles",
+    "official_link": "https://vets.delaware.gov/",
+    "application_link": null,
+    "source_url": "https://vets.delaware.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "DE",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "hi-education",
+    "state": "HI",
+    "benefit_name": "Resident Tuition for Veterans",
+    "category": "education",
+    "summary": "All veterans qualify for resident tuition rates at University of Hawaii system institutions regardless of prior residency.",
+    "eligibility": "Must be a veteran enrolled at a University of Hawaii institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "University of Hawaii System",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": "https://dod.hawaii.gov/ovs/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "hi-employment-pref",
+    "state": "HI",
+    "benefit_name": "Veterans Employment Preference",
+    "category": "employment",
+    "summary": "Veterans receive 5-10 preference points on state civil service examinations for Hawaii state government positions.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Hawaii state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Hawaii Department of Human Resources Development",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": "https://dod.hawaii.gov/ovs/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "hi-income-tax",
+    "state": "HI",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay and Survivor Benefit Plan payments are fully exempt from Hawaii state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Hawaii state income tax returns.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Hawaii Department of Taxation",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": "https://dod.hawaii.gov/ovs/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "hi-property-tax",
+    "state": "HI",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Totally disabled veterans are fully exempt from property taxes on their primary residence in Hawaii.",
+    "eligibility": "Must be a Hawaii resident with total and permanent VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Hawaii County Real Property Tax Offices",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": "https://dod.hawaii.gov/ovs/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "hi-vehicle-tax",
+    "state": "HI",
+    "benefit_name": "Disabled Veteran Vehicle Tax Exemption",
+    "category": "vehicle",
+    "summary": "Specially adapted vehicles owned by disabled veterans are exempt from motor vehicle weight tax.",
+    "eligibility": "Must be a Hawaii resident with a specially adapted vehicle provided through VA assistance.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Department of Motor Vehicles",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": "https://dod.hawaii.gov/ovs/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ia-education",
+    "state": "IA",
+    "benefit_name": "War Orphan Education Assistance",
+    "category": "education",
+    "summary": "Tuition assistance for children of Iowa veterans who died in service or from service-connected causes.",
+    "eligibility": "Must be a child of an Iowa veteran killed in action or deceased from service-connected disability.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Iowa College Student Aid Commission",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": "https://dva.iowa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "ia-employment",
+    "state": "IA",
+    "benefit_name": "Home Base Iowa Veterans Hiring",
+    "category": "employment",
+    "summary": "Connects veterans with Iowa employers committed to hiring veterans. Priority service at IowaWORKS offices.",
+    "eligibility": "Must be a veteran seeking employment in Iowa.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Workforce Development",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": "https://dva.iowa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ia-hunting-fishing",
+    "state": "IA",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Reduced-cost lifetime combination hunting and fishing license for disabled veterans.",
+    "eligibility": "Must be an Iowa resident with a VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Department of Natural Resources",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": "https://dva.iowa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ia-income-tax",
+    "state": "IA",
+    "benefit_name": "Military Retirement Pay Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay and military pensions are exempt from Iowa state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Iowa state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Iowa Department of Revenue",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": "https://dva.iowa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ia-property-tax",
+    "state": "IA",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "$4,000 assessed value reduction for veterans. 100% disabled veterans receive full property tax exemption on homestead.",
+    "eligibility": "Must be an Iowa resident veteran. Full exemption requires 100% VA-rated disability.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Iowa Department of Revenue",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": "https://dva.iowa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "id-education",
+    "state": "ID",
+    "benefit_name": "National Guard Education Assistance",
+    "category": "education",
+    "summary": "Tuition assistance for active Idaho National Guard members at state institutions.",
+    "eligibility": "Must be an active member of the Idaho Army or Air National Guard.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Military Division",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.idaho.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "id-employment-pref",
+    "state": "ID",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive preference in Idaho state government hiring. Disabled veterans receive additional preference.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Idaho state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Idaho Division of Human Resources",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.idaho.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "id-hunting-fishing",
+    "state": "ID",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Reduced-fee hunting and fishing licenses for Idaho veterans with 40% or greater service-connected disability.",
+    "eligibility": "Must be an Idaho resident with 40% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "40%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Fish and Game",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.idaho.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "id-property-tax",
+    "state": "ID",
+    "benefit_name": "Circuit Breaker Property Tax Reduction",
+    "category": "property_tax",
+    "summary": "Property tax reduction program for qualifying veterans and surviving spouses based on income and home value.",
+    "eligibility": "Must be an Idaho resident veteran or surviving spouse meeting income requirements.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Idaho State Tax Commission",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.idaho.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "id-state-parks",
+    "state": "ID",
+    "benefit_name": "Disabled Veteran State Parks Pass",
+    "category": "recreation",
+    "summary": "Free lifetime day-use and camping pass at all Idaho State Parks for disabled veterans.",
+    "eligibility": "Must be an Idaho resident with a VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Parks and Recreation",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.idaho.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "il-education",
+    "state": "IL",
+    "benefit_name": "Illinois Veteran Grant (IVG)",
+    "category": "education",
+    "summary": "Pays tuition and certain fees at Illinois state-supported colleges and universities for eligible veterans.",
+    "eligibility": "Must be an Illinois resident veteran with at least one year of federal active duty service and honorable discharge.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Student Assistance Commission",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.illinois.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "il-employment-pref",
+    "state": "IL",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive preference points on state examinations. Wartime veterans and disabled veterans receive additional preference.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Illinois state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Illinois Department of Central Management Services",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.illinois.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "il-income-tax",
+    "state": "IL",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from Illinois state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Illinois state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Illinois Department of Revenue",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.illinois.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "il-property-tax",
+    "state": "IL",
+    "benefit_name": "Disabled Veterans Standard Homestead Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption ranging from $2,500 to full exemption based on disability rating. 70%+ disability receives full exemption up to $250,000 EAV.",
+    "eligibility": "Must be an Illinois resident veteran with a VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "30%+",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Illinois Department of Revenue",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.illinois.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "il-vehicle-tag",
+    "state": "IL",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Multiple veteran and military license plate options available. Disabled veteran plates may include registration fee waivers.",
+    "eligibility": "Must be an Illinois resident veteran with DD-214 or VA documentation.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Secretary of State",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.illinois.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "in-education-dependents",
+    "state": "IN",
+    "benefit_name": "Children of Disabled Veterans Tuition Exemption",
+    "category": "education",
+    "summary": "100% tuition exemption at Indiana state institutions for children of disabled veterans or those killed in action.",
+    "eligibility": "Must be a dependent child of an Indiana veteran who is disabled or was killed in action.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Indiana Commission for Higher Education",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": "https://www.in.gov/dva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "in-employment-pref",
+    "state": "IN",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive preference in Indiana state government hiring decisions.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Indiana state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Indiana State Personnel Department",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": "https://www.in.gov/dva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "in-hunting-fishing",
+    "state": "IN",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Reduced-fee hunting and fishing licenses for Indiana resident disabled veterans.",
+    "eligibility": "Must be an Indiana resident with a VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Natural Resources",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": "https://www.in.gov/dva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "in-property-tax",
+    "state": "IN",
+    "benefit_name": "Disabled Veteran Property Tax Deduction",
+    "category": "property_tax",
+    "summary": "Property tax deduction of $24,960 for disabled veterans and $14,000 for other veterans on their homestead.",
+    "eligibility": "Must be an Indiana resident veteran. Higher deduction requires VA-rated service-connected disability.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Indiana Department of Local Government Finance",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": "https://www.in.gov/dva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "in-vehicle-tag",
+    "state": "IN",
+    "benefit_name": "Disabled Hoosier Veteran License Plate",
+    "category": "vehicle",
+    "summary": "Free special license plate for disabled veterans with parking privileges. Multiple veteran plate options available.",
+    "eligibility": "Must be an Indiana resident with a VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Bureau of Motor Vehicles",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": "https://www.in.gov/dva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ks-education",
+    "state": "KS",
+    "benefit_name": "Kansas National Guard Educational Assistance",
+    "category": "education",
+    "summary": "Tuition assistance for active Kansas National Guard members at state institutions.",
+    "eligibility": "Must be an active member of the Kansas Army or Air National Guard.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Adjutant General's Department",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": "https://kcva.ks.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ks-hunting-fishing",
+    "state": "KS",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Kansas resident veterans with total disability.",
+    "eligibility": "Must be a Kansas resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Wildlife and Parks",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": "https://kcva.ks.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ks-income-tax",
+    "state": "KS",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from Kansas state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Kansas state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Kansas Department of Revenue",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": "https://kcva.ks.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ks-property-tax",
+    "state": "KS",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption on homestead for veterans with 100% permanent and total disability.",
+    "eligibility": "Must be a Kansas resident with 100% P&T VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Kansas Department of Revenue",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": "https://kcva.ks.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ks-vehicle-tag",
+    "state": "KS",
+    "benefit_name": "Disabled Veteran License Plate",
+    "category": "vehicle",
+    "summary": "Free distinctive license plate for disabled veterans with registration fee exemption.",
+    "eligibility": "Must be a Kansas resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Division of Vehicles",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": "https://kcva.ks.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "la-education",
+    "state": "LA",
+    "benefit_name": "Veterans and Dependents Education Benefits",
+    "category": "education",
+    "summary": "Free tuition at Louisiana state colleges for children and surviving spouses of veterans killed or 90%+ disabled.",
+    "eligibility": "Must be a dependent of a Louisiana veteran who was killed, MIA, or 90%+ disabled.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Louisiana Board of Regents",
+    "official_link": "https://www.vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": "https://www.vetaffairs.la.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "la-hunting-fishing",
+    "state": "LA",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free basic hunting and fishing license for Louisiana resident disabled veterans.",
+    "eligibility": "Must be a Louisiana resident with 50% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Wildlife and Fisheries",
+    "official_link": "https://www.vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": "https://www.vetaffairs.la.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "la-income-tax",
+    "state": "LA",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from Louisiana state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Louisiana state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Louisiana Department of Revenue",
+    "official_link": "https://www.vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": "https://www.vetaffairs.la.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "la-property-tax",
+    "state": "LA",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Veterans with 100% disability receive full homestead property tax exemption. Partial exemptions for lower ratings.",
+    "eligibility": "Must be a Louisiana resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Louisiana Tax Commission",
+    "official_link": "https://www.vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": "https://www.vetaffairs.la.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "la-vehicle-tag",
+    "state": "LA",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran and disabled veteran plates. Disabled veterans may qualify for registration fee exemptions.",
+    "eligibility": "Must be a Louisiana resident veteran with DD-214 or VA documentation.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Office of Motor Vehicles",
+    "official_link": "https://www.vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": "https://www.vetaffairs.la.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ma-education",
+    "state": "MA",
+    "benefit_name": "Veterans Education Benefits",
+    "category": "education",
+    "summary": "Tuition waivers at Massachusetts state colleges and universities for eligible veterans.",
+    "eligibility": "Must be a Massachusetts resident veteran enrolled at a state institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Higher Education",
+    "official_link": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "application_link": null,
+    "source_url": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ma-employment-pref",
+    "state": "MA",
+    "benefit_name": "Veterans Preference in Civil Service",
+    "category": "employment",
+    "summary": "Veterans receive preference in Massachusetts civil service hiring. Disabled veterans receive absolute preference.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Massachusetts state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Massachusetts Human Resources Division",
+    "official_link": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "application_link": null,
+    "source_url": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ma-income-tax",
+    "state": "MA",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from Massachusetts state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Massachusetts state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Massachusetts Department of Revenue",
+    "official_link": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "application_link": null,
+    "source_url": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ma-property-tax",
+    "state": "MA",
+    "benefit_name": "Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemptions ranging from $400 to full exemption based on disability rating and service era.",
+    "eligibility": "Must be a Massachusetts resident veteran. Amount varies by disability level.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Massachusetts Department of Revenue",
+    "official_link": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "application_link": null,
+    "source_url": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ma-vehicle-excise",
+    "state": "MA",
+    "benefit_name": "Disabled Veteran Motor Vehicle Excise Tax Exemption",
+    "category": "vehicle",
+    "summary": "Full excise tax exemption on one motor vehicle for disabled veterans with VA-rated disability.",
+    "eligibility": "Must be a Massachusetts resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Registry of Motor Vehicles",
+    "official_link": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "application_link": null,
+    "source_url": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "md-education",
+    "state": "MD",
+    "benefit_name": "Veterans of the Afghanistan and Iraq Conflicts Scholarship",
+    "category": "education",
+    "summary": "Tuition assistance for Maryland veterans who served in Afghanistan or Iraq conflicts and their dependents.",
+    "eligibility": "Must be a Maryland resident veteran who served in Afghanistan/Iraq or their dependent.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maryland Higher Education Commission",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.maryland.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "md-employment-pref",
+    "state": "MD",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive preference in Maryland state government hiring. Disabled veterans receive additional preference.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Maryland state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maryland Department of Budget and Management",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.maryland.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "md-hunting-fishing",
+    "state": "MD",
+    "benefit_name": "Disabled Veteran Hunting License",
+    "category": "recreation",
+    "summary": "Free hunting license for Maryland resident veterans with 100% service-connected disability.",
+    "eligibility": "Must be a Maryland resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Natural Resources",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.maryland.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "md-income-tax",
+    "state": "MD",
+    "benefit_name": "Military Retirement Income Tax Subtraction",
+    "category": "income_tax",
+    "summary": "Up to $5,000 subtraction modification for military retirement income. First $15,000 exempt if over age 55.",
+    "eligibility": "Must be receiving military retirement pay and filing Maryland state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maryland Comptroller",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.maryland.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "md-property-tax",
+    "state": "MD",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for 100% permanently disabled veterans on their principal residence.",
+    "eligibility": "Must be a Maryland resident with 100% permanent VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maryland Department of Assessments and Taxation",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.maryland.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "me-education",
+    "state": "ME",
+    "benefit_name": "Veterans Dependents Educational Benefits",
+    "category": "education",
+    "summary": "Free tuition at Maine state institutions for dependents of veterans who are 100% disabled or died in service.",
+    "eligibility": "Must be a dependent of a Maine veteran who is 100% disabled, deceased, or MIA/POW.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maine Department of Education",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.maine.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "me-hunting-fishing",
+    "state": "ME",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Maine resident veterans with 70%+ disability. Reduced fees for others.",
+    "eligibility": "Must be a Maine resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "70%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Inland Fisheries and Wildlife",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.maine.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "me-income-tax",
+    "state": "ME",
+    "benefit_name": "Military Pension Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pension income is exempt from Maine state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Maine state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maine Revenue Services",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.maine.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "me-property-tax",
+    "state": "ME",
+    "benefit_name": "Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "$6,000 property tax exemption for veterans. Paraplegic veterans receive full exemption on specially adapted housing.",
+    "eligibility": "Must be a Maine resident veteran age 62+ or with VA-rated disability.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maine Revenue Services",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.maine.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "me-vehicle-tag",
+    "state": "ME",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Distinctive veteran plates available. Disabled veteran plates with registration fee waivers.",
+    "eligibility": "Must be a Maine resident veteran with DD-214.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Bureau of Motor Vehicles",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.maine.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mi-education",
+    "state": "MI",
+    "benefit_name": "Michigan Tuition Grant for Veterans",
+    "category": "education",
+    "summary": "Tuition-free attendance at state community colleges for eligible Michigan veterans.",
+    "eligibility": "Must be a Michigan resident veteran who served on active duty and received honorable discharge.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Michigan Department of Labor and Economic Opportunity",
+    "official_link": "https://www.michigan.gov/mvaa",
+    "application_link": null,
+    "source_url": "https://www.michigan.gov/mvaa",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mi-employment-pref",
+    "state": "MI",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive 5 points preference on civil service examinations. Disabled veterans receive 10 points.",
+    "eligibility": "Must be a veteran with honorable discharge seeking Michigan state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Michigan Civil Service Commission",
+    "official_link": "https://www.michigan.gov/mvaa",
+    "application_link": null,
+    "source_url": "https://www.michigan.gov/mvaa",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mi-hunting-fishing",
+    "state": "MI",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Michigan resident veterans with 100% service-connected disability.",
+    "eligibility": "Must be a Michigan resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Michigan Department of Natural Resources",
+    "official_link": "https://www.michigan.gov/mvaa",
+    "application_link": null,
+    "source_url": "https://www.michigan.gov/mvaa",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mi-property-tax",
+    "state": "MI",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Full property tax exemption on homestead for 100% disabled veterans. Extends to surviving spouses.",
+    "eligibility": "Must be a Michigan resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Michigan Department of Treasury",
+    "official_link": "https://www.michigan.gov/mvaa",
+    "application_link": null,
+    "source_url": "https://www.michigan.gov/mvaa",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mi-vehicle-tag",
+    "state": "MI",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Distinctive veteran plates for all service branches. Disabled veteran plates with reduced fees.",
+    "eligibility": "Must be a Michigan resident veteran with DD-214.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Michigan Secretary of State",
+    "official_link": "https://www.michigan.gov/mvaa",
+    "application_link": null,
+    "source_url": "https://www.michigan.gov/mvaa",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mn-education",
+    "state": "MN",
+    "benefit_name": "Minnesota GI Bill",
+    "category": "education",
+    "summary": "Up to $10,000 for post-secondary education or on-the-job training for eligible veterans and dependents.",
+    "eligibility": "Must be a Minnesota resident veteran who served after 9/11 or their eligible dependent.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Minnesota Department of Veterans Affairs",
+    "official_link": "https://mn.gov/mdva/",
+    "application_link": null,
+    "source_url": "https://mn.gov/mdva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MN",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mn-hunting-fishing",
+    "state": "MN",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Minnesota resident veterans with 100% permanent disability.",
+    "eligibility": "Must be a Minnesota resident with 100% permanent VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Minnesota Department of Natural Resources",
+    "official_link": "https://mn.gov/mdva/",
+    "application_link": null,
+    "source_url": "https://mn.gov/mdva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mn-income-tax",
+    "state": "MN",
+    "benefit_name": "Military Retirement Pay Tax Subtraction",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from Minnesota state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Minnesota state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Minnesota Department of Revenue",
+    "official_link": "https://mn.gov/mdva/",
+    "application_link": null,
+    "source_url": "https://mn.gov/mdva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MN",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mn-property-tax",
+    "state": "MN",
+    "benefit_name": "Disabled Veteran Property Tax Exclusion",
+    "category": "property_tax",
+    "summary": "Market value exclusion up to $300,000 for veterans with 70%+ disability. Full exclusion for 100% disabled.",
+    "eligibility": "Must be a Minnesota resident with 70% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "70%+",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Minnesota Department of Revenue",
+    "official_link": "https://mn.gov/mdva/",
+    "application_link": null,
+    "source_url": "https://mn.gov/mdva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mn-vehicle-tag",
+    "state": "MN",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran plates including combat wounded, Purple Heart, and service branch plates.",
+    "eligibility": "Must be a Minnesota resident veteran with appropriate documentation.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Minnesota Driver and Vehicle Services",
+    "official_link": "https://mn.gov/mdva/",
+    "application_link": null,
+    "source_url": "https://mn.gov/mdva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MN",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mo-education",
+    "state": "MO",
+    "benefit_name": "Missouri Returning Heroes Education Act",
+    "category": "education",
+    "summary": "Caps tuition at $50 per credit hour at Missouri public colleges for combat veterans.",
+    "eligibility": "Must be a Missouri resident combat veteran who served after 9/11 with honorable discharge.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Missouri Department of Higher Education",
+    "official_link": "https://mvc.dps.mo.gov/",
+    "application_link": null,
+    "source_url": "https://mvc.dps.mo.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MO",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mo-hunting-fishing",
+    "state": "MO",
+    "benefit_name": "Disabled Veteran Hunting and Fishing Permits",
+    "category": "recreation",
+    "summary": "Free hunting and fishing permits for Missouri resident veterans with 60% or greater disability.",
+    "eligibility": "Must be a Missouri resident with 60% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "60%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Missouri Department of Conservation",
+    "official_link": "https://mvc.dps.mo.gov/",
+    "application_link": null,
+    "source_url": "https://mvc.dps.mo.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MO",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mo-income-tax",
+    "state": "MO",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from Missouri state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Missouri state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Missouri Department of Revenue",
+    "official_link": "https://mvc.dps.mo.gov/",
+    "application_link": null,
+    "source_url": "https://mvc.dps.mo.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MO",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mo-property-tax",
+    "state": "MO",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "100% disabled veterans are exempt from real and personal property taxes on their homestead.",
+    "eligibility": "Must be a Missouri resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Missouri State Tax Commission",
+    "official_link": "https://mvc.dps.mo.gov/",
+    "application_link": null,
+    "source_url": "https://mvc.dps.mo.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MO",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mo-vehicle-tag",
+    "state": "MO",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Multiple veteran plate options. Disabled veteran plates include parking privileges.",
+    "eligibility": "Must be a Missouri resident veteran with DD-214.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Missouri Department of Revenue",
+    "official_link": "https://mvc.dps.mo.gov/",
+    "application_link": null,
+    "source_url": "https://mvc.dps.mo.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MO",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ms-education-dependents",
+    "state": "MS",
+    "benefit_name": "Mississippi Veterans and Dependents Education Program",
+    "category": "education",
+    "summary": "Eight semesters of free tuition at Mississippi state institutions for children of 100% disabled or deceased veterans.",
+    "eligibility": "Must be a dependent of a Mississippi veteran who is 100% disabled or deceased from service-connected causes.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Mississippi Board of Trustees of State Institutions of Higher Learning",
+    "official_link": "https://www.msva.ms.gov/",
+    "application_link": null,
+    "source_url": "https://www.msva.ms.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MS",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "ms-hunting-fishing",
+    "state": "MS",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free all-game hunting and fishing license for Mississippi resident veterans with 100% disability.",
+    "eligibility": "Must be a Mississippi resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Mississippi Department of Wildlife, Fisheries, and Parks",
+    "official_link": "https://www.msva.ms.gov/",
+    "application_link": null,
+    "source_url": "https://www.msva.ms.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ms-income-tax",
+    "state": "MS",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is fully exempt from Mississippi state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Mississippi state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Mississippi Department of Revenue",
+    "official_link": "https://www.msva.ms.gov/",
+    "application_link": null,
+    "source_url": "https://www.msva.ms.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MS",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ms-property-tax",
+    "state": "MS",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption on homestead for veterans with 100% service-connected disability.",
+    "eligibility": "Must be a Mississippi resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Mississippi State Tax Commission",
+    "official_link": "https://www.msva.ms.gov/",
+    "application_link": null,
+    "source_url": "https://www.msva.ms.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ms-vehicle-tag",
+    "state": "MS",
+    "benefit_name": "Disabled Veteran License Plate",
+    "category": "vehicle",
+    "summary": "Free license plate and registration for disabled veterans. Multiple veteran plate designs available.",
+    "eligibility": "Must be a Mississippi resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Mississippi Department of Revenue",
+    "official_link": "https://www.msva.ms.gov/",
+    "application_link": null,
+    "source_url": "https://www.msva.ms.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mt-education",
+    "state": "MT",
+    "benefit_name": "Montana University System Fee Waiver",
+    "category": "education",
+    "summary": "Tuition waiver at Montana state universities for eligible wartime veterans and Purple Heart recipients.",
+    "eligibility": "Must be a Montana resident veteran of wartime service or Purple Heart recipient.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Montana University System",
+    "official_link": "https://mvad.mt.gov/",
+    "application_link": null,
+    "source_url": "https://mvad.mt.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mt-hunting-fishing",
+    "state": "MT",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Reduced-fee combination hunting and fishing license for Montana resident disabled veterans.",
+    "eligibility": "Must be a Montana resident with 60% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "60%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Montana Fish, Wildlife and Parks",
+    "official_link": "https://mvad.mt.gov/",
+    "application_link": null,
+    "source_url": "https://mvad.mt.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MT",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mt-income-tax",
+    "state": "MT",
+    "benefit_name": "Military Retirement Income Partial Exemption",
+    "category": "income_tax",
+    "summary": "Partial income tax exemption on military retirement pay for Montana resident veterans.",
+    "eligibility": "Must be receiving military retirement pay and filing Montana state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Montana Department of Revenue",
+    "official_link": "https://mvad.mt.gov/",
+    "application_link": null,
+    "source_url": "https://mvad.mt.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "mt-property-tax",
+    "state": "MT",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption on primary residence for veterans with 100% service-connected disability.",
+    "eligibility": "Must be a Montana resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Montana Department of Revenue",
+    "official_link": "https://mvad.mt.gov/",
+    "application_link": null,
+    "source_url": "https://mvad.mt.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MT",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "mt-vehicle-tag",
+    "state": "MT",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Veteran and Purple Heart plates. Disabled veteran plates with reduced fees.",
+    "eligibility": "Must be a Montana resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Montana Motor Vehicle Division",
+    "official_link": "https://mvad.mt.gov/",
+    "application_link": null,
+    "source_url": "https://mvad.mt.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "MT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nd-education",
+    "state": "ND",
+    "benefit_name": "Veterans Education Assistance",
+    "category": "education",
+    "summary": "Tuition assistance at North Dakota state institutions for eligible veterans and dependents of deceased veterans.",
+    "eligibility": "Must be a North Dakota resident veteran or dependent of deceased veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "North Dakota Department of Veterans Affairs",
+    "official_link": "https://www.nd.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.nd.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ND",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nd-hunting-fishing",
+    "state": "ND",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing license for North Dakota resident veterans with 50% or greater disability.",
+    "eligibility": "Must be a North Dakota resident with 50% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "North Dakota Game and Fish Department",
+    "official_link": "https://www.nd.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.nd.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ND",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "nd-income-tax",
+    "state": "ND",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from North Dakota state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing North Dakota state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "North Dakota Office of State Tax Commissioner",
+    "official_link": "https://www.nd.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.nd.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ND",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nd-property-tax",
+    "state": "ND",
+    "benefit_name": "Disabled Veteran Property Tax Credit",
+    "category": "property_tax",
+    "summary": "Property tax credit for disabled veterans based on disability rating and income.",
+    "eligibility": "Must be a North Dakota resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "North Dakota Office of State Tax Commissioner",
+    "official_link": "https://www.nd.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.nd.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ND",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "nd-vehicle-tag",
+    "state": "ND",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Distinctive veteran and disabled veteran plates. Free plates for 100% disabled veterans.",
+    "eligibility": "Must be a North Dakota resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "North Dakota Department of Transportation",
+    "official_link": "https://www.nd.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.nd.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "ND",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ne-education",
+    "state": "NE",
+    "benefit_name": "Nebraska Veterans Education Benefit",
+    "category": "education",
+    "summary": "Tuition credit at University of Nebraska for veterans and dependents of killed or disabled veterans.",
+    "eligibility": "Must be a Nebraska resident veteran or dependent of deceased/disabled veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "University of Nebraska System",
+    "official_link": "https://veterans.nebraska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nebraska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NE",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ne-hunting-fishing",
+    "state": "NE",
+    "benefit_name": "Disabled Veteran Hunting and Fishing Permit",
+    "category": "recreation",
+    "summary": "Free hunting and fishing permits for Nebraska resident veterans with 100% disability.",
+    "eligibility": "Must be a Nebraska resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Nebraska Game and Parks Commission",
+    "official_link": "https://veterans.nebraska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nebraska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NE",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ne-income-tax",
+    "state": "NE",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is fully exempt from Nebraska state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Nebraska state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Nebraska Department of Revenue",
+    "official_link": "https://veterans.nebraska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nebraska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NE",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ne-property-tax",
+    "state": "NE",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption on homestead for 100% disabled veterans.",
+    "eligibility": "Must be a Nebraska resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Nebraska Department of Revenue",
+    "official_link": "https://veterans.nebraska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nebraska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NE",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ne-vehicle-tag",
+    "state": "NE",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Distinctive veteran and disabled veteran plates. Purple Heart plates available at no extra charge.",
+    "eligibility": "Must be a Nebraska resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Nebraska Department of Motor Vehicles",
+    "official_link": "https://veterans.nebraska.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nebraska.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NE",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nh-education",
+    "state": "NH",
+    "benefit_name": "Veterans Education Scholarship",
+    "category": "education",
+    "summary": "Tuition waiver at New Hampshire state institutions for children of veterans killed or 100% disabled.",
+    "eligibility": "Must be a dependent of a New Hampshire veteran killed or 100% disabled in service.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Hampshire Department of Education",
+    "official_link": "https://www.nh.gov/nhveterans/",
+    "application_link": null,
+    "source_url": "https://www.nh.gov/nhveterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NH",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "nh-hunting-fishing",
+    "state": "NH",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for New Hampshire resident veterans with permanent total disability.",
+    "eligibility": "Must be a New Hampshire resident with permanent total VA-rated disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New Hampshire Fish and Game Department",
+    "official_link": "https://www.nh.gov/nhveterans/",
+    "application_link": null,
+    "source_url": "https://www.nh.gov/nhveterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NH",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "nh-income-tax",
+    "state": "NH",
+    "benefit_name": "No State Income Tax on Earned Income",
+    "category": "income_tax",
+    "summary": "New Hampshire has no tax on earned income or military retirement pay. Only interest and dividends are taxed.",
+    "eligibility": "Applies to all New Hampshire residents.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Hampshire Department of Revenue Administration",
+    "official_link": "https://www.nh.gov/nhveterans/",
+    "application_link": null,
+    "source_url": "https://www.nh.gov/nhveterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NH",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nh-property-tax",
+    "state": "NH",
+    "benefit_name": "Veteran Property Tax Credit",
+    "category": "property_tax",
+    "summary": "Tax credit of $500 for all veterans. $2,000 credit for 100% disabled veterans on primary residence.",
+    "eligibility": "Must be a New Hampshire resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Hampshire Department of Revenue Administration",
+    "official_link": "https://www.nh.gov/nhveterans/",
+    "application_link": null,
+    "source_url": "https://www.nh.gov/nhveterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NH",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nh-vehicle-tag",
+    "state": "NH",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Veteran and disabled veteran plates. Free plates for Purple Heart and disabled veterans.",
+    "eligibility": "Must be a New Hampshire resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New Hampshire Division of Motor Vehicles",
+    "official_link": "https://www.nh.gov/nhveterans/",
+    "application_link": null,
+    "source_url": "https://www.nh.gov/nhveterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NH",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nj-education",
+    "state": "NJ",
+    "benefit_name": "New Jersey Veterans Tuition Credit Program",
+    "category": "education",
+    "summary": "Tuition credit at New Jersey state colleges for eligible veterans. Up to $800 per year.",
+    "eligibility": "Must be a New Jersey resident veteran enrolled at a state institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New Jersey Higher Education Student Assistance Authority",
+    "official_link": "https://www.nj.gov/military/",
+    "application_link": null,
+    "source_url": "https://www.nj.gov/military/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NJ",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nj-employment-pref",
+    "state": "NJ",
+    "benefit_name": "Veterans Preference in Civil Service",
+    "category": "employment",
+    "summary": "Absolute preference in state civil service for disabled veterans. Veterans receive preference points.",
+    "eligibility": "Must be a veteran seeking New Jersey state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Jersey Civil Service Commission",
+    "official_link": "https://www.nj.gov/military/",
+    "application_link": null,
+    "source_url": "https://www.nj.gov/military/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NJ",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nj-income-tax",
+    "state": "NJ",
+    "benefit_name": "Military Retirement Income Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay, disability pay, and survivor benefits are exempt from New Jersey income tax.",
+    "eligibility": "Must be receiving military retirement/disability pay and filing New Jersey income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Jersey Division of Taxation",
+    "official_link": "https://www.nj.gov/military/",
+    "application_link": null,
+    "source_url": "https://www.nj.gov/military/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NJ",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nj-property-tax",
+    "state": "NJ",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Full property tax exemption on principal dwelling for 100% permanently disabled veterans.",
+    "eligibility": "Must be a New Jersey resident with 100% permanent VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Jersey Division of Taxation",
+    "official_link": "https://www.nj.gov/military/",
+    "application_link": null,
+    "source_url": "https://www.nj.gov/military/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NJ",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "nj-vehicle-tag",
+    "state": "NJ",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free plates for disabled veterans, Purple Heart, and POW. Other veteran plates at reduced fees.",
+    "eligibility": "Must be a New Jersey resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New Jersey Motor Vehicle Commission",
+    "official_link": "https://www.nj.gov/military/",
+    "application_link": null,
+    "source_url": "https://www.nj.gov/military/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NJ",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nm-education",
+    "state": "NM",
+    "benefit_name": "Vietnam Veterans Scholarship",
+    "category": "education",
+    "summary": "Full tuition at New Mexico state institutions for Vietnam-era veterans and their children.",
+    "eligibility": "Must be a New Mexico resident who served during the Vietnam era or their dependent.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Mexico Department of Veterans' Services",
+    "official_link": "https://www.nmdvs.org/",
+    "application_link": null,
+    "source_url": "https://www.nmdvs.org/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NM",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nm-hunting-fishing",
+    "state": "NM",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing license for New Mexico resident veterans with 100% disability.",
+    "eligibility": "Must be a New Mexico resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New Mexico Department of Game and Fish",
+    "official_link": "https://www.nmdvs.org/",
+    "application_link": null,
+    "source_url": "https://www.nmdvs.org/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NM",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "nm-income-tax",
+    "state": "NM",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from New Mexico state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing New Mexico state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Mexico Taxation and Revenue Department",
+    "official_link": "https://www.nmdvs.org/",
+    "application_link": null,
+    "source_url": "https://www.nmdvs.org/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NM",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nm-property-tax",
+    "state": "NM",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption up to $4,000 for veterans with any service-connected disability.",
+    "eligibility": "Must be a New Mexico resident with any VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New Mexico Taxation and Revenue Department",
+    "official_link": "https://www.nmdvs.org/",
+    "application_link": null,
+    "source_url": "https://www.nmdvs.org/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NM",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "nm-vehicle-tag",
+    "state": "NM",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran and disabled veteran plates. Disabled veteran plates include parking privileges.",
+    "eligibility": "Must be a New Mexico resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New Mexico Motor Vehicle Division",
+    "official_link": "https://www.nmdvs.org/",
+    "application_link": null,
+    "source_url": "https://www.nmdvs.org/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NM",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nv-education",
+    "state": "NV",
+    "benefit_name": "Nevada National Guard Education Benefit",
+    "category": "education",
+    "summary": "Tuition assistance for active Nevada National Guard members at state colleges.",
+    "eligibility": "Must be an active member of the Nevada National Guard.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Nevada Office of the Military",
+    "official_link": "https://veterans.nv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NV",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nv-hunting-fishing",
+    "state": "NV",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Reduced-fee combination hunting and fishing license for disabled veterans.",
+    "eligibility": "Must be a Nevada resident with 50% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Nevada Department of Wildlife",
+    "official_link": "https://veterans.nv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NV",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "nv-income-tax",
+    "state": "NV",
+    "benefit_name": "No State Income Tax",
+    "category": "income_tax",
+    "summary": "Nevada has no state income tax, so all military retirement pay, VA disability compensation, and military pay is tax-free.",
+    "eligibility": "Applies to all Nevada residents. No action required.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Nevada Department of Taxation",
+    "official_link": "https://veterans.nv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NV",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "nv-property-tax",
+    "state": "NV",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption based on disability rating. 100% disabled veterans receive exemption on assessed value up to $20,000.",
+    "eligibility": "Must be a Nevada resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Nevada Department of Taxation",
+    "official_link": "https://veterans.nv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NV",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "nv-vehicle-tag",
+    "state": "NV",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free special plates for disabled veterans. Multiple veteran plate designs available.",
+    "eligibility": "Must be a Nevada resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Nevada Department of Motor Vehicles",
+    "official_link": "https://veterans.nv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.nv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NV",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ny-education",
+    "state": "NY",
+    "benefit_name": "Veterans Tuition Awards",
+    "category": "education",
+    "summary": "Full tuition award at SUNY and CUNY institutions for eligible New York veterans.",
+    "eligibility": "Must be a New York resident veteran who served during qualifying wartime periods.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New York State Higher Education Services Corporation",
+    "official_link": "https://veterans.ny.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.ny.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NY",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ny-employment-pref",
+    "state": "NY",
+    "benefit_name": "Veterans Preference in Civil Service",
+    "category": "employment",
+    "summary": "Veterans receive additional credits on civil service examinations. Disabled veterans receive additional preference.",
+    "eligibility": "Must be a veteran with honorable discharge seeking New York state or local employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New York Department of Civil Service",
+    "official_link": "https://veterans.ny.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.ny.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NY",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ny-hunting-fishing",
+    "state": "NY",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for New York resident veterans with 40% or greater disability.",
+    "eligibility": "Must be a New York resident with 40% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "40%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New York Department of Environmental Conservation",
+    "official_link": "https://veterans.ny.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.ny.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NY",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ny-property-tax",
+    "state": "NY",
+    "benefit_name": "Veterans Property Tax Exemptions",
+    "category": "property_tax",
+    "summary": "Multiple property tax exemptions for veterans based on service era and disability. Up to full exemption for 100% disabled.",
+    "eligibility": "Must be a New York resident veteran. Amount depends on service era and disability rating.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "New York Department of Taxation and Finance",
+    "official_link": "https://veterans.ny.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.ny.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NY",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ny-vehicle-tag",
+    "state": "NY",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free plates for disabled veterans and Purple Heart recipients. Other veteran plates available.",
+    "eligibility": "Must be a New York resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "New York Department of Motor Vehicles",
+    "official_link": "https://veterans.ny.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.ny.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "NY",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ok-education",
+    "state": "OK",
+    "benefit_name": "Oklahoma Veterans Education Tuition Waiver",
+    "category": "education",
+    "summary": "Tuition waiver at Oklahoma state institutions for dependents of veterans killed or 100% disabled.",
+    "eligibility": "Must be a dependent of an Oklahoma veteran who was killed or is 100% disabled.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Oklahoma State Regents for Higher Education",
+    "official_link": "https://odva.ok.gov/",
+    "application_link": null,
+    "source_url": "https://odva.ok.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OK",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "ok-hunting-fishing",
+    "state": "OK",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free lifetime combination hunting and fishing license for Oklahoma resident disabled veterans.",
+    "eligibility": "Must be an Oklahoma resident with 60% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "60%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Oklahoma Department of Wildlife Conservation",
+    "official_link": "https://odva.ok.gov/",
+    "application_link": null,
+    "source_url": "https://odva.ok.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OK",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ok-income-tax",
+    "state": "OK",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Up to 100% of military retirement pay is exempt from Oklahoma state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Oklahoma state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Oklahoma Tax Commission",
+    "official_link": "https://odva.ok.gov/",
+    "application_link": null,
+    "source_url": "https://odva.ok.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OK",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ok-property-tax",
+    "state": "OK",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Full property tax exemption on homestead for 100% disabled veterans.",
+    "eligibility": "Must be an Oklahoma resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Oklahoma Tax Commission",
+    "official_link": "https://odva.ok.gov/",
+    "application_link": null,
+    "source_url": "https://odva.ok.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OK",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ok-vehicle-tag",
+    "state": "OK",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free plates for disabled veterans and multiple veteran plate options.",
+    "eligibility": "Must be an Oklahoma resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Oklahoma Tax Commission",
+    "official_link": "https://odva.ok.gov/",
+    "application_link": null,
+    "source_url": "https://odva.ok.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OK",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "or-education",
+    "state": "OR",
+    "benefit_name": "Oregon Veterans Education Benefit",
+    "category": "education",
+    "summary": "Reduced tuition at Oregon state universities for veterans through in-state tuition rates.",
+    "eligibility": "Must be a veteran enrolled at an Oregon state institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Oregon Higher Education Coordinating Commission",
+    "official_link": "https://www.oregon.gov/odva/",
+    "application_link": null,
+    "source_url": "https://www.oregon.gov/odva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OR",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "or-hunting-fishing",
+    "state": "OR",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Oregon resident veterans with 25% or greater disability.",
+    "eligibility": "Must be an Oregon resident with 25% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "25%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Oregon Department of Fish and Wildlife",
+    "official_link": "https://www.oregon.gov/odva/",
+    "application_link": null,
+    "source_url": "https://www.oregon.gov/odva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OR",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "or-income-tax",
+    "state": "OR",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from Oregon state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Oregon state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Oregon Department of Revenue",
+    "official_link": "https://www.oregon.gov/odva/",
+    "application_link": null,
+    "source_url": "https://www.oregon.gov/odva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OR",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "or-property-tax",
+    "state": "OR",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption up to $25,927 for veterans with 40% or greater disability.",
+    "eligibility": "Must be an Oregon resident with 40% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "40%+",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Oregon Department of Revenue",
+    "official_link": "https://www.oregon.gov/odva/",
+    "application_link": null,
+    "source_url": "https://www.oregon.gov/odva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OR",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "or-vehicle-tag",
+    "state": "OR",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free veteran registration plates for disabled veterans. Other veteran plates available.",
+    "eligibility": "Must be an Oregon resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Oregon Department of Transportation",
+    "official_link": "https://www.oregon.gov/odva/",
+    "application_link": null,
+    "source_url": "https://www.oregon.gov/odva/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "OR",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "pa-education",
+    "state": "PA",
+    "benefit_name": "Educational Gratuity Program",
+    "category": "education",
+    "summary": "Tuition at Pennsylvania state institutions for children of veterans who died or were 100% disabled from service.",
+    "eligibility": "Must be a dependent of a Pennsylvania veteran deceased or 100% disabled from military service.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Pennsylvania Department of Military and Veterans Affairs",
+    "official_link": "https://www.dmva.pa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dmva.pa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "PA",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "pa-employment-pref",
+    "state": "PA",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive 10 points on civil service examinations. Disabled veterans receive additional consideration.",
+    "eligibility": "Must be a veteran seeking Pennsylvania state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Pennsylvania State Civil Service Commission",
+    "official_link": "https://www.dmva.pa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dmva.pa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "PA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "pa-hunting-fishing",
+    "state": "PA",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Reduced-fee hunting and fishing licenses for Pennsylvania resident disabled veterans.",
+    "eligibility": "Must be a Pennsylvania resident with 60% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "60%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Pennsylvania Game Commission",
+    "official_link": "https://www.dmva.pa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dmva.pa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "PA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "pa-property-tax",
+    "state": "PA",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Full property tax exemption on primary residence for 100% disabled veterans.",
+    "eligibility": "Must be a Pennsylvania resident with 100% VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Pennsylvania Department of Military and Veterans Affairs",
+    "official_link": "https://www.dmva.pa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dmva.pa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "PA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "pa-vehicle-tag",
+    "state": "PA",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free registration for disabled veteran plates. Multiple veteran and military plate options.",
+    "eligibility": "Must be a Pennsylvania resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Pennsylvania Department of Transportation",
+    "official_link": "https://www.dmva.pa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dmva.pa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "PA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ri-education",
+    "state": "RI",
+    "benefit_name": "Veterans Tuition Waiver",
+    "category": "education",
+    "summary": "Tuition waivers at Rhode Island state institutions for eligible veterans.",
+    "eligibility": "Must be a Rhode Island resident veteran enrolled at a state institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Rhode Island Office of Postsecondary Commissioner",
+    "official_link": "https://vets.ri.gov/",
+    "application_link": null,
+    "source_url": "https://vets.ri.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "RI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ri-employment-pref",
+    "state": "RI",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive 5 points preference on civil service exams. Disabled veterans receive 10 points.",
+    "eligibility": "Must be a veteran seeking Rhode Island state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Rhode Island Department of Administration",
+    "official_link": "https://vets.ri.gov/",
+    "application_link": null,
+    "source_url": "https://vets.ri.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "RI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ri-income-tax",
+    "state": "RI",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from Rhode Island state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing Rhode Island income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Rhode Island Division of Taxation",
+    "official_link": "https://vets.ri.gov/",
+    "application_link": null,
+    "source_url": "https://vets.ri.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "RI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ri-property-tax",
+    "state": "RI",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for veterans with qualifying disability ratings. Amount varies by municipality.",
+    "eligibility": "Must be a Rhode Island resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Rhode Island Division of Municipal Finance",
+    "official_link": "https://vets.ri.gov/",
+    "application_link": null,
+    "source_url": "https://vets.ri.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "RI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ri-vehicle-tag",
+    "state": "RI",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free plates for disabled veterans and POW. Other veteran plates available.",
+    "eligibility": "Must be a Rhode Island resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Rhode Island Division of Motor Vehicles",
+    "official_link": "https://vets.ri.gov/",
+    "application_link": null,
+    "source_url": "https://vets.ri.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "RI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "sc-education",
+    "state": "SC",
+    "benefit_name": "Free Tuition for Children of Veterans",
+    "category": "education",
+    "summary": "Free tuition at South Carolina state institutions for children of certain wartime veterans.",
+    "eligibility": "Must be a child of a South Carolina wartime veteran who is deceased, disabled, or was a POW.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "South Carolina Commission on Higher Education",
+    "official_link": "https://va.sc.gov/",
+    "application_link": null,
+    "source_url": "https://va.sc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SC",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "sc-hunting-fishing",
+    "state": "SC",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing license for South Carolina resident veterans with permanent disability.",
+    "eligibility": "Must be a South Carolina resident with permanent VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "South Carolina Department of Natural Resources",
+    "official_link": "https://va.sc.gov/",
+    "application_link": null,
+    "source_url": "https://va.sc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SC",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "sc-income-tax",
+    "state": "SC",
+    "benefit_name": "Military Retirement Income Tax Deduction",
+    "category": "income_tax",
+    "summary": "Military retirement income deduction of up to $17,500. Full deduction at age 65.",
+    "eligibility": "Must be receiving military retirement pay and filing South Carolina income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "South Carolina Department of Revenue",
+    "official_link": "https://va.sc.gov/",
+    "application_link": null,
+    "source_url": "https://va.sc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SC",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "sc-property-tax",
+    "state": "SC",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Full property tax exemption on homestead for permanently and totally disabled veterans.",
+    "eligibility": "Must be a South Carolina resident with permanent and total VA-rated disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "South Carolina Department of Revenue",
+    "official_link": "https://va.sc.gov/",
+    "application_link": null,
+    "source_url": "https://va.sc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SC",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "sc-vehicle-tag",
+    "state": "SC",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free plates for disabled veterans and multiple veteran plate designs. No additional fees for qualifying plates.",
+    "eligibility": "Must be a South Carolina resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "South Carolina Department of Motor Vehicles",
+    "official_link": "https://va.sc.gov/",
+    "application_link": null,
+    "source_url": "https://va.sc.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SC",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "sd-education",
+    "state": "SD",
+    "benefit_name": "Free Tuition for Dependents",
+    "category": "education",
+    "summary": "Free tuition at South Dakota state institutions for dependents of veterans who died in service or were 100% disabled.",
+    "eligibility": "Must be a dependent of a South Dakota veteran deceased or 100% disabled from service.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "South Dakota Board of Regents",
+    "official_link": "https://vetaffairs.sd.gov/",
+    "application_link": null,
+    "source_url": "https://vetaffairs.sd.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SD",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "sd-hunting-fishing",
+    "state": "SD",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Reduced-fee licenses for South Dakota resident disabled veterans.",
+    "eligibility": "Must be a South Dakota resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "South Dakota Game, Fish and Parks",
+    "official_link": "https://vetaffairs.sd.gov/",
+    "application_link": null,
+    "source_url": "https://vetaffairs.sd.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "sd-income-tax",
+    "state": "SD",
+    "benefit_name": "No State Income Tax",
+    "category": "income_tax",
+    "summary": "South Dakota has no state income tax. All military retirement pay and VA benefits are tax-free.",
+    "eligibility": "Applies to all South Dakota residents.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "South Dakota Department of Revenue",
+    "official_link": "https://vetaffairs.sd.gov/",
+    "application_link": null,
+    "source_url": "https://vetaffairs.sd.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SD",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "sd-property-tax",
+    "state": "SD",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Full property tax exemption on homestead for veterans with total and permanent disability. Paraplegic veterans also exempt.",
+    "eligibility": "Must be a South Dakota resident with total and permanent VA-rated disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "South Dakota Department of Revenue",
+    "official_link": "https://vetaffairs.sd.gov/",
+    "application_link": null,
+    "source_url": "https://vetaffairs.sd.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "sd-vehicle-tag",
+    "state": "SD",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free plates for disabled veterans. Multiple veteran plate options available.",
+    "eligibility": "Must be a South Dakota resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "South Dakota Division of Motor Vehicles",
+    "official_link": "https://vetaffairs.sd.gov/",
+    "application_link": null,
+    "source_url": "https://vetaffairs.sd.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "SD",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ut-education",
+    "state": "UT",
+    "benefit_name": "Purple Heart Tuition Waiver",
+    "category": "education",
+    "summary": "Tuition waiver at Utah state institutions for Purple Heart recipients.",
+    "eligibility": "Must be a Utah resident Purple Heart recipient enrolled at a state institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Utah System of Higher Education",
+    "official_link": "https://veterans.utah.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.utah.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "UT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ut-hunting-fishing",
+    "state": "UT",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing license for Utah resident veterans with 50% or greater disability.",
+    "eligibility": "Must be a Utah resident with 50% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Utah Division of Wildlife Resources",
+    "official_link": "https://veterans.utah.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.utah.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "UT",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ut-income-tax",
+    "state": "UT",
+    "benefit_name": "Military Retirement Income Tax Credit",
+    "category": "income_tax",
+    "summary": "Tax credit on military retirement income for Utah resident veterans.",
+    "eligibility": "Must be receiving military retirement pay and filing Utah state income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Utah State Tax Commission",
+    "official_link": "https://veterans.utah.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.utah.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "UT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "ut-property-tax",
+    "state": "UT",
+    "benefit_name": "Disabled Veteran Property Tax Abatement",
+    "category": "property_tax",
+    "summary": "Property tax abatement for veterans with VA-rated disability. Amount based on disability percentage.",
+    "eligibility": "Must be a Utah resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%+",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Utah State Tax Commission",
+    "official_link": "https://veterans.utah.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.utah.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "UT",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ut-vehicle-tag",
+    "state": "UT",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran plates. Disabled veteran plates are free and include parking privileges.",
+    "eligibility": "Must be a Utah resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Utah Division of Motor Vehicles",
+    "official_link": "https://veterans.utah.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.utah.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "UT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "vt-education",
+    "state": "VT",
+    "benefit_name": "Veterans Tuition Assistance",
+    "category": "education",
+    "summary": "Tuition assistance programs for Vermont veterans at state institutions.",
+    "eligibility": "Must be a Vermont resident veteran enrolled at a state institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Vermont Student Assistance Corporation",
+    "official_link": "https://veterans.vermont.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.vermont.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "VT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "vt-employment-pref",
+    "state": "VT",
+    "benefit_name": "Veterans Preference in State Employment",
+    "category": "employment",
+    "summary": "Veterans receive preference in Vermont state government hiring.",
+    "eligibility": "Must be a veteran seeking Vermont state employment.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Vermont Department of Human Resources",
+    "official_link": "https://veterans.vermont.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.vermont.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "VT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "vt-hunting-fishing",
+    "state": "VT",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Vermont resident veterans with permanent total disability.",
+    "eligibility": "Must be a Vermont resident with permanent total VA-rated disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100% P&T",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Vermont Fish and Wildlife Department",
+    "official_link": "https://veterans.vermont.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.vermont.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "VT",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "vt-property-tax",
+    "state": "VT",
+    "benefit_name": "Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption up to $10,000 for veterans. Higher exemption for disabled veterans.",
+    "eligibility": "Must be a Vermont resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Vermont Department of Taxes",
+    "official_link": "https://veterans.vermont.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.vermont.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "VT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "vt-vehicle-tag",
+    "state": "VT",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Free veteran plates for eligible veterans. Disabled veteran plates with reduced fees.",
+    "eligibility": "Must be a Vermont resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Vermont Department of Motor Vehicles",
+    "official_link": "https://veterans.vermont.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.vermont.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "VT",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wa-education",
+    "state": "WA",
+    "benefit_name": "Veterans Education Assistance",
+    "category": "education",
+    "summary": "Resident tuition rates at Washington state institutions for all veterans regardless of domicile.",
+    "eligibility": "Must be a veteran enrolled at a Washington state institution.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Washington Student Achievement Council",
+    "official_link": "https://www.dva.wa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dva.wa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wa-hunting-fishing",
+    "state": "WA",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Washington resident veterans with 30% or greater disability.",
+    "eligibility": "Must be a Washington resident with 30% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "30%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Washington Department of Fish and Wildlife",
+    "official_link": "https://www.dva.wa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dva.wa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "wa-property-tax",
+    "state": "WA",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption on primary residence for veterans with 80% or greater service-connected disability based on income.",
+    "eligibility": "Must be a Washington resident with 80% or greater VA-rated disability and meet income limits.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "80%+",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Washington Department of Revenue",
+    "official_link": "https://www.dva.wa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dva.wa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "wa-state-parks",
+    "state": "WA",
+    "benefit_name": "Disabled Veteran State Parks Pass",
+    "category": "recreation",
+    "summary": "Free Discover Pass for day-use access to all Washington State Parks for disabled veterans.",
+    "eligibility": "Must be a Washington resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Washington State Parks",
+    "official_link": "https://www.dva.wa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dva.wa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "wa-vehicle-tag",
+    "state": "WA",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Multiple veteran and military plate options. Disabled veteran plates are free.",
+    "eligibility": "Must be a Washington resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Washington Department of Licensing",
+    "official_link": "https://www.dva.wa.gov/",
+    "application_link": null,
+    "source_url": "https://www.dva.wa.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WA",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wi-education",
+    "state": "WI",
+    "benefit_name": "Wisconsin GI Bill",
+    "category": "education",
+    "summary": "Full tuition remission at UW System and Wisconsin Technical College for eligible veterans and dependents.",
+    "eligibility": "Must be a Wisconsin resident veteran with qualifying service or their dependent.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Wisconsin Department of Veterans Affairs",
+    "official_link": "https://dva.wi.gov/",
+    "application_link": null,
+    "source_url": "https://dva.wi.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wi-housing",
+    "state": "WI",
+    "benefit_name": "Veterans Primary Mortgage Loan Program",
+    "category": "housing",
+    "summary": "Low-interest home loans for Wisconsin veterans through the state's mortgage loan program.",
+    "eligibility": "Must be a Wisconsin resident veteran purchasing a primary residence.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Wisconsin Department of Veterans Affairs",
+    "official_link": "https://dva.wi.gov/",
+    "application_link": null,
+    "source_url": "https://dva.wi.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wi-hunting-fishing",
+    "state": "WI",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing licenses for Wisconsin resident veterans with 70% or greater disability.",
+    "eligibility": "Must be a Wisconsin resident with 70% or greater VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "70%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Wisconsin Department of Natural Resources",
+    "official_link": "https://dva.wi.gov/",
+    "application_link": null,
+    "source_url": "https://dva.wi.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "wi-property-tax",
+    "state": "WI",
+    "benefit_name": "Veterans and Surviving Spouses Property Tax Credit",
+    "category": "property_tax",
+    "summary": "Property tax credit for veterans based on service and disability. Full credit for 100% disabled.",
+    "eligibility": "Must be a Wisconsin resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Wisconsin Department of Revenue",
+    "official_link": "https://dva.wi.gov/",
+    "application_link": null,
+    "source_url": "https://dva.wi.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wi-vehicle-tag",
+    "state": "WI",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Distinctive veteran plates. Free plates for disabled veterans.",
+    "eligibility": "Must be a Wisconsin resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Wisconsin Department of Transportation",
+    "official_link": "https://dva.wi.gov/",
+    "application_link": null,
+    "source_url": "https://dva.wi.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WI",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wv-education",
+    "state": "WV",
+    "benefit_name": "Veterans Education Benefits",
+    "category": "education",
+    "summary": "Free tuition at West Virginia state institutions for dependents of veterans killed or totally disabled.",
+    "eligibility": "Must be a dependent of a West Virginia veteran who was killed or is totally disabled.",
+    "applies_to": [
+      "dependents"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "West Virginia Higher Education Policy Commission",
+    "official_link": "https://veterans.wv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.wv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WV",
+      "issue_type": "state_benefit",
+      "audience": "dependents"
+    }
+  },
+  {
+    "id": "wv-hunting-fishing",
+    "state": "WV",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Free hunting and fishing license for West Virginia resident veterans with 60% or greater disability.",
+    "eligibility": "Must be a West Virginia resident with 60% or greater VA-rated disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "60%+",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "West Virginia Division of Natural Resources",
+    "official_link": "https://veterans.wv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.wv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WV",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "wv-income-tax",
+    "state": "WV",
+    "benefit_name": "Military Retirement Income Tax Exemption",
+    "category": "income_tax",
+    "summary": "Military retirement pay is exempt from West Virginia state income tax.",
+    "eligibility": "Must be receiving military retirement pay and filing West Virginia income tax.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "West Virginia State Tax Department",
+    "official_link": "https://veterans.wv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.wv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WV",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wv-property-tax",
+    "state": "WV",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption on homestead for totally disabled veterans.",
+    "eligibility": "Must be a West Virginia resident with total VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "West Virginia State Tax Department",
+    "official_link": "https://veterans.wv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.wv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WV",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "wv-vehicle-tag",
+    "state": "WV",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Distinctive veteran and disabled veteran plates. Free registration for disabled veterans.",
+    "eligibility": "Must be a West Virginia resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "West Virginia Division of Motor Vehicles",
+    "official_link": "https://veterans.wv.gov/",
+    "application_link": null,
+    "source_url": "https://veterans.wv.gov/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WV",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wy-education",
+    "state": "WY",
+    "benefit_name": "Veterans Education Benefits",
+    "category": "education",
+    "summary": "Resident tuition rates at University of Wyoming for all veterans regardless of prior domicile.",
+    "eligibility": "Must be a veteran enrolled at the University of Wyoming.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "University of Wyoming",
+    "official_link": "https://www.wyomilitary.wyo.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.wyomilitary.wyo.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WY",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wy-hunting-fishing",
+    "state": "WY",
+    "benefit_name": "Disabled Veteran Hunting and Fishing License",
+    "category": "recreation",
+    "summary": "Reduced-fee hunting and fishing licenses for Wyoming resident disabled veterans.",
+    "eligibility": "Must be a Wyoming resident with VA-rated service-connected disability.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": false,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Wyoming Game and Fish Department",
+    "official_link": "https://www.wyomilitary.wyo.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.wyomilitary.wyo.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WY",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "wy-income-tax",
+    "state": "WY",
+    "benefit_name": "No State Income Tax",
+    "category": "income_tax",
+    "summary": "Wyoming has no state income tax. All military retirement pay and VA benefits are tax-free.",
+    "eligibility": "Applies to all Wyoming residents.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Wyoming Department of Revenue",
+    "official_link": "https://www.wyomilitary.wyo.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.wyomilitary.wyo.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WY",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wy-property-tax",
+    "state": "WY",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption up to $3,000 assessed value for veterans. Higher exemption for disabled veterans.",
+    "eligibility": "Must be a Wyoming resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Wyoming Department of Revenue",
+    "official_link": "https://www.wyomilitary.wyo.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.wyomilitary.wyo.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WY",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  },
+  {
+    "id": "wy-vehicle-tag",
+    "state": "WY",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Veteran and disabled veteran plates. Combat veteran and Purple Heart plates available.",
+    "eligibility": "Must be a Wyoming resident veteran.",
+    "applies_to": [
+      "all_veterans"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Wyoming Department of Transportation",
+    "official_link": "https://www.wyomilitary.wyo.gov/veterans/",
+    "application_link": null,
+    "source_url": "https://www.wyomilitary.wyo.gov/veterans/",
+    "last_verified": "2026-03-22",
+    "manual_review": true,
+    "tags": {
+      "state": "WY",
+      "issue_type": "state_benefit",
+      "audience": "all_veterans"
+    }
+  }
+]

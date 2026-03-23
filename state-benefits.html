@@ -172,9 +172,13 @@ function toggleMenu() {
   menu.classList.toggle('active');
 }
 
-fetch('data/state-benefits.json').then(function(response) {
-  return response.json();
-}).then(function(benefitsData) {
+Promise.all([
+  fetch('data/state-benefits.json').then(function(r) { return r.json(); }),
+  fetch('data/state-benefits-batch1.json').then(function(r) { return r.json(); }),
+  fetch('data/state-benefits-batch2.json').then(function(r) { return r.json(); }),
+  fetch('data/state-benefits-batch3.json').then(function(r) { return r.json(); })
+]).then(function(results) {
+  var benefitsData = [].concat(results[0], results[1], results[2], results[3]);
 
   // Category display labels
   var CAT_LABELS = {
@@ -183,7 +187,7 @@ fetch('data/state-benefits.json').then(function(response) {
     vehicle: 'Vehicle / Registration', burial: 'Burial / Cemetery',
     licensing: 'Professional Licensing', business: 'Business / Entrepreneurship',
     long_term_care: 'Long-Term Care', disabled_veteran: 'Disabled Veteran',
-    dependent: 'Spouse / Dependent / Survivor'
+    dependent: 'Spouse / Dependent / Survivor', income_tax: 'Income Tax'
   };
 
   // Render card function for state benefits
@@ -267,6 +271,7 @@ fetch('data/state-benefits.json').then(function(response) {
     { key: 'healthcare', label: 'Healthcare' },
     { key: 'burial', label: 'Burial' },
     { key: 'licensing', label: 'Licensing' },
+    { key: 'income_tax', label: 'Income Tax' },
     { key: 'disabled_veteran', label: 'Disabled Vet' },
     { key: 'dependent', label: 'Spouse/Dependent' }
   ]);
