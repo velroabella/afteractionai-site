@@ -431,6 +431,50 @@
     return { data, error };
   }
 
+  // ── ISSUE TAGS (Smart Matching) ─────────────────────
+  async function saveIssueTags(tags) {
+    if (!currentUser) return { error: 'Not logged in' };
+    // Merge with existing tags — don't overwrite
+    var existing = (currentProfile && currentProfile.issue_tags) ? currentProfile.issue_tags : [];
+    var merged = {};
+    existing.forEach(function(t) { merged[t.issue] = t; });
+    tags.forEach(function(t) {
+      if (merged[t.issue]) {
+        merged[t.issue].count = (merged[t.issue].count || 1) + 1;
+        merged[t.issue].last_seen = new Date().toISOString();
+      } else {
+        merged[t.issue] = {
+          issue: t.issue,
+          category: t.category,
+          count: 1,
+          first_seen: new Date().toISOString(),
+          last_seen: new Date().toISOString()
+        };
+      }
+    });
+    var tagArray = Object.keys(merged).map(function(k) { return merged[k]; });
+    return updateProfile({ issue_tags: tagArray });
+  }
+
+  function getIssueTags() {
+    if (!currentProfile || !currentProfile.issue_tags) return [];
+    return currentProfile.issue_tags;
+  }
+
+  // ── AUTO-CHECKLIST FROM ACTION ENGINE ──────────────
+  async function saveAutoChecklist(reportId, actionChecklist) {
+    if (!currentUser || !actionChecklist || actionChecklist.length === 0) return { data: null };
+    // Load existing to avoid duplicates
+    var existResult = await loadChecklist();
+    var existingTitles = {};
+    if (existResult.data) {
+      existResult.data.forEach(function(item) { existingTitles[item.title] = true; });
+    }
+    var newItems = actionChecklist.filter(function(item) { return !existingTitles[item.title]; });
+    if (newItems.length === 0) return { data: [], message: 'All items already exist' };
+    return saveChecklist(reportId, newItems);
+  }
+
   // ── PUBLIC API ────────────────────────────────────────
   window.AAAI = window.AAAI || {};
   window.AAAI.auth = {
@@ -454,6 +498,9 @@
     loadTemplateOutputs,
     loadReports,
     subscribeNewsletter,
+    saveIssueTags,
+    getIssueTags,
+    saveAutoChecklist,
     supabase // Expose for advanced use
   };
 

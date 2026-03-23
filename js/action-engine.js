@@ -405,6 +405,128 @@
     return TEMPLATE_LABELS[id] || id.replace(/[-_]/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
   }
 
+  // ── TAG PERSISTENCE ──────────────────────────────────
+
+  /**
+   * Save detected issues to user profile (merges with existing)
+   * @param {Array} issues - From detectIssues()
+   * @returns {Promise|null}
+   */
+  function persistTags(issues) {
+    if (!issues || issues.length === 0) return null;
+    if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn()) {
+      return AAAI.auth.saveIssueTags(issues);
+    }
+    return null;
+  }
+
+  /**
+   * Get enriched action plan that combines fresh analysis with saved tags
+   * Prioritizes issues the user has seen multiple times
+   * @param {string} text - Current text to analyze
+   * @param {Object} [userProfile] - User profile with issue_tags
+   * @returns {Object} - Enriched action plan with priority scoring
+   */
+  function getEnrichedPlan(text, userProfile) {
+    var plan = getActionPlan(text, userProfile);
+
+    // If user has saved tags, merge and prioritize
+    var savedTags = [];
+    if (userProfile && userProfile.issue_tags && Array.isArray(userProfile.issue_tags)) {
+      savedTags = userProfile.issue_tags;
+    }
+
+    if (savedTags.length > 0) {
+      var tagMap = {};
+      savedTags.forEach(function(t) { tagMap[t.issue] = t; });
+
+      // Score current issues: higher if they've appeared before
+      plan.issues.forEach(function(iss) {
+        var saved = tagMap[iss.issue];
+        if (saved) {
+          iss.priority = (saved.count || 1) + 1;
+          iss.recurring = true;
+        } else {
+          iss.priority = 1;
+          iss.recurring = false;
+        }
+      });
+
+      // Sort by priority (recurring issues first)
+      plan.issues.sort(function(a, b) { return (b.priority || 1) - (a.priority || 1); });
+
+      // Add any saved issues NOT in current text as secondary recommendations
+      var currentIssueMap = {};
+      plan.issues.forEach(function(iss) { currentIssueMap[iss.issue] = true; });
+
+      savedTags.forEach(function(t) {
+        if (!currentIssueMap[t.issue] && (t.count || 1) >= 2) {
+          plan.issues.push({
+            issue: t.issue,
+            category: t.category,
+            priority: 0,
+            recurring: true,
+            fromHistory: true
+          });
+        }
+      });
+
+      // Regenerate recommendations with enriched issues
+      plan.templates = getTemplateRecommendations(plan.issues);
+      plan.resources = getResourceRecommendations(plan.issues, plan.userState);
+    }
+
+    plan.savedTagCount = savedTags.length;
+    return plan;
+  }
+
+  /**
+   * Auto-save checklist items from action engine to Supabase
+   * @param {string} reportId - Report ID to link to
+   * @param {Array} issues - Detected issues
+   * @returns {Promise|null}
+   */
+  function autoSaveChecklist(reportId, issues) {
+    if (!issues || issues.length === 0) return null;
+    if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn()) {
+      var checklistItems = generateChecklist(issues);
+      if (checklistItems.length > 0) {
+        return AAAI.auth.saveAutoChecklist(reportId, checklistItems);
+      }
+    }
+    return null;
+  }
+
+  /**
+   * Render enriched action panel with priority indicators
+   * @param {Object} actionPlan - From getEnrichedPlan()
+   * @param {Object} [options]
+   * @returns {string} - HTML string
+   */
+  function renderEnrichedPanel(actionPlan, options) {
+    var baseHtml = renderActionPanel(actionPlan, options);
+    if (!baseHtml) return '';
+
+    // Add recurring issue badges
+    var recurringIssues = actionPlan.issues.filter(function(i) { return i.recurring; });
+    if (recurringIssues.length > 0) {
+      var badgeHtml = '<div class="action-panel__section">';
+      badgeHtml += '<h4 class="action-panel__heading">Your Focus Areas</h4>';
+      badgeHtml += '<div class="action-panel__items">';
+      recurringIssues.forEach(function(iss) {
+        var label = formatTemplateLabel(iss.issue);
+        var badge = iss.fromHistory ? ' (from previous sessions)' : '';
+        badgeHtml += '<span class="action-panel__tag">' + label + badge + '</span>';
+      });
+      badgeHtml += '</div></div>';
+
+      // Insert focus areas before the templates section
+      baseHtml = baseHtml.replace('<div class="action-panel__section">', badgeHtml + '<div class="action-panel__section">');
+    }
+
+    return baseHtml;
+  }
+
   // ── PUBLIC API ────────────────────────────────────────
   window.AAAI = window.AAAI || {};
   window.AAAI.actions = {
@@ -414,6 +536,10 @@
     generateChecklist: generateChecklist,
     getActionPlan: getActionPlan,
     renderActionPanel: renderActionPanel,
+    persistTags: persistTags,
+    getEnrichedPlan: getEnrichedPlan,
+    autoSaveChecklist: autoSaveChecklist,
+    renderEnrichedPanel: renderEnrichedPanel,
     ISSUE_PATTERNS: ISSUE_PATTERNS,
     ISSUE_TO_TEMPLATES: ISSUE_TO_TEMPLATES,
     ISSUE_TO_RESOURCES: ISSUE_TO_RESOURCES,

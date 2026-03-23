@@ -6051,6 +6051,20 @@ a, button, input, select, textarea {
   gap: 8px;
 }
 
+/* Focus area tags */
+.action-panel__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  background: rgba(168, 85, 247, 0.12);
+  color: #c084fc;
+  border: 1px solid rgba(168, 85, 247, 0.2);
+}
+
 /* Mobile responsive */
 @media (max-width: 768px) {
   .action-panel {
