@@ -2080,6 +2080,134 @@ a:hover { color: #000; }
 }
 .dashboard__signout:hover { border-color: var(--gray-500); color: var(--gray-700); }
 
+/* Progress bar */
+.dashboard__progress-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.dashboard__progress-bar {
+  flex: 1;
+  height: 10px;
+  background: var(--gray-100);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.dashboard__progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), #f59e0b);
+  border-radius: 5px;
+  transition: width 0.6s ease;
+}
+.dashboard__progress-pct {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--gold);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Checklist preview on dashboard */
+.dash-checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.dash-checklist-item:last-child {
+  border-bottom: none;
+}
+.dash-checklist-check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-300);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.dash-checklist-check--done {
+  background: var(--gold);
+  border-color: var(--gold);
+}
+.dash-checklist-check svg {
+  display: none;
+}
+.dash-checklist-check--done svg {
+  display: block;
+  color: #fff;
+}
+.dash-checklist-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+.dash-checklist-title--done {
+  text-decoration: line-through;
+  color: var(--gray-400);
+}
+.dash-checklist-desc {
+  font-size: 0.8rem;
+  color: var(--gray-500);
+  margin-top: 2px;
+}
+.dash-checklist-cat {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--gold);
+  margin-top: 3px;
+}
+.dash-checklist-more {
+  text-align: center;
+  padding: 12px 0 4px;
+}
+.dash-checklist-more a {
+  color: var(--gold);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Report list on dashboard */
+.dash-report-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--gray-100);
+}
+.dash-report-item:last-child {
+  border-bottom: none;
+}
+.dash-report-date {
+  font-size: 0.85rem;
+  color: var(--gray-500);
+}
+.dash-report-preview {
+  font-size: 0.85rem;
+  color: var(--gray-700);
+  flex: 1;
+  margin: 0 12px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.dash-report-link {
+  color: var(--gold);
+  font-size: 0.8rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
 /* ── EDUCATION HUB ─────────────────────────────────────── */
 .edu-section { margin-bottom: 40px; }
 .edu-section__title {

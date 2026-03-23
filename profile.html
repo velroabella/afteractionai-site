@@ -61,9 +61,15 @@
     <button class="dashboard__signout auth-signout-btn" onclick="AAAI.auth.signOut().then(()=>window.location='index.html')">Sign Out</button>
   </div>
 
-  <!-- Progress Overview -->
+  <!-- Progress Overview with visual bar -->
   <div class="dashboard__card">
     <h3>Mission Progress</h3>
+    <div class="dashboard__progress-bar-wrap">
+      <div class="dashboard__progress-bar">
+        <div class="dashboard__progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+      <span class="dashboard__progress-pct" id="progressPct">0%</span>
+    </div>
     <div class="dashboard__stat">
       <div class="dashboard__stat-item">
         <div class="dashboard__stat-number" id="statTotal">0</div>
@@ -83,18 +89,43 @@
     </div>
   </div>
 
-  <!-- Goals -->
+  <!-- Next Recommended Actions — moved up for visibility -->
+  <div class="dashboard__card dashboard__actions-panel">
+    <h3>Next Recommended Actions</h3>
+    <div id="dashActions">
+      <p style="font-size:0.9rem;color:var(--gray-500);">Complete a conversation to get personalized action recommendations.</p>
+    </div>
+  </div>
+
+  <!-- Checklist Preview — interactive summary of top items -->
   <div class="dashboard__card">
-    <h3>My Direction</h3>
+    <h3>Mission Checklist</h3>
+    <div id="dashChecklist">
+      <p style="font-size:0.9rem;color:var(--gray-500);">No checklist items yet. Complete a conversation to generate your mission checklist.</p>
+    </div>
+  </div>
+
+  <!-- Goals / Focus Areas -->
+  <div class="dashboard__card">
+    <h3>Focus Areas</h3>
     <div class="dashboard__goals" id="dashGoals">
       <span class="dashboard__goal-tag" style="opacity:0.5;">No goals set yet</span>
     </div>
+    <div class="dashboard__goals" id="dashIssueTags" style="margin-top:8px;"></div>
     <p style="font-size:0.85rem;color:var(--gray-500);margin-top:12px;">
-      Goals are set based on your AI conversation. Start or continue a chat to update.
+      Focus areas update automatically based on your conversations and templates.
     </p>
   </div>
 
-  <!-- Latest Report -->
+  <!-- Saved Reports -->
+  <div class="dashboard__card">
+    <h3>My Reports</h3>
+    <div id="dashReportsList">
+      <p style="font-size:0.9rem;color:var(--gray-500);">No reports yet. <a href="index.html" style="color:var(--gold);">Start a conversation</a> to get your personalized plan.</p>
+    </div>
+  </div>
+
+  <!-- Latest Report Preview -->
   <div class="dashboard__card">
     <h3>Latest Report</h3>
     <div id="dashReport">
@@ -104,25 +135,9 @@
 
   <!-- Template Outputs -->
   <div class="dashboard__card">
-    <h3>My Outputs</h3>
+    <h3>My Documents</h3>
     <div id="dashOutputs">
-      <p style="font-size:0.9rem;color:var(--gray-500);">No templates completed yet. Start a task from your Mission Checklist to generate outputs.</p>
-    </div>
-  </div>
-
-  <!-- Next Recommended Actions -->
-  <div class="dashboard__card dashboard__actions-panel">
-    <h3>Next Recommended Actions</h3>
-    <div id="dashActions">
-      <p style="font-size:0.9rem;color:var(--gray-500);">Complete a conversation to get personalized action recommendations.</p>
-    </div>
-  </div>
-
-  <!-- Uploaded Documents -->
-  <div class="dashboard__card">
-    <h3>Uploaded Documents</h3>
-    <div id="dashDocuments">
-      <p style="font-size:0.9rem;color:var(--gray-500);">No documents uploaded yet. Upload during your AI conversation to personalize your plan.</p>
+      <p style="font-size:0.9rem;color:var(--gray-500);">No templates completed yet. Start a task from your Mission Checklist to generate documents.</p>
     </div>
   </div>
 
@@ -184,38 +199,80 @@
 <script src="js/auth.js"></script>
 <script src="js/newsletter.js"></script>
 <script>
-// Profile page logic
+// Profile page logic — Dashboard 2.0
 (function() {
+  var CAT_LABELS = { immediate: 'Immediate', short_term: 'Short-Term', strategic: 'Strategic', optional: 'Optional' };
+
   window.addEventListener('authStateChanged', function(e) {
-    const { user, profile } = e.detail;
-    const content = document.getElementById('dashboardContent');
-    const login = document.getElementById('dashboardLogin');
+    var user = e.detail.user;
+    var profile = e.detail.profile;
+    var content = document.getElementById('dashboardContent');
+    var login = document.getElementById('dashboardLogin');
 
     if (user) {
       content.style.display = 'block';
       login.style.display = 'none';
 
       // Greeting
-      const name = profile?.display_name || user.email.split('@')[0];
+      var name = (profile && profile.display_name) ? profile.display_name : user.email.split('@')[0];
       document.getElementById('dashGreeting').textContent = 'Welcome back, ' + name;
 
-      // Load checklist stats
+      // Load checklist stats + interactive preview
       AAAI.auth.loadChecklist().then(function(result) {
         if (result.data) {
-          const total = result.data.length;
-          const completed = result.data.filter(function(i) { return i.is_completed; }).length;
-          const pct = total > 0 ? Math.round((completed / total) * 100) : 0;
+          var total = result.data.length;
+          var completed = result.data.filter(function(i) { return i.is_completed; }).length;
+          var pct = total > 0 ? Math.round((completed / total) * 100) : 0;
           document.getElementById('statTotal').textContent = total;
           document.getElementById('statCompleted').textContent = completed;
           document.getElementById('statProgress').textContent = pct + '%';
+
+          // Progress bar
+          document.getElementById('progressFill').style.width = pct + '%';
+          document.getElementById('progressPct').textContent = pct + '%';
+
+          // Checklist preview — show first 8 incomplete, then completed
+          var checklistEl = document.getElementById('dashChecklist');
+          if (total > 0) {
+            var incomplete = result.data.filter(function(i) { return !i.is_completed; });
+            var done = result.data.filter(function(i) { return i.is_completed; });
+            var showItems = incomplete.slice(0, 6).concat(done.slice(0, 2));
+            var html = '';
+            showItems.forEach(function(item) {
+              var isDone = item.is_completed;
+              html += '<div class="dash-checklist-item" data-id="' + item.id + '">' +
+                '<div class="dash-checklist-check' + (isDone ? ' dash-checklist-check--done' : '') + '" onclick="toggleDashCheck(this, \'' + item.id + '\')">' +
+                  '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' +
+                '</div>' +
+                '<div>' +
+                  '<div class="dash-checklist-title' + (isDone ? ' dash-checklist-title--done' : '') + '">' + (item.title || '') + '</div>' +
+                  (item.description ? '<div class="dash-checklist-desc">' + item.description + '</div>' : '') +
+                  '<div class="dash-checklist-cat">' + (CAT_LABELS[item.category] || item.category || '') + '</div>' +
+                '</div>' +
+              '</div>';
+            });
+            if (total > 8) {
+              html += '<div class="dash-checklist-more"><a href="index.html">View all ' + total + ' items →</a></div>';
+            }
+            checklistEl.innerHTML = html;
+          }
         }
       });
 
       // Load goals
-      if (profile?.goals && profile.goals.length > 0) {
+      if (profile && profile.goals && profile.goals.length > 0) {
         var goalsEl = document.getElementById('dashGoals');
         goalsEl.innerHTML = profile.goals.map(function(g) {
           return '<span class="dashboard__goal-tag">' + g + '</span>';
+        }).join('');
+      }
+
+      // Show issue tags as focus area badges
+      if (profile && profile.issue_tags && profile.issue_tags.length > 0) {
+        var tagsEl = document.getElementById('dashIssueTags');
+        tagsEl.innerHTML = profile.issue_tags.map(function(t) {
+          var label = t.issue.replace(/[-_]/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+          return '<span class="action-panel__tag">' + label + ' (' + (t.count || 1) + ')</span>';
         }).join('');
       }
 
@@ -239,7 +296,6 @@
                 '</div>' +
               '</div>';
             }).join('');
-            // Store full content in data attributes
             var cards = outputsEl.querySelectorAll('.template-output-card');
             result.data.forEach(function(o, i) {
               if (cards[i]) cards[i].dataset.content = o.content || '';
@@ -248,10 +304,23 @@
         });
       }
 
-      // Load latest report + generate action recommendations
+      // Load reports list + latest report preview + action recommendations
       if (AAAI.auth.loadReports) {
         AAAI.auth.loadReports().then(function(result) {
           if (result.data && result.data.length > 0) {
+            // Reports list
+            var listEl = document.getElementById('dashReportsList');
+            listEl.innerHTML = result.data.map(function(r, i) {
+              var date = new Date(r.created_at).toLocaleDateString();
+              var snippet = r.report_content ? r.report_content.substring(0, 80).replace(/</g, '&lt;') : '';
+              return '<div class="dash-report-item">' +
+                '<span class="dash-report-date">' + date + '</span>' +
+                '<span class="dash-report-preview">' + snippet + '</span>' +
+                '<a href="index.html" class="dash-report-link">Open →</a>' +
+              '</div>';
+            }).join('');
+
+            // Latest report preview
             var reportEl = document.getElementById('dashReport');
             var latest = result.data[0];
             var preview = latest.report_content ? latest.report_content.substring(0, 300).replace(/</g, '&lt;') + '...' : '';
@@ -262,7 +331,7 @@
                 '<a href="index.html" style="color:var(--gold);font-size:0.85rem;font-weight:600;">Continue Conversation →</a>' +
               '</div>';
 
-            // Action Engine — use enriched plan with saved tags for smarter recommendations
+            // Action Engine — enriched recommendations
             if (typeof AAAI !== 'undefined' && AAAI.actions && latest.report_content) {
               try {
                 var actionPlan = (AAAI.actions.getEnrichedPlan && profile && profile.issue_tags)
@@ -275,7 +344,7 @@
                     : AAAI.actions.renderActionPanel(actionPlan, { maxTemplates: 5, maxResources: 4 });
                   actionsEl.innerHTML = panelHtml;
                 } else {
-                  actionsEl.innerHTML = '<p style="font-size:0.9rem;color:var(--gray-500);">No specific action items detected from your latest report. <a href="index.html" style="color:var(--gold);">Start a new conversation</a> to get recommendations.</p>';
+                  actionsEl.innerHTML = '<p style="font-size:0.9rem;color:var(--gray-500);">No specific action items detected. <a href="index.html" style="color:var(--gold);">Start a new conversation</a> to get recommendations.</p>';
                 }
               } catch(e) {
                 console.error('ActionEngine dashboard error:', e);
@@ -289,6 +358,32 @@
       login.style.display = 'block';
     }
   });
+
+  // Toggle checklist item from dashboard
+  window.toggleDashCheck = function(el, itemId) {
+    var isDone = el.classList.contains('dash-checklist-check--done');
+    var newState = !isDone;
+    el.classList.toggle('dash-checklist-check--done');
+    var titleEl = el.nextElementSibling.querySelector('.dash-checklist-title');
+    if (titleEl) titleEl.classList.toggle('dash-checklist-title--done');
+
+    // Persist to Supabase
+    if (AAAI.auth.toggleChecklistItem) {
+      AAAI.auth.toggleChecklistItem(itemId, newState).then(function() {
+        // Update progress stats
+        var checks = document.querySelectorAll('.dash-checklist-check');
+        var total = parseInt(document.getElementById('statTotal').textContent) || checks.length;
+        var doneCount = document.querySelectorAll('.dash-checklist-check--done').length;
+        var statCompleted = parseInt(document.getElementById('statCompleted').textContent) || 0;
+        var newCompleted = newState ? statCompleted + 1 : statCompleted - 1;
+        var newPct = total > 0 ? Math.round((newCompleted / total) * 100) : 0;
+        document.getElementById('statCompleted').textContent = newCompleted;
+        document.getElementById('statProgress').textContent = newPct + '%';
+        document.getElementById('progressFill').style.width = newPct + '%';
+        document.getElementById('progressPct').textContent = newPct + '%';
+      });
+    }
+  };
 })();
 </script>
 </body>
