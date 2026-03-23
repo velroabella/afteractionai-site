@@ -771,6 +771,9 @@
     // Action engine recommendations placeholder
     html += '<div id="actionEnginePanel"></div>';
 
+    // State benefits recommendations placeholder
+    html += '<div id="stateBenefitsPanel"></div>';
+
     container.innerHTML = html;
 
     // Wire actions
@@ -836,6 +839,68 @@
         }
       } catch(e) {
         console.error('ActionEngine template completion error:', e);
+      }
+    }
+
+    // ── State Benefits Recommendations (post-template) ──
+    if (typeof AAAI !== 'undefined' && AAAI.actions && AAAI.actions.getStateBenefitsForTemplate) {
+      // Extract user state from formData — look for any field containing a state value
+      var userStateName = formData.state || formData.user_state || formData.principalState || '';
+      if (!userStateName) {
+        // Scan all form fields for a US state name match
+        var stateNames = US_STATES; // from template-flow.js scope
+        var formVals = Object.values(formData);
+        for (var fv = 0; fv < formVals.length; fv++) {
+          if (typeof formVals[fv] === 'string' && stateNames.indexOf(formVals[fv]) !== -1) {
+            userStateName = formVals[fv];
+            break;
+          }
+        }
+      }
+
+      if (userStateName) {
+        var templateContext = {
+          state: userStateName,
+          templateId: templateData.id,
+          issue_tags: [],
+          disability_rating_band: formData.disabilityRating || formData.disability_rating || null,
+          service_status: formData.serviceStatus || formData.service_status || 'veteran'
+        };
+
+        // Also feed detected issues from action engine if available
+        if (typeof AAAI !== 'undefined' && AAAI.actions && AAAI.actions.detectIssues) {
+          var fullText = output.sections.map(function(s) { return (s.heading || '') + ' ' + (s.content || ''); }).join(' ');
+          templateContext.issue_tags = AAAI.actions.detectIssues(fullText);
+        }
+
+        AAAI.actions.getStateBenefitsForTemplate(templateContext).then(function(benefits) {
+          if (benefits && benefits.length > 0) {
+            var panelEl = document.getElementById('stateBenefitsPanel');
+            if (panelEl) {
+              // Look up full state name for display
+              var displayName = userStateName;
+              if (userStateName.length === 2 && typeof ResourceHub !== 'undefined' && ResourceHub.STATES) {
+                for (var sn = 0; sn < ResourceHub.STATES.length; sn++) {
+                  if (ResourceHub.STATES[sn].abbr === userStateName) {
+                    displayName = ResourceHub.STATES[sn].name;
+                    break;
+                  }
+                }
+              }
+              var html = AAAI.actions.renderStateBenefitsPanel(benefits, displayName);
+              panelEl.innerHTML =
+                '<div class="tmpl-completion-actions" style="margin-top:24px;">' +
+                  '<div class="tmpl-completion-actions__title">' +
+                    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> ' +
+                    'Relevant State Benefits' +
+                  '</div>' +
+                  html +
+                '</div>';
+            }
+          }
+        }).catch(function(e) {
+          console.error('StateBenefits template completion error:', e);
+        });
       }
     }
 

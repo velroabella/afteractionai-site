@@ -546,6 +546,124 @@
     'crisis':       []
   };
 
+  // ── TEMPLATE → BENEFIT CATEGORY MAPPING ─────────────
+  // Maps template IDs to relevant state benefit categories for post-completion suggestions
+  var TEMPLATE_TO_BENEFIT_CATS = {
+    // VA / Claims
+    'va-claim-personal-statement':    ['disabled_veteran', 'property_tax', 'income_tax', 'housing'],
+    'va-appeal-letter':               ['disabled_veteran', 'property_tax', 'income_tax', 'housing'],
+    'nexus-letter-prep':              ['disabled_veteran', 'property_tax', 'healthcare'],
+    'benefits-eligibility-summary':   ['property_tax', 'education', 'employment', 'income_tax', 'vehicle', 'recreation'],
+    // Career
+    'resume-builder':                 ['employment', 'education', 'licensing'],
+    'linkedin-profile-builder':       ['employment', 'education'],
+    'federal-resume':                 ['employment', 'education'],
+    'interview-prep-script':          ['employment', 'education'],
+    'salary-negotiation-script':      ['employment', 'income_tax'],
+    'military-civilian-skills-translator': ['employment', 'licensing', 'education'],
+    // Financial
+    'debt-hardship-letter':           ['property_tax', 'income_tax', 'housing', 'vehicle'],
+    'credit-dispute-letter':          ['property_tax', 'income_tax', 'housing'],
+    'budget-financial-recovery-plan': ['property_tax', 'income_tax', 'vehicle', 'housing'],
+    // Housing
+    'va-loan-readiness-checklist':    ['housing', 'property_tax', 'vehicle'],
+    'rental-application-packet':      ['housing', 'property_tax'],
+    // Legal / Life
+    'general-power-of-attorney':      ['property_tax', 'vehicle', 'income_tax'],
+    'durable-power-of-attorney':      ['property_tax', 'vehicle', 'income_tax'],
+    'medical-power-of-attorney':      ['healthcare', 'disabled_veteran'],
+    'last-will-and-testament':        ['property_tax', 'burial'],
+    'living-will':                    ['healthcare', 'burial'],
+    'hipaa-authorization-form':       ['healthcare'],
+    'emergency-contact-family-care-plan': ['dependent', 'education'],
+    'personal-emergency-action-plan':     ['housing', 'healthcare'],
+    // Records
+    'records-request-letter':         ['education', 'employment', 'property_tax']
+  };
+
+  /**
+   * Get relevant state benefit categories for a template type
+   * Falls back to broad categories if template ID is not mapped
+   * @param {string} templateId - Template identifier
+   * @returns {Array} - Array of benefit category strings
+   */
+  function getBenefitCatsForTemplate(templateId) {
+    if (TEMPLATE_TO_BENEFIT_CATS[templateId]) {
+      return TEMPLATE_TO_BENEFIT_CATS[templateId];
+    }
+    return ['property_tax', 'education', 'employment', 'income_tax'];
+  }
+
+  /**
+   * Get state benefits relevant to a completed template
+   * @param {Object} context
+   *   - state {string} - Full state name OR two-letter abbreviation
+   *   - templateId {string} - The template that was just completed
+   *   - issue_tags {Array} - Optional detected issues
+   *   - disability_rating_band {string} - Optional
+   *   - service_status {string} - Optional
+   * @returns {Promise<Array>} - Top 3-5 scored benefits
+   */
+  function getStateBenefitsForTemplate(context) {
+    if (!context || !context.state) {
+      return Promise.resolve([]);
+    }
+
+    // Convert full state name to abbreviation if needed
+    var stateAbbr = context.state.length === 2 ? context.state.toUpperCase() : null;
+    if (!stateAbbr) {
+      var stList = (typeof ResourceHub !== 'undefined' && ResourceHub.STATES) ? ResourceHub.STATES : [];
+      for (var si = 0; si < stList.length; si++) {
+        if (stList[si].name.toLowerCase() === context.state.toLowerCase()) {
+          stateAbbr = stList[si].abbr;
+          break;
+        }
+      }
+    }
+    if (!stateAbbr) return Promise.resolve([]);
+
+    var templateCats = getBenefitCatsForTemplate(context.templateId);
+    var disabilityBand = context.disability_rating_band || null;
+    var serviceStatus = context.service_status || 'veteran';
+
+    return loadStateBenefits().then(function(allBenefits) {
+      var stateBenefits = allBenefits.filter(function(b) {
+        return b.state === stateAbbr;
+      });
+      if (stateBenefits.length === 0) return [];
+
+      var scored = stateBenefits.map(function(b) {
+        var score = 1;
+        if (templateCats.indexOf(b.category) !== -1) score += 3;
+        if (context.issue_tags && context.issue_tags.length > 0) {
+          var issueCats = {};
+          context.issue_tags.forEach(function(tag) {
+            var cats = ISSUE_CAT_TO_BENEFIT_CAT[tag.category];
+            if (cats) cats.forEach(function(c) { issueCats[c] = true; });
+          });
+          if (issueCats[b.category]) score += 2;
+        }
+        if (disabilityBand && disabilityBand !== '0') {
+          if (b.disability_threshold) score += 2;
+          if (b.category === 'disabled_veteran') score += 2;
+        }
+        if (serviceStatus === 'guard_reserve' && b.guard_reserve_eligible === true) score += 1;
+        if ((serviceStatus === 'spouse' || serviceStatus === 'survivor') && b.spouse_survivor_eligible === true) score += 1;
+        if (b.applies_to && Array.isArray(b.applies_to) && b.applies_to.indexOf('all_veterans') !== -1) score += 1;
+        return {
+          benefit_name: b.benefit_name, summary: b.summary, category: b.category,
+          official_link: b.official_link, state: b.state, score: score
+        };
+      });
+
+      scored.sort(function(a, b) {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.benefit_name.localeCompare(b.benefit_name);
+      });
+      return scored.slice(0, 5);
+    });
+  }
+
   // Cache for loaded state benefits data
   var _stateBenefitsCache = null;
   var _stateBenefitsLoading = null;
@@ -726,13 +844,16 @@
     autoSaveChecklist: autoSaveChecklist,
     renderEnrichedPanel: renderEnrichedPanel,
     getStateBenefitsForUser: getStateBenefitsForUser,
+    getStateBenefitsForTemplate: getStateBenefitsForTemplate,
+    getBenefitCatsForTemplate: getBenefitCatsForTemplate,
     renderStateBenefitsPanel: renderStateBenefitsPanel,
     loadStateBenefits: loadStateBenefits,
     ISSUE_PATTERNS: ISSUE_PATTERNS,
     ISSUE_TO_TEMPLATES: ISSUE_TO_TEMPLATES,
     ISSUE_TO_RESOURCES: ISSUE_TO_RESOURCES,
     ISSUE_TO_CHECKLIST: ISSUE_TO_CHECKLIST,
-    ISSUE_CAT_TO_BENEFIT_CAT: ISSUE_CAT_TO_BENEFIT_CAT
+    ISSUE_CAT_TO_BENEFIT_CAT: ISSUE_CAT_TO_BENEFIT_CAT,
+    TEMPLATE_TO_BENEFIT_CATS: TEMPLATE_TO_BENEFIT_CATS
   };
 
 })();
