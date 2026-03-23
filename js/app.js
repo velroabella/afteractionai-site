@@ -1252,6 +1252,62 @@
         if (detectedIssues.length > 0) {
           AAAI.actions.persistTags(detectedIssues);
         }
+
+        // ── State Benefits Recommendations ────────────────
+        // Detect state from profile or conversation text
+        var userState = (userProfile && userProfile.state) ? userProfile.state : null;
+        if (!userState) {
+          // Try to extract state from report/conversation text
+          var stateList = (typeof ResourceHub !== 'undefined' && ResourceHub.STATES) ? ResourceHub.STATES : [];
+          for (var si = 0; si < stateList.length; si++) {
+            var s = stateList[si];
+            // Match full state name in text (case-insensitive, word boundary)
+            var stateRegex = new RegExp('\\b' + s.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+            if (stateRegex.test(reportText)) {
+              userState = s.abbr;
+              break;
+            }
+          }
+        }
+
+        if (userState && AAAI.actions.getStateBenefitsForUser) {
+          var stateContext = {
+            state: userState,
+            issue_tags: detectedIssues,
+            disability_rating_band: (userProfile && userProfile.disability_rating) ? userProfile.disability_rating : null,
+            service_status: (userProfile && userProfile.service_status) ? userProfile.service_status : 'veteran'
+          };
+
+          AAAI.actions.getStateBenefitsForUser(stateContext).then(function(benefits) {
+            if (benefits && benefits.length > 0) {
+              // Look up full state name for display
+              var stateName = userState;
+              var statesList = (typeof ResourceHub !== 'undefined' && ResourceHub.STATES) ? ResourceHub.STATES : [];
+              for (var sn = 0; sn < statesList.length; sn++) {
+                if (statesList[sn].abbr === userState) {
+                  stateName = statesList[sn].name;
+                  break;
+                }
+              }
+
+              var benefitsHtml = AAAI.actions.renderStateBenefitsPanel(benefits, stateName);
+              if (benefitsHtml) {
+                var benefitsDiv = document.createElement('div');
+                benefitsDiv.className = 'message message--system';
+                benefitsDiv.innerHTML =
+                  '<div class="action-panel__title">' +
+                    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+                    ' Recommended State Benefits' +
+                  '</div>' + benefitsHtml;
+                if (chatMessages) chatMessages.appendChild(benefitsDiv);
+                scrollToBottom();
+                log('StateBenefits', 'showed ' + benefits.length + ' benefits for ' + stateName);
+              }
+            }
+          }).catch(function(e) {
+            log('StateBenefits', 'error: ' + e.message);
+          });
+        }
       } catch(e) {
         log('ActionEngine', 'render error: ' + e.message);
       }

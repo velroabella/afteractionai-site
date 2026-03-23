@@ -527,6 +527,191 @@
     return baseHtml;
   }
 
+  // ── STATE BENEFITS MATCHING ──────────────────────────
+  // Maps action-engine issue categories → state benefit categories
+  var ISSUE_CAT_TO_BENEFIT_CAT = {
+    'va_benefits':  ['property_tax', 'disabled_veteran', 'income_tax'],
+    'healthcare':   ['healthcare'],
+    'education':    ['education'],
+    'career':       ['employment', 'licensing'],
+    'business':     ['business'],
+    'financial':    ['property_tax', 'income_tax', 'vehicle'],
+    'housing':      ['housing', 'property_tax'],
+    'property_tax': ['property_tax'],
+    'licensing':    ['licensing'],
+    'burial':       ['burial'],
+    'dependent':    ['dependent', 'education'],
+    'transition':   ['education', 'employment', 'property_tax', 'income_tax', 'vehicle'],
+    'legal':        [],
+    'crisis':       []
+  };
+
+  // Cache for loaded state benefits data
+  var _stateBenefitsCache = null;
+  var _stateBenefitsLoading = null;
+
+  /**
+   * Load all state benefits JSON files (cached after first load)
+   * @returns {Promise<Array>} - All state benefit records
+   */
+  function loadStateBenefits() {
+    if (_stateBenefitsCache) {
+      return Promise.resolve(_stateBenefitsCache);
+    }
+    if (_stateBenefitsLoading) {
+      return _stateBenefitsLoading;
+    }
+    _stateBenefitsLoading = Promise.all([
+      fetch('data/state-benefits.json').then(function(r) { return r.json(); }),
+      fetch('data/state-benefits-batch1.json').then(function(r) { return r.json(); }),
+      fetch('data/state-benefits-batch2.json').then(function(r) { return r.json(); }),
+      fetch('data/state-benefits-batch3.json').then(function(r) { return r.json(); })
+    ]).then(function(results) {
+      _stateBenefitsCache = [].concat(results[0], results[1], results[2], results[3]);
+      _stateBenefitsLoading = null;
+      return _stateBenefitsCache;
+    }).catch(function(err) {
+      _stateBenefitsLoading = null;
+      console.error('StateBenefits: load error', err);
+      return [];
+    });
+    return _stateBenefitsLoading;
+  }
+
+  /**
+   * Get top relevant state benefits for a user context
+   * @param {Object} userContext
+   *   - state {string} - Two-letter state abbreviation (required)
+   *   - issue_tags {Array} - From action engine detectIssues() [{issue, category}]
+   *   - disability_rating_band {string} - e.g. '0', '10-40', '50-90', '100' (optional)
+   *   - service_status {string} - e.g. 'veteran', 'active', 'guard_reserve', 'spouse' (optional)
+   * @returns {Promise<Array>} - Top 5 scored benefits [{benefit_name, summary, category, official_link, score}]
+   */
+  function getStateBenefitsForUser(userContext) {
+    if (!userContext || !userContext.state) {
+      return Promise.resolve([]);
+    }
+
+    var state = userContext.state.toUpperCase();
+    var issueTags = userContext.issue_tags || [];
+    var disabilityBand = userContext.disability_rating_band || null;
+    var serviceStatus = userContext.service_status || 'veteran';
+
+    // Collect relevant benefit categories from issue tags
+    var relevantCats = {};
+    issueTags.forEach(function(tag) {
+      var cats = ISSUE_CAT_TO_BENEFIT_CAT[tag.category];
+      if (cats) {
+        cats.forEach(function(c) { relevantCats[c] = true; });
+      }
+    });
+    var relevantCatKeys = Object.keys(relevantCats);
+
+    return loadStateBenefits().then(function(allBenefits) {
+      // Filter to user's state only
+      var stateBenefits = allBenefits.filter(function(b) {
+        return b.state === state;
+      });
+
+      if (stateBenefits.length === 0) return [];
+
+      // Score each benefit for relevance
+      var scored = stateBenefits.map(function(b) {
+        var score = 1; // Base score for being in the user's state
+
+        // Category match with detected issues (+3 each)
+        if (relevantCatKeys.indexOf(b.category) !== -1) {
+          score += 3;
+        }
+
+        // Disability match (+2 if user has disability and benefit is disability-related)
+        if (disabilityBand && disabilityBand !== '0') {
+          if (b.disability_threshold) score += 2;
+          if (b.category === 'disabled_veteran') score += 2;
+        }
+
+        // Service status match (+1)
+        if (serviceStatus === 'guard_reserve' && b.guard_reserve_eligible === true) {
+          score += 1;
+        }
+        if ((serviceStatus === 'spouse' || serviceStatus === 'survivor') && b.spouse_survivor_eligible === true) {
+          score += 1;
+        }
+
+        // Applies-to match (+1 for broad applicability)
+        if (b.applies_to && Array.isArray(b.applies_to)) {
+          if (b.applies_to.indexOf('all_veterans') !== -1) {
+            score += 1;
+          }
+        }
+
+        return {
+          benefit_name: b.benefit_name,
+          summary: b.summary,
+          category: b.category,
+          official_link: b.official_link,
+          state: b.state,
+          score: score
+        };
+      });
+
+      // Sort by score descending, then alphabetical
+      scored.sort(function(a, b) {
+        if (b.score !== a.score) return b.score - a.score;
+        return a.benefit_name.localeCompare(b.benefit_name);
+      });
+
+      // Return top 5
+      return scored.slice(0, 5);
+    });
+  }
+
+  /**
+   * Render a "Recommended State Benefits" HTML section
+   * @param {Array} benefits - From getStateBenefitsForUser()
+   * @param {string} stateName - Full state name for display
+   * @returns {string} - HTML string
+   */
+  function renderStateBenefitsPanel(benefits, stateName) {
+    if (!benefits || benefits.length === 0) return '';
+
+    var CAT_LABELS = {
+      property_tax: 'Property Tax', education: 'Education', recreation: 'Recreation',
+      employment: 'Employment', healthcare: 'Healthcare', housing: 'Housing',
+      vehicle: 'Vehicle', burial: 'Burial', licensing: 'Licensing',
+      business: 'Business', long_term_care: 'Long-Term Care',
+      disabled_veteran: 'Disabled Veteran', dependent: 'Dependent',
+      income_tax: 'Income Tax', 'employment-pref': 'Employment'
+    };
+
+    var html = '<div class="action-panel">';
+    html += '<div class="action-panel__section">';
+    html += '<h4 class="action-panel__heading">Recommended State Benefits' +
+            (stateName ? ' — ' + stateName : '') + '</h4>';
+    html += '<div class="state-benefits-recs">';
+
+    benefits.forEach(function(b) {
+      var catLabel = CAT_LABELS[b.category] || b.category.replace(/[_-]/g, ' ');
+      html += '<div class="state-benefit-rec">';
+      html += '<div class="state-benefit-rec__header">';
+      html += '<strong class="state-benefit-rec__name">' + (b.benefit_name || '') + '</strong>';
+      html += '<span class="state-benefit-rec__cat">' + catLabel + '</span>';
+      html += '</div>';
+      html += '<p class="state-benefit-rec__summary">' + (b.summary || '') + '</p>';
+      if (b.official_link) {
+        html += '<a href="' + b.official_link + '" class="action-panel__link action-panel__link--resource" target="_blank" rel="noopener noreferrer">Official Info</a>';
+      }
+      html += '</div>';
+    });
+
+    html += '</div></div>';
+    html += '<div style="margin-top:8px;text-align:right;">';
+    html += '<a href="state-benefits.html" class="action-panel__link action-panel__link--resource" style="font-size:0.85rem;">View all state benefits &rarr;</a>';
+    html += '</div>';
+    html += '</div>';
+    return html;
+  }
+
   // ── PUBLIC API ────────────────────────────────────────
   window.AAAI = window.AAAI || {};
   window.AAAI.actions = {
@@ -540,10 +725,14 @@
     getEnrichedPlan: getEnrichedPlan,
     autoSaveChecklist: autoSaveChecklist,
     renderEnrichedPanel: renderEnrichedPanel,
+    getStateBenefitsForUser: getStateBenefitsForUser,
+    renderStateBenefitsPanel: renderStateBenefitsPanel,
+    loadStateBenefits: loadStateBenefits,
     ISSUE_PATTERNS: ISSUE_PATTERNS,
     ISSUE_TO_TEMPLATES: ISSUE_TO_TEMPLATES,
     ISSUE_TO_RESOURCES: ISSUE_TO_RESOURCES,
-    ISSUE_TO_CHECKLIST: ISSUE_TO_CHECKLIST
+    ISSUE_TO_CHECKLIST: ISSUE_TO_CHECKLIST,
+    ISSUE_CAT_TO_BENEFIT_CAT: ISSUE_CAT_TO_BENEFIT_CAT
   };
 
 })();
