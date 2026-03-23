@@ -54,7 +54,7 @@
       container.innerHTML = '<div style="text-align:center;padding:60px;"><h2>Template not found</h2><p><a href="document-templates.html">Browse all templates</a></p></div>';
       return;
     }
-    if (templateData.phase !== 1) {
+    if (templateData.phase > 2) {
       container.innerHTML = '<div style="text-align:center;padding:60px;"><h2>' + escapeHtml(templateData.title) + '</h2><p>This template is coming soon. <a href="document-templates.html">Browse available templates</a></p></div>';
       return;
     }
@@ -203,7 +203,17 @@
       'last-will-and-testament': generateWill,
       'living-will': generateLivingWill,
       'va-claim-personal-statement': generateVAClaim,
-      'debt-hardship-letter': generateDebtLetter
+      'debt-hardship-letter': generateDebtLetter,
+      'durable-power-of-attorney': generateDurablePOA,
+      'medical-power-of-attorney': generateMedicalPOA,
+      'hipaa-authorization-form': generateHIPAA,
+      'emergency-contact-family-care-plan': generateFamilyCarePlan,
+      'va-appeal-letter': generateVAAppeal,
+      'records-request-letter': generateRecordsRequest,
+      'federal-resume': generateFederalResume,
+      'interview-prep-script': generateInterviewPrep,
+      'credit-dispute-letter': generateCreditDispute,
+      'budget-financial-recovery-plan': generateBudgetPlan
     };
 
     var gen = generators[templateId];
@@ -318,6 +328,195 @@
     };
   }
 
+  // ── Phase 2 Generators ────────────────────────────────
+
+  function generateDurablePOA(d) {
+    return {
+      title: 'Durable Power of Attorney',
+      sections: [
+        { heading: 'DURABLE POWER OF ATTORNEY', content: 'State of ' + d.state },
+        { heading: 'Parties', content: 'Principal: ' + d.principalName + '\nAgent (Attorney-in-Fact): ' + d.agentName + '\nRelationship: ' + d.agentRelation + (d.successorAgent ? '\nSuccessor Agent: ' + d.successorAgent : '') },
+        { heading: 'Durability Clause', content: 'This Power of Attorney shall NOT be affected by my subsequent disability or incapacity. This Power of Attorney shall remain in full force and effect even if I become disabled, incapacitated, or incompetent after the date of execution.' },
+        { heading: 'Grant of Authority', content: 'I, ' + d.principalName + ', a resident of the State of ' + d.state + ', hereby appoint ' + d.agentName + ' (' + d.agentRelation + ') as my attorney-in-fact with the following powers:\n\n' + d.powers },
+        { heading: 'Limitations', content: d.limitations || 'No specific limitations placed on the agent\'s authority beyond those required by state law.' },
+        { heading: 'Successor Agent', content: d.successorAgent ? 'If ' + d.agentName + ' is unable or unwilling to serve, I appoint ' + d.successorAgent + ' as my successor agent with the same powers.' : 'No successor agent designated.' },
+        { heading: 'Revocation', content: 'I reserve the right to revoke this Durable Power of Attorney at any time by providing written notice to my agent and any third parties who have relied upon it.' },
+        { heading: 'Signatures', content: 'Principal Signature: _______________________\nDate: _______________\n\nWitness 1: _______________________\nDate: _______________\n\nWitness 2: _______________________\nDate: _______________\n\nNotary Acknowledgment:\n(Notarization is typically required for Durable Powers of Attorney in ' + d.state + ')' },
+        { heading: 'IMPORTANT DISCLAIMER', content: 'This document was generated as a starting template. A Durable Power of Attorney is a significant legal document. State laws vary significantly. Have this reviewed by a licensed attorney in ' + d.state + ' before signing. Free legal help for veterans is available through VA and veterans legal aid organizations.' }
+      ]
+    };
+  }
+
+  function generateMedicalPOA(d) {
+    return {
+      title: 'Medical Power of Attorney — ' + d.principalName,
+      sections: [
+        { heading: 'MEDICAL POWER OF ATTORNEY', content: 'State of ' + d.state },
+        { heading: 'Designation of Healthcare Agent', content: 'I, ' + d.principalName + ', a resident of the State of ' + d.state + ', hereby designate the following person as my agent to make healthcare decisions on my behalf:\n\nHealthcare Agent: ' + d.agentName + '\nRelationship: ' + d.agentRelation + '\nPhone: ' + d.agentPhone },
+        { heading: 'Alternate Agent', content: d.alternateAgent ? 'If my primary agent is unable or unwilling to serve, I designate: ' + d.alternateAgent : 'No alternate agent designated.' },
+        { heading: 'Authority Granted', content: 'My agent shall have authority to:\n\n• Consent to or refuse any medical treatment, procedure, or service\n• Access my medical records and health information\n• Choose healthcare providers and facilities\n• Make decisions about life-sustaining treatment\n' + (d.mentalHealth === 'Yes' ? '• Make decisions regarding mental health treatment' : d.mentalHealth === 'Only in specific circumstances' ? '• Make decisions regarding mental health treatment only in specific circumstances' : '• My agent does NOT have authority over mental health treatment decisions') },
+        { heading: 'Special Instructions', content: d.specialInstructions || 'No specific medical instructions provided. My agent should make decisions consistent with my known values and wishes.' },
+        { heading: 'Activation', content: 'This Medical Power of Attorney becomes effective when my attending physician certifies in writing that I am unable to make healthcare decisions for myself.' },
+        { heading: 'Signatures', content: 'Principal Signature: _______________________\nDate: _______________\n\nWitness 1 (not the agent): _______________________\nDate: _______________\n\nWitness 2: _______________________\nDate: _______________\n\nNotary Acknowledgment:\n(May be required in ' + d.state + ')' },
+        { heading: 'IMPORTANT DISCLAIMER', content: 'This document was generated as a starting template. State laws regarding Medical Powers of Attorney vary. Have this reviewed by a licensed attorney or healthcare provider in ' + d.state + '. Provide copies to your agent, physician, and hospital.' }
+      ]
+    };
+  }
+
+  function generateHIPAA(d) {
+    return {
+      title: 'HIPAA Authorization — ' + d.patientName,
+      sections: [
+        { heading: 'AUTHORIZATION FOR RELEASE OF HEALTH INFORMATION', content: 'Pursuant to the Health Insurance Portability and Accountability Act of 1996 (HIPAA), 45 CFR Parts 160 and 164' },
+        { heading: 'Patient Information', content: 'Patient Name: ' + d.patientName + '\nDate of Birth: ' + d.dob },
+        { heading: 'Healthcare Provider / Facility', content: 'I authorize the following provider or facility to release my health information:\n\n' + d.providerName },
+        { heading: 'Authorized Recipient', content: 'The following person or organization is authorized to receive my health information:\n\n' + d.authorizedPerson },
+        { heading: 'Information to Be Released', content: 'Type of information authorized for release: ' + d.infoType + (d.notes ? '\n\nAdditional notes: ' + d.notes : '') },
+        { heading: 'Purpose', content: 'Purpose of this authorization: ' + d.purpose },
+        { heading: 'Expiration', content: 'This authorization expires: ' + d.expiration },
+        { heading: 'Patient Rights', content: 'I understand that:\n• I may revoke this authorization in writing at any time\n• Revocation will not apply to information already released\n• I may refuse to sign this authorization and it will not affect my treatment\n• Information released may be re-disclosed by the recipient and may no longer be protected by HIPAA' },
+        { heading: 'Signatures', content: 'Patient Signature: _______________________\nDate: _______________\n\nIf signed by personal representative:\nRepresentative Name: _______________________\nRelationship: _______________________\nSignature: _______________________' },
+        { heading: 'Next Steps', content: '1. Sign and date this form\n2. Provide a copy to ' + d.providerName + '\n3. Keep a copy for your records\n4. If using for a VA claim, submit with your claim packet' }
+      ]
+    };
+  }
+
+  function generateFamilyCarePlan(d) {
+    return {
+      title: 'Emergency Contact & Family Care Plan — ' + d.fullName,
+      sections: [
+        { heading: 'EMERGENCY CONTACT & FAMILY CARE PLAN', content: 'Prepared by: ' + d.fullName + '\nDate: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) },
+        { heading: 'Dependents', content: d.dependents },
+        { heading: 'Emergency Contacts', content: 'PRIMARY: ' + d.primaryContact + '\nSECONDARY: ' + d.secondaryContact },
+        { heading: 'Designated Caregiver', content: 'If I am unavailable, deployed, hospitalized, or incapacitated, the following person is designated to care for my dependents:\n\n' + d.caregiver },
+        { heading: 'Medical Information', content: d.medicalInfo || 'No special medical information noted. Update this section with allergies, medications, doctor names, and insurance info.' },
+        { heading: 'Financial Information', content: d.financialInfo || 'No financial information noted. Consider adding: bank name (no account numbers), insurance provider, location of important documents.' },
+        { heading: 'Special Instructions', content: d.specialNeeds || 'No special instructions noted. Consider adding: school/daycare info, pet care needs, religious preferences, daily routines.' },
+        { heading: 'Important Document Locations', content: 'Update this section with the location of:\n• Will and estate documents\n• Insurance policies\n• Military documents (DD-214, orders)\n• Birth certificates and Social Security cards\n• Vehicle titles and property deeds\n• Power of Attorney documents' },
+        { heading: 'Review Schedule', content: 'This plan should be reviewed and updated:\n• Every 6 months\n• When family circumstances change\n• Before any deployment or extended absence\n• When changing designated caregivers' },
+        { heading: 'Next Steps', content: '1. Share this plan with your designated caregiver and emergency contacts\n2. Keep copies in a secure but accessible location\n3. If active duty, submit a copy to your unit (DA Form 5305 or equivalent)\n4. Store a digital copy in a secure location\n5. Consider pairing with a Last Will, Living Will, and Power of Attorney' }
+      ]
+    };
+  }
+
+  function generateVAAppeal(d) {
+    var dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    var laneInfo = {
+      'Supplemental Claim (new evidence)': 'I am filing a Supplemental Claim under 38 CFR § 3.2501 with new and relevant evidence not previously considered.',
+      'Higher-Level Review (same evidence, different reviewer)': 'I am requesting a Higher-Level Review under 38 CFR § 3.2601, asking that a senior reviewer re-examine the existing evidence.',
+      'Board of Veterans Appeals (judge review)': 'I am appealing to the Board of Veterans\' Appeals for a review by a Veterans Law Judge.',
+      'Not sure yet': 'I intend to appeal this decision through the appropriate review lane. [Consult with a Veterans Service Organization to determine the best appeal pathway.]'
+    };
+    return {
+      title: 'VA Appeal Letter — ' + d.fullName,
+      sections: [
+        { heading: '', content: dateStr + '\n\nDepartment of Veterans Affairs\nEvidence Intake Center\nP.O. Box 4444\nJanesville, WI 53547-4444' },
+        { heading: 'RE: Appeal of Denied Claim', content: 'Veteran: ' + d.fullName + '\nBranch: ' + d.branch + (d.claimNumber ? '\nClaim/File Number: ' + d.claimNumber : '') + '\nOriginal Denial Date: ' + d.denialDate },
+        { heading: 'Appeal Pathway', content: laneInfo[d.appealLane] || laneInfo['Not sure yet'] },
+        { heading: 'Condition(s) Denied', content: d.deniedCondition },
+        { heading: 'VA\'s Stated Reason for Denial', content: d.denialReason },
+        { heading: 'Why the Denial Should Be Reconsidered', content: 'I respectfully disagree with the denial decision for the following reasons:\n\n' + d.newEvidence },
+        { heading: 'Supporting Evidence Enclosed', content: 'I am submitting the following evidence in support of this appeal:\n• This letter of disagreement\n• [List any new medical records, buddy statements, nexus letters, or other evidence]\n• [Reference any specific evidence the VA may have overlooked]' },
+        { heading: 'Closing', content: 'I respectfully request that the Department of Veterans Affairs reconsider this claim in light of the evidence provided. I have served my country faithfully and ask for fair consideration of my claim.\n\nSincerely,\n\n' + d.fullName + '\n[Your address]\n[Your phone number]\n[Your email]' },
+        { heading: 'Next Steps', content: '1. Submit within 1 year of the denial date (' + d.denialDate + ')\n2. For Supplemental Claims: use VA Form 20-0995\n3. For Higher-Level Review: use VA Form 20-0996\n4. For Board Appeal: use VA Form 10182\n5. Contact a Veterans Service Organization (VSO) for free help\n6. Keep copies of everything you submit\n7. Consider using the AfterAction AI Nexus Letter Prep template' }
+      ]
+    };
+  }
+
+  function generateRecordsRequest(d) {
+    var dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    return {
+      title: 'Records Request Letter — ' + d.fullName,
+      sections: [
+        { heading: '', content: dateStr + '\n\n' + d.recordsFrom },
+        { heading: 'RE: Request for ' + d.recordType, content: 'Dear Records Custodian,\n\nI am writing to formally request copies of my records as described below.' },
+        { heading: 'Veteran / Requestor Information', content: 'Name: ' + d.fullName + '\nBranch of Service: ' + d.branch + '\nDates of Service: ' + d.serviceDates + (d.ssn_last4 ? '\nLast 4 SSN: xxx-xx-' + d.ssn_last4 : '') },
+        { heading: 'Records Requested', content: 'Type: ' + d.recordType + '\nFrom: ' + d.recordsFrom + '\n\nPurpose: ' + d.reason + (d.additionalDetails ? '\n\nAdditional Details: ' + d.additionalDetails : '') },
+        { heading: 'Authorization', content: 'I authorize the release of the above-described records. I understand that I may be required to provide additional identification or complete agency-specific forms.\n\nSincerely,\n\n' + d.fullName + '\n[Your current address]\n[Your phone number]\n[Your email]' },
+        { heading: 'Enclosures', content: 'Consider including:\n• Copy of government-issued photo ID\n• Copy of DD-214 (if available)\n• Signed SF-180 (for military records from NPRC)\n• Any prior correspondence regarding this request' },
+        { heading: 'Key Contacts for Records', content: 'National Personnel Records Center (NPRC):\n1 Archives Drive, St. Louis, MO 63138\nOnline: vetrecs.archives.gov\n\nVA Records:\nCall 1-800-827-1000 or visit va.gov\n\nFor fastest service, submit SF-180 online at vetrecs.archives.gov' }
+      ]
+    };
+  }
+
+  function generateFederalResume(d) {
+    return {
+      title: 'Federal Resume — ' + d.fullName,
+      sections: [
+        { heading: d.fullName, content: d.address + '\nEmail: ' + d.email + '\nPhone: ' + d.phone + '\nCitizenship: ' + d.citizenship + '\nVeterans\' Preference: ' + d.vetPref + (d.clearance ? '\nSecurity Clearance: ' + d.clearance : '') + (d.targetJob ? '\n\nApplying for: ' + d.targetJob : '') },
+        { heading: 'Military Experience', content: d.branch + ' — ' + d.mos + '\nRank: ' + d.rank + '\nDates: ' + d.serviceDates + '\nHours per week: ' + d.hoursPerWeek + '\n\nDuties and Accomplishments:\n' + d.duties },
+        { heading: 'Education', content: d.education },
+        { heading: 'Certifications, Licenses & Training', content: d.certs || 'List any certifications, licenses, and military training courses with dates.' },
+        { heading: 'Federal Resume Formatting Tips', content: 'IMPORTANT — Federal resumes are NOT like civilian resumes:\n\n• Length: 3-5 pages is normal (not 1-2 pages)\n• Include hours per week for every position\n• Include exact dates (month/year) for all positions\n• Include supervisor name and phone for each position\n• Use keywords from the job announcement throughout\n• Quantify accomplishments with numbers, percentages, dollar amounts\n• Include ALL relevant training, even military courses\n• List your GPA if 3.0 or above\n• Describe duties in paragraph format, not just bullet points\n• Each duty description should clearly address the job\'s qualification requirements' },
+        { heading: 'Veterans\' Preference Notes', content: d.vetPref.indexOf('5-point') >= 0 ? 'You claimed 5-point preference (TP). You will need to submit a DD-214 showing honorable discharge.' : d.vetPref.indexOf('10-point') >= 0 ? 'You claimed 10-point preference. You will need to submit SF-15, DD-214, and VA disability rating letter.' : 'Review your eligibility for veterans\' preference at fedshirevets.gov.' },
+        { heading: 'Next Steps', content: '1. Create or update your USAJobs profile at usajobs.gov\n2. Upload this resume to your USAJobs account\n3. Tailor the resume for each specific job announcement\n4. Apply to positions where you meet the minimum qualifications\n5. Consider attending a federal resume workshop at your local VA or American Job Center' }
+      ]
+    };
+  }
+
+  function generateInterviewPrep(d) {
+    return {
+      title: 'Interview Prep Script — ' + d.fullName,
+      sections: [
+        { heading: 'INTERVIEW PREPARATION: ' + d.targetRole, content: 'Candidate: ' + d.fullName + '\nTarget Role: ' + d.targetRole + '\nBackground: ' + d.branch + ' — ' + d.mos },
+        { heading: 'STAR Response #1: Leadership', content: 'SITUATION: Set the scene from your military experience.\n' + d.leadershipExample + '\n\nSTAR Framework:\n• Situation: [Opening context — where were you, what was happening?]\n• Task: [What was your specific responsibility or challenge?]\n• Action: [What exactly did YOU do? Use "I" not "we"]\n• Result: [What was the measurable outcome? Quantify if possible]\n\nCivilian Translation Tip: Replace military jargon. Instead of "I led a squad of 9 on a patrol," say "I managed a team of 9 professionals executing high-stakes field operations with zero safety incidents."' },
+        { heading: 'STAR Response #2: Overcoming Challenges', content: 'SITUATION: Describe the challenge.\n' + d.challengeExample + '\n\nSTAR Framework:\n• Situation: [What was the challenge or problem?]\n• Task: [What needed to be accomplished despite the challenge?]\n• Action: [How did you adapt, problem-solve, or persevere?]\n• Result: [What was the outcome? What did you learn?]\n\nCivilian Translation Tip: Emphasize problem-solving, adaptability, and composure under pressure — these translate to any industry.' },
+        { heading: 'STAR Response #3: Teamwork & Conflict', content: 'SITUATION: Describe the team dynamic.\n' + d.teamworkExample + '\n\nSTAR Framework:\n• Situation: [What was the team dynamic or conflict?]\n• Task: [What role did you play in resolving it?]\n• Action: [How did you communicate, mediate, or collaborate?]\n• Result: [How was the team or project improved?]\n\nCivilian Translation Tip: Show emotional intelligence and communication skills, not just authority.' },
+        { heading: 'Additional Strengths to Highlight', content: d.additionalStrengths || 'Consider mentioning: security clearance, project management experience, training and mentoring, technical certifications, crisis management.' },
+        { heading: 'Common Interview Questions to Prepare For', content: '• "Tell me about yourself." — Lead with your military background translated for this role.\n• "Why are you leaving the military / why this career?" — Focus on how your skills transfer.\n• "What is your biggest weakness?" — Pick something real but show how you\'re improving.\n• "Where do you see yourself in 5 years?" — Show ambition aligned with the company.\n• "Why should we hire you?" — Connect your military discipline, leadership, and specific skills to their needs.' },
+        { heading: 'Interview Day Tips', content: '• Arrive 15 minutes early\n• Bring 3-5 printed copies of your resume\n• Dress one level above the company norm\n• Prepare 2-3 questions to ask them\n• Send a thank-you email within 24 hours\n• If virtual: test your camera/mic, use a clean background, make eye contact with the camera' }
+      ]
+    };
+  }
+
+  function generateCreditDispute(d) {
+    var dateStr = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    var bureauAddresses = {
+      'Equifax': 'Equifax Information Services LLC\nP.O. Box 740256\nAtlanta, GA 30374-0256',
+      'Experian': 'Experian\nP.O. Box 4500\nAllen, TX 75013',
+      'TransUnion': 'TransUnion LLC\nConsumer Dispute Center\nP.O. Box 2000\nChester, PA 19016',
+      'All three bureaus': 'Send separate copies to:\n\nEquifax: P.O. Box 740256, Atlanta, GA 30374-0256\nExperian: P.O. Box 4500, Allen, TX 75013\nTransUnion: P.O. Box 2000, Chester, PA 19016'
+    };
+    return {
+      title: 'Credit Dispute Letter',
+      sections: [
+        { heading: '', content: d.fullName + '\n' + d.address + '\n\n' + dateStr + '\n\n' + (bureauAddresses[d.bureau] || d.bureau) },
+        { heading: 'RE: Formal Dispute of Inaccurate Credit Information', content: 'Dear ' + d.bureau + ' Dispute Department,\n\nI am writing pursuant to the Fair Credit Reporting Act (FCRA), 15 U.S.C. § 1681, to dispute inaccurate information on my credit report.' },
+        { heading: 'Disputed Account', content: 'Creditor/Account Name: ' + d.accountName + (d.accountNumber ? '\nAccount Number: ' + d.accountNumber : '') + '\nReason for Dispute: ' + d.disputeReason },
+        { heading: 'Explanation', content: d.explanation },
+        { heading: 'Veteran Status & SCRA Protections', content: d.veteranStatus.indexOf('Yes') === 0 ? 'I am a United States military ' + d.veteranStatus.replace('Yes — ', '') + '. I request that any applicable protections under the Servicemembers Civil Relief Act (SCRA) be applied. The SCRA provides specific credit protections for servicemembers and veterans that may affect how this account should be reported.' : '' },
+        { heading: 'Request', content: 'Under the FCRA, you are required to investigate this dispute within 30 days, forward my dispute to the furnisher, and remove or correct the item if it cannot be verified.\n\nI request that you:\n1. Investigate this disputed item immediately\n2. Forward all relevant documentation to the furnisher\n3. Remove or correct the inaccurate information\n4. Send me written confirmation of the results\n5. Provide an updated copy of my credit report' },
+        { heading: 'Enclosures', content: 'I am enclosing:\n• Copy of my government-issued ID\n• Copy of my credit report with the disputed item highlighted\n• [Any supporting documents proving the inaccuracy]\n' + (d.veteranStatus.indexOf('Yes') === 0 ? '• Copy of DD-214 or military orders (for SCRA protections)' : '') },
+        { heading: 'Closing', content: 'Please investigate this matter promptly. I expect a written response within 30 days as required by law.\n\nSincerely,\n\n' + d.fullName },
+        { heading: 'Next Steps', content: '1. Send via certified mail with return receipt requested\n2. Keep copies of everything\n3. If disputing with all three bureaus, send separate letters to each\n4. Follow up after 30 days if no response\n5. If the bureau does not correct the item, you can file a complaint with the Consumer Financial Protection Bureau (CFPB)\n6. Veterans can get free credit counseling through many VSOs' }
+      ]
+    };
+  }
+
+  function generateBudgetPlan(d) {
+    var income = parseFloat(d.monthlyIncome.replace(/[^0-9.]/g, '')) || 0;
+    var housing = parseFloat(d.housing.replace(/[^0-9.]/g, '')) || 0;
+    var transport = parseFloat(d.transportation.replace(/[^0-9.]/g, '')) || 0;
+    var food = parseFloat(d.food.replace(/[^0-9.]/g, '')) || 0;
+    var essentials = housing + transport + food;
+    var remaining = income - essentials;
+    var housingPct = income > 0 ? Math.round((housing / income) * 100) : 0;
+
+    return {
+      title: 'Budget & Financial Recovery Plan — ' + d.fullName,
+      sections: [
+        { heading: 'MONTHLY FINANCIAL SNAPSHOT', content: 'Name: ' + d.fullName + '\nDate: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) + '\nPrimary Goal: ' + d.financialGoal },
+        { heading: 'Income', content: 'Total Monthly Income: $' + income.toLocaleString() + '\n\nSources:\n' + d.incomeSources },
+        { heading: 'Essential Expenses', content: 'Housing (rent/mortgage + utilities): $' + housing.toLocaleString() + ' (' + housingPct + '% of income)' + (housingPct > 30 ? ' ⚠ Above recommended 30%' : ' ✓ Within recommended range') + '\nTransportation: $' + transport.toLocaleString() + '\nFood/Groceries: $' + food.toLocaleString() + '\n\nTotal Essentials: $' + essentials.toLocaleString() + '\nRemaining after essentials: $' + remaining.toLocaleString() },
+        { heading: 'Other Monthly Expenses', content: d.otherExpenses || 'Review and list all other recurring expenses: phone, insurance, subscriptions, childcare, etc.' },
+        { heading: 'Debts', content: d.debts + '\n\nDebt Payoff Strategy:\n• List debts from smallest balance to largest (debt snowball) or highest interest to lowest (debt avalanche)\n• Pay minimums on all debts, then put extra toward your target debt\n• Once one debt is paid off, roll that payment into the next' },
+        { heading: 'Recommended Budget (50/30/20 Rule)', content: 'Based on your $' + income.toLocaleString() + ' monthly income:\n\n50% Needs (max $' + Math.round(income * 0.5).toLocaleString() + '): Housing, transportation, food, insurance, minimum debt payments\n30% Wants (max $' + Math.round(income * 0.3).toLocaleString() + '): Entertainment, dining out, subscriptions, hobbies\n20% Savings & Extra Debt (min $' + Math.round(income * 0.2).toLocaleString() + '): Emergency fund, retirement, extra debt payments' },
+        { heading: 'Action Plan', content: '1. Build a $1,000 starter emergency fund first\n2. List all debts and choose snowball or avalanche method\n3. Cut unnecessary subscriptions and expenses\n4. If you have VA disability, confirm you are receiving the correct rating\n5. Check if you qualify for property tax exemptions, vehicle registration discounts, or other veteran benefits\n6. Set up automatic transfers for savings on payday\n7. Review and adjust this budget monthly' },
+        { heading: 'Veteran-Specific Resources', content: '• VA Financial Counseling: Call 1-800-827-1000\n• Military OneSource (active/recently separated): militaryonesource.mil\n• Consumer Financial Protection Bureau Veterans Page: consumerfinance.gov/veterans\n• National Foundation for Credit Counseling: nfcc.org\n• Many states offer veteran-specific property tax, vehicle, and education benefits — check AfterAction AI State Benefits' }
+      ]
+    };
+  }
+
   // ── Render Output ──────────────────────────────────────
   function renderOutput(output, formData) {
     var html = '';
@@ -391,9 +590,9 @@
         templateData.suggested_next.forEach(function(nextId) {
           var next = all.find(function(t) { return t.id === nextId; });
           if (next) {
-            var href = next.phase === 1 ? 'template-flow.html?id=' + next.id : '#';
-            var cls = next.phase === 1 ? 'tmpl-flow__next-link' : 'tmpl-flow__next-link tmpl-flow__next-link--disabled';
-            nextHtml += '<a href="' + href + '" class="' + cls + '">' + escapeHtml(next.title) + (next.phase !== 1 ? ' (Coming Soon)' : '') + '</a>';
+            var href = next.phase <= 2 ? 'template-flow.html?id=' + next.id : '#';
+            var cls = next.phase <= 2 ? 'tmpl-flow__next-link' : 'tmpl-flow__next-link tmpl-flow__next-link--disabled';
+            nextHtml += '<a href="' + href + '" class="' + cls + '">' + escapeHtml(next.title) + (next.phase > 2 ? ' (Coming Soon)' : '') + '</a>';
           }
         });
         linksDiv.innerHTML = nextHtml;
