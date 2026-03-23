@@ -727,13 +727,17 @@
     html += '<h1 class="tmpl-flow__title">' + escapeHtml(output.title) + '</h1>';
     html += '</div>';
 
-    // Legal disclaimer banner
+    // Legal disclaimer banner (template-specific)
     if (templateData.legal_disclaimer) {
       html += '<div class="tmpl-disclaimer">';
       html += '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>';
       html += '<span>' + escapeHtml(templateData.legal_disclaimer) + '</span>';
       html += '</div>';
     }
+    // Universal AI disclaimer (always shown)
+    html += '<div class="tmpl-disclaimer" style="font-size:0.85rem;opacity:0.85;">';
+    html += '<span>AI-generated content. Not legal, medical, or financial advice. Verify before use. See our <a href="disclaimer.html">Disclaimer</a> and <a href="terms.html">Terms of Service</a>.</span>';
+    html += '</div>';
 
     // Output document
     html += '<div class="tmpl-output" id="outputContent">';
@@ -919,7 +923,7 @@
       doc.setFont('helvetica', 'italic');
       doc.setFontSize(8);
       doc.setTextColor(150, 150, 150);
-      doc.text('AfterAction AI — afteractionai.org', mL, pageH - 8);
+      doc.text('AfterAction AI — afteractionai.org | AI-generated content. Not legal, medical, or financial advice. Verify before use.', mL, pageH - 8);
       doc.text('Page ' + p + ' of ' + totalPages, pageW - mR, pageH - 8, { align: 'right' });
     }
 
