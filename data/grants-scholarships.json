@@ -14,7 +14,11 @@
     "source_url": "https://www.pattillmanfoundation.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-folds-of-honor",
@@ -31,7 +35,11 @@
     "source_url": "https://foldsofhonor.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "dependents", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "dependents",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-amvets",
@@ -48,7 +56,11 @@
     "source_url": "https://www.amvets.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-dav",
@@ -59,13 +71,17 @@
     "geography": "National",
     "eligibility": "Disabled veterans and their dependents pursuing higher education.",
     "amount": "$2,500 - $6,000",
-    "application_link": "https://www.dav.org/veterans/benefits-support/scholarships/",
+    "application_link": "https://www.dav.org/get-involved/volunteer/dav-scholarships/",
     "deadline": "August 31",
     "website": "https://www.dav.org",
     "source_url": "https://www.dav.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-vfw",
@@ -76,13 +92,17 @@
     "geography": "National",
     "eligibility": "VFW members and their families pursuing education.",
     "amount": "$1,000 - $5,000",
-    "application_link": "https://www.vfw.org/community/youth-and-sports/scholarships",
+    "application_link": "https://www.vfw.org/community/youth-and-education/youth-scholarships",
     "deadline": "July 31",
     "website": "https://www.vfw.org",
     "source_url": "https://www.vfw.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-streetshares",
@@ -99,7 +119,11 @@
     "source_url": "https://www.secondservicefoundation.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "entrepreneurship"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "entrepreneurship"
+    }
   },
   {
     "id": "grant-bunker-labs",
@@ -116,7 +140,11 @@
     "source_url": "https://www.bunkerlabs.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "entrepreneurship"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "entrepreneurship"
+    }
   },
   {
     "id": "grant-sba-ovbd",
@@ -133,7 +161,11 @@
     "source_url": "https://www.sba.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "entrepreneurship"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "entrepreneurship"
+    }
   },
   {
     "id": "grant-student-veterans-america",
@@ -150,7 +182,11 @@
     "source_url": "https://studentveterans.org",
     "last_verified": "2026-03-22",
     "manual_review": false,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-fisher-house",
@@ -167,7 +203,11 @@
     "source_url": "https://www.fisherhouse.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "hardship"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "hardship"
+    }
   },
   {
     "id": "grant-va-home-loan",
@@ -184,7 +224,11 @@
     "source_url": "https://www.va.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "housing"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "housing"
+    }
   },
   {
     "id": "grant-va-retraining",
@@ -201,7 +245,11 @@
     "source_url": "https://www.va.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-disabled-veteran-tech",
@@ -218,7 +266,11 @@
     "source_url": "https://www.va.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "disability"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "disability"
+    }
   },
   {
     "id": "grant-military-spouse-education",
@@ -235,7 +287,11 @@
     "source_url": "https://www.militaryonesource.mil",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "spouses", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "spouses",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-survivor-education",
@@ -252,7 +308,11 @@
     "source_url": "https://www.va.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "dependents", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "dependents",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-state-veterans-grants",
@@ -269,7 +329,11 @@
     "source_url": "https://www.va.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-transition-employment",
@@ -286,7 +350,11 @@
     "source_url": "https://www.va.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "employment"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "employment"
+    }
   },
   {
     "id": "grant-vet-hiring-incentive",
@@ -303,7 +371,11 @@
     "source_url": "https://www.dol.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "employment"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "employment"
+    }
   },
   {
     "id": "grant-caregiver-support",
@@ -320,7 +392,11 @@
     "source_url": "https://www.caregiver.va.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "spouses", "goal_type": "hardship"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "spouses",
+      "goal_type": "hardship"
+    }
   },
   {
     "id": "grant-homeless-veterans",
@@ -337,7 +413,11 @@
     "source_url": "https://www.va.gov/homeless/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "housing"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "housing"
+    }
   },
   {
     "id": "grant-guard-reserve-education",
@@ -354,7 +434,11 @@
     "source_url": "https://www.militaryonesource.mil",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "guard_reserve", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "guard_reserve",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-va-independent-living",
@@ -371,7 +455,11 @@
     "source_url": "https://www.va.gov/careers-employment/vocational-rehabilitation/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "education"
+    }
   },
   {
     "id": "grant-military-nonprofit-loans",
@@ -382,13 +470,17 @@
     "geography": "National",
     "eligibility": "Military families in financial crisis (active duty, retired, survivors).",
     "amount": "$1,000 - $5,000",
-    "application_link": "https://www.operationhomefront.org/get-help/",
+    "application_link": "https://www.operationhomefront.org/our-programs/",
     "deadline": "Rolling admission",
     "website": "https://www.operationhomefront.org",
     "source_url": "https://www.operationhomefront.org",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "veterans", "goal_type": "hardship"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "veterans",
+      "goal_type": "hardship"
+    }
   },
   {
     "id": "grant-military-child-education",
@@ -405,6 +497,10 @@
     "source_url": "https://www.militaryonesource.mil",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "financial_assistance", "audience": "dependents", "goal_type": "education"}
+    "tags": {
+      "issue_type": "financial_assistance",
+      "audience": "dependents",
+      "goal_type": "education"
+    }
   }
 ]
