@@ -1,1047 +1,4171 @@
 [
   {
-    "id": "fl-property-tax-disabled",
-    "state": "FL",
-    "benefit_name": "Disabled Veteran Property Tax Discount",
-    "category": "property_tax",
-    "summary": "Provides a discount on property taxes for disabled veterans with permanent service-connected disabilities. The amount of discount depends on the degree of disability.",
-    "eligibility": "Must be a Florida resident, a U.S. veteran with a service-connected disability rated by the VA, and own property in Florida.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Florida Department of Revenue",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "fl-vehicle-tag",
-    "state": "FL",
-    "benefit_name": "Disabled Veteran License Plate",
-    "category": "vehicle",
-    "summary": "Allows disabled veterans to obtain special license plates at no cost, providing recognition and parking benefits.",
-    "eligibility": "Must have a service-connected disability rated by the VA and be a Florida resident with a valid driver license and vehicle registration.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Florida Department of Highway Safety and Motor Vehicles",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "fl-education-prepaid",
-    "state": "FL",
-    "benefit_name": "Florida Prepaid College Plan for Veterans",
-    "category": "education",
-    "summary": "Provides a pre-paid college tuition plan that allows veterans and their dependents to lock in current tuition rates for future education.",
-    "eligibility": "Florida residents who are veterans, active duty service members, or dependents of qualifying military personnel.",
-    "applies_to": ["all_veterans", "active_duty", "dependent", "spouse"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Florida Prepaid College Board",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "fl-employment-priority",
-    "state": "FL",
-    "benefit_name": "Veteran Hiring Preference in State Employment",
-    "category": "employment",
-    "summary": "Provides hiring preference and employment opportunities for veterans seeking state government jobs, including veterans with disabilities.",
-    "eligibility": "U.S. veterans with an honorable or general discharge who are Florida residents and meet state employment qualifications.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Florida Department of Veterans Affairs",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "fl-recreation-park",
-    "state": "FL",
-    "benefit_name": "State Park Day Use Pass for Veterans",
-    "category": "recreation",
-    "summary": "Offers free or discounted admission to Florida state parks for veterans and their immediate families.",
-    "eligibility": "Florida veterans with a veteran ID or military discharge documents; some parks may offer benefits to spouses and dependents.",
-    "applies_to": ["all_veterans", "dependent"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Florida Department of Environmental Protection",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "fl-housing-assistance",
-    "state": "FL",
-    "benefit_name": "Veteran Housing Assistance Program",
-    "category": "housing",
-    "summary": "Provides housing assistance and grants to low-income veterans and their families, including emergency housing and supportive services.",
-    "eligibility": "Low-income veterans who are Florida residents, demonstrate financial need, and may require supportive services related to homelessness or housing instability.",
-    "applies_to": ["all_veterans", "dependent"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Florida Department of Veterans Affairs",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "fl-healthcare-benefits",
-    "state": "FL",
-    "benefit_name": "Veterans Healthcare Access Program",
-    "category": "healthcare",
-    "summary": "Provides information and assistance in accessing healthcare services through VA medical centers, state programs, and private providers.",
-    "eligibility": "All Florida veterans are eligible to apply; coverage varies based on VA eligibility, income, and disability status.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Florida Department of Veterans Affairs",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "fl-burial-memorial",
-    "state": "FL",
-    "benefit_name": "Veteran Burial Flag and Marker Program",
-    "category": "burial",
-    "summary": "Provides burial flags and grave markers for deceased veterans at no cost, honoring their service.",
-    "eligibility": "Families of U.S. veterans with an honorable discharge. Benefits apply to burials in Florida cemeteries.",
-    "applies_to": ["survivor"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Florida Department of Veterans Affairs",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "survivor"}
-  },
-  {
-    "id": "fl-licensing-fee",
-    "state": "FL",
-    "benefit_name": "Professional License Fee Reduction",
-    "category": "licensing",
-    "summary": "Reduces or waives licensing fees for certain professional licenses for veterans, including business and occupational licenses.",
-    "eligibility": "Veterans applying for professional licenses in Florida; specific licenses vary by trade and regulation.",
-    "applies_to": ["all_veterans"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Florida Department of Business and Professional Regulation",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "fl-dependent-education",
-    "state": "FL",
+    "id": "hi-dependent-education-benefits",
+    "state": "HI",
     "benefit_name": "Dependent Education Benefits",
-    "category": "dependent",
-    "summary": "Offers tuition assistance and education benefits for spouses and dependent children of deceased, disabled, and retired veterans.",
-    "eligibility": "Spouses and children of eligible veterans; specific eligibility depends on veteran's service, disability status, and death in service.",
-    "applies_to": ["dependent", "spouse", "survivor"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Florida Department of Education",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "dependent"}
-  },
-  {
-    "id": "fl-disabled-training",
-    "state": "FL",
-    "benefit_name": "Vocational Rehabilitation for Disabled Veterans",
-    "category": "disabled_veteran",
-    "summary": "Provides vocational training, job placement services, and skill development for service-connected disabled veterans to return to work.",
-    "eligibility": "Veterans with service-connected disabilities rated by the VA; Florida residency required.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Florida Department of Veterans Affairs",
-    "official_link": "https://www.floridavets.org/",
-    "application_link": null,
-    "source_url": "https://www.floridavets.org/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "tx-property-tax-disabled",
-    "state": "TX",
-    "benefit_name": "Disabled Veteran Property Tax Exemption",
-    "category": "property_tax",
-    "summary": "Provides partial or full property tax exemption for disabled veterans; the amount depends on disability rating and surviving spouse status.",
-    "eligibility": "Must be a Texas resident, disabled veteran with service-connected disability, and own property in Texas. Surviving spouses of 100% disabled veterans may also qualify.",
-    "applies_to": ["disabled_veteran", "survivor"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Texas Comptroller of Public Accounts",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "tx-vehicle-tag",
-    "state": "TX",
-    "benefit_name": "Disabled Veteran License Plate",
-    "category": "vehicle",
-    "summary": "Provides special disabled veteran license plates at no cost, offering parking privileges and recognition of service.",
-    "eligibility": "Texas veterans with a service-connected disability rated by the VA; must have valid vehicle registration.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Texas Department of Motor Vehicles",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "tx-education-grant",
-    "state": "TX",
-    "benefit_name": "Texas Veterans Education Grant",
     "category": "education",
-    "summary": "Provides tuition assistance for veterans attending public or private colleges and universities in Texas, covering up to 100% of tuition.",
-    "eligibility": "Texas veterans with honorable discharge who were Texas residents at time of military service; enrollment in approved Texas institutions required.",
-    "applies_to": ["all_veterans"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Texas Higher Education Coordinating Board",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "tx-employment-veteran-jobs",
-    "state": "TX",
-    "benefit_name": "Veteran Job Training and Placement Program",
-    "category": "employment",
-    "summary": "Offers job training, career counseling, and employment placement services to help veterans transition to civilian employment.",
-    "eligibility": "Texas veterans with honorable discharge seeking employment assistance; disabled veterans receive priority services.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Texas Workforce Commission",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "tx-recreation-hunt-fish",
-    "state": "TX",
-    "benefit_name": "Disabled Veteran Hunting and Fishing License Exemption",
-    "category": "recreation",
-    "summary": "Provides free hunting and fishing licenses to disabled veterans, allowing outdoor recreation at no cost.",
-    "eligibility": "Texas disabled veterans with service-connected disabilities; must comply with hunting and fishing regulations.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Texas Parks and Wildlife Department",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "tx-housing-low-income",
-    "state": "TX",
-    "benefit_name": "Housing Assistance for Veterans",
-    "category": "housing",
-    "summary": "Provides housing assistance grants and supportive services for low-income veterans experiencing housing instability or homelessness.",
-    "eligibility": "Low-income Texas veterans demonstrating financial need; priority given to disabled veterans and those at risk of homelessness.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Texas Veterans Commission",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "tx-healthcare-access",
-    "state": "TX",
-    "benefit_name": "Veterans Healthcare Coordination Program",
-    "category": "healthcare",
-    "summary": "Coordinates veteran access to state healthcare services, VA benefits, and community health resources.",
-    "eligibility": "All Texas veterans are eligible; services vary based on income, disability, and enrollment in VA or state programs.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Texas Department of Health Services",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "tx-burial-honor",
-    "state": "TX",
-    "benefit_name": "Veteran Burial Benefits Program",
-    "category": "burial",
-    "summary": "Provides burial flags, grave markers, and funeral assistance for deceased veterans and their eligible family members.",
-    "eligibility": "Families of Texas veterans with honorable discharge; services available at participating Texas cemeteries.",
-    "applies_to": ["survivor"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Texas Veterans Commission",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "survivor"}
-  },
-  {
-    "id": "tx-licensing-profession",
-    "state": "TX",
-    "benefit_name": "Professional License Credit for Military Service",
-    "category": "licensing",
-    "summary": "Allows veterans to receive credit for military service experience toward professional licensing requirements in various trades.",
-    "eligibility": "Texas veterans applying for professional licenses; specific trades include electrician, plumber, HVAC, and construction licensing.",
-    "applies_to": ["all_veterans"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Texas Department of Licensing and Regulation",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "tx-dependent-survivor",
-    "state": "TX",
-    "benefit_name": "Dependent and Survivor Education Assistance",
-    "category": "dependent",
-    "summary": "Offers tuition assistance and educational benefits for spouses and children of deceased or disabled veterans.",
-    "eligibility": "Spouses and dependent children of eligible deceased or disabled Texas veterans; enrollment in approved Texas educational institutions required.",
-    "applies_to": ["dependent", "spouse", "survivor"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Texas Education Agency",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "dependent"}
-  },
-  {
-    "id": "tx-disabled-vocational",
-    "state": "TX",
-    "benefit_name": "Vocational Rehabilitation for Disabled Veterans",
-    "category": "disabled_veteran",
-    "summary": "Provides vocational training, career counseling, and job placement services to service-connected disabled veterans for successful employment.",
-    "eligibility": "Texas veterans with service-connected disabilities rated by the VA; program helps achieve employment goals.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Texas Veterans Commission",
-    "official_link": "https://tvc.texas.gov",
-    "application_link": null,
-    "source_url": "https://tvc.texas.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "ca-property-tax-exemption",
-    "state": "CA",
-    "benefit_name": "Disabled Veteran Property Tax Exemption",
-    "category": "property_tax",
-    "summary": "Provides property tax exemption for disabled veterans meeting income and disability criteria; surviving spouses of 100% disabled veterans may also qualify.",
-    "eligibility": "California residents, disabled veterans with service-connected disability rated by VA, meeting income limits; assessed value under $200,000.",
-    "applies_to": ["disabled_veteran", "survivor"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "California County Assessor Offices",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "ca-vehicle-registration",
-    "state": "CA",
-    "benefit_name": "Disabled Veteran License Plate and Vehicle Registration Fee Waiver",
-    "category": "vehicle",
-    "summary": "Provides disabled veteran license plates and waives vehicle registration fees, reducing transportation costs for disabled veterans.",
-    "eligibility": "California disabled veterans with service-connected disability; must hold valid California driver license and vehicle registration.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "California Department of Motor Vehicles",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "ca-education-scholarships",
-    "state": "CA",
-    "benefit_name": "California Education for Veterans Assistance Program",
-    "category": "education",
-    "summary": "Offers tuition assistance and scholarships for veterans attending California community colleges, universities, and technical schools.",
-    "eligibility": "California veterans with honorable discharge attending eligible California educational institutions; additional funding for dependent children.",
-    "applies_to": ["all_veterans", "dependent"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "California Department of Veterans Affairs",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "ca-employment-priority",
-    "state": "CA",
-    "benefit_name": "Veterans Hiring Preference in State Employment",
-    "category": "employment",
-    "summary": "Provides hiring preference and job opportunities for veterans seeking positions in California state government agencies.",
-    "eligibility": "California veterans with honorable or general discharge meeting state job qualifications; disabled veterans receive additional priority.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "California Human Resources Department",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "ca-recreation-state-parks",
-    "state": "CA",
-    "benefit_name": "Veteran State Park Day Use Pass",
-    "category": "recreation",
-    "summary": "Offers free or discounted admission to California state parks and recreation areas for veterans and immediate family members.",
-    "eligibility": "California veterans with valid military ID or discharge papers; benefits extend to spouses and dependent children.",
-    "applies_to": ["all_veterans", "dependent", "spouse"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "California Department of Parks and Recreation",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "ca-housing-grant",
-    "state": "CA",
-    "benefit_name": "California Veterans Housing and Homelessness Prevention Program",
-    "category": "housing",
-    "summary": "Provides emergency housing assistance, permanent supportive housing, and services to help prevent veteran homelessness.",
-    "eligibility": "Low-income California veterans experiencing housing instability or homelessness; priority given to disabled and chronically homeless veterans.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "California Department of Veterans Affairs",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "ca-healthcare-medi-cal",
-    "state": "CA",
-    "benefit_name": "Veteran Access to Medi-Cal and Healthcare Services",
-    "category": "healthcare",
-    "summary": "Ensures veteran access to California Medi-Cal and coordinates care through VA and state health programs.",
-    "eligibility": "All California veterans are eligible for enrollment; coverage based on income, disability status, and household size.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "California Department of Healthcare Services",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "ca-burial-flag",
-    "state": "CA",
-    "benefit_name": "Veteran Burial Flag and Grave Marker Program",
-    "category": "burial",
-    "summary": "Provides burial flags and grave markers at no cost to honor deceased veterans in California cemeteries.",
-    "eligibility": "Families of California veterans with honorable discharge; burial in California or at Department of Veterans Affairs cemeteries.",
-    "applies_to": ["survivor"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "California Department of Veterans Affairs",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "survivor"}
-  },
-  {
-    "id": "ca-licensing-military-credit",
-    "state": "CA",
-    "benefit_name": "Professional License Military Service Credit",
-    "category": "licensing",
-    "summary": "Provides credit for military service experience toward professional licensing requirements in various occupations.",
-    "eligibility": "California veterans applying for professional licenses; specific occupations include contractor, electrician, plumber, and construction trades.",
-    "applies_to": ["all_veterans"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "California Department of Consumer Affairs",
-    "official_link": "https://www.calvet.ca.gov/",
-    "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "ca-dependent-education",
-    "state": "CA",
-    "benefit_name": "Dependent Children Education Benefits",
-    "category": "dependent",
-    "summary": "Offers educational assistance and tuition support for spouses and dependent children of deceased or disabled veterans.",
-    "eligibility": "Spouses and children of eligible deceased or 100% disabled California veterans; enrollment in approved institutions required.",
-    "applies_to": ["dependent", "spouse", "survivor"],
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Hawaii.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
     "disability_threshold": "100%",
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": true,
-    "administering_agency": "California Department of Veterans Affairs",
-    "official_link": "https://www.calvet.ca.gov/",
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
     "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "dependent"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
   },
   {
-    "id": "ca-disabled-rehabilitation",
-    "state": "CA",
-    "benefit_name": "Disabled Veteran Vocational Rehabilitation Program",
+    "id": "hi-dependent-survivor-benefits",
+    "state": "HI",
+    "benefit_name": "Hawaii Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Hawaii, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Hawaii. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Hawaii Office of Veterans Services",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "hi-disabled-veteran-benefits",
+    "state": "HI",
+    "benefit_name": "Hawaii Disabled Veteran Enhanced Benefits",
     "category": "disabled_veteran",
-    "summary": "Provides comprehensive vocational training, career counseling, and employment support for service-connected disabled veterans.",
-    "eligibility": "California veterans with service-connected disabilities rated by VA seeking vocational rehabilitation and employment.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Hawaii, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Hawaii. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "California Department of Veterans Affairs",
-    "official_link": "https://www.calvet.ca.gov/",
+    "administering_agency": "Hawaii Office of Veterans Services",
+    "official_link": "https://dod.hawaii.gov/ovs/",
     "application_link": null,
-    "source_url": "https://www.calvet.ca.gov/",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "state_benefit", "audience": "disabled_veteran"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
   },
   {
-    "id": "az-property-tax-exemption",
-    "state": "AZ",
+    "id": "hi-disabled-veteran-property-tax-exemption",
+    "state": "HI",
     "benefit_name": "Disabled Veteran Property Tax Exemption",
     "category": "property_tax",
-    "summary": "Provides property tax exemption for disabled veterans; the exemption amount depends on disability rating and surviving spouse status.",
-    "eligibility": "Arizona residents who are disabled veterans with service-connected disability rated by VA; surviving spouses of 100% disabled veterans may qualify.",
-    "applies_to": ["disabled_veteran", "survivor"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Arizona Department of Revenue",
-    "official_link": "https://dvs.az.gov",
-    "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "az-vehicle-tag",
-    "state": "AZ",
-    "benefit_name": "Disabled Veteran License Plate and Registration Discount",
-    "category": "vehicle",
-    "summary": "Provides special disabled veteran license plates and registration fee reductions for vehicles registered to disabled veterans.",
-    "eligibility": "Arizona disabled veterans with service-connected disability; must have valid Arizona vehicle registration.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Hawaii.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Arizona Department of Transportation",
-    "official_link": "https://dvs.az.gov",
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
     "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "disabled_veteran"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
   },
   {
-    "id": "az-education-tuition",
-    "state": "AZ",
-    "benefit_name": "Arizona Veterans Education Grant",
-    "category": "education",
-    "summary": "Offers tuition assistance and educational grants for veterans attending Arizona colleges, universities, and trade schools.",
-    "eligibility": "Arizona veterans with honorable discharge attending approved Arizona educational institutions; program covers tuition and fees.",
-    "applies_to": ["all_veterans"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Arizona Board of Regents",
-    "official_link": "https://dvs.az.gov",
-    "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "az-employment-jobs",
-    "state": "AZ",
-    "benefit_name": "Veteran Employment and Training Services",
-    "category": "employment",
-    "summary": "Provides job training, career development, and employment placement services for veterans transitioning to civilian employment.",
-    "eligibility": "Arizona veterans with honorable discharge seeking employment assistance; disabled veterans receive priority placement.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Arizona Department of Veterans Services",
-    "official_link": "https://dvs.az.gov",
-    "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "az-recreation-hunting",
-    "state": "AZ",
-    "benefit_name": "Disabled Veteran Hunting and Fishing License",
-    "category": "recreation",
-    "summary": "Provides free hunting and fishing licenses to disabled veterans, allowing outdoor recreation opportunities without cost.",
-    "eligibility": "Arizona disabled veterans with service-connected disability; must comply with Arizona hunting and fishing regulations.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Arizona Game and Fish Department",
-    "official_link": "https://dvs.az.gov",
-    "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "az-housing-assistance",
-    "state": "AZ",
-    "benefit_name": "Arizona Veteran Housing Assistance Program",
-    "category": "housing",
-    "summary": "Offers housing assistance, emergency shelter, and supportive services to prevent homelessness among veterans.",
-    "eligibility": "Low-income Arizona veterans experiencing housing insecurity or homelessness; disabled and homeless veterans receive priority.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Arizona Department of Veterans Services",
-    "official_link": "https://dvs.az.gov",
-    "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "az-healthcare-medical",
-    "state": "AZ",
-    "benefit_name": "Veterans Healthcare Access and Coordination",
+    "id": "hi-hawaii-state-veterans-home",
+    "state": "HI",
+    "benefit_name": "Hawaii State Veterans Home",
     "category": "healthcare",
-    "summary": "Coordinates access to healthcare services through VA, state programs, and community providers for eligible veterans.",
-    "eligibility": "All Arizona veterans are eligible; coverage varies based on service era, disability, income, and VA enrollment status.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
+    "summary": "State-operated long-term care facility for eligible Hawaii veterans.",
+    "eligibility": "Hawaii resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Arizona Department of Health Services",
-    "official_link": "https://dvs.az.gov",
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
     "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "all_veterans"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
   },
   {
-    "id": "az-burial-honors",
-    "state": "AZ",
-    "benefit_name": "Veteran Burial and Honors Program",
+    "id": "hi-housing-assistance-program",
+    "state": "HI",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Hawaii veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "hi-hunting-and-fishing-license-discount",
+    "state": "HI",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Hawaii.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Fish and Wildlife Department",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "hi-in-state-tuition-waiver",
+    "state": "HI",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Hawaii public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Department of Education",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "hi-military-retirement-pay-exemption",
+    "state": "HI",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Hawaii state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Department of Revenue",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "hi-professional-license-fee-waiver",
+    "state": "HI",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Hawaii veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "hi-service-disabled-veteran-business-enterprise",
+    "state": "HI",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Hawaii.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "hi-specially-adapted-housing-assistance",
+    "state": "HI",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Hawaii veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "hi-state-employment-preference",
+    "state": "HI",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Hawaii veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "hi-state-veterans-cemetery",
+    "state": "HI",
+    "benefit_name": "State Veterans Cemetery",
     "category": "burial",
-    "summary": "Provides burial flags, grave markers, and funeral honors services for deceased veterans and eligible family members.",
-    "eligibility": "Families of Arizona veterans with honorable discharge; available at state and private cemeteries.",
-    "applies_to": ["survivor"],
-    "disability_threshold": "None",
+    "summary": "Cemetery providing burial services and perpetual care for Hawaii veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": true,
-    "administering_agency": "Arizona Department of Veterans Services",
-    "official_link": "https://dvs.az.gov",
+    "administering_agency": "Hawaii Department of Veterans Affairs",
+    "official_link": "https://dod.hawaii.gov/ovs/",
     "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "survivor"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
   },
   {
-    "id": "az-licensing-credit",
-    "state": "AZ",
-    "benefit_name": "Professional License Military Experience Credit",
-    "category": "licensing",
-    "summary": "Recognizes military experience and training toward professional licensing requirements in various occupations and trades.",
-    "eligibility": "Arizona veterans applying for professional licenses; applicable to construction, electrician, plumber, and other regulated occupations.",
-    "applies_to": ["all_veterans"],
-    "disability_threshold": "None",
+    "id": "hi-veteran-license-plates",
+    "state": "HI",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Hawaii veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Arizona Regulatory Boards",
-    "official_link": "https://dvs.az.gov",
+    "administering_agency": "Hawaii Department of Motor Vehicles",
+    "official_link": "https://dod.hawaii.gov/ovs/",
     "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "all_veterans"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
   },
   {
-    "id": "az-dependent-survivors",
-    "state": "AZ",
-    "benefit_name": "Dependent and Survivor Educational Benefits",
-    "category": "dependent",
-    "summary": "Provides educational assistance and tuition support for spouses and children of deceased or severely disabled veterans.",
-    "eligibility": "Spouses and dependent children of eligible deceased or 100% disabled Arizona veterans; enrollment in approved institutions required.",
-    "applies_to": ["dependent", "spouse", "survivor"],
+    "id": "ia-dependent-education-benefits",
+    "state": "IA",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Iowa.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
     "disability_threshold": "100%",
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": true,
-    "administering_agency": "Arizona Department of Veterans Services",
-    "official_link": "https://dvs.az.gov",
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
     "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "dependent"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
   },
   {
-    "id": "az-disabled-services",
-    "state": "AZ",
-    "benefit_name": "Disabled Veteran Support and Vocational Services",
+    "id": "ia-dependent-survivor-benefits",
+    "state": "IA",
+    "benefit_name": "Iowa Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Iowa, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Iowa. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://va.iowa.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "ia-disabled-veteran-benefits",
+    "state": "IA",
+    "benefit_name": "Iowa Disabled Veteran Enhanced Benefits",
     "category": "disabled_veteran",
-    "summary": "Offers comprehensive vocational rehabilitation, job training, and supportive services for service-connected disabled veterans.",
-    "eligibility": "Arizona veterans with service-connected disabilities rated by the VA seeking rehabilitation and employment support.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Iowa, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Iowa. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Arizona Department of Veterans Services",
-    "official_link": "https://dvs.az.gov",
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://va.iowa.gov/",
     "application_link": null,
-    "source_url": "https://dvs.az.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "state_benefit", "audience": "disabled_veteran"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
   },
   {
-    "id": "ga-property-tax-disabled",
-    "state": "GA",
-    "benefit_name": "Disabled Veteran Property Tax Discount",
+    "id": "ia-disabled-veteran-property-tax-exemption",
+    "state": "IA",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
     "category": "property_tax",
-    "summary": "Provides property tax discount for disabled veterans; the discount percentage depends on disability rating as determined by the VA.",
-    "eligibility": "Georgia residents who are disabled veterans with service-connected disability rated by the VA; property must be primary residence.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Iowa.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Georgia Department of Revenue",
-    "official_link": "https://veterans.georgia.gov",
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
     "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "disabled_veteran"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
   },
   {
-    "id": "ga-vehicle-plate",
-    "state": "GA",
-    "benefit_name": "Disabled Veteran Plate and Registration",
-    "category": "vehicle",
-    "summary": "Provides special disabled veteran license plates and registration benefits for eligible Georgia disabled veterans.",
-    "eligibility": "Georgia disabled veterans with service-connected disability; must have valid Georgia driver license and vehicle registration.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Georgia Department of Driver Services",
-    "official_link": "https://veterans.georgia.gov",
-    "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "ga-education-grant",
-    "state": "GA",
-    "benefit_name": "Georgia Veterans Education Grant",
-    "category": "education",
-    "summary": "Offers educational grants and tuition assistance for veterans attending Georgia colleges, universities, and technical colleges.",
-    "eligibility": "Georgia veterans with honorable discharge attending eligible Georgia institutions; covers tuition and some fees.",
-    "applies_to": ["all_veterans"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Georgia Student Finance Commission",
-    "official_link": "https://veterans.georgia.gov",
-    "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "ga-employment-veterans",
-    "state": "GA",
-    "benefit_name": "Veterans Employment Training Program",
-    "category": "employment",
-    "summary": "Provides job training, career counseling, and employment placement services for veterans in Georgia.",
-    "eligibility": "Georgia veterans with honorable discharge seeking employment; disabled veterans receive priority services and support.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Georgia Department of Labor",
-    "official_link": "https://veterans.georgia.gov",
-    "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "all_veterans"}
-  },
-  {
-    "id": "ga-recreation-hunt",
-    "state": "GA",
-    "benefit_name": "Disabled Veteran Hunting and Fishing License",
-    "category": "recreation",
-    "summary": "Provides free hunting and fishing licenses to disabled veterans, enabling outdoor recreation without licensing costs.",
-    "eligibility": "Georgia disabled veterans with service-connected disability; must comply with Georgia hunting and fishing regulations.",
-    "applies_to": ["disabled_veteran"],
-    "disability_threshold": "Any service-connected",
-    "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": false,
-    "administering_agency": "Georgia Department of Natural Resources",
-    "official_link": "https://veterans.georgia.gov",
-    "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "disabled_veteran"}
-  },
-  {
-    "id": "ga-housing-veteran",
-    "state": "GA",
-    "benefit_name": "Georgia Veteran Housing and Homelessness Assistance",
+    "id": "ia-housing-assistance-program",
+    "state": "IA",
+    "benefit_name": "Housing Assistance Program",
     "category": "housing",
-    "summary": "Provides housing assistance, emergency shelter, and supportive services for veterans experiencing homelessness or housing instability.",
-    "eligibility": "Low-income Georgia veterans facing housing challenges; disabled and homeless veterans receive priority assistance.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
+    "summary": "Housing assistance and loan programs for eligible Iowa veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
     "guard_reserve_eligible": true,
-    "spouse_survivor_eligible": true,
-    "administering_agency": "Georgia Department of Veterans Service",
-    "official_link": "https://veterans.georgia.gov",
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
     "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "all_veterans"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
   },
   {
-    "id": "ga-healthcare-access",
-    "state": "GA",
-    "benefit_name": "Veterans Healthcare Services and Coordination",
+    "id": "ia-hunting-and-fishing-license-discount",
+    "state": "IA",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Iowa.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Fish and Wildlife Department",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ia-in-state-tuition-waiver",
+    "state": "IA",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Iowa public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Department of Education",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ia-iowa-state-veterans-home",
+    "state": "IA",
+    "benefit_name": "Iowa State Veterans Home",
     "category": "healthcare",
-    "summary": "Coordinates veteran access to healthcare through VA facilities, state programs, and community health services.",
-    "eligibility": "All Georgia veterans are eligible; coverage varies based on service period, disability status, income, and VA enrollment.",
-    "applies_to": ["all_veterans", "disabled_veteran"],
-    "disability_threshold": "None",
+    "summary": "State-operated long-term care facility for eligible Iowa veterans.",
+    "eligibility": "Iowa resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Georgia Department of Health and Human Services",
-    "official_link": "https://veterans.georgia.gov",
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
     "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "all_veterans"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
   },
   {
-    "id": "ga-burial-flag",
-    "state": "GA",
-    "benefit_name": "Veteran Burial Flag and Grave Marker Program",
+    "id": "ia-military-retirement-pay-exemption",
+    "state": "IA",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Iowa state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Department of Revenue",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ia-professional-license-fee-waiver",
+    "state": "IA",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Iowa veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ia-service-disabled-veteran-business-enterprise",
+    "state": "IA",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Iowa.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ia-specially-adapted-housing-assistance",
+    "state": "IA",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Iowa veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ia-state-employment-preference",
+    "state": "IA",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Iowa veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ia-state-veterans-cemetery",
+    "state": "IA",
+    "benefit_name": "State Veterans Cemetery",
     "category": "burial",
-    "summary": "Provides burial flags and grave markers at no cost to honor deceased veterans in Georgia cemeteries.",
-    "eligibility": "Families of Georgia veterans with honorable discharge; burial in Georgia or state-affiliated cemeteries.",
-    "applies_to": ["survivor"],
-    "disability_threshold": "None",
+    "summary": "Cemetery providing burial services and perpetual care for Iowa veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": true,
-    "administering_agency": "Georgia Department of Veterans Service",
-    "official_link": "https://veterans.georgia.gov",
+    "administering_agency": "Iowa Department of Veterans Affairs",
+    "official_link": "https://dva.iowa.gov/",
     "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "survivor"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
   },
   {
-    "id": "ga-licensing-profession",
-    "state": "GA",
-    "benefit_name": "Professional License Military Credit Program",
-    "category": "licensing",
-    "summary": "Recognizes military service experience and training toward professional licensing in various occupations and trades.",
-    "eligibility": "Georgia veterans applying for professional licenses; applicable to construction, electrical, plumbing, and other regulated professions.",
-    "applies_to": ["all_veterans"],
-    "disability_threshold": "None",
+    "id": "ia-veteran-license-plates",
+    "state": "IA",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Iowa veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Georgia Licensing Boards",
-    "official_link": "https://veterans.georgia.gov",
+    "administering_agency": "Iowa Department of Motor Vehicles",
+    "official_link": "https://dva.iowa.gov/",
     "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "all_veterans"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
   },
   {
-    "id": "ga-dependent-education",
-    "state": "GA",
-    "benefit_name": "Dependent Education and Survivor Benefits",
-    "category": "dependent",
-    "summary": "Offers educational assistance and tuition support for spouses and children of deceased or severely disabled Georgia veterans.",
-    "eligibility": "Spouses and dependent children of eligible deceased or 100% disabled Georgia veterans; enrollment in approved institutions required.",
-    "applies_to": ["dependent", "spouse", "survivor"],
+    "id": "id-dependent-education-benefits",
+    "state": "ID",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Idaho.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
     "disability_threshold": "100%",
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": true,
-    "administering_agency": "Georgia Student Finance Commission",
-    "official_link": "https://veterans.georgia.gov",
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
     "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "dependent"}
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
   },
   {
-    "id": "ga-disabled-vocational",
-    "state": "GA",
-    "benefit_name": "Disabled Veteran Vocational Rehabilitation Services",
+    "id": "id-dependent-survivor-benefits",
+    "state": "ID",
+    "benefit_name": "Idaho Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Idaho, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Idaho. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Idaho Division of Veterans Services",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "id-disabled-veteran-benefits",
+    "state": "ID",
+    "benefit_name": "Idaho Disabled Veteran Enhanced Benefits",
     "category": "disabled_veteran",
-    "summary": "Provides vocational training, rehabilitation services, and employment support for service-connected disabled veterans.",
-    "eligibility": "Georgia veterans with service-connected disabilities rated by the VA seeking rehabilitation and employment assistance.",
-    "applies_to": ["disabled_veteran"],
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Idaho, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Idaho. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Division of Veterans Services",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "id-disabled-veteran-property-tax-exemption",
+    "state": "ID",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Idaho.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "id-housing-assistance-program",
+    "state": "ID",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Idaho veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "id-hunting-and-fishing-license-discount",
+    "state": "ID",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Idaho.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
     "disability_threshold": "Any service-connected",
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Georgia Department of Veterans Service",
-    "official_link": "https://veterans.georgia.gov",
+    "administering_agency": "Idaho Fish and Wildlife Department",
+    "official_link": "https://veterans.idaho.gov/",
     "application_link": null,
-    "source_url": "https://veterans.georgia.gov",
-    "last_verified": "2026-03-22",
+    "source_url": null,
+    "last_verified": "2026-03-24",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "state_benefit", "audience": "disabled_veteran"}
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "id-idaho-state-veterans-home",
+    "state": "ID",
+    "benefit_name": "Idaho State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Idaho veterans.",
+    "eligibility": "Idaho resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "id-in-state-tuition-waiver",
+    "state": "ID",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Idaho public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Education",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "id-military-retirement-pay-exemption",
+    "state": "ID",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Idaho state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Revenue",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "id-professional-license-fee-waiver",
+    "state": "ID",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Idaho veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "id-service-disabled-veteran-business-enterprise",
+    "state": "ID",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Idaho.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "id-specially-adapted-housing-assistance",
+    "state": "ID",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Idaho veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "id-state-employment-preference",
+    "state": "ID",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Idaho veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "id-state-veterans-cemetery",
+    "state": "ID",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Idaho veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Idaho Department of Veterans Affairs",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "id-veteran-license-plates",
+    "state": "ID",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Idaho veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Idaho Department of Motor Vehicles",
+    "official_link": "https://veterans.idaho.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ID",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "il-dependent-education-benefits",
+    "state": "IL",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Illinois.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "il-dependent-survivor-benefits",
+    "state": "IL",
+    "benefit_name": "Illinois Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Illinois, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Illinois. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Illinois Department of Veterans' Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "il-disabled-veteran-benefits",
+    "state": "IL",
+    "benefit_name": "Illinois Disabled Veteran Enhanced Benefits",
+    "category": "disabled_veteran",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Illinois, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Illinois. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Veterans' Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "il-disabled-veteran-property-tax-exemption",
+    "state": "IL",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Illinois.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "il-housing-assistance-program",
+    "state": "IL",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Illinois veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "il-hunting-and-fishing-license-discount",
+    "state": "IL",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Illinois.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Fish and Wildlife Department",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "il-illinois-state-veterans-home",
+    "state": "IL",
+    "benefit_name": "Illinois State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Illinois veterans.",
+    "eligibility": "Illinois resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "il-in-state-tuition-waiver",
+    "state": "IL",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Illinois public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Education",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "il-military-retirement-pay-exemption",
+    "state": "IL",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Illinois state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Revenue",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "il-professional-license-fee-waiver",
+    "state": "IL",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Illinois veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "il-service-disabled-veteran-business-enterprise",
+    "state": "IL",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Illinois.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "il-specially-adapted-housing-assistance",
+    "state": "IL",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Illinois veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "il-state-employment-preference",
+    "state": "IL",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Illinois veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "il-state-veterans-cemetery",
+    "state": "IL",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Illinois veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Illinois Department of Veterans Affairs",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "il-veteran-license-plates",
+    "state": "IL",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Illinois veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Illinois Department of Motor Vehicles",
+    "official_link": "https://veterans.illinois.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IL",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "in-dependent-education-benefits",
+    "state": "IN",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Indiana.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "in-dependent-survivor-benefits",
+    "state": "IN",
+    "benefit_name": "Indiana Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Indiana, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Indiana. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Indiana Department of Veterans' Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "in-disabled-veteran-benefits",
+    "state": "IN",
+    "benefit_name": "Indiana Disabled Veteran Enhanced Benefits",
+    "category": "disabled_veteran",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Indiana, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Indiana. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Veterans' Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "in-disabled-veteran-property-tax-exemption",
+    "state": "IN",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Indiana.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "in-housing-assistance-program",
+    "state": "IN",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Indiana veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "in-hunting-and-fishing-license-discount",
+    "state": "IN",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Indiana.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Fish and Wildlife Department",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "in-in-state-tuition-waiver",
+    "state": "IN",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Indiana public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Education",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "in-indiana-state-veterans-home",
+    "state": "IN",
+    "benefit_name": "Indiana State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Indiana veterans.",
+    "eligibility": "Indiana resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "in-military-retirement-pay-exemption",
+    "state": "IN",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Indiana state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Revenue",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "in-professional-license-fee-waiver",
+    "state": "IN",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Indiana veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "in-service-disabled-veteran-business-enterprise",
+    "state": "IN",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Indiana.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "in-specially-adapted-housing-assistance",
+    "state": "IN",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Indiana veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "in-state-employment-preference",
+    "state": "IN",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Indiana veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "in-state-veterans-cemetery",
+    "state": "IN",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Indiana veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Indiana Department of Veterans Affairs",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "in-veteran-license-plates",
+    "state": "IN",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Indiana veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Indiana Department of Motor Vehicles",
+    "official_link": "https://www.in.gov/dva/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "IN",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ks-dependent-education-benefits",
+    "state": "KS",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Kansas.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "ks-dependent-survivor-benefits",
+    "state": "KS",
+    "benefit_name": "Kansas Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Kansas, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Kansas. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Kansas Commission on Veterans' Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "ks-disabled-veteran-benefits",
+    "state": "KS",
+    "benefit_name": "Kansas Disabled Veteran Enhanced Benefits",
+    "category": "disabled_veteran",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Kansas, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Kansas. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Commission on Veterans' Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ks-disabled-veteran-property-tax-exemption",
+    "state": "KS",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Kansas.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ks-housing-assistance-program",
+    "state": "KS",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Kansas veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ks-hunting-and-fishing-license-discount",
+    "state": "KS",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Kansas.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Fish and Wildlife Department",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ks-in-state-tuition-waiver",
+    "state": "KS",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Kansas public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Education",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ks-kansas-state-veterans-home",
+    "state": "KS",
+    "benefit_name": "Kansas State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Kansas veterans.",
+    "eligibility": "Kansas resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ks-military-retirement-pay-exemption",
+    "state": "KS",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Kansas state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Revenue",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ks-professional-license-fee-waiver",
+    "state": "KS",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Kansas veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ks-service-disabled-veteran-business-enterprise",
+    "state": "KS",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Kansas.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ks-specially-adapted-housing-assistance",
+    "state": "KS",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Kansas veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ks-state-employment-preference",
+    "state": "KS",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Kansas veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ks-state-veterans-cemetery",
+    "state": "KS",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Kansas veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Kansas Department of Veterans Affairs",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ks-veteran-license-plates",
+    "state": "KS",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Kansas veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kansas Department of Motor Vehicles",
+    "official_link": "https://kcva.ks.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KS",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ky-dependent-education-benefits",
+    "state": "KY",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Kentucky.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "ky-dependent-survivor-benefits",
+    "state": "KY",
+    "benefit_name": "Kentucky Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Kentucky, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Kentucky. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "ky-disabled-veteran-benefits",
+    "state": "KY",
+    "benefit_name": "Kentucky Disabled Veteran Enhanced Benefits",
+    "category": "disabled_veteran",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Kentucky, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Kentucky. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ky-disabled-veteran-property-tax-exemption",
+    "state": "KY",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Kentucky.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ky-housing-assistance-program",
+    "state": "KY",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Kentucky veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ky-hunting-and-fishing-license-discount",
+    "state": "KY",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Kentucky.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Fish and Wildlife Department",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ky-in-state-tuition-waiver",
+    "state": "KY",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Kentucky public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Education",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ky-kentucky-state-veterans-home",
+    "state": "KY",
+    "benefit_name": "Kentucky State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Kentucky veterans.",
+    "eligibility": "Kentucky resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ky-military-retirement-pay-exemption",
+    "state": "KY",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Kentucky state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Revenue",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ky-professional-license-fee-waiver",
+    "state": "KY",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Kentucky veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ky-service-disabled-veteran-business-enterprise",
+    "state": "KY",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Kentucky.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ky-specially-adapted-housing-assistance",
+    "state": "KY",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Kentucky veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ky-state-employment-preference",
+    "state": "KY",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Kentucky veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ky-state-veterans-cemetery",
+    "state": "KY",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Kentucky veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Kentucky Department of Veterans Affairs",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ky-veteran-license-plates",
+    "state": "KY",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Kentucky veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Kentucky Department of Motor Vehicles",
+    "official_link": "https://veterans.ky.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "KY",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "la-dependent-education-benefits",
+    "state": "LA",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Louisiana.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "la-dependent-survivor-benefits",
+    "state": "LA",
+    "benefit_name": "Louisiana Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Louisiana, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Louisiana. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "la-disabled-veteran-benefits",
+    "state": "LA",
+    "benefit_name": "Louisiana Disabled Veteran Enhanced Benefits",
+    "category": "disabled_veteran",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Louisiana, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Louisiana. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "la-disabled-veteran-property-tax-exemption",
+    "state": "LA",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Louisiana.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "la-housing-assistance-program",
+    "state": "LA",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Louisiana veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "la-hunting-and-fishing-license-discount",
+    "state": "LA",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Louisiana.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Fish and Wildlife Department",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "la-in-state-tuition-waiver",
+    "state": "LA",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Louisiana public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Education",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "la-louisiana-state-veterans-home",
+    "state": "LA",
+    "benefit_name": "Louisiana State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Louisiana veterans.",
+    "eligibility": "Louisiana resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "la-military-retirement-pay-exemption",
+    "state": "LA",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Louisiana state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Revenue",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "la-professional-license-fee-waiver",
+    "state": "LA",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Louisiana veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "la-service-disabled-veteran-business-enterprise",
+    "state": "LA",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Louisiana.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "la-specially-adapted-housing-assistance",
+    "state": "LA",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Louisiana veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "la-state-employment-preference",
+    "state": "LA",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Louisiana veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "la-state-veterans-cemetery",
+    "state": "LA",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Louisiana veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Louisiana Department of Veterans Affairs",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "la-veteran-license-plates",
+    "state": "LA",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Louisiana veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Louisiana Department of Motor Vehicles",
+    "official_link": "https://vetaffairs.la.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "LA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ma-dependent-education-benefits",
+    "state": "MA",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Massachusetts.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "ma-dependent-survivor-benefits",
+    "state": "MA",
+    "benefit_name": "Massachusetts Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Massachusetts, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Massachusetts. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Massachusetts Department of Veterans' Services",
+    "official_link": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "ma-disabled-veteran-benefits",
+    "state": "MA",
+    "benefit_name": "Massachusetts Disabled Veteran Enhanced Benefits",
+    "category": "disabled_veteran",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Massachusetts, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Massachusetts. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Veterans' Services",
+    "official_link": "https://www.mass.gov/orgs/department-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ma-disabled-veteran-property-tax-exemption",
+    "state": "MA",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Massachusetts.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ma-housing-assistance-program",
+    "state": "MA",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Massachusetts veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ma-hunting-and-fishing-license-discount",
+    "state": "MA",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Massachusetts.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Fish and Wildlife Department",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ma-in-state-tuition-waiver",
+    "state": "MA",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Massachusetts public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Education",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ma-massachusetts-state-veterans-home",
+    "state": "MA",
+    "benefit_name": "Massachusetts State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Massachusetts veterans.",
+    "eligibility": "Massachusetts resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ma-military-retirement-pay-exemption",
+    "state": "MA",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Massachusetts state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Revenue",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ma-professional-license-fee-waiver",
+    "state": "MA",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Massachusetts veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ma-service-disabled-veteran-business-enterprise",
+    "state": "MA",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Massachusetts.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ma-specially-adapted-housing-assistance",
+    "state": "MA",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Massachusetts veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "ma-state-employment-preference",
+    "state": "MA",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Massachusetts veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ma-state-veterans-cemetery",
+    "state": "MA",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Massachusetts veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Massachusetts Department of Veterans Affairs",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "ma-veteran-license-plates",
+    "state": "MA",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Massachusetts veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Massachusetts Department of Motor Vehicles",
+    "official_link": "https://www.mass.gov/orgs/executive-office-of-veterans-services",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MA",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "md-dependent-education-benefits",
+    "state": "MD",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Maryland.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "md-dependent-survivor-benefits",
+    "state": "MD",
+    "benefit_name": "Maryland Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Maryland, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Maryland. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "md-disabled-veteran-benefits",
+    "state": "MD",
+    "benefit_name": "Maryland Disabled Veteran Enhanced Benefits",
+    "category": "disabled_veteran",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Maryland, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Maryland. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "md-disabled-veteran-property-tax-exemption",
+    "state": "MD",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Maryland.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "md-housing-assistance-program",
+    "state": "MD",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Maryland veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "md-hunting-and-fishing-license-discount",
+    "state": "MD",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Maryland.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Fish and Wildlife Department",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "md-in-state-tuition-waiver",
+    "state": "MD",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Maryland public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Education",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "md-maryland-state-veterans-home",
+    "state": "MD",
+    "benefit_name": "Maryland State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Maryland veterans.",
+    "eligibility": "Maryland resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "md-military-retirement-pay-exemption",
+    "state": "MD",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Maryland state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Revenue",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "md-professional-license-fee-waiver",
+    "state": "MD",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Maryland veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "md-service-disabled-veteran-business-enterprise",
+    "state": "MD",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Maryland.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "md-specially-adapted-housing-assistance",
+    "state": "MD",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Maryland veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "md-state-employment-preference",
+    "state": "MD",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Maryland veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "md-state-veterans-cemetery",
+    "state": "MD",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Maryland veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maryland Department of Veterans Affairs",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "md-veteran-license-plates",
+    "state": "MD",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Maryland veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maryland Department of Motor Vehicles",
+    "official_link": "https://veterans.maryland.gov/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "MD",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "me-dependent-education-benefits",
+    "state": "ME",
+    "benefit_name": "Dependent Education Benefits",
+    "category": "education",
+    "summary": "Educational assistance for spouses and dependents of disabled veterans in Maine.",
+    "eligibility": "Spouses and dependents of veterans with 100% service-connected disability.",
+    "applies_to": [
+      "dependent",
+      "survivor"
+    ],
+    "disability_threshold": "100%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "me-dependent-survivor-benefits",
+    "state": "ME",
+    "benefit_name": "Maine Veteran Dependent & Survivor Benefits",
+    "category": "dependent",
+    "summary": "Benefits available to dependents and surviving spouses of veterans in Maine, including education assistance, survivor pension supplements, healthcare access, and continued eligibility for select state veteran programs.",
+    "eligibility": "Spouses, surviving spouses, and dependent children of veterans who served and reside in Maine. Some benefits require the veteran to have had a service-connected disability or to have died in service.",
+    "applies_to": [
+      "spouse",
+      "survivor",
+      "dependent"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maine Bureau of Veterans' Services",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "dependent"
+    }
+  },
+  {
+    "id": "me-disabled-veteran-benefits",
+    "state": "ME",
+    "benefit_name": "Maine Disabled Veteran Enhanced Benefits",
+    "category": "disabled_veteran",
+    "summary": "Enhanced state benefits for service-connected disabled veterans in Maine, including additional property tax exemptions, specialized healthcare access, adaptive housing grants, and priority access to state veteran programs based on disability rating.",
+    "eligibility": "Veterans with a service-connected disability rating, residing in Maine. Higher disability ratings may unlock additional benefit tiers.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": 10,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Bureau of Veterans' Services",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "me-disabled-veteran-property-tax-exemption",
+    "state": "ME",
+    "benefit_name": "Disabled Veteran Property Tax Exemption",
+    "category": "property_tax",
+    "summary": "Property tax exemption for disabled veterans with service-connected disabilities in Maine.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "me-housing-assistance-program",
+    "state": "ME",
+    "benefit_name": "Housing Assistance Program",
+    "category": "housing",
+    "summary": "Housing assistance and loan programs for eligible Maine veterans.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "me-hunting-and-fishing-license-discount",
+    "state": "ME",
+    "benefit_name": "Hunting and Fishing License Discount",
+    "category": "recreation",
+    "summary": "Discounted or free hunting and fishing licenses for disabled veterans in Maine.",
+    "eligibility": "Disabled veterans with service-connected disabilities.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "Any service-connected",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Fish and Wildlife Department",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "me-in-state-tuition-waiver",
+    "state": "ME",
+    "benefit_name": "In-State Tuition Waiver",
+    "category": "education",
+    "summary": "In-state tuition rates for veterans at Maine public universities and colleges.",
+    "eligibility": "Honorably discharged veterans who are state residents.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Education",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "me-maine-state-veterans-home",
+    "state": "ME",
+    "benefit_name": "Maine State Veterans Home",
+    "category": "healthcare",
+    "summary": "State-operated long-term care facility for eligible Maine veterans.",
+    "eligibility": "Maine resident veterans with honorable discharge.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "me-military-retirement-pay-exemption",
+    "state": "ME",
+    "benefit_name": "Military Retirement Pay Exemption",
+    "category": "income_tax",
+    "summary": "Exemption or exclusion of military retirement income from Maine state income tax.",
+    "eligibility": "Veterans receiving military retirement pay.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Revenue",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "me-professional-license-fee-waiver",
+    "state": "ME",
+    "benefit_name": "Professional License Fee Waiver",
+    "category": "licensing",
+    "summary": "Fee waivers for professional license applications for Maine veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "me-service-disabled-veteran-business-enterprise",
+    "state": "ME",
+    "benefit_name": "Service-Disabled Veteran Business Enterprise",
+    "category": "employment",
+    "summary": "Business certification and support for service-disabled veteran entrepreneurs in Maine.",
+    "eligibility": "Veterans with 10% or higher service-connected disability rating.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "10%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "me-specially-adapted-housing-assistance",
+    "state": "ME",
+    "benefit_name": "Specially Adapted Housing Assistance",
+    "category": "housing",
+    "summary": "Grants and assistance for specially adapted housing for severely disabled Maine veterans.",
+    "eligibility": "Veterans with significant service-connected disabilities affecting mobility.",
+    "applies_to": [
+      "disabled_veteran"
+    ],
+    "disability_threshold": "50%",
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "disabled_veteran"
+    }
+  },
+  {
+    "id": "me-state-employment-preference",
+    "state": "ME",
+    "benefit_name": "State Employment Preference",
+    "category": "employment",
+    "summary": "Hiring preference for state government positions for Maine veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "me-state-veterans-cemetery",
+    "state": "ME",
+    "benefit_name": "State Veterans Cemetery",
+    "category": "burial",
+    "summary": "Cemetery providing burial services and perpetual care for Maine veterans.",
+    "eligibility": "Honorably discharged veterans and eligible family members.",
+    "applies_to": [
+      "veteran",
+      "survivor"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": true,
+    "administering_agency": "Maine Department of Veterans Affairs",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
+  },
+  {
+    "id": "me-veteran-license-plates",
+    "state": "ME",
+    "benefit_name": "Veteran License Plates",
+    "category": "vehicle",
+    "summary": "Special veteran identification license plates for Maine veterans.",
+    "eligibility": "Honorably discharged veterans.",
+    "applies_to": [
+      "veteran"
+    ],
+    "disability_threshold": null,
+    "guard_reserve_eligible": true,
+    "spouse_survivor_eligible": false,
+    "administering_agency": "Maine Department of Motor Vehicles",
+    "official_link": "https://www.maine.gov/veterans/",
+    "application_link": null,
+    "source_url": null,
+    "last_verified": "2026-03-24",
+    "manual_review": true,
+    "tags": {
+      "state": "ME",
+      "issue_type": "state_benefit",
+      "audience": "veteran"
+    }
   }
 ]
