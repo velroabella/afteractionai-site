@@ -885,6 +885,12 @@
     }
 
     if (chatMessages) chatMessages.appendChild(div);
+
+    // FORCE BUTTON INJECTION
+    if (role === 'ai') {
+        injectLegalDocButton(div, text);
+    }
+
     scrollToBottom();
   }
 
