@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Elected Officials & Committees — AfterAction AI</title>
+  <title>Elected Officials & Committees â AfterAction AI</title>
   <meta name="description" content="Find your U.S. senators, representatives, and the committees that shape veteran policy. Search by state and contact your elected officials." />
   <meta name="keywords" content="elected officials, congress, senate, house representatives, veterans committees, veteran policy" />
-  <meta property="og:title" content="Elected Officials & Committees — AfterAction AI" />
+  <meta property="og:title" content="Elected Officials & Committees â AfterAction AI" />
   <meta property="og:description" content="Find your U.S. elected officials and veteran committees." />
   <meta property="og:type" content="website" />
   <link rel="canonical" href="https://afteractionai.org/elected-officials" />
@@ -175,10 +175,10 @@
 <script src="js/newsletter.js"></script>
 
 <script>
-// ══════════════════════════════════════════════════════════
-// ELECTED OFFICIALS PAGE — ResourceHub Integration
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
+// ELECTED OFFICIALS PAGE â ResourceHub Integration
 // Loads elected officials and committees data
-// ══════════════════════════════════════════════════════════
+// ââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
 
 function toggleMenu() {
   var menu = document.getElementById('navMenu');
@@ -197,7 +197,7 @@ Promise.all([
     var partyMap = { 'R': 'Republican', 'D': 'Democrat', 'I': 'Independent' };
     var partyFull = partyMap[official.party] || official.party || '';
 
-    // Build contact details — only include what exists
+    // Build contact details â only include what exists
     var details = '';
     if (official.phone) {
       details += '<div class="hub-card__detail-row">' +
@@ -206,7 +206,7 @@ Promise.all([
         '</div>';
     }
 
-    // Build action buttons — only include what exists
+    // Build action buttons â only include what exists
     var actions = '';
     if (official.website) {
       actions += '<a href="' + ResourceHub.escapeHtml(official.website) + '" class="hub-card__action" target="_blank" rel="noopener noreferrer">Website</a>';
@@ -272,32 +272,51 @@ Promise.all([
     { key: 'House', label: 'House' }
   ]);
 
-    // Veteran Committees filter button + section toggle
     (function() {
       var filterBtns = document.getElementById('filterBtns');
       if (!filterBtns) return;
-      var committeeBtn = document.createElement('button');
-      committeeBtn.className = 'filter-btn';
-      committeeBtn.setAttribute('data-filter', 'committees');
-      committeeBtn.textContent = 'Veteran Committees';
-      filterBtns.appendChild(committeeBtn);
       var officialsSection = document.getElementById('officialsSection');
       var committeesSection = document.getElementById('committeesSection');
-      filterBtns.addEventListener('click', function(e) {
-        var btn = e.target.closest ? e.target.closest('.filter-btn') : null;
-        if (!btn) return;
-        [].forEach.call(filterBtns.querySelectorAll('.filter-btn'), function(b) {
+      var inCommitteeMode = false;
+
+      function getOrAddBtn() {
+        var existing = filterBtns.querySelector('[data-filter="committees"]');
+        if (existing) return existing;
+        var btn = document.createElement('button');
+        btn.className = 'filter-btn';
+        btn.setAttribute('data-filter', 'committees');
+        btn.textContent = 'Veteran Committees';
+        btn.addEventListener('click', onCommitteeClick);
+        filterBtns.appendChild(btn);
+        return btn;
+      }
+
+      function onCommitteeClick() {
+        inCommitteeMode = true;
+        [].forEach.call(filterBtns.querySelectorAll('.filter-btn:not([data-filter="committees"])'), function(b) {
           b.classList.remove('active');
         });
-        btn.classList.add('active');
-        if (btn.getAttribute('data-filter') === 'committees') {
-          if (officialsSection) officialsSection.style.display = 'none';
-          if (committeesSection) committeesSection.style.display = '';
-        } else {
-          if (officialsSection) officialsSection.style.display = '';
-          if (committeesSection) committeesSection.style.display = 'none';
-        }
+        this.classList.add('active');
+        if (officialsSection) officialsSection.style.display = 'none';
+        if (committeesSection) committeesSection.style.display = '';
+      }
+
+      getOrAddBtn();
+
+      var obs = new MutationObserver(function() {
+        var btn = getOrAddBtn();
+        if (inCommitteeMode) btn.classList.add('active');
       });
+      obs.observe(filterBtns, { childList: true });
+
+      filterBtns.addEventListener('click', function(e) {
+        var btn = e.target.closest ? e.target.closest('.filter-btn') : null;
+        if (!btn || btn.getAttribute('data-filter') === 'committees') return;
+        inCommitteeMode = false;
+        if (officialsSection) officialsSection.style.display = '';
+        if (committeesSection) committeesSection.style.display = 'none';
+      });
+    })();
     })();
 
   // Handle committees separately (for now, just display them all)
