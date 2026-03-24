@@ -293,7 +293,7 @@ Promise.all([
 
       function onCommitteeClick() {
         inCommitteeMode = true;
-        [].forEach.call(filterBtns.querySelectorAll('.filter-btn:not([data-filter="committees"])'), function(b) {
+        [].forEach.call(filterBtns.querySelectorAll('button:not([data-filter="committees"])'), function(b) {
           b.classList.remove('active');
         });
         this.classList.add('active');
@@ -310,7 +310,7 @@ Promise.all([
       obs.observe(filterBtns, { childList: true });
 
       filterBtns.addEventListener('click', function(e) {
-        var btn = e.target.closest ? e.target.closest('.filter-btn') : null;
+        var btn = e.target.closest ? e.target.closest('button') : null;
         if (!btn || btn.getAttribute('data-filter') === 'committees') return;
         inCommitteeMode = false;
         if (officialsSection) officialsSection.style.display = '';
