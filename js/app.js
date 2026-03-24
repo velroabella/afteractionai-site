@@ -1201,6 +1201,10 @@
     var pdfBtn = document.getElementById('btnDownloadPDF');
     if (pdfBtn) {
       pdfBtn.addEventListener('click', function() {
+        // Phase 3.5: Legal forms route through acknowledgment modal + .docx
+        if (typeof AAAI !== 'undefined' && AAAI.legalIntegration && AAAI.legalIntegration.detectAndHandle(reportText)) {
+          return;
+        }
         generateReportPDF(reportText);
       });
     }
