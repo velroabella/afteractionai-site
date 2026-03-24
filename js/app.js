@@ -1533,3 +1533,62 @@
   init();
 
 })();
+
+
+function injectLegalDocButton(messageDiv, rawText) {
+  try {
+    if (typeof AAAI === 'undefined' || !AAAI.legalIntegration || !AAAI.legal || !window.docx) return;
+    const formType = AAAI.legalIntegration.detectLegalFormType(rawText);
+    if (!formType) return;
+
+    const btn = document.createElement('button');
+    btn.className = 'report-download-btn';
+    btn.style.marginTop = '12px';
+    btn.textContent = '⬇ Download Word Doc';
+
+    btn.addEventListener('click', function () {
+      AAAI.legal.requireAcknowledgment(formType, function(confirmedFormType) {
+        generateDocxFromChatText(confirmedFormType || formType, rawText);
+      });
+    });
+
+    messageDiv.appendChild(btn);
+  } catch (e) {
+    console.warn('Legal doc button injection failed:', e);
+  }
+}
+
+function generateDocxFromChatText(formType, rawText) {
+  const cleaned = rawText.replace(/\[OPTIONS:[\s\S]*?\]/g, '').trim();
+  const lines = cleaned.split(/\r?\n/).filter(Boolean);
+
+  const paragraphs = lines.map(line => {
+    const isHeading = /^[A-Z][A-Z\s\-\/()#:]+$/.test(line.trim()) || line.trim().startsWith('# ');
+    return new window.docx.Paragraph({
+      children: [
+        new window.docx.TextRun({
+          text: line.replace(/^#\s*/, ''),
+          bold: isHeading
+        })
+      ],
+      spacing: { after: 200 }
+    });
+  });
+
+  const doc = new window.docx.Document({
+    sections: [{
+      properties: {},
+      children: paragraphs
+    }]
+  });
+
+  window.docx.Packer.toBlob(doc).then(blob => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `${formType || 'legal-template'}.docx`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+  });
+}
