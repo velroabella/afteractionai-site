@@ -27,7 +27,7 @@
 <!-- NAVIGATION -->
 <nav class="navbar">
   <div class="navbar__inner">
-    <a href="index.html" class="navbar__logo">
+    <a class='navbar__logo' href='/'>
       <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
@@ -36,31 +36,31 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href='/'>Home</a></li>
       <li class="navbar__dropdown">
-        <a href="about.html">About</a>
+        <a href='/about'>About</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="about.html">Our Mission</a></li>
-          <li><a href="board.html">Board</a></li>
+          <li><a href='/about'>Our Mission</a></li>
+          <li><a href='/board'>Board</a></li>
         </ul>
       </li>
       <li class="navbar__dropdown">
-        <a href="resources.html">Resources</a>
+        <a href='/resources'>Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html" class="active">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
-          <li><a href="state-benefits.html">State Benefits</a></li>
-          <li><a href="document-templates.html">Document Templates</a></li>
+          <li><a href='/resources'>Partner Organizations</a></li>
+          <li><a class='active' href='/elected-officials'>Elected Officials</a></li>
+          <li><a href='/licensure'>Licensure & Certifications</a></li>
+          <li><a href='/grants-scholarships'>Grants & Scholarships</a></li>
+          <li><a href='/hotlines-escalation'>Hotlines & Escalation</a></li>
+          <li><a href='/state-benefits'>State Benefits</a></li>
+          <li><a href='/document-templates'>Document Templates</a></li>
         </ul>
       </li>
-      <li><a href="blog.html">Blog</a></li>
-      <li><a href="gallery.html">Gallery</a></li>
-      <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
-      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li><a href='/blog'>Blog</a></li>
+      <li><a href='/gallery'>Gallery</a></li>
+      <li><a href='/contact'>Contact</a></li>
+      <li><a href='/education'>Education</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href='/profile'>Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
     </ul>
   </div>
@@ -101,7 +101,7 @@
     </div>
 
     <!-- OFFICIALS GRID -->
-    <section class="section">
+    <section class="section" id="officialsSection">
       <h2 style="margin-bottom: 20px; font-size: 20px; color: #333;">Elected Officials</h2>
       <div class="resources-grid" id="officialsGrid">
         <!-- Officials will populate here -->
@@ -109,7 +109,7 @@
     </section>
 
     <!-- COMMITTEES SECTION -->
-    <section class="section">
+    <section class="section" id="committeesSection" style="display:none;">
       <h2 style="margin-bottom: 20px; font-size: 20px; color: #333;">Veteran Committees</h2>
       <div class="resources-grid" id="committeesGrid">
         <!-- Committees will populate here -->
@@ -129,31 +129,31 @@
           <h3>Navigate</h3>
           <div class="footer__nav-columns">
             <div class="footer__nav-col">
-              <a href="index.html">Home</a>
-              <a href="about.html">About</a>
-              <a href="board.html">Board</a>
+              <a href='/'>Home</a>
+              <a href='/about'>About</a>
+              <a href='/board'>Board</a>
             </div>
             <div class="footer__nav-col">
-              <a href="resources.html">Resources</a>
-              <a href="blog.html">Blog</a>
-              <a href="contact.html">Contact</a>
+              <a href='/resources'>Resources</a>
+              <a href='/blog'>Blog</a>
+              <a href='/contact'>Contact</a>
             </div>
           </div>
         </div>
         <div class="footer__section">
           <h3>Resource Hub</h3>
-          <a href="elected-officials.html">Elected Officials</a>
-          <a href="licensure.html">Licensure & Certifications</a>
-          <a href="grants-scholarships.html">Grants & Scholarships</a>
-          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
-          <a href="state-benefits.html">State Benefits</a>
-          <a href="document-templates.html">Document Templates</a>
+          <a href='/elected-officials'>Elected Officials</a>
+          <a href='/licensure'>Licensure & Certifications</a>
+          <a href='/grants-scholarships'>Grants & Scholarships</a>
+          <a href='/hotlines-escalation'>Hotlines & Escalation</a>
+          <a href='/state-benefits'>State Benefits</a>
+          <a href='/document-templates'>Document Templates</a>
         </div>
         <div class="footer__section">
           <h3>Legal</h3>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="disclaimer.html">Disclaimer</a>
+          <a href='/privacy'>Privacy Policy</a>
+          <a href='/terms'>Terms of Service</a>
+          <a href='/disclaimer'>Disclaimer</a>
         </div>
         <div class="footer__section">
           <h3>Connect</h3>
@@ -271,6 +271,34 @@ Promise.all([
     { key: 'Senate', label: 'Senate' },
     { key: 'House', label: 'House' }
   ]);
+
+    // Veteran Committees filter button + section toggle
+    (function() {
+      var filterBtns = document.getElementById('filterBtns');
+      if (!filterBtns) return;
+      var committeeBtn = document.createElement('button');
+      committeeBtn.className = 'filter-btn';
+      committeeBtn.setAttribute('data-filter', 'committees');
+      committeeBtn.textContent = 'Veteran Committees';
+      filterBtns.appendChild(committeeBtn);
+      var officialsSection = document.getElementById('officialsSection');
+      var committeesSection = document.getElementById('committeesSection');
+      filterBtns.addEventListener('click', function(e) {
+        var btn = e.target.closest ? e.target.closest('.filter-btn') : null;
+        if (!btn) return;
+        [].forEach.call(filterBtns.querySelectorAll('.filter-btn'), function(b) {
+          b.classList.remove('active');
+        });
+        btn.classList.add('active');
+        if (btn.getAttribute('data-filter') === 'committees') {
+          if (officialsSection) officialsSection.style.display = 'none';
+          if (committeesSection) committeesSection.style.display = '';
+        } else {
+          if (officialsSection) officialsSection.style.display = '';
+          if (committeesSection) committeesSection.style.display = 'none';
+        }
+      });
+    })();
 
   // Handle committees separately (for now, just display them all)
   var committeesContainer = document.getElementById('committeesGrid');
