@@ -1119,6 +1119,33 @@ STEP 3 — SIGNAL COMPLETION:
 
     // Mark checklist item as in-progress
     markChecklistItemProgress();
+
+    // Action-engine integration: show relevant state benefits after template completion
+    if (typeof AAAI !== 'undefined' && AAAI.actions && AAAI.auth) {
+      AAAI.auth.getProfile().then(function(profile) {
+        if (!profile || !profile.state) return;
+        var tmplId = activeTemplate ? activeTemplate.id : '';
+        AAAI.actions.getStateBenefitsForTemplate({
+          state: profile.state,
+          templateId: tmplId,
+          issue_tags: profile.issue_tags || [],
+          disability_rating_band: profile.disability_rating_band || null,
+          service_status: profile.service_status || 'veteran'
+        }).then(function(benefits) {
+          if (!benefits || benefits.length === 0) return;
+          var stateName = profile.state_name || profile.state;
+          var html = AAAI.actions.renderStateBenefitsPanel(benefits, stateName);
+          if (!html) return;
+          var panel = document.getElementById('templateComplete');
+          if (panel) {
+            var div = document.createElement('div');
+            div.id = 'template-state-benefits';
+            div.innerHTML = html;
+            panel.appendChild(div);
+          }
+        });
+      });
+    }
   }
 
   function extractTemplateOutput(conversation) {
