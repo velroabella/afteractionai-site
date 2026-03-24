@@ -732,6 +732,12 @@
     div.className = 'message message--crisis';
     div.innerHTML = crisisHtml;
     if (chatMessages) chatMessages.appendChild(div);
+
+    if (role === 'ai') {
+      setTimeout(function() {
+        injectLegalDocButton(div, text);
+      }, 0);
+    }
     scrollToBottom();
   }
 
