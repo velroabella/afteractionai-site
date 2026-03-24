@@ -1,0 +1,142 @@
+/* ============================================================
+   PHASE 3.5 — Legal Acknowledgment Modal
+   Follows existing auth-modal pattern from styles.css
+   ============================================================ */
+
+/* --- Overlay --- */
+.legal-modal {
+  position: fixed; inset: 0; z-index: 10000;
+  background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.legal-modal.active {
+  opacity: 1; pointer-events: auto;
+}
+
+/* --- Box --- */
+.legal-modal__box {
+  background: var(--white, #FFFFFF); border-radius: var(--radius, 12px);
+  width: 100%; max-width: 520px; padding: 32px;
+  box-shadow: var(--shadow-lg, 0 8px 32px rgba(0,0,0,0.12));
+  position: relative;
+  max-height: 90vh; overflow-y: auto;
+}
+
+/* --- Close button --- */
+.legal-modal__close {
+  position: absolute; top: 12px; right: 16px;
+  background: none; border: none; font-size: 28px;
+  color: var(--gray-500, #6C757D); cursor: pointer;
+  line-height: 1;
+}
+.legal-modal__close:hover { color: var(--gray-900, #212529); }
+
+/* --- Header --- */
+.legal-modal__header {
+  text-align: center; margin-bottom: 20px;
+}
+.legal-modal__icon {
+  font-size: 40px; margin-bottom: 8px;
+}
+.legal-modal__title {
+  font-family: var(--font, 'Inter', sans-serif);
+  font-size: 20px; font-weight: 700;
+  color: var(--gray-900, #212529);
+  margin: 0 0 4px 0;
+}
+.legal-modal__subtitle {
+  font-family: var(--font, 'Inter', sans-serif);
+  font-size: 14px; color: var(--gray-500, #6C757D);
+  margin: 0;
+}
+
+/* --- Notice box --- */
+.legal-modal__notice {
+  background: var(--red-bg, #FFF3CD);
+  border-left: 4px solid var(--gold, #C5A55A);
+  border-radius: var(--radius-sm, 8px);
+  padding: 14px 16px; margin-bottom: 20px;
+  font-size: 13px; line-height: 1.5;
+  color: var(--gray-900, #212529);
+}
+.legal-modal__notice strong {
+  display: block; margin-bottom: 4px;
+  font-size: 14px;
+}
+
+/* --- Checkbox group --- */
+.legal-modal__checks {
+  display: flex; flex-direction: column; gap: 12px;
+  margin-bottom: 24px;
+}
+.legal-modal__check {
+  display: flex; align-items: flex-start; gap: 10px;
+  cursor: pointer;
+  font-family: var(--font, 'Inter', sans-serif);
+  font-size: 14px; line-height: 1.45;
+  color: var(--gray-700, #495057);
+}
+.legal-modal__check input[type="checkbox"] {
+  margin-top: 3px; flex-shrink: 0;
+  width: 18px; height: 18px;
+  accent-color: var(--green, #28A745);
+  cursor: pointer;
+}
+
+/* --- Buttons --- */
+.legal-modal__actions {
+  display: flex; gap: 12px;
+}
+.legal-modal__btn {
+  flex: 1; padding: 12px 20px;
+  border-radius: var(--radius-sm, 8px);
+  font-family: var(--font, 'Inter', sans-serif);
+  font-size: 15px; font-weight: 600;
+  cursor: pointer; border: none;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+.legal-modal__btn--cancel {
+  background: var(--gray-100, #F0F2F4);
+  color: var(--gray-700, #495057);
+}
+.legal-modal__btn--cancel:hover {
+  background: var(--gray-200, #E2E6EA);
+}
+.legal-modal__btn--continue {
+  background: var(--green, #28A745);
+  color: #fff;
+}
+.legal-modal__btn--continue:disabled {
+  opacity: 0.4; cursor: not-allowed;
+}
+.legal-modal__btn--continue:not(:disabled):hover {
+  opacity: 0.9;
+}
+
+/* --- Dark mode overrides (matches auth modal) --- */
+@media (prefers-color-scheme: dark) {
+  .legal-modal__box {
+    background: #111; color: #fff;
+  }
+  .legal-modal__close { color: rgba(255,255,255,0.5); }
+  .legal-modal__close:hover { color: #fff; }
+  .legal-modal__title { color: #fff; }
+  .legal-modal__subtitle { color: rgba(255,255,255,0.6); }
+  .legal-modal__check { color: rgba(255,255,255,0.8); }
+  .legal-modal__notice {
+    background: rgba(197,165,90,0.15);
+    color: #fff;
+  }
+  .legal-modal__btn--cancel {
+    background: #222; color: rgba(255,255,255,0.8);
+  }
+  .legal-modal__btn--cancel:hover { background: #333; }
+}
+
+/* --- Responsive --- */
+@media (max-width: 560px) {
+  .legal-modal__box { margin: 16px; padding: 24px 20px; }
+  .legal-modal__actions { flex-direction: column-reverse; }
+}
