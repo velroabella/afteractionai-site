@@ -1544,7 +1544,19 @@
 function injectLegalDocButton(messageDiv, rawText) {
   try {
     if (typeof AAAI === 'undefined' || !AAAI.legalIntegration || !AAAI.legal || !window.docx) return;
-    const formType = AAAI.legalIntegration.detectLegalFormType(rawText);
+    let formType = null;
+
+    // Fallback detection (more reliable)
+    if (/power of attorney/i.test(rawText)) formType = 'power-of-attorney';
+    else if (/living will|advance directive/i.test(rawText)) formType = 'living-will';
+    else if (/hipaa/i.test(rawText)) formType = 'hipaa';
+    else if (/affidavit/i.test(rawText)) formType = 'affidavit';
+
+    // Try system detection if available
+    if (!formType && AAAI.legalIntegration && AAAI.legalIntegration.detectLegalFormType) {
+      formType = AAAI.legalIntegration.detectLegalFormType(rawText);
+    }
+
     if (!formType) return;
 
     const btn = document.createElement('button');
