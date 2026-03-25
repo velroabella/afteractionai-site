@@ -43,8 +43,10 @@
     { pattern: /health\s*care\s+(power|proxy|agent)/i,       formType: 'medical-power-of-attorney' },
     { pattern: /living\s+will|advance\s+directive/i,         formType: 'living-will' },
     { pattern: /last\s+will\s+and\s+testament/i,             formType: 'last-will-and-testament' },
+    { pattern: /last\s+will\b/i,                             formType: 'last-will-and-testament' },
     { pattern: /hipaa\s+authorization/i,                     formType: 'hipaa-authorization-form' },
     { pattern: /release\s+of\s+health\s+information/i,       formType: 'hipaa-authorization-form' },
+    { pattern: /\bhipaa\b/i,                                 formType: 'hipaa-authorization-form' },
   ];
 
   /**
@@ -55,7 +57,9 @@
     if (!reportText || typeof reportText !== 'string') return null;
     for (var i = 0; i < CONTENT_PATTERNS.length; i++) {
       if (CONTENT_PATTERNS[i].pattern.test(reportText)) {
-        return CONTENT_PATTERNS[i].formType;
+        var formType = CONTENT_PATTERNS[i].formType;
+        console.log('[LegalDetect] detected formType:', formType);
+        return formType;
       }
     }
     return null;
