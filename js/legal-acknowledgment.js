@@ -9,12 +9,15 @@
   /* ---------- CONSTANTS ---------- */
 
   const LEGAL_FORM_TYPES = [
+    'power-of-attorney',
     'general-power-of-attorney',
     'durable-power-of-attorney',
     'medical-power-of-attorney',
     'living-will',
     'last-will-and-testament',
-    'hipaa-authorization-form'
+    'hipaa-authorization-form',
+    'hipaa',
+    'affidavit'
   ];
 
   const ACKNOWLEDGMENT_ITEMS = [
