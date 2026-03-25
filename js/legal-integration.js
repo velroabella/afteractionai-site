@@ -40,7 +40,18 @@
     'credit-dispute-letter':          'credit-dispute-letter',
     'budget-financial-recovery-plan': 'budget-financial-recovery-plan',
     'va-loan-readiness-checklist':    'va-loan-readiness-checklist',
-    'rental-application-packet':      'rental-application-packet'
+    'rental-application-packet':      'rental-application-packet',
+
+    /* Career / guidance form keys */
+    'military-civilian-skills-translator': 'military-skills-translator',
+    'military-skills-translator':          'military-skills-translator',
+    'salary-negotiation-script':           'salary-negotiation-script',
+    'federal-resume':                      'federal-resume-usajobs',
+    'federal-resume-usajobs':              'federal-resume-usajobs',
+    'resume-builder':                      'resume-builder',
+    'linkedin-profile-builder':            'linkedin-profile-builder',
+    'interview-prep-script':               'interview-prep-star',
+    'interview-prep-star':                 'interview-prep-star'
   };
 
   /* ---------- CONTENT-BASED DETECTION ---------- */
@@ -75,6 +86,17 @@
     { pattern: /rental\s+application\s+packet/i,                       formType: 'rental-application-packet' },
     { pattern: /credit\s+dispute\s+letter|dispute\s+credit\s+report/i, formType: 'credit-dispute-letter' },
     { pattern: /budget\s+financial\s+recovery\s+plan|financial\s+recovery\s+plan/i, formType: 'budget-financial-recovery-plan' },
+    /* Career / guidance form patterns (strict — no .* wildcards)
+       ORDER: military-skills-translator MUST precede resume-builder
+       because skills translator responses may reference "Resume Builder". */
+    { pattern: /military\s+to\s+civilian\s+skills\s+translat/i,                formType: 'military-skills-translator' },
+    { pattern: /military\s+skills\s+translat/i,                                formType: 'military-skills-translator' },
+    { pattern: /salary\s+negotiation\s+script/i,                               formType: 'salary-negotiation-script' },
+    { pattern: /federal\s+resume\s+\(?\s*usajobs\s*\)?/i,                      formType: 'federal-resume-usajobs' },
+    { pattern: /federal\s+resume/i,                                            formType: 'federal-resume-usajobs' },
+    { pattern: /linkedin\s+profile\s+builder/i,                                formType: 'linkedin-profile-builder' },
+    { pattern: /interview\s+prep\s+script|interview\s+prep.*star\s+method/i,   formType: 'interview-prep-star' },
+    { pattern: /resume\s+builder/i,                                            formType: 'resume-builder' },
   ];
 
   /**
