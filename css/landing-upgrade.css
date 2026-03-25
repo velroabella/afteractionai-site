@@ -32,11 +32,11 @@
       Overrides .screen--landing::after without removing it.
    ----------------------------------------------------------- */
 .screen--landing::after {
-  width: 48% !important;
+  width: 42% !important;
   background: linear-gradient(
     to right,
-    rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.58) 52%,
+    rgba(0,0,0,0.86) 0%,
+    rgba(0,0,0,0.52) 50%,
     rgba(0,0,0,0.00) 100%
   ) !important;
 }
@@ -445,9 +445,10 @@
        Shift right and slightly up to frame the subject.
    ----------------------------------------------------------- */
 .screen--landing::before {
-  background-size: cover !important;
-  background-position: 82% 60% !important;
-  opacity: 0.72 !important;
+  background-size: contain !important;
+  background-repeat: no-repeat !important;
+  background-position: center 22% !important;
+  opacity: 0.78 !important;
 }
 
 
