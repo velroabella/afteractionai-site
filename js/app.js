@@ -824,6 +824,9 @@
 
       // Phase 3.5: inject Download Word Doc button for legal template responses
       injectLegalDocButton(div, fullText);
+        div.innerHTML = formatMessage(fullText);
+        // Phase 3.5: inject Download Word Doc button for legal template responses
+        injectLegalDocButton(div, fullText);
         scrollToBottom();
         if (onComplete) onComplete();
         return;
@@ -883,6 +886,8 @@
 
     if (role === 'ai') {
       div.innerHTML = formatMessage(text);
+      // Phase 3.5: inject Download Word Doc button for legal template responses
+      injectLegalDocButton(div, text);
     } else {
       div.textContent = text;
     }
@@ -895,6 +900,116 @@
     }
 
     scrollToBottom();
+  }
+
+  // Phase 3.5 — detect legal template responses and inject Download Word Doc button
+  function injectLegalDocButton(messageDiv, rawText) {
+    // Wait for Phase 3.5 scripts to be ready (they load after app.js)
+    if (typeof AAAI === 'undefined' || !AAAI.legalIntegration || !AAAI.legal) return;
+    var formType = AAAI.legalIntegration.detectLegalFormType(rawText);
+    if (!formType) return;
+
+    var btn = document.createElement('button');
+    btn.className = 'legal-doc-btn';
+    btn.textContent = '⬇ Download Word Doc';
+    btn.setAttribute('aria-label', 'Download legal document as Word file');
+    btn.style.cssText = 'display:inline-block;margin-top:12px;padding:9px 18px;' +
+      'background:#1a56db;color:#fff;border:none;border-radius:6px;' +
+      'font-size:13px;font-weight:600;cursor:pointer;letter-spacing:0.01em;';
+
+    btn.addEventListener('click', function () {
+      AAAI.legal.requireAcknowledgment(formType, function (confirmedFormType) {
+        generateDocxFromChatText(confirmedFormType, rawText);
+      });
+    });
+
+    messageDiv.appendChild(btn);
+  }
+
+  // Phase 3.6 — build .docx using structured model; falls back to raw text
+  function generateDocxFromChatText(formType, rawText) {
+    if (!window.docx) {
+      console.error('[LegalDocBtn] window.docx not loaded');
+      return;
+    }
+
+    var D = window.docx;
+
+    // ── Phase 3.6: attempt structured parse ─────────────────────────────
+    var model = (typeof AAAI !== 'undefined' && AAAI.legalModel)
+      ? AAAI.legalModel.parse(rawText, formType)
+      : null;
+
+    var children;
+
+    if (model) {
+      // Structured path: title → sections (heading + body)
+      log('LegalDocx', 'structured model parsed — ' + model.sections.length + ' sections');
+      children = [];
+
+      // Document title
+      if (model.title) {
+        children.push(new D.Paragraph({
+          children: [new D.TextRun({ text: model.title, bold: true, size: 36, font: 'Arial' })],
+          spacing: { after: 280 }
+        }));
+      }
+
+      // Sections
+      model.sections.forEach(function (section) {
+        // Section heading
+        if (section.heading) {
+          children.push(new D.Paragraph({
+            children: [new D.TextRun({ text: section.heading, bold: true, size: 26, font: 'Arial' })],
+            spacing: { before: 200, after: 80 }
+          }));
+        }
+        // Section body lines
+        if (section.content) {
+          section.content.split('\n').forEach(function (line) {
+            var t = line.trim();
+            children.push(new D.Paragraph({
+              children: [new D.TextRun({ text: t || ' ', size: 22, font: 'Arial' })],
+              spacing: { after: t === '' ? 0 : 80 }
+            }));
+          });
+        }
+        // Spacer between sections
+        children.push(new D.Paragraph({ spacing: { after: 140 }, children: [] }));
+      });
+
+    } else {
+      // Fallback path: raw text (Phase 3.5 logic preserved exactly)
+      log('LegalDocx', 'model parse failed or unavailable — using raw text fallback');
+      var cleanText = rawText.replace(/\[OPTIONS:[^\]]*\]/g, '').trim();
+      children = cleanText.split('\n').map(function (line) {
+        var trimmed = line.trim();
+        var isHeading = trimmed.length > 0 && trimmed === trimmed.toUpperCase() && trimmed.length > 3;
+        return new D.Paragraph({
+          children: [new D.TextRun({
+            text: trimmed || ' ',
+            bold: isHeading,
+            size: isHeading ? 26 : 22
+          })],
+          spacing: { after: trimmed === '' ? 0 : 120 }
+        });
+      });
+    }
+
+    var doc = new D.Document({ sections: [{ children: children }] });
+
+    D.Packer.toBlob(doc).then(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url;
+      a.download = formType + '.docx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }).catch(function (err) {
+      console.error('[LegalDocBtn] Packer failed:', err);
+    });
   }
 
   function formatMessage(text) {
@@ -1063,6 +1178,10 @@
       // Must appear as a section heading, not as a word mid-sentence
       var escaped = m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       return new RegExp('^[ \t]*(?:#{1,4}\\s*|\\*{1,2})?\\s*' + escaped + '\\s*\\*{0,2}\\s*:?\\s*$', 'im').test(text);
+      // Must appear as a section heading (start of line, optional ## or **),
+      // not as a word mid-sentence ("In summary..." / "VA Benefits Summary")
+      var escaped = m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp('^[ \\t]*(?:#{1,4}\\s*|\\*{1,2})?\\s*' + escaped + '\\s*\\*{0,2}\\s*:?\\s*$', 'im').test(text);
     }).length >= 2;
 
     var longEnough = text.length > 800;

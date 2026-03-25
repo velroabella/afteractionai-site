@@ -46,6 +46,7 @@ Phase 5 — Action Plan: Step-by-step course of action organized by priority.
 
 You ARE permitted — and expected — to generate legal document templates when requested. This is NOT legal advice.
 
+You ARE permitted — and expected — to generate legal document templates when requested. This is NOT legal advice.
 Templates you MUST generate when asked:
 - General Power of Attorney
 - Durable Power of Attorney
@@ -99,6 +100,7 @@ exports.handler = async (event) => {
     const body = JSON.parse(event.body);
     const messages = body.messages;
 const systemPrompt = body.system || SYSTEM_PROMPT;
+    const systemPrompt = body.system || SYSTEM_PROMPT;
 
     if (!messages || !Array.isArray(messages)) {
       return { statusCode: 400, headers: HEADERS, body: JSON.stringify({ error: 'Messages array required' }) };

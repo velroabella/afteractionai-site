@@ -18,6 +18,7 @@
     'hipaa-authorization-form',
     'hipaa',
     'affidavit'
+    'hipaa-authorization-form'
   ];
 
   const ACKNOWLEDGMENT_ITEMS = [
@@ -166,6 +167,14 @@
     closeModal();
 
     // Fire callback
+    // Capture before closeModal() nulls the module-level vars
+    const cb = _pendingCallback;
+    const ft = _pendingFormType;
+
+    btn.textContent = 'Continue →';
+    closeModal();
+
+    // Fire callback with the captured (non-null) values
     if (typeof cb === 'function') {
       cb(ft);
     }
