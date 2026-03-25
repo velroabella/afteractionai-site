@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/board-upgrade.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
   <meta property="og:image:width" content="1536" />
@@ -94,8 +95,14 @@
         </div>
 
         <!-- Board Seat Open #1 -->
-        <div class="board-card">
-          <div class="board-card__photo">▭</div>
+        <div class="board-card board-card--open">
+          <div class="board-card__avatar">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="18" r="9" stroke="#C5A55A" stroke-width="2" fill="none"/>
+              <path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#C5A55A" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="board-card__badge">Seat Open</div>
           <h3 class="board-card__name">Board Seat Open</h3>
           <p class="board-card__title">Nonprofit Operations or VSO Leadership</p>
           <p class="board-card__bio">
@@ -104,8 +111,14 @@
         </div>
 
         <!-- Board Seat Open #2 -->
-        <div class="board-card">
-          <div class="board-card__photo">▭</div>
+        <div class="board-card board-card--open">
+          <div class="board-card__avatar">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="18" r="9" stroke="#C5A55A" stroke-width="2" fill="none"/>
+              <path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#C5A55A" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="board-card__badge">Seat Open</div>
           <h3 class="board-card__name">Board Seat Open</h3>
           <p class="board-card__title">Veteran Community Network</p>
           <p class="board-card__bio">
@@ -115,7 +128,7 @@
       </div>
 
       <div class="board-note">
-        <p><strong>We're Hiring.</strong> AfterAction AI is building a board of directors with diverse expertise in veteran services, nonprofit governance, technology, and fundraising. If you align with our mission and bring relevant experience, we'd love to hear from you. <a href="contact.html" style="color: var(--blue); font-weight: 600;">Contact us to learn more.</a></p>
+        <p><strong>We're Hiring.</strong> AfterAction AI is building a board of directors with diverse expertise in veteran services, nonprofit governance, technology, and fundraising. If you align with our mission and bring relevant experience, we'd love to hear from you. <a href="contact.html" class="board-note__link">Contact us to learn more.</a></p>
       </div>
     </section>
 
