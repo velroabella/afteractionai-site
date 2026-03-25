@@ -99,7 +99,6 @@ exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body);
     const messages = body.messages;
-const systemPrompt = body.system || SYSTEM_PROMPT;
     const systemPrompt = body.system || SYSTEM_PROMPT;
 
     if (!messages || !Array.isArray(messages)) {
