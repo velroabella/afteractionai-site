@@ -26,7 +26,14 @@
     'poa':        'general-power-of-attorney',
     'will':       'last-will-and-testament',
     'living_will':'living-will',
-    'hipaa_auth': 'hipaa-authorization-form'
+    'hipaa_auth': 'hipaa-authorization-form',
+
+    /* VA / benefits form keys */
+    'nexus-letter':                 'nexus-letter',
+    'va-appeal-letter':             'va-appeal-letter',
+    'records-request-letter':       'records-request-letter',
+    'benefits-eligibility-summary': 'benefits-eligibility-summary',
+    'va-claim-personal-statement':  'va-claim-personal-statement'
   };
 
   /* ---------- CONTENT-BASED DETECTION ---------- */
@@ -47,6 +54,11 @@
     { pattern: /hipaa\s+authorization/i,                     formType: 'hipaa-authorization-form' },
     { pattern: /release\s+of\s+health\s+information/i,       formType: 'hipaa-authorization-form' },
     { pattern: /\bhipaa\b/i,                                 formType: 'hipaa-authorization-form' },
+    { pattern: /nexus\s+letter/i,                            formType: 'nexus-letter' },
+    { pattern: /va\s+appeal\s+letter|notice\s+of\s+disagreement/i, formType: 'va-appeal-letter' },
+    { pattern: /records\s+request\s+letter/i,                formType: 'records-request-letter' },
+    { pattern: /benefits\s+eligibility\s+summary/i,          formType: 'benefits-eligibility-summary' },
+    { pattern: /va\s+claim\s+personal\s+statement|statement\s+in\s+support\s+of\s+claim/i, formType: 'va-claim-personal-statement' },
   ];
 
   /**
