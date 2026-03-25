@@ -32,11 +32,11 @@
       Overrides .screen--landing::after without removing it.
    ----------------------------------------------------------- */
 .screen--landing::after {
-  width: 80%;
+  width: 55%;
   background: linear-gradient(
     to right,
-    rgba(0, 0, 0, 0.92) 0%,
-    rgba(0, 0, 0, 0.72) 42%,
+    rgba(0, 0, 0, 0.90) 0%,
+    rgba(0, 0, 0, 0.65) 50%,
     rgba(0, 0, 0, 0.00) 100%
   );
 }
@@ -427,12 +427,26 @@
 
 
 /* -----------------------------------------------------------
-   17. BACKGROUND IMAGE REPOSITIONING
+   17. NAVBAR LOGO REPLACEMENT
+       Swaps to afteractionai_logo_new.png.
+       mix-blend-mode: screen eliminates the black background —
+       black pixels become transparent, logo art remains fully visible.
+       Height increased to 48px to accommodate tagline line.
+   ----------------------------------------------------------- */
+.navbar__logo-img {
+  mix-blend-mode: screen;
+  height: 48px !important;
+}
+
+
+/* -----------------------------------------------------------
+   18. BACKGROUND IMAGE REPOSITIONING
        Default center center cuts off subject (person + headstones).
        Shift right and slightly up to frame the subject.
    ----------------------------------------------------------- */
 .screen--landing::before {
-  background-position: 70% 35% !important;
+  background-position: 40% 62% !important;
+  opacity: 0.62 !important;
 }
 
 
@@ -446,15 +460,18 @@
 .aaai-top-trust {
   position: absolute;
   top: 72px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   display: flex;
-  gap: 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
   font-size: 0.85rem;
   letter-spacing: 1px;
-  opacity: 0.85;
+  opacity: 0.92;
   z-index: 5;
   white-space: nowrap;
+  padding: 0 24px;
 }
 
 .aaai-top-trust span {
@@ -493,22 +510,25 @@
    ----------------------------------------------------------- */
 .aaai-top-trust__donate {
   white-space: nowrap;
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.78rem;
-  font-weight: 500;
+  color: #000000;
+  background: var(--gold);
+  font-size: 0.72rem;
+  font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   text-decoration: none;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  padding: 5px 14px;
+  border-radius: 4px;
   cursor: pointer;
+  transition: background 0.15s ease;
 }
 
 .aaai-top-trust__donate:hover {
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  background: var(--gold-light);
+  color: #000000;
+  text-decoration: none;
 }
 
 #btnDonate {
