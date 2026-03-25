@@ -18,7 +18,6 @@
     'hipaa-authorization-form',
     'hipaa',
     'affidavit'
-    'hipaa-authorization-form'
   ];
 
   const ACKNOWLEDGMENT_ITEMS = [
@@ -160,13 +159,6 @@
       // Non-blocking — still allow generation
     }
 
-    btn.textContent = 'Continue →';
-
-    const cb = _pendingCallback;
-    const ft = _pendingFormType;
-    closeModal();
-
-    // Fire callback
     // Capture before closeModal() nulls the module-level vars
     const cb = _pendingCallback;
     const ft = _pendingFormType;

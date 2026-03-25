@@ -904,9 +904,12 @@
 
   // Phase 3.5 — detect legal template responses and inject Download Word Doc button
   function injectLegalDocButton(messageDiv, rawText) {
-    // Wait for Phase 3.5 scripts to be ready (they load after app.js)
-    if (typeof AAAI === 'undefined' || !AAAI.legalIntegration || !AAAI.legal) return;
+    console.log('[LegalBtn] injectLegalDocButton called, text length:', rawText ? rawText.length : 0);
+    console.log('[LegalBtn] AAAI defined:', typeof AAAI !== 'undefined', '| legalIntegration:', !!(typeof AAAI !== 'undefined' && AAAI.legalIntegration));
+    // Only legalIntegration is required for detection; legal (modal) is checked at click time
+    if (typeof AAAI === 'undefined' || !AAAI.legalIntegration) return;
     var formType = AAAI.legalIntegration.detectLegalFormType(rawText);
+    console.log('[LegalBtn] detectLegalFormType result:', formType);
     if (!formType) return;
 
     var btn = document.createElement('button');
@@ -924,6 +927,7 @@
     });
 
     messageDiv.appendChild(btn);
+    console.log('[LegalBtn] button appended for formType:', formType);
   }
 
   // Phase 3.6 — build .docx using structured model; falls back to raw text
