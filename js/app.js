@@ -540,7 +540,7 @@
       hideCaption();
 
       // Phase 2: Detect report from voice mode too
-      if (isReportResponse(fullText)) {
+      if (isReport(fullText)) {
         log('Report', 'detected (voice) — showing actions');
         showReportActions(fullText);
       }
@@ -769,7 +769,7 @@
         if (userInput) userInput.focus();
 
         // Phase 2: Detect report and show PDF download + checklist
-        if (isReportResponse(aiResponse)) {
+        if (isReport(aiResponse)) {
           log('Report', 'detected — showing actions');
           showReportActions(aiResponse);
         }
@@ -1047,25 +1047,506 @@
   // ══════════════════════════════════════════════════════
   var lastReportText = null; // stores the latest detected report text
 
-  function isReportResponse(text) {
-  if (!text) return false;
+  function isReport(text) {
+    // A report must contain at least 3 of these markers
+    var markers = [
+      /action\s*plan/i,
+      /key\s*finding/i,
+      /recommend/i,
+      /next\s*step/i,
+      /benefit/i,
+      /resource/i,
+      /priority/i,
+      /eligib/i,
+      /veteran/i,
+      /summary/i,
+      /checklist/i,
+      /timeline/i
+    ];
+    var hits = 0;
+    for (var m = 0; m < markers.length; m++) {
+      if (markers[m].test(text)) hits++;
+    }
+    // Must also be substantial (500+ chars) and match at least 3 markers
+    return text.length >= 500 && hits >= 3;
+  }
 
-  var markers = [
-    'Action Plan',
-    'Key Findings',
-    'Recommendations',
-    'Next Steps',
-    'Checklist',
-    'Summary'
-  ];
+  function generateReportPDF(reportText) {
+    if (typeof window.jspdf === 'undefined' || !window.jspdf.jsPDF) {
+      showToast('PDF library not loaded. Please try again.');
+      log('PDF', 'jsPDF not available');
+      return;
+    }
 
-  var hasMarkers = markers.filter(function(m) {
-    return text.toLowerCase().indexOf(m.toLowerCase()) !== -1;
-  }).length >= 2;
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF({ unit: 'mm', format: 'a4' });
 
-  var longEnough = text.length > 800;
+    var pageW = doc.internal.pageSize.getWidth();
+    var pageH = doc.internal.pageSize.getHeight();
+    var marginL = 20;
+    var marginR = 20;
+    var marginTop = 25;
+    var marginBottom = 20;
+    var usableW = pageW - marginL - marginR;
+    var y = marginTop;
 
-  return hasMarkers && longEnough;
+    // ── Header bar ──
+    doc.setFillColor(26, 54, 93); // navy
+    doc.rect(0, 0, pageW, 18, 'F');
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(14);
+    doc.setTextColor(255, 255, 255);
+    doc.text('AfterAction AI \u2014 Veteran Benefits Report', pageW / 2, 12, { align: 'center' });
+
+    y = 28;
+
+    // ── Date line ──
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9);
+    doc.setTextColor(120, 120, 120);
+    var dateStr = 'Generated: ' + new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+    doc.text(dateStr, pageW - marginR, y, { align: 'right' });
+    y += 8;
+
+    // ── Parse sections from the report text ──
+    var sections = parseReportSections(reportText);
+
+    // ── Render each section ──
+    for (var s = 0; s < sections.length; s++) {
+      var sec = sections[s];
+
+      // Section heading
+      if (sec.heading) {
+        if (y > pageH - 40) { doc.addPage(); y = marginTop; }
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(12);
+        doc.setTextColor(26, 54, 93);
+        y += 4;
+        doc.text(sec.heading, marginL, y);
+        y += 2;
+        // underline
+        doc.setDrawColor(26, 54, 93);
+        doc.setLineWidth(0.5);
+        doc.line(marginL, y, marginL + usableW, y);
+        y += 6;
+      }
+
+      // Section body
+      if (sec.body) {
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(40, 40, 40);
+
+        var lines = doc.splitTextToSize(sec.body, usableW);
+        for (var li = 0; li < lines.length; li++) {
+          if (y > pageH - marginBottom) {
+            doc.addPage();
+            y = marginTop;
+          }
+          doc.text(lines[li], marginL, y);
+          y += 5;
+        }
+        y += 3;
+      }
+    }
+
+    // ── Footer on every page ──
+    var totalPages = doc.internal.getNumberOfPages();
+    for (var p = 1; p <= totalPages; p++) {
+      doc.setPage(p);
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      doc.setTextColor(150, 150, 150);
+      doc.text('AfterAction AI \u2014 afteractionai.org', marginL, pageH - 8);
+      doc.text('Page ' + p + ' of ' + totalPages, pageW - marginR, pageH - 8, { align: 'right' });
+    }
+
+    doc.save('AfterAction_AI_Report.pdf');
+    log('PDF', 'downloaded');
+  }
+
+  function parseReportSections(text) {
+    // Clean markdown artifacts
+    var clean = text
+      .replace(/\[OPTIONS:\s*.*?\]/g, '')
+      .replace(/\*\*(.*?)\*\*/g, '$1')
+      .replace(/\[(.*?)\]\(https?:\/\/.*?\)/g, '$1')
+      .trim();
+
+    var sections = [];
+    // Split on markdown-style headings (##, ###, numbered headings, or ALL-CAPS lines)
+    var parts = clean.split(/\n(?=#{1,3}\s|(?:\d+[\.\)]\s*[A-Z])|\n[A-Z][A-Z\s&\-:]{5,}\n)/);
+
+    if (parts.length <= 1) {
+      // No clear sections found — treat as one block with a generic heading
+      sections.push({ heading: 'Your Personalized Report', body: clean });
+      return sections;
+    }
+
+    for (var i = 0; i < parts.length; i++) {
+      var chunk = parts[i].trim();
+      if (!chunk) continue;
+
+      // Try to extract heading from first line
+      var firstNewline = chunk.indexOf('\n');
+      var heading = '';
+      var body = chunk;
+
+      if (firstNewline > 0 && firstNewline < 120) {
+        var potentialHeading = chunk.substring(0, firstNewline).replace(/^#{1,3}\s*/, '').replace(/^\d+[\.\)]\s*/, '').trim();
+        if (potentialHeading.length < 100) {
+          heading = potentialHeading;
+          body = chunk.substring(firstNewline + 1).trim();
+        }
+      }
+
+      if (!heading && i === 0) heading = 'Veteran Summary';
+
+      sections.push({ heading: heading, body: body });
+    }
+
+    return sections;
+  }
+
+  function showReportActions(reportText) {
+    lastReportText = reportText;
+
+    var div = document.createElement('div');
+    div.className = 'message message--system';
+    div.innerHTML =
+      '<div class="report-actions">' +
+        '<p class="report-actions__title">YOUR PERSONALIZED REPORT IS READY</p>' +
+        '<div class="report-actions__buttons">' +
+          '<button id="btnDownloadPDF" class="report-actions__btn report-actions__btn--pdf">' +
+            '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+            ' Download PDF' +
+          '</button>' +
+          '<button id="btnLaunchChecklist" class="report-actions__btn report-actions__btn--checklist">' +
+            'View Mission Checklist \u2192' +
+          '</button>' +
+        '</div>' +
+        '<p class="report-actions__note">Or keep chatting \u2014 I\'m here for as long as you need.</p>' +
+      '</div>';
+    if (chatMessages) chatMessages.appendChild(div);
+    scrollToBottom();
+
+    // Wire up PDF button
+    var pdfBtn = document.getElementById('btnDownloadPDF');
+    if (pdfBtn) {
+      pdfBtn.addEventListener('click', function() {
+        // Phase 3.5: Legal forms route through acknowledgment modal + .docx
+        if (typeof AAAI !== 'undefined' && AAAI.legalIntegration && AAAI.legalIntegration.detectAndHandle(reportText)) {
+          return;
+        }
+        generateReportPDF(reportText);
+      });
+    }
+
+    // Wire up checklist button
+    var clBtn = document.getElementById('btnLaunchChecklist');
+    if (clBtn) {
+      clBtn.addEventListener('click', function() {
+        buildChecklist(reportText);
+      });
+    }
+
+    // Action Engine — show recommended next actions based on report content
+    var detectedIssues = [];
+    if (typeof AAAI !== 'undefined' && AAAI.actions) {
+      try {
+        var userProfile = null;
+        if (AAAI.auth && AAAI.auth.getProfile) {
+          userProfile = AAAI.auth.getProfile();
+        }
+        // Use enriched plan if user has saved tags, otherwise standard plan
+        var actionPlan = (AAAI.actions.getEnrichedPlan && userProfile && userProfile.issue_tags)
+          ? AAAI.actions.getEnrichedPlan(reportText, userProfile)
+          : AAAI.actions.getActionPlan(reportText, userProfile);
+
+        detectedIssues = actionPlan.issues;
+
+        var panelHtml = (AAAI.actions.renderEnrichedPanel && actionPlan.savedTagCount > 0)
+          ? AAAI.actions.renderEnrichedPanel(actionPlan, { maxTemplates: 4, maxResources: 3 })
+          : AAAI.actions.renderActionPanel(actionPlan, { maxTemplates: 4, maxResources: 3 });
+
+        if (panelHtml) {
+          var actionDiv = document.createElement('div');
+          actionDiv.className = 'message message--system';
+          actionDiv.innerHTML =
+            '<div class="action-panel__title">' +
+              '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' +
+              ' Recommended Next Actions' +
+            '</div>' + panelHtml;
+          if (chatMessages) chatMessages.appendChild(actionDiv);
+          scrollToBottom();
+          log('ActionEngine', 'showed ' + actionPlan.issues.length + ' issues, ' +
+              actionPlan.templates.flow.length + ' templates, ' +
+              actionPlan.resources.length + ' resources' +
+              (actionPlan.savedTagCount ? ' (enriched from ' + actionPlan.savedTagCount + ' saved tags)' : ''));
+        }
+
+        // Persist detected issue tags for smart matching across sessions
+        if (detectedIssues.length > 0) {
+          AAAI.actions.persistTags(detectedIssues);
+        }
+
+        // ── State Benefits Recommendations ────────────────
+        // Detect state from profile or conversation text
+        var userState = (userProfile && userProfile.state) ? userProfile.state : null;
+        if (!userState) {
+          // Try to extract state from report/conversation text
+          var stateList = (typeof ResourceHub !== 'undefined' && ResourceHub.STATES) ? ResourceHub.STATES : [];
+          for (var si = 0; si < stateList.length; si++) {
+            var s = stateList[si];
+            // Match full state name in text (case-insensitive, word boundary)
+            var stateRegex = new RegExp('\\b' + s.name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '\\b', 'i');
+            if (stateRegex.test(reportText)) {
+              userState = s.abbr;
+              break;
+            }
+          }
+        }
+
+        if (userState && AAAI.actions.getStateBenefitsForUser) {
+          var stateContext = {
+            state: userState,
+            issue_tags: detectedIssues,
+            disability_rating_band: (userProfile && userProfile.disability_rating) ? userProfile.disability_rating : null,
+            service_status: (userProfile && userProfile.service_status) ? userProfile.service_status : 'veteran'
+          };
+
+          AAAI.actions.getStateBenefitsForUser(stateContext).then(function(benefits) {
+            if (benefits && benefits.length > 0) {
+              // Look up full state name for display
+              var stateName = userState;
+              var statesList = (typeof ResourceHub !== 'undefined' && ResourceHub.STATES) ? ResourceHub.STATES : [];
+              for (var sn = 0; sn < statesList.length; sn++) {
+                if (statesList[sn].abbr === userState) {
+                  stateName = statesList[sn].name;
+                  break;
+                }
+              }
+
+              var benefitsHtml = AAAI.actions.renderStateBenefitsPanel(benefits, stateName);
+              if (benefitsHtml) {
+                var benefitsDiv = document.createElement('div');
+                benefitsDiv.className = 'message message--system';
+                benefitsDiv.innerHTML =
+                  '<div class="action-panel__title">' +
+                    '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+                    ' Recommended State Benefits' +
+                  '</div>' + benefitsHtml;
+                if (chatMessages) chatMessages.appendChild(benefitsDiv);
+                scrollToBottom();
+                log('StateBenefits', 'showed ' + benefits.length + ' benefits for ' + stateName);
+              }
+            }
+          }).catch(function(e) {
+            log('StateBenefits', 'error: ' + e.message);
+          });
+        }
+      } catch(e) {
+        log('ActionEngine', 'render error: ' + e.message);
+      }
+    }
+
+    // Save report to Supabase if logged in + auto-generate checklist
+    if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn()) {
+      AAAI.auth.saveReport(reportText, conversationHistory).then(function(result) {
+        if (result && !result.error) {
+          log('Report', 'saved to Supabase');
+
+          // Auto-save action engine checklist items linked to this report
+          if (result.data && result.data.id && AAAI.actions && AAAI.actions.autoSaveChecklist && detectedIssues.length > 0) {
+            AAAI.actions.autoSaveChecklist(result.data.id, detectedIssues).then(function(clResult) {
+              if (clResult && clResult.data) {
+                log('AutoChecklist', 'saved ' + clResult.data.length + ' items from action engine');
+              }
+            }).catch(function(e) {
+              log('AutoChecklist', 'save error: ' + e.message);
+            });
+          }
+        }
+      }).catch(function(e) {
+        log('Report', 'save error: ' + e.message);
+      });
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  CHECKLIST INTEGRATION
+  // ══════════════════════════════════════════════════════
+  function showChecklistPrompt(reportText) {
+    var div = document.createElement('div');
+    div.className = 'message message--system';
+    div.innerHTML =
+      '<div class="checklist-cta">' +
+        '<p class="checklist-cta__title">YOUR MISSION STARTS NOW</p>' +
+        '<p class="checklist-cta__desc">Your personalized plan is ready. Convert it into an actionable mission checklist.</p>' +
+        '<button id="btnLaunchChecklist" class="checklist-cta__btn">View Mission Checklist \u2192</button>' +
+        '<p class="checklist-cta__note">Or keep chatting \u2014 I\'m here for as long as you need.</p>' +
+      '</div>';
+    if (chatMessages) chatMessages.appendChild(div);
+    scrollToBottom();
+
+    $('btnLaunchChecklist').addEventListener('click', function() {
+      buildChecklist(reportText);
+    });
+  }
+
+  function buildChecklist(reportText) {
+    var items = parseReportToChecklist(reportText);
+
+    var sections = {
+      immediate: document.querySelector('#checklistImmediate .checklist-section__items'),
+      short_term: document.querySelector('#checklistShortTerm .checklist-section__items'),
+      strategic: document.querySelector('#checklistStrategic .checklist-section__items'),
+      optional: document.querySelector('#checklistOptional .checklist-section__items')
+    };
+
+    var keys = Object.keys(sections);
+    for (var k = 0; k < keys.length; k++) {
+      if (sections[keys[k]]) sections[keys[k]].innerHTML = '';
+    }
+
+    items.forEach(function(item, index) {
+      var section = sections[item.category];
+      if (!section) return;
+
+      var el = document.createElement('div');
+      el.className = 'checklist-item';
+      el.setAttribute('data-index', index);
+
+      el.innerHTML =
+        '<div class="checklist-item__check" onclick="this.classList.toggle(\'checked\');this.closest(\'.checklist-item\').classList.toggle(\'completed\');updateChecklistProgress();">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' +
+        '</div>' +
+        '<div class="checklist-item__content">' +
+          '<div class="checklist-item__title">' + item.title + '</div>' +
+          (item.description ? '<div class="checklist-item__desc">' + item.description + '</div>' : '') +
+          '<div class="checklist-item__actions">' +
+            '<button class="checklist-btn checklist-btn--assist" data-index="' + index + '" title="AI explains this step">AI Assist</button>' +
+          '</div>' +
+        '</div>';
+      section.appendChild(el);
+    });
+
+    document.querySelectorAll('.checklist-btn--assist').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var itemEl = this.closest('.checklist-item');
+        var title = itemEl.querySelector('.checklist-item__title').textContent;
+        var desc = itemEl.querySelector('.checklist-item__desc');
+        showAIAssist(itemEl, title, desc ? desc.textContent : '');
+      });
+    });
+
+    var checklistScreen = $('checklistScreen');
+    if (chatScreen) chatScreen.style.display = 'none';
+    if (checklistScreen) checklistScreen.style.display = 'flex';
+    updateChecklistProgress();
+  }
+
+  function parseReportToChecklist(text) {
+    var items = [];
+    var lines = text.split('\n');
+    var currentCategory = 'immediate';
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i].trim();
+      var lower = line.toLowerCase();
+
+      if (lower.indexOf('immediate') > -1 || lower.indexOf('this week') > -1 || lower.indexOf('right now') > -1) {
+        currentCategory = 'immediate'; continue;
+      }
+      if (lower.indexOf('short-term') > -1 || lower.indexOf('short term') > -1 || lower.indexOf('this month') > -1) {
+        currentCategory = 'short_term'; continue;
+      }
+      if (lower.indexOf('medium-term') > -1 || lower.indexOf('strategic') > -1 || lower.indexOf('long-term') > -1 || lower.indexOf('6-12 month') > -1) {
+        currentCategory = 'strategic'; continue;
+      }
+      if (lower.indexOf('optional') > -1 || lower.indexOf('bonus') > -1) {
+        currentCategory = 'optional'; continue;
+      }
+
+      var actionMatch = line.match(/^(?:\d+[\.\)]\s*|\*\s+|-\s+|\u2022\s*)(.+)/);
+      if (actionMatch && actionMatch[1].length > 10) {
+        var title = actionMatch[1].replace(/\*\*/g, '').trim();
+        var desc = '';
+        for (var j = i + 1; j < Math.min(i + 4, lines.length); j++) {
+          var nextLine = lines[j].trim();
+          if (!nextLine) continue;
+          if (nextLine.match(/^(?:\d+[\.\)]\s*|\*\s+|-\s+|\u2022\s*)/)) break;
+          if (nextLine.length > 15 && !nextLine.match(/^#{1,3}\s/)) {
+            desc = nextLine.replace(/\*\*/g, '').trim();
+            break;
+          }
+        }
+        items.push({ category: currentCategory, title: title.substring(0, 200), description: desc.substring(0, 300) });
+      }
+    }
+
+    if (items.length < 3) {
+      return [
+        { category: 'immediate', title: 'Review your personalized AfterAction Plan', description: 'Read through the full plan above and identify your top priority.' },
+        { category: 'immediate', title: 'Contact the first resource listed in your plan', description: 'Make the first call or visit the first link recommended.' },
+        { category: 'immediate', title: 'Gather required documents', description: 'Collect DD-214, VA rating letter, and any other documents mentioned.' },
+        { category: 'short_term', title: 'Complete initial applications', description: 'Submit applications for benefits and programs identified in your plan.' },
+        { category: 'short_term', title: 'Follow up on pending items', description: 'Check status of applications and schedule follow-up appointments.' },
+        { category: 'strategic', title: 'Track progress and adjust plan', description: 'Come back to update your plan as your situation evolves.' },
+        { category: 'optional', title: 'Explore additional resources', description: 'Visit the Education Hub and Resources page for more tools.' }
+      ];
+    }
+    return items;
+  }
+
+  window.updateChecklistProgress = function() {
+    var all = document.querySelectorAll('.checklist-item');
+    var completed = document.querySelectorAll('.checklist-item.completed');
+    var pct = all.length > 0 ? Math.round((completed.length / all.length) * 100) : 0;
+    var fill = $('checklistProgressFill');
+    var text = $('checklistProgressText');
+    if (fill) fill.style.width = pct + '%';
+    if (text) text.textContent = pct + '% Complete \u2014 ' + completed.length + ' of ' + all.length + ' tasks';
+  };
+
+  function showAIAssist(itemEl, title, description) {
+    if (itemEl.querySelector('.ai-assist-panel')) return;
+
+    var panel = document.createElement('div');
+    panel.className = 'ai-assist-panel';
+    panel.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+    itemEl.querySelector('.checklist-item__content').appendChild(panel);
+
+    var prompt = 'You are AfterAction AI. A veteran has a checklist task: "' + title + '". ' + (description ? 'Details: ' + description : '') + ' Explain in 2-3 short sentences: what this means, why it matters, and the first concrete step to take. Be direct and veteran-friendly. Keep it under 75 words.';
+
+    var assistPromise = fetch(CONFIG.apiEndpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messages: [{ role: 'user', content: prompt }] })
+    }).then(function(r) { return r.json(); }).then(function(d) { return d.response; });
+
+    assistPromise.then(function(response) {
+      panel.innerHTML = '<p style="font-size:0.85rem;color:var(--gray-300);line-height:1.5;">' + response.replace(/\n/g, '<br>') + '</p>' +
+        '<button class="ai-assist-close" onclick="this.parentElement.remove()">Dismiss</button>';
+    }).catch(function() {
+      panel.innerHTML = '<p style="font-size:0.85rem;color:var(--gray-500);">Could not load explanation. Try again later.</p>';
+    });
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  EXPOSE GLOBALS
+  // ══════════════════════════════════════════════════════
+  window.AAAI_CONFIG = {
+    model: CONFIG.model,
+    apiEndpoint: CONFIG.apiEndpoint
+  };
+
+  window.AAAI_startChat = startChat;
+  window.AAAI_endVoiceSession = endVoiceSession;
+
+  // ── BOOT ────────────────────────────────────────────
+  init();
+
 })();
 
 
