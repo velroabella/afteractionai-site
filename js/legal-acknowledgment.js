@@ -17,7 +17,12 @@
     'last-will-and-testament',
     'hipaa-authorization-form',
     'hipaa',
-    'affidavit'
+    'affidavit',
+    'nexus-letter',
+    'va-appeal-letter',
+    'records-request-letter',
+    'benefits-eligibility-summary',
+    'va-claim-personal-statement'
   ];
 
   const ACKNOWLEDGMENT_ITEMS = [
