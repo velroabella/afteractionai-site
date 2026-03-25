@@ -95,7 +95,7 @@
     { pattern: /federal\s+resume\s+\(?\s*usajobs\s*\)?/i,                      formType: 'federal-resume-usajobs' },
     { pattern: /federal\s+resume/i,                                            formType: 'federal-resume-usajobs' },
     { pattern: /linkedin\s+profile\s+builder/i,                                formType: 'linkedin-profile-builder' },
-    { pattern: /interview\s+prep\s+script|interview\s+prep.*star\s+method/i,   formType: 'interview-prep-star' },
+    { pattern: /interview\s+prep\s+script|interview\s+prep\s+\(?\s*star\s+method\s*\)?/i, formType: 'interview-prep-star' },
     { pattern: /resume\s+builder/i,                                            formType: 'resume-builder' },
   ];
 
