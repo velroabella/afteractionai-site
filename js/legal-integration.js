@@ -66,12 +66,15 @@
     { pattern: /benefits\s+eligibility\s+summary/i,          formType: 'benefits-eligibility-summary' },
     { pattern: /va\s+claim\s+personal\s+statement|statement\s+in\s+support\s+of\s+claim/i, formType: 'va-claim-personal-statement' },
     { pattern: /nexus\s+letter/i,                            formType: 'nexus-letter' },
-    /* Financial / administrative form patterns (strict — no .* wildcards) */
+    /* Financial / administrative form patterns (strict — no .* wildcards)
+       ORDER MATTERS: va-loan-readiness-checklist MUST precede credit-dispute
+       and budget-financial because VA loan responses reference those forms
+       by name, which would trigger false matches via first-match-wins. */
     { pattern: /debt\s+hardship\s+letter/i,                            formType: 'debt-hardship-letter' },
-    { pattern: /credit\s+dispute\s+letter|dispute\s+credit\s+report/i, formType: 'credit-dispute-letter' },
-    { pattern: /budget\s+financial\s+recovery\s+plan|financial\s+recovery\s+plan/i, formType: 'budget-financial-recovery-plan' },
     { pattern: /va\s+loan\s+readiness\s+checklist/i,                   formType: 'va-loan-readiness-checklist' },
     { pattern: /rental\s+application\s+packet/i,                       formType: 'rental-application-packet' },
+    { pattern: /credit\s+dispute\s+letter|dispute\s+credit\s+report/i, formType: 'credit-dispute-letter' },
+    { pattern: /budget\s+financial\s+recovery\s+plan|financial\s+recovery\s+plan/i, formType: 'budget-financial-recovery-plan' },
   ];
 
   /**
