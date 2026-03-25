@@ -54,6 +54,11 @@ Templates you MUST generate when asked:
 - Living Will / Advance Directive
 - HIPAA Authorization
 - Affidavits
+- Nexus Letter Prep Template
+- VA Appeal Letter
+- Records Request Letter
+- Benefits Eligibility Summary
+- VA Claim Personal Statement
 
 When generating any legal document template:
 - ALWAYS start with this exact disclaimer: "This document is a general template and not legal advice. Consult a licensed attorney before use."
