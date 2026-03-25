@@ -1590,42 +1590,4 @@
 })();
 
 
-function injectLegalDocButton(messageDiv, rawText) {
-  try {
-    if (typeof AAAI === 'undefined' || !AAAI.legalIntegration || !AAAI.legal || !window.docx) return;
-    let formType = null;
-
-    // Fallback detection (more reliable)
-    if (/power of attorney/i.test(rawText)) formType = 'power-of-attorney';
-    else if (/living will|advance directive/i.test(rawText)) formType = 'living-will';
-    else if (/hipaa/i.test(rawText)) formType = 'hipaa';
-    else if (/affidavit/i.test(rawText)) formType = 'affidavit';
-
-    // Try system detection if available
-    if (!formType && AAAI.legalIntegration && AAAI.legalIntegration.detectLegalFormType) {
-      formType = AAAI.legalIntegration.detectLegalFormType(rawText);
-    }
-
-    if (!formType) return;
-
-    const btn = document.createElement('button');
-    btn.className = 'report-download-btn';
-    btn.style.marginTop = '12px';
-    btn.textContent = '⬇ Download Word Doc';
-
-    btn.addEventListener('click', function () {
-      AAAI.legal.requireAcknowledgment(formType, function(confirmedFormType) {
-        if (typeof AAAI !== 'undefined' && AAAI.legalDocx && AAAI.legalDocx.generate) {
-          AAAI.legalDocx.generate(confirmedFormType || formType, rawText).catch(function (err) {
-            console.error('[LegalBtn] AAAI.legalDocx.generate failed:', err);
-          });
-        }
-      });
-    });
-
-    messageDiv.appendChild(btn);
-  } catch (e) {
-    console.warn('Legal doc button injection failed:', e);
-  }
-}
 
