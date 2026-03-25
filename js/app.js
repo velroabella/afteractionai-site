@@ -929,6 +929,10 @@
             if (typeof showToast === 'function') { showToast(msg, 'error'); }
             else { alert('Document generation error: ' + msg); }
           });
+        } else {
+          console.error('[LegalBtn] AAAI.legalDocx is unavailable at click time.');
+          if (typeof showToast === 'function') { showToast('DOCX generator is unavailable. Please refresh the page and try again.', 'error'); }
+          else { alert('DOCX generator is unavailable. Please refresh the page and try again.'); }
         }
       });
     });
