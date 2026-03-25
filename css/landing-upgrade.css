@@ -445,8 +445,9 @@
        Shift right and slightly up to frame the subject.
    ----------------------------------------------------------- */
 .screen--landing::before {
-  background-position: 15% 82% !important;
-  opacity: 0.62 !important;
+  background-size: 140% auto !important;
+  background-position: 10% 78% !important;
+  opacity: 0.65 !important;
 }
 
 
