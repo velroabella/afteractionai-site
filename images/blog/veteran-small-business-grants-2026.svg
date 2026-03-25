@@ -1,13 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a2e"/>
-      <stop offset="100%" style="stop-color:#16213e"/>
+    <linearGradient id="vb-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#080608"/>
+      <stop offset="55%" stop-color="#120f08"/>
+      <stop offset="100%" stop-color="#1c1608"/>
+    </linearGradient>
+    <linearGradient id="vb-amber" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#92400e" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#92400e" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <rect width="600" height="400" fill="url(#bg)"/>
-  <circle cx="300" cy="155" r="50" fill="none" stroke="#4ade80" stroke-width="3.5" opacity="0.8"/>
-  <text x="300" y="168" text-anchor="middle" fill="#4ade80" font-family="Inter,sans-serif" font-size="20" font-weight="700">Biz Grants</text>
-  <text x="300" y="250" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Inter,sans-serif" font-size="16" font-weight="600">Entrepreneurship</text>
-  <text x="300" y="280" text-anchor="middle" fill="rgba(255,255,255,0.45)" font-family="Inter,sans-serif" font-size="13">AfterAction AI</text>
+  <rect width="600" height="400" fill="url(#vb-bg)"/>
+  <rect x="0" y="0" width="340" height="400" fill="url(#vb-amber)"/>
+  <!-- Ascending bars right side -->
+  <rect x="390" y="230" width="30" height="55" rx="2" fill="rgba(197,165,90,0.12)" stroke="rgba(197,165,90,0.22)" stroke-width="1"/>
+  <rect x="430" y="195" width="30" height="90" rx="2" fill="rgba(197,165,90,0.15)" stroke="rgba(197,165,90,0.28)" stroke-width="1"/>
+  <rect x="470" y="160" width="30" height="125" rx="2" fill="rgba(197,165,90,0.18)" stroke="rgba(197,165,90,0.32)" stroke-width="1"/>
+  <rect x="510" y="125" width="30" height="160" rx="2" fill="rgba(197,165,90,0.22)" stroke="rgba(197,165,90,0.38)" stroke-width="1"/>
+  <rect x="550" y="100" width="30" height="185" rx="2" fill="rgba(197,165,90,0.26)" stroke="rgba(197,165,90,0.45)" stroke-width="1"/>
+  <line x1="380" y1="285" x2="590" y2="285" stroke="rgba(197,165,90,0.18)" stroke-width="1"/>
+  <line x1="0" y1="80"  x2="380" y2="80"  stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="200" x2="380" y2="200" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <line x1="0" y1="320" x2="380" y2="320" stroke="rgba(255,255,255,0.025)" stroke-width="1"/>
+  <rect x="0" y="0" width="5" height="400" fill="#C5A55A"/>
+  <rect x="30" y="104" width="44" height="2" fill="#C5A55A" opacity="0.7"/>
+  <text x="30" y="122" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="700" fill="#C5A55A" letter-spacing="3">ENTREPRENEURSHIP</text>
+  <text x="30" y="185" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-size="42" font-weight="800" fill="#ffffff" letter-spacing="-1">VETERAN GRANTS</text>
+  <text x="30" y="232" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-size="36" font-weight="800" fill="#C5A55A" letter-spacing="-0.5">2026</text>
+  <text x="30" y="272" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="rgba(255,255,255,0.36)">SBA · Private foundations · Veteran entrepreneur programs</text>
 </svg>
