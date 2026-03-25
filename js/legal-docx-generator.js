@@ -101,44 +101,21 @@
   /* ---------- NOTICE SECTION ---------- */
 
   function buildNoticeSection(D) {
-    const border = { style: D.BorderStyle.SINGLE, size: 1, color: 'CC0000' };
-    const borders = { top: border, bottom: border, left: border, right: border };
+    var paragraphs = [];
 
-    const rows = [];
-    // Single-cell table with notice content
-    const cellChildren = [
-      new D.Paragraph({
-        spacing: { after: 120 },
-        children: [new D.TextRun({ text: NOTICE_TITLE, bold: true, size: 24, color: 'CC0000', font: 'Arial' })]
-      })
-    ];
-
-    NOTICE_LINES.forEach(function (line) {
-      cellChildren.push(
-        new D.Paragraph({
-          spacing: { after: line === '' ? 80 : 40 },
-          children: line ? [new D.TextRun({ text: line, size: 22, font: 'Arial' })] : []
-        })
-      );
-    });
-
-    rows.push(new D.TableRow({
-      children: [
-        new D.TableCell({
-          borders: borders,
-          width: { size: 9360, type: D.WidthType.DXA },
-          shading: { fill: 'FFF5F5', type: D.ShadingType.CLEAR },
-          margins: { top: 120, bottom: 120, left: 200, right: 200 },
-          children: cellChildren
-        })
-      ]
+    paragraphs.push(new D.Paragraph({
+      spacing: { before: 120, after: 120 },
+      children: [new D.TextRun({ text: NOTICE_TITLE, bold: true, size: 24, color: 'CC0000', font: 'Arial' })]
     }));
 
-    return new D.Table({
-      width: { size: 9360, type: D.WidthType.DXA },
-      columnWidths: [9360],
-      rows: rows
+    NOTICE_LINES.forEach(function (line) {
+      paragraphs.push(new D.Paragraph({
+        spacing: { after: line === '' ? 80 : 60 },
+        children: line ? [new D.TextRun({ text: line, size: 22, font: 'Arial' })] : []
+      }));
     });
+
+    return paragraphs;
   }
 
   /* ---------- FORM-SPECIFIC CONTENT BUILDERS ---------- */
@@ -607,7 +584,7 @@
         footers: { default: buildFooter(D) },
         children: [
           // Notice section at top of document body
-          buildNoticeSection(D),
+          ...buildNoticeSection(D),
           spacer(D),
           // Form content
           ...formContent
