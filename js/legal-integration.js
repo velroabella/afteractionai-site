@@ -125,6 +125,7 @@
 
     if (!formType) {
       console.error('[LegalIntegration] Unknown template:', templateId);
+      showError('Unknown document type: ' + templateId);
       return;
     }
 
