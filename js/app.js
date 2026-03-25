@@ -924,7 +924,10 @@
       AAAI.legal.requireAcknowledgment(formType, function (confirmedFormType) {
         if (typeof AAAI !== 'undefined' && AAAI.legalDocx && AAAI.legalDocx.generate) {
           AAAI.legalDocx.generate(confirmedFormType, rawText).catch(function (err) {
+            var msg = err && err.message ? err.message : String(err || 'DOCX generation failed');
             console.error('[LegalBtn] AAAI.legalDocx.generate failed:', err);
+            if (typeof showToast === 'function') { showToast(msg, 'error'); }
+            else { alert('Document generation error: ' + msg); }
           });
         }
       });
