@@ -2635,6 +2635,17 @@ a:hover { color: #000; }
   transform: translateY(-45%);
 }
 
+/* Board page hero — flag-hero.jpg, frame upper portion to show flag + silhouette */
+.page-hero-image--board {
+  min-height: 65vh;
+  background-position: center 30%;
+}
+.page-hero-image--board .page-hero-image__content {
+  position: absolute;
+  top: 45%;
+  transform: translateY(-45%);
+}
+
 .page-hero-image::before {
   content: '';
   position: absolute;
