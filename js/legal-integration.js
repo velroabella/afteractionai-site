@@ -54,11 +54,11 @@
     { pattern: /hipaa\s+authorization/i,                     formType: 'hipaa-authorization-form' },
     { pattern: /release\s+of\s+health\s+information/i,       formType: 'hipaa-authorization-form' },
     { pattern: /\bhipaa\b/i,                                 formType: 'hipaa-authorization-form' },
-    { pattern: /nexus\s+letter/i,                            formType: 'nexus-letter' },
     { pattern: /va\s+appeal\s+letter|notice\s+of\s+disagreement/i, formType: 'va-appeal-letter' },
     { pattern: /records\s+request\s+letter/i,                formType: 'records-request-letter' },
     { pattern: /benefits\s+eligibility\s+summary/i,          formType: 'benefits-eligibility-summary' },
     { pattern: /va\s+claim\s+personal\s+statement|statement\s+in\s+support\s+of\s+claim/i, formType: 'va-claim-personal-statement' },
+    { pattern: /nexus\s+letter/i,                            formType: 'nexus-letter' },
   ];
 
   /**
