@@ -771,6 +771,7 @@ a:hover { color: #000; }
   height: 38px;
   width: auto;
   display: block;
+  mix-blend-mode: screen;
 }
 
 /* Legacy fallback - no longer used */
