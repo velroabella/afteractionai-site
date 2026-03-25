@@ -1048,27 +1048,26 @@
   var lastReportText = null; // stores the latest detected report text
 
   function isReportResponse(text) {
-    // A report must contain at least 3 of these markers
+    if (!text) return false;
+
     var markers = [
-      /action\s*plan/i,
-      /key\s*finding/i,
-      /recommend/i,
-      /next\s*step/i,
-      /benefit/i,
-      /resource/i,
-      /priority/i,
-      /eligib/i,
-      /veteran/i,
-      /summary/i,
-      /checklist/i,
-      /timeline/i
+      'Action Plan',
+      'Key Findings',
+      'Recommendations',
+      'Next Steps',
+      'Checklist',
+      'Summary'
     ];
-    var hits = 0;
-    for (var m = 0; m < markers.length; m++) {
-      if (markers[m].test(text)) hits++;
-    }
-    // Must also be substantial (500+ chars) and match at least 3 markers
-    return text.length >= 500 && hits >= 3;
+
+    var hasMarkers = markers.filter(function(m) {
+      // Must appear as a section heading, not as a word mid-sentence
+      var escaped = m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      return new RegExp('^[ \t]*(?:#{1,4}\\s*|\\*{1,2})?\\s*' + escaped + '\\s*\\*{0,2}\\s*:?\\s*$', 'im').test(text);
+    }).length >= 2;
+
+    var longEnough = text.length > 800;
+
+    return hasMarkers && longEnough;
   }
 
   function generateReportPDF(reportText) {
