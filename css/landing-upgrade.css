@@ -424,3 +424,103 @@
     width: auto !important;
   }
 }
+
+
+/* -----------------------------------------------------------
+   17. BACKGROUND IMAGE REPOSITIONING
+       Default center center cuts off subject (person + headstones).
+       Shift right and slightly up to frame the subject.
+   ----------------------------------------------------------- */
+.screen--landing::before {
+  background-position: 70% 35% !important;
+}
+
+
+/* -----------------------------------------------------------
+   18. TOP TRUST ROW
+       Replaces hero logo area + trust bar.
+       Absolutely positioned — centered across full hero width.
+       Sits above headline content.
+       z-index: 5 clears hero overlays (::before z:0, ::after z:0).
+   ----------------------------------------------------------- */
+.aaai-top-trust {
+  position: absolute;
+  top: 72px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 24px;
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+  opacity: 0.85;
+  z-index: 5;
+  white-space: nowrap;
+}
+
+.aaai-top-trust span {
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.aaai-top-trust span::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+.aaai-top-trust span:first-child::before {
+  display: none;
+}
+
+
+/* -----------------------------------------------------------
+   19. DONATE LINK IN TOP TRUST ROW
+       .aaai-top-trust__donate is a real <a href="#donate"> link.
+       Styled to match the trust row spans visually.
+       No dot separator before it (first item).
+       #btnDonate in landing__actions hidden — ID preserved in DOM.
+   ----------------------------------------------------------- */
+.aaai-top-trust__donate {
+  white-space: nowrap;
+  color: rgba(255, 255, 255, 0.62);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.aaai-top-trust__donate:hover {
+  color: rgba(255, 255, 255, 0.9);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+#btnDonate {
+  display: none !important;
+}
+
+
+/* -----------------------------------------------------------
+   20. LANDING TOP PADDING ADJUSTMENT
+       landing__logo removed — reduce top padding so headline
+       doesn't sit too low. Navbar height ~60px.
+   ----------------------------------------------------------- */
+.landing {
+  padding-top: 140px !important;
+}
