@@ -445,10 +445,12 @@
        Shift right and slightly up to frame the subject.
    ----------------------------------------------------------- */
 .screen--landing::before {
-  background-size: contain !important;
-  background-repeat: no-repeat !important;
-  background-position: center 22% !important;
-  opacity: 0.78 !important;
+  bottom: unset !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  background-size: cover !important;
+  background-position: center 25% !important;
+  opacity: 0.72 !important;
 }
 
 
