@@ -540,7 +540,7 @@
       hideCaption();
 
       // Phase 2: Detect report from voice mode too
-      if (isReport(fullText)) {
+      if (isReportResponse(fullText)) {
         log('Report', 'detected (voice) — showing actions');
         showReportActions(fullText);
       }
@@ -769,7 +769,7 @@
         if (userInput) userInput.focus();
 
         // Phase 2: Detect report and show PDF download + checklist
-        if (isReport(aiResponse)) {
+        if (isReportResponse(aiResponse)) {
           log('Report', 'detected — showing actions');
           showReportActions(aiResponse);
         }
@@ -1047,7 +1047,7 @@
   // ══════════════════════════════════════════════════════
   var lastReportText = null; // stores the latest detected report text
 
-  function isReport(text) {
+  function isReportResponse(text) {
     // A report must contain at least 3 of these markers
     var markers = [
       /action\s*plan/i,
