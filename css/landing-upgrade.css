@@ -464,7 +464,7 @@
 .aaai-top-trust {
   position: absolute;
   top: 120px;
-  left: 72%;
+  left: 50%;
   transform: translateX(-50%);
   display: flex;
   justify-content: center;
