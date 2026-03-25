@@ -477,15 +477,15 @@
 }
 
 .aaai-top-trust span {
-  white-space: nowrap;
-  color: rgba(255, 255, 255, 0.62);
-  font-size: 0.78rem;
-  font-weight: 500;
+  color: #D4AF37;             /* solid gold */
+  font-size: 0.8rem;
+  font-weight: 600;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   display: flex;
   align-items: center;
   gap: 8px;
+  text-shadow: 0 0 6px rgba(212,175,55,0.25);   /* subtle glow for contrast */
 }
 
 .aaai-top-trust span::before {
