@@ -160,11 +160,14 @@
     }
 
     btn.textContent = 'Continue →';
+
+    const cb = _pendingCallback;
+    const ft = _pendingFormType;
     closeModal();
 
     // Fire callback
-    if (typeof _pendingCallback === 'function') {
-      _pendingCallback(_pendingFormType);
+    if (typeof cb === 'function') {
+      cb(ft);
     }
   }
 
