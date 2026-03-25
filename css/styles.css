@@ -768,7 +768,7 @@ a:hover { color: #000; }
 }
 
 .navbar__logo-img {
-  height: 38px;
+  height: 48px;
   width: auto;
   display: block;
   mix-blend-mode: screen;
@@ -2774,7 +2774,7 @@ a:hover { color: #000; }
 }
 
 .navbar__logo-img {
-  height: 36px;
+  height: 48px;
   width: auto;
 }
 
@@ -3378,7 +3378,7 @@ img {
 
 /* navbar__logo span and logo-mark overrides removed - using image logo */
 .navbar__logo-img {
-  height: 34px;
+  height: 48px;
   width: auto;
 }
 
