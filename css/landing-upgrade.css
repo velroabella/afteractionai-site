@@ -445,7 +445,7 @@
        Shift right and slightly up to frame the subject.
    ----------------------------------------------------------- */
 .screen--landing::before {
-  background-position: 40% 62% !important;
+  background-position: 15% 82% !important;
   opacity: 0.62 !important;
 }
 
@@ -459,7 +459,7 @@
    ----------------------------------------------------------- */
 .aaai-top-trust {
   position: absolute;
-  top: 72px;
+  top: 120px;
   left: 0;
   right: 0;
   display: flex;
