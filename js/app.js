@@ -820,7 +820,10 @@
       if (i >= words.length) {
         activeStreamTimer = null;
         div.classList.remove('message--streaming');
-        div.innerHTML = formatMessage(fullText);
+        div.innerHTML = formatMessage(fullText)
+
+      // Phase 3.5: inject Download Word Doc button for legal template responses
+      injectLegalDocButton(div, fullText);
         scrollToBottom();
         if (onComplete) onComplete();
         return;
