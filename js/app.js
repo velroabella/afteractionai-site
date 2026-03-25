@@ -922,98 +922,16 @@
 
     btn.addEventListener('click', function () {
       AAAI.legal.requireAcknowledgment(formType, function (confirmedFormType) {
-        generateDocxFromChatText(confirmedFormType, rawText);
+        if (typeof AAAI !== 'undefined' && AAAI.legalDocx && AAAI.legalDocx.generate) {
+          AAAI.legalDocx.generate(confirmedFormType, rawText).catch(function (err) {
+            console.error('[LegalBtn] AAAI.legalDocx.generate failed:', err);
+          });
+        }
       });
     });
 
     messageDiv.appendChild(btn);
     console.log('[LegalBtn] button appended for formType:', formType);
-  }
-
-  // Phase 3.6 — build .docx using structured model; falls back to raw text
-  function generateDocxFromChatText(formType, rawText) {
-    if (!window.docx) {
-      console.error('[LegalDocBtn] window.docx not loaded');
-      return;
-    }
-
-    var D = window.docx;
-
-    // ── Phase 3.6: attempt structured parse ─────────────────────────────
-    var model = (typeof AAAI !== 'undefined' && AAAI.legalModel)
-      ? AAAI.legalModel.parse(rawText, formType)
-      : null;
-
-    var children;
-
-    if (model) {
-      // Structured path: title → sections (heading + body)
-      log('LegalDocx', 'structured model parsed — ' + model.sections.length + ' sections');
-      children = [];
-
-      // Document title
-      if (model.title) {
-        children.push(new D.Paragraph({
-          children: [new D.TextRun({ text: model.title, bold: true, size: 36, font: 'Arial' })],
-          spacing: { after: 280 }
-        }));
-      }
-
-      // Sections
-      model.sections.forEach(function (section) {
-        // Section heading
-        if (section.heading) {
-          children.push(new D.Paragraph({
-            children: [new D.TextRun({ text: section.heading, bold: true, size: 26, font: 'Arial' })],
-            spacing: { before: 200, after: 80 }
-          }));
-        }
-        // Section body lines
-        if (section.content) {
-          section.content.split('\n').forEach(function (line) {
-            var t = line.trim();
-            children.push(new D.Paragraph({
-              children: [new D.TextRun({ text: t || ' ', size: 22, font: 'Arial' })],
-              spacing: { after: t === '' ? 0 : 80 }
-            }));
-          });
-        }
-        // Spacer between sections
-        children.push(new D.Paragraph({ spacing: { after: 140 }, children: [] }));
-      });
-
-    } else {
-      // Fallback path: raw text (Phase 3.5 logic preserved exactly)
-      log('LegalDocx', 'model parse failed or unavailable — using raw text fallback');
-      var cleanText = rawText.replace(/\[OPTIONS:[^\]]*\]/g, '').trim();
-      children = cleanText.split('\n').map(function (line) {
-        var trimmed = line.trim();
-        var isHeading = trimmed.length > 0 && trimmed === trimmed.toUpperCase() && trimmed.length > 3;
-        return new D.Paragraph({
-          children: [new D.TextRun({
-            text: trimmed || ' ',
-            bold: isHeading,
-            size: isHeading ? 26 : 22
-          })],
-          spacing: { after: trimmed === '' ? 0 : 120 }
-        });
-      });
-    }
-
-    var doc = new D.Document({ sections: [{ children: children }] });
-
-    D.Packer.toBlob(doc).then(function (blob) {
-      var url = URL.createObjectURL(blob);
-      var a = document.createElement('a');
-      a.href = url;
-      a.download = formType + '.docx';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      URL.revokeObjectURL(url);
-    }).catch(function (err) {
-      console.error('[LegalDocBtn] Packer failed:', err);
-    });
   }
 
   function formatMessage(text) {
@@ -1697,7 +1615,11 @@ function injectLegalDocButton(messageDiv, rawText) {
 
     btn.addEventListener('click', function () {
       AAAI.legal.requireAcknowledgment(formType, function(confirmedFormType) {
-        generateDocxFromChatText(confirmedFormType || formType, rawText);
+        if (typeof AAAI !== 'undefined' && AAAI.legalDocx && AAAI.legalDocx.generate) {
+          AAAI.legalDocx.generate(confirmedFormType || formType, rawText).catch(function (err) {
+            console.error('[LegalBtn] AAAI.legalDocx.generate failed:', err);
+          });
+        }
       });
     });
 
@@ -1707,37 +1629,3 @@ function injectLegalDocButton(messageDiv, rawText) {
   }
 }
 
-function generateDocxFromChatText(formType, rawText) {
-  const cleaned = rawText.replace(/\[OPTIONS:[\s\S]*?\]/g, '').trim();
-  const lines = cleaned.split(/\r?\n/).filter(Boolean);
-
-  const paragraphs = lines.map(line => {
-    const isHeading = /^[A-Z][A-Z\s\-\/()#:]+$/.test(line.trim()) || line.trim().startsWith('# ');
-    return new window.docx.Paragraph({
-      children: [
-        new window.docx.TextRun({
-          text: line.replace(/^#\s*/, ''),
-          bold: isHeading
-        })
-      ],
-      spacing: { after: 200 }
-    });
-  });
-
-  const doc = new window.docx.Document({
-    sections: [{
-      properties: {},
-      children: paragraphs
-    }]
-  });
-
-  window.docx.Packer.toBlob(doc).then(blob => {
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `${formType || 'legal-template'}.docx`;
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(a.href), 1000);
-  });
-}
