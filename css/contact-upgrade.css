@@ -159,8 +159,13 @@
    ----------------------------------------------------------- */
 .page-hero-bar {
   background-size: cover !important;
-  background-position: center !important;
+  background-position: center 20% !important;
   min-height: 75vh !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  text-align: center !important;
 }
 .page-hero-bar::before {
   top: 0 !important;
@@ -169,10 +174,25 @@
   height: 100% !important;
   background: linear-gradient(
     180deg,
-    rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.72) 45%,
-    rgba(0,0,0,0.88) 100%
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.55) 45%,
+    rgba(0,0,0,0.62) 100%
   ) !important;
+}
+.page-hero-bar::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 6px !important;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #C5A55A 50%,
+    transparent 100%
+  ) !important;
+  z-index: 3 !important;
 }
 .page-hero-bar__title,
 .page-hero-bar__subtitle,

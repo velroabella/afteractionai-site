@@ -98,8 +98,7 @@
     <div class="resources-filters" id="filterBtns">
       <button class="filter-btn active" data-filter="all">All Issues</button>
       <button class="filter-btn" data-filter="crisis">Crisis Support</button>
-      <button class="filter-btn" data-filter="benefits_complaint">Benefits Complaint</button>
-      <button class="filter-btn" data-filter="fraud">Fraud Reporting</button>
+      <button class="filter-btn" data-filter="benefits_complaint">Benefits</button>
       <button class="filter-btn" data-filter="ig">Inspector General</button>
       <button class="filter-btn" data-filter="legal">Legal Assistance</button>
     </div>
@@ -230,8 +229,7 @@ fetch('data/hotlines-escalation.json').then(function(response) {
   ResourceHub.buildFilterButtons([
     { key: 'all', label: 'All Issues' },
     { key: 'crisis', label: 'Crisis Support' },
-    { key: 'benefits_complaint', label: 'Benefits Complaint' },
-    { key: 'fraud', label: 'Fraud Reporting' },
+    { key: 'benefits_complaint', label: 'Benefits' },
     { key: 'ig', label: 'Inspector General' },
     { key: 'legal', label: 'Legal Assistance' }
   ]);
