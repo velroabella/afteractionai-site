@@ -36,6 +36,13 @@
 }
 
 /* -----------------------------------------------------------
+   3a. HERO SIZE — guarantee 75vh across all breakpoints
+   ----------------------------------------------------------- */
+.page-hero-image--about {
+  min-height: 75vh !important;
+}
+
+/* -----------------------------------------------------------
    4. HERO EYEBROW — increase visibility
    ----------------------------------------------------------- */
 .page-hero-image__eyebrow {

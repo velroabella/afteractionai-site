@@ -119,6 +119,14 @@
     rgba(0,0,0,0.88) 100%
   ) !important;
 }
+.page-hero-image::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #C5A55A 50%,
+    transparent 100%
+  ) !important;
+}
 
 /* ── 7. MOBILE — STACK FEATURED CARD ───────────────────── */
 @media (max-width: 767px) {
