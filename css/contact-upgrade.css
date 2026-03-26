@@ -160,7 +160,7 @@
 .page-hero-bar {
   background-size: cover !important;
   background-position: center !important;
-  min-height: 320px !important;
+  min-height: 75vh !important;
 }
 .page-hero-bar::before {
   top: 0 !important;
@@ -170,7 +170,7 @@
   background: linear-gradient(
     180deg,
     rgba(0,0,0,0.88) 0%,
-    rgba(0,0,0,0.80) 45%,
+    rgba(0,0,0,0.72) 45%,
     rgba(0,0,0,0.88) 100%
   ) !important;
 }

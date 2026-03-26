@@ -104,16 +104,19 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(197, 165, 90, 0.25) !important;
 }
 
-/* ── 8. HERO OVERLAY — READABILITY (bright parchment image) ── */
-/* 04_Blog.jpg is a warm, bright parchment/Constitution image.
-   The global overlay (0.82→0.65→0.78) is not sufficient at the
-   midpoint. Boost to ensure white text clears the warm tones. */
+/* ── 8. HERO HEIGHT + OVERLAY — normalized to About standard ── */
+/* min-height matches .page-hero-image--about (75vh).
+   04_Blog.jpg is bright parchment — overlay boosted vs About
+   but reduced from original to keep visual quality. */
+.page-hero-image {
+  min-height: 75vh !important;
+}
 .page-hero-image::before {
   background: linear-gradient(
     180deg,
-    rgba(0,0,0,0.90) 0%,
-    rgba(0,0,0,0.82) 40%,
-    rgba(0,0,0,0.90) 100%
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.75) 40%,
+    rgba(0,0,0,0.88) 100%
   ) !important;
 }
 

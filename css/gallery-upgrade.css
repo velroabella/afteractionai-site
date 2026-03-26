@@ -15,17 +15,20 @@
 }
 
 /* -----------------------------------------------------------
-   2. HERO OVERLAY — READABILITY (very bright seals/flag image)
-   05_Gallery.jpg is a colorful, high-luminance image.
-   The global overlay (0.82→0.65→0.78) leaves mid-image
-   bleed-through behind subtitle text. Boost significantly.
+   2. HERO HEIGHT + OVERLAY — normalized to About standard
+   min-height: 75vh matches About page.
+   05_Gallery.jpg is bright/colorful — overlay boosted vs About
+   but reduced from original to preserve visual quality.
    ----------------------------------------------------------- */
+.page-hero-image {
+  min-height: 75vh !important;
+}
 .page-hero-image::before {
   background: linear-gradient(
     180deg,
-    rgba(0,0,0,0.90) 0%,
-    rgba(0,0,0,0.84) 40%,
-    rgba(0,0,0,0.90) 100%
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.75) 40%,
+    rgba(0,0,0,0.88) 100%
   ) !important;
 }
 
