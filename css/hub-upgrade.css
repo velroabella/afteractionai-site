@@ -1,0 +1,107 @@
+/* ══════════════════════════════════════════════════════════
+   GLOBAL HUB UPGRADE — Gold Interactive State Uniformity
+   Additive overrides only. Load after styles.css and after
+   any page-specific upgrade CSS file.
+   Targets: ResourceHub-generated .hub-filter-btn,
+            .hub-state-btn, and shared .filter-btn classes.
+   Full rollback = remove this <link> tag.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1. GOLD CUSTOM PROPERTIES ──────────────────────────── */
+:root {
+  --hub-gold:       #C5A55A;
+  --hub-gold-light: #E8D5A0;
+  --hub-gold-glow:  rgba(197, 165, 90, 0.25);
+  --hub-gold-tint:  rgba(197, 165, 90, 0.08);
+}
+
+/* ── 2. HERO BAR — RADIAL GLOW → GOLD ──────────────────── */
+/* Overrides the subtle red radial glow on page-hero-bar    */
+.page-hero-bar::before {
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(197, 165, 90, 0.07) 0%,
+    transparent 50%
+  ) !important;
+}
+
+/* ── 3. HERO DIVIDER → GOLD ─────────────────────────────── */
+/* Overrides .page-hero-bar__divider { background: #DC3545 } */
+.page-hero-bar__divider {
+  background: var(--hub-gold) !important;
+}
+
+/* ── 4. SEARCH BAR FOCUS → GOLD ────────────────────────── */
+.resources-search__input:focus {
+  border-color: var(--hub-gold) !important;
+  box-shadow: 0 0 0 3px var(--hub-gold-glow) !important;
+  outline: none !important;
+}
+
+/* ── 5. FILTER-BTN — ACTIVE → GOLD (belt-and-suspenders) ── */
+/* Catches any remaining hardcoded .filter-btn instances     */
+/* before JS replaces them, and any custom .filter-btn       */
+/* buttons appended after buildFilterButtons() runs.         */
+.filter-btn.active {
+  background: var(--hub-gold) !important;
+  border-color: var(--hub-gold) !important;
+  color: #111111 !important;
+  box-shadow: 0 2px 10px var(--hub-gold-glow) !important;
+}
+
+.filter-btn:hover {
+  border-color: var(--hub-gold) !important;
+  color: var(--hub-gold) !important;
+  background: var(--hub-gold-tint) !important;
+}
+
+/* ── 6. HUB-FILTER-BTN — ACTIVE → GOLD ─────────────────── */
+/* The class ResourceHub.buildFilterButtons() injects.       */
+/* This is the primary fix for "flash gold then revert".     */
+/* Overrides: .hub-filter-btn.active { background: var(--navy) } */
+.hub-filter-btn.active {
+  background: var(--hub-gold) !important;
+  border-color: var(--hub-gold) !important;
+  color: #111111 !important;
+  box-shadow: 0 2px 10px var(--hub-gold-glow) !important;
+}
+
+.hub-filter-btn:hover {
+  border-color: var(--hub-gold) !important;
+  color: var(--hub-gold) !important;
+  background: var(--hub-gold-tint) !important;
+}
+
+/* ── 7. HUB-STATE-BTN — ACTIVE → GOLD ──────────────────── */
+/* The class ResourceHub.buildStateSelector() injects.       */
+/* Overrides: .hub-state-btn.active { background: var(--navy) } */
+.hub-state-btn.active {
+  background: var(--hub-gold) !important;
+  border-color: var(--hub-gold) !important;
+  color: #111111 !important;
+  box-shadow: 0 2px 10px var(--hub-gold-glow) !important;
+}
+
+.hub-state-btn:hover {
+  border-color: var(--hub-gold) !important;
+  color: var(--hub-gold) !important;
+  background: var(--hub-gold-tint) !important;
+}
+
+/* ── 8. HUB CARD ACTION BUTTONS → GOLD HOVER ───────────── */
+/* .hub-card__link — used on grants, hotlines, licensure,   */
+/* state-benefits. White bg base; hover → gold.             */
+.hub-card__link:hover {
+  background: var(--hub-gold) !important;
+  color: #111111 !important;
+  border-color: var(--hub-gold) !important;
+  box-shadow: 0 4px 16px var(--hub-gold-glow) !important;
+}
+
+/* .hub-card__action — used on elected-officials. Same fix. */
+.hub-card__action:hover {
+  background: var(--hub-gold) !important;
+  color: #111111 !important;
+  border-color: var(--hub-gold) !important;
+  box-shadow: 0 4px 16px var(--hub-gold-glow) !important;
+}
