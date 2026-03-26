@@ -1,0 +1,154 @@
+/* =============================================================
+   CONTACT PAGE UPGRADE — css/contact-upgrade.css
+   Additive overrides only. Load after styles.css on contact.html.
+   Full rollback: remove the <link> tag from contact.html.
+   Mirrors about/board upgrade pattern: red → gold throughout.
+   ============================================================= */
+
+/* -----------------------------------------------------------
+   1. GOLD CUSTOM PROPERTIES
+   ----------------------------------------------------------- */
+:root {
+  --contact-gold:       #C5A55A;
+  --contact-gold-light: #E8D5A0;
+  --contact-gold-glow:  rgba(197, 165, 90, 0.25);
+}
+
+/* -----------------------------------------------------------
+   2. HERO BAR — radial glow red → gold ambient
+   ----------------------------------------------------------- */
+.page-hero-bar::before {
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(197, 165, 90, 0.08) 0%,
+    transparent 55%
+  ) !important;
+}
+
+/* -----------------------------------------------------------
+   3. HERO SUBTITLE LINKS — visible gold on dark background
+   ----------------------------------------------------------- */
+.page-hero-bar__subtitle a {
+  color: var(--contact-gold) !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  text-decoration-color: rgba(197,165,90,0.4) !important;
+  font-weight: 500 !important;
+  transition: color 0.2s !important;
+}
+.page-hero-bar__subtitle a:hover {
+  color: var(--contact-gold-light) !important;
+}
+
+/* -----------------------------------------------------------
+   4. FORM FOCUS RING — red → gold
+   ----------------------------------------------------------- */
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--contact-gold) !important;
+  box-shadow: 0 0 0 3px rgba(197, 165, 90, 0.12) !important;
+  outline: none !important;
+}
+
+/* -----------------------------------------------------------
+   5. SUBMIT BUTTON — hover red → gold
+   ----------------------------------------------------------- */
+.form-group__submit:hover {
+  background: var(--contact-gold) !important;
+  color: #111 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 16px var(--contact-gold-glow) !important;
+}
+
+/* -----------------------------------------------------------
+   6. CONTACT INFO PANEL — grey → premium dark treatment
+   ----------------------------------------------------------- */
+.contact-info {
+  background: linear-gradient(
+    160deg,
+    #111111 0%,
+    #181818 60%,
+    #1c1812 100%
+  ) !important;
+  border: 1px solid rgba(197,165,90,0.18) !important;
+  color: #fff !important;
+}
+
+/* Heading */
+.contact-info__heading {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--contact-gold) !important;
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(197,165,90,0.2);
+}
+
+/* Labels */
+.contact-info__label {
+  color: rgba(255,255,255,0.45) !important;
+  font-size: 0.75rem !important;
+  letter-spacing: 1.5px !important;
+  text-transform: uppercase !important;
+  font-weight: 700 !important;
+}
+
+/* Values */
+.contact-info__value {
+  color: rgba(255,255,255,0.9) !important;
+  font-weight: 500 !important;
+}
+
+/* Value links */
+.contact-info__value a,
+.contact-info-link {
+  color: var(--contact-gold) !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  text-decoration-color: rgba(197,165,90,0.35) !important;
+  transition: color 0.2s, text-decoration-color 0.2s !important;
+}
+.contact-info__value a:hover,
+.contact-info-link:hover {
+  color: var(--contact-gold-light) !important;
+  text-decoration-color: var(--contact-gold) !important;
+}
+
+/* -----------------------------------------------------------
+   7. EMERGENCY BANNER — yellow/red → dark with gold accent
+   ----------------------------------------------------------- */
+.contact-emergency {
+  background: rgba(17, 17, 17, 0.96) !important;
+  border: 1px solid rgba(197,165,90,0.3) !important;
+  border-left: 4px solid var(--contact-gold) !important;
+  color: rgba(255,255,255,0.85) !important;
+  text-align: left !important;
+  padding: 18px 20px !important;
+}
+
+.contact-emergency strong {
+  color: var(--contact-gold) !important;
+  font-weight: 700 !important;
+}
+
+.contact-emergency a {
+  color: var(--contact-gold) !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+}
+.contact-emergency a:hover {
+  color: var(--contact-gold-light) !important;
+}
+
+/* -----------------------------------------------------------
+   8. SECTION TITLE UNDERLINE — red → gold (if visible)
+   ----------------------------------------------------------- */
+.section__title::after {
+  background: var(--contact-gold) !important;
+  width: 48px !important;
+}
