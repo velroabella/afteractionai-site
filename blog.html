@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/blog-upgrade.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
   <meta property="og:image:width" content="1536" />
@@ -177,13 +178,14 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
     return el.innerHTML;
   }
 
-  function renderCard(post, isPublished) {
+  function renderCard(post, isPublished, isFeatured) {
     var thumb = post.thumbnail || DEFAULT_THUMB;
     var dateText = isPublished ? formatDate(post.publish_date) : 'Coming Soon';
     var linkHtml = '';
 
     if (isPublished && post.url) {
-      linkHtml = '<a href="' + escapeHtml(post.url) + '" class="blog-card__link">Read More \u2192</a>';
+      var linkLabel = isFeatured ? 'Read Full Article \u2192' : 'Read More \u2192';
+      linkHtml = '<a href="' + escapeHtml(post.url) + '" class="blog-card__link">' + linkLabel + '</a>';
     } else if (isPublished) {
       linkHtml = '<span class="blog-card__link blog-card__link--disabled">Full article coming soon</span>';
     } else {
@@ -191,12 +193,14 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
     }
 
     var opacity = isPublished ? '' : ' style="opacity:0.55;"';
+    var featuredClass = isFeatured ? ' blog-card--featured' : '';
 
-    return '<div class="blog-card"' + opacity + '>' +
+    return '<div class="blog-card' + featuredClass + '"' + opacity + '>' +
       '<div class="blog-card__image">' +
         '<img src="' + escapeHtml(thumb) + '" alt="' + escapeHtml(post.title) + '" class="blog-card__thumb" />' +
       '</div>' +
       '<div class="blog-card__content">' +
+        (isFeatured ? '<span class="blog-card__featured-label">Featured</span>' : '') +
         '<p class="blog-card__date">' + escapeHtml(dateText) +
           (post.category ? ' <span class="blog-card__category">' + escapeHtml(post.category) + '</span>' : '') +
         '</p>' +
@@ -223,11 +227,12 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
     posts.forEach(function(post) {
       var pubDate = new Date(post.publish_date);
       if (pubDate <= now) {
-        html += renderCard(post, true);
+        var isFeatured = (publishedCount === 0); // first published = featured
+        html += renderCard(post, true, isFeatured);
         publishedCount++;
       } else if (!teaserShown) {
         // Show one upcoming teaser card
-        html += renderCard(post, false);
+        html += renderCard(post, false, false);
         teaserShown = true;
       }
     });
