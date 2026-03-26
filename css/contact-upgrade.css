@@ -159,7 +159,7 @@
    ----------------------------------------------------------- */
 .page-hero-bar {
   background-size: cover !important;
-  background-position: center 13% !important;
+  background-position: center -10% !important;
   min-height: 75vh !important;
   display: flex !important;
   flex-direction: column !important;

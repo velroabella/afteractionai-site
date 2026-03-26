@@ -21,7 +21,7 @@
   min-height: 75vh !important;
 }
 .page-hero-image--board {
-  background-position: center 5% !important;
+  background-position: center -15% !important;
 }
 .page-hero-image--board::before {
   background: linear-gradient(
