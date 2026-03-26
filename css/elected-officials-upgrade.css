@@ -1,0 +1,51 @@
+/* =============================================================
+   ELECTED OFFICIALS PAGE UPGRADE — css/elected-officials-upgrade.css
+   Additive overrides only. Load after styles.css + hub-upgrade.css.
+   Full rollback: remove the <link> tag from elected-officials.html.
+   ============================================================= */
+
+/* -----------------------------------------------------------
+   1. GOLD CUSTOM PROPERTIES
+   ----------------------------------------------------------- */
+:root {
+  --officials-gold:      #C5A55A;
+  --officials-gold-glow: rgba(197, 165, 90, 0.25);
+}
+
+/* -----------------------------------------------------------
+   2. HERO BAR DIVIDER — red → gold
+   ----------------------------------------------------------- */
+.page-hero-bar__divider {
+  background: var(--officials-gold) !important;
+  box-shadow: 0 0 12px var(--officials-gold-glow) !important;
+}
+
+/* -----------------------------------------------------------
+   3. HERO IMAGE — background image overlay
+   hero-elected-officials.png = US Capitol B&W at night.
+   Medium brightness — overlay at 82%→72%→82%.
+   Inline style on the section provides background-image URL.
+   ----------------------------------------------------------- */
+.page-hero-bar {
+  background-size: cover !important;
+  background-position: center !important;
+  min-height: 320px !important;
+}
+.page-hero-bar::before {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.82) 0%,
+    rgba(0,0,0,0.72) 45%,
+    rgba(0,0,0,0.82) 100%
+  ) !important;
+}
+.page-hero-bar__title,
+.page-hero-bar__subtitle,
+.page-hero-bar__divider {
+  position: relative !important;
+  z-index: 1 !important;
+}

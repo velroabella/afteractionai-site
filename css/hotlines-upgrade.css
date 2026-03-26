@@ -59,3 +59,31 @@
 .section__title::after {
   background: var(--hot-gold) !important;
 }
+
+/* -----------------------------------------------------------
+   HERO IMAGE — background image overlay
+   hero-hotlines.jpg = combat rescue painting; darker overall tones.
+   ----------------------------------------------------------- */
+.page-hero-bar {
+  background-size: cover !important;
+  background-position: center !important;
+  min-height: 320px !important;
+}
+.page-hero-bar::before {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.82) 0%,
+    rgba(0,0,0,0.70) 45%,
+    rgba(0,0,0,0.82) 100%
+  ) !important;
+}
+.page-hero-bar__title,
+.page-hero-bar__subtitle,
+.page-hero-bar__divider {
+  position: relative !important;
+  z-index: 1 !important;
+}

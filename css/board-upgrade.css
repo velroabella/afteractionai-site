@@ -15,7 +15,17 @@
 }
 
 /* -----------------------------------------------------------
-   2. HERO DIVIDER — red → gold
+   2. HERO BACKGROUND POSITION — readability fix
+   styles.css sets center 30% which exposes the bright sky/window
+   directly behind the text block. Shift to center 65% to show
+   the darker cockpit interior behind text instead.
+   ----------------------------------------------------------- */
+.page-hero-image--board {
+  background-position: center 40% !important;
+}
+
+/* -----------------------------------------------------------
+   3. HERO DIVIDER — red → gold
    ----------------------------------------------------------- */
 .page-hero-image__divider {
   background: var(--board-gold) !important;
