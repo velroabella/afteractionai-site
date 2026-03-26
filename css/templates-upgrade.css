@@ -1,0 +1,67 @@
+/* ══════════════════════════════════════════════════════════
+   DOCUMENT TEMPLATES PAGE — PREMIUM UPGRADE
+   Additive overrides only. Load after styles.css.
+   Never modify styles.css. Full rollback = remove this <link>.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1. GOLD CUSTOM PROPERTIES ──────────────────────────── */
+:root {
+  --tmpl-gold:       #C5A55A;
+  --tmpl-gold-light: #E8D5A0;
+  --tmpl-gold-glow:  rgba(197, 165, 90, 0.25);
+  --tmpl-gold-tint:  rgba(197, 165, 90, 0.08);
+}
+
+/* ── 2. HERO BAR — RADIAL GLOW → GOLD ──────────────────── */
+.page-hero-bar::before {
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(197, 165, 90, 0.07) 0%,
+    transparent 50%
+  ) !important;
+}
+
+/* ── 3. SEARCH BAR FOCUS → GOLD ────────────────────────── */
+.resources-search__input:focus {
+  border-color: var(--tmpl-gold) !important;
+  box-shadow: 0 0 0 3px var(--tmpl-gold-glow) !important;
+  outline: none !important;
+}
+
+/* ── 4. FILTER PILLS — HOVER → GOLD TINT ───────────────── */
+.filter-btn:hover {
+  border-color: var(--tmpl-gold) !important;
+  color: var(--tmpl-gold) !important;
+  background: var(--tmpl-gold-tint) !important;
+  box-shadow: none !important;
+}
+
+/* ── 5. FILTER PILLS — ACTIVE → GOLD FILL ──────────────── */
+.filter-btn.active {
+  background: var(--tmpl-gold) !important;
+  border-color: var(--tmpl-gold) !important;
+  color: #111111 !important;
+  box-shadow: 0 2px 10px var(--tmpl-gold-glow) !important;
+}
+
+/* ── 6. TEMPLATE CARD BUTTON — HOVER POLISH ────────────── */
+/* Cards have dark backgrounds; btn is white-on-dark by default.
+   Hover upgrades to gold tint without breaking dark-card contrast. */
+.tmpl-card__btn:hover {
+  background: var(--tmpl-gold) !important;
+  color: #111111 !important;
+  border-color: var(--tmpl-gold) !important;
+  box-shadow: 0 4px 16px var(--tmpl-gold-glow) !important;
+}
+
+/* ── 7. SECTION TITLE UNDERLINE → GOLD ─────────────────── */
+.section__title::after {
+  background: var(--tmpl-gold) !important;
+}
+
+/* ── 8. NEWSLETTER BUTTON HOVER → GOLD ─────────────────── */
+/* Newsletter form appears in footer area */
+.newsletter-form button:hover {
+  background: var(--tmpl-gold) !important;
+  color: #111111 !important;
+}
