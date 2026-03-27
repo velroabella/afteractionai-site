@@ -28,22 +28,15 @@ exports.handler = async (event) => {
 
   try {
     const requestBody = {
-      session: {
-        type: 'realtime',
-        model: 'gpt-4o-realtime-preview',
-        instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.',
-        audio: {
-          output: {
-            voice: 'ash'
-          }
-        }
-      }
+      model: 'gpt-4o-realtime-preview',
+      voice: 'ash',
+      instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.'
     };
 
-    console.log('[realtime-token] POST https://api.openai.com/v1/realtime/client_secrets');
+    console.log('[realtime-token] POST https://api.openai.com/v1/realtime/sessions');
     console.log('[realtime-token] Body:', JSON.stringify(requestBody));
 
-    const response = await fetch('https://api.openai.com/v1/realtime/client_secrets', {
+    const response = await fetch('https://api.openai.com/v1/realtime/sessions', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + OPENAI_API_KEY,
