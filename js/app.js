@@ -1137,7 +1137,7 @@
       html += '<div style="margin-top:7px;font-size:12px;color:#555;font-style:italic;">I\'ll generate your Word Doc once we have all the details above.</div>';
 
       var card = document.createElement('div');
-      card.className = 'doc-readiness-card';
+      card.className = 'legal-doc-status-card';
       card.style.cssText = 'margin-top:12px;padding:11px 14px;border-radius:8px;font-size:13px;line-height:1.6;' +
         'background:' + (isAlmost ? '#fff8e6' : '#f0f4ff') + ';' +
         'border:1px solid ' + (isAlmost ? '#f5c518' : '#c7d2f5') + ';';
@@ -1154,7 +1154,7 @@
     console.log('[LegalBtn] injectLegalDocButton called, text length:', rawText ? rawText.length : 0);
     console.log('[LegalBtn] AAAI defined:', typeof AAAI !== 'undefined', '| legalIntegration:', !!(typeof AAAI !== 'undefined' && AAAI.legalIntegration));
     // Guard: never inject more than one card or button per message div (covers all duplicate-call paths)
-    if (messageDiv.querySelector('.doc-readiness-card') || messageDiv.querySelector('.legal-doc-btn')) return;
+    if (messageDiv.querySelector('.legal-doc-status-card') || messageDiv.querySelector('.legal-doc-btn')) return;
     // Only legalIntegration is required for detection; legal (modal) is checked at click time
     if (typeof AAAI === 'undefined' || !AAAI.legalIntegration) return;
     var detectedType = AAAI.legalIntegration.detectLegalFormType(rawText);
