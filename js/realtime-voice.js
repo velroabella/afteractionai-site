@@ -23,7 +23,7 @@
   'use strict';
 
   var TOKEN_ENDPOINT = '/api/realtime-token';
-  var REALTIME_BASE  = 'https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview';
+  var REALTIME_BASE  = 'https://api.openai.com/v1/realtime/calls';
   var DATA_CHANNEL   = 'oai-events';
 
   // ── State ──
