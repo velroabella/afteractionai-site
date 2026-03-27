@@ -316,6 +316,8 @@
   var streamAbortController = null;
   var activeStreamTimer = null;
   var activeDocumentType = null;       // Phase 3.8: locked to first detected doc type per session
+  var selectedTopics = [];             // Session-start topic selections
+  var topicBubblesShown = false;       // true after topic bubbles rendered once
 
   // ── DOM HELPERS ────────────────────────────────────────
   function $(id) { return document.getElementById(id); }
@@ -480,6 +482,87 @@
   }
 
   // ══════════════════════════════════════════════════════
+  //  SESSION-START TOPIC BUBBLES
+  // ══════════════════════════════════════════════════════
+  var TOPIC_BUBBLES = [
+    { id: 'va-benefits',    label: 'VA Benefits',         icon: '\u2B50' },
+    { id: 'disability',     label: 'Disability Increase',  icon: '\uD83D\uDCC8' },
+    { id: 'career',         label: 'Career Transition',    icon: '\uD83D\uDCBC' },
+    { id: 'medical-claims', label: 'Medical / Claims',     icon: '\uD83C\uDFE5' },
+    { id: 'legal-docs',     label: 'Legal Documents',      icon: '\uD83D\uDCC4' },
+    { id: 'financial',      label: 'Financial / Housing',  icon: '\uD83C\uDFE0' }
+  ];
+
+  function renderTopicBubbles() {
+    if (!chatMessages) return;
+
+    var container = document.createElement('div');
+    container.className = 'topic-bubbles';
+    container.id = 'topicBubbles';
+
+    var label = document.createElement('div');
+    label.className = 'topic-bubbles__label';
+    label.textContent = 'What can I help you with today?';
+    container.appendChild(label);
+
+    var row = document.createElement('div');
+    row.className = 'topic-bubbles__row';
+
+    TOPIC_BUBBLES.forEach(function(topic) {
+      var btn = document.createElement('button');
+      btn.className = 'topic-bubble';
+      btn.setAttribute('data-topic-id', topic.id);
+      btn.innerHTML = '<span class="topic-bubble__icon">' + topic.icon + '</span>' +
+                      '<span class="topic-bubble__text">' + topic.label + '</span>';
+
+      btn.addEventListener('click', function() {
+        var idx = selectedTopics.indexOf(topic.id);
+        if (idx === -1) {
+          selectedTopics.push(topic.id);
+          btn.classList.add('topic-bubble--selected');
+        } else {
+          selectedTopics.splice(idx, 1);
+          btn.classList.remove('topic-bubble--selected');
+        }
+        log('topicBubble', topic.id + ' → ' + (idx === -1 ? 'selected' : 'deselected') +
+            ' | selectedTopics=' + JSON.stringify(selectedTopics));
+
+        // Show/hide the "Go" button
+        var goBtn = document.getElementById('topicGoBtn');
+        if (goBtn) goBtn.style.display = selectedTopics.length > 0 ? 'inline-flex' : 'none';
+      });
+
+      row.appendChild(btn);
+    });
+
+    container.appendChild(row);
+
+    // "Go" button — hidden until at least one topic selected
+    var goBtn = document.createElement('button');
+    goBtn.className = 'topic-go-btn';
+    goBtn.id = 'topicGoBtn';
+    goBtn.textContent = 'Let\u2019s go \u2192';
+    goBtn.style.display = 'none';
+    goBtn.addEventListener('click', function() {
+      if (selectedTopics.length === 0) return;
+      var labels = selectedTopics.map(function(id) {
+        var match = TOPIC_BUBBLES.filter(function(t) { return t.id === id; })[0];
+        return match ? match.label : id;
+      });
+      var msg = 'I\u2019d like help with: ' + labels.join(', ');
+      // Remove the bubble container
+      container.remove();
+      // Send as user message
+      addMessage(msg, 'user');
+      sendToAI(msg);
+    });
+    container.appendChild(goBtn);
+
+    chatMessages.appendChild(container);
+    scrollToBottom();
+  }
+
+  // ══════════════════════════════════════════════════════
   //  START CHAT
   // ══════════════════════════════════════════════════════
   function startChat(mode) {
@@ -586,6 +669,12 @@
       log('RT.onAIMessage', 'length=' + fullText.length);
       addMessage(fullText, 'ai');
       hideCaption();
+
+      // Show topic bubbles once after voice greeting
+      if (!topicBubblesShown) {
+        topicBubblesShown = true;
+        renderTopicBubbles();
+      }
 
       // Phase 2: Detect report from voice mode too
       if (isReportResponse(fullText)) {
@@ -821,6 +910,12 @@
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
         if (userInput) userInput.focus();
+
+        // Show topic bubbles once after the opening greeting
+        if (!topicBubblesShown && userText === 'START_CONVERSATION') {
+          topicBubblesShown = true;
+          renderTopicBubbles();
+        }
 
         // Phase 2: Detect report and show PDF download + checklist
         if (isReportResponse(aiResponse)) {
