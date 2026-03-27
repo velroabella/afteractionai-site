@@ -315,6 +315,7 @@
   var uploadedDocTypes = [];
   var streamAbortController = null;
   var activeStreamTimer = null;
+  var activeDocumentType = null; // Phase 3.8: locked to first detected doc type per session
 
   // ── DOM HELPERS ────────────────────────────────────────
   function $(id) { return document.getElementById(id); }
@@ -1086,11 +1087,12 @@
     function assess(formType, responseText, history) {
       if (!formType) return null;
 
-      // Scan combined history + current response for field evidence
-      var historyText = (history || []).map(function (m) {
-        return (m && m.content) ? m.content : '';
-      }).join('\n');
-      var allText = historyText + '\n' + (responseText || '');
+      // Scan ONLY user-submitted messages — prevents AI option text false-positives (Phase 3.8)
+      var userTextOnly = (history || []).filter(function (m) {
+        return m && m.role === 'user';
+      }).map(function (m) {
+        return m.content || '';
+      }).join(' ');
 
       var requiredFields = REQUIRED_FIELDS[formType] || ['fullName'];
       var collected = [];
@@ -1098,18 +1100,16 @@
 
       requiredFields.forEach(function (field) {
         var detector = FIELD_DETECTORS[field];
-        if (detector && detector(allText)) {
+        if (detector && detector(userTextOnly)) {
           collected.push(field);
         } else {
           missing.push(field);
         }
       });
 
-      // If the response is a full document draft, treat as READY unconditionally
-      var isDraft = isDocumentDraft(responseText);
-
+      // READY only when ALL required fields are collected (Phase 3.8: isDraft path removed)
       var status;
-      if (isDraft || missing.length === 0) {
+      if (missing.length === 0) {
         status = 'READY';
       } else if (collected.length >= 1 && missing.length <= 1) {
         status = 'ALMOST_READY';
@@ -1117,7 +1117,7 @@
         status = 'NOT_READY';
       }
 
-      return { documentType: formType, status: status, collected: collected, missing: missing, isDraft: isDraft };
+      return { documentType: formType, status: status, collected: collected, missing: missing };
     }
 
     function injectStatusCard(messageDiv, readiness) {
@@ -1157,16 +1157,23 @@
     if (messageDiv.querySelector('.doc-readiness-card') || messageDiv.querySelector('.legal-doc-btn')) return;
     // Only legalIntegration is required for detection; legal (modal) is checked at click time
     if (typeof AAAI === 'undefined' || !AAAI.legalIntegration) return;
-    var formType = AAAI.legalIntegration.detectLegalFormType(rawText);
-    console.log('[LegalBtn] detectLegalFormType result:', formType);
+    var detectedType = AAAI.legalIntegration.detectLegalFormType(rawText);
+    console.log('[LegalBtn] detectLegalFormType result:', detectedType);
+    // ── ACTIVE DOCUMENT LOCK (Phase 3.8) ─────────────────────
+    // First detection in a session sets the lock. All subsequent detections are ignored.
+    if (detectedType && activeDocumentType === null) {
+      activeDocumentType = detectedType;
+      console.log('[LegalBtn] activeDocumentType locked to:', activeDocumentType);
+    }
+    var formType = activeDocumentType;
     if (!formType) return;
+    // ─────────────────────────────────────────────────────────
 
     // ── READINESS GATE (Phase 3.7) ───────────────────────────
     var readiness = DocReadinessGate.assess(formType, rawText, conversationHistory);
     console.log('[LegalBtn] readiness:', readiness && readiness.status,
       '| collected:', readiness && readiness.collected,
-      '| missing:', readiness && readiness.missing,
-      '| isDraft:', readiness && readiness.isDraft);
+      '| missing:', readiness && readiness.missing);
     if (readiness && readiness.status !== 'READY') {
       DocReadinessGate.injectStatusCard(messageDiv, readiness);
       return;
@@ -1184,7 +1191,10 @@
     btn.addEventListener('click', function () {
       AAAI.legal.requireAcknowledgment(formType, function (confirmedFormType) {
         if (typeof AAAI !== 'undefined' && AAAI.legalDocx && AAAI.legalDocx.generate) {
-          AAAI.legalDocx.generate(confirmedFormType, rawText).catch(function (err) {
+          AAAI.legalDocx.generate(confirmedFormType, rawText).then(function () {
+            activeDocumentType = null;
+            console.log('[DOC RESET] activeDocumentType cleared after generation');
+          }).catch(function (err) {
             var msg = err && err.message ? err.message : String(err || 'DOCX generation failed');
             console.error('[LegalBtn] AAAI.legalDocx.generate failed:', err);
             if (typeof showToast === 'function') { showToast(msg, 'error'); }
