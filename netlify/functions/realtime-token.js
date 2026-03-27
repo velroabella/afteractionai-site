@@ -30,7 +30,11 @@ exports.handler = async (event) => {
   try {
     const requestBody = {
       model: 'gpt-4o-realtime-preview',
+      modalities: ['text', 'audio'],
       voice: 'ash',
+      input_audio_transcription: {
+        model: 'whisper-1'
+      },
       instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.'
     };
 
