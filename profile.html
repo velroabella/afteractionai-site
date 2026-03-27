@@ -25,7 +25,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -36,21 +36,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn"><a href="profile.html" class="active">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -90,6 +98,14 @@
     </div>
   </div>
 
+  <!-- AIOS Next Step Banner — returning user primary CTA -->
+  <div class="dashboard__card aios-next-step" id="dashNextStep">
+    <div class="aios-next-step__label">▶ Your Next Step</div>
+    <div class="aios-next-step__empty">
+      <a href="index.html">Start a conversation</a> to generate your mission checklist.
+    </div>
+  </div>
+
   <!-- Next Recommended Actions — moved up for visibility -->
   <div class="dashboard__card dashboard__actions-panel">
     <h3>Next Recommended Actions</h3>
@@ -98,9 +114,11 @@
     </div>
   </div>
 
-  <!-- Checklist Preview — interactive summary of top items -->
+  <!-- Mission Checklist — AIOS with filters + status controls -->
   <div class="dashboard__card">
     <h3>Mission Checklist</h3>
+    <!-- Filter tabs injected by JS -->
+    <div id="dashChecklistFilters"></div>
     <div id="dashChecklist">
       <p style="font-size:0.9rem;color:var(--gray-500);">No checklist items yet. Complete a conversation to generate your mission checklist.</p>
     </div>
@@ -197,7 +215,56 @@
 </div>
 
 <script src="js/action-engine.js"></script>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+    </div>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+        <!-- Social media links hidden until accounts are created -->
+      </div>
+    </div>
+    <div class="footer__nonprofit">AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.</div>
+    <div class="footer__bottom"><p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p></div>
+  </div>
+</footer>
+
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
 <script>
 function toggleMenu() {
@@ -205,63 +272,286 @@ function toggleMenu() {
   menu.classList.toggle('active');
 }
 
-// Profile page logic — Dashboard 2.0
+// ══════════════════════════════════════════════════════
+// AfterAction AI — Dashboard AIOS v2
+// Persistent checklist, status controls, next-step logic
+// ══════════════════════════════════════════════════════
 (function() {
   var CAT_LABELS = { immediate: 'Immediate', short_term: 'Short-Term', strategic: 'Strategic', optional: 'Optional' };
+  var STATUS_LABELS = { not_started: 'Not Started', in_progress: 'In Progress', completed: 'Done', skipped: 'Skipped' };
 
+  // All loaded checklist items — kept in memory for client-side filtering
+  var _allItems = [];
+  var _activeFilter = 'active'; // default filter on load
+
+  // ── NEXT STEP LOGIC ──────────────────────────────────
+  // Priority: in_progress first, then not_started by priority asc
+  function computeNextStep(items) {
+    var inProg = items.filter(function(i) { return i.status === 'in_progress'; });
+    if (inProg.length > 0) return inProg[0];
+    var notStarted = items.filter(function(i) { return i.status === 'not_started'; });
+    if (notStarted.length > 0) return notStarted[0]; // already sorted by priority
+    return null;
+  }
+
+  function renderNextStep(items) {
+    var banner = document.getElementById('dashNextStep');
+    if (!banner) return;
+    var next = computeNextStep(items);
+    if (!next) {
+      var allDone = items.length > 0 && items.every(function(i) { return i.status === 'completed' || i.status === 'skipped'; });
+      banner.querySelector('.aios-next-step__empty') && (banner.innerHTML =
+        '<div class="aios-next-step__label">▶ Your Next Step</div>' +
+        '<div class="aios-next-step__empty">' +
+          (allDone ? '🎖 All tasks complete. <a href="index.html" style="color:var(--gold)">Start a new conversation</a> to build your next plan.'
+                   : '<a href="index.html" style="color:var(--gold)">Start a conversation</a> to generate your mission checklist.') +
+        '</div>');
+      return;
+    }
+    var isInProg = next.status === 'in_progress';
+    var btnClass = isInProg ? 'aios-next-step__btn--resume' : 'aios-next-step__btn--start';
+    var btnLabel = isInProg ? '↩ Resume Task' : '▶ Start This Task';
+    var catBadge = CAT_LABELS[next.category] || next.category || '';
+    banner.innerHTML =
+      '<div class="aios-next-step__label">' + (isInProg ? '↩ Resume Where You Left Off' : '▶ Your Next Step') + '</div>' +
+      '<div class="aios-next-step__title">' + escHtml(next.title) + '</div>' +
+      (next.description ? '<div class="aios-next-step__desc">' + escHtml(next.description) + '</div>' : '') +
+      '<div class="aios-next-step__actions">' +
+        '<button class="aios-next-step__btn ' + btnClass + '" ' +
+          'onclick="aiosNextStepClick(\'' + next.id + '\',\'' + escAttr(next.title) + '\',\'' + next.status + '\')">' +
+          btnLabel + '</button>' +
+        '<span style="font-size:0.75rem;color:var(--gray-500);">' + catBadge + '</span>' +
+      '</div>';
+  }
+
+  // ── FILTER TABS ───────────────────────────────────────
+  function renderFilterTabs(items) {
+    var counts = { active: 0, in_progress: 0, not_started: 0, completed: 0, skipped: 0, all: items.length };
+    items.forEach(function(i) {
+      counts[i.status] = (counts[i.status] || 0) + 1;
+      if (i.status === 'in_progress' || i.status === 'not_started') counts.active++;
+    });
+    var tabs = [
+      { key: 'active',      label: 'Active' },
+      { key: 'in_progress', label: 'In Progress' },
+      { key: 'completed',   label: 'Done' },
+      { key: 'skipped',     label: 'Skipped' },
+      { key: 'all',         label: 'All' }
+    ];
+    var html = '<div class="aios-filter-tabs">';
+    tabs.forEach(function(t) {
+      var c = counts[t.key] || 0;
+      var isActive = _activeFilter === t.key;
+      html += '<button class="aios-filter-tab' + (isActive ? ' aios-filter-tab--active' : '') + '" ' +
+        'onclick="aiosSetFilter(\'' + t.key + '\')">' +
+        t.label + '<span class="aios-filter-count">' + c + '</span></button>';
+    });
+    html += '</div>';
+    var filtersEl = document.getElementById('dashChecklistFilters');
+    if (filtersEl) filtersEl.innerHTML = html;
+  }
+
+  // ── CHECKLIST RENDERER ────────────────────────────────
+  function renderChecklist(items, filter) {
+    var checklistEl = document.getElementById('dashChecklist');
+    if (!checklistEl) return;
+
+    var filtered = items.filter(function(i) {
+      if (filter === 'active')      return i.status === 'not_started' || i.status === 'in_progress';
+      if (filter === 'in_progress') return i.status === 'in_progress';
+      if (filter === 'completed')   return i.status === 'completed';
+      if (filter === 'skipped')     return i.status === 'skipped';
+      return true; // 'all'
+    });
+
+    if (filtered.length === 0) {
+      var emptyMsg = filter === 'active'
+        ? 'No active tasks. <a href="index.html" style="color:var(--gold)">Start a conversation</a> to build your plan.'
+        : 'No ' + (STATUS_LABELS[filter] || filter).toLowerCase() + ' tasks.';
+      checklistEl.innerHTML = '<p style="font-size:0.88rem;color:var(--gray-500);">' + emptyMsg + '</p>';
+      return;
+    }
+
+    var html = '';
+
+    // ── INTELLIGENCE SIGNAL ─────────────────────────────
+    // Show guidance text above the list when viewing active/in_progress tasks
+    var hasActiveItems = filtered.some(function(i) { return i.status === 'not_started' || i.status === 'in_progress'; });
+    if ((filter === 'active' || filter === 'in_progress') && hasActiveItems) {
+      html += '<div class="aios-intelligence-signal">Based on your situation, we recommend starting here:</div>';
+    }
+
+    // Cap visible items — show more link if needed
+    var maxShow = 10;
+    var showItems = filtered.slice(0, maxShow);
+
+    showItems.forEach(function(item) {
+      var s = item.status || 'not_started';
+      var isDone = s === 'completed';
+      var isSkip = s === 'skipped';
+      var isInProg = s === 'in_progress';
+      var catCls = 'aios-item__badge--' + (item.category || 'optional');
+      var catLabel = CAT_LABELS[item.category] || item.category || '';
+      var statusCls = 'aios-item__status-badge--' + s;
+      var statusLabel = STATUS_LABELS[s] || s;
+      var rowCls = 'aios-item' + (isDone ? ' aios-item--completed' : '') + (isSkip ? ' aios-item--skipped' : '') + (isInProg ? ' aios-item--in_progress' : '');
+
+      // Action buttons based on current status
+      var actionBtns = '';
+      if (s === 'not_started') {
+        actionBtns = '<button class="aios-item__btn aios-item__btn--start" onclick="aiosSetStatus(\'' + item.id + '\',\'in_progress\',this)">▶ Start</button>' +
+                     '<button class="aios-item__btn aios-item__btn--skip"  onclick="aiosSetStatus(\'' + item.id + '\',\'skipped\',this)">Skip</button>';
+      } else if (s === 'in_progress') {
+        actionBtns = '<button class="aios-item__btn aios-item__btn--done" onclick="aiosSetStatus(\'' + item.id + '\',\'completed\',this)">✓ Done</button>' +
+                     '<button class="aios-item__btn aios-item__btn--skip"  onclick="aiosSetStatus(\'' + item.id + '\',\'skipped\',this)">Skip</button>';
+      } else if (s === 'completed' || s === 'skipped') {
+        actionBtns = '<button class="aios-item__btn aios-item__btn--undo"  onclick="aiosSetStatus(\'' + item.id + '\',\'not_started\',this)">Undo</button>';
+      }
+
+      var resourceLinkHtml = '';
+      if (item.resource_link) {
+        var isExt = /^https?:\/\//.test(item.resource_link);
+        var linkTarget = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
+        resourceLinkHtml = '<a href="' + escHtml(item.resource_link) + '" class="aios-item__resource-link"' + linkTarget + '>Take action →</a>';
+      }
+
+      html += '<div class="' + rowCls + '" data-id="' + item.id + '" data-status="' + s + '">' +
+        '<div class="aios-item__body">' +
+          '<div class="aios-item__title' + (isDone ? ' aios-item__title--done' : '') + '">' + escHtml(item.title) + '</div>' +
+          (item.description ? '<div class="aios-item__desc">' + escHtml(item.description) + '</div>' : '') +
+          '<div class="aios-item__meta">' +
+            '<span class="aios-item__badge ' + catCls + '">' + catLabel + '</span>' +
+            '<span class="aios-item__status-badge ' + statusCls + '">' + statusLabel + '</span>' +
+            resourceLinkHtml +
+          '</div>' +
+        '</div>' +
+        '<div class="aios-item__actions">' + actionBtns + '</div>' +
+      '</div>';
+    });
+
+    if (filtered.length > maxShow) {
+      html += '<p style="font-size:0.8rem;color:var(--gray-500);margin-top:10px;">Showing ' + maxShow + ' of ' + filtered.length + ' tasks in this view.</p>';
+    }
+
+    checklistEl.innerHTML = html;
+  }
+
+  // ── PROGRESS STATS ────────────────────────────────────
+  function updateStats(items) {
+    var total     = items.length;
+    var completed = items.filter(function(i) { return i.status === 'completed'; }).length;
+    var pct       = total > 0 ? Math.round((completed / total) * 100) : 0;
+    document.getElementById('statTotal').textContent     = total;
+    document.getElementById('statCompleted').textContent = completed;
+    document.getElementById('statProgress').textContent  = pct + '%';
+    document.getElementById('progressFill').style.width  = pct + '%';
+    document.getElementById('progressPct').textContent   = pct + '%';
+  }
+
+  // ── GLOBAL HANDLERS (called from inline onclick) ──────
+
+  // Filter tab click
+  window.aiosSetFilter = function(filter) {
+    _activeFilter = filter;
+    renderFilterTabs(_allItems);
+    renderChecklist(_allItems, filter);
+  };
+
+  // Status button click on individual item
+  window.aiosSetStatus = function(itemId, newStatus, btnEl) {
+    if (!AAAI.auth.updateChecklistItemStatus) return;
+    // Optimistic UI update — swap the row immediately
+    var row = document.querySelector('.aios-item[data-id="' + itemId + '"]');
+    var item = _allItems.find(function(i) { return i.id === itemId; });
+    if (!item) return;
+
+    var oldStatus = item.status;
+    item.status = newStatus;
+    item.is_completed = newStatus === 'completed';
+
+    // Persist
+    AAAI.auth.updateChecklistItemStatus(itemId, newStatus).then(function(result) {
+      if (result && result.error) {
+        // Revert on failure
+        item.status = oldStatus;
+        item.is_completed = oldStatus === 'completed';
+        console.warn('[AIOS] status update error:', result.error);
+      }
+    });
+
+    // Dispatch analytics event
+    var evtName = 'aaai:checklist_item_' + (newStatus === 'in_progress' ? 'started' : newStatus === 'completed' ? 'completed' : 'skipped');
+    if (newStatus === 'not_started') evtName = null; // undo — no analytics event
+    if (evtName) {
+      window.dispatchEvent(new CustomEvent(evtName, { detail: { itemId: itemId, title: item.title, itemCategory: item.category } }));
+    }
+
+    // Re-render affected sections
+    updateStats(_allItems);
+    renderNextStep(_allItems);
+    renderFilterTabs(_allItems);
+    renderChecklist(_allItems, _activeFilter);
+  };
+
+  // Next step CTA click
+  window.aiosNextStepClick = function(itemId, title, currentStatus) {
+    window.dispatchEvent(new CustomEvent('aaai:next_step_clicked', { detail: { itemId: itemId, title: title } }));
+    if (currentStatus === 'not_started') {
+      // Move to in_progress
+      window.aiosSetStatus(itemId, 'in_progress', null);
+    }
+    // Scroll to checklist
+    var cl = document.getElementById('dashChecklist');
+    if (cl) cl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Switch filter to show active items
+    window.aiosSetFilter('active');
+  };
+
+  // ── UTILITIES ─────────────────────────────────────────
+  function escHtml(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function escAttr(s) { return String(s || '').replace(/'/g,'&#39;').replace(/"/g,'&quot;'); }
+
+  // ── MAIN LOAD ─────────────────────────────────────────
   window.addEventListener('authStateChanged', function(e) {
-    var user = e.detail.user;
+    var user    = e.detail.user;
     var profile = e.detail.profile;
     var content = document.getElementById('dashboardContent');
-    var login = document.getElementById('dashboardLogin');
+    var login   = document.getElementById('dashboardLogin');
 
     if (user) {
       content.style.display = 'block';
-      login.style.display = 'none';
+      login.style.display   = 'none';
 
       // Greeting
       var name = (profile && profile.display_name) ? profile.display_name : user.email.split('@')[0];
       document.getElementById('dashGreeting').textContent = 'Welcome back, ' + name;
 
-      // Load checklist stats + interactive preview
+      // ── Load full checklist (all statuses) ──
       AAAI.auth.loadChecklist().then(function(result) {
-        if (result.data) {
-          var total = result.data.length;
-          var completed = result.data.filter(function(i) { return i.is_completed; }).length;
-          var pct = total > 0 ? Math.round((completed / total) * 100) : 0;
-          document.getElementById('statTotal').textContent = total;
-          document.getElementById('statCompleted').textContent = completed;
-          document.getElementById('statProgress').textContent = pct + '%';
+        if (result.data && result.data.length > 0) {
+          _allItems = result.data;
 
-          // Progress bar
-          document.getElementById('progressFill').style.width = pct + '%';
-          document.getElementById('progressPct').textContent = pct + '%';
+          // Sort: in_progress first, then by priority asc, then sort_order
+          _allItems.sort(function(a, b) {
+            var statusOrder = { in_progress: 0, not_started: 1, completed: 2, skipped: 3 };
+            var sA = statusOrder[a.status] !== undefined ? statusOrder[a.status] : 1;
+            var sB = statusOrder[b.status] !== undefined ? statusOrder[b.status] : 1;
+            if (sA !== sB) return sA - sB;
+            if (a.priority !== b.priority) return (a.priority || 2) - (b.priority || 2);
+            return (a.sort_order || 0) - (b.sort_order || 0);
+          });
 
-          // Checklist preview — show first 8 incomplete, then completed
-          var checklistEl = document.getElementById('dashChecklist');
-          if (total > 0) {
-            var incomplete = result.data.filter(function(i) { return !i.is_completed; });
-            var done = result.data.filter(function(i) { return i.is_completed; });
-            var showItems = incomplete.slice(0, 6).concat(done.slice(0, 2));
-            var html = '';
-            showItems.forEach(function(item) {
-              var isDone = item.is_completed;
-              html += '<div class="dash-checklist-item" data-id="' + item.id + '">' +
-                '<div class="dash-checklist-check' + (isDone ? ' dash-checklist-check--done' : '') + '" onclick="toggleDashCheck(this, \'' + item.id + '\')">' +
-                  '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' +
-                '</div>' +
-                '<div>' +
-                  '<div class="dash-checklist-title' + (isDone ? ' dash-checklist-title--done' : '') + '">' + (item.title || '') + '</div>' +
-                  (item.description ? '<div class="dash-checklist-desc">' + item.description + '</div>' : '') +
-                  '<div class="dash-checklist-cat">' + (CAT_LABELS[item.category] || item.category || '') + '</div>' +
-                '</div>' +
-              '</div>';
-            });
-            if (total > 8) {
-              html += '<div class="dash-checklist-more"><a href="index.html">View all ' + total + ' items →</a></div>';
-            }
-            checklistEl.innerHTML = html;
-          }
+          updateStats(_allItems);
+          renderNextStep(_allItems);
+          renderFilterTabs(_allItems);
+          renderChecklist(_allItems, _activeFilter);
+
+          // Dispatch analytics event
+          var active    = _allItems.filter(function(i) { return i.status === 'in_progress' || i.status === 'not_started'; }).length;
+          var completed = _allItems.filter(function(i) { return i.status === 'completed'; }).length;
+          window.dispatchEvent(new CustomEvent('aaai:checklist_viewed', {
+            detail: { total: _allItems.length, active: active, completed: completed }
+          }));
         }
       });
 
@@ -269,7 +559,7 @@ function toggleMenu() {
       if (profile && profile.goals && profile.goals.length > 0) {
         var goalsEl = document.getElementById('dashGoals');
         goalsEl.innerHTML = profile.goals.map(function(g) {
-          return '<span class="dashboard__goal-tag">' + g + '</span>';
+          return '<span class="dashboard__goal-tag">' + escHtml(g) + '</span>';
         }).join('');
       }
 
@@ -292,13 +582,13 @@ function toggleMenu() {
               var date = new Date(o.created_at).toLocaleDateString();
               return '<div class="template-output-card">' +
                 '<div class="template-output-card__header">' +
-                  '<span class="template-output-card__title">' + (o.title || o.template_type) + '</span>' +
+                  '<span class="template-output-card__title">' + escHtml(o.title || o.template_type) + '</span>' +
                   '<span class="template-output-card__date">' + date + '</span>' +
                 '</div>' +
                 '<div class="template-output-card__preview">' + preview + '</div>' +
                 '<div class="template-output-card__actions">' +
                   '<button class="template-output-card__btn" onclick="navigator.clipboard.writeText(this.closest(\'.template-output-card\').dataset.content).then(function(){alert(\'Copied!\')});" data-content="">Copy</button>' +
-                  '<button class="template-output-card__btn" onclick="var b=new Blob([this.closest(\'.template-output-card\').dataset.content],{type:\'text/plain\'});var u=URL.createObjectURL(b);var a=document.createElement(\'a\');a.href=u;a.download=\'' + (o.template_type || 'output') + '.txt\';a.click();">Download</button>' +
+                  '<button class="template-output-card__btn" onclick="var b=new Blob([this.closest(\'.template-output-card\').dataset.content],{type:\'text/plain\'});var u=URL.createObjectURL(b);var a=document.createElement(\'a\');a.href=u;a.download=\'' + escAttr(o.template_type || 'output') + '.txt\';a.click();">Download</button>' +
                 '</div>' +
               '</div>';
             }).join('');
@@ -310,14 +600,13 @@ function toggleMenu() {
         });
       }
 
-      // Load reports list + latest report preview + action recommendations
+      // Load reports + action recommendations
       if (AAAI.auth.loadReports) {
         AAAI.auth.loadReports().then(function(result) {
           if (result.data && result.data.length > 0) {
-            // Reports list
             var listEl = document.getElementById('dashReportsList');
-            listEl.innerHTML = result.data.map(function(r, i) {
-              var date = new Date(r.created_at).toLocaleDateString();
+            listEl.innerHTML = result.data.map(function(r) {
+              var date    = new Date(r.created_at).toLocaleDateString();
               var snippet = r.report_content ? r.report_content.substring(0, 80).replace(/</g, '&lt;') : '';
               return '<div class="dash-report-item">' +
                 '<span class="dash-report-date">' + date + '</span>' +
@@ -326,14 +615,14 @@ function toggleMenu() {
               '</div>';
             }).join('');
 
-            // Latest report preview
             var reportEl = document.getElementById('dashReport');
-            var latest = result.data[0];
-            var preview = latest.report_content ? latest.report_content.substring(0, 300).replace(/</g, '&lt;') + '...' : '';
-            var date = new Date(latest.created_at).toLocaleDateString();
-            reportEl.innerHTML = '<p style="font-size:0.8rem;color:var(--gray-500);margin-bottom:8px;">Generated ' + date + '</p>' +
+            var latest   = result.data[0];
+            var preview  = latest.report_content ? latest.report_content.substring(0, 300).replace(/</g, '&lt;') + '...' : '';
+            var date     = new Date(latest.created_at).toLocaleDateString();
+            reportEl.innerHTML =
+              '<p style="font-size:0.8rem;color:var(--gray-500);margin-bottom:8px;">Generated ' + date + '</p>' +
               '<div style="font-size:0.85rem;color:var(--gray-700);line-height:1.6;max-height:200px;overflow-y:auto;">' + preview + '</div>' +
-              '<div style="margin-top:12px;display:flex;gap:8px;">' +
+              '<div style="margin-top:12px;">' +
                 '<a href="index.html" style="color:var(--gold);font-size:0.85rem;font-weight:600;">Continue Conversation →</a>' +
               '</div>';
 
@@ -359,37 +648,20 @@ function toggleMenu() {
           }
         });
       }
+
     } else {
       content.style.display = 'none';
-      login.style.display = 'block';
+      login.style.display   = 'block';
     }
   });
 
-  // Toggle checklist item from dashboard
+  // Legacy toggle still works — delegates to new status engine
   window.toggleDashCheck = function(el, itemId) {
-    var isDone = el.classList.contains('dash-checklist-check--done');
+    var isDone  = el.classList.contains('dash-checklist-check--done');
     var newState = !isDone;
-    el.classList.toggle('dash-checklist-check--done');
-    var titleEl = el.nextElementSibling.querySelector('.dash-checklist-title');
-    if (titleEl) titleEl.classList.toggle('dash-checklist-title--done');
-
-    // Persist to Supabase
-    if (AAAI.auth.toggleChecklistItem) {
-      AAAI.auth.toggleChecklistItem(itemId, newState).then(function() {
-        // Update progress stats
-        var checks = document.querySelectorAll('.dash-checklist-check');
-        var total = parseInt(document.getElementById('statTotal').textContent) || checks.length;
-        var doneCount = document.querySelectorAll('.dash-checklist-check--done').length;
-        var statCompleted = parseInt(document.getElementById('statCompleted').textContent) || 0;
-        var newCompleted = newState ? statCompleted + 1 : statCompleted - 1;
-        var newPct = total > 0 ? Math.round((newCompleted / total) * 100) : 0;
-        document.getElementById('statCompleted').textContent = newCompleted;
-        document.getElementById('statProgress').textContent = newPct + '%';
-        document.getElementById('progressFill').style.width = newPct + '%';
-        document.getElementById('progressPct').textContent = newPct + '%';
-      });
-    }
+    window.aiosSetStatus(itemId, newState ? 'completed' : 'not_started', el);
   };
+
 })();
 </script>
 </body>

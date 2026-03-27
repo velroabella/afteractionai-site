@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Medical & Mental Health Support — AfterAction AI</title>
+  <meta name="description" content="Immediate access to veteran crisis support, mental health treatment, PTSD and TBI resources, alternative therapies, and international treatment programs." />
+  <meta name="keywords" content="veteran mental health, PTSD support, TBI treatment, veteran crisis line, ibogaine, ketamine therapy, psychedelic therapy veterans" />
+  <meta property="og:title" content="Medical & Mental Health Support — AfterAction AI" />
+  <meta property="og:description" content="197 verified resources for veterans — traditional, alternative, and international treatment options." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/medical-help" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
+          <li><a href="state-benefits.html">State Benefits</a></li>
+          <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn active">Get Help Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero-text hero-has-image" style="background-image: url('images/hero-medical.png'); background-repeat: no-repeat; background-size: cover; background-position: center 50%;">
+  <div class="page-hero-text__inner">
+    <h1 class="page-hero-text__title">Medical &amp; Mental Health Support</h1>
+    <div class="page-hero-bar__divider"></div>
+    <p class="page-hero-text__subtitle">Immediate access to treatment, crisis support, and recovery resources for veterans</p>
+  </div>
+</section>
+
+<!-- ── SECTION 1: CRISIS SECTION ── -->
+<div class="mh-crisis-section" id="crisis">
+  <div class="mh-crisis-inner">
+    <div class="mh-crisis-header">
+      <span style="font-size:1.1rem;">🆘</span>
+      <h2>If You Are in Crisis — Reach Out Now</h2>
+    </div>
+    <div class="mh-crisis-row">
+      <a href="tel:988" class="mh-crisis-btn">
+        <span class="mh-crisis-btn__label">Call</span>
+        <span class="mh-crisis-btn__value">988</span>
+        <span class="mh-crisis-btn__sub">Press 1 for Veterans</span>
+      </a>
+      <a href="sms:838255" class="mh-crisis-btn">
+        <span class="mh-crisis-btn__label">Text</span>
+        <span class="mh-crisis-btn__value">838255</span>
+        <span class="mh-crisis-btn__sub">Veterans Crisis Line</span>
+      </a>
+      <a href="https://www.veteranscrisisline.net/get-help-now/chat/" target="_blank" rel="noopener noreferrer" class="mh-crisis-btn">
+        <span class="mh-crisis-btn__label">Chat</span>
+        <span class="mh-crisis-btn__value">Live Chat</span>
+        <span class="mh-crisis-btn__sub">veteranscrisisline.net</span>
+      </a>
+      <a href="tel:18007994889" class="mh-crisis-btn">
+        <span class="mh-crisis-btn__label">TTY</span>
+        <span class="mh-crisis-btn__value">1-800-799-4889</span>
+        <span class="mh-crisis-btn__sub">Deaf / Hard of Hearing</span>
+      </a>
+      <a href="tel:18778258256" class="mh-crisis-btn">
+        <span class="mh-crisis-btn__label">24/7 VA Mental Health</span>
+        <span class="mh-crisis-btn__value">1-877-825-8256</span>
+        <span class="mh-crisis-btn__sub">VA Caregiver Support</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 2: QUICK ACCESS ── -->
+<div class="mh-quick-access">
+  <div class="mh-quick-access-inner">
+    <div class="mh-quick-label">Quick Access</div>
+    <div class="mh-quick-buttons">
+      <button class="mh-quick-btn mh-quick-btn--crisis" onclick="setCurated('crisis')">
+        <span class="mh-quick-btn__icon">🆘</span> Crisis Support
+      </button>
+      <button class="mh-quick-btn" onclick="setCurated('free')">
+        <span class="mh-quick-btn__icon">💚</span> Free / Low Cost
+      </button>
+      <button class="mh-quick-btn" onclick="setCurated('travel')">
+        <span class="mh-quick-btn__icon">✈️</span> Travel for Treatment
+      </button>
+      <button class="mh-quick-btn" onclick="setCurated('top')">
+        <span class="mh-quick-btn__icon">⭐</span> Top Recommended
+      </button>
+      <button class="mh-quick-btn" onclick="clearAllFilters()">
+        <span class="mh-quick-btn__icon">📋</span> Show All
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3: RESOURCE DATABASE ── -->
+<div class="mh-page-wrapper" id="resource-database">
+
+  <!-- SIDEBAR -->
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <h3>Filters</h3>
+      <button class="mh-clear-btn" onclick="clearAllFilters()">Clear all</button>
+    </div>
+
+    <input type="text" class="mh-search-input" id="mhSearchInput"
+           placeholder="🔍 Search resources..."
+           oninput="applyFilters()" />
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Condition</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="condition" data-value="PTSD" data-active-class="active-ptsd" onclick="togglePill(this)">PTSD</button>
+        <button class="mh-pill" data-filter="condition" data-value="TBI" data-active-class="active-tbi" onclick="togglePill(this)">TBI</button>
+        <button class="mh-pill" data-filter="condition" data-value="Anxiety" data-active-class="active-anxiety" onclick="togglePill(this)">Anxiety</button>
+        <button class="mh-pill" data-filter="condition" data-value="Depression" data-active-class="active-depression" onclick="togglePill(this)">Depression</button>
+        <button class="mh-pill" data-filter="condition" data-value="Substance Abuse" data-active-class="active-substance" onclick="togglePill(this)">Substance Abuse</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Resource Type</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="category" data-value="VA" onclick="togglePill(this)">VA</button>
+        <button class="mh-pill" data-filter="category" data-value="Nonprofit" onclick="togglePill(this)">Nonprofit</button>
+        <button class="mh-pill" data-filter="category" data-value="Crisis Support" onclick="togglePill(this)">Crisis</button>
+        <button class="mh-pill" data-filter="category" data-value="Telehealth" onclick="togglePill(this)">Telehealth</button>
+        <button class="mh-pill" data-filter="category" data-value="Peer Support" onclick="togglePill(this)">Peer Support</button>
+        <button class="mh-pill" data-filter="category" data-value="Ketamine Clinic" onclick="togglePill(this)">Ketamine</button>
+        <button class="mh-pill" data-filter="category" data-value="Ibogaine Clinic" onclick="togglePill(this)">Ibogaine</button>
+        <button class="mh-pill" data-filter="category" data-value="Psychedelic Therapy" onclick="togglePill(this)">Psychedelic</button>
+        <button class="mh-pill" data-filter="category" data-value="Ayahuasca Retreat" onclick="togglePill(this)">Ayahuasca</button>
+        <button class="mh-pill" data-filter="category" data-value="Holistic & Retreat" onclick="togglePill(this)">Holistic</button>
+        <button class="mh-pill" data-filter="category" data-value="Neurological Treatment" onclick="togglePill(this)">HBOT / TMS</button>
+        <button class="mh-pill" data-filter="category" data-value="Emerging Treatment" onclick="togglePill(this)">Experimental</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Location</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="country" data-value="United States" onclick="togglePill(this)">🇺🇸 USA</button>
+        <button class="mh-pill" data-filter="country" data-value="Mexico" onclick="togglePill(this)">🇲🇽 Mexico</button>
+        <button class="mh-pill" data-filter="country" data-value="Costa Rica" onclick="togglePill(this)">🇨🇷 Costa Rica</button>
+        <button class="mh-pill" data-filter="country" data-value="Peru" onclick="togglePill(this)">🇵🇪 Peru</button>
+        <button class="mh-pill" data-filter="country" data-value="Canada" onclick="togglePill(this)">🇨🇦 Canada</button>
+        <button class="mh-pill" data-filter="country" data-value="International" onclick="togglePill(this)">🌍 Other</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Cost</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="cost" data-value="Free" onclick="togglePill(this)">Free</button>
+        <button class="mh-pill" data-filter="cost" data-value="Low" onclick="togglePill(this)">Low Cost</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Credibility</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="credibility" data-value="High" onclick="togglePill(this)">✅ High</button>
+        <button class="mh-pill" data-filter="credibility" data-value="Medium" onclick="togglePill(this)">⚠️ Medium</button>
+        <button class="mh-pill" data-filter="credibility" data-value="Experimental" onclick="togglePill(this)">🧪 Experimental</button>
+      </div>
+    </div>
+
+    <div class="mh-result-count">
+      Showing <strong id="mhResultCount">197</strong> of <strong id="mhTotalCount">197</strong> resources
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <div class="mh-toolbar-left"><strong id="mhResultLabel">197</strong> resources found</div>
+      <select class="mh-sort-select" id="mhSortSelect" onchange="applyFilters()">
+        <option value="default">Sort: Default</option>
+        <option value="name">Sort: A–Z</option>
+        <option value="credibility">Sort: Credibility</option>
+        <option value="cost">Sort: Free First</option>
+      </select>
+    </div>
+
+    <div class="mh-grid" id="mhGrid"></div>
+
+    <div class="mh-load-more" id="mhLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="loadMore()">Load More Resources</button>
+    </div>
+  </main>
+</div>
+
+<!-- ── MODAL ── -->
+<div class="mh-modal-overlay" id="mhModalOverlay" onclick="closeModal(event)">
+  <div class="mh-modal" id="mhModal">
+    <button class="mh-modal__close" onclick="closeModalDirect()">✕</button>
+    <div id="mhModalBody"></div>
+  </div>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+  // ============================================================
+  // DATA LOAD
+  // ============================================================
+  let ALL_RESOURCES = [];
+  let FILTERED = [];
+  let DISPLAYED = 0;
+  const PAGE_SIZE = 24;
+
+  const filters = {
+    search: '',
+    condition: new Set(),
+    category: new Set(),
+    treatment: new Set(),
+    country: new Set(),
+    cost: new Set(),
+    credibility: new Set(),
+    curated: null
+  };
+
+  const CURATED_FN = {
+    crisis: (r) => r.category_normalized === 'Crisis Support' || (r.treatment_tags || []).includes('Crisis'),
+    free: (r) => (r.cost_range || '').toLowerCase().includes('free') || (r.cost_range || '').toLowerCase().includes('low'),
+    travel: (r) => r.location && r.location.country !== 'United States',
+    top: (r) => r.credibility_level === 'High' && r.is_veteran_focused === true
+  };
+
+  async function init() {
+    try {
+      const res = await fetch('afteractionai_resources_database.json');
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      ALL_RESOURCES = await res.json();
+      document.getElementById('mhTotalCount').textContent = ALL_RESOURCES.length;
+      applyFilters();
+    } catch(e) {
+      document.getElementById('mhGrid').innerHTML = `
+        <div class="mh-empty">
+          <div class="mh-empty-icon">⚠️</div>
+          <h3>Database Not Found</h3>
+          <p>afteractionai_resources_database.json must be in the same folder as this page.</p>
+        </div>`;
+      console.error('Resource DB load error:', e);
+    }
+  }
+
+  // ============================================================
+  // FILTER ENGINE
+  // ============================================================
+  function applyFilters() {
+    filters.search = (document.getElementById('mhSearchInput').value || '').toLowerCase();
+
+    FILTERED = ALL_RESOURCES.filter(r => {
+      if (filters.search) {
+        const hay = [r.name, r.description, r.category_normalized,
+          (r.conditions_supported || []).join(' '),
+          r.location ? Object.values(r.location).join(' ') : ''].join(' ').toLowerCase();
+        if (!hay.includes(filters.search)) return false;
+      }
+      if (filters.curated && CURATED_FN[filters.curated]) {
+        if (!CURATED_FN[filters.curated](r)) return false;
+      }
+      if (filters.condition.size > 0) {
+        const conds = (r.conditions_supported || []).map(c => c.toLowerCase());
+        if (![...filters.condition].some(f => conds.some(c => c.includes(f.toLowerCase())))) return false;
+      }
+      if (filters.category.size > 0) {
+        if (!filters.category.has(r.category_normalized)) return false;
+      }
+      if (filters.country.size > 0) {
+        const country = (r.location && r.location.country) || '';
+        let match = false;
+        for (const f of filters.country) {
+          if (f === 'International') {
+            match = !['United States','Mexico','Costa Rica','Peru','Canada'].includes(country);
+          } else {
+            match = country === f || country.startsWith(f);
+          }
+          if (match) break;
+        }
+        if (!match) return false;
+      }
+      if (filters.cost.size > 0) {
+        const cost = (r.cost_range || '').toLowerCase();
+        let match = false;
+        for (const f of filters.cost) {
+          if (f === 'Free' && cost.includes('free')) match = true;
+          if (f === 'Low' && (cost.includes('low') || cost.includes('sliding') || cost.includes('free'))) match = true;
+        }
+        if (!match) return false;
+      }
+      if (filters.credibility.size > 0) {
+        if (!filters.credibility.has(r.credibility_level)) return false;
+      }
+      return true;
+    });
+
+    const sort = document.getElementById('mhSortSelect').value;
+    if (sort === 'name') FILTERED.sort((a,b) => a.name.localeCompare(b.name));
+    else if (sort === 'credibility') {
+      const o = {High:0,Medium:1,Experimental:2};
+      FILTERED.sort((a,b) => (o[a.credibility_level]||1) - (o[b.credibility_level]||1));
+    } else if (sort === 'cost') {
+      FILTERED.sort((a,b) => {
+        const free = x => (x.cost_range||'').toLowerCase().includes('free') ? 0 : 1;
+        return free(a) - free(b);
+      });
+    }
+
+    DISPLAYED = 0;
+    document.getElementById('mhGrid').innerHTML = '';
+    document.getElementById('mhResultCount').textContent = FILTERED.length;
+    document.getElementById('mhResultLabel').textContent = FILTERED.length;
+    loadMore();
+  }
+
+  function loadMore() {
+    const batch = FILTERED.slice(DISPLAYED, DISPLAYED + PAGE_SIZE);
+    if (batch.length === 0 && DISPLAYED === 0) {
+      document.getElementById('mhGrid').innerHTML = `
+        <div class="mh-empty">
+          <div class="mh-empty-icon">🔍</div>
+          <h3>No resources found</h3>
+          <p>Try adjusting your filters or search terms.</p>
+        </div>`;
+    } else {
+      batch.forEach(r => {
+        document.getElementById('mhGrid').insertAdjacentHTML('beforeend', renderCard(r));
+      });
+    }
+    DISPLAYED += batch.length;
+    document.getElementById('mhLoadMore').style.display = DISPLAYED < FILTERED.length ? 'block' : 'none';
+  }
+
+  // ============================================================
+  // RENDER
+  // ============================================================
+  function renderCard(r) {
+    const catClass = getCatClass(r.category_normalized);
+    const costClass = getCostClass(r.cost_range);
+    const credClass = getCredClass(r.credibility_level);
+    const loc = buildLoc(r.location);
+    const conds = (r.conditions_supported || []).slice(0,4)
+      .map(c => `<span class="mh-cond ${getCondClass(c)}">${esc(c)}</span>`).join('');
+    const desc = (r.description || '').substring(0, 115) + ((r.description||'').length > 115 ? '…' : '');
+
+    return `<div class="mh-card aa-card" onclick="openModal(${r.id})">
+      <div class="mh-card__top">
+        <div class="mh-card__name">${esc(r.name)}</div>
+        ${r.is_veteran_focused ? '<span class="mh-card__vet-badge">VET FOCUSED</span>' : ''}
+      </div>
+      <div class="mh-card__meta">
+        <span class="mh-badge ${catClass}">${esc(r.category_normalized||r.category)}</span>
+        <span class="mh-badge ${costClass}">${esc(r.cost_range||'Unknown')}</span>
+        <span class="mh-cred-dot"><span class="mh-dot ${credClass}"></span>${esc(r.credibility_level||'Unknown')}</span>
+      </div>
+      <div class="mh-card__location">📍 ${esc(loc)}</div>
+      <div class="mh-card__desc">${esc(desc)}</div>
+      <div class="mh-card__conditions">${conds}</div>
+      <div class="mh-card__footer">
+        ${r.website ? `<a class="mh-card__link" href="${esc(r.website)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Visit Website →</a>` : '<span></span>'}
+        ${r.notes ? `<span class="mh-card__note" title="${esc(r.notes)}">${esc((r.notes||'').substring(0,38))}${(r.notes||'').length>38?'…':''}</span>` : ''}
+      </div>
+    </div>`;
+  }
+
+  function openModal(id) {
+    const r = ALL_RESOURCES.find(x => x.id === id);
+    if (!r) return;
+    const loc = buildLoc(r.location);
+    const conds = (r.conditions_supported||[]).map(c => `<span class="mh-cond ${getCondClass(c)}" style="margin:2px">${esc(c)}</span>`).join(' ');
+    const contact = typeof r.contact_info === 'object'
+      ? JSON.stringify(r.contact_info, null, 2)
+      : (r.contact_info || 'Not listed');
+    const isAlt = ['Ibogaine Clinic','Ayahuasca Retreat','Psychedelic Therapy','Emerging Treatment'].includes(r.category_normalized);
+
+    document.getElementById('mhModalBody').innerHTML = `
+      <div class="mh-modal__name">${esc(r.name)}</div>
+      <div class="mh-card__meta" style="margin-bottom:12px;">
+        <span class="mh-badge ${getCatClass(r.category_normalized)}">${esc(r.category_normalized||r.category)}</span>
+        <span class="mh-badge ${getCostClass(r.cost_range)}">${esc(r.cost_range||'Unknown')}</span>
+        <span class="mh-cred-dot"><span class="mh-dot ${getCredClass(r.credibility_level)}"></span>${esc(r.credibility_level)}</span>
+        ${r.is_veteran_focused ? '<span class="mh-card__vet-badge">VET FOCUSED</span>' : ''}
+      </div>
+      <div class="mh-modal__section"><div class="mh-modal__label">About</div><p>${esc(r.description||'No description available.')}</p></div>
+      <div class="mh-modal__section"><div class="mh-modal__label">Conditions Supported</div><div>${conds||'Not specified'}</div></div>
+      <div class="mh-modal__section"><div class="mh-modal__label">Location</div><p>${esc(loc)}</p></div>
+      <div class="mh-modal__section"><div class="mh-modal__label">Treatment Type</div><p>${esc(r.treatment_type||'Not specified')}</p></div>
+      ${r.website ? `<div class="mh-modal__section"><div class="mh-modal__label">Website</div><a href="${esc(r.website)}" target="_blank" rel="noopener">${esc(r.website)}</a></div>` : ''}
+      <div class="mh-modal__section"><div class="mh-modal__label">Contact</div><p style="white-space:pre-wrap;font-size:0.82rem;">${esc(contact)}</p></div>
+      ${r.notes ? `<div class="mh-modal__section"><div class="mh-modal__label">Notes</div><p>${esc(r.notes)}</p></div>` : ''}
+      ${isAlt ? `<div class="mh-modal__warning">⚠️ <strong>Legal Notice:</strong> Some treatments (ibogaine, ayahuasca, psilocybin) are controlled substances in the US but legal in Mexico, Peru, Jamaica, and parts of Europe. Always research legal status in your jurisdiction before traveling. AfterAction AI does not endorse any specific provider.</div>` : ''}`;
+    document.getElementById('mhModalOverlay').classList.add('open');
+  }
+
+  function closeModal(e) {
+    if (e.target === document.getElementById('mhModalOverlay')) closeModalDirect();
+  }
+  function closeModalDirect() {
+    document.getElementById('mhModalOverlay').classList.remove('open');
+  }
+
+  // ============================================================
+  // FILTER CONTROLS
+  // ============================================================
+  function togglePill(btn) {
+    const filterType = btn.dataset.filter;
+    const value = btn.dataset.value;
+    const activeClass = btn.dataset.activeClass || 'active';
+    const wasActive = btn.classList.contains('active') || btn.classList.contains(activeClass);
+    if (wasActive) {
+      btn.classList.remove('active', activeClass);
+      filters[filterType].delete(value);
+    } else {
+      btn.classList.add(activeClass);
+      filters[filterType].add(value);
+    }
+    filters.curated = null;
+    document.querySelectorAll('.mh-quick-btn').forEach(b => b.classList.remove('active'));
+    applyFilters();
+  }
+
+  function clearAllFilters() {
+    Object.keys(filters).forEach(k => {
+      if (k === 'curated') filters[k] = null;
+      else if (k === 'search') filters[k] = '';
+      else filters[k].clear();
+    });
+    document.querySelectorAll('.mh-pill').forEach(p => p.className = 'mh-pill');
+    document.querySelectorAll('.mh-quick-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('mhSearchInput').value = '';
+    applyFilters();
+  }
+
+  function setCurated(type) {
+    clearAllFilters();
+    filters.curated = type;
+    const map = {crisis:0, free:1, travel:2, top:3};
+    document.querySelectorAll('.mh-quick-btn')[map[type]]?.classList.add('active');
+    document.getElementById('mhGrid').scrollIntoView({behavior:'smooth', block:'start'});
+    applyFilters();
+  }
+
+  // ============================================================
+  // HELPERS
+  // ============================================================
+  function getCatClass(cat) {
+    const m = {
+      'VA':'mh-badge--va','Nonprofit':'mh-badge--nonprofit','Crisis Support':'mh-badge--crisis',
+      'Psychedelic Therapy':'mh-badge--psychedelic','Ibogaine Clinic':'mh-badge--ibogaine',
+      'Ayahuasca Retreat':'mh-badge--ayahuasca','Ketamine Clinic':'mh-badge--ketamine',
+      'Holistic & Retreat':'mh-badge--holistic','Neurological Treatment':'mh-badge--neuro',
+      'Emerging Treatment':'mh-badge--emerging','Telehealth':'mh-badge--telehealth',
+      'Peer Support':'mh-badge--peer','Alternative Therapy':'mh-badge--holistic'
+    };
+    return m[cat] || 'mh-badge--default';
+  }
+  function getCostClass(cost) {
+    if (!cost) return 'mh-badge--unknown';
+    const c = cost.toLowerCase();
+    if (c.includes('free')) return 'mh-badge--free';
+    if (c.includes('low') || c.includes('sliding')) return 'mh-badge--low';
+    if (c.includes('$$$') || c.includes('high')) return 'mh-badge--expensive';
+    return 'mh-badge--unknown';
+  }
+  function getCredClass(cred) {
+    if (cred === 'High') return 'mh-dot--high';
+    if (cred === 'Experimental') return 'mh-dot--experimental';
+    return 'mh-dot--medium';
+  }
+  function getCondClass(cond) {
+    const c = (cond||'').toLowerCase();
+    if (c.includes('ptsd')) return 'mh-cond--ptsd';
+    if (c.includes('tbi')) return 'mh-cond--tbi';
+    if (c.includes('anxiety')) return 'mh-cond--anxiety';
+    if (c.includes('depression')) return 'mh-cond--depression';
+    if (c.includes('substance') || c.includes('addiction')) return 'mh-cond--substance';
+    return '';
+  }
+  function buildLoc(loc) {
+    if (!loc) return 'Unknown';
+    if (typeof loc === 'string') return loc;
+    return [loc.city, loc.state, loc.country].filter(Boolean).join(', ') || 'Location TBD';
+  }
+  function esc(str) {
+    if (!str) return '';
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function toggleMenu() {
+    const menu = document.getElementById('navMenu');
+    menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+  }
+  document.querySelectorAll('.navbar__nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 768) document.getElementById('navMenu').style.display = 'none';
+    });
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
+
+  init();
+</script>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+    </div>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+        <!-- Social media links hidden until accounts are created -->
+      </div>
+    </div>
+    <div class="footer__nonprofit">AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.</div>
+    <div class="footer__bottom"><p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p></div>
+  </div>
+</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>

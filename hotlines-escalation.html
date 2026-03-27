@@ -14,8 +14,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
-  <link rel="stylesheet" href="css/hotlines-upgrade.css" />
-  <link rel="stylesheet" href="css/hub-upgrade.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
   <meta property="og:image:width" content="1536" />
@@ -38,7 +36,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -49,195 +47,310 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html" class="active">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html" class="active">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO SECTION -->
-<section class="page-hero-bar" style="background-image: url('images/hero-hotlines.jpg');">
-  <h1 class="page-hero-bar__title">Hotlines, Inspector General & Escalation Channels</h1>
-  <div class="page-hero-bar__divider"></div>
-  <p class="page-hero-bar__subtitle">When you need help NOW — crisis lines, complaint channels, and fraud reporting.</p>
+<!-- HERO -->
+<section class="rp-hero hero-has-image" style="background-image: url('images/hero-hotlines.jpg');">
+  <div class="rp-hero__inner">
+    <h1 class="rp-hero__title">Hotlines &amp; Escalation</h1>
+    <hr class="rp-hero__divider" />
+    <p class="rp-hero__subtitle">When you need help NOW — crisis lines, Inspector General contacts, complaint channels, and fraud reporting.</p>
+  </div>
 </section>
 
-<!-- PAGE CONTENT -->
-<div class="page">
-  <div class="page__content">
-
-    <!-- CRISIS ALERT -->
-    <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 16px; margin-bottom: 24px; border-radius: 4px;">
-      <strong style="color: #856404;">In Crisis?</strong> Call <a href="tel:988" style="font-weight: 600; color: #856404;">988</a> (press 1) for the Veterans Crisis Line. Available 24/7.
+<!-- CRISIS BAR -->
+<div class="rp-crisis-bar">
+  <div class="rp-crisis-bar__inner">
+    <div class="rp-crisis-bar__label">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FCA5A5" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      IMMEDIATE CRISIS SUPPORT
     </div>
-
-    <!-- SEARCH BAR -->
-    <div class="resources-search">
-      <input
-        type="text"
-        class="resources-search__input"
-        id="searchInput"
-        placeholder="Search by issue type or organization..."
-      />
+    <div class="rp-crisis-bar__btns">
+      <a href="tel:988" class="rp-crisis-btn">📞 988 — Veterans Crisis Line</a>
+      <a href="sms:838255" class="rp-crisis-btn">💬 Text 838255</a>
+      <a href="https://www.veteranscrisisline.net/get-help-now/chat/" target="_blank" rel="noopener noreferrer" class="rp-crisis-btn">🖥 Online Chat</a>
     </div>
-
-    <!-- ISSUE TYPE FILTER -->
-    <div class="resources-filters" id="filterBtns">
-      <button class="filter-btn active" data-filter="all">All Issues</button>
-      <button class="filter-btn" data-filter="crisis">Crisis Support</button>
-      <button class="filter-btn" data-filter="benefits_complaint">Benefits</button>
-      <button class="filter-btn" data-filter="ig">Inspector General</button>
-      <button class="filter-btn" data-filter="legal">Legal Assistance</button>
-    </div>
-
-    <!-- HOTLINES GRID -->
-    <section class="section">
-      <div class="resources-grid" id="hotlinesGrid">
-        <!-- Hotlines and escalation resources will populate here -->
-      </div>
-    </section>
-
   </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__crisis">
-        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
-      </div>
-      <div class="footer__grid">
-        <div class="footer__section footer__section--nav">
-          <h3>Navigate</h3>
-          <div class="footer__nav-columns">
-            <div class="footer__nav-col">
-              <a href="index.html">Home</a>
-              <a href="about.html">About</a>
-              <a href="board.html">Board</a>
-            </div>
-            <div class="footer__nav-col">
-              <a href="resources.html">Resources</a>
-              <a href="blog.html">Blog</a>
-              <a href="contact.html">Contact</a>
-            </div>
-          </div>
-        </div>
-        <div class="footer__section">
-          <h3>Resource Hub</h3>
-          <a href="elected-officials.html">Elected Officials</a>
-          <a href="licensure.html">Licensure & Certifications</a>
-          <a href="grants-scholarships.html">Grants & Scholarships</a>
-          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
-          <a href="state-benefits.html">State Benefits</a>
-          <a href="document-templates.html">Document Templates</a>
-        </div>
-        <div class="footer__section">
-          <h3>Legal</h3>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="disclaimer.html">Disclaimer</a>
-        </div>
-        <div class="footer__section">
-          <h3>Connect</h3>
-          <!-- Social media links hidden until accounts are created -->
-        </div>
-      </div>
-      <div class="footer__nonprofit">
-        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
-      </div>
-      <div class="footer__bottom">
-        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
-      </div>
-    </div>
-  </footer>
 </div>
 
-<script src="js/resource-hub.js"></script>
+<!-- QUICK ACCESS BAR -->
+<div class="rp-quickaccess">
+  <div class="rp-quickaccess__inner">
+    <button class="rp-qa-btn rp-qa-btn--crisis" onclick="applyQA('crisis')">🚨 Crisis Lines</button>
+    <button class="rp-qa-btn" onclick="applyQA('benefits_complaint')">📋 Benefits Complaints</button>
+    <button class="rp-qa-btn" onclick="applyQA('ig')">🏛 Inspector General</button>
+    <button class="rp-qa-btn" onclick="applyQA('legal')">⚖️ Legal Help</button>
+    <button class="rp-qa-btn" onclick="applyQA('healthcare')">🏥 Healthcare</button>
+    <button class="rp-qa-btn" onclick="applyQA('housing')">🏠 Housing</button>
+    <button class="rp-qa-btn" onclick="applyQA('all')">All Hotlines</button>
+  </div>
+</div>
+
+<!-- TWO-COLUMN LAYOUT -->
+<div class="rp-page-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="rp-sidebar">
+
+    <!-- Search -->
+    <div style="margin-bottom:20px;">
+      <input type="text" id="searchInput" placeholder="Search hotlines..."
+        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
+        oninput="filterAndRender()" />
+    </div>
+
+    <!-- Issue Type Filter -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Issue Type</div>
+      <button class="rp-pill active" data-filter-group="issue" data-filter-value="all" onclick="setPill(this,'issue')">All Issues</button>
+      <button class="rp-pill" data-filter-group="issue" data-filter-value="crisis" onclick="setPill(this,'issue')">Crisis Support</button>
+      <button class="rp-pill" data-filter-group="issue" data-filter-value="benefits_complaint" onclick="setPill(this,'issue')">Benefits Complaint</button>
+      <button class="rp-pill" data-filter-group="issue" data-filter-value="ig" onclick="setPill(this,'issue')">Inspector General</button>
+      <button class="rp-pill" data-filter-group="issue" data-filter-value="legal" onclick="setPill(this,'issue')">Legal Assistance</button>
+      <button class="rp-pill" data-filter-group="issue" data-filter-value="healthcare" onclick="setPill(this,'issue')">Healthcare</button>
+      <button class="rp-pill" data-filter-group="issue" data-filter-value="housing" onclick="setPill(this,'issue')">Housing</button>
+      <button class="rp-pill" data-filter-group="issue" data-filter-value="employment" onclick="setPill(this,'issue')">Employment</button>
+      <button class="rp-pill" data-filter-group="issue" data-filter-value="complaint" onclick="setPill(this,'issue')">General Complaint</button>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Results count -->
+    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
+
+    <!-- Cards grid -->
+    <div class="rp-grid" id="hotlinesGrid"></div>
+
+    <!-- Empty state -->
+    <div class="rp-empty" id="emptyState" style="display:none;">
+      <div class="rp-empty__icon">🔍</div>
+      <p>No hotlines match your current filters. Try adjusting the issue type.</p>
+      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+    </div>
+
+    <!-- Load more -->
+    <div style="text-align:center;margin-top:24px;">
+      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More</button>
+    </div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+    </div>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+      </div>
+    </div>
+    <div class="footer__nonprofit">
+      AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+    </div>
+  </div>
+</footer>
+
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
-
 <script>
-// ══════════════════════════════════════════════════════════
-// HOTLINES & ESCALATION PAGE — ResourceHub Integration
-// Crisis lines, complaint channels, fraud reporting
-// ══════════════════════════════════════════════════════════
+// ── State ──────────────────────────────────────────────────
+const PAGE_SIZE = 24;
+let allHotlines = [];
+let filteredHotlines = [];
+let visibleCount = 0;
 
+const activeFilters = { issue: 'all' };
+
+// ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
-  var menu = document.getElementById('navMenu');
-  menu.classList.toggle('active');
+  document.getElementById('navMenu').classList.toggle('active');
 }
 
-fetch('data/hotlines-escalation.json').then(function(response) {
-  return response.json();
-}).then(function(hotlinesData) {
+// ── Pills ─────────────────────────────────────────────────
+function setPill(btn, group) {
+  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilters[group] = btn.dataset.filterValue;
+  filterAndRender();
+}
 
-  // Render card function for hotlines and escalation
-  function renderHotlineCard(hotline) {
-    var isCrisis = hotline.issue_type === 'crisis';
-    var cardClass = isCrisis ? 'hub-card hub-card--crisis' : 'hub-card';
+// ── Quick Access ──────────────────────────────────────────
+function applyQA(val) {
+  if (val === 'all') { resetFilters(); return; }
+  const pill = document.querySelector(`.rp-pill[data-filter-group="issue"][data-filter-value="${val}"]`);
+  if (pill) setPill(pill, 'issue');
+}
 
-    var issueLabel = (hotline.issue_type || '').replace(/_/g, ' ');
-    var phoneHtml = hotline.phone
-      ? '<a href="tel:' + ResourceHub.escapeHtml(hotline.phone) + '" class="hub-card__phone">' + ResourceHub.escapeHtml(hotline.phone) + '</a>'
-      : '';
+// ── Reset ─────────────────────────────────────────────────
+function resetFilters() {
+  activeFilters.issue = 'all';
+  document.querySelectorAll('.rp-pill').forEach(b => {
+    b.classList.toggle('active', b.dataset.filterValue === 'all');
+  });
+  document.getElementById('searchInput').value = '';
+  filterAndRender();
+}
 
-    var actions = '';
-    if (hotline.complaint_form_url) {
-      actions += '<a href="' + ResourceHub.escapeHtml(hotline.complaint_form_url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Submit Complaint</a>';
-    }
-    if (hotline.website) {
-      actions += '<a href="' + ResourceHub.escapeHtml(hotline.website) + '" class="hub-card__link hub-card__link--outline" target="_blank" rel="noopener noreferrer">Learn More</a>';
-    }
-
-    return '<div class="' + cardClass + '">' +
-      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(hotline.name || '') + '</h3>' +
-      '<p class="hub-card__meta">' + issueLabel + '</p>' +
-      (phoneHtml ? '<div style="margin-bottom:12px;">' + phoneHtml + '</div>' : '') +
-      '<div class="hub-card__details">' +
-      '<strong>Hours:</strong> ' + ResourceHub.escapeHtml(hotline.hours || '24/7') + '<br />' +
-      ResourceHub.escapeHtml(hotline.description || '') +
-      '</div>' +
-      '<div class="hub-card__links">' + actions + '</div>' +
-      '</div>';
-  }
-
-  // Initialize ResourceHub for hotlines
-  ResourceHub.init({
-    containerId: 'hotlinesGrid',
-    searchInputId: 'searchInput',
-    filterContainerId: 'filterBtns',
-    data: hotlinesData,
-    renderCard: renderHotlineCard,
-    filterKey: 'issue_type',
-    searchFields: ['name', 'description', 'issue_type'],
-    stateField: null
+// ── Filter ────────────────────────────────────────────────
+function filterAndRender() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  filteredHotlines = allHotlines.filter(h => {
+    if (activeFilters.issue !== 'all' && h.issue_type !== activeFilters.issue) return false;
+    if (q && !((h.name||'').toLowerCase().includes(q) ||
+               (h.description||'').toLowerCase().includes(q) ||
+               (h.phone||'').toLowerCase().includes(q))) return false;
+    return true;
   });
 
-  // Build issue type filter buttons
-  ResourceHub.buildFilterButtons([
-    { key: 'all', label: 'All Issues' },
-    { key: 'crisis', label: 'Crisis Support' },
-    { key: 'benefits_complaint', label: 'Benefits' },
-    { key: 'ig', label: 'Inspector General' },
-    { key: 'legal', label: 'Legal Assistance' }
-  ]);
+  // Sort: crisis first
+  filteredHotlines.sort((a, b) => {
+    if (a.issue_type === 'crisis' && b.issue_type !== 'crisis') return -1;
+    if (b.issue_type === 'crisis' && a.issue_type !== 'crisis') return 1;
+    return 0;
+  });
 
-}).catch(function(err) {
-  console.error('Error loading hotlines data:', err);
-  document.getElementById('hotlinesGrid').innerHTML = '<div class="hub-no-results"><p>Error loading hotlines. Please try again later.</p></div>';
-});
+  visibleCount = 0;
+  document.getElementById('hotlinesGrid').innerHTML = '';
+  loadMore();
+  updateCount();
+}
+
+// ── Render ────────────────────────────────────────────────
+const ISSUE_LABELS = {
+  crisis: 'Crisis Support', benefits_complaint: 'Benefits Complaint',
+  ig: 'Inspector General', legal: 'Legal', healthcare: 'Healthcare',
+  housing: 'Housing', employment: 'Employment', complaint: 'Complaint'
+};
+
+function renderCard(h) {
+  const isCrisis = h.issue_type === 'crisis';
+  const tagClass = isCrisis ? 'rp-tag--red' : 'rp-tag--primary';
+  const issueLabel = ISSUE_LABELS[h.issue_type] || h.issue_type;
+
+  let phoneBtn = '';
+  if (h.phone) {
+    phoneBtn = `<a href="tel:${esc(h.phone)}" class="rp-card__phone">${esc(h.phone)}</a>`;
+  }
+
+  let complaintBtn = '';
+  if (h.complaint_form_url) {
+    complaintBtn = `<a href="${esc(h.complaint_form_url)}" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;margin-left:8px;background:#1d4ed8;">Submit Complaint</a>`;
+  }
+
+  let learnBtn = '';
+  if (h.website) {
+    learnBtn = `<a href="${esc(h.website)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Learn More →</a>`;
+  }
+
+  return `<div class="rp-card" ${isCrisis ? 'style="border-left:3px solid #DC2626;"' : ''}>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+      <span class="${tagClass}">${issueLabel}</span>
+      ${h.hours ? `<span class="rp-tag--neutral">${esc(h.hours)}</span>` : ''}
+    </div>
+    <h3 class="rp-card__name">${esc(h.name||'')}</h3>
+    <p class="rp-card__desc" style="font-size:0.85rem;color:#adb5bd;margin-bottom:12px;line-height:1.5;">${esc(h.description||'')}</p>
+    ${h.who_should_use ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;"><em>Who: ${esc(h.who_should_use)}</em></p>` : ''}
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">${phoneBtn}${complaintBtn}${learnBtn}</div>
+  </div>`;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Load More ─────────────────────────────────────────────
+function loadMore() {
+  const grid = document.getElementById('hotlinesGrid');
+  const batch = filteredHotlines.slice(visibleCount, visibleCount + PAGE_SIZE);
+  batch.forEach(h => { grid.insertAdjacentHTML('beforeend', renderCard(h)); });
+  visibleCount += batch.length;
+  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredHotlines.length ? 'inline-block' : 'none';
+  document.getElementById('emptyState').style.display = filteredHotlines.length === 0 ? 'block' : 'none';
+}
+
+function updateCount() {
+  document.getElementById('resultsCount').textContent =
+    filteredHotlines.length === allHotlines.length
+      ? `Showing all ${allHotlines.length} hotlines & escalation resources`
+      : `Showing ${filteredHotlines.length} of ${allHotlines.length} resources`;
+}
+
+// ── Init ──────────────────────────────────────────────────
+fetch('data/hotlines-escalation.json')
+  .then(r => r.json())
+  .then(data => {
+    allHotlines = Array.isArray(data) ? data : (data.resources || []);
+    filterAndRender();
+  })
+  .catch(err => {
+    console.error('Error loading hotlines:', err);
+    document.getElementById('hotlinesGrid').innerHTML =
+      '<div class="rp-empty"><p>Error loading hotlines. Please try again later.</p></div>';
+  });
 </script>
 
 </body>

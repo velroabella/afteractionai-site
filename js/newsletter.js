@@ -24,12 +24,21 @@
 
     try {
       if (window.AAAI?.auth?.subscribeNewsletter) {
+        const pageSlug = window.AAAI?.analytics?.pageSlug || source;
         const { data, error } = await AAAI.auth.subscribeNewsletter(email, source);
         if (error && !error.message.includes('duplicate')) {
           showMessage(formEl, 'Something went wrong. Please try again.', 'error');
         } else {
           showMessage(formEl, 'You\'re in! Watch your inbox for veteran resources.', 'success');
           emailInput.value = '';
+          // Track email capture event
+          if (window.AAAI?.analytics?.track) {
+            window.AAAI.analytics.track('email_capture', {
+              category: 'newsletter',
+              tags: ['newsletter', 'email_capture'],
+              metadata: { source: source, page_slug: pageSlug }
+            });
+          }
         }
       } else {
         // Fallback: store locally until auth is loaded

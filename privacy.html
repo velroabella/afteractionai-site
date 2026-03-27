@@ -20,6 +20,7 @@
   <meta property="og:site_name" content="AfterAction AI" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -35,7 +36,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -46,21 +47,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -76,78 +85,159 @@
       <div class="policy-container">
         <div class="policy-content">
           <h2>Introduction</h2>
-          <p>AfterAction AI (the "Organization," "we," "us," "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services.</p>
+          <p>AfterAction AI (the "Organization," "we," "us," "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our services. We built this platform for veterans, by veterans — and we take your privacy seriously.</p>
 
           <h2>1. Information We Collect</h2>
-          <p>We may collect information about you in various ways, including:</p>
+          <p>We collect only what we need to provide our services:</p>
           <ul>
-            <li><strong>Information You Provide:</strong> Name, email address, phone number, military service history, DD-214, and other information you voluntarily provide through forms, surveys, or direct communication.</li>
-            <li><strong>Account Information:</strong> If you create an account, we store your email address, display name, and account preferences to provide personalized features such as saved documents and action plans.</li>
-            <li><strong>Uploaded Documents:</strong> Documents you upload (DD-214, medical records, etc.) are processed to generate your outputs. Uploaded data may be processed by AI systems, including third-party AI providers, on our behalf. See Section 8 for details.</li>
-            <li><strong>Automatically Collected Information:</strong> We use Google Analytics to collect anonymous usage data (page views, time on site, device type). We do NOT use cookies for tracking or targeting.</li>
-            <li><strong>Crisis Information:</strong> If you use our crisis support features, information may be routed to the Veterans Crisis Line but is not stored in our system.</li>
+            <li><strong>Information You Provide:</strong> Name, email address, military service history, and other information you voluntarily share through the AI chat, forms, or account registration.</li>
+            <li><strong>Account Information:</strong> If you create an account, we store your email address, display name, and account preferences to provide personalized features such as saved plans and generated documents.</li>
+            <li><strong>Conversation History:</strong> When you interact with our AI assistant, we store the conversation history associated with your account. This allows you to access your plan and outputs across sessions. Conversation history may contain information you choose to share, such as service history, medical information, or financial circumstances. See Section 3 for retention details.</li>
+            <li><strong>Uploaded Documents:</strong> Documents you upload (DD-214, VA letters, medical records, etc.) are processed entirely within your browser. Document content is transmitted to our AI provider for processing only. <strong>AfterActionAI.org does not store the content of your uploaded documents on our servers.</strong> See Section 8 for details on AI provider data handling.</li>
+            <li><strong>Usage Information:</strong> We may collect basic technical information such as browser type and pages visited to improve site functionality. We do not use third-party analytics tracking services.</li>
+            <li><strong>Crisis Information:</strong> If you use our crisis support features, we route you directly to the Veterans Crisis Line. We do not store or forward your identity in connection with crisis referrals.</li>
           </ul>
 
           <h2>2. How We Use Your Information</h2>
           <p>We use the information we collect to:</p>
           <ul>
             <li>Generate personalized benefits recommendations, action plans, and document templates using AI</li>
-            <li>Provide account-based features including saved documents and profile-based services</li>
-            <li>Improve our platform through anonymous analytics</li>
-            <li>Respond to your inquiries and provide customer support</li>
+            <li>Provide account-based features including saved plans, generated documents, and VA checklists</li>
+            <li>Remember your session history so you can return to your plan</li>
+            <li>Respond to your inquiries and provide support</li>
             <li>Comply with legal obligations</li>
           </ul>
+          <p>We do not use your information for advertising, profiling, or sale to third parties.</p>
 
           <h2>3. Data Retention</h2>
-          <p>We believe in minimal data retention. Specifically:</p>
-          <ul>
-            <li>Documents you upload (DD-214, medical records, etc.) are processed to generate your outputs, then <strong>securely deleted within 24 hours</strong>. We do not retain copies unless you explicitly request otherwise.</li>
-            <li>Account data (email, display name, saved documents) is retained for as long as your account is active. You may request deletion at any time.</li>
-            <li>Personally identifiable information (PII) not associated with an account is retained only as long as necessary to provide services, typically <strong>no longer than 90 days</strong> unless you request deletion sooner.</li>
-            <li>Anonymous analytics data may be retained indefinitely to improve service quality.</li>
-          </ul>
+          <p>We retain data only as long as necessary to provide our services. The following table describes what we store and for how long:</p>
+
+          <table class="policy-table">
+            <thead>
+              <tr>
+                <th>Data Type</th>
+                <th>Where Stored</th>
+                <th>Retention Period</th>
+                <th>Deletable?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Account credentials</td>
+                <td>Supabase (encrypted)</td>
+                <td>Until account deleted</td>
+                <td>Yes — delete account</td>
+              </tr>
+              <tr>
+                <td>User profile</td>
+                <td>Supabase</td>
+                <td>Until account deleted</td>
+                <td>Yes — contact us</td>
+              </tr>
+              <tr>
+                <td>Conversation history</td>
+                <td>Supabase</td>
+                <td>90 days (auto-deleted)</td>
+                <td>Yes — contact us</td>
+              </tr>
+              <tr>
+                <td>AI reports &amp; plans</td>
+                <td>Supabase</td>
+                <td>90 days (auto-deleted)</td>
+                <td>Yes — contact us</td>
+              </tr>
+              <tr>
+                <td>Generated documents</td>
+                <td>Supabase</td>
+                <td>180 days (auto-deleted)</td>
+                <td>Yes — contact us</td>
+              </tr>
+              <tr>
+                <td>VA checklists</td>
+                <td>Supabase</td>
+                <td>365 days (auto-deleted)</td>
+                <td>Yes — contact us</td>
+              </tr>
+              <tr>
+                <td>Newsletter signups</td>
+                <td>Supabase</td>
+                <td>Until unsubscribed</td>
+                <td>Yes — unsubscribe link</td>
+              </tr>
+              <tr>
+                <td>Uploaded documents</td>
+                <td>Not stored</td>
+                <td>Not applicable</td>
+                <td>N/A — browser only</td>
+              </tr>
+              <tr>
+                <td>Voice session tokens</td>
+                <td>Not stored</td>
+                <td>Ephemeral (~10 minutes)</td>
+                <td>N/A — auto-expire</td>
+              </tr>
+            </tbody>
+          </table>
 
           <h2>4. Data Sharing</h2>
           <p>We do not sell, trade, or rent your personal information. We only share data in the following circumstances:</p>
           <ul>
-            <li><strong>Crisis Situations:</strong> If crisis detection triggers, we route you to the Veterans Crisis Line but do not retain or forward your identity</li>
-            <li><strong>Legal Requirements:</strong> If required by law or valid court order</li>
-            <li><strong>With Your Consent:</strong> If you explicitly authorize us to share your information with partner organizations</li>
+            <li><strong>AI Processing:</strong> Your conversation input and any uploaded document content is transmitted to our AI providers for processing. See Section 8 for details.</li>
+            <li><strong>Crisis Situations:</strong> If crisis detection triggers, we direct you to the Veterans Crisis Line. We do not transmit your identity as part of this referral.</li>
+            <li><strong>Legal Requirements:</strong> If required by law, subpoena, or valid court order.</li>
+            <li><strong>With Your Consent:</strong> If you explicitly authorize sharing with partner organizations.</li>
           </ul>
 
           <h2>5. Data Security</h2>
-          <p>We use industry-standard encryption and security protocols to protect your data in transit and at rest. However, no system is 100% secure. If you believe your information has been compromised, contact us immediately at hello@afteractionai.org.</p>
+          <p>We use industry-standard security measures to protect your data, including encrypted connections (HTTPS), row-level security on our database (each user's data is isolated), and server-side API key management. However, no system is 100% secure. If you believe your information has been compromised, contact us immediately at hello@afteractionai.org.</p>
 
           <h2>6. Cookies and Tracking</h2>
-          <p>We do not use cookies for tracking, targeting, or marketing purposes. We use Google Analytics with anonymized data collection to understand how the platform is being used. You can opt out of analytics in your browser settings.</p>
+          <p>We do not use cookies for tracking, targeting, or marketing purposes. We do not use Google Analytics or any third-party analytics platform. We do not use advertising networks, tracking pixels, or data brokers. Your activity on this site is not tracked for commercial purposes.</p>
 
           <h2>7. Your Rights</h2>
           <p>You have the right to:</p>
           <ul>
-            <li>Access the personal information we hold about you</li>
-            <li>Request correction of inaccurate information</li>
-            <li>Request deletion of your information (subject to legal retention requirements)</li>
-            <li>Opt out of analytics tracking</li>
+            <li><strong>Know</strong> what personal data we hold about you</li>
+            <li><strong>Access</strong> your personal data upon request</li>
+            <li><strong>Correct</strong> inaccurate information (profile updates available in your account)</li>
+            <li><strong>Delete</strong> your data — we will honor deletion requests within 30 days</li>
+            <li><strong>Opt out</strong> of newsletter communications at any time</li>
           </ul>
-          <p>To exercise these rights, contact us at hello@afteractionai.org.</p>
+          <p>To exercise any of these rights, contact us at hello@afteractionai.org. We do not charge for reasonable data requests and will respond within 30 days.</p>
+          <p><strong>California residents</strong> have additional rights under the California Privacy Rights Act (CPRA), including the right to know the categories of sensitive personal information collected and the right to limit its use. To exercise CPRA rights, contact us at hello@afteractionai.org.</p>
 
-          <h2>8. Third-Party Services and AI Processing</h2>
-          <p>We use the following categories of third-party services:</p>
+          <h2>8. AI Providers and Third-Party Processing</h2>
+          <p>This platform uses two AI providers to deliver its services. Both providers receive your conversation input and any document content you share during a session.</p>
+
           <ul>
-            <li><strong>AI Providers:</strong> We use third-party artificial intelligence providers to power features including benefits matching, document generation, and action plan creation. Your input data is securely transmitted to these providers for processing and is not retained by them beyond what is necessary to complete your request.</li>
-            <li><strong>Cloud Hosting and Authentication:</strong> We use secure cloud hosting and authentication services to store and protect your account data.</li>
-            <li><strong>Analytics:</strong> We use Google Analytics with anonymized data collection to understand platform usage.</li>
+            <li>
+              <strong>Anthropic Claude</strong> — Used for all text-based conversations, benefits analysis, and document generation. When you type a message or upload a document, that content is sent to Anthropic's API for processing. Anthropic's API usage policy states that API inputs and outputs are not used to train their models by default. For details, see <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer">Anthropic's Privacy Policy</a>.
+            </li>
+            <li>
+              <strong>OpenAI GPT-4o Realtime</strong> — Used for voice-based conversations. If you use the voice feature, your spoken input is processed by OpenAI's Realtime API. OpenAI's API usage policy states that API data is not used to train models by default. For details, see <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer">OpenAI's Privacy Policy</a>.
+            </li>
+            <li>
+              <strong>Supabase</strong> — Cloud database and authentication provider. Your account data, conversation history, and generated outputs are stored in Supabase's PostgreSQL infrastructure. See <a href="https://supabase.com/privacy" target="_blank" rel="noopener noreferrer">Supabase's Privacy Policy</a>.
+            </li>
+            <li>
+              <strong>Netlify</strong> — Website hosting and serverless functions. Our site is served from Netlify's infrastructure. See <a href="https://www.netlify.com/privacy/" target="_blank" rel="noopener noreferrer">Netlify's Privacy Policy</a>.
+            </li>
           </ul>
-          <p>These services have their own privacy policies. We encourage you to review them. We do not use third-party tracking pixels, retargeting services, or data brokers.</p>
 
-          <h2>9. Children's Privacy</h2>
-          <p>Our services are designed for veterans and adults. We do not knowingly collect information from children under 13. If you believe we have collected such information, please contact us immediately.</p>
+          <p>We do not use advertising networks, retargeting services, or data broker integrations. We make no guarantees about third-party provider policies on your behalf — please review each provider's policy directly for the most current terms.</p>
 
-          <h2>10. Updates to This Policy</h2>
-          <p>We may update this Privacy Policy from time to time. We will notify you of any material changes by posting the updated policy on our website and updating the "Last Updated" date below. Your continued use of the platform constitutes acceptance of the updated policy.</p>
+          <h2>9. Sensitive Veteran Information</h2>
+          <p>Veterans may share sensitive information through our platform including health conditions, disability ratings, mental health disclosures, financial circumstances, and discharge information. We treat this information with the highest level of care. This data is stored only in connection with your account, is subject to automatic deletion per the retention schedule in Section 3, and is never sold or shared with third parties except as required to provide our AI services (Section 8).</p>
+          <p>AfterAction AI is not a covered entity under HIPAA and is not a licensed healthcare provider. Do not use this platform as a substitute for medical care or legal advice.</p>
 
-          <h2>11. Contact Us</h2>
-          <p>If you have questions about this Privacy Policy or our privacy practices, please contact us at:</p>
+          <h2>10. Children's Privacy</h2>
+          <p>Our services are designed for adult veterans and their families. We do not knowingly collect information from children under 13. If you believe we have collected such information, please contact us immediately at hello@afteractionai.org.</p>
+
+          <h2>11. Updates to This Policy</h2>
+          <p>We may update this Privacy Policy from time to time. We will notify registered users of material changes by email and will post the updated policy on our website with an updated date below. Continued use of the platform constitutes acceptance of the updated policy.</p>
+
+          <h2>12. Contact Us</h2>
+          <p>Questions about this Privacy Policy or your privacy rights:</p>
           <ul>
             <li>Email: hello@afteractionai.org</li>
             <li>Website: AfterActionAI.org</li>
@@ -156,7 +246,6 @@
 
           <div class="policy-meta">
             <p>Last Updated: March 2026</p>
-            <p><em>This privacy policy is current as of the date above. Before launching publicly, please have this policy reviewed by a qualified attorney specializing in nonprofit and data privacy law.</em></p>
           </div>
         </div>
       </div>
@@ -230,5 +319,35 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 });
 </script>
 
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/newsletter.js"></script>
 </body>
 </html>

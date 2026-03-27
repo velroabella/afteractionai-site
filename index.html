@@ -39,7 +39,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -50,21 +50,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -72,7 +80,7 @@
 <!-- CRISIS BANNER -->
 <div class="crisis-banner" id="crisisBanner" style="display:none;">
   <div class="crisis-banner__inner">
-    <span>Veterans Crisis Line:</span> Dial <a href="tel:988">988</a>, Press 1 &nbsp;|&nbsp; Text <a href="sms:838255">838255</a> &nbsp;|&nbsp; <a href="https://www.veteranscrisisline.net/get-help/chat" target="_blank" rel="noopener">Chat Now</a>
+    <span>Veterans Crisis Line:</span> Dial <a href="tel:988">988</a>, Press 1 &nbsp;|&nbsp; Text <a href="sms:838255">838255</a> &nbsp;|&nbsp; <a href="https://www.veteranscrisisline.net/get-help-now/chat/" target="_blank" rel="noopener noreferrer">Chat Now</a>
   </div>
   <p>Confidential. 24/7. You are not alone.</p>
 </div>
@@ -80,7 +88,6 @@
 <!-- ═══ LANDING SCREEN ═══ -->
 <div class="screen screen--landing" id="landingScreen">
   <div class="aaai-top-trust">
-    <a href="#donate" class="aaai-top-trust__donate">Donate</a>
     <span>Free — Always</span>
     <span>Private — Always</span>
     <span>Built by Veterans</span>
@@ -102,14 +109,6 @@
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
         I'll Type
       </button>
-      <button class="btn btn--cc" id="btnStartCC">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 12h2"/><path d="M15 12h2"/><path d="M7 16h10"/></svg>
-        CC
-      </button>
-      <a href="#donate" class="btn btn--donate" id="btnDonate">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        Donate
-      </a>
     </div>
 
     <div class="landing__footer">
@@ -324,6 +323,7 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
   </div>
 </div>
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
 <!-- Phase 3.5 + 3.6: Legal Form System -->
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>

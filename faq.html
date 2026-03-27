@@ -20,6 +20,7 @@
   <meta property="og:site_name" content="AfterAction AI" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -35,7 +36,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -46,21 +47,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -281,5 +290,35 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 });
 </script>
 
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/newsletter.js"></script>
 </body>
 </html>

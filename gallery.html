@@ -37,7 +37,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -48,21 +48,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html" class="active">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -83,35 +91,9 @@
 
     <!-- GALLERY GRID -->
     <section class="section">
-      <div class="gallery-grid">
-        <div class="gallery-card">
-          <div class="gallery-card__image">Story photo</div>
-          <div class="gallery-card__body">
-            <h3 class="gallery-card__title">Veteran Story Title</h3>
-            <p class="gallery-card__text">A brief caption or excerpt sharing the impact of AfterAction AI on a veteran's life and journey.</p>
-          </div>
-        </div>
-        <div class="gallery-card">
-          <div class="gallery-card__image">Story photo</div>
-          <div class="gallery-card__body">
-            <h3 class="gallery-card__title">Veteran Story Title</h3>
-            <p class="gallery-card__text">A brief caption or excerpt sharing the impact of AfterAction AI on a veteran's life and journey.</p>
-          </div>
-        </div>
-        <div class="gallery-card">
-          <div class="gallery-card__image">Story photo</div>
-          <div class="gallery-card__body">
-            <h3 class="gallery-card__title">Veteran Story Title</h3>
-            <p class="gallery-card__text">A brief caption or excerpt sharing the impact of AfterAction AI on a veteran's life and journey.</p>
-          </div>
-        </div>
-        <div class="gallery-card">
-          <div class="gallery-card__image">Story photo</div>
-          <div class="gallery-card__body">
-            <h3 class="gallery-card__title">Veteran Story Title</h3>
-            <p class="gallery-card__text">A brief caption or excerpt sharing the impact of AfterAction AI on a veteran's life and journey.</p>
-          </div>
-        </div>
+      <div style="text-align:center;padding:60px 20px;color:var(--gray-500);">
+        <p style="font-size:1.1rem;margin-bottom:8px;">Content coming soon. Veteran stories and media will be available here shortly.</p>
+        <p style="font-size:0.95rem;">Have a story to share? <a href="contact.html" style="color:var(--gold);font-weight:600;">Get in touch.</a></p>
       </div>
     </section>
 
@@ -222,6 +204,7 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
   </div>
 </div>
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
 </body>
 </html>

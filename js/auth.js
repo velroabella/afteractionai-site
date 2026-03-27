@@ -333,6 +333,9 @@
   }
 
   // ── CHECKLIST ─────────────────────────────────────────
+  // Priority lookup: category label → integer (1=highest)
+  var CHECKLIST_PRIORITY = { immediate: 1, short_term: 2, strategic: 3, optional: 4 };
+
   async function saveChecklist(reportId, items) {
     if (!currentUser) return { data: null, error: 'Not logged in' };
     const rows = items.map((item, i) => ({
@@ -341,8 +344,14 @@
       category: item.category,
       title: item.title,
       description: item.description || '',
-      sort_order: i,
-      is_completed: false
+      sort_order: item.sort_order !== undefined ? item.sort_order : i,
+      is_completed: false,
+      // AIOS fields
+      status:        'not_started',
+      priority:      item.priority || CHECKLIST_PRIORITY[item.category] || 2,
+      source:        item.source || 'ai_report',
+      resource_link: item.resource_link || null,
+      due_context:   item.due_context || null
     }));
     const { data, error } = await supabase
       .from('checklist_items')
@@ -368,7 +377,8 @@
       .from('checklist_items')
       .update({
         is_completed: completed,
-        completed_at: completed ? new Date().toISOString() : null
+        status:        completed ? 'completed' : 'not_started',
+        completed_at:  completed ? new Date().toISOString() : null
       })
       .eq('id', itemId)
       .eq('user_id', currentUser.id)
@@ -461,6 +471,121 @@
     return currentProfile.issue_tags;
   }
 
+  // ── ACTIVITY LOGGING (analytics backbone) ────────────
+  // Called by analytics.js via AAAI.auth.logActivity()
+  // Writes to activity_logs table — fire-and-forget
+  async function logActivity(payload) {
+    if (!currentUser) return; // Only log authenticated users
+    try {
+      const { data, error } = await supabase
+        .from('activity_logs')
+        .insert({
+          user_id: currentUser.id,
+          action: payload.action || payload.eventType || 'event',
+          event_type: payload.eventType || payload.action || 'event',
+          page_slug: payload.pageSlug || null,
+          category: payload.category || null,
+          tags: payload.tags && payload.tags.length ? payload.tags : null,
+          session_id: payload.sessionId || null,
+          metadata: payload.metadata || {}
+        });
+      // DEBUG LOG — remove after confirming events are flowing
+      if (error) {
+        console.warn('[AAAI Auth] logActivity INSERT error:', error.code, error.message);
+      } else {
+        console.log('[AAAI Auth] logActivity INSERT OK:', payload.eventType || payload.action);
+      }
+    } catch(e) {
+      console.warn('[AAAI Auth] logActivity exception:', e.message);
+    }
+  }
+
+  // ── CONSENT MANAGEMENT ───────────────────────────────
+  async function updateConsent(consentEmail, consentAnalytics) {
+    if (!currentUser) return { error: 'Not logged in' };
+    // Only include fields that were explicitly passed — avoids overwriting
+    // an existing consent_analytics value when only consent_email is being set.
+    var payload = {};
+    if (consentEmail !== undefined && consentEmail !== null) payload.consent_email = consentEmail;
+    if (consentAnalytics !== undefined && consentAnalytics !== null) payload.consent_analytics = consentAnalytics;
+    if (Object.keys(payload).length === 0) return { data: currentProfile, skipped: true };
+    return updateProfile(payload);
+  }
+
+  // ── SEGMENTATION PROFILE UPDATE ──────────────────────
+  // Called by app.js after report generation.
+  // Writes audience_type, primary_need, secondary_needs to the profile
+  // only when they are currently NULL — never overwrites existing data.
+  async function updateSegmentation(fields) {
+    if (!currentUser) return { error: 'Not logged in' };
+
+    // Build the update payload — only include fields that have a value
+    // and are not already set on the current profile
+    var payload = {};
+
+    if (fields.audience_type && !currentProfile?.audience_type && !currentProfile?.audience) {
+      payload.audience_type = fields.audience_type;
+    }
+    if (fields.primary_need && !currentProfile?.primary_need) {
+      payload.primary_need = fields.primary_need;
+    }
+    if (fields.secondary_needs && fields.secondary_needs.length > 0 && !currentProfile?.secondary_needs) {
+      payload.secondary_needs = fields.secondary_needs;
+    }
+    if (fields.veteran_status && !currentProfile?.veteran_status) {
+      payload.veteran_status = fields.veteran_status;
+    }
+    if (fields.state && !currentProfile?.state) {
+      payload.state = fields.state;
+    }
+
+    // Nothing new to write — profile already populated
+    if (Object.keys(payload).length === 0) {
+      console.log('[AAAI Auth] updateSegmentation: all fields already set, skipping');
+      return { data: currentProfile, skipped: true };
+    }
+
+    // DEBUG LOG — remove after confirming segmentation is flowing
+    console.log('[AAAI Auth] PROFILE UPDATE:', payload);
+
+    return updateProfile(payload);
+  }
+
+  // ── AIOS STATUS UPDATE ───────────────────────────────
+  // Richer status transitions: not_started → in_progress → completed / skipped
+  async function updateChecklistItemStatus(itemId, status) {
+    if (!currentUser) return { error: 'Not logged in' };
+    var valid = ['not_started', 'in_progress', 'completed', 'skipped'];
+    if (valid.indexOf(status) === -1) return { error: 'Invalid status: ' + status };
+    var updates = {
+      status:       status,
+      is_completed: status === 'completed',
+      completed_at: status === 'completed' ? new Date().toISOString() : null
+    };
+    const { data, error } = await supabase
+      .from('checklist_items')
+      .update(updates)
+      .eq('id', itemId)
+      .eq('user_id', currentUser.id)
+      .select()
+      .single();
+    return { data, error };
+  }
+
+  // ── ACTIVE CHECKLIST (for returning user / next-step) ─
+  // Returns only tasks that are not_started or in_progress, ordered by priority.
+  async function loadActiveChecklist() {
+    if (!currentUser) return { data: null, error: 'Not logged in' };
+    const { data, error } = await supabase
+      .from('checklist_items')
+      .select('*')
+      .eq('user_id', currentUser.id)
+      .not('status', 'in', '("completed","skipped")')
+      .order('priority', { ascending: true })
+      .order('sort_order', { ascending: true });
+    return { data, error };
+  }
+
   // ── AUTO-CHECKLIST FROM ACTION ENGINE ──────────────
   async function saveAutoChecklist(reportId, actionChecklist) {
     if (!currentUser || !actionChecklist || actionChecklist.length === 0) return { data: null };
@@ -501,7 +626,14 @@
     saveIssueTags,
     getIssueTags,
     saveAutoChecklist,
-    supabase // Expose for advanced use
+    updateChecklistItemStatus,
+    loadActiveChecklist,
+    logActivity,
+    updateConsent,
+    updateSegmentation
+    // C-02 FIX: supabase client intentionally NOT exposed on public API
+    // Exposing it allowed any user to run authenticated queries via DevTools
+    // All database operations must go through the methods above
   };
 
   // Auto-init when DOM is ready

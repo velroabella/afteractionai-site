@@ -6,3 +6,19 @@ dist/
 build/
 site-deploy.zip
 .github/
+
+# Local backup files created by Cowork build sessions
+*.backup-before-*.html
+*.backup-before-*.css
+*.backup-before-*.js
+*.backup-before-*.json
+css/*.backup-before-*.css
+js/*.backup-before-*.js
+js/*.backup-before-*.css
+js/*.backup
+
+# Scratch files
+.write_test
+
+# SQL backup files
+security_compliance/*.backup.sql

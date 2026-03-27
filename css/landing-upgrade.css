@@ -140,45 +140,11 @@
 
 
 /* -----------------------------------------------------------
-   9. DONATE — repositioned as minimal text-link
-      Pushed to its own flex row (order: 10).
-      Visually separated from conversion CTAs.
-      Still accessible, still navigates to #donate anchor.
-      SVG icon hidden — text only.
+   9. LANDING ACTIONS
    ----------------------------------------------------------- */
 .landing__actions {
   flex-wrap: wrap !important;
   row-gap: 0 !important;
-}
-
-#btnDonate {
-  order: 10 !important;
-  width: 100% !important;
-  background: transparent !important;
-  color: rgba(255, 255, 255, 0.38) !important;
-  border: none !important;
-  font-size: 0.78rem !important;
-  font-weight: 400 !important;
-  padding: 12px 0 0 !important;
-  justify-content: flex-start !important;
-  box-shadow: none !important;
-  text-decoration: underline !important;
-  text-decoration-color: rgba(255, 255, 255, 0.15) !important;
-  text-underline-offset: 3px !important;
-  letter-spacing: 0.02em !important;
-  transform: none !important;
-}
-
-#btnDonate:hover {
-  color: rgba(255, 255, 255, 0.6) !important;
-  text-decoration-color: rgba(255, 255, 255, 0.4) !important;
-  transform: none !important;
-  box-shadow: none !important;
-  background: transparent !important;
-}
-
-#btnDonate svg {
-  display: none !important;
 }
 
 
@@ -419,10 +385,6 @@
     gap: 12px;
   }
 
-  /* On mobile, donate doesn't need full width */
-  #btnDonate {
-    width: auto !important;
-  }
 }
 
 
@@ -503,38 +465,8 @@
 
 
 /* -----------------------------------------------------------
-   19. DONATE LINK IN TOP TRUST ROW
-       .aaai-top-trust__donate is a real <a href="#donate"> link.
-       Styled to match the trust row spans visually.
-       No dot separator before it (first item).
-       #btnDonate in landing__actions hidden — ID preserved in DOM.
+   19. (DONATE REMOVED — no active donation system)
    ----------------------------------------------------------- */
-.aaai-top-trust__donate {
-  white-space: nowrap;
-  color: #000000;
-  background: var(--gold);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  padding: 5px 14px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background 0.15s ease;
-}
-
-.aaai-top-trust__donate:hover {
-  background: var(--gold-light);
-  color: #000000;
-  text-decoration: none;
-}
-
-#btnDonate {
-  display: none !important;
-}
 
 
 /* -----------------------------------------------------------
