@@ -317,10 +317,15 @@
   // ══════════════════════════════════════════════════════
   function setMuted(val) {
     muted = val;
+    // Silence outgoing mic
     if (localStream) {
       localStream.getAudioTracks().forEach(function(t) { t.enabled = !muted; });
     }
-    log('mute', muted ? 'muted' : 'unmuted');
+    // Silence incoming AI audio immediately
+    if (audioEl) {
+      audioEl.muted = muted;
+    }
+    log('mute', muted ? 'muted (mic+AI audio)' : 'unmuted (mic+AI audio)');
   }
 
   // ══════════════════════════════════════════════════════
