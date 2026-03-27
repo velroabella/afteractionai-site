@@ -2690,9 +2690,9 @@ a:hover { color: #000; }
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(0,0,0,0.75) 0%,
-    rgba(0,0,0,0.50) 40%,
-    rgba(0,0,0,0.60) 100%
+    rgba(0,0,0,0.62) 0%,
+    rgba(0,0,0,0.38) 40%,
+    rgba(0,0,0,0.50) 100%
   );
   z-index: 1;
 }
@@ -7067,7 +7067,7 @@ a, button, input, select, textarea {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.52);
+  background: rgba(0, 0, 0, 0.44);
   z-index: 0;
 }
 .hero-has-image > * {
