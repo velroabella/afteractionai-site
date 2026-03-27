@@ -13,7 +13,7 @@ const HEADERS = {
 };
 
 exports.handler = async (event) => {
-  console.log('REALTIME TOKEN FUNCTION HIT — GA VERSION');
+  console.log('REALTIME TOKEN FUNCTION HIT — CLIENT_SECRETS VERSION');
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: HEADERS, body: '' };
   }
@@ -29,19 +29,26 @@ exports.handler = async (event) => {
 
   try {
     const requestBody = {
-      model: 'gpt-4o-realtime-preview',
-      modalities: ['text', 'audio'],
-      voice: 'ash',
-      input_audio_transcription: {
-        model: 'whisper-1'
-      },
-      instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.'
+      session: {
+        type: 'realtime',
+        model: 'gpt-4o-realtime-preview',
+        modalities: ['text', 'audio'],
+        instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.',
+        audio: {
+          output: {
+            voice: 'ash'
+          }
+        },
+        input_audio_transcription: {
+          model: 'whisper-1'
+        }
+      }
     };
 
-    console.log('[realtime-token] POST https://api.openai.com/v1/realtime/sessions');
+    console.log('[realtime-token] POST https://api.openai.com/v1/realtime/client_secrets');
     console.log('[realtime-token] Body:', JSON.stringify(requestBody));
 
-    const response = await fetch('https://api.openai.com/v1/realtime/sessions', {
+    const response = await fetch('https://api.openai.com/v1/realtime/client_secrets', {
       method: 'POST',
       headers: {
         'Authorization': 'Bearer ' + OPENAI_API_KEY,
@@ -65,14 +72,15 @@ exports.handler = async (event) => {
     const data = JSON.parse(rawBody);
     console.log('[realtime-token] Parsed keys:', Object.keys(data));
 
-    const secret = data.client_secret?.value;
+    // /v1/realtime/client_secrets returns { value: "ek_...", expires_at: ... }
+    const secret = data.value || data.client_secret?.value;
 
     if (!secret) {
-      console.error('[realtime-token] client_secret.value not found');
-      console.error('[realtime-token] data.client_secret:', JSON.stringify(data.client_secret));
+      console.error('[realtime-token] No token found in response');
       console.error('[realtime-token] data.value:', data.value);
+      console.error('[realtime-token] data.client_secret:', JSON.stringify(data.client_secret));
 
-      const fallback = data.value || (typeof data.client_secret === 'string' ? data.client_secret : null);
+      const fallback = typeof data.client_secret === 'string' ? data.client_secret : null;
       if (fallback) {
         console.log('[realtime-token] Using fallback:', fallback.substring(0, 10) + '...');
         return {
@@ -89,11 +97,11 @@ exports.handler = async (event) => {
       };
     }
 
-    console.log('[realtime-token] Token obtained, expires_at:', data.client_secret.expires_at);
+    console.log('[realtime-token] Token obtained:', secret.substring(0, 10) + '...', 'expires_at:', data.expires_at);
     return {
       statusCode: 200,
       headers: HEADERS,
-      body: JSON.stringify({ client_secret: secret, debug: 'GA_TOKEN_ENDPOINT_V2' })
+      body: JSON.stringify({ client_secret: secret, debug: 'CLIENT_SECRETS_V3' })
     };
 
   } catch (err) {
