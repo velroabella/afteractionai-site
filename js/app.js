@@ -540,8 +540,11 @@
           setVoiceUI('connecting', detail || 'Connecting...');
           break;
         case 'connected':
+          setVoiceUI('listening');
+          break;
         case 'listening':
           setVoiceUI('listening');
+          RealtimeVoice.sendText('START_CONVERSATION');
           break;
         case 'speaking':
           setVoiceUI('speaking');
