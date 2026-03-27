@@ -1153,6 +1153,8 @@
   function injectLegalDocButton(messageDiv, rawText) {
     console.log('[LegalBtn] injectLegalDocButton called, text length:', rawText ? rawText.length : 0);
     console.log('[LegalBtn] AAAI defined:', typeof AAAI !== 'undefined', '| legalIntegration:', !!(typeof AAAI !== 'undefined' && AAAI.legalIntegration));
+    // Guard: never inject more than one card or button per message div (covers all duplicate-call paths)
+    if (messageDiv.querySelector('.doc-readiness-card') || messageDiv.querySelector('.legal-doc-btn')) return;
     // Only legalIntegration is required for detection; legal (modal) is checked at click time
     if (typeof AAAI === 'undefined' || !AAAI.legalIntegration) return;
     var formType = AAAI.legalIntegration.detectLegalFormType(rawText);
