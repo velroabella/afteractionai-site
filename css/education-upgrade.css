@@ -1,0 +1,123 @@
+/* ══════════════════════════════════════════════════════════
+   EDUCATION PAGE — PREMIUM UPGRADE
+   Additive overrides only. Load after styles.css.
+   Full rollback = remove this <link> tag.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1. GOLD CUSTOM PROPERTIES ──────────────────────────── */
+:root {
+  --edu-gold:       #C5A55A;
+  --edu-gold-deep:  #b8924a;
+  --edu-gold-light: #E8D5A0;
+  --edu-gold-glow:  rgba(197, 165, 90, 0.25);
+  --edu-gold-tint:  rgba(197, 165, 90, 0.08);
+}
+
+/* ── 2. HERO BAR — RADIAL GLOW → GOLD ──────────────────── */
+.page-hero-bar::before {
+  background: radial-gradient(
+    circle at 30% 50%,
+    rgba(197, 165, 90, 0.07) 0%,
+    transparent 50%
+  ) !important;
+}
+
+/* ── 3. HERO DIVIDER → GOLD ─────────────────────────────── */
+.page-hero-bar__divider {
+  background: var(--edu-gold) !important;
+}
+
+/* ── 4. SECTION TITLE — GOLD UNDERLINE ACCENT ───────────── */
+/* Matches the About/Board underline treatment */
+.edu-section__title {
+  position: relative !important;
+  padding-bottom: 10px !important;
+  margin-bottom: 10px !important;
+}
+
+.edu-section__title::after {
+  content: '' !important;
+  position: absolute !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  width: 32px !important;
+  height: 2px !important;
+  background: var(--edu-gold) !important;
+  border-radius: 2px !important;
+}
+
+/* ── 5. EDU CARD — GOLD TOP BORDER + HOVER POLISH ───────── */
+/* Keep white cards — just add gold accent strip and lift */
+.edu-card {
+  border-top: 3px solid var(--edu-gold) !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06) !important;
+}
+
+.edu-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 10px 36px rgba(0, 0, 0, 0.10) !important;
+}
+
+/* ── 6. PLACEHOLDER BLOCK — PREMIUM DARK TREATMENT ──────── */
+/* Replaces grey box with intentional dark module block */
+.edu-card__placeholder {
+  background: linear-gradient(135deg, #111111 0%, #1a1a1a 100%) !important;
+  border-radius: var(--radius-sm) !important;
+  height: 160px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin-bottom: 14px !important;
+  border: 1px solid rgba(197, 165, 90, 0.18) !important;
+  color: inherit !important;
+  /* Remove default text — child spans handle it */
+  font-size: 0 !important;
+}
+
+.edu-card__placeholder-label {
+  display: block !important;
+  font-size: 0.78rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--edu-gold) !important;
+  font-family: var(--font) !important;
+}
+
+.edu-card__placeholder-sub {
+  display: block !important;
+  font-size: 0.75rem !important;
+  font-weight: 400 !important;
+  letter-spacing: 0.04em !important;
+  color: rgba(255, 255, 255, 0.35) !important;
+  font-family: var(--font) !important;
+}
+
+/* ── 7. CTA LINK → GOLD ─────────────────────────────────── */
+/* Overrides .edu-card__cta { color: #DC3545 } (styles.css line 3089) */
+.edu-card__cta {
+  color: var(--edu-gold) !important;
+  transition: color 0.2s !important;
+}
+
+.edu-card__cta:hover {
+  color: #111111 !important;
+}
+
+/* ── 8. NEWSLETTER BUTTON → GOLD ───────────────────────── */
+/* Overrides .newsletter-form button { background: #DC3545 } */
+.newsletter-form button {
+  background: var(--edu-gold) !important;
+  color: #111111 !important;
+  font-weight: 700 !important;
+  transition: background 0.2s, transform 0.15s !important;
+}
+
+.newsletter-form button:hover {
+  background: var(--edu-gold-deep) !important;
+  transform: translateY(-1px) !important;
+}

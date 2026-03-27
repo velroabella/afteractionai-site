@@ -134,8 +134,11 @@ var ResourceHub = (function() {
       return '';
     }
     return links.map(function(link) {
-      return '<a href="' + escapeHtml(link.url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">' +
-             escapeHtml(link.label) + '</a>';
+      var isRestricted = /va\.gov|\.mil\/|osd\.mil|\.af\.mil|\.army\.mil|\.navy\.mil|\.marines\.mil|\.uscg\.mil/.test(link.url);
+      var restrictedAttr = isRestricted ? ' data-restricted="true"' : '';
+      var restrictedTip  = isRestricted ? '<span class="link-restricted-tip" aria-hidden="true">(Official gov site)</span>' : '';
+      return '<a href="' + escapeHtml(link.url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer"' + restrictedAttr + '>' +
+             escapeHtml(link.label) + '</a>' + restrictedTip;
     }).join('');
   }
 
@@ -304,6 +307,13 @@ var ResourceHub = (function() {
       }
     }
 
+    // Analytics: track filter_used event (non-'all' filters only)
+    if (category !== 'all' && window.AAAI && window.AAAI.analytics) {
+      window.AAAI.analytics.track('filter_used', {
+        metadata: { filter_type: 'category', filter_value: category, result_count: _filtered.length }
+      });
+    }
+
     if (_config.onFilter) {
       _config.onFilter(_filtered);
     }
@@ -337,6 +347,13 @@ var ResourceHub = (function() {
           }
         });
       }
+    }
+
+    // Analytics: track state filter usage
+    if (_activeFilters.state && window.AAAI && window.AAAI.analytics) {
+      window.AAAI.analytics.track('filter_used', {
+        metadata: { filter_type: 'state', filter_value: _activeFilters.state, result_count: _filtered.length }
+      });
     }
 
     if (_config.onFilter) {

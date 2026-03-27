@@ -128,45 +128,84 @@
     va_claim: [
       { category: 'immediate', title: 'Gather supporting documents', description: 'Collect DD-214, medical records, and any buddy statements' },
       { category: 'immediate', title: 'Write your personal statement', description: 'Use the VA Claim Personal Statement template' },
-      { category: 'short_term', title: 'File your VA claim', description: 'Submit VA Form 21-526EZ with supporting evidence' },
-      { category: 'short_term', title: 'Schedule C&P exam', description: 'Attend your Compensation & Pension exam when scheduled' }
+      { category: 'short_term', title: 'File your VA claim', description: 'Submit VA Form 21-526EZ with supporting evidence',
+        resource_link: 'https://www.va.gov/disability/file-disability-claim-form-21-526ez/' },
+      { category: 'short_term', title: 'Schedule C&P exam', description: 'Attend your Compensation & Pension exam when scheduled',
+        resource_link: 'https://www.va.gov/disability/va-claim-exam/' }
     ],
     va_appeal: [
       { category: 'immediate', title: 'Review your denial letter', description: 'Identify the specific reason for denial' },
-      { category: 'immediate', title: 'Choose your appeal pathway', description: 'Supplemental Claim, Higher-Level Review, or Board Appeal' },
+      { category: 'immediate', title: 'Choose your appeal pathway', description: 'Supplemental Claim, Higher-Level Review, or Board Appeal',
+        resource_link: 'https://www.va.gov/decision-reviews/' },
       { category: 'short_term', title: 'Gather new evidence', description: 'Get nexus letter, new medical records, or buddy statements' },
-      { category: 'short_term', title: 'Submit your appeal', description: 'File within 1 year of denial date' }
+      { category: 'short_term', title: 'Submit your appeal', description: 'File within 1 year of denial date',
+        resource_link: 'https://www.va.gov/decision-reviews/' }
     ],
     career: [
       { category: 'immediate', title: 'Build your civilian resume', description: 'Translate military experience using the Resume Builder' },
-      { category: 'immediate', title: 'Update your LinkedIn profile', description: 'Use the LinkedIn Profile Builder template' },
-      { category: 'short_term', title: 'Prepare for interviews', description: 'Practice STAR method responses' },
-      { category: 'short_term', title: 'Apply to target positions', description: 'Submit tailored resume to at least 5 positions per week' }
+      { category: 'immediate', title: 'Update your LinkedIn profile', description: 'Use the LinkedIn Profile Builder template',
+        resource_link: 'https://www.linkedin.com/in/' },
+      { category: 'short_term', title: 'Prepare for interviews', description: 'Practice STAR method responses',
+        resource_link: 'https://www.dol.gov/agencies/vets/programs/tap' },
+      { category: 'short_term', title: 'Search federal jobs', description: 'Veterans have hiring preference on USAJobs',
+        resource_link: 'https://www.usajobs.gov/Help/working-in-government/unique-hiring-paths/veterans/' }
     ],
     debt: [
       { category: 'immediate', title: 'List all debts', description: 'Creditor, balance, minimum payment, interest rate' },
       { category: 'immediate', title: 'Send hardship letter', description: 'Use the Debt Hardship Letter template' },
       { category: 'short_term', title: 'Create a monthly budget', description: 'Use the Budget Recovery Plan template' },
-      { category: 'strategic', title: 'Dispute inaccurate credit items', description: 'Use the Credit Dispute Letter template' }
+      { category: 'strategic', title: 'Dispute inaccurate credit items', description: 'Use the Credit Dispute Letter template',
+        resource_link: 'https://www.annualcreditreport.com/' }
     ],
     transition: [
-      { category: 'immediate', title: 'Secure your DD-214', description: 'Ensure you have certified copies' },
-      { category: 'immediate', title: 'Enroll in VA healthcare', description: 'Apply at va.gov/health-care/apply' },
+      { category: 'immediate', title: 'Secure your DD-214', description: 'Ensure you have certified copies',
+        resource_link: 'https://www.archives.gov/veterans/military-service-records' },
+      { category: 'immediate', title: 'Enroll in VA healthcare', description: 'Apply online at VA.gov — takes about 30 minutes',
+        resource_link: 'https://www.va.gov/health-care/apply-for-va-health-care/' },
       { category: 'short_term', title: 'Build your civilian resume', description: 'Use the Resume Builder template' },
-      { category: 'short_term', title: 'File for VA disability', description: 'If you have service-connected conditions' },
-      { category: 'short_term', title: 'Check state benefits', description: 'Review state-specific veteran benefits for your state' },
+      { category: 'short_term', title: 'File for VA disability', description: 'If you have service-connected conditions',
+        resource_link: 'https://www.va.gov/disability/how-to-file-claim/' },
+      { category: 'short_term', title: 'Check state benefits', description: 'Review state-specific veteran benefits for your state',
+        resource_link: 'state-benefits.html' },
       { category: 'strategic', title: 'Build financial stability', description: 'Create a budget and build emergency fund' }
     ],
     will: [
       { category: 'immediate', title: 'Draft your will', description: 'Use the Last Will and Testament template' },
-      { category: 'short_term', title: 'Have an attorney review', description: 'Free legal help available through VA' },
+      { category: 'short_term', title: 'Find free legal assistance', description: 'Veterans Legal Services and nonprofit legal aid are available',
+        resource_link: 'https://www.nvlsp.org/' },
       { category: 'short_term', title: 'Complete related documents', description: 'Power of Attorney, Living Will, HIPAA Authorization' }
     ],
     va_loan: [
-      { category: 'immediate', title: 'Get your Certificate of Eligibility', description: 'Request at va.gov or through your lender' },
-      { category: 'immediate', title: 'Check your credit score', description: 'Free at annualcreditreport.com' },
-      { category: 'short_term', title: 'Get pre-approved', description: 'Contact 2-3 VA-approved lenders to compare rates' },
+      { category: 'immediate', title: 'Get your Certificate of Eligibility', description: 'Request directly from VA or through your lender',
+        resource_link: 'https://www.va.gov/housing-assistance/home-loans/how-to-apply/' },
+      { category: 'immediate', title: 'Check your credit score', description: 'Free — no credit impact',
+        resource_link: 'https://www.annualcreditreport.com/' },
+      { category: 'short_term', title: 'Get pre-approved', description: 'Contact 2-3 VA-approved lenders to compare rates',
+        resource_link: 'https://www.benefits.va.gov/homeloans/lenders.asp' },
       { category: 'short_term', title: 'Complete VA Loan Readiness Checklist', description: 'Use the template to verify all requirements' }
+    ],
+    credit: [
+      { category: 'immediate', title: 'Pull your free credit reports', description: 'Check all three bureaus — Equifax, Experian, TransUnion',
+        resource_link: 'https://www.annualcreditreport.com/' },
+      { category: 'immediate', title: 'Dispute inaccurate items', description: 'Use the Credit Dispute Letter template' },
+      { category: 'short_term', title: 'Request fraud alert or freeze if needed', description: 'Free at each bureau — blocks unauthorized credit',
+        resource_link: 'https://www.identitytheft.gov/' }
+    ],
+    va_healthcare: [
+      { category: 'immediate', title: 'Enroll in VA healthcare', description: 'Apply online — most veterans are eligible',
+        resource_link: 'https://www.va.gov/health-care/apply-for-va-health-care/' },
+      { category: 'short_term', title: 'Schedule your first appointment', description: 'Contact your nearest VA medical center',
+        resource_link: 'https://www.va.gov/find-locations/' },
+      { category: 'short_term', title: 'Check eligibility for mental health services', description: 'Mental health care is available to all enrolled veterans',
+        resource_link: 'https://www.va.gov/health-care/health-needs-conditions/mental-health/' }
+    ],
+    education: [
+      { category: 'immediate', title: 'Check your GI Bill eligibility', description: 'Determine which chapter you qualify for',
+        resource_link: 'https://www.va.gov/education/eligibility/' },
+      { category: 'immediate', title: 'Apply for education benefits', description: 'Submit VA Form 22-1990 online',
+        resource_link: 'https://www.va.gov/education/apply-for-education-benefits/application/1990/' },
+      { category: 'short_term', title: 'Compare school GI Bill approval status', description: 'Verify school is VA-approved before enrolling',
+        resource_link: 'https://www.va.gov/education/gi-bill-comparison-tool/' }
     ]
   };
 
@@ -258,6 +297,13 @@
    * @param {Array} issues - Array from detectIssues()
    * @returns {Array} - Array of checklist item objects
    */
+  // Priority map — keeps action-engine in sync with DB convention
+  var CATEGORY_PRIORITY = { immediate: 1, short_term: 2, strategic: 3, optional: 4 };
+
+  // Max IMMEDIATE tasks allowed per report — any excess downgrades to short_term.
+  // Prevents overwhelming the user with an undifferentiated urgent list.
+  var MAX_IMMEDIATE = 3;
+
   function generateChecklist(issues) {
     var items = [];
     var seen = {};
@@ -271,15 +317,34 @@
         if (seen[key]) return;
         seen[key] = true;
         items.push({
-          category: item.category,
-          title: item.title,
-          description: item.description,
-          sort_order: sortOrder++,
+          category:     item.category,
+          title:        item.title,
+          description:  item.description,
+          sort_order:   sortOrder++,
           is_completed: false,
-          source_issue: iss.issue
+          source_issue: iss.issue,
+          // AIOS fields
+          priority:      item.priority || CATEGORY_PRIORITY[item.category] || 2,
+          source:        'ai_report',
+          resource_link: item.resource_link || null,
+          due_context:   item.due_context   || null
         });
       });
     });
+
+    // ── PRIORITY CAP ─────────────────────────────────────
+    // Enforce MAX_IMMEDIATE.  Items beyond the cap downgrade to short_term
+    // so the user always has a clear, focused set of urgent actions.
+    var immediateIndexes = [];
+    items.forEach(function(item, idx) {
+      if (item.category === 'immediate') immediateIndexes.push(idx);
+    });
+    if (immediateIndexes.length > MAX_IMMEDIATE) {
+      immediateIndexes.slice(MAX_IMMEDIATE).forEach(function(idx) {
+        items[idx].category = 'short_term';
+        items[idx].priority = CATEGORY_PRIORITY['short_term'];
+      });
+    }
 
     return items;
   }

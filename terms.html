@@ -20,6 +20,7 @@
   <meta property="og:site_name" content="AfterAction AI" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -27,7 +28,7 @@
 <nav class="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -35,7 +36,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -46,21 +47,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -144,22 +153,20 @@
           </ul>
 
           <h2>9. Third-Party AI Processing</h2>
-          <p>AfterAction AI uses third-party artificial intelligence providers to power features including benefits matching, document generation, and action plan creation. When you use these features:</p>
+          <p>AfterAction AI uses two AI providers to power its services. When you use AI features, your conversation input and any document content you share is processed by:</p>
           <ul>
-            <li>Your input data may be securely transmitted to and processed by third-party AI systems on our behalf</li>
-            <li>We select providers that maintain appropriate security and privacy standards</li>
-            <li>Third-party AI providers do not retain your personal data beyond what is necessary to process your request</li>
-            <li>No human at any third-party provider reviews your individual data unless required for safety or legal compliance</li>
+            <li><strong>Anthropic Claude</strong> — Text conversations, benefits analysis, and document generation</li>
+            <li><strong>OpenAI GPT-4o Realtime</strong> — Voice-based conversations</li>
           </ul>
+          <p>No human at these providers reviews your individual data unless required for safety or legal compliance. These providers operate under their own privacy policies, which we encourage you to review directly: <a href="https://www.anthropic.com/privacy" target="_blank" rel="noopener noreferrer">Anthropic Privacy Policy</a> · <a href="https://openai.com/policies/privacy-policy" target="_blank" rel="noopener noreferrer">OpenAI Privacy Policy</a>.</p>
 
           <h2>10. Document Upload and Security</h2>
           <p>If you upload documents (DD-214, medical records, etc.):</p>
           <ul>
             <li>You are responsible for ensuring you have the right to upload them</li>
-            <li>Documents may be processed by AI systems (including third-party providers) to generate your outputs</li>
+            <li>Documents are processed entirely within your browser — AfterActionAI.org does not store document content on its servers</li>
+            <li>Document content is transmitted to our AI provider (Anthropic Claude) for processing only</li>
             <li>Uploaded documents are not reviewed by humans unless required for safety or legal compliance</li>
-            <li>Documents are securely processed and deleted within 24 hours</li>
-            <li>We will not retain copies unless you explicitly request otherwise</li>
             <li>We recommend redacting sensitive information (SSN, account numbers) before uploading</li>
           </ul>
 
@@ -200,7 +207,6 @@
 
           <div class="policy-meta">
             <p>Last Updated: March 2026</p>
-            <p><em>This terms of service is current as of the date above. Before launching publicly, please have this document reviewed by a qualified attorney specializing in nonprofit law and digital services.</em></p>
           </div>
         </div>
       </div>
@@ -274,5 +280,35 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 });
 </script>
 
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/newsletter.js"></script>
 </body>
 </html>

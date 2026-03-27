@@ -1,0 +1,64 @@
+/* =============================================================
+   GALLERY PAGE UPGRADE — css/gallery-upgrade.css
+   Additive overrides only. Load after styles.css on gallery.html.
+   Full rollback: remove the <link> tag from gallery.html.
+   05_Gallery.jpg is a bright, colorful seals-on-flag image —
+   the global overlay is insufficient. Boost here.
+   ============================================================= */
+
+/* -----------------------------------------------------------
+   1. GOLD CUSTOM PROPERTIES
+   ----------------------------------------------------------- */
+:root {
+  --gallery-gold:      #C5A55A;
+  --gallery-gold-glow: rgba(197, 165, 90, 0.25);
+}
+
+/* -----------------------------------------------------------
+   2. HERO HEIGHT + OVERLAY — normalized to About standard
+   min-height: 75vh matches About page.
+   05_Gallery.jpg is bright/colorful — overlay boosted vs About
+   but reduced from original to preserve visual quality.
+   ----------------------------------------------------------- */
+.page-hero-image {
+  min-height: 75vh !important;
+}
+.page-hero-image::before {
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.75) 40%,
+    rgba(0,0,0,0.88) 100%
+  ) !important;
+}
+
+/* -----------------------------------------------------------
+   3. HERO DIVIDER — red → gold
+   ----------------------------------------------------------- */
+.page-hero-image__divider {
+  background: var(--gallery-gold) !important;
+  box-shadow: 0 0 16px var(--gallery-gold-glow) !important;
+}
+
+/* -----------------------------------------------------------
+   4. HERO BOTTOM STRIPE — red gradient → gold
+   ----------------------------------------------------------- */
+.page-hero-image::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--gallery-gold) 50%,
+    transparent 100%
+  ) !important;
+}
+
+/* -----------------------------------------------------------
+   5. HERO EYEBROW — visibility + gold color
+   ----------------------------------------------------------- */
+.page-hero-image__eyebrow {
+  color: var(--gallery-gold) !important;
+  opacity: 1 !important;
+  letter-spacing: 4px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.5) !important;
+}

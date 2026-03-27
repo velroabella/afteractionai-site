@@ -1,13 +1,27 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" style="stop-color:#1a1a2e"/>
-      <stop offset="100%" style="stop-color:#16213e"/>
+    <linearGradient id="ub-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050810"/>
+      <stop offset="60%" stop-color="#091525"/>
+      <stop offset="100%" stop-color="#0d1f3c"/>
+    </linearGradient>
+    <linearGradient id="ub-gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#C5A55A" stop-opacity="0.12"/>
+      <stop offset="100%" stop-color="#C5A55A" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <rect width="600" height="400" fill="url(#bg)"/>
-  <circle cx="300" cy="160" r="60" fill="none" stroke="#DC3545" stroke-width="4" opacity="0.8"/>
-  <text x="300" y="175" text-anchor="middle" fill="#DC3545" font-family="Inter,sans-serif" font-size="36" font-weight="700">$72B</text>
-  <text x="300" y="260" text-anchor="middle" fill="rgba(255,255,255,0.85)" font-family="Inter,sans-serif" font-size="18" font-weight="600">Unclaimed Benefits</text>
-  <text x="300" y="290" text-anchor="middle" fill="rgba(255,255,255,0.5)" font-family="Inter,sans-serif" font-size="14">Every Year</text>
+  <rect width="600" height="400" fill="url(#ub-bg)"/>
+  <rect x="0" y="0" width="320" height="400" fill="url(#ub-gold)"/>
+  <line x1="0" y1="80"  x2="600" y2="80"  stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="160" x2="600" y2="160" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="240" x2="600" y2="240" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="0" y1="320" x2="600" y2="320" stroke="rgba(255,255,255,0.03)" stroke-width="1"/>
+  <line x1="200" y1="0" x2="200" y2="400" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+  <line x1="400" y1="0" x2="400" y2="400" stroke="rgba(255,255,255,0.02)" stroke-width="1"/>
+  <rect x="0" y="0" width="5" height="400" fill="#C5A55A"/>
+  <rect x="30" y="104" width="44" height="2" fill="#C5A55A" opacity="0.7"/>
+  <text x="30" y="122" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-size="11" font-weight="700" fill="#C5A55A" letter-spacing="3">VETERAN BENEFITS</text>
+  <text x="30" y="202" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-size="78" font-weight="800" fill="#ffffff" letter-spacing="-2">$72B</text>
+  <text x="30" y="244" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-size="20" font-weight="600" fill="rgba(255,255,255,0.88)">Goes Unclaimed Every Year</text>
+  <text x="30" y="276" font-family="'Inter','Helvetica Neue',Arial,sans-serif" font-size="13" font-weight="400" fill="rgba(255,255,255,0.38)">Federal · State · Nonprofit — benefits veterans earned</text>
 </svg>

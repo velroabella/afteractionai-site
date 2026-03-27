@@ -1,0 +1,228 @@
+/* =============================================================
+   ABOUT PAGE UPGRADE — css/about-upgrade.css
+   Additive overrides only. Load after styles.css on about.html.
+   Full rollback: remove the <link> tag from about.html.
+   Strategy: swap red (#DC3545) accents to gold (#C5A55A),
+   improve eyebrow/link visibility, add section rhythm.
+   ============================================================= */
+
+/* -----------------------------------------------------------
+   1. GOLD CUSTOM PROPERTY (local scope)
+   ----------------------------------------------------------- */
+:root {
+  --about-gold:       #C5A55A;
+  --about-gold-light: #E8D5A0;
+  --about-gold-glow:  rgba(197, 165, 90, 0.25);
+}
+
+/* -----------------------------------------------------------
+   2. HERO DIVIDER — red bar under title → gold
+   ----------------------------------------------------------- */
+.page-hero-image__divider {
+  background: var(--about-gold) !important;
+  box-shadow: 0 0 16px var(--about-gold-glow) !important;
+}
+
+/* -----------------------------------------------------------
+   3. HERO BOTTOM STRIPE — red gradient accent → gold
+   ----------------------------------------------------------- */
+.page-hero-image::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--about-gold) 50%,
+    transparent 100%
+  ) !important;
+}
+
+/* -----------------------------------------------------------
+   3a. HERO SIZE — guarantee 75vh across all breakpoints
+   ----------------------------------------------------------- */
+.page-hero-image--about {
+  min-height: 75vh !important;
+}
+
+/* -----------------------------------------------------------
+   4. HERO EYEBROW — increase visibility
+   ----------------------------------------------------------- */
+.page-hero-image__eyebrow {
+  color: var(--about-gold) !important;
+  opacity: 1 !important;
+  letter-spacing: 4px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4) !important;
+}
+
+/* -----------------------------------------------------------
+   5. SECTION TITLE UNDERLINES — red → gold
+   ----------------------------------------------------------- */
+.section__title::after {
+  background: var(--about-gold) !important;
+  width: 48px !important;
+}
+
+/* -----------------------------------------------------------
+   6. MISSION STATEMENT — left border red → gold
+   ----------------------------------------------------------- */
+.mission-statement {
+  border-left-color: var(--about-gold) !important;
+}
+
+/* Inline link inside mission statement */
+.mission-statement a {
+  color: var(--about-gold) !important;
+  text-decoration-color: rgba(197,165,90,0.4) !important;
+}
+
+/* -----------------------------------------------------------
+   7. WHY CARDS — top border + number gradient red → gold
+   ----------------------------------------------------------- */
+.why-card {
+  border-top-color: var(--about-gold) !important;
+}
+
+.why-card__number {
+  background: linear-gradient(
+    135deg,
+    var(--about-gold) 0%,
+    #a07c38 100%
+  ) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* -----------------------------------------------------------
+   8. FOUNDER CARDS — title color red → gold
+   ----------------------------------------------------------- */
+.founder-card__title {
+  color: var(--about-gold) !important;
+}
+
+/* Photo hover border red → gold */
+.founder-card:hover img {
+  border-color: var(--about-gold) !important;
+}
+
+/* Inline link inside founder card bio */
+.founder-card__bio a {
+  color: var(--about-gold) !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  text-decoration-color: rgba(197,165,90,0.4) !important;
+  transition: color 0.2s, text-decoration-color 0.2s !important;
+}
+.founder-card__bio a:hover {
+  color: var(--about-gold-light) !important;
+  text-decoration-color: var(--about-gold) !important;
+}
+
+/* -----------------------------------------------------------
+   9. RECRUITING FOUNDER CARD — professional placeholder
+   ----------------------------------------------------------- */
+.founder-card--recruiting {
+  background: linear-gradient(
+    160deg,
+    #111111 0%,
+    #181818 60%,
+    #1c1812 100%
+  ) !important;
+  border: 1px solid rgba(197,165,90,0.2) !important;
+  color: #fff !important;
+}
+
+.founder-card--recruiting .founder-card__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(197,165,90,0.1);
+  border: 2px dashed rgba(197,165,90,0.4);
+  position: relative;
+}
+
+.founder-card--recruiting .founder-card__avatar svg {
+  opacity: 0.55;
+}
+
+.founder-card--recruiting .founder-card__badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--about-gold);
+  background: rgba(197,165,90,0.12);
+  border: 1px solid rgba(197,165,90,0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+}
+
+.founder-card--recruiting .founder-card__name {
+  color: #ffffff !important;
+}
+
+.founder-card--recruiting .founder-card__title {
+  color: var(--about-gold) !important;
+  letter-spacing: 1.5px !important;
+}
+
+.founder-card--recruiting .founder-card__bio {
+  color: rgba(255,255,255,0.65) !important;
+  line-height: 1.75 !important;
+}
+
+/* -----------------------------------------------------------
+   10. VALUE CARDS — top stripe red → gold
+   ----------------------------------------------------------- */
+.value-card::before {
+  background: linear-gradient(
+    90deg,
+    var(--about-gold) 0%,
+    transparent 100%
+  ) !important;
+}
+
+/* -----------------------------------------------------------
+   11. CTA BANNER — top stripe + button hover red → gold
+   ----------------------------------------------------------- */
+.cta-banner__inner::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--about-gold),
+    transparent
+  ) !important;
+}
+
+.cta-banner__button:hover {
+  background: var(--about-gold) !important;
+  color: #111 !important;
+  box-shadow: 0 8px 24px var(--about-gold-glow) !important;
+}
+
+/* -----------------------------------------------------------
+   12. SECTION RHYTHM — subtle alternating backgrounds
+   ----------------------------------------------------------- */
+.page__content > .section:nth-child(odd) {
+  background: transparent;
+}
+
+.page__content > .section:nth-child(even) {
+  background: rgba(197,165,90,0.03);
+  border-radius: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+/* CTA banner section — always transparent, let its own bg show */
+.section.cta-banner {
+  background: transparent !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}

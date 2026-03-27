@@ -28,7 +28,7 @@
 <nav class="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -36,7 +36,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -47,238 +47,358 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html" class="active">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO SECTION -->
-<section class="page-hero-bar">
-  <h1 class="page-hero-bar__title">State Veteran Benefits</h1>
-  <div class="page-hero-bar__divider"></div>
-  <p class="page-hero-bar__subtitle">Property tax, education, recreation, and more — find benefits in your state.</p>
+<!-- HERO -->
+<section class="rp-hero hero-has-image" style="background-image: url('images/hero-states.png'); background-repeat: no-repeat; background-size: cover; background-position: center 55%;">
+  <div class="rp-hero__inner">
+    <h1 class="rp-hero__title">State Veteran Benefits</h1>
+    <hr class="rp-hero__divider" />
+    <p class="rp-hero__subtitle">Property tax exemptions, education, recreation, housing, and more — find veteran benefits in your state.</p>
+  </div>
 </section>
 
-<!-- PAGE CONTENT -->
-<div class="page">
-  <div class="page__content">
-
-    <!-- SEARCH BAR -->
-    <div class="resources-search">
-      <input
-        type="text"
-        class="resources-search__input"
-        id="searchInput"
-        placeholder="Search by benefit name or category..."
-      />
-    </div>
-
-    <!-- STATE SELECTOR -->
-    <div style="margin-bottom: 24px;">
-      <label style="display: block; margin-bottom: 12px; font-weight: 600; color: #333;">Filter by State:</label>
-      <div id="stateSelector"></div>
-    </div>
-
-    <!-- CATEGORY FILTER -->
-    <div class="resources-filters" id="filterBtns"></div>
-
-    <!-- BENEFITS GRID -->
-    <section class="section">
-      <div class="resources-grid" id="benefitsGrid">
-        <!-- State benefits will populate here -->
-      </div>
-    </section>
-
+<!-- QUICK ACCESS BAR -->
+<div class="rp-quickaccess">
+  <div class="rp-quickaccess__inner">
+    <button class="rp-qa-btn" onclick="applyQA('property_tax')">🏠 Property Tax</button>
+    <button class="rp-qa-btn" onclick="applyQA('income_tax')">💰 Income Tax</button>
+    <button class="rp-qa-btn" onclick="applyQA('education')">🎓 Education</button>
+    <button class="rp-qa-btn" onclick="applyQA('healthcare')">🏥 Healthcare</button>
+    <button class="rp-qa-btn" onclick="applyQA('disabled_veteran')">♿ Disabled Vet</button>
+    <button class="rp-qa-btn" onclick="applyQA('dependent')">👨‍👩‍👧 Spouse/Dependent</button>
+    <button class="rp-qa-btn" onclick="applyQA('all')">All Benefits</button>
   </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__crisis">
-        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
-      </div>
-      <div class="footer__grid">
-        <div class="footer__section footer__section--nav">
-          <h3>Navigate</h3>
-          <div class="footer__nav-columns">
-            <div class="footer__nav-col">
-              <a href="index.html">Home</a>
-              <a href="about.html">About</a>
-              <a href="board.html">Board</a>
-            </div>
-            <div class="footer__nav-col">
-              <a href="resources.html">Resources</a>
-              <a href="blog.html">Blog</a>
-              <a href="contact.html">Contact</a>
-            </div>
-          </div>
-        </div>
-        <div class="footer__section">
-          <h3>Resource Hub</h3>
-          <a href="elected-officials.html">Elected Officials</a>
-          <a href="licensure.html">Licensure & Certifications</a>
-          <a href="grants-scholarships.html">Grants & Scholarships</a>
-          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
-          <a href="state-benefits.html">State Benefits</a>
-          <a href="document-templates.html">Document Templates</a>
-        </div>
-        <div class="footer__section">
-          <h3>Legal</h3>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="disclaimer.html">Disclaimer</a>
-        </div>
-        <div class="footer__section">
-          <h3>Connect</h3>
-          <!-- Social media links hidden until accounts are created -->
-        </div>
-      </div>
-      <div class="footer__nonprofit">
-        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
-      </div>
-      <div class="footer__bottom">
-        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
-      </div>
-    </div>
-  </footer>
 </div>
 
-<script src="js/resource-hub.js"></script>
+<!-- TWO-COLUMN LAYOUT -->
+<div class="rp-page-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="rp-sidebar">
+
+    <!-- Search -->
+    <div style="margin-bottom:20px;">
+      <input type="text" id="searchInput" placeholder="Search benefits..."
+        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
+        oninput="filterAndRender()" />
+    </div>
+
+    <!-- State Selector -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Your State</div>
+      <select id="stateSelect" onchange="filterAndRender()"
+        style="width:100%;padding:8px 10px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;cursor:pointer;">
+        <option value="all">All States</option>
+        <option value="AK">Alaska (AK)</option>
+        <option value="AL">Alabama (AL)</option>
+        <option value="AR">Arkansas (AR)</option>
+        <option value="AZ">Arizona (AZ)</option>
+        <option value="CA">California (CA)</option>
+        <option value="CO">Colorado (CO)</option>
+        <option value="CT">Connecticut (CT)</option>
+        <option value="DC">Washington DC</option>
+        <option value="DE">Delaware (DE)</option>
+        <option value="FL">Florida (FL)</option>
+        <option value="GA">Georgia (GA)</option>
+        <option value="HI">Hawaii (HI)</option>
+        <option value="IA">Iowa (IA)</option>
+        <option value="ID">Idaho (ID)</option>
+        <option value="IL">Illinois (IL)</option>
+        <option value="IN">Indiana (IN)</option>
+        <option value="KS">Kansas (KS)</option>
+        <option value="KY">Kentucky (KY)</option>
+        <option value="LA">Louisiana (LA)</option>
+        <option value="MA">Massachusetts (MA)</option>
+        <option value="MD">Maryland (MD)</option>
+        <option value="ME">Maine (ME)</option>
+        <option value="MI">Michigan (MI)</option>
+        <option value="MN">Minnesota (MN)</option>
+        <option value="MO">Missouri (MO)</option>
+        <option value="MS">Mississippi (MS)</option>
+        <option value="MT">Montana (MT)</option>
+        <option value="NC">North Carolina (NC)</option>
+        <option value="ND">North Dakota (ND)</option>
+        <option value="NE">Nebraska (NE)</option>
+        <option value="NH">New Hampshire (NH)</option>
+        <option value="NJ">New Jersey (NJ)</option>
+        <option value="NM">New Mexico (NM)</option>
+        <option value="NV">Nevada (NV)</option>
+        <option value="NY">New York (NY)</option>
+        <option value="OH">Ohio (OH)</option>
+        <option value="OK">Oklahoma (OK)</option>
+        <option value="OR">Oregon (OR)</option>
+        <option value="PA">Pennsylvania (PA)</option>
+        <option value="RI">Rhode Island (RI)</option>
+        <option value="SC">South Carolina (SC)</option>
+        <option value="SD">South Dakota (SD)</option>
+        <option value="TN">Tennessee (TN)</option>
+        <option value="TX">Texas (TX)</option>
+        <option value="UT">Utah (UT)</option>
+        <option value="VA">Virginia (VA)</option>
+        <option value="VT">Vermont (VT)</option>
+        <option value="WA">Washington (WA)</option>
+        <option value="WI">Wisconsin (WI)</option>
+        <option value="WV">West Virginia (WV)</option>
+        <option value="WY">Wyoming (WY)</option>
+      </select>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Benefit Type</div>
+      <button class="rp-pill active" data-filter-group="category" data-filter-value="all" onclick="setPill(this,'category')">All Types</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="property_tax" onclick="setPill(this,'category')">Property Tax</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="income_tax" onclick="setPill(this,'category')">Income Tax</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="education" onclick="setPill(this,'category')">Education</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="employment" onclick="setPill(this,'category')">Employment</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="healthcare" onclick="setPill(this,'category')">Healthcare</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="housing" onclick="setPill(this,'category')">Housing</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="vehicle" onclick="setPill(this,'category')">Vehicle</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="recreation" onclick="setPill(this,'category')">Recreation</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="burial" onclick="setPill(this,'category')">Burial</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="disabled_veteran" onclick="setPill(this,'category')">Disabled Veteran</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="dependent" onclick="setPill(this,'category')">Spouse / Dependent</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="licensing" onclick="setPill(this,'category')">Licensing</button>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
+
+    <div class="rp-grid" id="benefitsGrid">
+      <div style="color:#adb5bd;padding:40px;text-align:center;">Loading state benefits&hellip;</div>
+    </div>
+
+    <div class="rp-empty" id="emptyState" style="display:none;">
+      <div class="rp-empty__icon">🗺️</div>
+      <p>No benefits match your current filters. Try selecting a different state or benefit type.</p>
+      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+    </div>
+
+    <div style="text-align:center;margin-top:24px;">
+      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More Benefits</button>
+    </div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+    </div>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+      </div>
+    </div>
+    <div class="footer__nonprofit">
+      AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+    </div>
+  </div>
+</footer>
+
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
-
 <script>
-// ══════════════════════════════════════════════════════════
-// STATE BENEFITS PAGE — ResourceHub Integration
-// State-specific veteran benefits by category
-// ══════════════════════════════════════════════════════════
+// ── State ──────────────────────────────────────────────────
+const PAGE_SIZE = 24;
+let allBenefits = [];
+let filteredBenefits = [];
+let visibleCount = 0;
 
+const activeFilters = { category: 'all' };
+
+const CAT_LABELS = {
+  property_tax:'Property Tax', education:'Education', recreation:'Recreation',
+  employment:'Employment', healthcare:'Healthcare', housing:'Housing',
+  vehicle:'Vehicle / Registration', burial:'Burial / Cemetery',
+  licensing:'Professional Licensing', disabled_veteran:'Disabled Veteran',
+  dependent:'Spouse / Dependent', income_tax:'Income Tax'
+};
+
+// ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
-  var menu = document.getElementById('navMenu');
-  menu.classList.toggle('active');
+  document.getElementById('navMenu').classList.toggle('active');
 }
 
-Promise.all([
-  fetch('data/state-benefits.json').then(function(r) { return r.json(); }),
-  fetch('data/state-benefits-batch1.json').then(function(r) { return r.json(); }),
-  fetch('data/state-benefits-batch2.json').then(function(r) { return r.json(); }),
-  fetch('data/state-benefits-batch3.json').then(function(r) { return r.json(); })
-]).then(function(results) {
-  var benefitsData = [].concat(results[0], results[1], results[2], results[3]);
+// ── Pills ─────────────────────────────────────────────────
+function setPill(btn, group) {
+  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilters[group] = btn.dataset.filterValue;
+  filterAndRender();
+}
 
-  // Category display labels
-  var CAT_LABELS = {
-    property_tax: 'Property Tax', education: 'Education', recreation: 'Recreation',
-    employment: 'Employment', healthcare: 'Healthcare', housing: 'Housing',
-    vehicle: 'Vehicle / Registration', burial: 'Burial / Cemetery',
-    licensing: 'Professional Licensing', business: 'Business / Entrepreneurship',
-    long_term_care: 'Long-Term Care', disabled_veteran: 'Disabled Veteran',
-    dependent: 'Spouse / Dependent / Survivor', income_tax: 'Income Tax'
-  };
+// ── Quick Access ──────────────────────────────────────────
+function applyQA(val) {
+  if (val === 'all') { resetFilters(); return; }
+  const pill = document.querySelector(`.rp-pill[data-filter-group="category"][data-filter-value="${val}"]`);
+  if (pill) setPill(pill, 'category');
+}
 
-  // Render card function for state benefits
-  function renderBenefitCard(benefit) {
-    var categoryLabel = CAT_LABELS[benefit.category] || (benefit.category || '').replace(/_/g, ' ');
-    var esc = ResourceHub.escapeHtml;
+// ── Reset ─────────────────────────────────────────────────
+function resetFilters() {
+  activeFilters.category = 'all';
+  document.getElementById('stateSelect').value = 'all';
+  document.querySelectorAll('.rp-pill').forEach(b => {
+    b.classList.toggle('active', b.dataset.filterValue === 'all');
+  });
+  document.getElementById('searchInput').value = '';
+  filterAndRender();
+}
 
-    // Build details section
-    var details = '';
-    if (benefit.eligibility) {
-      details += '<strong>Eligibility:</strong> ' + esc(benefit.eligibility);
-    } else if (benefit.who_qualifies) {
-      details += '<strong>Who Qualifies:</strong> ' + esc(benefit.who_qualifies);
-    }
-    if (benefit.disability_threshold) {
-      details += '<br><strong>Disability:</strong> ' + esc(benefit.disability_threshold);
-    }
-    if (benefit.applies_to) {
-      var tags = (Array.isArray(benefit.applies_to) ? benefit.applies_to : [benefit.applies_to])
-        .map(function(t) { return t.replace(/_/g, ' '); }).join(', ');
-      details += '<br><strong>Applies to:</strong> ' + esc(tags);
-    }
-    if (benefit.guard_reserve_eligible === true) {
-      details += '<br><strong>Guard/Reserve:</strong> Eligible';
-    } else if (benefit.guard_reserve_eligible === false) {
-      details += '<br><strong>Guard/Reserve:</strong> Not eligible';
-    }
-    if (benefit.spouse_survivor_eligible === true) {
-      details += '<br><strong>Spouse/Survivor:</strong> Eligible';
-    }
-    if (benefit.administering_agency) {
-      details += '<br><strong>Agency:</strong> ' + esc(benefit.administering_agency);
-    }
+// ── Filter ────────────────────────────────────────────────
+function filterAndRender() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  const selectedState = document.getElementById('stateSelect').value;
 
-    // Actions
-    var actions = '';
-    if (benefit.official_link) {
-      actions += '<a href="' + esc(benefit.official_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Official Info</a>';
-    }
-    if (benefit.application_link) {
-      actions += '<a href="' + esc(benefit.application_link) + '" class="hub-card__link hub-card__link--outline" target="_blank" rel="noopener noreferrer">Apply</a>';
-    }
-
-    // Manual review badge
-    var reviewBadge = benefit.manual_review ? '<span style="display:inline-block;margin-top:8px;font-size:0.72rem;color:rgba(255,255,255,0.4);font-style:italic;">Verify details with official source</span>' : '';
-
-    return '<div class="hub-card">' +
-      '<h3 class="hub-card__title">' + esc(benefit.benefit_name || '') + '</h3>' +
-      '<p class="hub-card__meta">' + esc(benefit.state || '') + ' &middot; ' + categoryLabel + '</p>' +
-      '<p class="hub-card__description">' + esc(benefit.summary || '') + '</p>' +
-      '<div class="hub-card__details">' + details + reviewBadge + '</div>' +
-      '<div class="hub-card__links">' + actions + '</div>' +
-      '</div>';
-  }
-
-  // Initialize ResourceHub for state benefits
-  ResourceHub.init({
-    containerId: 'benefitsGrid',
-    searchInputId: 'searchInput',
-    filterContainerId: 'filterBtns',
-    stateContainerId: 'stateSelector',
-    data: benefitsData,
-    renderCard: renderBenefitCard,
-    filterKey: 'category',
-    searchFields: ['benefit_name', 'summary', 'eligibility', 'who_qualifies', 'administering_agency'],
-    stateField: 'state'
+  filteredBenefits = allBenefits.filter(b => {
+    if (activeFilters.category !== 'all' && b.category !== activeFilters.category) return false;
+    if (selectedState !== 'all' && b.state !== selectedState) return false;
+    if (q && !((b.benefit_name||'').toLowerCase().includes(q) ||
+               (b.summary||'').toLowerCase().includes(q) ||
+               (b.eligibility||'').toLowerCase().includes(q))) return false;
+    return true;
   });
 
-  // Build state selector
-  ResourceHub.buildStateSelector();
+  visibleCount = 0;
+  document.getElementById('benefitsGrid').innerHTML = '';
+  loadMore();
+  updateCount();
+}
 
-  // Build category filter buttons
-  ResourceHub.buildFilterButtons([
-    { key: 'all', label: 'All Categories' },
-    { key: 'property_tax', label: 'Property Tax' },
-    { key: 'vehicle', label: 'Vehicle' },
-    { key: 'education', label: 'Education' },
-    { key: 'employment', label: 'Employment' },
-    { key: 'recreation', label: 'Recreation' },
-    { key: 'housing', label: 'Housing' },
-    { key: 'healthcare', label: 'Healthcare' },
-    { key: 'burial', label: 'Burial' },
-    { key: 'licensing', label: 'Licensing' },
-    { key: 'income_tax', label: 'Income Tax' },
-    { key: 'disabled_veteran', label: 'Disabled Vet' },
-    { key: 'dependent', label: 'Spouse/Dependent' }
-  ]);
+// ── Render ────────────────────────────────────────────────
+function renderCard(b) {
+  const catLabel = CAT_LABELS[b.category] || (b.category||'').replace(/_/g,' ');
+  const appliesTo = (Array.isArray(b.applies_to) ? b.applies_to : [b.applies_to||'']).filter(Boolean).join(', ').replace(/_/g,' ');
 
-}).catch(function(err) {
-  console.error('Error loading state benefits data:', err);
-  document.getElementById('benefitsGrid').innerHTML = '<div class="hub-no-results"><p>Error loading state benefits. Please try again later.</p></div>';
+  const guardBadge = b.guard_reserve_eligible === true
+    ? '<span class="rp-tag--neutral" style="font-size:0.7rem;">Guard/Reserve Eligible</span>' : '';
+  const spouseBadge = b.spouse_survivor_eligible === true
+    ? '<span class="rp-tag--neutral" style="font-size:0.7rem;">Spouse/Survivor Eligible</span>' : '';
+
+  let officialBtn = '';
+  if (b.official_link) {
+    officialBtn = `<a href="${esc(b.official_link)}" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Official Info</a>`;
+  }
+  let applyBtn = '';
+  if (b.application_link) {
+    applyBtn = `<a href="${esc(b.application_link)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Apply →</a>`;
+  }
+
+  return `<div class="rp-card">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+      <span class="rp-tag--primary">${esc(b.state||'')}</span>
+      <span class="rp-tag--secondary">${catLabel}</span>
+      ${guardBadge}${spouseBadge}
+    </div>
+    <h3 class="rp-card__name">${esc(b.benefit_name||'')}</h3>
+    <p style="font-size:0.85rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">${esc(b.summary||'')}</p>
+    ${b.eligibility ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:6px;"><strong style="color:#9ca3af;">Eligibility:</strong> ${esc(b.eligibility)}</p>` : ''}
+    ${b.disability_threshold ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:6px;"><strong style="color:#9ca3af;">Disability:</strong> ${esc(b.disability_threshold)}</p>` : ''}
+    ${appliesTo ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;"><strong style="color:#9ca3af;">Applies to:</strong> ${esc(appliesTo)}</p>` : ''}
+    <div style="display:flex;align-items:center;">${officialBtn}${applyBtn}</div>
+  </div>`;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Load More ─────────────────────────────────────────────
+function loadMore() {
+  const grid = document.getElementById('benefitsGrid');
+  const batch = filteredBenefits.slice(visibleCount, visibleCount + PAGE_SIZE);
+  batch.forEach(b => { grid.insertAdjacentHTML('beforeend', renderCard(b)); });
+  visibleCount += batch.length;
+  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredBenefits.length ? 'inline-block' : 'none';
+  document.getElementById('emptyState').style.display = filteredBenefits.length === 0 ? 'block' : 'none';
+}
+
+function updateCount() {
+  const sel = document.getElementById('stateSelect').value;
+  const stateName = sel === 'all' ? 'all states' : sel;
+  document.getElementById('resultsCount').textContent =
+    `Showing ${Math.min(visibleCount, filteredBenefits.length)} of ${filteredBenefits.length} benefits (${stateName})`;
+}
+
+// ── Init ──────────────────────────────────────────────────
+Promise.all([
+  fetch('data/state-benefits.json').then(r => r.json()),
+  fetch('data/state-benefits-batch1.json').then(r => r.json()),
+  fetch('data/state-benefits-batch2.json').then(r => r.json()),
+  fetch('data/state-benefits-batch3.json').then(r => r.json())
+]).then(results => {
+  allBenefits = [].concat(...results.map(r => Array.isArray(r) ? r : []));
+  filterAndRender();
+}).catch(err => {
+  console.error('Error loading state benefits:', err);
+  document.getElementById('benefitsGrid').innerHTML =
+    '<div class="rp-empty"><p>Error loading state benefits. Please try again later.</p></div>';
 });
 </script>
 

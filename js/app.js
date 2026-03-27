@@ -765,7 +765,7 @@
     var crisisHtml =
       '<strong>Veterans Crisis Line</strong>' +
       '<p>Dial <a href="tel:988">988</a>, Press 1 &nbsp;|&nbsp; Text <a href="sms:838255">838255</a></p>' +
-      '<p><a href="https://www.veteranscrisisline.net/get-help/chat" target="_blank" rel="noopener">Chat Online Now</a></p>' +
+      '<p><a href="https://www.veteranscrisisline.net/get-help-now/chat/" target="_blank" rel="noopener noreferrer">Chat Online Now</a></p>' +
       '<p style="margin-top:8px;font-size:0.85rem;">Confidential. 24/7. You are not alone.</p>';
     var div = document.createElement('div');
     div.className = 'message message--crisis';
@@ -790,6 +790,12 @@
 
     if (userText !== 'START_CONVERSATION') {
       conversationHistory.push({ role: 'user', content: userText });
+      // Fire audit_started on the first real user message only
+      var realMsgCount = conversationHistory.filter(function(m) { return m.role === 'user'; }).length;
+      if (realMsgCount === 1) {
+        window.dispatchEvent(new CustomEvent('aaai:audit_started'));
+        log('Analytics', 'dispatched aaai:audit_started');
+      }
     }
 
     showTyping();
@@ -1296,6 +1302,9 @@
 
   function showReportActions(reportText) {
     lastReportText = reportText;
+    // Signal that AI has generated a complete report
+    window.dispatchEvent(new CustomEvent('aaai:audit_completed', { detail: { tags: [] } }));
+    log('Analytics', 'dispatched aaai:audit_completed');
 
     var div = document.createElement('div');
     div.className = 'message message--system';
@@ -1312,6 +1321,12 @@
           '</button>' +
         '</div>' +
         '<p class="report-actions__note">Or keep chatting \u2014 I\'m here for as long as you need.</p>' +
+        '<div class="report-actions__consent">' +
+          '<label for="chkEmailConsent">' +
+            '<input type="checkbox" id="chkEmailConsent"> ' +
+            'I agree to receive updates and resources' +
+          '</label>' +
+        '</div>' +
       '</div>';
     if (chatMessages) chatMessages.appendChild(div);
     scrollToBottom();
@@ -1333,6 +1348,30 @@
     if (clBtn) {
       clBtn.addEventListener('click', function() {
         buildChecklist(reportText);
+      });
+    }
+
+    // Wire up email consent checkbox
+    var consentChk = document.getElementById('chkEmailConsent');
+    if (consentChk) {
+      consentChk.addEventListener('change', function() {
+        var value = consentChk.checked;
+        console.log('EMAIL CONSENT:', value);
+        if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.updateConsent) {
+          if (!AAAI.auth.isLoggedIn || !AAAI.auth.isLoggedIn()) {
+            log('Consent', 'user not logged in — consent not saved');
+            return;
+          }
+          AAAI.auth.updateConsent(value).then(function(result) {
+            if (result && result.error) {
+              log('Consent', 'updateConsent error: ' + result.error);
+            } else {
+              log('Consent', 'consent_email saved: ' + value);
+            }
+          }).catch(function(e) {
+            log('Consent', 'updateConsent exception: ' + e.message);
+          });
+        }
       });
     }
 
@@ -1441,6 +1480,12 @@
       AAAI.auth.saveReport(reportText, conversationHistory).then(function(result) {
         if (result && !result.error) {
           log('Report', 'saved to Supabase');
+          // Signal that report was persisted — pass reportId for analytics correlation
+          var savedReportId = result.data && result.data.id ? result.data.id : null;
+          window.dispatchEvent(new CustomEvent('aaai:report_generated', {
+            detail: { reportId: savedReportId, tags: [] }
+          }));
+          log('Analytics', 'dispatched aaai:report_generated | reportId=' + savedReportId);
 
           // Auto-save action engine checklist items linked to this report
           if (result.data && result.data.id && AAAI.actions && AAAI.actions.autoSaveChecklist && detectedIssues.length > 0) {
@@ -1452,11 +1497,107 @@
               log('AutoChecklist', 'save error: ' + e.message);
             });
           }
+
+          // Extract segmentation signals from conversation and write to profile
+          if (AAAI.auth.updateSegmentation) {
+            var seg = extractSegmentationFromConversation(conversationHistory);
+            AAAI.auth.updateSegmentation(seg).then(function(segResult) {
+              if (segResult && !segResult.skipped) {
+                log('Segmentation', 'profile updated: ' + JSON.stringify(seg));
+              }
+            }).catch(function(e) {
+              log('Segmentation', 'update error: ' + e.message);
+            });
+          }
         }
       }).catch(function(e) {
         log('Report', 'save error: ' + e.message);
       });
     }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  SEGMENTATION EXTRACTION
+  //  Parses conversation history to extract profile fields.
+  //  Matches user replies against known AI prompt options.
+  // ══════════════════════════════════════════════════════
+  function extractSegmentationFromConversation(history) {
+    // Collect all user message text — lowercase for matching
+    var userText = history
+      .filter(function(m) { return m.role === 'user'; })
+      .map(function(m) { return (m.content || '').toLowerCase(); })
+      .join(' | ');
+
+    // ── AUDIENCE TYPE ──────────────────────────────────────
+    // Maps Q3 service status options → audience_type values
+    var audienceType = null;
+    var audienceMap = [
+      { match: ['active duty', 'active-duty'],                              value: 'active_duty' },
+      { match: ['guard', 'reserve', 'guard/reserve', 'guard / reserve'],   value: 'guard_reserve' },
+      { match: ['transitioning', 'within 12 months'],                      value: 'transitioning' },
+      { match: ['recently separated', 'recently sep', '< 2 years', 'less than 2'],  value: 'recently_separated' },
+      { match: ['veteran', '2+ years', 'two years out'],                   value: 'veteran' },
+      { match: ['retired', '20+ yrs', 'medical retirement'],               value: 'retired' },
+      { match: ['family', 'spouse', 'surviving', 'caregiver'],             value: 'family_member' }
+    ];
+    audienceMap.some(function(entry) {
+      return entry.match.some(function(phrase) {
+        if (userText.indexOf(phrase) !== -1) { audienceType = entry.value; return true; }
+      });
+    });
+
+    // ── PRIMARY NEED ───────────────────────────────────────
+    // Maps Phase 2 category selection → primary_need values
+    var primaryNeed = null;
+    var primaryMap = [
+      { match: ['va benefits', 'disability', 'va claim', 'va rating'],     value: 'va_benefits' },
+      { match: ['employment', 'career', 'job', 'resume', 'work'],          value: 'employment' },
+      { match: ['education', 'gi bill', 'school', 'degree', 'training'],   value: 'education' },
+      { match: ['medical', 'mental health', 'healthcare', 'counseling'],   value: 'medical_mental_health' },
+      { match: ['legal', 'documents', 'power of attorney', 'will'],        value: 'legal_documents' },
+      { match: ['financial', 'emergency aid', 'debt', 'budget'],           value: 'financial' },
+      { match: ['housing', 'home loan', 'va loan', 'rental'],              value: 'housing' },
+      { match: ['family support', 'community', 'caregiver'],               value: 'family_support' },
+      { match: ['business', 'entrepreneur', 'self-employed'],              value: 'business' }
+    ];
+    primaryMap.some(function(entry) {
+      return entry.match.some(function(phrase) {
+        if (userText.indexOf(phrase) !== -1) { primaryNeed = entry.value; return true; }
+      });
+    });
+
+    // ── SECONDARY NEEDS ────────────────────────────────────
+    // All category matches beyond the first become secondary_needs
+    var secondaryNeeds = [];
+    primaryMap.forEach(function(entry) {
+      var matched = entry.match.some(function(phrase) {
+        return userText.indexOf(phrase) !== -1;
+      });
+      if (matched && entry.value !== primaryNeed) {
+        secondaryNeeds.push(entry.value);
+      }
+    });
+
+    // ── STATE ──────────────────────────────────────────────
+    // Extract US state mentions from Q6
+    var state = null;
+    var statePattern = /\b(alabama|alaska|arizona|arkansas|california|colorado|connecticut|delaware|florida|georgia|hawaii|idaho|illinois|indiana|iowa|kansas|kentucky|louisiana|maine|maryland|massachusetts|michigan|minnesota|mississippi|missouri|montana|nebraska|nevada|new hampshire|new jersey|new mexico|new york|north carolina|north dakota|ohio|oklahoma|oregon|pennsylvania|rhode island|south carolina|south dakota|tennessee|texas|utah|vermont|virginia|washington|west virginia|wisconsin|wyoming)\b/i;
+    var stateMatch = userText.match(statePattern);
+    if (stateMatch) { state = stateMatch[0].replace(/\b\w/g, function(c) { return c.toUpperCase(); }); }
+
+    // ── VETERAN STATUS ─────────────────────────────────────
+    var veteranStatus = null;
+    if (userText.indexOf('honorable') !== -1) { veteranStatus = 'honorable'; }
+    else if (userText.indexOf('general under honorable') !== -1) { veteranStatus = 'general_under_honorable'; }
+    else if (userText.indexOf('other than honorable') !== -1) { veteranStatus = 'oth'; }
+
+    return {
+      audience_type: audienceType,
+      primary_need: primaryNeed,
+      secondary_needs: secondaryNeeds.length > 0 ? secondaryNeeds : null,
+      state: state,
+      veteran_status: veteranStatus
+    };
   }
 
   // ══════════════════════════════════════════════════════

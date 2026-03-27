@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/blog-upgrade.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
   <meta property="og:image:width" content="1536" />
@@ -28,7 +29,7 @@
 <nav class="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -36,7 +37,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -47,21 +48,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html" class="active">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -177,13 +186,14 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
     return el.innerHTML;
   }
 
-  function renderCard(post, isPublished) {
+  function renderCard(post, isPublished, isFeatured) {
     var thumb = post.thumbnail || DEFAULT_THUMB;
     var dateText = isPublished ? formatDate(post.publish_date) : 'Coming Soon';
     var linkHtml = '';
 
     if (isPublished && post.url) {
-      linkHtml = '<a href="' + escapeHtml(post.url) + '" class="blog-card__link">Read More \u2192</a>';
+      var linkLabel = isFeatured ? 'Read Full Article \u2192' : 'Read More \u2192';
+      linkHtml = '<a href="' + escapeHtml(post.url) + '" class="blog-card__link">' + linkLabel + '</a>';
     } else if (isPublished) {
       linkHtml = '<span class="blog-card__link blog-card__link--disabled">Full article coming soon</span>';
     } else {
@@ -191,12 +201,14 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
     }
 
     var opacity = isPublished ? '' : ' style="opacity:0.55;"';
+    var featuredClass = isFeatured ? ' blog-card--featured' : '';
 
-    return '<div class="blog-card"' + opacity + '>' +
+    return '<div class="blog-card' + featuredClass + '"' + opacity + '>' +
       '<div class="blog-card__image">' +
         '<img src="' + escapeHtml(thumb) + '" alt="' + escapeHtml(post.title) + '" class="blog-card__thumb" />' +
       '</div>' +
       '<div class="blog-card__content">' +
+        (isFeatured ? '<span class="blog-card__featured-label">Featured</span>' : '') +
         '<p class="blog-card__date">' + escapeHtml(dateText) +
           (post.category ? ' <span class="blog-card__category">' + escapeHtml(post.category) + '</span>' : '') +
         '</p>' +
@@ -223,11 +235,12 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
     posts.forEach(function(post) {
       var pubDate = new Date(post.publish_date);
       if (pubDate <= now) {
-        html += renderCard(post, true);
+        var isFeatured = (publishedCount === 0); // first published = featured
+        html += renderCard(post, true, isFeatured);
         publishedCount++;
       } else if (!teaserShown) {
         // Show one upcoming teaser card
-        html += renderCard(post, false);
+        html += renderCard(post, false, false);
         teaserShown = true;
       }
     });
@@ -250,7 +263,7 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
 <div class="auth-modal" id="authModal" style="display:none;">
   <div class="auth-modal__box">
     <button class="auth-modal__close" aria-label="Close">&times;</button>
-    <div class="auth-modal__logo"><img src="images/logo-header.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
     <div class="auth-tabs">
       <button class="auth-tab active" data-tab="login">Sign In</button>
       <button class="auth-tab" data-tab="signup">Create Account</button>
@@ -275,6 +288,7 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
   </div>
 </div>
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
 </body>
 </html>

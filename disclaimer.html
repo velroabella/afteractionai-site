@@ -20,6 +20,7 @@
   <meta property="og:site_name" content="AfterAction AI" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -27,7 +28,7 @@
 <nav class="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -35,7 +36,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -46,21 +47,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -78,7 +87,7 @@
         <div class="policy-content">
           <h2>1. We Are Not the VA</h2>
           <p><strong>AfterAction AI is NOT the U.S. Department of Veterans Affairs.</strong> We are an independent nonprofit organization. We are not a government agency and do not speak for the VA or Department of Defense.</p>
-          <p>The official source for all VA benefits, policies, and information is <strong><a href="https://www.va.gov" target="_blank">VA.gov</a></strong>. Always verify benefit eligibility and requirements directly with the VA or your local VA medical center.</p>
+          <p>The official source for all VA benefits, policies, and information is <strong><a href="https://www.va.gov" target="_blank" rel="noopener noreferrer">VA.gov</a></strong>. Always verify benefit eligibility and requirements directly with the VA or your local VA medical center.</p>
 
           <h2>2. We Are Not a Government Agency</h2>
           <p>AfterAction AI is a private nonprofit organization. While we work with veteran programs and resources, we do not have the authority to determine benefit eligibility, approve applications, or make official decisions on your behalf.</p>
@@ -86,15 +95,15 @@
 
           <h2>3. We Are Not a Law Firm</h2>
           <p><strong>AfterAction AI does not provide legal advice.</strong> While we may discuss veteran legal rights and resources, we are not qualified to serve as your attorney.</p>
-          <p>For legal matters involving benefits appeals, discharge upgrades, or other complex veteran legal issues, please consult a qualified attorney who specializes in military or veteran law. The <a href="https://www.dav.org" target="_blank">Disabled American Veterans (DAV)</a> and <a href="https://www.vfw.org" target="_blank">Veterans of Foreign Wars (VFW)</a> offer legal assistance programs.</p>
+          <p>For legal matters involving benefits appeals, discharge upgrades, or other complex veteran legal issues, please consult a qualified attorney who specializes in military or veteran law. The <a href="https://www.dav.org" target="_blank" rel="noopener noreferrer">Disabled American Veterans (DAV)</a> and <a href="https://www.vfw.org" target="_blank" rel="noopener noreferrer">Veterans of Foreign Wars (VFW)</a> offer legal assistance programs.</p>
 
           <h2>4. We Are Not a Medical Provider</h2>
           <p><strong>AfterAction AI does not provide medical or mental health advice.</strong> If you are experiencing mental health symptoms, depression, suicidal thoughts, or other medical concerns, please reach out to qualified health professionals.</p>
           <ul>
             <li><strong>Veterans Crisis Line:</strong> Call 988, Press 1 (24/7, confidential)</li>
             <li><strong>Text:</strong> 838255</li>
-            <li><strong>Chat:</strong> <a href="https://www.veteranscrisisline.net" target="_blank">veteranscrisisline.net</a></li>
-            <li><strong>VA Health Services:</strong> <a href="https://www.va.gov" target="_blank">VA.gov</a></li>
+            <li><strong>Chat:</strong> <a href="https://www.veteranscrisisline.net" target="_blank" rel="noopener noreferrer">veteranscrisisline.net</a></li>
+            <li><strong>VA Health Services:</strong> <a href="https://www.va.gov" target="_blank" rel="noopener noreferrer">VA.gov</a></li>
           </ul>
 
           <h2>5. Information For Guidance Only</h2>
@@ -144,19 +153,20 @@
           <p>Many veteran benefits require an honorable discharge or General Discharge Under Honorable Conditions. If you have a discharge characterization other than these (OTH, Bad Conduct, Dishonorable), you may face restrictions on benefits.</p>
           <p>For discharge upgrade information or concerns about discharge-related benefits eligibility:</p>
           <ul>
-            <li>Contact the <a href="https://www.archives.gov/veterans" target="_blank">National Archives Veterans Records Center</a></li>
-            <li>Work with a VSO like the <a href="https://www.dav.org" target="_blank">DAV</a> or <a href="https://www.vfw.org" target="_blank">VFW</a></li>
+            <li>Contact the <a href="https://www.archives.gov/veterans" target="_blank" rel="noopener noreferrer">National Archives Veterans Records Center</a></li>
+            <li>Work with a VSO like the <a href="https://www.dav.org" target="_blank" rel="noopener noreferrer">DAV</a> or <a href="https://www.vfw.org" target="_blank" rel="noopener noreferrer">VFW</a></li>
             <li>Consult a military law attorney</li>
           </ul>
 
           <h2>11. Data Security and Document Upload Disclaimer</h2>
-          <p>While we use industry-standard encryption and security measures, no online system is 100% secure. Documents you upload may be processed by AI systems, including third-party AI providers, and are not reviewed by humans unless required for safety or legal compliance. Uploaded documents are securely deleted within 24 hours. If you have concerns about uploading sensitive documents (DD-214, medical records), consider:</p>
+          <p>While we use industry-standard encryption and security measures, no online system is 100% secure. Documents you upload are processed entirely within your browser — AfterActionAI.org does not store document content on its servers. Document content is transmitted to our AI provider (Anthropic Claude) for processing only and is not stored by us. If you have concerns about uploading sensitive documents (DD-214, medical records), consider:</p>
           <ul>
             <li>Redacting sensitive information (SSN, account numbers) before uploading</li>
             <li>You are responsible for ensuring you have the right to upload any document</li>
             <li>Working directly with official agencies (VA) or VSOs instead</li>
             <li>Contacting us for alternative options at hello@afteractionai.org</li>
           </ul>
+          <p>For full details on data collection, storage, and your rights, see our <a href="privacy.html">Privacy Policy</a>.</p>
 
           <h2>12. No Relationship with the VA or DoD</h2>
           <p>AfterAction AI has no formal relationship with, endorsement from, or affiliation with:</p>
@@ -272,5 +282,35 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 });
 </script>
 
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/newsletter.js"></script>
 </body>
 </html>

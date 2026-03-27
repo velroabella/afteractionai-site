@@ -1,0 +1,150 @@
+/* ══════════════════════════════════════════════════════════
+   BLOG PAGE — PREMIUM UPGRADE
+   Additive overrides only. Load after styles.css.
+   Full rollback = remove this <link> tag.
+   ══════════════════════════════════════════════════════════ */
+
+/* ── 1. GOLD CUSTOM PROPERTIES ──────────────────────────── */
+:root {
+  --blog-gold:       #C5A55A;
+  --blog-gold-deep:  #b8924a;
+  --blog-gold-glow:  rgba(197, 165, 90, 0.25);
+  --blog-gold-tint:  rgba(197, 165, 90, 0.08);
+}
+
+/* ── 2. GOLD ALIGNMENT — DATE + LINK ────────────────────── */
+/* Overrides styles.css line 3636: .blog-card__date { color: #DC3545 } */
+.blog-card__date {
+  color: var(--blog-gold) !important;
+}
+
+/* Overrides styles.css line 2951: .blog-card__link { color: #DC3545 } */
+.blog-card__link {
+  color: var(--blog-gold) !important;
+  transition: color 0.2s, gap 0.2s ease !important;
+}
+
+/* Overrides styles.css line 2961: .blog-card__link:hover { color: #c82333 } */
+.blog-card__link:hover {
+  color: var(--blog-gold-deep) !important;
+  text-decoration: none !important;
+}
+
+/* ── 3. CATEGORY BADGE — GOLD TINT ─────────────────────── */
+/* Upgrade from flat navy to gold-tinted treatment */
+.blog-card__category {
+  background: rgba(197, 165, 90, 0.15) !important;
+  color: var(--blog-gold) !important;
+  border: 1px solid rgba(197, 165, 90, 0.25) !important;
+}
+
+/* ── 4. FEATURED CARD — FULL-WIDTH LAYOUT ───────────────── */
+/* Spans all columns; horizontal split (image left, content right) */
+.blog-card--featured {
+  grid-column: 1 / -1 !important;
+  flex-direction: row !important;
+  min-height: 300px !important;
+  border: 1px solid rgba(197, 165, 90, 0.20) !important;
+  box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08) !important;
+}
+
+.blog-card--featured .blog-card__image {
+  width: 45% !important;
+  height: auto !important;
+  min-height: 300px !important;
+  flex-shrink: 0 !important;
+  border-radius: 16px 0 0 16px !important;
+}
+
+.blog-card--featured .blog-card__content {
+  padding: 36px 40px !important;
+  justify-content: center !important;
+  flex: 1 !important;
+}
+
+.blog-card--featured .blog-card__title {
+  font-size: 1.55rem !important;
+  line-height: 1.35 !important;
+  margin-bottom: 16px !important;
+}
+
+.blog-card--featured .blog-card__excerpt {
+  font-size: 0.98rem !important;
+  line-height: 1.65 !important;
+  color: var(--gray-600, #4b5563) !important;
+  margin-bottom: 24px !important;
+  /* Don't truncate on featured */
+  -webkit-line-clamp: unset !important;
+  overflow: visible !important;
+}
+
+.blog-card--featured .blog-card__link {
+  font-size: 1rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* ── 5. FEATURED LABEL BADGE ────────────────────────────── */
+.blog-card__featured-label {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #111111;
+  background: var(--blog-gold);
+  padding: 3px 10px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+
+/* ── 6. FEATURED HOVER REFINEMENT ───────────────────────── */
+.blog-card--featured:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.10), 0 0 0 1px rgba(197, 165, 90, 0.25) !important;
+}
+
+/* ── 8. HERO HEIGHT + OVERLAY — normalized to About standard ── */
+/* min-height matches .page-hero-image--about (75vh).
+   04_Blog.jpg is bright parchment — overlay boosted vs About
+   but reduced from original to keep visual quality. */
+.page-hero-image {
+  min-height: 75vh !important;
+}
+.page-hero-image::before {
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.88) 0%,
+    rgba(0,0,0,0.75) 40%,
+    rgba(0,0,0,0.88) 100%
+  ) !important;
+}
+.page-hero-image::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    #C5A55A 50%,
+    transparent 100%
+  ) !important;
+}
+
+/* ── 7. MOBILE — STACK FEATURED CARD ───────────────────── */
+@media (max-width: 767px) {
+  .blog-card--featured {
+    flex-direction: column !important;
+  }
+
+  .blog-card--featured .blog-card__image {
+    width: 100% !important;
+    min-height: 220px !important;
+    border-radius: 16px 16px 0 0 !important;
+  }
+
+  .blog-card--featured .blog-card__content {
+    padding: 24px !important;
+  }
+
+  .blog-card--featured .blog-card__title {
+    font-size: 1.25rem !important;
+  }
+}

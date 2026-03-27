@@ -864,5 +864,102 @@
       "goal_type": "career",
       "specialty": "transportation"
     }
+  },
+  {
+    "id": "lic-sf-3d1x2-security",
+    "branch": "Space Force",
+    "military_job_code": "3D1X2 / 17S",
+    "military_job_title": "Cyber Systems Operations / Space Operations",
+    "civilian_pathway": "Cybersecurity Analyst / Systems Security Engineer",
+    "certification_name": "CompTIA Security+ / CISSP / CEH",
+    "issuing_agency": "CompTIA / (ISC)\u00b2 / EC-Council",
+    "requirements_summary": "Space Force Guardians in cyber and space operations roles have extensive technical training directly applicable to CompTIA Security+, CISSP, and Certified Ethical Hacker (CEH). DoD 8570 mandates Security+ for many billets, so many Guardians are already certified before separation.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.comptia.org/certifications/security",
+      "https://www.isc2.org/Certifications/CISSP",
+      "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E",
+      "TA"
+    ],
+    "official_links": [
+      "https://www.cool.osd.mil/air_force/index.html"
+    ],
+    "source_url": "https://www.cool.osd.mil/air_force/index.html",
+    "last_verified": "2026-03-27",
+    "manual_review": false,
+    "tags": {
+      "branch": "Space Force",
+      "issue_type": "certification",
+      "goal_type": "career",
+      "specialty": "cybersecurity"
+    }
+  },
+  {
+    "id": "lic-sf-systems-pe",
+    "branch": "Space Force",
+    "military_job_code": "62E / 63A / 17D",
+    "military_job_title": "Developmental Engineer / Space Systems Engineer",
+    "civilian_pathway": "Professional Engineer (PE) / Systems Engineer",
+    "certification_name": "PE License / INCOSE CSEP",
+    "issuing_agency": "NCEES (State PE Boards) / INCOSE",
+    "requirements_summary": "Space Force engineers with accredited engineering degrees and verified experience qualify for PE licensure. INCOSE CSEP directly recognizes systems engineering expertise from space systems work. Both are highly valued in defense contracting and government agencies.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://ncees.org/engineering/pe/",
+      "https://www.incose.org/certification"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://ncees.org",
+      "https://www.incose.org"
+    ],
+    "source_url": "https://ncees.org/engineering/pe/",
+    "last_verified": "2026-03-27",
+    "manual_review": false,
+    "tags": {
+      "branch": "Space Force",
+      "issue_type": "licensure",
+      "goal_type": "career",
+      "specialty": "it"
+    }
+  },
+  {
+    "id": "lic-sf-intelligence-pmp",
+    "branch": "Space Force",
+    "military_job_code": "1N2X1 / 14N",
+    "military_job_title": "Intelligence Analyst / Intelligence Officer",
+    "civilian_pathway": "Intelligence Analyst / Program Manager / Cleared Contractor",
+    "certification_name": "PMP / CompTIA CySA+ / ODNI-Recognized Certifications",
+    "issuing_agency": "PMI / CompTIA",
+    "requirements_summary": "Space Force intelligence Guardians with TS/SCI clearances transition strongly into IC, defense contracting, and national labs. PMP certification leverages leadership experience. CompTIA CySA+ is directly applicable to cyber-intelligence roles. Clearance retention is the most valuable credential for this pathway.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.pmi.org/certifications/project-management-pmp",
+      "https://www.comptia.org/certifications/cybersecurity-analyst"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E",
+      "TA"
+    ],
+    "official_links": [
+      "https://www.cool.osd.mil/air_force/index.html"
+    ],
+    "source_url": "https://www.cool.osd.mil/air_force/index.html",
+    "last_verified": "2026-03-27",
+    "manual_review": true,
+    "tags": {
+      "branch": "Space Force",
+      "issue_type": "certification",
+      "goal_type": "career",
+      "specialty": "it"
+    }
   }
 ]

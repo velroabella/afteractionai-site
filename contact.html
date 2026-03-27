@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/contact-upgrade.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
   <meta property="og:image:width" content="1536" />
@@ -28,7 +29,7 @@
 <nav class="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -36,7 +37,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -47,27 +48,35 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html" class="active">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- CONTACT HERO -->
-<section class="page-hero-bar">
+<section class="page-hero-bar" style="background-image: url('images/hero-contact.jpg');">
   <h1 class="page-hero-bar__title">Get In Touch</h1>
   <div class="page-hero-bar__divider"></div>
   <p class="page-hero-bar__subtitle">We'd love to hear from you. Questions, partnerships, or just want to say hello? <a href="faq.html">Check our FAQ</a> or <a href="about.html">learn about us</a>.</p>
@@ -116,7 +125,7 @@
 
         <!-- CONTACT INFO -->
         <div class="contact-info">
-          <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 24px;">Direct Contact</h3>
+          <h3 class="contact-info__heading">Direct Contact</h3>
 
           <div class="contact-info__item">
             <p class="contact-info__label">Email</p>
@@ -130,12 +139,12 @@
 
           <div class="contact-info__item">
             <p class="contact-info__label">Website</p>
-            <p class="contact-info__value"><a href="https://afteractionai.org">AfterActionAI.org</a></p>
+            <p class="contact-info__value"><a href="https://afteractionai.org" target="_blank" rel="noopener noreferrer">AfterActionAI.org</a></p>
           </div>
 
           <div class="contact-info__item">
             <p class="contact-info__label">Resources</p>
-            <p class="contact-info__value"><a href="resources.html" style="color: var(--blue); font-weight: 600;">Browse partner organizations</a> or <a href="faq.html" style="color: var(--blue); font-weight: 600;">view frequently asked questions</a></p>
+            <p class="contact-info__value"><a href="resources.html" class="contact-info-link">Browse partner organizations</a> or <a href="faq.html" class="contact-info-link">view frequently asked questions</a></p>
           </div>
 
           <!-- Social media links hidden until accounts are created -->
@@ -240,7 +249,7 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 <div class="auth-modal" id="authModal" style="display:none;">
   <div class="auth-modal__box">
     <button class="auth-modal__close" aria-label="Close">&times;</button>
-    <div class="auth-modal__logo"><img src="images/logo-header.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
     <div class="auth-tabs">
       <button class="auth-tab active" data-tab="login">Sign In</button>
       <button class="auth-tab" data-tab="signup">Create Account</button>
@@ -265,6 +274,7 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
   </div>
 </div>
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
 </body>
 </html>

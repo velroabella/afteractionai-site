@@ -28,7 +28,7 @@
 <nav class="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -36,7 +36,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -47,185 +47,311 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html" class="active">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html" class="active">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO SECTION -->
-<section class="page-hero-bar">
-  <h1 class="page-hero-bar__title">Veteran Grants & Scholarships</h1>
-  <div class="page-hero-bar__divider"></div>
-  <p class="page-hero-bar__subtitle">Education funding, entrepreneurship grants, and financial assistance.</p>
+<!-- HERO -->
+<section class="rp-hero hero-has-image" style="background-image: url('images/hero-grants.png'); background-repeat: no-repeat; background-size: 90% auto; background-position: center 55%;">
+  <div class="rp-hero__inner">
+    <h1 class="rp-hero__title">Grants &amp; Scholarships</h1>
+    <hr class="rp-hero__divider" />
+    <p class="rp-hero__subtitle">Education funding, entrepreneurship grants, and financial assistance for veterans and military families.</p>
+  </div>
 </section>
 
-<!-- PAGE CONTENT -->
-<div class="page">
-  <div class="page__content">
-
-    <!-- SEARCH BAR -->
-    <div class="resources-search">
-      <input
-        type="text"
-        class="resources-search__input"
-        id="searchInput"
-        placeholder="Search by program name or provider..."
-      />
-    </div>
-
-    <!-- CATEGORY FILTER -->
-    <div class="resources-filters" id="filterBtns">
-      <button class="filter-btn active" data-filter="all">All Categories</button>
-      <button class="filter-btn" data-filter="education">Education</button>
-      <button class="filter-btn" data-filter="entrepreneurship">Entrepreneurship</button>
-      <button class="filter-btn" data-filter="hardship">Hardship Assistance</button>
-      <button class="filter-btn" data-filter="housing">Housing</button>
-      <button class="filter-btn" data-filter="disability">Disability Support</button>
-    </div>
-
-    <!-- GRANTS GRID -->
-    <section class="section">
-      <div class="resources-grid" id="grantsGrid">
-        <!-- Grants and scholarships will populate here -->
-      </div>
-    </section>
-
+<!-- QUICK ACCESS BAR -->
+<div class="rp-quickaccess">
+  <div class="rp-quickaccess__inner">
+    <button class="rp-qa-btn" onclick="applyQA('education')">🎓 Education</button>
+    <button class="rp-qa-btn" onclick="applyQA('entrepreneurship')">💼 Entrepreneurship</button>
+    <button class="rp-qa-btn" onclick="applyQA('hardship')">🤝 Hardship Aid</button>
+    <button class="rp-qa-btn" onclick="applyQA('housing')">🏠 Housing</button>
+    <button class="rp-qa-btn" onclick="applyQA('disability')">♿ Disability Support</button>
+    <button class="rp-qa-btn" onclick="applyQA('dependents')">👨‍👩‍👧 For Dependents</button>
+    <button class="rp-qa-btn" onclick="applyQA('all')">All Grants</button>
   </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__crisis">
-        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
-      </div>
-      <div class="footer__grid">
-        <div class="footer__section footer__section--nav">
-          <h3>Navigate</h3>
-          <div class="footer__nav-columns">
-            <div class="footer__nav-col">
-              <a href="index.html">Home</a>
-              <a href="about.html">About</a>
-              <a href="board.html">Board</a>
-            </div>
-            <div class="footer__nav-col">
-              <a href="resources.html">Resources</a>
-              <a href="blog.html">Blog</a>
-              <a href="contact.html">Contact</a>
-            </div>
-          </div>
-        </div>
-        <div class="footer__section">
-          <h3>Resource Hub</h3>
-          <a href="elected-officials.html">Elected Officials</a>
-          <a href="licensure.html">Licensure & Certifications</a>
-          <a href="grants-scholarships.html">Grants & Scholarships</a>
-          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
-          <a href="state-benefits.html">State Benefits</a>
-          <a href="document-templates.html">Document Templates</a>
-        </div>
-        <div class="footer__section">
-          <h3>Legal</h3>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="disclaimer.html">Disclaimer</a>
-        </div>
-        <div class="footer__section">
-          <h3>Connect</h3>
-          <!-- Social media links hidden until accounts are created -->
-        </div>
-      </div>
-      <div class="footer__nonprofit">
-        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
-      </div>
-      <div class="footer__bottom">
-        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
-      </div>
-    </div>
-  </footer>
 </div>
 
-<script src="js/resource-hub.js"></script>
+<!-- TWO-COLUMN LAYOUT -->
+<div class="rp-page-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="rp-sidebar">
+
+    <!-- Search -->
+    <div style="margin-bottom:20px;">
+      <input type="text" id="searchInput" placeholder="Search grants..."
+        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
+        oninput="filterAndRender()" />
+    </div>
+
+    <!-- Category Filter -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Category</div>
+      <button class="rp-pill active" data-filter-group="category" data-filter-value="all" onclick="setPill(this,'category')">All Categories</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="education" onclick="setPill(this,'category')">Education</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="entrepreneurship" onclick="setPill(this,'category')">Entrepreneurship</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="hardship" onclick="setPill(this,'category')">Hardship Aid</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="housing" onclick="setPill(this,'category')">Housing</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="disability" onclick="setPill(this,'category')">Disability Support</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="employment" onclick="setPill(this,'category')">Employment</button>
+    </div>
+
+    <!-- Audience Filter -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Who It's For</div>
+      <button class="rp-pill active" data-filter-group="audience" data-filter-value="all" onclick="setPill(this,'audience')">All</button>
+      <button class="rp-pill" data-filter-group="audience" data-filter-value="veterans" onclick="setPill(this,'audience')">Veterans</button>
+      <button class="rp-pill" data-filter-group="audience" data-filter-value="dependents" onclick="setPill(this,'audience')">Dependents</button>
+      <button class="rp-pill" data-filter-group="audience" data-filter-value="spouses" onclick="setPill(this,'audience')">Spouses</button>
+      <button class="rp-pill" data-filter-group="audience" data-filter-value="guard_reserve" onclick="setPill(this,'audience')">Guard &amp; Reserve</button>
+    </div>
+
+    <!-- Geography Filter -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Availability</div>
+      <button class="rp-pill active" data-filter-group="geography" data-filter-value="all" onclick="setPill(this,'geography')">All</button>
+      <button class="rp-pill" data-filter-group="geography" data-filter-value="National" onclick="setPill(this,'geography')">National</button>
+      <button class="rp-pill" data-filter-group="geography" data-filter-value="State-specific" onclick="setPill(this,'geography')">State-Specific</button>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Results count -->
+    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
+
+    <!-- Cards grid -->
+    <div class="rp-grid" id="grantsGrid"></div>
+
+    <!-- Empty state -->
+    <div class="rp-empty" id="emptyState" style="display:none;">
+      <div class="rp-empty__icon">🔍</div>
+      <p>No grants match your current filters. Try adjusting the category or audience.</p>
+      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+    </div>
+
+    <!-- Load more -->
+    <div style="text-align:center;margin-top:24px;">
+      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More</button>
+    </div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+    </div>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+      </div>
+    </div>
+    <div class="footer__nonprofit">
+      AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+    </div>
+  </div>
+</footer>
+
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
-
 <script>
-// ══════════════════════════════════════════════════════════
-// GRANTS & SCHOLARSHIPS PAGE — ResourceHub Integration
-// ══════════════════════════════════════════════════════════
+// ── State ──────────────────────────────────────────────────
+const PAGE_SIZE = 24;
+let allGrants = [];
+let filteredGrants = [];
+let visibleCount = 0;
 
+const activeFilters = { category: 'all', audience: 'all', geography: 'all' };
+
+// ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
-  var menu = document.getElementById('navMenu');
-  menu.classList.toggle('active');
+  document.getElementById('navMenu').classList.toggle('active');
 }
 
-fetch('data/grants-scholarships.json').then(function(response) {
-  return response.json();
-}).then(function(grantsData) {
+// ── Pills ─────────────────────────────────────────────────
+function setPill(btn, group) {
+  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilters[group] = btn.dataset.filterValue;
+  filterAndRender();
+}
 
-  // Render card function for grants and scholarships
-  function renderGrantCard(grant) {
-    var deadlineText = grant.deadline ? ResourceHub.formatDate(grant.deadline) : 'Rolling';
+// ── Quick Access ──────────────────────────────────────────
+function applyQA(val) {
+  if (val === 'all') {
+    resetFilters();
+    return;
+  }
+  // audience-based QA
+  if (['dependents','spouses','guard_reserve'].includes(val)) {
+    const pill = document.querySelector(`.rp-pill[data-filter-group="audience"][data-filter-value="${val}"]`);
+    if (pill) setPill(pill, 'audience');
+  } else {
+    const pill = document.querySelector(`.rp-pill[data-filter-group="category"][data-filter-value="${val}"]`);
+    if (pill) setPill(pill, 'category');
+  }
+}
 
-    var actions = '';
-    if (grant.application_link) {
-      actions += '<a href="' + ResourceHub.escapeHtml(grant.application_link) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">Apply Now</a>';
-    }
-    if (grant.website) {
-      actions += '<a href="' + ResourceHub.escapeHtml(grant.website) + '" class="hub-card__link hub-card__link--outline" target="_blank" rel="noopener noreferrer">Learn More</a>';
-    }
+// ── Reset ─────────────────────────────────────────────────
+function resetFilters() {
+  activeFilters.category = 'all';
+  activeFilters.audience = 'all';
+  activeFilters.geography = 'all';
+  document.querySelectorAll('.rp-pill').forEach(b => {
+    b.classList.toggle('active', b.dataset.filterValue === 'all');
+  });
+  document.getElementById('searchInput').value = '';
+  filterAndRender();
+}
 
-    return '<div class="hub-card">' +
-      '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(grant.program_name || '') + '</h3>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(grant.provider || '') + '</p>' +
-      '<div class="hub-card__details">' +
-      '<strong>Amount:</strong> ' + ResourceHub.escapeHtml(grant.amount || 'Varies') + '<br />' +
-      '<strong>Eligibility:</strong> ' + ResourceHub.escapeHtml(grant.eligibility || '') + '<br />' +
-      '<strong>Deadline:</strong> ' + deadlineText +
-      '</div>' +
-      '<div class="hub-card__links">' + actions + '</div>' +
-      '</div>';
+// ── Filter ────────────────────────────────────────────────
+function filterAndRender() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  filteredGrants = allGrants.filter(g => {
+    if (activeFilters.category !== 'all' && g.category !== activeFilters.category) return false;
+    if (activeFilters.audience !== 'all' && g.audience !== activeFilters.audience) return false;
+    if (activeFilters.geography !== 'all' && g.geography !== activeFilters.geography) return false;
+    if (q && !((g.program_name||'').toLowerCase().includes(q) ||
+               (g.provider||'').toLowerCase().includes(q) ||
+               (g.eligibility||'').toLowerCase().includes(q))) return false;
+    return true;
+  });
+  visibleCount = 0;
+  document.getElementById('grantsGrid').innerHTML = '';
+  loadMore();
+  updateCount();
+}
+
+// ── Render ────────────────────────────────────────────────
+function renderCard(g) {
+  const catLabel = { education:'Education', entrepreneurship:'Entrepreneurship', hardship:'Hardship Aid',
+    housing:'Housing', disability:'Disability', employment:'Employment' }[g.category] || g.category;
+  const audLabel = { veterans:'Veterans', dependents:'Dependents', spouses:'Spouses',
+    guard_reserve:'Guard/Reserve' }[g.audience] || g.audience;
+  const geoLabel = g.geography === 'National' ? 'National' : 'State-Specific';
+
+  let applyBtn = '';
+  if (g.application_link) {
+    applyBtn = `<a href="${esc(g.application_link)}" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Apply Now</a>`;
+  }
+  let learnBtn = '';
+  if (g.website) {
+    learnBtn = `<a href="${esc(g.website)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Learn More →</a>`;
   }
 
-  // Initialize ResourceHub for grants
-  ResourceHub.init({
-    containerId: 'grantsGrid',
-    searchInputId: 'searchInput',
-    filterContainerId: 'filterBtns',
-    data: grantsData,
-    renderCard: renderGrantCard,
-    filterKey: 'category',
-    searchFields: ['program_name', 'provider', 'eligibility'],
-    stateField: null
+  return `<div class="rp-card">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+      <span class="rp-tag--primary">${catLabel}</span>
+      <span class="rp-tag--secondary">${audLabel}</span>
+      <span class="rp-tag--neutral">${geoLabel}</span>
+    </div>
+    <h3 class="rp-card__name">${esc(g.program_name||'')}</h3>
+    <p class="rp-card__org">${esc(g.provider||'')}</p>
+    <p class="rp-card__desc" style="font-size:0.85rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">${esc(g.eligibility||'')}</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+      <div style="font-size:0.85rem;color:#C5A55A;font-weight:600;">💰 ${esc(g.amount||'Varies')}</div>
+      <div style="font-size:0.8rem;color:#6c757d;">📅 ${esc(g.deadline||'Rolling')}</div>
+    </div>
+    <div style="display:flex;align-items:center;">${applyBtn}${learnBtn}</div>
+  </div>`;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Load More ─────────────────────────────────────────────
+function loadMore() {
+  const grid = document.getElementById('grantsGrid');
+  const batch = filteredGrants.slice(visibleCount, visibleCount + PAGE_SIZE);
+  batch.forEach(g => { grid.insertAdjacentHTML('beforeend', renderCard(g)); });
+  visibleCount += batch.length;
+  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredGrants.length ? 'inline-block' : 'none';
+  document.getElementById('emptyState').style.display = filteredGrants.length === 0 ? 'block' : 'none';
+}
+
+function updateCount() {
+  document.getElementById('resultsCount').textContent =
+    filteredGrants.length === allGrants.length
+      ? `Showing all ${allGrants.length} grants & scholarships`
+      : `Showing ${filteredGrants.length} of ${allGrants.length} grants & scholarships`;
+}
+
+// ── Init ──────────────────────────────────────────────────
+fetch('data/grants-scholarships.json')
+  .then(r => r.json())
+  .then(data => {
+    allGrants = Array.isArray(data) ? data : (data.resources || []);
+    filterAndRender();
+  })
+  .catch(err => {
+    console.error('Error loading grants:', err);
+    document.getElementById('grantsGrid').innerHTML =
+      '<div class="rp-empty"><p>Error loading grants. Please try again later.</p></div>';
   });
-
-  // Build category filter buttons
-  ResourceHub.buildFilterButtons([
-    { key: 'all', label: 'All Categories' },
-    { key: 'education', label: 'Education' },
-    { key: 'entrepreneurship', label: 'Entrepreneurship' },
-    { key: 'hardship', label: 'Hardship Assistance' },
-    { key: 'housing', label: 'Housing' },
-    { key: 'disability', label: 'Disability Support' }
-  ]);
-
-}).catch(function(err) {
-  console.error('Error loading grants data:', err);
-  document.getElementById('grantsGrid').innerHTML = '<div class="hub-no-results"><p>Error loading grants and scholarships. Please try again later.</p></div>';
-});
 </script>
 
 </body>

@@ -15,6 +15,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <link rel="stylesheet" href="css/legal-modal.css" />
+  <link rel="stylesheet" href="css/landing-upgrade.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
@@ -30,7 +31,7 @@
 <nav class="navbar" id="mainNav">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -38,7 +39,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -49,21 +50,29 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
@@ -71,41 +80,35 @@
 <!-- CRISIS BANNER -->
 <div class="crisis-banner" id="crisisBanner" style="display:none;">
   <div class="crisis-banner__inner">
-    <span>Veterans Crisis Line:</span> Dial <a href="tel:988">988</a>, Press 1 &nbsp;|&nbsp; Text <a href="sms:838255">838255</a> &nbsp;|&nbsp; <a href="https://www.veteranscrisisline.net/get-help/chat" target="_blank" rel="noopener">Chat Now</a>
+    <span>Veterans Crisis Line:</span> Dial <a href="tel:988">988</a>, Press 1 &nbsp;|&nbsp; Text <a href="sms:838255">838255</a> &nbsp;|&nbsp; <a href="https://www.veteranscrisisline.net/get-help-now/chat/" target="_blank" rel="noopener noreferrer">Chat Now</a>
   </div>
   <p>Confidential. 24/7. You are not alone.</p>
 </div>
 
 <!-- ═══ LANDING SCREEN ═══ -->
 <div class="screen screen--landing" id="landingScreen">
+  <div class="aaai-top-trust">
+    <span>Free — Always</span>
+    <span>Private — Always</span>
+    <span>Built by Veterans</span>
+  </div>
+
   <div class="landing">
-    <div class="landing__logo">
-      <img src="images/logo-primary.png" alt="AfterAction AI" class="landing__logo-img">
-      <p class="landing__tagline">Free Veteran Benefits Navigator</p>
-    </div>
 
     <div class="landing__mission">
       <p class="landing__hero-tagline">One conversation. Every benefit. Every resource.</p>
-      <p>A personalized plan — at no cost to you. Ever.</p>
+      <p>Upload your situation. Get a <strong>structured written report</strong> — your personalized path forward, at no cost. Ever.</p>
     </div>
 
     <div class="landing__actions">
       <button class="btn btn--voice" id="btnStartVoice">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
-        Talk to AI
+        Build My Plan
       </button>
       <button class="btn btn--text" id="btnStartText">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
         I'll Type
       </button>
-      <button class="btn btn--cc" id="btnStartCC">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 12h2"/><path d="M15 12h2"/><path d="M7 16h10"/></svg>
-        CC
-      </button>
-      <a href="#donate" class="btn btn--donate" id="btnDonate">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-        Donate
-      </a>
     </div>
 
     <div class="landing__footer">
@@ -113,6 +116,64 @@
       <p class="landing__crisis-link">Need immediate help? <a href="tel:988">Veterans Crisis Line: 988 (Press 1)</a></p>
     </div>
   </div>
+
+  <div class="aaai-sections">
+
+    <div class="aaai-section">
+      <span class="aaai-section__overline">How It Works</span>
+      <h2 class="aaai-section__heading">From conversation to action plan — in one session</h2>
+      <p class="aaai-section__sub">No appointments. No forms. No waiting. Tell AfterAction AI your situation — it does the analysis and produces a structured report you can act on immediately.</p>
+      <div class="aaai-cards">
+        <div class="aaai-card">
+          <span class="aaai-card__step">Step 01</span>
+          <p class="aaai-card__title">Share Your Situation</p>
+          <p class="aaai-card__body">Upload documents — DD-214, denial letters, medical records, resume — or just start talking. The AI meets you where you are and asks the right questions.</p>
+        </div>
+        <div class="aaai-card">
+          <span class="aaai-card__step">Step 02</span>
+          <p class="aaai-card__title">The AI Analyzes</p>
+          <p class="aaai-card__body">AfterAction AI cross-references your input against thousands of benefits, programs, and resources in real time — identifying gaps, opportunities, and next steps specific to you.</p>
+        </div>
+        <div class="aaai-card">
+          <span class="aaai-card__step">Step 03</span>
+          <p class="aaai-card__title">Receive Your Report</p>
+          <p class="aaai-card__body">A structured written report with immediate actions, short-term goals, and long-range strategy — organized by priority, ready to execute.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="aaai-section">
+      <span class="aaai-section__overline">Your Report</span>
+      <h2 class="aaai-section__heading">What your report includes</h2>
+      <p class="aaai-section__sub">Not a list of links. A structured analysis of your specific situation — organized by urgency and ready to act on.</p>
+      <div class="aaai-outcomes">
+        <div class="aaai-outcome"><div class="aaai-outcome__dot"></div><p class="aaai-outcome__label">Benefits you qualify for — immediately</p></div>
+        <div class="aaai-outcome"><div class="aaai-outcome__dot"></div><p class="aaai-outcome__label">Gap analysis — what's missing and why</p></div>
+        <div class="aaai-outcome"><div class="aaai-outcome__dot"></div><p class="aaai-outcome__label">State-specific resources and programs</p></div>
+        <div class="aaai-outcome"><div class="aaai-outcome__dot"></div><p class="aaai-outcome__label">Document templates and filing guidance</p></div>
+        <div class="aaai-outcome"><div class="aaai-outcome__dot"></div><p class="aaai-outcome__label">Education, licensure, and career paths</p></div>
+        <div class="aaai-outcome"><div class="aaai-outcome__dot"></div><p class="aaai-outcome__label">Escalation paths for denied claims</p></div>
+      </div>
+    </div>
+
+    <div class="aaai-section">
+      <span class="aaai-section__overline">Who Built This</span>
+      <h2 class="aaai-section__heading">Built by a veteran who knows the system</h2>
+      <div class="aaai-trust-body">
+        <p>AfterAction AI exists because the resources were always there. The problem was always navigation. This platform was built by a veteran who spent years watching others fall through the cracks of a system that was supposed to help them.</p>
+        <p>No subscription. No algorithm deciding what you deserve. No upsell. Just an AI system trained to analyze your specific situation and produce a clear, actionable path forward.</p>
+        <div class="aaai-trust-pills">
+          <span class="aaai-trust-pill">Free — Always</span>
+          <span class="aaai-trust-pill">No Credit Card</span>
+          <span class="aaai-trust-pill">No Waitlist</span>
+          <span class="aaai-trust-pill">Private by Default</span>
+          <span class="aaai-trust-pill">Veteran-Built</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
 </div>
 
 <!-- ═══ CHAT SCREEN — Full Conversational Interface ═══ -->
@@ -237,7 +298,7 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
 <div class="auth-modal" id="authModal" style="display:none;">
   <div class="auth-modal__box">
     <button class="auth-modal__close" aria-label="Close">&times;</button>
-    <div class="auth-modal__logo"><img src="images/logo-header.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
     <div class="auth-tabs">
       <button class="auth-tab active" data-tab="login">Sign In</button>
       <button class="auth-tab" data-tab="signup">Create Account</button>
@@ -262,12 +323,14 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
   </div>
 </div>
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
 <!-- Phase 3.5 + 3.6: Legal Form System -->
 <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
 <script src="js/legal-acknowledgment.js"></script>
 <script src="js/legal-docx-generator.js"></script>
 <script src="js/legal-integration.js"></script>
+<script src="js/form-questions.js"></script>
 <script src="js/legal-document-model.js"></script>
 </body>
 </html>

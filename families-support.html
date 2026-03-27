@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Families &amp; Survivors — AfterAction AI</title>
+  <meta name="description" content="Support for Gold Star families, surviving spouses, military spouses, caregivers, and loved ones navigating loss, service, and transition." />
+  <meta name="keywords" content="Gold Star families, surviving spouse support, military spouse resources, caregiver support, veteran families, survivor benefits" />
+  <meta property="og:title" content="Families &amp; Survivors — AfterAction AI" />
+  <meta property="og:description" content="Support for Gold Star families, surviving spouses, military spouses, caregivers, and loved ones navigating loss, service, and transition." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/families-support" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="families-support.html" class="navbar__families-btn active">Families &amp; Survivors</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html">Resources</a>
+                <ul class="navbar__dropdown-menu">
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
+          <li><a href="state-benefits.html">State Benefits</a></li>
+          <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="fam-hero hero-has-image" style="background-image: url('images/hero-families.jpg');">
+  <div class="fam-hero__inner">
+    <h1 class="fam-hero__title">Families &amp; Survivors</h1>
+    <div class="fam-hero__divider"></div>
+    <p class="fam-hero__subtitle">Support for Gold Star families, surviving spouses, military spouses, caregivers, and loved ones navigating loss, service, and transition.</p>
+  </div>
+</section>
+
+<!-- CRISIS BAR -->
+<div class="fam-crisis-section" id="crisis">
+  <div class="fam-crisis-inner">
+    <div class="fam-crisis-header">
+      <span style="font-size:1rem;">🆘</span>
+      <h2>If You Need Immediate Support — Reach Out Now</h2>
+    </div>
+    <div class="fam-crisis-row">
+      <a href="tel:18008007272" class="fam-crisis-btn">
+        <span class="fam-crisis-btn__label">Call TAPS</span>
+        <span class="fam-crisis-btn__value">800-959-TAPS</span>
+        <span class="fam-crisis-btn__sub">Gold Star &amp; Survivor Support</span>
+      </a>
+      <a href="tel:988" class="fam-crisis-btn">
+        <span class="fam-crisis-btn__label">Call</span>
+        <span class="fam-crisis-btn__value">988 (Press 1)</span>
+        <span class="fam-crisis-btn__sub">Veterans Crisis Line</span>
+      </a>
+      <a href="tel:18552603274" class="fam-crisis-btn">
+        <span class="fam-crisis-btn__label">VA Caregiver</span>
+        <span class="fam-crisis-btn__value">855-260-3274</span>
+        <span class="fam-crisis-btn__sub">Caregiver Support Line</span>
+      </a>
+      <a href="tel:18007997233" class="fam-crisis-btn">
+        <span class="fam-crisis-btn__label">DV Hotline</span>
+        <span class="fam-crisis-btn__value">800-799-7233</span>
+        <span class="fam-crisis-btn__sub">Domestic Violence Support</span>
+      </a>
+      <a href="tel:18003429647" class="fam-crisis-btn">
+        <span class="fam-crisis-btn__label">Military OneSource</span>
+        <span class="fam-crisis-btn__value">800-342-9647</span>
+        <span class="fam-crisis-btn__sub">24/7 Family Support</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- QUICK ACCESS -->
+<div class="fam-quickaccess">
+  <div class="fam-quickaccess__inner">
+    <div class="fam-quickaccess__label">Quick Access</div>
+    <div class="fam-quickaccess__row" id="qaRow">
+      <button class="fam-qa-btn fam-qa-btn--crisis" data-qa="crisis" onclick="setQA(this)">🆘 Crisis Support</button>
+      <button class="fam-qa-btn" data-qa="gold_star" onclick="setQA(this)">Gold Star &amp; Survivors</button>
+      <button class="fam-qa-btn" data-qa="military_spouse" onclick="setQA(this)">Military Spouses</button>
+      <button class="fam-qa-btn" data-qa="caregiver" onclick="setQA(this)">Caregivers</button>
+      <button class="fam-qa-btn" data-qa="benefits" onclick="setQA(this)">Benefits &amp; Guidance</button>
+      <button class="fam-qa-btn" data-qa="top" onclick="setQA(this)">⭐ Top Recommended</button>
+      <button class="fam-qa-btn" onclick="clearAllFilters()">📋 Show All</button>
+    </div>
+  </div>
+</div>
+
+<!-- TWO-COLUMN LAYOUT -->
+<div class="fam-page-wrapper" id="resource-database">
+
+  <!-- FILTER SIDEBAR -->
+  <aside class="fam-sidebar">
+    <div class="fam-sidebar-header">
+      <h3>Filters</h3>
+      <button class="fam-clear-btn" onclick="clearAllFilters()">Clear all</button>
+    </div>
+
+    <input type="text" class="fam-search-input" id="famSearchInput"
+           placeholder="🔍 Search resources…"
+           oninput="onSearch(this.value)" />
+
+    <div class="fam-filter-group">
+      <div class="fam-filter-group-label">Audience</div>
+      <div class="fam-filter-pills" id="pillsAudience">
+        <button class="fam-pill" data-filter="audience" data-value="gold_star_families" onclick="togglePill(this,'audience')">Gold Star Families</button>
+        <button class="fam-pill" data-filter="audience" data-value="surviving_spouses" onclick="togglePill(this,'audience')">Surviving Spouses</button>
+        <button class="fam-pill" data-filter="audience" data-value="military_spouses" onclick="togglePill(this,'audience')">Military Spouses</button>
+        <button class="fam-pill" data-filter="audience" data-value="caregivers" onclick="togglePill(this,'audience')">Caregivers</button>
+        <button class="fam-pill" data-filter="audience" data-value="veteran_families" onclick="togglePill(this,'audience')">Veteran Families</button>
+      </div>
+    </div>
+
+    <div class="fam-filter-group">
+      <div class="fam-filter-group-label">Category</div>
+      <div class="fam-filter-pills" id="pillsCategory">
+        <button class="fam-pill" data-filter="category" data-value="grief_bereavement" onclick="togglePill(this,'category')">Grief &amp; Bereavement</button>
+        <button class="fam-pill" data-filter="category" data-value="mental_health" onclick="togglePill(this,'category')">Mental Health</button>
+        <button class="fam-pill" data-filter="category" data-value="financial_assistance" onclick="togglePill(this,'category')">Financial</button>
+        <button class="fam-pill" data-filter="category" data-value="survivor_benefits" onclick="togglePill(this,'category')">Survivor Benefits</button>
+        <button class="fam-pill" data-filter="category" data-value="caregiver_support" onclick="togglePill(this,'category')">Caregiver Support</button>
+        <button class="fam-pill" data-filter="category" data-value="employment_education" onclick="togglePill(this,'category')">Employment &amp; Ed</button>
+        <button class="fam-pill" data-filter="category" data-value="children_youth" onclick="togglePill(this,'category')">Children &amp; Youth</button>
+        <button class="fam-pill" data-filter="category" data-value="housing" onclick="togglePill(this,'category')">Housing</button>
+        <button class="fam-pill" data-filter="category" data-value="legal_services" onclick="togglePill(this,'category')">Legal Services</button>
+        <button class="fam-pill" data-filter="category" data-value="community_connection" onclick="togglePill(this,'category')">Community</button>
+        <button class="fam-pill" data-filter="category" data-value="crisis_emergency" onclick="togglePill(this,'category')">Crisis &amp; Emergency</button>
+      </div>
+    </div>
+
+    <div class="fam-filter-group">
+      <div class="fam-filter-group-label">Location</div>
+      <div class="fam-filter-pills" id="pillsLocation">
+        <button class="fam-pill" data-filter="location" data-value="national" onclick="togglePill(this,'location')">National</button>
+        <button class="fam-pill" data-filter="location" data-value="CA" onclick="togglePill(this,'location')">California</button>
+        <button class="fam-pill" data-filter="location" data-value="GA" onclick="togglePill(this,'location')">Georgia</button>
+        <button class="fam-pill" data-filter="location" data-value="MA" onclick="togglePill(this,'location')">Massachusetts</button>
+        <button class="fam-pill" data-filter="location" data-value="VA" onclick="togglePill(this,'location')">Virginia</button>
+      </div>
+    </div>
+
+    <div class="fam-filter-group">
+      <div class="fam-filter-group-label">Format</div>
+      <div class="fam-filter-pills" id="pillsFormat">
+        <button class="fam-pill" data-filter="format" data-value="nonprofit" onclick="togglePill(this,'format')">Nonprofit</button>
+        <button class="fam-pill" data-filter="format" data-value="government" onclick="togglePill(this,'format')">Government</button>
+      </div>
+    </div>
+
+    <div class="fam-result-count" id="sidebarCount">Loading…</div>
+  </aside>
+
+  <!-- MAIN RESULTS -->
+  <div class="fam-main">
+    <div class="fam-toolbar">
+      <div class="fam-toolbar-left" id="toolbarLabel">Loading resources…</div>
+      <select class="fam-sort-select" id="sortSelect" onchange="applyFilters()">
+        <option value="default">Sort: Recommended</option>
+        <option value="alpha">Sort: A → Z</option>
+        <option value="category">Sort: Category</option>
+      </select>
+    </div>
+
+    <div class="fam-grid" id="famGrid">
+      <div class="fam-empty"><h3>Loading…</h3></div>
+    </div>
+
+    <div class="fam-load-more" id="loadMoreArea" style="display:none;">
+      <button class="fam-load-more-btn" onclick="loadMore()">Load More Resources</button>
+    </div>
+  </div>
+
+</div><!-- end fam-page-wrapper -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+    </div>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+        <!-- Social media links hidden until accounts are created -->
+      </div>
+    </div>
+    <div class="footer__nonprofit">
+      AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── Navbar toggle ── */
+function toggleMenu() {
+  const menu = document.getElementById('navMenu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+document.querySelectorAll('.navbar__nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth < 768) document.getElementById('navMenu').style.display = 'none';
+  });
+});
+
+/* ── Label maps ── */
+const AUDIENCE_LABELS = {
+  gold_star_families:'Gold Star Families', surviving_spouses:'Surviving Spouses',
+  military_spouses:'Military Spouses', caregivers:'Caregivers', veteran_families:'Veteran Families'
+};
+const CATEGORY_LABELS = {
+  grief_bereavement:'Grief & Bereavement', mental_health:'Mental Health',
+  financial_assistance:'Financial Assistance', housing:'Housing', legal_services:'Legal Services',
+  caregiver_support:'Caregiver Support', employment_education:'Employment & Education',
+  children_youth:'Children & Youth', community_connection:'Community Connection',
+  crisis_emergency:'Crisis & Emergency', survivor_benefits:'Survivor Benefits'
+};
+
+/* ── QA filter map ── */
+const QA_MAP = {
+  crisis:         { type:'category', values:['crisis_emergency'] },
+  gold_star:      { type:'audience', values:['gold_star_families','surviving_spouses'] },
+  military_spouse:{ type:'audience', values:['military_spouses'] },
+  caregiver:      { type:'audience', values:['caregivers'] },
+  benefits:       { type:'category', values:['survivor_benefits','financial_assistance','legal_services'] },
+  top:            { type:'credibility', values:['flagship'] }
+};
+
+/* ── State ── */
+let allResources = [];
+const activeFilters = { audience:null, category:null, location:null, format:null, search:'', qa:null };
+const PAGE_SIZE = 24;
+let visibleCount = PAGE_SIZE;
+
+/* ── Toggle sidebar pill (single-select per group) ── */
+function togglePill(el, filterType) {
+  const val = el.dataset.value;
+  const group = el.closest('.fam-filter-pills');
+  const wasActive = el.classList.contains('active');
+  group.querySelectorAll('.fam-pill').forEach(p => p.classList.remove('active'));
+  // Clear QA when using manual pills
+  clearQAButtons();
+  activeFilters.qa = null;
+  if (!wasActive) {
+    el.classList.add('active');
+    activeFilters[filterType] = val;
+  } else {
+    activeFilters[filterType] = null;
+  }
+  visibleCount = PAGE_SIZE;
+  applyFilters();
+}
+
+/* ── Quick-access buttons ── */
+function setQA(btn) {
+  const qa = btn.dataset.qa;
+  const wasActive = btn.classList.contains('active');
+  clearQAButtons();
+  clearPills();
+  Object.keys(activeFilters).forEach(k => activeFilters[k] = k === 'search' ? activeFilters.search : null);
+  if (!wasActive) {
+    btn.classList.add('active');
+    activeFilters.qa = qa;
+  }
+  visibleCount = PAGE_SIZE;
+  applyFilters();
+}
+function clearQAButtons() {
+  document.querySelectorAll('#qaRow .fam-qa-btn').forEach(b => b.classList.remove('active'));
+}
+function clearPills() {
+  document.querySelectorAll('.fam-pill').forEach(p => p.classList.remove('active'));
+}
+function clearAllFilters() {
+  clearQAButtons(); clearPills();
+  Object.keys(activeFilters).forEach(k => activeFilters[k] = k === 'search' ? '' : null);
+  document.getElementById('famSearchInput').value = '';
+  visibleCount = PAGE_SIZE;
+  applyFilters();
+}
+function onSearch(val) {
+  activeFilters.search = val.trim();
+  visibleCount = PAGE_SIZE;
+  applyFilters();
+}
+
+/* ── Render a single card ── */
+function renderCard(r) {
+  const audiences = (r.audience||[]).map(a =>
+    `<span class="fam-badge fam-badge--audience">${AUDIENCE_LABELS[a]||a}</span>`
+  ).join('');
+  const catLabel = CATEGORY_LABELS[r.category] || r.category;
+  const location = r.state ? `${r.city?r.city+', ':''}${r.state}` : (r.city||'National');
+  const flagshipBadge = r.credibility_level==='flagship'
+    ? '<span class="fam-card__flagship">Flagship</span>' : '';
+  const link = r.website
+    ? `<a href="${r.website}" target="_blank" rel="noopener noreferrer" class="fam-card__link">Visit Website →</a>` : '';
+  const contact = r.contact_info
+    ? `<span style="font-size:0.72rem;color:rgba(255,255,255,0.35);">${r.contact_info}</span>` : '';
+  return `<div class="fam-card aa-card">
+    <div class="fam-card__top">
+      <div class="fam-card__name">${r.name}</div>${flagshipBadge}
+    </div>
+    <div class="fam-card__meta-row">
+      ${audiences}
+      <span class="fam-badge fam-badge--category">${catLabel}</span>
+      <span class="fam-badge fam-badge--format">${r.format||''}</span>
+    </div>
+    <div class="fam-card__location">
+      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      ${location}
+    </div>
+    <p class="fam-card__desc">${r.description||''}</p>
+    ${(link||contact)?`<div class="fam-card__footer">${link}${contact}</div>`:''}
+  </div>`;
+}
+
+/* ── Apply all filters and render ── */
+function applyFilters() {
+  const f = activeFilters;
+  const sort = document.getElementById('sortSelect').value;
+
+  let results = allResources.filter(r => {
+    // QA filter
+    if (f.qa) {
+      const qa = QA_MAP[f.qa];
+      if (qa.type==='audience' && !r.audience.some(a=>qa.values.includes(a))) return false;
+      if (qa.type==='category' && !qa.values.includes(r.category)) return false;
+      if (qa.type==='credibility' && !qa.values.includes(r.credibility_level)) return false;
+    }
+    // Pill filters
+    if (f.audience && !r.audience.includes(f.audience)) return false;
+    if (f.category && r.category!==f.category) return false;
+    if (f.location) {
+      if (f.location==='national' && r.state!=='') return false;
+      if (f.location!=='national' && r.state!==f.location) return false;
+    }
+    if (f.format && r.format!==f.format) return false;
+    // Search
+    if (f.search) {
+      const q=f.search.toLowerCase();
+      if (![r.name,r.description,r.category,...(r.audience||[])].join(' ').toLowerCase().includes(q)) return false;
+    }
+    return true;
+  });
+
+  // Sort
+  if (sort==='alpha') results.sort((a,b)=>a.name.localeCompare(b.name));
+  else if (sort==='category') results.sort((a,b)=>a.category.localeCompare(b.category));
+  else results.sort((a,b)=>(a.credibility_level==='flagship'?0:1)-(b.credibility_level==='flagship'?0:1));
+
+  const total = results.length;
+  const shown = results.slice(0, visibleCount);
+
+  // Toolbar
+  const activeLabel = f.qa ? Object.keys(QA_MAP).includes(f.qa) ? '' : '' : '';
+  document.getElementById('toolbarLabel').innerHTML =
+    `Showing <strong>${shown.length}</strong> of <strong>${total}</strong> resources`;
+  document.getElementById('sidebarCount').innerHTML =
+    `<strong>${total}</strong> resource${total!==1?'s':''}`;
+
+  // Grid
+  const grid = document.getElementById('famGrid');
+  if (total===0) {
+    grid.innerHTML=`<div class="fam-empty"><h3>No resources found</h3><p>Try adjusting your filters.</p></div>`;
+  } else {
+    grid.innerHTML = shown.map(renderCard).join('');
+  }
+
+  // Load more
+  const lma = document.getElementById('loadMoreArea');
+  lma.style.display = total > visibleCount ? 'block' : 'none';
+}
+
+function loadMore() {
+  visibleCount += PAGE_SIZE;
+  applyFilters();
+}
+
+/* ── Load JSON data ── */
+Promise.all([
+  fetch('families_support_database.json').then(r=>r.json()),
+  fetch('families_support_curated.json').then(r=>r.json())
+]).then(([db]) => {
+  allResources = db.resources || [];
+  // Default: show top recommended (flagship)
+  document.querySelector('[data-qa="top"]').classList.add('active');
+  activeFilters.qa = 'top';
+  applyFilters();
+}).catch(err => {
+  document.getElementById('famGrid').innerHTML =
+    `<div class="fam-empty"><h3>Could not load resources</h3><p>Please refresh the page.</p></div>`;
+  console.error('Families data error:', err);
+});
+</script>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>

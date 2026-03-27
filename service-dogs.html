@@ -1,0 +1,917 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Service Dogs for Veterans — AfterAction AI</title>
+  <meta name="description" content="Comprehensive service dog resource hub for veterans. Covers ADA rights, PTSD service dogs, veteran organizations, training, housing, travel, scam warnings, and financial assistance." />
+  <meta name="keywords" content="service dog veterans, PTSD service dog, veteran service dog organization, ADA service animal, emotional support animal, psychiatric service dog, K9s for Warriors" />
+  <meta property="og:title" content="Service Dogs for Veterans — AfterAction AI" />
+  <meta property="og:description" content="Everything veterans need to know about service dogs — legal rights, trusted organizations, PTSD service dogs, training options, and financial assistance." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/service-dogs" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+
+  <style>
+    /* ── Service Dog Page Styles ─────────────────────────── */
+    .sd-hero {
+      background: var(--gray-900, #111);
+      border-bottom: 1px solid var(--gray-800, #222);
+      padding: 56px 24px 40px;
+      text-align: center;
+    }
+    .sd-hero__eyebrow {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold, #C5A55A);
+      margin-bottom: 12px;
+    }
+    .sd-hero__title {
+      font-size: clamp(1.6rem, 4vw, 2.4rem);
+      font-weight: 800;
+      color: #fff;
+      margin: 0 0 14px;
+      line-height: 1.2;
+    }
+    .sd-hero__sub {
+      font-size: 1rem;
+      color: var(--gray-400, #9ca3af);
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+
+    /* ── Page wrapper ─────────────────────────────────────── */
+    .sd-page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    /* ── Section headers ─────────────────────────────────── */
+    .sd-section {
+      margin-top: 48px;
+    }
+    .sd-section__header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--gray-800, #222);
+    }
+    .sd-section__icon { font-size: 1.3rem; }
+    .sd-section__title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #fff;
+      margin: 0;
+    }
+
+    /* ── Quick Nav / Table of Contents ─────────────────────── */
+    .sd-quicknav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 20px 0;
+      margin-top: 28px;
+    }
+    .sd-quicknav__btn {
+      background: var(--gray-800, #1e2229);
+      border: 1px solid var(--gray-700, #374151);
+      color: var(--gray-300, #d1d5db);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .sd-quicknav__btn:hover {
+      background: var(--gray-700, #374151);
+      border-color: var(--gold, #C5A55A);
+      color: #fff;
+    }
+
+    /* ── Explanation boxes ──────────────────────────────────── */
+    .sd-explainer {
+      background: var(--gray-900, #111827);
+      border: 1px solid var(--gray-800, #1f2937);
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-bottom: 14px;
+    }
+    .sd-explainer__title {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 8px;
+    }
+    .sd-explainer__body {
+      font-size: 0.88rem;
+      color: var(--gray-400, #9ca3af);
+      line-height: 1.65;
+      margin: 0;
+    }
+    .sd-explainer__badge {
+      display: inline-block;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+    .sd-explainer__badge--service { background: #1d4ed8; color: #fff; }
+    .sd-explainer__badge--psd    { background: #7c3aed; color: #fff; }
+    .sd-explainer__badge--esa    { background: #0f766e; color: #fff; }
+    .sd-explainer__badge--therapy { background: #b45309; color: #fff; }
+
+    /* ── Org cards ──────────────────────────────────────────── */
+    .sd-orgs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+    }
+    .sd-card {
+      background: var(--gray-900, #111827);
+      border: 1px solid var(--gray-800, #1f2937);
+      border-radius: 8px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      transition: border-color 0.15s;
+    }
+    .sd-card:hover { border-color: var(--gold, #C5A55A); }
+    .sd-card__name {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0;
+    }
+    .sd-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .sd-card__tag {
+      font-size: 0.68rem;
+      font-weight: 600;
+      padding: 2px 7px;
+      border-radius: 10px;
+      background: var(--gray-800, #1e2229);
+      color: var(--gray-400, #9ca3af);
+      border: 1px solid var(--gray-700, #374151);
+    }
+    .sd-card__tag--adi  { background: rgba(29,78,216,0.15); color: #93c5fd; border-color: rgba(29,78,216,0.3); }
+    .sd-card__tag--vet  { background: rgba(197,165,90,0.15); color: var(--gold, #C5A55A); border-color: rgba(197,165,90,0.3); }
+    .sd-card__tag--free { background: rgba(22,163,74,0.15); color: #86efac; border-color: rgba(22,163,74,0.3); }
+    .sd-card__desc {
+      font-size: 0.83rem;
+      color: var(--gray-400, #9ca3af);
+      line-height: 1.55;
+      flex: 1;
+    }
+    .sd-card__meta {
+      font-size: 0.78rem;
+      color: var(--gray-500, #6b7280);
+    }
+    .sd-card__meta strong { color: var(--gray-300, #d1d5db); }
+    .sd-card__link {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--gold, #C5A55A);
+      text-decoration: none;
+    }
+    .sd-card__link:hover { text-decoration: underline; }
+
+    /* ── Key facts / bullet lists ────────────────────────────── */
+    .sd-facts {
+      background: var(--gray-900, #111827);
+      border: 1px solid var(--gray-800, #1f2937);
+      border-left: 3px solid var(--gold, #C5A55A);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin-bottom: 14px;
+    }
+    .sd-facts__title {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #fff;
+      margin: 0 0 10px;
+    }
+    .sd-facts ul {
+      margin: 0;
+      padding: 0 0 0 18px;
+      list-style: disc;
+    }
+    .sd-facts ul li {
+      font-size: 0.84rem;
+      color: var(--gray-400, #9ca3af);
+      line-height: 1.6;
+      margin-bottom: 4px;
+    }
+    .sd-facts ul li strong { color: var(--gray-200, #e5e7eb); }
+
+    /* ── Warning box ────────────────────────────────────────── */
+    .sd-warning {
+      background: rgba(220,38,38,0.08);
+      border: 1px solid rgba(220,38,38,0.25);
+      border-radius: 8px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+    }
+    .sd-warning__title {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #fca5a5;
+      margin: 0 0 8px;
+    }
+    .sd-warning__body {
+      font-size: 0.84rem;
+      color: var(--gray-400, #9ca3af);
+      line-height: 1.6;
+      margin: 0;
+    }
+    .sd-warning ul {
+      margin: 8px 0 0;
+      padding: 0 0 0 18px;
+    }
+    .sd-warning ul li {
+      font-size: 0.83rem;
+      color: var(--gray-400, #9ca3af);
+      line-height: 1.6;
+      margin-bottom: 3px;
+    }
+
+    /* ── Official source pills ───────────────────────────────── */
+    .sd-official-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .sd-official-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gray-800, #1e2229);
+      border: 1px solid var(--gray-700, #374151);
+      color: var(--gray-300, #d1d5db);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .sd-official-link:hover {
+      border-color: var(--gold, #C5A55A);
+      color: var(--gold, #C5A55A);
+    }
+
+    /* ── Filter pills for orgs ───────────────────────────────── */
+    .sd-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .sd-filter-pill {
+      background: var(--gray-800, #1e2229);
+      border: 1px solid var(--gray-700, #374151);
+      color: var(--gray-400, #9ca3af);
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .sd-filter-pill.active,
+    .sd-filter-pill:hover {
+      background: var(--gold, #C5A55A);
+      border-color: var(--gold, #C5A55A);
+      color: var(--gray-900, #111);
+    }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 640px) {
+      .sd-orgs-grid { grid-template-columns: 1fr; }
+      .sd-hero { padding: 40px 16px 28px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html" class="active">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
+          <li><a href="state-benefits.html">State Benefits</a></li>
+          <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="sd-hero">
+  <div class="sd-hero__eyebrow">Resources → Core Support</div>
+  <h1 class="sd-hero__title">Service Dogs for Veterans</h1>
+  <p class="sd-hero__sub">Legal rights, trusted organizations, PTSD service dogs, training paths, financial assistance, and how to avoid scams — everything in one place.</p>
+</div>
+
+<!-- QUICK NAV -->
+<div class="sd-page">
+  <nav class="sd-quicknav" aria-label="Jump to section">
+    <a href="#types"       class="sd-quicknav__btn">Dog Types & Differences</a>
+    <a href="#ada"         class="sd-quicknav__btn">ADA Public Access Rights</a>
+    <a href="#housing"     class="sd-quicknav__btn">Housing Rights</a>
+    <a href="#travel"      class="sd-quicknav__btn">Air Travel</a>
+    <a href="#training"    class="sd-quicknav__btn">Training Options</a>
+    <a href="#orgs"        class="sd-quicknav__btn">Veteran Organizations</a>
+    <a href="#va"          class="sd-quicknav__btn">VA Benefits</a>
+    <a href="#financial"   class="sd-quicknav__btn">Financial Assistance</a>
+    <a href="#scams"       class="sd-quicknav__btn">Scam Warnings</a>
+    <a href="#official"    class="sd-quicknav__btn">Official Sources</a>
+  </nav>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: TYPES -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="types">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">🐕</span>
+      <h2 class="sd-section__title">Understanding Dog Types: Service Dog vs. ESA vs. Therapy Dog</h2>
+    </div>
+    <p style="font-size:0.88rem;color:var(--gray-400);line-height:1.65;margin-bottom:16px;">
+      These terms are frequently confused — even by housing providers, businesses, and airlines. Getting this right matters, because the legal protections differ significantly.
+    </p>
+
+    <div class="sd-explainer">
+      <span class="sd-explainer__badge sd-explainer__badge--service">Service Dog</span>
+      <div class="sd-explainer__title">Service Dog (including Psychiatric Service Dog)</div>
+      <p class="sd-explainer__body">A dog individually trained to perform specific tasks directly related to a person's disability. Psychiatric Service Dogs (PSDs) are service dogs trained for veterans with PTSD, anxiety disorders, or other mental health conditions. <strong>Full public access rights under the ADA.</strong> Examples of PSD tasks: interrupting nightmares, tactile grounding during panic attacks, creating physical space in crowds, turning on lights, medication reminders, "room clearing" for hypervigilance.</p>
+    </div>
+
+    <div class="sd-explainer">
+      <span class="sd-explainer__badge sd-explainer__badge--esa">Emotional Support Animal (ESA)</span>
+      <div class="sd-explainer__title">Emotional Support Animal (ESA)</div>
+      <p class="sd-explainer__body">Any animal (not just dogs) that provides comfort through presence alone. <strong>Does not require specific task training.</strong> ESAs are <em>not</em> protected under ADA for public access — they cannot enter stores, restaurants, or public accommodations as a right. They <em>are</em> protected under the Fair Housing Act for housing, with documentation from a licensed mental health provider. As of January 2021, airlines are no longer required to accept ESAs in the cabin under federal rules.</p>
+    </div>
+
+    <div class="sd-explainer">
+      <span class="sd-explainer__badge sd-explainer__badge--therapy">Therapy Dog</span>
+      <div class="sd-explainer__title">Therapy Dog</div>
+      <p class="sd-explainer__body">Dogs trained to provide comfort and affection in institutional settings (hospitals, VA medical centers, nursing homes, schools). <strong>Therapy dogs belong to volunteers who bring them to facilities</strong> — they are not the property of the person receiving therapy. No ADA public access rights. Access depends on permission from individual facilities. Many VA Medical Centers use therapy dog programs.</p>
+    </div>
+
+    <div class="sd-facts">
+      <div class="sd-facts__title">The Single Most Important Distinction</div>
+      <ul>
+        <li>A <strong>service dog</strong> must be trained to perform a specific task. Presence alone does not count.</li>
+        <li>An <strong>ESA</strong> provides benefit through companionship and presence — no specific task required.</li>
+        <li>Only <strong>service dogs</strong> (and miniature horses) have ADA public access rights.</li>
+        <li>Both service dogs and ESAs have housing protections under the FHA.</li>
+        <li>Neither requires a vest, certification card, or registration — and businesses cannot legally demand them.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: ADA -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="ada">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">⚖️</span>
+      <h2 class="sd-section__title">ADA Public Access Rights</h2>
+    </div>
+
+    <div class="sd-facts">
+      <div class="sd-facts__title">What Businesses Can — and Cannot — Do</div>
+      <ul>
+        <li>Businesses <strong>may ask only two questions</strong>: (1) Is this a service animal required because of a disability? (2) What work or task has the dog been trained to perform?</li>
+        <li>Businesses <strong>cannot ask</strong> about the nature or extent of the person's disability.</li>
+        <li>Businesses <strong>cannot require</strong> documentation, registration, ID cards, certification, or a vest.</li>
+        <li>Businesses <strong>cannot require</strong> a demonstration of the task.</li>
+        <li>Businesses <strong>may exclude</strong> a service animal if it is out of control and the handler does not take effective action, or if it is not housebroken.</li>
+        <li>Service animals must be <strong>under control at all times</strong> (leash, tether, or voice/signal control).</li>
+        <li>Applies to <strong>all businesses open to the public</strong>: restaurants, stores, hotels, hospitals, and government facilities.</li>
+      </ul>
+    </div>
+
+    <div class="sd-official-links">
+      <a href="https://www.ada.gov/resources/service-animals-2010-requirements/" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 ADA.gov — Official Service Animal Requirements
+      </a>
+      <a href="https://www.ada.gov/resources/service-animals-faqs/" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 ADA.gov — Service Animal FAQs
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: HOUSING -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="housing">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">🏠</span>
+      <h2 class="sd-section__title">Housing Rights</h2>
+    </div>
+
+    <div class="sd-facts">
+      <div class="sd-facts__title">Fair Housing Act Protections (Broader than ADA)</div>
+      <ul>
+        <li>The FHA covers most housing: rental apartments, condos, co-ops, homeowners associations, and most housing with 4+ units.</li>
+        <li><strong>Both service dogs AND emotional support animals</strong> are covered under the FHA as "assistance animals."</li>
+        <li>Housing providers must provide <strong>reasonable accommodations</strong> for assistance animals, even if they have a "no pets" policy.</li>
+        <li><strong>No pet deposit or pet fee</strong> may be charged for a legitimate service animal or ESA.</li>
+        <li>Breed and weight restrictions in pet policies generally <strong>cannot be applied</strong> to assistance animals.</li>
+        <li>For ESAs, housing providers may request <strong>documentation from a licensed healthcare provider</strong> verifying the disability-related need.</li>
+        <li>Housing providers <strong>can deny</strong> if the animal poses a direct threat to health/safety or would cause fundamental alteration.</li>
+      </ul>
+    </div>
+
+    <div class="sd-official-links">
+      <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp/assistance_animals" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 HUD — Assistance Animals in Housing
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: TRAVEL -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="travel">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">✈️</span>
+      <h2 class="sd-section__title">Air Travel</h2>
+    </div>
+
+    <div class="sd-facts">
+      <div class="sd-facts__title">Revised Rules Effective January 11, 2021</div>
+      <ul>
+        <li>Airlines are now <strong>only required to accommodate service dogs</strong> — not emotional support animals — in the cabin.</li>
+        <li>Airlines may require a <strong>DOT Service Animal Air Transportation Form</strong> submitted at least 48 hours before the flight.</li>
+        <li>Airlines may require the dog to <strong>sit on the floor or in the lap</strong> of the passenger.</li>
+        <li>Airlines may require the dog to be <strong>harnessed, leashed, or tethered</strong> at all times in the airport and aircraft.</li>
+        <li>Each airline has slightly <strong>different specific policies</strong> — always contact the airline directly before booking.</li>
+        <li>ESAs traveling by air now follow standard <strong>pet policies and fees</strong> (same as any household pet).</li>
+      </ul>
+    </div>
+
+    <div class="sd-official-links">
+      <a href="https://www.transportation.gov/individuals/aviation-consumer-protection/service-animals" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 DOT — Service Animals on Aircraft
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: TRAINING -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="training">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">🎓</span>
+      <h2 class="sd-section__title">Training: Self-Training vs. Professional Programs</h2>
+    </div>
+
+    <div class="sd-explainer">
+      <div class="sd-explainer__title">Owner / Self-Training</div>
+      <p class="sd-explainer__body">There is <strong>no federal law requiring a service dog to be professionally trained</strong>. Veterans can legally train their own service dog. This can reduce costs significantly and deepens the handler-dog bond during the training process. However, it requires substantial commitment — typically 18–24 months for a solid working service dog. The dog must still reliably perform specific trained tasks and demonstrate appropriate public access behavior. Recommended: work with a Certified Professional Dog Trainer (CPDT-KA) or a service dog trainer even if owner-training, especially for public access preparation.</p>
+    </div>
+
+    <div class="sd-explainer">
+      <div class="sd-explainer__title">ADI-Accredited Professional Programs</div>
+      <p class="sd-explainer__body">Working with an Assistance Dogs International (ADI) accredited organization is the gold standard. ADI-accredited programs meet rigorous standards for dog welfare, training quality, handler support, and follow-up services. Training typically spans 18–24 months before placement. Cost for privately purchased trained service dogs: <strong>$15,000–$50,000+</strong>. Through nonprofit organizations: <strong>free to the recipient</strong>. Reputable organizations provide lifetime follow-up support after placement.</p>
+    </div>
+
+    <div class="sd-facts">
+      <div class="sd-facts__title">Key Standards and Certifications to Know</div>
+      <ul>
+        <li><strong>ADI Accreditation</strong> — Gold standard for service dog organizations. Verify at assistancedogsinternational.org.</li>
+        <li><strong>IGDF Accreditation</strong> — Applies specifically to guide dog schools worldwide.</li>
+        <li><strong>Canine Good Citizen (CGC) Advanced</strong> — AKC benchmark for public access behavior, widely recognized.</li>
+        <li><strong>ADI Minimum Standards</strong> — Published public access test standards used by accredited programs.</li>
+        <li><strong>CPDT-KA</strong> — Certified Professional Dog Trainer credential; useful when working with independent trainers.</li>
+      </ul>
+    </div>
+
+    <div class="sd-facts">
+      <div class="sd-facts__title">Owner Responsibilities After Placement</div>
+      <ul>
+        <li>Maintaining the dog's training with regular practice and reinforcement</li>
+        <li>Proper veterinary care, nutrition, and regular health monitoring</li>
+        <li>The dog must remain clean and well-groomed in public settings</li>
+        <li>Managing the dog's behavior — if out of control, businesses can legally ask you to remove the dog</li>
+        <li>Retirement planning: service dogs typically work for 8–10 years and need transition planning</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: VETERAN ORGS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="orgs">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">🎖️</span>
+      <h2 class="sd-section__title">Veteran Service Dog Organizations</h2>
+    </div>
+    <p style="font-size:0.85rem;color:var(--gray-400);line-height:1.6;margin-bottom:16px;">
+      The following organizations are verified, reputable providers of service dogs for veterans. Many are ADI-accredited. All are free or reduced-cost for qualifying veterans. Wait times are long — apply early and apply to multiple organizations simultaneously.
+    </p>
+
+    <div class="sd-filters">
+      <button class="sd-filter-pill active" onclick="sdFilter('all',this)">All</button>
+      <button class="sd-filter-pill" onclick="sdFilter('ptsd',this)">PTSD / Mental Health</button>
+      <button class="sd-filter-pill" onclick="sdFilter('mobility',this)">Mobility</button>
+      <button class="sd-filter-pill" onclick="sdFilter('guide',this)">Guide / Vision</button>
+      <button class="sd-filter-pill" onclick="sdFilter('adi',this)">ADI Accredited</button>
+      <button class="sd-filter-pill" onclick="sdFilter('vetonly',this)">Veteran-Focused Only</button>
+    </div>
+
+    <div class="sd-orgs-grid" id="sdOrgsGrid">
+      <!-- Populated by JS -->
+      <div style="grid-column:1/-1;color:var(--gray-500);font-size:0.85rem;padding:20px 0;">Loading organizations...</div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: VA BENEFITS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="va">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">🏥</span>
+      <h2 class="sd-section__title">VA Benefits for Service Dogs</h2>
+    </div>
+
+    <div class="sd-facts">
+      <div class="sd-facts__title">What the VA Covers</div>
+      <ul>
+        <li>The VA provides <strong>veterinary care benefits</strong> for service dogs used by veterans with <strong>visual impairment, hearing loss, or substantial mobility impairment</strong>.</li>
+        <li>Covered services include: veterinary examinations, treatments, medications, equipment, and prosthetics for the dog.</li>
+        <li><strong>PTSD-only service dogs do not currently qualify</strong> for VA vet care benefits under existing policy — this has been debated in Congress.</li>
+        <li>Application is through the <strong>Prosthetics and Sensory Aids department</strong> at your local VA Medical Center.</li>
+        <li>Requires documentation: proof of the dog's training and the veteran's qualifying service-connected disability.</li>
+        <li>The VA also has facility-based <strong>therapy dog programs</strong> at many VAMCs — these are separate from personal service dog benefits.</li>
+      </ul>
+    </div>
+
+    <div class="sd-official-links">
+      <a href="https://www.prosthetics.va.gov/ServiceandGuideDogs.asp" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 VA — Service &amp; Guide Dog Benefits
+      </a>
+      <a href="https://www.va.gov/health-care/" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 VA Health Care Enrollment
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: FINANCIAL -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="financial">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">💰</span>
+      <h2 class="sd-section__title">Financial Assistance &amp; Costs</h2>
+    </div>
+
+    <div class="sd-explainer">
+      <div class="sd-explainer__title">Through ADI-Accredited Nonprofit Organizations</div>
+      <p class="sd-explainer__body">The most common path for veterans is through an ADI-accredited nonprofit, where the service dog is provided <strong>completely free of charge</strong> — including the dog, training, the team training period, and ongoing follow-up support. The organizations listed on this page use this model. The trade-off is wait time (1–3 years in many cases) and eligibility requirements.</p>
+    </div>
+
+    <div class="sd-explainer">
+      <div class="sd-explainer__title">VA Vocational Rehabilitation (VR&amp;E / Chapter 31)</div>
+      <p class="sd-explainer__body">If a service dog is determined necessary for your employment or independent living goals under a VA vocational rehabilitation plan, VR&amp;E may fund acquisition costs, training programs, or owner-training expenses. Requires enrollment in the VR&amp;E program with an active rehabilitation plan.</p>
+    </div>
+
+    <div class="sd-explainer">
+      <div class="sd-explainer__title">Private Purchase Costs</div>
+      <p class="sd-explainer__body">Privately purchasing a fully trained service dog from a professional organization (not through the free nonprofit route) typically costs <strong>$15,000–$50,000+</strong> depending on the type of dog, training level, and organization. This is generally not recommended when free programs are available — apply to multiple free programs while exploring this option.</p>
+    </div>
+
+    <div class="sd-official-links">
+      <a href="https://www.va.gov/careers-employment/vocational-rehabilitation/" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 VA VR&amp;E (Chapter 31) Program
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: SCAM WARNINGS -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="scams">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">⚠️</span>
+      <h2 class="sd-section__title">Scam Warning: Fake Certification &amp; Registration</h2>
+    </div>
+
+    <div class="sd-warning">
+      <div class="sd-warning__title">⚠️ There Is No Official Service Dog Registry or Certification in the US</div>
+      <p class="sd-warning__body">
+        Dozens of websites sell "official service dog registration," "certification cards," "service dog IDs," and "ESA letters" for $50–$200 with little or no verification. <strong>None of these carry any legal weight under the ADA.</strong> Businesses cannot require documentation, and these documents will not help you if challenged.
+      </p>
+      <ul>
+        <li>Any website claiming to be an "official national service dog registry" is deceptive — <strong>no such registry exists</strong></li>
+        <li>"Service dog certification" for a fee with no legitimate training verification is legally meaningless</li>
+        <li>Online ESA letters with no genuine clinical relationship (one video call for $99) may also be ethically and legally questionable</li>
+        <li>Service dog vests and patches can be purchased by anyone — they are not legally required and cannot prove status</li>
+        <li>Programs charging $500–$2,000 for "rapid certification" or "instant service dog training" without legitimate training programs</li>
+      </ul>
+    </div>
+
+    <div class="sd-facts">
+      <div class="sd-facts__title">How to Verify a Legitimate Organization</div>
+      <ul>
+        <li>Check for <strong>ADI or IGDF accreditation</strong> at assistancedogsinternational.org/find-a-provider/</li>
+        <li>Legitimate programs provide <strong>follow-up support for the life of the team</strong> — not just a placement</li>
+        <li>Legitimate programs have <strong>long wait lists</strong> — if someone can get you a certified service dog in 2 weeks, that's a red flag</li>
+        <li>Look for <strong>501(c)(3) nonprofit status</strong> and publicly available financials</li>
+        <li>Avoid any program that promises a specific dog before an assessment is completed</li>
+      </ul>
+    </div>
+
+    <div class="sd-official-links">
+      <a href="https://www.ada.gov/resources/service-animals-faqs/" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 ADA.gov — Service Animal FAQs
+      </a>
+      <a href="https://assistancedogsinternational.org/find-a-provider/" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        ✅ ADI — Find a Verified Provider
+      </a>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- SECTION: OFFICIAL SOURCES -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <section class="sd-section" id="official">
+    <div class="sd-section__header">
+      <span class="sd-section__icon">📋</span>
+      <h2 class="sd-section__title">Official Sources &amp; Authoritative References</h2>
+    </div>
+
+    <div class="sd-official-links" style="flex-direction:column;align-items:flex-start;">
+      <a href="https://www.ada.gov/resources/service-animals-2010-requirements/" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 ADA.gov — 2010 Service Animal Requirements (Definitive Guide)
+      </a>
+      <a href="https://www.hud.gov/program_offices/fair_housing_equal_opp/assistance_animals" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 HUD — Assistance Animals &amp; Fair Housing
+      </a>
+      <a href="https://www.transportation.gov/individuals/aviation-consumer-protection/service-animals" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 DOT — Service Animals on Aircraft (2021 Final Rule)
+      </a>
+      <a href="https://www.prosthetics.va.gov/ServiceandGuideDogs.asp" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        🏛 VA — Service &amp; Guide Dog Benefits Program
+      </a>
+      <a href="https://assistancedogsinternational.org" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        ✅ Assistance Dogs International (ADI) — Accreditation &amp; Provider Directory
+      </a>
+      <a href="https://www.iaadp.org/psd_tasks.html" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        📖 IAADP — Psychiatric Service Dog Task List
+      </a>
+      <a href="https://adata.org/guide/service-animals" target="_blank" rel="noopener noreferrer" class="sd-official-link">
+        📖 ADA National Network — Service Animal Guidance (Plain Language)
+      </a>
+    </div>
+  </section>
+
+</div><!-- /sd-page -->
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+    </div>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+        <a href="service-dogs.html">Service Dogs</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+        <!-- Social media links hidden until accounts are created -->
+      </div>
+    </div>
+    <div class="footer__nonprofit">
+      AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleMenu() {
+  const menu = document.getElementById('navMenu');
+  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
+}
+document.querySelectorAll('.navbar__nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (window.innerWidth < 768) {
+      document.getElementById('navMenu').style.display = 'none';
+    }
+  });
+});
+</script>
+
+<!-- ============================================================
+     SERVICE DOG ORGS — Loaded from data/service_dogs.json
+     ============================================================ -->
+<script>
+(function() {
+  'use strict';
+
+  var _allOrgs = [];
+  var _activeFilter = 'all';
+
+  function esc(s) {
+    if (!s) return '';
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function renderOrgs(filter) {
+    var grid = document.getElementById('sdOrgsGrid');
+    if (!grid) return;
+
+    var items = _allOrgs.filter(function(o) {
+      if (o.category !== 'veteran_org') return false;
+      if (filter === 'all') return true;
+      if (filter === 'ptsd')    return o.service_types && o.service_types.some(function(t){ return /ptsd|tbi|mst|psych/i.test(t); });
+      if (filter === 'mobility') return o.service_types && o.service_types.some(function(t){ return /mobility/i.test(t); });
+      if (filter === 'guide')   return o.service_types && o.service_types.some(function(t){ return /guide|vision/i.test(t); });
+      if (filter === 'adi')     return o.accredited === true && o.accreditation && o.accreditation.indexOf('ADI') !== -1;
+      if (filter === 'vetonly') return o.veteran_focused === true;
+      return true;
+    });
+
+    if (items.length === 0) {
+      grid.innerHTML = '<div style="grid-column:1/-1;color:var(--gray-500);font-size:0.85rem;padding:20px 0;">No organizations match this filter.</div>';
+      return;
+    }
+
+    var html = items.map(function(o) {
+      var tags = [];
+      if (o.accredited && o.accreditation && o.accreditation.indexOf('ADI') !== -1) tags.push('<span class="sd-card__tag sd-card__tag--adi">ADI Accredited</span>');
+      if (o.veteran_focused) tags.push('<span class="sd-card__tag sd-card__tag--vet">Veteran-Focused</span>');
+      if (o.cost && /free/i.test(o.cost)) tags.push('<span class="sd-card__tag sd-card__tag--free">Free to Veterans</span>');
+      if (o.service_types) o.service_types.forEach(function(t) {
+        tags.push('<span class="sd-card__tag">' + esc(t) + '</span>');
+      });
+
+      return '<div class="sd-card">' +
+        '<div class="sd-card__name">' + esc(o.name) + '</div>' +
+        (tags.length ? '<div class="sd-card__tags">' + tags.join('') + '</div>' : '') +
+        '<div class="sd-card__desc">' + esc(o.description) + '</div>' +
+        '<div class="sd-card__meta"><strong>Cost:</strong> ' + esc(o.cost) + '</div>' +
+        (o.wait_time ? '<div class="sd-card__meta"><strong>Wait time:</strong> ' + esc(o.wait_time) + '</div>' : '') +
+        (o.eligibility ? '<div class="sd-card__meta"><strong>Eligibility:</strong> ' + esc(o.eligibility) + '</div>' : '') +
+        (o.application_link
+          ? '<a href="' + esc(o.application_link) + '" target="_blank" rel="noopener noreferrer" class="sd-card__link">Apply / Learn More →</a>'
+          : (o.website ? '<a href="' + esc(o.website) + '" target="_blank" rel="noopener noreferrer" class="sd-card__link">Visit Website →</a>' : '')) +
+      '</div>';
+    }).join('');
+
+    grid.innerHTML = html;
+  }
+
+  window.sdFilter = function(filter, btn) {
+    _activeFilter = filter;
+    document.querySelectorAll('.sd-filter-pill').forEach(function(b) { b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    renderOrgs(filter);
+  };
+
+  fetch('data/service_dogs.json')
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      _allOrgs = data;
+      renderOrgs(_activeFilter);
+    })
+    .catch(function() {
+      var grid = document.getElementById('sdOrgsGrid');
+      if (grid) grid.innerHTML = '<div style="grid-column:1/-1;color:var(--gray-500);font-size:0.85rem;padding:20px 0;">Could not load organizations. Please refresh the page.</div>';
+    });
+
+})();
+</script>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>

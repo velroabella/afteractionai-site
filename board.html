@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/board-upgrade.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
   <meta property="og:image:width" content="1536" />
@@ -28,7 +29,7 @@
 <nav class="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -36,7 +37,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html" class="active">About</a>
         <ul class="navbar__dropdown-menu">
@@ -47,30 +48,41 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
 
 <!-- BOARD HERO -->
-<section class="page-hero-bar">
-  <h1 class="page-hero-bar__title">Board of Directors</h1>
-  <div class="page-hero-bar__divider"></div>
-  <p class="page-hero-bar__subtitle">Building a diverse, mission-driven leadership team for veteran advocacy.</p>
+<section class="page-hero-image page-hero-image--board" style="background-image: url('images/hero-board.jpg');">
+  <div class="page-hero-image__content">
+    <span class="page-hero-image__eyebrow">Leadership &amp; Governance</span>
+    <h1 class="page-hero-image__title">Board of Directors</h1>
+    <div class="page-hero-image__divider"></div>
+    <p class="page-hero-image__subtitle">Building a diverse, mission-driven leadership team for veteran advocacy.</p>
+  </div>
 </section>
 
 <!-- PAGE CONTENT -->
@@ -91,8 +103,14 @@
         </div>
 
         <!-- Board Seat Open #1 -->
-        <div class="board-card">
-          <div class="board-card__photo">▭</div>
+        <div class="board-card board-card--open">
+          <div class="board-card__avatar">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="18" r="9" stroke="#C5A55A" stroke-width="2" fill="none"/>
+              <path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#C5A55A" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="board-card__badge">Seat Open</div>
           <h3 class="board-card__name">Board Seat Open</h3>
           <p class="board-card__title">Nonprofit Operations or VSO Leadership</p>
           <p class="board-card__bio">
@@ -101,18 +119,56 @@
         </div>
 
         <!-- Board Seat Open #2 -->
-        <div class="board-card">
-          <div class="board-card__photo">▭</div>
+        <div class="board-card board-card--open">
+          <div class="board-card__avatar">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="18" r="9" stroke="#C5A55A" stroke-width="2" fill="none"/>
+              <path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#C5A55A" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="board-card__badge">Seat Open</div>
           <h3 class="board-card__name">Board Seat Open</h3>
           <p class="board-card__title">Veteran Community Network</p>
           <p class="board-card__bio">
             We're looking for a mission-driven veteran with strong connections to the veteran community — either through direct service, advocacy networks, or veteran-founded organizations. Your network will help us reach veterans in need.
           </p>
         </div>
+
+        <!-- Board Seat Open #3 -->
+        <div class="board-card board-card--open">
+          <div class="board-card__avatar">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="18" r="9" stroke="#C5A55A" stroke-width="2" fill="none"/>
+              <path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#C5A55A" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="board-card__badge">Seat Open</div>
+          <h3 class="board-card__name">Board Seat Open</h3>
+          <p class="board-card__title">Strategic Partnerships &amp; Corporate Sponsorships</p>
+          <p class="board-card__bio">
+            We're seeking a relationship-driven leader with a track record of building corporate partnerships, securing sponsorships, or developing revenue streams for mission-driven organizations. This seat is critical to our long-term funding strategy.
+          </p>
+        </div>
+
+        <!-- Board Seat Open #4 -->
+        <div class="board-card board-card--open">
+          <div class="board-card__avatar">
+            <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="24" cy="18" r="9" stroke="#C5A55A" stroke-width="2" fill="none"/>
+              <path d="M8 42c0-8.837 7.163-16 16-16s16 7.163 16 16" stroke="#C5A55A" stroke-width="2" stroke-linecap="round" fill="none"/>
+            </svg>
+          </div>
+          <div class="board-card__badge">Seat Open</div>
+          <h3 class="board-card__name">Board Seat Open</h3>
+          <p class="board-card__title">Technology &amp; AI Platform Development</p>
+          <p class="board-card__bio">
+            We're looking for a technologist with hands-on experience in AI, product development, or platform architecture. You'll help guide responsible AI use, platform scalability, and the long-term technical roadmap for AfterAction AI.
+          </p>
+        </div>
       </div>
 
       <div class="board-note">
-        <p><strong>We're Hiring.</strong> AfterAction AI is building a board of directors with diverse expertise in veteran services, nonprofit governance, technology, and fundraising. If you align with our mission and bring relevant experience, we'd love to hear from you. <a href="contact.html" style="color: var(--blue); font-weight: 600;">Contact us to learn more.</a></p>
+        <p><strong>We're Hiring.</strong> AfterAction AI is building a board of directors with diverse expertise in veteran services, nonprofit governance, technology, and fundraising. If you align with our mission and bring relevant experience, we'd love to hear from you. <a href="contact.html" class="board-note__link">Contact us to learn more.</a></p>
       </div>
     </section>
 
@@ -198,7 +254,7 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 <div class="auth-modal" id="authModal" style="display:none;">
   <div class="auth-modal__box">
     <button class="auth-modal__close" aria-label="Close">&times;</button>
-    <div class="auth-modal__logo"><img src="images/logo-header.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
     <div class="auth-tabs">
       <button class="auth-tab active" data-tab="login">Sign In</button>
       <button class="auth-tab" data-tab="signup">Create Account</button>
@@ -223,6 +279,7 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
   </div>
 </div>
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
 </body>
 </html>

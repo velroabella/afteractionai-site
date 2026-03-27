@@ -1,0 +1,2742 @@
+{
+  "metadata": {
+    "title": "AfterActionAI Families & Survivors Resource Database",
+    "version": "1.0",
+    "generated": "2026-03",
+    "total_records": 100,
+    "categories": [
+      "grief_bereavement",
+      "mental_health",
+      "financial_assistance",
+      "housing",
+      "legal_services",
+      "caregiver_support",
+      "employment_education",
+      "children_youth",
+      "community_connection",
+      "crisis_emergency",
+      "survivor_benefits"
+    ],
+    "audience_tags": [
+      "gold_star_families",
+      "surviving_spouses",
+      "military_spouses",
+      "caregivers",
+      "veteran_families"
+    ]
+  },
+  "resources": [
+    {
+      "id": "FAM-001",
+      "name": "Tragedy Assistance Program for Survivors (TAPS)",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "veteran_families"
+      ],
+      "category": "grief_bereavement",
+      "description": "The nation's leading nonprofit providing compassionate care to all those grieving the death of a military loved one. Offers peer-based emotional support, grief resources, Good Grief Camp for children, and 24/7 crisis support.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.taps.org",
+      "contact_info": "1-800-959-TAPS (8277)",
+      "eligibility": "Anyone who has lost a military loved one regardless of cause of death or relationship",
+      "tags": [
+        "grief",
+        "peer support",
+        "camps",
+        "Gold Star",
+        "crisis line",
+        "children",
+        "surviving spouse"
+      ],
+      "credibility_level": "flagship",
+      "notes": "TAPS is the flagship organization for military survivor support. Operates 24/7 survivor support line. Free services for all survivors."
+    },
+    {
+      "id": "FAM-002",
+      "name": "American Gold Star Mothers",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "grief_bereavement",
+      "description": "Nonprofit organization of mothers who have lost a son or daughter in military service. Provides community, advocacy, and mutual support through local chapters nationwide.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.goldstarmoms.com",
+      "contact_info": "info@goldstarmoms.com",
+      "eligibility": "Mothers (biological, adoptive, step, or foster) who lost a child in military service",
+      "tags": [
+        "Gold Star",
+        "mothers",
+        "chapters",
+        "peer support",
+        "advocacy"
+      ],
+      "credibility_level": "flagship",
+      "notes": "One of the oldest Gold Star organizations, founded 1928. Chapters in most states. Congressional charter."
+    },
+    {
+      "id": "FAM-003",
+      "name": "Gold Star Wives of America",
+      "audience": [
+        "surviving_spouses",
+        "gold_star_families"
+      ],
+      "category": "grief_bereavement",
+      "description": "Nonprofit organization serving widows and widowers of service members who died while on active duty or from a service-connected cause. Provides peer support, legislative advocacy, and benefits assistance.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.goldstarwives.org",
+      "contact_info": "goldstarwives@goldstarwives.org",
+      "eligibility": "Surviving spouses of active duty deaths or service-connected deaths",
+      "tags": [
+        "surviving spouse",
+        "widow",
+        "widower",
+        "advocacy",
+        "benefits",
+        "Gold Star"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Congressional charter. Strong advocacy role in survivor benefit legislation (SBP, DIC offset). Active chapters nationwide."
+    },
+    {
+      "id": "FAM-004",
+      "name": "Children of Fallen Patriots Foundation",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "employment_education",
+      "description": "Provides college scholarships and educational counseling to military children who have lost a parent in the line of duty. Covers the full cost of college education for eligible children.",
+      "country": "USA",
+      "state": "",
+      "city": "Greenwich, CT",
+      "format": "nonprofit",
+      "website": "https://www.fallenpatriots.org",
+      "contact_info": "1-866-96-PATRIOT | info@fallenpatriots.org",
+      "eligibility": "Children (under 25) who lost a parent in active duty combat, training, or service-connected death",
+      "tags": [
+        "scholarships",
+        "education",
+        "Gold Star",
+        "children",
+        "college"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Has awarded $20M+ in scholarships. Will cover full 4-year college costs for qualifying children. Highly reputable."
+    },
+    {
+      "id": "FAM-005",
+      "name": "Snowball Express (American Airlines Foundation)",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "grief_bereavement",
+      "description": "Annual event and year-round programs bringing together children of fallen military heroes and their surviving parents/guardians for grief camps, retreats, and community building.",
+      "country": "USA",
+      "state": "",
+      "city": "Fort Worth, TX",
+      "format": "nonprofit",
+      "website": "https://www.snowballexpress.org",
+      "contact_info": "info@snowballexpress.org",
+      "eligibility": "Children (under 18) of fallen military members and their surviving parent or guardian",
+      "tags": [
+        "Gold Star",
+        "children",
+        "grief camp",
+        "retreat",
+        "community"
+      ],
+      "credibility_level": "high",
+      "notes": "Backed by American Airlines Foundation. Annual December event in Dallas. Year-round local chapters."
+    },
+    {
+      "id": "FAM-006",
+      "name": "Parents of Fallen Soldiers",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "grief_bereavement",
+      "description": "Peer support and direct financial assistance for parents who have lost a son or daughter in military service. Operates a helpline, community forum, and emergency financial grants.",
+      "country": "USA",
+      "state": "",
+      "city": "Rocklin, CA",
+      "format": "nonprofit",
+      "website": "https://www.parentsoffallensoldie rs.org",
+      "contact_info": "1-800-395-5220",
+      "eligibility": "Parents of military members who died in service",
+      "tags": [
+        "Gold Star",
+        "parents",
+        "peer support",
+        "financial aid",
+        "grief"
+      ],
+      "credibility_level": "high",
+      "notes": "Provides emergency financial assistance up to $2,000. Active peer support community."
+    },
+    {
+      "id": "FAM-007",
+      "name": "Travis Manion Foundation",
+      "audience": [
+        "gold_star_families",
+        "veteran_families"
+      ],
+      "category": "community_connection",
+      "description": "Empowers veterans and survivors of fallen heroes to build character in future generations through leadership and service programs. Connects Gold Star families through service-based healing.",
+      "country": "USA",
+      "state": "",
+      "city": "Doylestown, PA",
+      "format": "nonprofit",
+      "website": "https://www.travismanion.org",
+      "contact_info": "info@travismanion.org",
+      "eligibility": "Gold Star families and veterans interested in service and leadership programs",
+      "tags": [
+        "Gold Star",
+        "service",
+        "leadership",
+        "community",
+        "healing through service"
+      ],
+      "credibility_level": "high",
+      "notes": "Founded in memory of 1st Lt. Travis Manion, KIA Iraq 2007. Strong in-person chapter network."
+    },
+    {
+      "id": "FAM-008",
+      "name": "Folds of Honor Foundation",
+      "audience": [
+        "gold_star_families",
+        "veteran_families"
+      ],
+      "category": "employment_education",
+      "description": "Provides educational scholarships to spouses and children of fallen or disabled American service members. Has awarded over $200M in scholarships since 2007.",
+      "country": "USA",
+      "state": "",
+      "city": "Owasso, OK",
+      "format": "nonprofit",
+      "website": "https://www.foldsofhonor.org",
+      "contact_info": "1-918-274-4400",
+      "eligibility": "Spouses and children of fallen or disabled military members; all school levels K-college",
+      "tags": [
+        "scholarships",
+        "education",
+        "Gold Star",
+        "disabled veteran families",
+        "K-12",
+        "college"
+      ],
+      "credibility_level": "flagship",
+      "notes": "One of the largest military education scholarship programs. K-12 and college. Over 47,000 scholarships awarded."
+    },
+    {
+      "id": "FAM-009",
+      "name": "Gold Star Family Alliance",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "grief_bereavement",
+      "description": "Peer-support and advocacy organization connecting Gold Star families across all branches of military service. Focuses on community healing, legislative awareness, and local chapter events.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "nonprofit",
+      "website": "https://www.goldstarfamilyalliance.org",
+      "contact_info": "info@goldstarfamilyalliance.org",
+      "eligibility": "Families who have lost a service member regardless of cause or era",
+      "tags": [
+        "Gold Star",
+        "advocacy",
+        "peer support",
+        "all branches",
+        "community"
+      ],
+      "credibility_level": "high",
+      "notes": "Inclusive of all wars and eras. Works to bridge gap between TAPS, Gold Star Mothers, and local families."
+    },
+    {
+      "id": "FAM-010",
+      "name": "Soaring Spirits International",
+      "audience": [
+        "surviving_spouses"
+      ],
+      "category": "grief_bereavement",
+      "description": "Nonprofit connecting widowed military spouses with peer mentors and a global community of others who have experienced the same loss. Offers Camp Widow retreats, online forums, and local meetups.",
+      "country": "USA",
+      "state": "",
+      "city": "San Diego, CA",
+      "format": "nonprofit",
+      "website": "https://www.soaringspirits.org",
+      "contact_info": "info@soaringspirits.org",
+      "eligibility": "Any widowed person; strong military spouse community within the broader program",
+      "tags": [
+        "surviving spouse",
+        "widow",
+        "widower",
+        "peer support",
+        "retreat",
+        "online community"
+      ],
+      "credibility_level": "high",
+      "notes": "Camp Widow events held several times per year. Online community active year-round. Not exclusively military but large military membership."
+    },
+    {
+      "id": "FAM-011",
+      "name": "Final Salute Inc.",
+      "audience": [
+        "surviving_spouses",
+        "veteran_families"
+      ],
+      "category": "housing",
+      "description": "Provides safe and stable housing for female veterans and their children, including surviving spouses of fallen service members. Operates transitional housing and permanent housing programs.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "nonprofit",
+      "website": "https://www.finalsaluteinc.org",
+      "contact_info": "info@finalsaluteinc.org",
+      "eligibility": "Female veterans and surviving spouses of fallen service members who need housing assistance",
+      "tags": [
+        "housing",
+        "female veterans",
+        "surviving spouse",
+        "transitional housing",
+        "permanent housing"
+      ],
+      "credibility_level": "high",
+      "notes": "One of the few organizations addressing housing specifically for female veteran survivors. Multiple locations."
+    },
+    {
+      "id": "FAM-012",
+      "name": "Fisher House Foundation",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides free or low-cost lodging near VA and military medical centers for families of hospitalized service members and veterans. Also administers the Hero Miles and Hotels for Heroes programs.",
+      "country": "USA",
+      "state": "",
+      "city": "Rockville, MD",
+      "format": "nonprofit",
+      "website": "https://www.fisherhouse.org",
+      "contact_info": "1-888-294-8560 | info@fisherhouse.org",
+      "eligibility": "Families of active duty, National Guard, Reserve, and veteran patients in military/VA hospitals",
+      "tags": [
+        "housing",
+        "lodging",
+        "hospitalized veteran",
+        "caregiver",
+        "travel",
+        "financial relief"
+      ],
+      "credibility_level": "flagship",
+      "notes": "90+ Fisher Houses at military and VA facilities nationwide. Free lodging. Also runs Hero Miles (free airline tickets) and Scholarship for Military Children."
+    },
+    {
+      "id": "FAM-013",
+      "name": "Semper Fi & America's Fund",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides immediate financial assistance and lifetime support to combat wounded, critically ill, and catastrophically injured service members and their families across all branches.",
+      "country": "USA",
+      "state": "",
+      "city": "Oceanside, CA",
+      "format": "nonprofit",
+      "website": "https://www.semperfifund.org",
+      "contact_info": "1-760-725-3680 | info@semperfifund.org",
+      "eligibility": "Combat wounded, critically ill, and injured service members and their families (all branches)",
+      "tags": [
+        "financial assistance",
+        "caregiver",
+        "wounded warrior",
+        "all branches",
+        "emergency funds"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Has distributed $300M+ to 30,000+ families. Provides rapid financial assistance. Charity Navigator top-rated."
+    },
+    {
+      "id": "FAM-014",
+      "name": "Operation Homefront",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides emergency financial assistance, transitional housing, and long-term stability programs for military families and wounded, ill, or injured service members.",
+      "country": "USA",
+      "state": "",
+      "city": "San Antonio, TX",
+      "format": "nonprofit",
+      "website": "https://www.operationhomefront.org",
+      "contact_info": "1-800-722-6098",
+      "eligibility": "Active duty, National Guard, Reserve, veterans, and their families in need",
+      "tags": [
+        "emergency assistance",
+        "housing",
+        "financial aid",
+        "transitional housing",
+        "military family"
+      ],
+      "credibility_level": "flagship",
+      "notes": "One of the largest military family support nonprofits. Has served 2.5M+ military families. Holiday programs, mortgage-free homes, transitional housing villages."
+    },
+    {
+      "id": "FAM-015",
+      "name": "Hope for the Warriors",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "financial_assistance",
+      "description": "Serves combat wounded service members, Gold Star families, and military caregivers through financial assistance, wellness programs, sports/recreation, and peer support.",
+      "country": "USA",
+      "state": "",
+      "city": "Spring Lake, NC",
+      "format": "nonprofit",
+      "website": "https://www.hopeforthewarriors.org",
+      "contact_info": "1-877-246-7349 | info@hopeforthewarriors.org",
+      "eligibility": "Post-9/11 combat wounded, Gold Star families, and military caregivers",
+      "tags": [
+        "Gold Star",
+        "caregiver",
+        "financial assistance",
+        "wellness",
+        "peer support",
+        "recreation"
+      ],
+      "credibility_level": "high",
+      "notes": "Strong focus on family wellness and caregiver support alongside financial assistance."
+    },
+    {
+      "id": "FAM-016",
+      "name": "Gary Sinise Foundation",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "veteran_families"
+      ],
+      "category": "financial_assistance",
+      "description": "Builds specially adapted smart homes for severely wounded veterans and first responders. Also provides entertainment, travel, and community support programs for Gold Star families.",
+      "country": "USA",
+      "state": "",
+      "city": "Nashville, TN",
+      "format": "nonprofit",
+      "website": "https://www.garysinisefoundation.org",
+      "contact_info": "info@garysinisefoundation.org",
+      "eligibility": "Severely wounded veterans, Gold Star families, and first responders",
+      "tags": [
+        "adapted homes",
+        "Gold Star",
+        "housing",
+        "community support",
+        "entertainment"
+      ],
+      "credibility_level": "high",
+      "notes": "Best known for building mortgage-free smart homes for catastrophically wounded veterans. R.I.S.E. program for Gold Star families."
+    },
+    {
+      "id": "FAM-017",
+      "name": "Pat Tillman Foundation",
+      "audience": [
+        "gold_star_families",
+        "veteran_families"
+      ],
+      "category": "employment_education",
+      "description": "Provides scholarships and a leadership development community for military veterans and their spouses (Tillman Scholars). Program includes mentorship, networking, and financial support for higher education.",
+      "country": "USA",
+      "state": "",
+      "city": "Chicago, IL",
+      "format": "nonprofit",
+      "website": "https://www.pattillmanfoundation.org",
+      "contact_info": "info@pattillmanfoundation.org",
+      "eligibility": "Active duty, veterans, and military spouses pursuing higher education; competitive application",
+      "tags": [
+        "scholarships",
+        "education",
+        "spouse",
+        "veteran",
+        "leadership",
+        "graduate school"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Highly competitive but prestigious. Up to $25,000/year. Strong alumni network. Includes military spouse track."
+    },
+    {
+      "id": "FAM-018",
+      "name": "National Military Family Association (NMFA)",
+      "audience": [
+        "military_spouses",
+        "gold_star_families",
+        "veteran_families"
+      ],
+      "category": "community_connection",
+      "description": "The leading advocacy organization for military families. Provides policy advocacy, scholarships, Operation Purple camps for children, and resources for all military family members.",
+      "country": "USA",
+      "state": "",
+      "city": "Alexandria, VA",
+      "format": "nonprofit",
+      "website": "https://www.militaryfamily.org",
+      "contact_info": "info@militaryfamily.org",
+      "eligibility": "All military family members - active duty, Guard/Reserve, retired, survivor",
+      "tags": [
+        "advocacy",
+        "scholarships",
+        "military spouse",
+        "children",
+        "Gold Star",
+        "policy"
+      ],
+      "credibility_level": "flagship",
+      "notes": "The primary advocacy voice for military families in Congress. Operation Purple Camps serve children coping with deployment and loss."
+    },
+    {
+      "id": "FAM-019",
+      "name": "Blue Star Families",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "community_connection",
+      "description": "Nonprofit connecting military families with their local communities through research, programs, and a national network. Publishes the annual Military Family Lifestyle Survey.",
+      "country": "USA",
+      "state": "",
+      "city": "Encinitas, CA",
+      "format": "nonprofit",
+      "website": "https://www.bluestarfam.org",
+      "contact_info": "info@bluestarfam.org",
+      "eligibility": "Active duty, Guard/Reserve, veteran families, and military spouses",
+      "tags": [
+        "military spouse",
+        "community",
+        "research",
+        "programs",
+        "local chapters"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Annual lifestyle survey is the gold standard for understanding military family needs. Active local chapters in most metro areas."
+    },
+    {
+      "id": "FAM-020",
+      "name": "Chris Kyle Frog Foundation",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "gold_star_families"
+      ],
+      "category": "mental_health",
+      "description": "Dedicated to strengthening military marriages and family relationships through retreat-based couples and family programs. Focus on healing relationships strained by combat trauma.",
+      "country": "USA",
+      "state": "",
+      "city": "Midlothian, TX",
+      "format": "nonprofit",
+      "website": "https://www.chriskylefrogfoundation.org",
+      "contact_info": "info@chriskylefrogfoundation.org",
+      "eligibility": "Military couples (all branches), veterans and spouses, Gold Star families",
+      "tags": [
+        "marriage",
+        "couples retreat",
+        "family healing",
+        "mental health",
+        "PTSD families"
+      ],
+      "credibility_level": "high",
+      "notes": "Founded by Taya Kyle after Chris Kyle's death. Retreat-based model. Strong focus on healing combat-related relationship strain."
+    },
+    {
+      "id": "FAM-021",
+      "name": "Give an Hour",
+      "audience": [
+        "military_spouses",
+        "gold_star_families",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "mental_health",
+      "description": "Network of licensed mental health providers who donate free counseling services to military personnel, veterans, and their families. Also develops community mental health programs.",
+      "country": "USA",
+      "state": "",
+      "city": "Bethesda, MD",
+      "format": "nonprofit",
+      "website": "https://www.giveanhour.org",
+      "contact_info": "info@giveanhour.org",
+      "eligibility": "Post-9/11 service members, veterans, and their family members",
+      "tags": [
+        "mental health",
+        "free therapy",
+        "counseling",
+        "military family",
+        "grief"
+      ],
+      "credibility_level": "high",
+      "notes": "Network of 7,000+ licensed providers. Free mental health services. Access via their online provider search."
+    },
+    {
+      "id": "FAM-022",
+      "name": "VA Dependency and Indemnity Compensation (DIC)",
+      "audience": [
+        "surviving_spouses",
+        "gold_star_families"
+      ],
+      "category": "survivor_benefits",
+      "description": "Federal benefit providing monthly tax-free payments to surviving spouses, children, and parents of service members who died in the line of duty or from a service-connected disability.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.va.gov/disability/dependency-indemnity-compensation/",
+      "contact_info": "1-800-827-1000 (VA Benefits line)",
+      "eligibility": "Surviving spouses, dependent children, and parents of veterans who died from service-connected causes",
+      "tags": [
+        "DIC",
+        "survivor benefits",
+        "monthly payment",
+        "VA",
+        "surviving spouse",
+        "Gold Star"
+      ],
+      "credibility_level": "flagship",
+      "notes": "2024 base rate ~$1,612/month for surviving spouse. Additional allowances for dependent children, housebound, or A&A. Apply via VA Form 21P-534EZ."
+    },
+    {
+      "id": "FAM-023",
+      "name": "Survivor Benefit Plan (SBP)",
+      "audience": [
+        "surviving_spouses",
+        "gold_star_families"
+      ],
+      "category": "survivor_benefits",
+      "description": "DoD insurance-like program that provides monthly annuity payments to eligible surviving spouses and dependents of retired service members. Pays up to 55% of the retiree's retirement pay.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.dfas.mil/retiredmilitary/survivors/Survivor-Benefit-Plan/",
+      "contact_info": "1-800-321-1080 (DFAS)",
+      "eligibility": "Surviving spouses and dependents of retired service members enrolled in SBP",
+      "tags": [
+        "SBP",
+        "annuity",
+        "survivor benefits",
+        "DoD",
+        "surviving spouse",
+        "retirement"
+      ],
+      "credibility_level": "flagship",
+      "notes": "SBP/DIC offset was eliminated in 2023 - surviving spouses can now receive both SBP AND DIC simultaneously. Major legislative win."
+    },
+    {
+      "id": "FAM-024",
+      "name": "TRICARE Survivor Coverage",
+      "audience": [
+        "surviving_spouses",
+        "gold_star_families"
+      ],
+      "category": "survivor_benefits",
+      "description": "Surviving spouses and dependent children of active duty service members who die on duty retain TRICARE health coverage. Coverage type and duration depends on circumstances of death.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.tricare.mil/Plans/Eligibility/Survivors",
+      "contact_info": "1-800-444-5445 (TRICARE)",
+      "eligibility": "Surviving spouses and children of active duty service members who died in the line of duty",
+      "tags": [
+        "TRICARE",
+        "health insurance",
+        "survivor benefits",
+        "surviving spouse",
+        "healthcare"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Surviving spouses retain TRICARE coverage and may retain it upon remarriage after age 55. Critical benefit - many survivors unaware of eligibility."
+    },
+    {
+      "id": "FAM-025",
+      "name": "Social Security Survivor Benefits",
+      "audience": [
+        "surviving_spouses",
+        "gold_star_families",
+        "veteran_families"
+      ],
+      "category": "survivor_benefits",
+      "description": "Federal Social Security benefit for surviving spouses, children, and parents of deceased workers including military members. Provides monthly payments based on the deceased's earnings record.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.ssa.gov/benefits/survivors/",
+      "contact_info": "1-800-772-1213 (SSA)",
+      "eligibility": "Widows/widowers (age 60+, or any age with qualifying child), dependent children, dependent parents",
+      "tags": [
+        "Social Security",
+        "survivor benefits",
+        "monthly payment",
+        "surviving spouse",
+        "children"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Can be received in addition to VA DIC. Surviving spouse at full retirement age receives 100% of deceased's benefit. Apply through SSA.gov or call 1-800-772-1213."
+    },
+    {
+      "id": "FAM-026",
+      "name": "Military OneSource",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "gold_star_families",
+        "caregivers"
+      ],
+      "category": "community_connection",
+      "description": "DoD-funded 24/7 support service providing confidential counseling, referrals, and resources for all military family members. Covers financial counseling, tax prep, childcare referrals, relationship support, and non-medical counseling.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.militaryonesource.mil",
+      "contact_info": "1-800-342-9647 (24/7)",
+      "eligibility": "Active duty, Guard/Reserve, and their families; some services extend to survivors and veterans",
+      "tags": [
+        "counseling",
+        "financial help",
+        "childcare",
+        "referrals",
+        "24/7",
+        "free",
+        "military spouse"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Free. Up to 12 sessions of non-medical counseling per issue. Available in 240+ languages. Critical first-call resource for military families."
+    },
+    {
+      "id": "FAM-027",
+      "name": "Elizabeth Dole Foundation - Hidden Heroes",
+      "audience": [
+        "caregivers"
+      ],
+      "category": "caregiver_support",
+      "description": "The nation's leading organization championing military caregivers - spouses, parents, and others caring for wounded, ill, or injured veterans. Provides research, advocacy, peer support, and the Hidden Heroes caregiver community.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.elizabethdolefoundation.org",
+      "contact_info": "info@elizabethdolefoundation.org",
+      "eligibility": "Anyone serving as caregiver to a wounded, ill, or injured veteran or service member",
+      "tags": [
+        "caregiver",
+        "peer support",
+        "advocacy",
+        "research",
+        "Hidden Heroes",
+        "respite"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Flagship caregiver organization. Caregiver Fellowship program, Hidden Heroes community, annual summit. Estimates 5.5 million military caregivers in the U.S."
+    },
+    {
+      "id": "FAM-028",
+      "name": "VA Caregiver Support Program (PCAFC)",
+      "audience": [
+        "caregivers"
+      ],
+      "category": "caregiver_support",
+      "description": "VA program providing a comprehensive package of support for caregivers of eligible post-9/11 (and now pre-9/11) veterans, including monthly stipend, health insurance, mental health services, respite care, and training.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.caregiver.va.gov",
+      "contact_info": "1-855-260-3274 (Caregiver Support Line)",
+      "eligibility": "Family caregivers of veterans who served on or after May 7, 1975 (pre-9/11 expansion in 2022); veteran must be enrolled in VA care",
+      "tags": [
+        "caregiver",
+        "stipend",
+        "health insurance",
+        "respite care",
+        "VA",
+        "training",
+        "mental health"
+      ],
+      "credibility_level": "flagship",
+      "notes": "PCAFC provides monthly stipend up to ~$2,800+/month for primary family caregivers. Also includes General Caregiver Support Services (GCSS) for all enrolled veterans' caregivers."
+    },
+    {
+      "id": "FAM-029",
+      "name": "VA Caregiver Support Line",
+      "audience": [
+        "caregivers",
+        "veteran_families"
+      ],
+      "category": "caregiver_support",
+      "description": "Dedicated VA hotline connecting caregivers to local VA Caregiver Support Coordinators, program information, peer support mentors, and crisis resources. Available Monday-Friday.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.caregiver.va.gov",
+      "contact_info": "1-855-260-3274",
+      "eligibility": "Caregivers of any veteran enrolled or eligible for VA care",
+      "tags": [
+        "hotline",
+        "caregiver",
+        "VA",
+        "peer mentor",
+        "support coordinator"
+      ],
+      "credibility_level": "flagship",
+      "notes": "First point of contact for caregivers entering the VA system. Connects to local VA Caregiver Support Coordinators at every VA medical center."
+    },
+    {
+      "id": "FAM-030",
+      "name": "Caregiver Action Network (CAN)",
+      "audience": [
+        "caregivers"
+      ],
+      "category": "caregiver_support",
+      "description": "National nonprofit providing education, peer support, and advocacy for all family caregivers including military caregivers. Offers the Caregiver Help Desk and extensive online resources.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.caregiveraction.org",
+      "contact_info": "1-855-227-3640 (Help Desk)",
+      "eligibility": "Any family caregiver; strong resources for military caregivers",
+      "tags": [
+        "caregiver",
+        "education",
+        "peer support",
+        "help desk",
+        "burnout",
+        "self-care"
+      ],
+      "credibility_level": "high",
+      "notes": "Broad caregiver resource not limited to military. Caregiver Help Desk provides free one-on-one assistance. National Caregiver Awareness Month advocacy."
+    },
+    {
+      "id": "FAM-031",
+      "name": "Well Spouse Association",
+      "audience": [
+        "caregivers",
+        "surviving_spouses"
+      ],
+      "category": "caregiver_support",
+      "description": "Peer support network for spousal and partner caregivers. Provides support groups, online forums, respite weekends, and a mentor network for those caring for a chronically ill or disabled spouse.",
+      "country": "USA",
+      "state": "",
+      "city": "Freehold, NJ",
+      "format": "nonprofit",
+      "website": "https://www.wellspouse.org",
+      "contact_info": "info@wellspouse.org | 1-800-838-0879",
+      "eligibility": "Spouses and partners caring for a chronically ill, disabled, or injured partner (includes military caregivers)",
+      "tags": [
+        "caregiver",
+        "spouse caregiver",
+        "peer support",
+        "respite",
+        "mental health",
+        "isolation"
+      ],
+      "credibility_level": "high",
+      "notes": "Addresses the often-overlooked mental health needs of spousal caregivers. Bimonthly newsletter, local support groups, online community."
+    },
+    {
+      "id": "FAM-032",
+      "name": "MyCAA Scholarship Program",
+      "audience": [
+        "military_spouses"
+      ],
+      "category": "employment_education",
+      "description": "DoD-funded scholarship program providing up to $4,000 in financial assistance to eligible military spouses pursuing portable degrees, licenses, or certifications for in-demand careers.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://mycaa.militaryonesource.mil",
+      "contact_info": "1-800-342-9647",
+      "eligibility": "Spouses of active duty service members in pay grades E-1 to E-5, W-1 to W-2, and O-1 to O-2",
+      "tags": [
+        "scholarship",
+        "education",
+        "military spouse",
+        "career",
+        "DoD",
+        "portable career"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Up to $4,000 total ($2,000/year). Best used for certifications, associate degrees, or portable career credentials. Apply through Military OneSource."
+    },
+    {
+      "id": "FAM-033",
+      "name": "Hiring Our Heroes - Military Spouse Program",
+      "audience": [
+        "military_spouses"
+      ],
+      "category": "employment_education",
+      "description": "U.S. Chamber of Commerce Foundation program connecting military spouses with employers committed to hiring them. Offers fellowships, job fairs, networking events, and employment resources nationwide.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.hiringourheroes.org/career-events/military-spouse-programs/",
+      "contact_info": "info@hiringourheroes.org",
+      "eligibility": "Military spouses (active duty, Guard/Reserve, veteran spouses)",
+      "tags": [
+        "employment",
+        "military spouse",
+        "job fair",
+        "fellowship",
+        "career",
+        "hiring"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Corporate Fellowship Program embeds military spouses in companies for 12-week paid fellowships. Strong corporate partner network. Hundreds of hiring events annually."
+    },
+    {
+      "id": "FAM-034",
+      "name": "Military Spouse Chamber of Commerce",
+      "audience": [
+        "military_spouses"
+      ],
+      "category": "employment_education",
+      "description": "Advocates for military spouse business owners and entrepreneurs. Provides business resources, networking, mentorship, and connections to contracts and markets for military spouse-owned businesses.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "nonprofit",
+      "website": "https://www.milspouschamber.com",
+      "contact_info": "info@milspouschamber.com",
+      "eligibility": "Military spouses who are business owners or aspiring entrepreneurs",
+      "tags": [
+        "entrepreneurship",
+        "military spouse",
+        "business",
+        "networking",
+        "certification"
+      ],
+      "credibility_level": "high",
+      "notes": "Helps military spouses obtain military spouse-owned business certification. Strong annual conference."
+    },
+    {
+      "id": "FAM-035",
+      "name": "Onward to Opportunity (O2O)",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "employment_education",
+      "description": "Free career training and job placement program for transitioning service members, veterans, and military spouses. Offers in-demand industry certifications and direct employer connections.",
+      "country": "USA",
+      "state": "",
+      "city": "Syracuse, NY",
+      "format": "nonprofit",
+      "website": "https://ivmf.syracuse.edu/programs/career-training/",
+      "contact_info": "ivmf@syr.edu",
+      "eligibility": "Transitioning service members (within 180 days of separation), veterans, and military spouses",
+      "tags": [
+        "career training",
+        "certification",
+        "job placement",
+        "military spouse",
+        "employment",
+        "free"
+      ],
+      "credibility_level": "high",
+      "notes": "Operated by the Institute for Veterans and Military Families (IVMF) at Syracuse University. Available on-base and online. High job placement rates."
+    },
+    {
+      "id": "FAM-036",
+      "name": "Veterati",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "employment_education",
+      "description": "Free mentoring platform connecting veterans and military spouses with volunteer professionals from top companies for career advice, job searches, resume help, and industry guidance.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "nonprofit",
+      "website": "https://www.veterati.com",
+      "contact_info": "support@veterati.com",
+      "eligibility": "Veterans, transitioning service members, and military spouses",
+      "tags": [
+        "mentoring",
+        "career",
+        "military spouse",
+        "networking",
+        "free",
+        "job search"
+      ],
+      "credibility_level": "high",
+      "notes": "On-demand mentoring - schedule calls with professionals at any time. 50,000+ mentors from hundreds of companies. 100% free for veterans and spouses."
+    },
+    {
+      "id": "FAM-037",
+      "name": "Home Base Program (MGH / Red Sox Foundation)",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers",
+        "gold_star_families"
+      ],
+      "category": "mental_health",
+      "description": "Partnership between Massachusetts General Hospital and the Red Sox Foundation providing world-class mental health care to veterans, service members, and their families affected by invisible wounds of war.",
+      "country": "USA",
+      "state": "MA",
+      "city": "Boston",
+      "format": "nonprofit",
+      "website": "https://www.homebaseprogram.org",
+      "contact_info": "1-617-724-5202",
+      "eligibility": "Post-9/11 veterans, service members, National Guard, Reserve, and their families",
+      "tags": [
+        "mental health",
+        "PTSD",
+        "TBI",
+        "family therapy",
+        "clinical care",
+        "research"
+      ],
+      "credibility_level": "flagship",
+      "notes": "MGH-based clinical care - among the best PTSD/TBI treatment in the country. Includes family therapy. Sliding scale fees. Telehealth available."
+    },
+    {
+      "id": "FAM-038",
+      "name": "National Alliance on Mental Illness (NAMI) - Military/Veterans",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers",
+        "gold_star_families"
+      ],
+      "category": "mental_health",
+      "description": "NAMI's military and veteran programs provide family education courses (NAMI Family-to-Family), peer support groups, and the NAMI HelpLine for family members of veterans struggling with mental illness.",
+      "country": "USA",
+      "state": "",
+      "city": "Arlington, VA",
+      "format": "nonprofit",
+      "website": "https://www.nami.org/Your-Journey/Veterans-Active-Duty",
+      "contact_info": "1-800-950-NAMI (6264)",
+      "eligibility": "Family members and caregivers of veterans or service members with mental health conditions",
+      "tags": [
+        "mental health",
+        "family education",
+        "peer support",
+        "NAMI",
+        "helpline",
+        "support groups"
+      ],
+      "credibility_level": "flagship",
+      "notes": "NAMI Family-to-Family is a free 8-session education course for families. Local NAMI chapters in every state. NAMI HelpLine M-F 10am-10pm ET."
+    },
+    {
+      "id": "FAM-039",
+      "name": "Cohen Veterans Network",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "gold_star_families"
+      ],
+      "category": "mental_health",
+      "description": "Network of outpatient mental health clinics providing evidence-based, low-cost or free therapy for post-9/11 veterans and their families, including spouses, children, and Gold Star families.",
+      "country": "USA",
+      "state": "",
+      "city": "New York, NY",
+      "format": "nonprofit",
+      "website": "https://www.cohenveteransnetwork.org",
+      "contact_info": "1-888-576-6738",
+      "eligibility": "Post-9/11 veterans, service members, and their family members; family members can access care independently",
+      "tags": [
+        "mental health",
+        "therapy",
+        "outpatient",
+        "family therapy",
+        "low cost",
+        "free",
+        "post-9/11"
+      ],
+      "credibility_level": "flagship",
+      "notes": "25+ clinics nationwide. Critically, family members can access care WITHOUT the veteran being present. Sliding scale fees - many receive free care."
+    },
+    {
+      "id": "FAM-040",
+      "name": "Centerstone Military Services",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "mental_health",
+      "description": "National network of behavioral health treatment centers providing mental health and substance use treatment for military personnel, veterans, and their families. Offers both in-person and telehealth services.",
+      "country": "USA",
+      "state": "",
+      "city": "Nashville, TN",
+      "format": "nonprofit",
+      "website": "https://www.centerstone.org/military",
+      "contact_info": "1-877-HOPE123 (1-877-467-3123)",
+      "eligibility": "Active duty, veterans, and military family members; sliding scale fees available",
+      "tags": [
+        "mental health",
+        "substance use",
+        "telehealth",
+        "in-person",
+        "family therapy",
+        "PTSD"
+      ],
+      "credibility_level": "high",
+      "notes": "Strong in Southeast and Midwest. Telehealth expands reach nationally. Accepts TRICARE and VA community care referrals."
+    },
+    {
+      "id": "FAM-041",
+      "name": "Stop Soldier Suicide - Family Resources",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "gold_star_families",
+        "caregivers"
+      ],
+      "category": "mental_health",
+      "description": "Suicide prevention organization with specific resources for military family members to identify warning signs, intervene, and connect their loved ones to care. Provides family toolkits and peer-to-peer support.",
+      "country": "USA",
+      "state": "",
+      "city": "Raleigh, NC",
+      "format": "nonprofit",
+      "website": "https://www.stopsoldiersuicide.org",
+      "contact_info": "Text 'SOLDIER' to 838255",
+      "eligibility": "Military family members concerned about a veteran or service member's mental health",
+      "tags": [
+        "suicide prevention",
+        "family resources",
+        "warning signs",
+        "crisis",
+        "mental health"
+      ],
+      "credibility_level": "high",
+      "notes": "Strong family-focused suicide prevention toolkit. Works upstream from Veterans Crisis Line. Provides individualized case management."
+    },
+    {
+      "id": "FAM-042",
+      "name": "Headstrong Project",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "mental_health",
+      "description": "Provides completely free, stigma-free mental health treatment to post-9/11 veterans and their families through a network of licensed therapists. No VA enrollment required.",
+      "country": "USA",
+      "state": "",
+      "city": "New York, NY",
+      "format": "nonprofit",
+      "website": "https://www.getheadstrong.org",
+      "contact_info": "info@getheadstrong.org",
+      "eligibility": "Post-9/11 veterans and their immediate family members; no VA enrollment required",
+      "tags": [
+        "mental health",
+        "free therapy",
+        "post-9/11",
+        "family",
+        "no VA required"
+      ],
+      "credibility_level": "high",
+      "notes": "100% free - covers all copays and fees. Therapists specialize in military culture. Quick intake process. Available in most major cities and via telehealth."
+    },
+    {
+      "id": "FAM-043",
+      "name": "Veterans Crisis Line - Family & Friends",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "gold_star_families",
+        "caregivers"
+      ],
+      "category": "crisis_emergency",
+      "description": "The Veterans Crisis Line is also available for family members and friends of veterans in crisis. Trained responders help family members learn how to support a veteran in crisis and connect to local resources.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.veteranscrisisline.net",
+      "contact_info": "Dial 988 then press 1 | Text 838255 | Chat at VeteransCrisisLine.net",
+      "eligibility": "Veterans in crisis AND their family members or friends seeking guidance on how to help",
+      "tags": [
+        "crisis",
+        "suicide prevention",
+        "24/7",
+        "hotline",
+        "family",
+        "text",
+        "chat"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Family members can call, text, or chat on behalf of a veteran. Responders provide guidance on how to help someone in crisis. 24/7/365."
+    },
+    {
+      "id": "FAM-044",
+      "name": "National Domestic Violence Hotline - Military",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "crisis_emergency",
+      "description": "Provides confidential support to military family members experiencing domestic violence, including help safety planning, finding local resources, and understanding military-specific reporting concerns.",
+      "country": "USA",
+      "state": "",
+      "city": "Austin, TX",
+      "format": "nonprofit",
+      "website": "https://www.thehotline.org",
+      "contact_info": "1-800-799-SAFE (7233) | Text START to 88788",
+      "eligibility": "Anyone experiencing domestic violence, including military spouses and families",
+      "tags": [
+        "domestic violence",
+        "crisis",
+        "safety planning",
+        "military spouse",
+        "confidential",
+        "24/7"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Understands military reporting concerns (UCMJ, on-base resources, etc.). 24/7. TTY available. Has specific resources for military-related DV situations."
+    },
+    {
+      "id": "FAM-045",
+      "name": "Safe Helpline (DoD Sexual Assault)",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "crisis_emergency",
+      "description": "DoD's confidential sexual assault support helpline for members of the military community. Provides 24/7 confidential support, information, and local referrals for survivors of sexual assault.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.safehelpline.org",
+      "contact_info": "1-877-995-5247 (24/7)",
+      "eligibility": "Active duty, Guard/Reserve, veterans, and DoD civilians; family members can call for referrals",
+      "tags": [
+        "sexual assault",
+        "crisis",
+        "confidential",
+        "DoD",
+        "SAPR",
+        "24/7"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Operated by RAINN on behalf of DoD. Completely confidential. Online chat available. Referrals to local SARC (Sexual Assault Response Coordinator)."
+    },
+    {
+      "id": "FAM-046",
+      "name": "Army Emergency Relief (AER)",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides emergency financial assistance to Army soldiers and their families, including surviving spouses. Offers interest-free loans and grants for basic needs including food, housing, and medical expenses.",
+      "country": "USA",
+      "state": "",
+      "city": "Alexandria, VA",
+      "format": "nonprofit",
+      "website": "https://www.aerhq.org",
+      "contact_info": "1-866-878-6378",
+      "eligibility": "Active duty Army, Army Reserve, Army National Guard, retired Army, and their dependents including surviving spouses",
+      "tags": [
+        "Army",
+        "financial assistance",
+        "emergency",
+        "interest-free loan",
+        "grant",
+        "surviving spouse"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Covers basic needs: rent, utilities, food, vehicle repairs, medical. Interest-free loans preferred over grants. Also offers educational scholarships."
+    },
+    {
+      "id": "FAM-047",
+      "name": "Navy-Marine Corps Relief Society (NMCRS)",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides emergency financial assistance, interest-free loans, grants, and budget counseling to sailors, Marines, retirees, and their families including surviving spouses.",
+      "country": "USA",
+      "state": "",
+      "city": "Arlington, VA",
+      "format": "nonprofit",
+      "website": "https://www.nmcrs.org",
+      "contact_info": "1-703-696-4904",
+      "eligibility": "Active duty Navy and Marine Corps, retirees, and their dependents including surviving spouses",
+      "tags": [
+        "Navy",
+        "Marine Corps",
+        "financial assistance",
+        "interest-free loan",
+        "surviving spouse",
+        "emergency"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Offices at most Navy and Marine installations. Also provides Visiting Nurse Program and childcare subsidies. Surviving spouses eligible for 1 year after loss."
+    },
+    {
+      "id": "FAM-048",
+      "name": "Air Force Aid Society (AFAS)",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides emergency financial assistance, educational grants and loans, and other programs to Air Force and Space Force active duty members, retirees, and their families including surviving spouses.",
+      "country": "USA",
+      "state": "",
+      "city": "Arlington, VA",
+      "format": "nonprofit",
+      "website": "https://www.afas.org",
+      "contact_info": "1-703-972-2650",
+      "eligibility": "Active duty Air Force and Space Force, retirees, and their dependents including surviving spouses",
+      "tags": [
+        "Air Force",
+        "Space Force",
+        "financial assistance",
+        "emergency",
+        "scholarships",
+        "surviving spouse"
+      ],
+      "credibility_level": "flagship",
+      "notes": "General Henry H. Arnold Education Grant for dependent children and spouses. Surviving spouse grants available for up to 1 year after death of member."
+    },
+    {
+      "id": "FAM-049",
+      "name": "Coast Guard Mutual Assistance (CGMA)",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides confidential financial assistance, loans, and counseling to Coast Guard members and their families, including surviving spouses. Covers emergencies, childcare, education, and other needs.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.cgmahq.org",
+      "contact_info": "1-800-881-2462",
+      "eligibility": "Active duty Coast Guard, Reserve, retirees, civilian employees, and their families",
+      "tags": [
+        "Coast Guard",
+        "financial assistance",
+        "emergency",
+        "counseling",
+        "surviving spouse"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Often overlooked - Coast Guard families have fewer military support options. CGMA fills that gap. Available globally where CG members are stationed."
+    },
+    {
+      "id": "FAM-050",
+      "name": "USA Cares",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "surviving_spouses",
+        "gold_star_families"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides post-9/11 veterans, active duty service members, and their families with financial assistance for housing, utilities, and other basic needs, along with case management and referrals.",
+      "country": "USA",
+      "state": "",
+      "city": "Radcliff, KY",
+      "format": "nonprofit",
+      "website": "https://www.usacares.org",
+      "contact_info": "1-800-773-0387",
+      "eligibility": "Post-9/11 veterans and active duty service members and their families in financial need",
+      "tags": [
+        "financial assistance",
+        "housing",
+        "utilities",
+        "post-9/11",
+        "case management",
+        "veterans family"
+      ],
+      "credibility_level": "high",
+      "notes": "All-branches financial assistance. Strong case management approach - works with families on long-term stability, not just emergency relief."
+    },
+    {
+      "id": "FAM-051",
+      "name": "Homes for Our Troops",
+      "audience": [
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "housing",
+      "description": "Builds and donates specially adapted custom homes nationwide for severely injured post-9/11 veterans, freeing them from the physical constraints of their disabilities and the financial burden of a mortgage.",
+      "country": "USA",
+      "state": "",
+      "city": "Taunton, MA",
+      "format": "nonprofit",
+      "website": "https://www.hfotusa.org",
+      "contact_info": "1-866-7-TROOPS (1-866-787-6677)",
+      "eligibility": "Post-9/11 veterans with severe service-connected injuries (amputation, spinal cord injury, TBI, blindness); family members benefit as occupants",
+      "tags": [
+        "housing",
+        "adapted home",
+        "mortgage-free",
+        "severe injury",
+        "family housing"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Homes built to exact veteran's disability specifications. 100% mortgage-free. Family lives in the home. Over 350 homes built since 2004."
+    },
+    {
+      "id": "FAM-052",
+      "name": "Building Homes for Heroes",
+      "audience": [
+        "veteran_families",
+        "military_spouses"
+      ],
+      "category": "housing",
+      "description": "Gifts mortgage-free, specially adapted homes to wounded warriors and their families. Also provides financial assistance and other resources to help veterans and families thrive after injury.",
+      "country": "USA",
+      "state": "",
+      "city": "Albertson, NY",
+      "format": "nonprofit",
+      "website": "https://www.buildinghomesforheroes.org",
+      "contact_info": "1-516-684-9220 | info@buildinghomesforheroes.org",
+      "eligibility": "Veterans wounded in action post-9/11 and their immediate families",
+      "tags": [
+        "housing",
+        "mortgage-free",
+        "adapted home",
+        "wounded warrior",
+        "family housing"
+      ],
+      "credibility_level": "high",
+      "notes": "Has gifted 300+ homes and vehicles. Also provides mortgage-free vehicle grants. Strong East Coast presence but builds nationally."
+    },
+    {
+      "id": "FAM-053",
+      "name": "Purple Heart Homes",
+      "audience": [
+        "veteran_families"
+      ],
+      "category": "housing",
+      "description": "Provides housing solutions for service-connected disabled veterans and their families through critical home repairs, accessibility modifications, and new home builds.",
+      "country": "USA",
+      "state": "",
+      "city": "Mooresville, NC",
+      "format": "nonprofit",
+      "website": "https://www.purplehearthomesusa.org",
+      "contact_info": "1-704-500-4921 | info@purplehearthomesusa.org",
+      "eligibility": "Service-connected disabled veterans of any era and their families",
+      "tags": [
+        "housing",
+        "home repair",
+        "accessibility",
+        "disabled veteran",
+        "all eras"
+      ],
+      "credibility_level": "high",
+      "notes": "Serves veterans of all eras - not just post-9/11. Focus on aging and disabled veterans who need critical home repairs or accessibility modifications."
+    },
+    {
+      "id": "FAM-054",
+      "name": "Operation Homefront - Transitional Housing Villages",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "housing",
+      "description": "Provides transitional housing at low cost (below-market rent) for military families recovering from financial hardship. Villages located near military installations across the country.",
+      "country": "USA",
+      "state": "",
+      "city": "San Antonio, TX",
+      "format": "nonprofit",
+      "website": "https://www.operationhomefront.org/our-programs/transitional-homes",
+      "contact_info": "1-800-722-6098",
+      "eligibility": "Post-9/11 veterans and their families facing financial instability; income-based eligibility",
+      "tags": [
+        "transitional housing",
+        "affordable housing",
+        "military family",
+        "financial hardship"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Villages in TX, GA, NC, CA and other states. Below-market rents with financial coaching included. 2-year program with path to permanent housing."
+    },
+    {
+      "id": "FAM-055",
+      "name": "National Veterans Legal Services Program (NVLSP)",
+      "audience": [
+        "surviving_spouses",
+        "gold_star_families",
+        "veteran_families"
+      ],
+      "category": "legal_services",
+      "description": "Provides free legal representation and advocacy for veterans and survivors in VA claims and appeals. Publishes the Veterans Benefits Manual - the definitive resource for veterans' legal claims.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.nvlsp.org",
+      "contact_info": "1-202-265-8305 | info@nvlsp.org",
+      "eligibility": "Veterans and survivors with denied or underpaid VA claims, particularly complex cases",
+      "tags": [
+        "legal",
+        "VA claims",
+        "appeals",
+        "free representation",
+        "DIC",
+        "survivor benefits"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Focuses on systemic VA issues and complex appeals. Trains VSO reps and attorneys. Strong track record on DIC and survivor benefit claims."
+    },
+    {
+      "id": "FAM-056",
+      "name": "American Bar Association - Military Pro Bono Project",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "legal_services",
+      "description": "Connects active duty service members and their families with pro bono civil legal assistance for issues arising from military service, including family law, housing, consumer issues, and more.",
+      "country": "USA",
+      "state": "",
+      "city": "Chicago, IL",
+      "format": "nonprofit",
+      "website": "https://www.americanbar.org/groups/legal_aid_indigent_defendants/our_work/military_pro_bono_project/",
+      "contact_info": "militaryprobono@americanbar.org",
+      "eligibility": "Active duty service members and their families with civil legal matters",
+      "tags": [
+        "legal",
+        "pro bono",
+        "family law",
+        "housing",
+        "consumer law",
+        "active duty families"
+      ],
+      "credibility_level": "high",
+      "notes": "Free civil legal help for active duty families. Cases screened and matched with volunteer attorneys. Covers most civil (non-criminal) legal matters."
+    },
+    {
+      "id": "FAM-057",
+      "name": "Armed Forces Legal Assistance (JAG Corps)",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "legal_services",
+      "description": "Free legal assistance from Judge Advocate General (JAG) offices at military installations covering wills, powers of attorney, family law matters, consumer protection, and other civil legal issues for service members and their families.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://legalassistance.law.af.mil",
+      "contact_info": "Contact nearest installation legal office",
+      "eligibility": "Active duty service members, their dependents, and retirees on a space-available basis",
+      "tags": [
+        "legal",
+        "JAG",
+        "wills",
+        "power of attorney",
+        "family law",
+        "free",
+        "installation"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Available at every major installation. Critical for deployment preparedness (wills, POA). Family members can use without the service member present."
+    },
+    {
+      "id": "FAM-058",
+      "name": "Veterans Legal Institute",
+      "audience": [
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "legal_services",
+      "description": "Provides free legal services to low-income veterans and their families including housing, family law, VA benefits appeals, and re-entry legal issues. Strong network of pro bono attorney volunteers.",
+      "country": "USA",
+      "state": "CA",
+      "city": "Los Angeles",
+      "format": "nonprofit",
+      "website": "https://www.vetslegalinstitute.org",
+      "contact_info": "1-213-640-3988",
+      "eligibility": "Low-income veterans and their families in Southern California; some remote services available",
+      "tags": [
+        "legal",
+        "pro bono",
+        "VA benefits",
+        "housing",
+        "family law",
+        "low-income"
+      ],
+      "credibility_level": "high",
+      "notes": "Primarily CA-based but a model for state-level veteran legal services. Refer out-of-state clients to state-based legal aid or NVLSP."
+    },
+    {
+      "id": "FAM-059",
+      "name": "TAPS - Good Grief Camp for Young Survivors",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "children_youth",
+      "description": "Free grief camps for children and teens who have lost a parent or sibling in military service. Provides age-appropriate grief support, peer connection, and mentoring from military volunteers.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.taps.org/programs/youth",
+      "contact_info": "1-800-959-8277",
+      "eligibility": "Children ages 5-17 who have experienced the death of a military loved one",
+      "tags": [
+        "children",
+        "youth",
+        "grief camp",
+        "Gold Star",
+        "peer support",
+        "free"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Flagship camp held annually at Arlington, VA. Regional camps throughout the year. Each child is paired with a military mentor for the weekend. Completely free."
+    },
+    {
+      "id": "FAM-060",
+      "name": "Operation Purple Camps (NMFA)",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "children_youth",
+      "description": "Free summer camps for children of military families - including those dealing with deployment, parent injury, or family transition. Provides a safe space for peer connection and coping skill development.",
+      "country": "USA",
+      "state": "",
+      "city": "Alexandria, VA",
+      "format": "nonprofit",
+      "website": "https://www.militaryfamily.org/programs/operation-purple/",
+      "contact_info": "info@militaryfamily.org",
+      "eligibility": "Children ages 7-17 of currently serving military members (all branches including Guard/Reserve)",
+      "tags": [
+        "children",
+        "youth",
+        "summer camp",
+        "free",
+        "deployment",
+        "military family"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Run by National Military Family Association. Camps at locations across the US in summer. Addresses deployment stress, separation, and resilience."
+    },
+    {
+      "id": "FAM-061",
+      "name": "Snowball Express - Youth Healing Retreats",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "children_youth",
+      "description": "Year-round healing retreats and an annual event bringing children of fallen military heroes and their surviving parents together for community, adventure, and grief processing activities.",
+      "country": "USA",
+      "state": "",
+      "city": "Fort Worth, TX",
+      "format": "nonprofit",
+      "website": "https://www.snowballexpress.org/programs",
+      "contact_info": "info@snowballexpress.org",
+      "eligibility": "Children under 18 of post-9/11 fallen military heroes and their surviving parent or legal guardian",
+      "tags": [
+        "children",
+        "youth",
+        "Gold Star",
+        "grief retreat",
+        "healing",
+        "free"
+      ],
+      "credibility_level": "high",
+      "notes": "Annual December event flies 1,700+ children and guardians to Dallas on American Airlines. Year-round local chapters. All expenses paid."
+    },
+    {
+      "id": "FAM-062",
+      "name": "Folds of Honor - K-12 Scholarship",
+      "audience": [
+        "gold_star_families",
+        "veteran_families"
+      ],
+      "category": "children_youth",
+      "description": "Provides tuition assistance for K-12 private or public school, tutoring, and educational support to children of fallen or disabled military members.",
+      "country": "USA",
+      "state": "",
+      "city": "Owasso, OK",
+      "format": "nonprofit",
+      "website": "https://www.foldsofhonor.org/scholarships",
+      "contact_info": "1-918-274-4400",
+      "eligibility": "Dependent children of fallen or disabled (10%+ VA rating) service members; K-12 and college",
+      "tags": [
+        "K-12",
+        "scholarship",
+        "tuition",
+        "Gold Star",
+        "disabled veteran families",
+        "education"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Up to $5,000/year per K-12 child. Rolling applications. Very high approval rate for qualifying families. Also covers college (separate application)."
+    },
+    {
+      "id": "FAM-063",
+      "name": "Scholarship for Military Children (DECA/Fisher House)",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "children_youth",
+      "description": "Annual scholarship program providing $2,000 college scholarships to dependent children of active duty, retired, and fallen military members through the DECA commissary program.",
+      "country": "USA",
+      "state": "",
+      "city": "Fort Lee, VA",
+      "format": "nonprofit",
+      "website": "https://www.militaryscholar.org",
+      "contact_info": "scholarships@militaryscholar.org",
+      "eligibility": "Dependent children of active duty, retired, or deceased service members with commissary access",
+      "tags": [
+        "scholarship",
+        "college",
+        "military children",
+        "commissary",
+        "annual"
+      ],
+      "credibility_level": "high",
+      "notes": "Apply through any commissary. One scholarship per commissary location available. Application typically opens January, deadline March. Administered by Fisher House."
+    },
+    {
+      "id": "FAM-064",
+      "name": "DoD Military OneSource - School Support",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "children_youth",
+      "description": "Provides academic support resources, tutoring reimbursement, special education advocacy, and School Liaison Officer connections for military children navigating frequent school transitions.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.militaryonesource.mil/education-employment/for-children-and-youth/",
+      "contact_info": "1-800-342-9647",
+      "eligibility": "Dependent children of active duty, Guard, and Reserve service members",
+      "tags": [
+        "education",
+        "school support",
+        "tutoring",
+        "school liaison",
+        "special needs",
+        "military child"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Tutoring reimbursement available through Military OneSource. School Liaison Officers (SLO) at every major installation assist with transitions."
+    },
+    {
+      "id": "FAM-065",
+      "name": "Mission22 - Family Peer Support",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "gold_star_families"
+      ],
+      "category": "mental_health",
+      "description": "Focuses on preventing veteran suicide through peer support, treatment programs, and family resources. Provides family-focused peer support groups and connections to mental health treatment for veteran families.",
+      "country": "USA",
+      "state": "",
+      "city": "Portland, OR",
+      "format": "nonprofit",
+      "website": "https://www.mission22.com",
+      "contact_info": "1-503-908-8505 | info@mission22.com",
+      "eligibility": "Veterans, service members, and their families; Gold Star families",
+      "tags": [
+        "suicide prevention",
+        "peer support",
+        "mental health",
+        "family resources",
+        "Gold Star"
+      ],
+      "credibility_level": "high",
+      "notes": "Specific focus on the 22-per-day veteran suicide statistic. Family peer support groups help spouses and family members cope with a veteran's mental health struggles."
+    },
+    {
+      "id": "FAM-066",
+      "name": "Armed Forces YMCA",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "community_connection",
+      "description": "Provides programs, services, and community connections specifically for military families including childcare, youth activities, family events, and support for families during deployment.",
+      "country": "USA",
+      "state": "",
+      "city": "Alexandria, VA",
+      "format": "nonprofit",
+      "website": "https://www.asymca.org",
+      "contact_info": "info@asymca.org",
+      "eligibility": "Active duty service members and their families, particularly junior enlisted families",
+      "tags": [
+        "community",
+        "childcare",
+        "youth programs",
+        "deployment support",
+        "military family"
+      ],
+      "credibility_level": "high",
+      "notes": "Operation Hero program helps children cope with deployment. Childcare subsidy programs. Events at or near installations."
+    },
+    {
+      "id": "FAM-067",
+      "name": "Semper Fi & America's Fund - Caregiver Support",
+      "audience": [
+        "caregivers",
+        "surviving_spouses"
+      ],
+      "category": "caregiver_support",
+      "description": "In addition to financial assistance, provides dedicated caregiver support including respite care funding, caregiver retreats, and peer connections for those caring for catastrophically wounded service members.",
+      "country": "USA",
+      "state": "CA",
+      "city": "Oceanside",
+      "format": "nonprofit",
+      "website": "https://www.semperfifund.org/programs/caregivers",
+      "contact_info": "1-760-725-3680",
+      "eligibility": "Caregivers of combat wounded, critically ill, or catastrophically injured service members (all branches)",
+      "tags": [
+        "caregiver",
+        "respite care",
+        "caregiver retreat",
+        "peer support",
+        "all branches"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Respite funding allows caregivers to take breaks. Annual caregiver retreats provide peer connection and mental health support."
+    },
+    {
+      "id": "FAM-068",
+      "name": "VFW - Unmet Needs Program",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides grants of up to $1,500 to military families facing financial shortfalls due to deployment or other military-related hardship, covering basic living expenses like housing, utilities, and food.",
+      "country": "USA",
+      "state": "",
+      "city": "Kansas City, MO",
+      "format": "nonprofit",
+      "website": "https://www.vfw.org/assistance/financial-grants",
+      "contact_info": "1-816-968-1117",
+      "eligibility": "Active duty service members and their families deployed within the past 60 days or returning within 90 days; must demonstrate financial need",
+      "tags": [
+        "financial assistance",
+        "grant",
+        "deployment",
+        "housing",
+        "utilities",
+        "military family"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Grants up to $1,500 per application. No repayment required. Quick turnaround (5-10 business days). Apply through VFW National or local posts."
+    },
+    {
+      "id": "FAM-069",
+      "name": "American Legion - Legacy Scholarship Fund",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "employment_education",
+      "description": "Provides college scholarships to children of veterans who died on active duty or from a service-connected disability after September 11, 2001, and to children of 100% disabled veterans.",
+      "country": "USA",
+      "state": "",
+      "city": "Indianapolis, IN",
+      "format": "nonprofit",
+      "website": "https://www.legion.org/scholarships/legacy",
+      "contact_info": "1-317-630-1202",
+      "eligibility": "Children (under 23) of post-9/11 fallen or 100% disabled veterans",
+      "tags": [
+        "scholarship",
+        "college",
+        "Gold Star",
+        "post-9/11",
+        "disabled veteran",
+        "education"
+      ],
+      "credibility_level": "high",
+      "notes": "Annual scholarship. Applications open in March each year. Children of 100% disabled veterans included even if veteran did not die in service."
+    },
+    {
+      "id": "FAM-070",
+      "name": "National Resource Directory (NRD)",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "military_spouses",
+        "caregivers",
+        "veteran_families"
+      ],
+      "category": "community_connection",
+      "description": "DoD, VA, and Department of Labor-managed online directory of tens of thousands of national and local resources for wounded warriors, veterans, service members, and their families.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.nrd.gov",
+      "contact_info": "nrd@va.gov",
+      "eligibility": "All service members, veterans, and family members",
+      "tags": [
+        "directory",
+        "resource hub",
+        "all audiences",
+        "DoD",
+        "VA",
+        "national",
+        "local"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Comprehensive searchable database of national and local resources. Filter by state, topic, and audience. Best used as a starting point for local resource searches."
+    },
+    {
+      "id": "FAM-071",
+      "name": "DAV (Disabled American Veterans) - Auxiliary",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "community_connection",
+      "description": "The DAV Auxiliary supports disabled veterans and their families through volunteer service, advocacy, and direct support programs including transportation, hospital visits, and family assistance.",
+      "country": "USA",
+      "state": "",
+      "city": "Cold Spring, KY",
+      "format": "nonprofit",
+      "website": "https://www.davauxiliary.org",
+      "contact_info": "1-859-441-7300",
+      "eligibility": "Family members and supporters of disabled veterans; membership-based with open enrollment",
+      "tags": [
+        "community",
+        "advocacy",
+        "volunteer",
+        "family of disabled veteran",
+        "transportation"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Local chapters in every state. Strong volunteer transportation network for veteran medical appointments. DAV National Service Officers provide free benefits claims help."
+    },
+    {
+      "id": "FAM-072",
+      "name": "Rosalynn Carter Institute for Caregivers",
+      "audience": [
+        "caregivers"
+      ],
+      "category": "caregiver_support",
+      "description": "National organization building caregiver resilience through evidence-based training, research, and advocacy. Offers the Caring for the Caregiver and CARE tools programs specifically for military caregivers.",
+      "country": "USA",
+      "state": "GA",
+      "city": "Americus",
+      "format": "nonprofit",
+      "website": "https://www.rosalynncarter.org",
+      "contact_info": "1-229-928-1234 | rci@gsw.edu",
+      "eligibility": "Family caregivers broadly; specific military caregiver programs available",
+      "tags": [
+        "caregiver",
+        "training",
+        "resilience",
+        "mental health",
+        "evidence-based",
+        "military caregiver"
+      ],
+      "credibility_level": "high",
+      "notes": "Founded by former First Lady Rosalynn Carter. Strong research and advocacy arm. Military caregiver specific curriculum available free online."
+    },
+    {
+      "id": "FAM-073",
+      "name": "Hire Heroes USA - Military Spouse Track",
+      "audience": [
+        "military_spouses"
+      ],
+      "category": "employment_education",
+      "description": "Free career coaching, resume writing, interview preparation, and job placement services for military spouses through a dedicated military spouse employment program.",
+      "country": "USA",
+      "state": "",
+      "city": "Alpharetta, GA",
+      "format": "nonprofit",
+      "website": "https://www.hireheroesusa.org/military-spouses/",
+      "contact_info": "1-844-634-1520",
+      "eligibility": "Military spouses (active duty, Reserve, Guard, veteran spouse)",
+      "tags": [
+        "employment",
+        "military spouse",
+        "career coaching",
+        "resume",
+        "job placement",
+        "free"
+      ],
+      "credibility_level": "high",
+      "notes": "100% free. One-on-one coaching via phone/video. Strong employer partner network. Also serves transitioning veterans."
+    },
+    {
+      "id": "FAM-074",
+      "name": "FOCUS (Families OverComing Under Stress)",
+      "audience": [
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "mental_health",
+      "description": "Evidence-based family resilience training program for military families with children. Teaches communication, problem-solving, and emotional regulation skills to strengthen families affected by deployment, combat stress, and reintegration.",
+      "country": "USA",
+      "state": "",
+      "city": "Los Angeles, CA",
+      "format": "nonprofit",
+      "website": "https://www.focusproject.org",
+      "contact_info": "info@focusproject.org",
+      "eligibility": "Military families with children ages 3-17 dealing with deployment or combat-related stress",
+      "tags": [
+        "family resilience",
+        "children",
+        "deployment",
+        "communication",
+        "reintegration",
+        "evidence-based"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Originally developed at UCLA/Harvard. Available at installations and via telehealth. Rated one of the most effective military family resilience programs."
+    },
+    {
+      "id": "FAM-075",
+      "name": "Military Family Support Center - RAND Corporation",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers",
+        "gold_star_families"
+      ],
+      "category": "community_connection",
+      "description": "Research-based resource hub from RAND providing data, reports, and evidence-based tools on military family well-being, caregiver health, Gold Star family needs, and spouse employment challenges.",
+      "country": "USA",
+      "state": "CA",
+      "city": "Santa Monica",
+      "format": "nonprofit",
+      "website": "https://www.rand.org/topics/military-families.html",
+      "contact_info": "N/A - research and resource hub",
+      "eligibility": "Open-access research; useful for nonprofits, policymakers, and informed families",
+      "tags": [
+        "research",
+        "data",
+        "caregiver",
+        "Gold Star",
+        "military spouse",
+        "policy",
+        "evidence-based"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Best used to understand scope of issues and find evidence-based programs. RAND's Hidden Toll report on military caregivers is the foundational research document."
+    },
+    {
+      "id": "FAM-076",
+      "name": "BrainLine Military - TBI Family Resources",
+      "audience": [
+        "caregivers",
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "caregiver_support",
+      "description": "WETA Public Media resource providing comprehensive information on traumatic brain injury for veterans, service members, and their families. Covers TBI symptoms, caregiving, treatment, and long-term adjustment.",
+      "country": "USA",
+      "state": "",
+      "city": "Arlington, VA",
+      "format": "nonprofit",
+      "website": "https://www.brainline.org/military",
+      "contact_info": "brainline@weta.org",
+      "eligibility": "Family members and caregivers of veterans or service members with TBI",
+      "tags": [
+        "TBI",
+        "caregiver",
+        "education",
+        "brain injury",
+        "military",
+        "family resources"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Best free TBI family education resource available. Includes videos, expert articles, and a community forum. Produced in partnership with DVBIC and the VA."
+    },
+    {
+      "id": "FAM-077",
+      "name": "Defense and Veterans Brain Injury Center (DVBIC)",
+      "audience": [
+        "caregivers",
+        "veteran_families",
+        "military_spouses"
+      ],
+      "category": "caregiver_support",
+      "description": "DoD's primary TBI program providing clinical care, research, and family education for service members and veterans with traumatic brain injury. Operates the TBI Family Caregiver Curriculum.",
+      "country": "USA",
+      "state": "",
+      "city": "Silver Spring, MD",
+      "format": "government",
+      "website": "https://www.dvbic.dcoe.mil",
+      "contact_info": "1-800-870-9244",
+      "eligibility": "Service members, veterans, and their family members/caregivers dealing with TBI",
+      "tags": [
+        "TBI",
+        "DoD",
+        "clinical care",
+        "caregiver curriculum",
+        "family education",
+        "research"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Free Family Caregiver Curriculum available as downloadable modules. 24/7 resource phone line. Referrals to nearest TBI specialist."
+    },
+    {
+      "id": "FAM-078",
+      "name": "Al-Anon Family Groups - Military",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "mental_health",
+      "description": "International peer support fellowship for families and friends of people with alcohol use disorder. Strong presence in the military community for spouses and family members of veterans struggling with alcohol.",
+      "country": "USA",
+      "state": "",
+      "city": "Virginia Beach, VA",
+      "format": "nonprofit",
+      "website": "https://al-anon.org",
+      "contact_info": "1-888-4AL-ANON (1-888-425-2666)",
+      "eligibility": "Family members and friends affected by someone else's drinking, including military/veteran families",
+      "tags": [
+        "alcohol",
+        "addiction",
+        "family support",
+        "peer groups",
+        "spouse",
+        "12-step"
+      ],
+      "credibility_level": "flagship",
+      "notes": "In-person meetings in every zip code and online meetings globally. Completely free. Strong overlap with military family needs given high rates of veteran alcohol use."
+    },
+    {
+      "id": "FAM-079",
+      "name": "Nar-Anon Family Groups",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "mental_health",
+      "description": "Peer support program for family members and friends of those struggling with drug addiction. Provides a 12-step recovery framework specifically for those affected by a loved one's substance use.",
+      "country": "USA",
+      "state": "",
+      "city": "Torrance, CA",
+      "format": "nonprofit",
+      "website": "https://www.nar-anon.org",
+      "contact_info": "1-800-477-6291",
+      "eligibility": "Family members of anyone struggling with drug addiction, including veterans and service members",
+      "tags": [
+        "substance use",
+        "addiction",
+        "family support",
+        "peer groups",
+        "12-step",
+        "drug addiction"
+      ],
+      "credibility_level": "high",
+      "notes": "Parallel to Al-Anon but focused on drug addiction. Highly relevant for families of veterans with opioid, prescription drug, or other substance use disorders."
+    },
+    {
+      "id": "FAM-080",
+      "name": "SAMHSA - Military Families Behavioral Health",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "mental_health",
+      "description": "SAMHSA's resource hub for military families addressing behavioral health - mental health, substance use, and co-occurring disorders. Includes treatment locator, family guides, and crisis resources.",
+      "country": "USA",
+      "state": "",
+      "city": "Rockville, MD",
+      "format": "government",
+      "website": "https://www.samhsa.gov/military-families",
+      "contact_info": "1-800-662-HELP (4357) | Text HOME to 741741",
+      "eligibility": "Military families dealing with mental health or substance use concerns",
+      "tags": [
+        "mental health",
+        "substance use",
+        "family guide",
+        "treatment locator",
+        "SAMHSA",
+        "government"
+      ],
+      "credibility_level": "flagship",
+      "notes": "SAMHSA treatment locator finds local providers accepting TRICARE/military families. National Helpline free and confidential 24/7. Multiple family guides available in Spanish."
+    },
+    {
+      "id": "FAM-081",
+      "name": "Psych Hub - Military Mental Health",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "mental_health",
+      "description": "Mental health education platform with a dedicated military and veteran library of short, clinically accurate videos covering PTSD, moral injury, TBI, and how family members can support their loved ones.",
+      "country": "USA",
+      "state": "",
+      "city": "Nashville, TN",
+      "format": "nonprofit",
+      "website": "https://psychhub.com/learn/military-mental-health",
+      "contact_info": "info@psychhub.com",
+      "eligibility": "All military family members and the general public - free educational content",
+      "tags": [
+        "education",
+        "mental health",
+        "PTSD",
+        "TBI",
+        "family support",
+        "video",
+        "free"
+      ],
+      "credibility_level": "high",
+      "notes": "Best used for family members who want to understand what their veteran is experiencing. Short (3-5 min) clinically accurate videos. 100% free."
+    },
+    {
+      "id": "FAM-082",
+      "name": "Wounded Warrior Project - Family Support",
+      "audience": [
+        "caregivers",
+        "military_spouses",
+        "veteran_families"
+      ],
+      "category": "caregiver_support",
+      "description": "WWP's family and caregiver programs provide mental health support, caregiver retreats, family workshops, and connections to benefits for the families of post-9/11 wounded warriors.",
+      "country": "USA",
+      "state": "",
+      "city": "Jacksonville, FL",
+      "format": "nonprofit",
+      "website": "https://www.woundedwarriorproject.org/programs/family-support",
+      "contact_info": "1-888-997-2586",
+      "eligibility": "Families and caregivers of post-9/11 wounded warriors registered with WWP",
+      "tags": [
+        "caregiver",
+        "wounded warrior",
+        "family retreat",
+        "mental health",
+        "post-9/11"
+      ],
+      "credibility_level": "high",
+      "notes": "Veteran must be registered with WWP first. Family programming includes Project Odyssey (wilderness retreats), Peer Support Mentoring, and the Independence Program for catastrophic injury caregivers."
+    },
+    {
+      "id": "FAM-083",
+      "name": "VA Women Veterans Program",
+      "audience": [
+        "surviving_spouses",
+        "veteran_families"
+      ],
+      "category": "community_connection",
+      "description": "VA programs specifically addressing the needs of women veterans including survivor benefits navigation, military sexual trauma care, gender-specific healthcare, and family support coordination.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.womenshealth.va.gov",
+      "contact_info": "1-855-829-6636 (Women Veterans Call Center)",
+      "eligibility": "Women veterans and women surviving spouses of veterans",
+      "tags": [
+        "women veterans",
+        "survivor benefits",
+        "MST",
+        "healthcare",
+        "VA",
+        "surviving spouse"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Women Veterans Call Center M-F 8am-10pm, Sat 8am-6:30pm ET. Navigates survivor benefits specifically for women. Every VA has a Women Veterans Program Manager."
+    },
+    {
+      "id": "FAM-084",
+      "name": "OutServe-SLDN (LGBTQ+ Military)",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "surviving_spouses"
+      ],
+      "category": "legal_services",
+      "description": "Legal and advocacy organization for LGBTQ+ military members, veterans, and their families. Provides legal assistance with benefits, survivor benefits for same-sex spouses, discharge upgrades, and policy advocacy.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.outserve-sldn.org",
+      "contact_info": "1-202-328-3244 | legal@outserve-sldn.org",
+      "eligibility": "LGBTQ+ service members, veterans, and their families including surviving same-sex spouses",
+      "tags": [
+        "LGBTQ+",
+        "legal",
+        "survivor benefits",
+        "same-sex spouse",
+        "discharge upgrade",
+        "advocacy"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Critical resource for LGBTQ+ surviving spouses navigating DIC, SBP, and TRICARE survivor eligibility. Free legal assistance."
+    },
+    {
+      "id": "FAM-085",
+      "name": "National Alliance for Hispanic Veterans",
+      "audience": [
+        "veteran_families",
+        "military_spouses"
+      ],
+      "category": "community_connection",
+      "description": "Advocacy and support organization ensuring Hispanic veterans and their families have equitable access to VA benefits, mental health services, and community resources. Provides bilingual outreach and benefit navigation.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "nonprofit",
+      "website": "https://www.hispanicveterans.org",
+      "contact_info": "info@hispanicveterans.org",
+      "eligibility": "Hispanic/Latino veterans and their families",
+      "tags": [
+        "Hispanic",
+        "Latino",
+        "bilingual",
+        "veteran family",
+        "advocacy",
+        "benefits navigation"
+      ],
+      "credibility_level": "high",
+      "notes": "Bilingual resources in Spanish and English. Strong advocacy on VA access disparities. Referral network to local VSOs and legal aid."
+    },
+    {
+      "id": "FAM-086",
+      "name": "Minority Veterans of America",
+      "audience": [
+        "veteran_families",
+        "military_spouses"
+      ],
+      "category": "community_connection",
+      "description": "Advocacy and community organization serving BIPOC, LGBTQ+, and women veterans and their families. Provides peer support, policy advocacy, and navigation of the VA system for underserved veteran communities.",
+      "country": "USA",
+      "state": "",
+      "city": "Seattle, WA",
+      "format": "nonprofit",
+      "website": "https://www.minorityveterans.org",
+      "contact_info": "info@minorityveterans.org",
+      "eligibility": "BIPOC, LGBTQ+, women veterans and their families",
+      "tags": [
+        "BIPOC",
+        "minority veteran",
+        "LGBTQ+",
+        "women veterans",
+        "advocacy",
+        "community"
+      ],
+      "credibility_level": "high",
+      "notes": "Addresses systemic disparities in VA access for minority veterans. Strong online community and local chapters emerging in major cities."
+    },
+    {
+      "id": "FAM-087",
+      "name": "VA Vet Center Program - Family Counseling",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "gold_star_families",
+        "caregivers"
+      ],
+      "category": "mental_health",
+      "description": "VA's community-based Vet Centers provide readjustment counseling, family counseling, bereavement counseling for Gold Star families, and MST counseling in a non-clinical, community setting.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.vetcenter.va.gov",
+      "contact_info": "1-877-WAR-VETS (1-877-927-8387)",
+      "eligibility": "Combat veterans, sexual trauma survivors, and their family members; Gold Star families for bereavement",
+      "tags": [
+        "counseling",
+        "family therapy",
+        "Gold Star",
+        "bereavement",
+        "readjustment",
+        "community-based",
+        "free"
+      ],
+      "credibility_level": "flagship",
+      "notes": "300+ Vet Centers nationwide. More accessible than VA medical centers - no VA enrollment required. Family members can access bereavement and readjustment counseling. Free."
+    },
+    {
+      "id": "FAM-088",
+      "name": "VA Caregiver Peer Support Mentoring Program",
+      "audience": [
+        "caregivers"
+      ],
+      "category": "caregiver_support",
+      "description": "VA program pairing new or struggling caregivers with experienced peer mentors who have firsthand experience caring for a veteran. Mentors provide emotional support, practical guidance, and community connection.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.caregiver.va.gov/support/peer_support_mentoring_program.asp",
+      "contact_info": "1-855-260-3274",
+      "eligibility": "Caregivers of veterans enrolled in VA care; PCAFC and General Caregiver Support participants",
+      "tags": [
+        "caregiver",
+        "peer mentor",
+        "VA",
+        "emotional support",
+        "1-on-1 support"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Free through the VA. Mentors matched on veteran's condition and caregiver situation. Can request a mentor through the Caregiver Support Line."
+    },
+    {
+      "id": "FAM-089",
+      "name": "Respite Care (VA HBPC & Community Programs)",
+      "audience": [
+        "caregivers"
+      ],
+      "category": "caregiver_support",
+      "description": "VA-funded respite care services giving family caregivers temporary relief from caregiving duties. Includes in-home respite, adult day health care, and short-term inpatient respite at VA facilities.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.caregiver.va.gov/support/Respite.asp",
+      "contact_info": "1-855-260-3274",
+      "eligibility": "Family caregivers of veterans enrolled in VA care; PCAFC caregivers receive enhanced respite funding",
+      "tags": [
+        "respite care",
+        "caregiver relief",
+        "VA",
+        "in-home care",
+        "adult day care"
+      ],
+      "credibility_level": "flagship",
+      "notes": "PCAFC caregivers receive 30 days/year of respite. General caregivers may access respite through VA HBPC. Critical for preventing caregiver burnout."
+    },
+    {
+      "id": "FAM-090",
+      "name": "Military Spouse JD Network",
+      "audience": [
+        "military_spouses"
+      ],
+      "category": "employment_education",
+      "description": "Supports military spouses who are attorneys navigating bar admission across multiple states due to frequent relocations. Provides pro bono opportunities, networking, and advocacy for bar portability.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "nonprofit",
+      "website": "https://msjdn.org",
+      "contact_info": "info@msjdn.org",
+      "eligibility": "Military spouses who are licensed attorneys or law students",
+      "tags": [
+        "legal profession",
+        "bar admission",
+        "military spouse",
+        "career portability",
+        "attorney"
+      ],
+      "credibility_level": "high",
+      "notes": "Addresses a critical barrier for military spouse attorneys - each state move can require a new bar exam. Advocates for reciprocity agreements and temporary practice rules."
+    },
+    {
+      "id": "FAM-091",
+      "name": "Student Veterans of America - Family Chapter",
+      "audience": [
+        "veteran_families",
+        "military_spouses"
+      ],
+      "category": "employment_education",
+      "description": "National network of campus-based chapters supporting student veterans and their families in higher education. Provides peer support, academic resources, and advocacy for GI Bill and financial aid access.",
+      "country": "USA",
+      "state": "",
+      "city": "Washington, DC",
+      "format": "nonprofit",
+      "website": "https://www.studentveterans.org",
+      "contact_info": "sva@studentveterans.org",
+      "eligibility": "Student veterans, their spouses, and dependents using GI Bill or other education benefits",
+      "tags": [
+        "education",
+        "GI Bill",
+        "campus support",
+        "military spouse",
+        "community",
+        "peer support"
+      ],
+      "credibility_level": "high",
+      "notes": "Chapters at 1,500+ campuses. Spouses and dependents using GI Bill benefits welcome. Annual conference includes family member programming."
+    },
+    {
+      "id": "FAM-092",
+      "name": "VA Death Pension (Survivors Pension)",
+      "audience": [
+        "surviving_spouses",
+        "gold_star_families"
+      ],
+      "category": "survivor_benefits",
+      "description": "VA needs-based monthly benefit for low-income surviving spouses and unmarried children of wartime veterans. Separate from DIC - based on financial need rather than cause of death.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.va.gov/pension/survivors-pension/",
+      "contact_info": "1-800-827-1000",
+      "eligibility": "Surviving spouses and unmarried children of deceased wartime veterans who meet income/net worth limits",
+      "tags": [
+        "survivor benefits",
+        "pension",
+        "low income",
+        "VA",
+        "surviving spouse",
+        "wartime veteran"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Often overlooked - not as well known as DIC. Net worth limit ~$155,000 (2024). Includes Aid & Attendance allowance for those needing in-home care assistance."
+    },
+    {
+      "id": "FAM-093",
+      "name": "VA Aid & Attendance Benefit",
+      "audience": [
+        "surviving_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "survivor_benefits",
+      "description": "Enhanced VA pension benefit providing additional monthly payments to veterans and surviving spouses who need help with daily living activities such as bathing, dressing, feeding, or are housebound.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.va.gov/pension/aid-attendance-housebound/",
+      "contact_info": "1-800-827-1000",
+      "eligibility": "Veterans or surviving spouses receiving VA pension who need assistance with daily activities",
+      "tags": [
+        "Aid & Attendance",
+        "pension",
+        "surviving spouse",
+        "caregiver",
+        "home care",
+        "VA"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Can add $1,400+/month to pension payments. Many surviving spouses qualify but are unaware. Often used to help fund in-home caregiving. Beware of scams - apply directly through VA."
+    },
+    {
+      "id": "FAM-094",
+      "name": "HelpLine Center - Military Families (211)",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "gold_star_families",
+        "caregivers"
+      ],
+      "category": "crisis_emergency",
+      "description": "Dial 211 to reach local community resource specialists who can connect military families with local food assistance, housing, utilities, mental health, childcare, and emergency services in their area.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.211.org",
+      "contact_info": "Dial 2-1-1 | Text your zip code to 898-211",
+      "eligibility": "Anyone in need of local community resources, including military families",
+      "tags": [
+        "crisis",
+        "local resources",
+        "food",
+        "housing",
+        "utilities",
+        "emergency",
+        "211"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Available in all 50 states. Specialists trained on military family needs in high-military-density areas. Best for finding LOCAL resources that national databases miss."
+    },
+    {
+      "id": "FAM-095",
+      "name": "American Corporate Partners (ACP) - Military Spouse Mentoring",
+      "audience": [
+        "military_spouses"
+      ],
+      "category": "employment_education",
+      "description": "Free career mentoring program pairing military spouses with professionals from Fortune 500 companies for one-year mentoring relationships focused on career development, job searching, and networking.",
+      "country": "USA",
+      "state": "",
+      "city": "New York, NY",
+      "format": "nonprofit",
+      "website": "https://www.acp-usa.org",
+      "contact_info": "acp@acp-usa.org",
+      "eligibility": "Military spouses (active duty, Guard/Reserve, veteran spouses) seeking career mentorship",
+      "tags": [
+        "mentoring",
+        "career",
+        "military spouse",
+        "Fortune 500",
+        "networking",
+        "free"
+      ],
+      "credibility_level": "high",
+      "notes": "Year-long 1-on-1 mentoring with corporate professionals. 3,000+ volunteer mentors from companies like Amazon, Goldman Sachs, IBM. Strong track record of employment outcomes."
+    },
+    {
+      "id": "FAM-096",
+      "name": "Warrior-Gateway (Resource Locator)",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "military_spouses",
+        "caregivers",
+        "veteran_families"
+      ],
+      "category": "community_connection",
+      "description": "Online resource directory and community platform connecting veterans, service members, and military families with local and national resources across health, benefits, housing, employment, and community.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "nonprofit",
+      "website": "https://www.warriorgateway.org",
+      "contact_info": "info@warriorgateway.org",
+      "eligibility": "All veterans, service members, and military family members",
+      "tags": [
+        "directory",
+        "resource locator",
+        "all audiences",
+        "local",
+        "national",
+        "community"
+      ],
+      "credibility_level": "high",
+      "notes": "Searchable by zip code and need. Community ratings and reviews on resources. Complementary to the NRD - more user-friendly interface."
+    },
+    {
+      "id": "FAM-097",
+      "name": "TRICARE Extended Care Health Option (ECHO)",
+      "audience": [
+        "military_spouses",
+        "veteran_families",
+        "caregivers"
+      ],
+      "category": "caregiver_support",
+      "description": "TRICARE supplemental program providing support for eligible beneficiaries with qualifying mental or physical disabilities. Covers respite care, home health, assistive devices, and other support services for military families.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.tricare.mil/Plans/SpecialPrograms/ECHO",
+      "contact_info": "1-800-444-5445",
+      "eligibility": "Active duty family members with qualifying physical or mental disability; enrolled in TRICARE Prime or Select",
+      "tags": [
+        "TRICARE",
+        "disability",
+        "respite care",
+        "assistive devices",
+        "caregiver",
+        "home health"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Often unknown to families of disabled dependents. Covers services not in standard TRICARE. Must register through regional contractor. $25/month family copay cap."
+    },
+    {
+      "id": "FAM-098",
+      "name": "Mercy Medical Angels",
+      "audience": [
+        "veteran_families",
+        "military_spouses",
+        "gold_star_families"
+      ],
+      "category": "financial_assistance",
+      "description": "Provides free or subsidized air transportation for veterans and their families who cannot afford to travel for medical care or critical family circumstances, including bereavement travel.",
+      "country": "USA",
+      "state": "VA",
+      "city": "Chesapeake",
+      "format": "nonprofit",
+      "website": "https://www.mercymedical.org",
+      "contact_info": "1-757-318-9174",
+      "eligibility": "Veterans, service members, and their families who cannot afford air travel for medical care; income-based",
+      "tags": [
+        "transportation",
+        "medical travel",
+        "financial assistance",
+        "air travel",
+        "bereavement travel"
+      ],
+      "credibility_level": "high",
+      "notes": "Complements Fisher House's Hero Miles program. Fills gap for families who don't live near military hospitals. Also covers some bereavement/emergency travel."
+    },
+    {
+      "id": "FAM-099",
+      "name": "National Military Spouse Network (NMSN)",
+      "audience": [
+        "military_spouses"
+      ],
+      "category": "community_connection",
+      "description": "Professional networking and advocacy organization for military spouses focusing on career advancement, leadership development, and policy advocacy for portable career opportunities.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "nonprofit",
+      "website": "https://www.nationalmilitaryspousenetwork.org",
+      "contact_info": "info@nmspousenetwork.org",
+      "eligibility": "Military spouses interested in professional development and leadership",
+      "tags": [
+        "military spouse",
+        "professional network",
+        "career",
+        "leadership",
+        "advocacy"
+      ],
+      "credibility_level": "high",
+      "notes": "Annual Summit brings together military spouse professionals and employers. Strong LinkedIn community. Policy focus on portable licensing and remote work for military spouses."
+    },
+    {
+      "id": "FAM-100",
+      "name": "Gold Star Family Registry (DoD)",
+      "audience": [
+        "gold_star_families"
+      ],
+      "category": "community_connection",
+      "description": "Official DoD registry allowing Gold Star families to formally register their loss, connect with official commemorative programs, receive invitations to memorial events, and access DoD survivor support services.",
+      "country": "USA",
+      "state": "",
+      "city": "National",
+      "format": "government",
+      "website": "https://www.goldstarregistry.defense.gov",
+      "contact_info": "goldstarregistry@defense.gov",
+      "eligibility": "Immediate family members of service members who died while serving in the U.S. Armed Forces",
+      "tags": [
+        "Gold Star",
+        "registry",
+        "DoD",
+        "memorial",
+        "commemorative",
+        "official recognition"
+      ],
+      "credibility_level": "flagship",
+      "notes": "Official registration provides access to Gold Star lapel buttons, memorial events, White House holiday events, and survivor support coordination through DoD."
+    }
+  ]
+}

@@ -17,7 +17,7 @@
     "category": "Claims",
     "author": "AfterAction AI Team",
     "thumbnail": "images/blog/va-claims-guide.svg",
-    "url": null
+    "url": "blog/how-to-file-va-disability-claim-step-by-step.html"
   },
   {
     "id": "5-transition-mistakes-every-veteran-should-avoid",
@@ -27,7 +27,7 @@
     "category": "Transition",
     "author": "AfterAction AI Team",
     "thumbnail": "images/blog/transition-mistakes.svg",
-    "url": null
+    "url": "blog/5-transition-mistakes-every-veteran-should-avoid.html"
   },
   {
     "id": "mental-health-resources-beyond-the-crisis-line",
@@ -37,27 +37,7 @@
     "category": "Mental Health",
     "author": "AfterAction AI Team",
     "thumbnail": "images/blog/mental-health-resources.svg",
-    "url": null
-  },
-  {
-    "id": "maximize-your-gi-bill-tips-most-veterans-miss",
-    "title": "Maximize Your GI Bill: Tips Most Veterans Miss",
-    "excerpt": "Your GI Bill is one of the most valuable benefits you earned. From housing allowances to transferring benefits, here's how to get the most out of it.",
-    "publish_date": "2026-03-26T08:00:00Z",
-    "category": "Education",
-    "author": "AfterAction AI Team",
-    "thumbnail": "images/blog/gi-bill-tips.svg",
-    "url": null
-  },
-  {
-    "id": "state-veteran-benefits-your-complete-guide",
-    "title": "State Veteran Benefits: Your Complete Guide",
-    "excerpt": "Every state offers unique benefits for veterans — property tax exemptions, hiring preferences, education waivers, and more. Here's how to find yours.",
-    "publish_date": "2026-03-28T08:00:00Z",
-    "category": "Benefits",
-    "author": "AfterAction AI Team",
-    "thumbnail": "images/blog/state-benefits-guide.svg",
-    "url": null
+    "url": "blog/mental-health-resources-beyond-the-crisis-line.html"
   },
   {
     "id": "understanding-va-disability-ratings-explained",
@@ -67,7 +47,7 @@
     "category": "Claims",
     "author": "AfterAction AI Team",
     "thumbnail": "images/blog/understanding-va-disability-ratings-explained.svg",
-    "url": null
+    "url": "blog/understanding-va-disability-ratings-explained.html"
   },
   {
     "id": "veteran-small-business-grants-2026",
@@ -77,6 +57,26 @@
     "category": "Entrepreneurship",
     "author": "AfterAction AI Team",
     "thumbnail": "images/blog/veteran-small-business-grants-2026.svg",
-    "url": null
+    "url": "blog/veteran-small-business-grants-2026.html"
+  },
+  {
+    "id": "maximize-your-gi-bill-tips-most-veterans-miss",
+    "title": "Maximize Your GI Bill: Tips Most Veterans Miss",
+    "excerpt": "Your GI Bill is one of the most valuable benefits you earned. From housing allowances to transferring benefits, here's how to get the most out of it.",
+    "publish_date": "2026-03-25T08:00:00Z",
+    "category": "Education",
+    "author": "AfterAction AI Team",
+    "thumbnail": "images/blog/gi-bill-tips.svg",
+    "url": "blog/maximize-your-gi-bill-tips-most-veterans-miss.html"
+  },
+  {
+    "id": "state-veteran-benefits-your-complete-guide",
+    "title": "State Veteran Benefits: Your Complete Guide",
+    "excerpt": "Every state offers unique benefits for veterans — property tax exemptions, hiring preferences, education waivers, and more. Here's how to find yours.",
+    "publish_date": "2026-03-25T09:00:00Z",
+    "category": "Benefits",
+    "author": "AfterAction AI Team",
+    "thumbnail": "images/blog/state-benefits-guide.svg",
+    "url": "blog/state-veteran-benefits-your-complete-guide.html"
   }
 ]

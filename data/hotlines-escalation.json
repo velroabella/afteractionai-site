@@ -18,7 +18,7 @@
   {
     "id": "hotline-va-benefits",
     "name": "VA Benefits Hotline",
-    "issue_type": "benefits",
+    "issue_type": "benefits_complaint",
     "description": "General VA benefits information and enrollment assistance. Helps with disability, education, and health benefits questions.",
     "phone": "1-800-827-1000",
     "email": "ask.va.gov",
@@ -29,7 +29,7 @@
     "source_url": "https://www.va.gov/contact-us/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits", "urgency_type": "standard"}
+    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
   },
   {
     "id": "hotline-va-health-benefits",
@@ -66,7 +66,7 @@
   {
     "id": "hotline-va-oig",
     "name": "VA Office of Inspector General Hotline",
-    "issue_type": "fraud",
+    "issue_type": "ig",
     "description": "Fraud, waste, and abuse reporting hotline. Report VA employee misconduct or fraudulent VA activities.",
     "phone": "1-800-488-8244",
     "email": "vaoighotline@va.gov",
@@ -77,12 +77,12 @@
     "source_url": "https://www.va.gov/oig/hotline/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "fraud", "urgency_type": "escalation"}
+    "tags": {"issue_type": "ig", "urgency_type": "escalation"}
   },
   {
     "id": "hotline-dod-oig",
     "name": "Department of Defense Office of Inspector General",
-    "issue_type": "fraud",
+    "issue_type": "ig",
     "description": "DoD hotline for reporting fraud, waste, and misconduct in military and defense programs.",
     "phone": "1-800-424-9098",
     "email": "dodig.hotline@dodig.mil",
@@ -93,7 +93,7 @@
     "source_url": "https://www.dodig.mil/hotline/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "fraud", "urgency_type": "escalation"}
+    "tags": {"issue_type": "ig", "urgency_type": "escalation"}
   },
   {
     "id": "hotline-champva",
@@ -114,7 +114,7 @@
   {
     "id": "hotline-caregiver-support",
     "name": "Caregiver Support Hotline",
-    "issue_type": "benefits",
+    "issue_type": "benefits_complaint",
     "description": "Support resources for family members caring for veterans. Includes counseling, respite care info, and support groups.",
     "phone": "1-888-888-8387",
     "email": "caregiver@va.gov",
@@ -125,7 +125,7 @@
     "source_url": "https://www.caregiver.va.gov/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits", "urgency_type": "standard"}
+    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
   },
   {
     "id": "hotline-homeless-veterans",
@@ -162,7 +162,7 @@
   {
     "id": "hotline-myva411",
     "name": "MyVA411 Call Center",
-    "issue_type": "benefits",
+    "issue_type": "benefits_complaint",
     "description": "General information about all VA programs and benefits. Routing service to appropriate VA departments.",
     "phone": "1-844-698-2311",
     "email": "Ask.VA.gov",
@@ -173,12 +173,12 @@
     "source_url": "https://www.va.gov/contact-us/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits", "urgency_type": "standard"}
+    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
   },
   {
     "id": "hotline-userra",
     "name": "USERRA/ESGR Ombudsman Hotline",
-    "issue_type": "employment",
+    "issue_type": "legal",
     "description": "Support for employment rights under USERRA. Assistance with job reintegration and employment discrimination.",
     "phone": "1-800-336-4829",
     "email": "esgr@defense.gov",
@@ -189,12 +189,12 @@
     "source_url": "https://www.esgr.mil/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "employment", "urgency_type": "standard"}
+    "tags": {"issue_type": "legal", "urgency_type": "standard"}
   },
   {
     "id": "hotline-state-vso",
     "name": "State Veterans Service Officers",
-    "issue_type": "benefits",
+    "issue_type": "benefits_complaint",
     "description": "State-level veteran service officers providing benefits counseling and claim assistance.",
     "phone": "Varies by state",
     "email": "Varies by state",
@@ -205,7 +205,7 @@
     "source_url": "https://www.va.gov/vso/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits", "urgency_type": "standard"}
+    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
   },
   {
     "id": "hotline-va-health-crisis",
@@ -226,7 +226,7 @@
   {
     "id": "hotline-vba-disability",
     "name": "VA Disability Benefits Hotline",
-    "issue_type": "benefits",
+    "issue_type": "benefits_complaint",
     "description": "Specific hotline for disability compensation and pension questions. Claims status and appeals.",
     "phone": "1-888-393-7229",
     "email": "vba@va.gov",
@@ -237,12 +237,12 @@
     "source_url": "https://www.va.gov/disability/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits", "urgency_type": "standard"}
+    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
   },
   {
     "id": "hotline-education-benefits",
     "name": "GI Bill Education Benefits Hotline",
-    "issue_type": "benefits",
+    "issue_type": "benefits_complaint",
     "description": "Questions about GI Bill and VA education benefits. School certifications and enrollment.",
     "phone": "1-888-442-4551",
     "email": "gibill@va.gov",
@@ -253,7 +253,7 @@
     "source_url": "https://www.va.gov/education/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits", "urgency_type": "standard"}
+    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
   },
   {
     "id": "hotline-voc-rehab",
@@ -290,7 +290,7 @@
   {
     "id": "hotline-life-insurance",
     "name": "VA Life Insurance Hotline",
-    "issue_type": "benefits",
+    "issue_type": "benefits_complaint",
     "description": "Questions about SGLI, VGLI, and other VA life insurance programs.",
     "phone": "1-800-419-1473",
     "email": "lifeinsurance@va.gov",
@@ -301,7 +301,7 @@
     "source_url": "https://www.va.gov/life-insurance/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits", "urgency_type": "standard"}
+    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
   },
   {
     "id": "hotline-nvf",

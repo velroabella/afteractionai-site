@@ -28,7 +28,7 @@
 <nav class="navbar">
   <div class="navbar__inner">
     <a href="index.html" class="navbar__logo">
-      <img src="images/logo-header.png" alt="AfterAction AI" class="navbar__logo-img">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
     </a>
     <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -36,7 +36,7 @@
       </svg>
     </button>
     <ul class="navbar__nav" id="navMenu">
-      <li><a href="index.html">Home</a></li>
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
       <li class="navbar__dropdown">
         <a href="about.html">About</a>
         <ul class="navbar__dropdown-menu">
@@ -47,233 +47,294 @@
       <li class="navbar__dropdown">
         <a href="resources.html">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
-          <li><a href="licensure.html" class="active">Licensure & Certifications</a></li>
-          <li><a href="grants-scholarships.html">Grants & Scholarships</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines & Escalation</a></li>
+          <li class="navbar__group-label">Core Support</li>
+          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+          <li><a href="service-dogs.html">Service Dogs</a></li>
+          <li><a href="families-support.html">Families &amp; Survivors</a></li>
+          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+          <li class="navbar__group-label">Life &amp; Transition</li>
+          <li><a href="education.html">Education</a></li>
+          <li><a href="licensure.html" class="active">Licensure &amp; Certifications</a></li>
+          <li class="navbar__group-label">Financial &amp; Legal</li>
+          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
           <li><a href="state-benefits.html">State Benefits</a></li>
           <li><a href="document-templates.html">Document Templates</a></li>
+          <li class="navbar__group-label">Network</li>
+          <li><a href="resources.html">Partner Organizations</a></li>
+          <li><a href="elected-officials.html">Elected Officials</a></li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
       <li><a href="gallery.html">Gallery</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a href="education.html">Education</a></li>
       <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
       <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- HERO SECTION -->
-<section class="page-hero-bar">
-  <h1 class="page-hero-bar__title">Military-to-Civilian Licensure & Certifications</h1>
-  <div class="page-hero-bar__divider"></div>
-  <p class="page-hero-bar__subtitle">Find the civilian credentials that match your military training.</p>
+<!-- HERO -->
+<section class="rp-hero hero-has-image" style="background-image: url('images/hero-licensure.png');">
+  <div class="rp-hero__inner">
+    <h1 class="rp-hero__title">Military-to-Civilian Licensure</h1>
+    <hr class="rp-hero__divider" />
+    <p class="rp-hero__subtitle">Find the civilian credentials that match your military training. Your skills already qualify you — find the certification pathway.</p>
+  </div>
 </section>
 
-<!-- PAGE CONTENT -->
-<div class="page">
-  <div class="page__content">
-
-    <!-- SEARCH BAR -->
-    <div class="resources-search">
-      <input
-        type="text"
-        class="resources-search__input"
-        id="searchInput"
-        placeholder="Search by military job, skill, or certification..."
-      />
-    </div>
-
-    <!-- BRANCH FILTER -->
-    <div class="resources-filters" id="filterBtns">
-      <button class="filter-btn active" data-filter="all">All Branches</button>
-      <button class="filter-btn" data-filter="army">Army</button>
-      <button class="filter-btn" data-filter="navy">Navy</button>
-      <button class="filter-btn" data-filter="air_force">Air Force</button>
-      <button class="filter-btn" data-filter="marines">Marines</button>
-      <button class="filter-btn" data-filter="coast_guard">Coast Guard</button>
-    </div>
-
-    <!-- COOL PROGRAM LINKS -->
-    <div class="cool-links">
-      <h3 class="cool-links__title">Credentialing Opportunities On-Line (COOL)</h3>
-      <p class="cool-links__subtitle">Official DoD programs that help service members find civilian credentials matching their military training.</p>
-      <div class="cool-links__grid">
-        <a href="https://www.cool.osd.mil/army/index.html" class="cool-links__item" target="_blank" rel="noopener noreferrer">Army COOL</a>
-        <a href="https://www.cool.osd.mil/usn/index.html" class="cool-links__item" target="_blank" rel="noopener noreferrer">Navy COOL</a>
-        <a href="https://afvec.us.af.mil/afvec/Public/COOL/" class="cool-links__item" target="_blank" rel="noopener noreferrer">Air Force COOL</a>
-        <a href="https://www.cool.osd.mil/usmc/index.html" class="cool-links__item" target="_blank" rel="noopener noreferrer">Marine Corps COOL</a>
-        <a href="https://www.cool.osd.mil/uscg/index.html" class="cool-links__item" target="_blank" rel="noopener noreferrer">Coast Guard COOL</a>
-      </div>
-    </div>
-
-    <!-- PATHWAYS GRID -->
-    <section class="section">
-      <div class="resources-grid" id="pathwaysGrid">
-        <!-- Licensure pathways will populate here -->
-      </div>
-    </section>
-
+<!-- QUICK ACCESS BAR -->
+<div class="rp-quickaccess">
+  <div class="rp-quickaccess__inner">
+    <button class="rp-qa-btn" onclick="applyQA('healthcare')">🏥 Healthcare</button>
+    <button class="rp-qa-btn" onclick="applyQA('cybersecurity')">🔒 Cybersecurity</button>
+    <button class="rp-qa-btn" onclick="applyQA('aviation')">✈️ Aviation</button>
+    <button class="rp-qa-btn" onclick="applyQA('trades')">🔧 Trades</button>
+    <button class="rp-qa-btn" onclick="applyQA('transportation')">🚛 Transportation</button>
+    <button class="rp-qa-btn" onclick="applyQA('it')">💻 IT</button>
+    <button class="rp-qa-btn" onclick="applyQA('all')">All Pathways</button>
   </div>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <div class="footer__inner">
-      <div class="footer__crisis">
-        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
-      </div>
-      <div class="footer__grid">
-        <div class="footer__section footer__section--nav">
-          <h3>Navigate</h3>
-          <div class="footer__nav-columns">
-            <div class="footer__nav-col">
-              <a href="index.html">Home</a>
-              <a href="about.html">About</a>
-              <a href="board.html">Board</a>
-            </div>
-            <div class="footer__nav-col">
-              <a href="resources.html">Resources</a>
-              <a href="blog.html">Blog</a>
-              <a href="contact.html">Contact</a>
-            </div>
-          </div>
-        </div>
-        <div class="footer__section">
-          <h3>Resource Hub</h3>
-          <a href="elected-officials.html">Elected Officials</a>
-          <a href="licensure.html">Licensure & Certifications</a>
-          <a href="grants-scholarships.html">Grants & Scholarships</a>
-          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
-          <a href="state-benefits.html">State Benefits</a>
-          <a href="document-templates.html">Document Templates</a>
-        </div>
-        <div class="footer__section">
-          <h3>Legal</h3>
-          <a href="privacy.html">Privacy Policy</a>
-          <a href="terms.html">Terms of Service</a>
-          <a href="disclaimer.html">Disclaimer</a>
-        </div>
-        <div class="footer__section">
-          <h3>Connect</h3>
-          <!-- Social media links hidden until accounts are created -->
-        </div>
-      </div>
-      <div class="footer__nonprofit">
-        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
-      </div>
-      <div class="footer__bottom">
-        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
-      </div>
-    </div>
-  </footer>
 </div>
 
-<script src="js/resource-hub.js"></script>
+<!-- TWO-COLUMN LAYOUT -->
+<div class="rp-page-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="rp-sidebar">
+
+    <!-- Search -->
+    <div style="margin-bottom:20px;">
+      <input type="text" id="searchInput" placeholder="Search by job code, title, or cert..."
+        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
+        oninput="filterAndRender()" />
+    </div>
+
+    <!-- Branch Filter -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Branch</div>
+      <button class="rp-pill active" data-filter-group="branch" data-filter-value="all" onclick="setPill(this,'branch')">All Branches</button>
+      <button class="rp-pill" data-filter-group="branch" data-filter-value="Army" onclick="setPill(this,'branch')">Army</button>
+      <button class="rp-pill" data-filter-group="branch" data-filter-value="Navy" onclick="setPill(this,'branch')">Navy</button>
+      <button class="rp-pill" data-filter-group="branch" data-filter-value="Air Force" onclick="setPill(this,'branch')">Air Force</button>
+      <button class="rp-pill" data-filter-group="branch" data-filter-value="Space Force" onclick="setPill(this,'branch')">Space Force</button>
+      <button class="rp-pill" data-filter-group="branch" data-filter-value="All" onclick="setPill(this,'branch')">All Branches / Cross</button>
+    </div>
+
+    <!-- Specialty Filter -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Civilian Specialty</div>
+      <button class="rp-pill active" data-filter-group="specialty" data-filter-value="all" onclick="setPill(this,'specialty')">All</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="healthcare" onclick="setPill(this,'specialty')">Healthcare</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="medical" onclick="setPill(this,'specialty')">Medical</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="cybersecurity" onclick="setPill(this,'specialty')">Cybersecurity</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="it" onclick="setPill(this,'specialty')">IT</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="aviation" onclick="setPill(this,'specialty')">Aviation</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="transportation" onclick="setPill(this,'specialty')">Transportation</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="trades" onclick="setPill(this,'specialty')">Trades</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="construction" onclick="setPill(this,'specialty')">Construction</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="logistics" onclick="setPill(this,'specialty')">Logistics</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="public_safety" onclick="setPill(this,'specialty')">Public Safety</button>
+      <button class="rp-pill" data-filter-group="specialty" data-filter-value="management" onclick="setPill(this,'specialty')">Management</button>
+    </div>
+
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
+
+    <div class="rp-grid" id="licensureGrid"></div>
+
+    <div class="rp-empty" id="emptyState" style="display:none;">
+      <div class="rp-empty__icon">🎓</div>
+      <p>No pathways match your filters. Try adjusting the branch or specialty.</p>
+      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+    </div>
+
+    <div style="text-align:center;margin-top:24px;">
+      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More</button>
+    </div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+    </div>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+      </div>
+    </div>
+    <div class="footer__nonprofit">
+      AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+    </div>
+  </div>
+</footer>
+
 <script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
 <script src="js/newsletter.js"></script>
-
 <script>
-// ══════════════════════════════════════════════════════════
-// LICENSURE PAGE — ResourceHub Integration
-// Military-to-civilian credential pathways
-// ══════════════════════════════════════════════════════════
+// ── State ──────────────────────────────────────────────────
+const PAGE_SIZE = 24;
+let allPaths = [];
+let filteredPaths = [];
+let visibleCount = 0;
 
+const activeFilters = { branch: 'all', specialty: 'all' };
+
+// ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
-  var menu = document.getElementById('navMenu');
-  menu.classList.toggle('active');
+  document.getElementById('navMenu').classList.toggle('active');
 }
 
-fetch('data/licensure.json').then(function(response) {
-  return response.json();
-}).then(function(licensureData) {
+// ── Pills ─────────────────────────────────────────────────
+function setPill(btn, group) {
+  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilters[group] = btn.dataset.filterValue;
+  filterAndRender();
+}
 
-  // Render card function for licensure pathways
-  function renderPathwayCard(pathway) {
-    var examLinks = Array.isArray(pathway.school_or_exam_links) ? pathway.school_or_exam_links : [];
-    var officialLinks = Array.isArray(pathway.official_links) ? pathway.official_links : [];
-    var fundingOpts = Array.isArray(pathway.benefit_funding_options) ? pathway.benefit_funding_options : [];
-    var testingRequired = pathway.additional_testing_required;
+// ── Quick Access ──────────────────────────────────────────
+function applyQA(val) {
+  if (val === 'all') { resetFilters(); return; }
+  const pill = document.querySelector(`.rp-pill[data-filter-group="specialty"][data-filter-value="${val}"]`);
+  if (pill) setPill(pill, 'specialty');
+}
 
-    // Build exam/resource links
-    var linkHtml = '';
-    examLinks.forEach(function(url) {
-      var domain = '';
-      try { domain = new URL(url).hostname.replace('www.', ''); } catch(e) { domain = url; }
-      linkHtml += '<a href="' + ResourceHub.escapeHtml(url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">' + ResourceHub.escapeHtml(domain) + '</a>';
-    });
-    officialLinks.forEach(function(url) {
-      var domain = '';
-      try { domain = new URL(url).hostname.replace('www.', ''); } catch(e) { domain = url; }
-      linkHtml += '<a href="' + ResourceHub.escapeHtml(url) + '" class="hub-card__link" target="_blank" rel="noopener noreferrer">' + ResourceHub.escapeHtml(domain) + ' (Official)</a>';
-    });
+// ── Reset ─────────────────────────────────────────────────
+function resetFilters() {
+  activeFilters.branch = 'all';
+  activeFilters.specialty = 'all';
+  document.querySelectorAll('.rp-pill').forEach(b => {
+    b.classList.toggle('active', b.dataset.filterValue === 'all');
+  });
+  document.getElementById('searchInput').value = '';
+  filterAndRender();
+}
 
-    // Testing badge
-    var testBadge = testingRequired ? '<span class="hub-card__exam-badge">Exam Required</span>' : '<span class="hub-card__exam-badge" style="background:rgba(80,200,120,0.15);color:rgba(80,200,120,0.9);">No Additional Testing</span>';
+// ── Filter ────────────────────────────────────────────────
+function filterAndRender() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  filteredPaths = allPaths.filter(p => {
+    if (activeFilters.branch !== 'all' && p.branch !== activeFilters.branch) return false;
+    if (activeFilters.specialty !== 'all' && (p.tags||{}).specialty !== activeFilters.specialty) return false;
+    if (q && !((p.military_job_code||'').toLowerCase().includes(q) ||
+               (p.military_job_title||'').toLowerCase().includes(q) ||
+               (p.civilian_pathway||'').toLowerCase().includes(q) ||
+               (p.certification_name||'').toLowerCase().includes(q))) return false;
+    return true;
+  });
+  visibleCount = 0;
+  document.getElementById('licensureGrid').innerHTML = '';
+  loadMore();
+  updateCount();
+}
 
-    // Funding tags
-    var fundingHtml = '';
-    if (fundingOpts.length > 0) {
-      fundingHtml = '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;">';
-      fundingOpts.forEach(function(f) {
-        fundingHtml += '<span class="hub-card__tag">' + ResourceHub.escapeHtml(f) + '</span>';
-      });
-      fundingHtml += '</div>';
-    }
+// ── Render ────────────────────────────────────────────────
+function renderCard(p) {
+  const specialty = (p.tags||{}).specialty || '';
+  const fundingList = (p.benefit_funding_options||[]).join(', ');
+  const testingBadge = p.additional_testing_required
+    ? '<span class="rp-tag--neutral" style="font-size:0.7rem;">Add\'l Testing Required</span>'
+    : '<span class="rp-tag--neutral" style="font-size:0.7rem;">No Add\'l Testing</span>';
 
-    // Requirements / next steps
-    var reqSummary = pathway.requirements_summary || '';
-    var nextSteps = '';
-    if (reqSummary) {
-      nextSteps = '<div class="hub-card__next-steps"><strong>Next Steps:</strong> ' + ResourceHub.escapeHtml(reqSummary) + '</div>';
-    } else {
-      nextSteps = '<div class="hub-card__next-steps" style="color:rgba(255,255,255,0.45);font-style:italic;">Official requirements link not yet added. Additional manual review required.</div>';
-    }
-
-    return '<div class="hub-card">' +
-      '<div class="hub-card__header">' +
-        '<h3 class="hub-card__title">' + ResourceHub.escapeHtml(pathway.certification_name || pathway.civilian_certification || '') + '</h3>' +
-        testBadge +
-      '</div>' +
-      '<p class="hub-card__meta">' + ResourceHub.escapeHtml(pathway.branch || '') + ' &bull; ' + ResourceHub.escapeHtml(pathway.civilian_pathway || '') + '</p>' +
-      '<div class="hub-card__details">' +
-        '<strong>Military Role:</strong> ' + ResourceHub.escapeHtml(pathway.military_job_title || '') + ' (' + ResourceHub.escapeHtml(pathway.military_job_code || '') + ')<br />' +
-        '<strong>Issuing Agency:</strong> ' + ResourceHub.escapeHtml(pathway.issuing_agency || '') +
-      '</div>' +
-      nextSteps +
-      (linkHtml ? '<div class="hub-card__link-list" style="margin-top:12px;">' + linkHtml + '</div>' : '') +
-      fundingHtml +
-      '</div>';
+  let examLinks = '';
+  if ((p.school_or_exam_links||[]).length) {
+    const links = p.school_or_exam_links.slice(0,2).map(l =>
+      `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer" class="rp-card__phone" style="text-decoration:none;font-size:0.8rem;margin-right:6px;">Exam Info →</a>`
+    ).join('');
+    examLinks = links;
   }
 
-  // Initialize ResourceHub for licensure
-  ResourceHub.init({
-    containerId: 'pathwaysGrid',
-    searchInputId: 'searchInput',
-    filterContainerId: 'filterBtns',
-    data: licensureData,
-    renderCard: renderPathwayCard,
-    filterKey: 'branch',
-    searchFields: ['military_job_title', 'certification_name', 'civilian_pathway', 'issuing_agency', 'military_job_code'],
-    stateField: null
+  return `<div class="rp-card">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+      <span class="rp-tag--primary">${esc(p.branch||'')}</span>
+      ${specialty ? `<span class="rp-tag--secondary">${esc(specialty.replace(/_/g,' '))}</span>` : ''}
+      ${testingBadge}
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
+      <span style="font-size:0.85rem;color:#C5A55A;font-weight:700;">${esc(p.military_job_code||'')} — ${esc(p.military_job_title||'')}</span>
+    </div>
+    <h3 class="rp-card__name" style="margin-bottom:4px;">${esc(p.civilian_pathway||'')}</h3>
+    <p class="rp-card__org">${esc(p.certification_name||'')} · ${esc(p.issuing_agency||'')}</p>
+    <p style="font-size:0.82rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">${esc(p.requirements_summary||'')}</p>
+    ${fundingList ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;">💰 Funding: ${esc(fundingList)}</p>` : ''}
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">${examLinks}</div>
+  </div>`;
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Load More ─────────────────────────────────────────────
+function loadMore() {
+  const grid = document.getElementById('licensureGrid');
+  const batch = filteredPaths.slice(visibleCount, visibleCount + PAGE_SIZE);
+  batch.forEach(p => { grid.insertAdjacentHTML('beforeend', renderCard(p)); });
+  visibleCount += batch.length;
+  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredPaths.length ? 'inline-block' : 'none';
+  document.getElementById('emptyState').style.display = filteredPaths.length === 0 ? 'block' : 'none';
+}
+
+function updateCount() {
+  document.getElementById('resultsCount').textContent =
+    filteredPaths.length === allPaths.length
+      ? `Showing all ${allPaths.length} licensure pathways`
+      : `Showing ${filteredPaths.length} of ${allPaths.length} pathways`;
+}
+
+// ── Init ──────────────────────────────────────────────────
+fetch('data/licensure.json')
+  .then(r => r.json())
+  .then(data => {
+    allPaths = Array.isArray(data) ? data : (data.resources || []);
+    filterAndRender();
+  })
+  .catch(err => {
+    console.error('Error loading licensure:', err);
+    document.getElementById('licensureGrid').innerHTML =
+      '<div class="rp-empty"><p>Error loading licensure data. Please try again later.</p></div>';
   });
-
-  // Build branch filter buttons
-  ResourceHub.buildFilterButtons([
-    { key: 'all', label: 'All Branches' },
-    { key: 'army', label: 'Army' },
-    { key: 'navy', label: 'Navy' },
-    { key: 'air_force', label: 'Air Force' },
-    { key: 'marines', label: 'Marines' },
-    { key: 'coast_guard', label: 'Coast Guard' }
-  ]);
-
-}).catch(function(err) {
-  console.error('Error loading licensure data:', err);
-  document.getElementById('pathwaysGrid').innerHTML = '<div class="hub-no-results"><p>Error loading licensure information. Please try again later.</p></div>';
-});
 </script>
 
 </body>

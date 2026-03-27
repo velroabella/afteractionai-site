@@ -1,0 +1,198 @@
+/* =============================================================
+   BOARD PAGE UPGRADE — css/board-upgrade.css
+   Additive overrides only. Load after styles.css on board.html.
+   Full rollback: remove the <link> tag from board.html.
+   Mirrors about-upgrade.css: red → gold, open seats premium.
+   ============================================================= */
+
+/* -----------------------------------------------------------
+   1. GOLD CUSTOM PROPERTIES
+   ----------------------------------------------------------- */
+:root {
+  --board-gold:       #C5A55A;
+  --board-gold-light: #E8D5A0;
+  --board-gold-glow:  rgba(197, 165, 90, 0.25);
+}
+
+/* -----------------------------------------------------------
+   2. HERO HEIGHT + POSITION + OVERLAY — normalized to About standard
+   ----------------------------------------------------------- */
+.page-hero-image {
+  min-height: 75vh !important;
+}
+.page-hero-image--board {
+  background-position: center 75% !important;
+}
+.page-hero-image--board::before {
+  background: linear-gradient(
+    180deg,
+    rgba(0,0,0,0.65) 0%,
+    rgba(0,0,0,0.50) 40%,
+    rgba(0,0,0,0.65) 100%
+  ) !important;
+}
+
+/* -----------------------------------------------------------
+   3. HERO DIVIDER — red → gold
+   ----------------------------------------------------------- */
+.page-hero-image__divider {
+  background: var(--board-gold) !important;
+  box-shadow: 0 0 16px var(--board-gold-glow) !important;
+}
+
+/* -----------------------------------------------------------
+   3. HERO BOTTOM STRIPE — red gradient → gold
+   ----------------------------------------------------------- */
+.page-hero-image::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--board-gold) 50%,
+    transparent 100%
+  ) !important;
+}
+
+/* -----------------------------------------------------------
+   4. HERO EYEBROW — visibility + gold color
+   ----------------------------------------------------------- */
+.page-hero-image__eyebrow {
+  color: var(--board-gold) !important;
+  opacity: 1 !important;
+  letter-spacing: 4px !important;
+  font-weight: 700 !important;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.4) !important;
+}
+
+/* -----------------------------------------------------------
+   5. SECTION TITLE UNDERLINES — red → gold
+   ----------------------------------------------------------- */
+.section__title::after {
+  background: var(--board-gold) !important;
+  width: 48px !important;
+}
+
+/* -----------------------------------------------------------
+   6. BOARD CARDS — title color + hover border → gold
+   ----------------------------------------------------------- */
+.board-card__title {
+  color: var(--board-gold) !important;
+}
+
+.board-card:hover img {
+  border-color: var(--board-gold) !important;
+}
+
+/* -----------------------------------------------------------
+   7. OPEN SEAT CARDS — premium dark treatment
+   ----------------------------------------------------------- */
+.board-card--open {
+  background: linear-gradient(
+    160deg,
+    #111111 0%,
+    #181818 60%,
+    #1c1812 100%
+  ) !important;
+  border: 1px solid rgba(197,165,90,0.2) !important;
+  color: #fff !important;
+}
+
+.board-card--open .board-card__avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(197,165,90,0.08);
+  border: 2px dashed rgba(197,165,90,0.4);
+}
+
+.board-card--open .board-card__avatar svg {
+  opacity: 0.6;
+}
+
+.board-card__badge {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: var(--board-gold);
+  background: rgba(197,165,90,0.12);
+  border: 1px solid rgba(197,165,90,0.3);
+  border-radius: 20px;
+  padding: 4px 12px;
+  margin-bottom: 12px;
+}
+
+.board-card--open .board-card__name {
+  color: #ffffff !important;
+  margin-top: 0 !important;
+}
+
+.board-card--open .board-card__title {
+  color: var(--board-gold) !important;
+  letter-spacing: 1.5px !important;
+}
+
+.board-card--open .board-card__bio {
+  color: rgba(255,255,255,0.65) !important;
+  line-height: 1.75 !important;
+}
+
+/* -----------------------------------------------------------
+   8. BOARD NOTE — link color + subtle upgrade
+   ----------------------------------------------------------- */
+.board-note {
+  background: rgba(197,165,90,0.04) !important;
+  border: 1px solid rgba(197,165,90,0.15) !important;
+}
+
+.board-note__link {
+  color: var(--board-gold) !important;
+  font-weight: 600 !important;
+  text-decoration: underline !important;
+  text-underline-offset: 3px !important;
+  text-decoration-color: rgba(197,165,90,0.4) !important;
+  transition: color 0.2s, text-decoration-color 0.2s !important;
+}
+
+.board-note__link:hover {
+  color: var(--board-gold-light) !important;
+  text-decoration-color: var(--board-gold) !important;
+}
+
+/* -----------------------------------------------------------
+   9. CTA BANNER — top stripe + button hover → gold
+   ----------------------------------------------------------- */
+.cta-banner__inner::before {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--board-gold),
+    transparent
+  ) !important;
+}
+
+.cta-banner__button:hover {
+  background: var(--board-gold) !important;
+  color: #111 !important;
+  box-shadow: 0 8px 24px var(--board-gold-glow) !important;
+}
+
+/* -----------------------------------------------------------
+   10. SECTION RHYTHM — alternating subtle background
+   ----------------------------------------------------------- */
+.page__content > .section:nth-child(even) {
+  background: rgba(197,165,90,0.03);
+  border-radius: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.section.cta-banner {
+  background: transparent !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
