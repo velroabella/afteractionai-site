@@ -24,34 +24,6 @@
 
   <style>
     /* ── Service Dog Page Styles ─────────────────────────── */
-    .sd-hero {
-      background: var(--gray-900, #111);
-      border-bottom: 1px solid var(--gray-800, #222);
-      padding: 56px 24px 40px;
-      text-align: center;
-    }
-    .sd-hero__eyebrow {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--gold, #C5A55A);
-      margin-bottom: 12px;
-    }
-    .sd-hero__title {
-      font-size: clamp(1.6rem, 4vw, 2.4rem);
-      font-weight: 800;
-      color: #fff;
-      margin: 0 0 14px;
-      line-height: 1.2;
-    }
-    .sd-hero__sub {
-      font-size: 1rem;
-      color: var(--gray-400, #9ca3af);
-      max-width: 600px;
-      margin: 0 auto;
-      line-height: 1.6;
-    }
 
     /* ── Page wrapper ─────────────────────────────────────── */
     .sd-page {
@@ -147,61 +119,6 @@
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 16px;
     }
-    .sd-card {
-      background: var(--gray-900, #111827);
-      border: 1px solid var(--gray-800, #1f2937);
-      border-radius: 8px;
-      padding: 18px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      transition: border-color 0.15s;
-    }
-    .sd-card:hover { border-color: var(--gold, #C5A55A); }
-    .sd-card__name {
-      font-size: 0.9rem;
-      font-weight: 700;
-      color: #fff;
-      margin: 0;
-    }
-    .sd-card__tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 4px;
-    }
-    .sd-card__tag {
-      font-size: 0.68rem;
-      font-weight: 600;
-      padding: 2px 7px;
-      border-radius: 10px;
-      background: var(--gray-800, #1e2229);
-      color: var(--gray-400, #9ca3af);
-      border: 1px solid var(--gray-700, #374151);
-    }
-    .sd-card__tag--adi  { background: rgba(29,78,216,0.15); color: #93c5fd; border-color: rgba(29,78,216,0.3); }
-    .sd-card__tag--vet  { background: rgba(197,165,90,0.15); color: var(--gold, #C5A55A); border-color: rgba(197,165,90,0.3); }
-    .sd-card__tag--free { background: rgba(22,163,74,0.15); color: #86efac; border-color: rgba(22,163,74,0.3); }
-    .sd-card__desc {
-      font-size: 0.83rem;
-      color: var(--gray-400, #9ca3af);
-      line-height: 1.55;
-      flex: 1;
-    }
-    .sd-card__meta {
-      font-size: 0.78rem;
-      color: var(--gray-500, #6b7280);
-    }
-    .sd-card__meta strong { color: var(--gray-300, #d1d5db); }
-    .sd-card__link {
-      display: inline-block;
-      margin-top: 4px;
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--gold, #C5A55A);
-      text-decoration: none;
-    }
-    .sd-card__link:hover { text-decoration: underline; }
-
     /* ── Key facts / bullet lists ────────────────────────────── */
     .sd-facts {
       background: var(--gray-900, #111827);
@@ -315,7 +232,6 @@
     /* ── Responsive ──────────────────────────────────────────── */
     @media (max-width: 640px) {
       .sd-orgs-grid { grid-template-columns: 1fr; }
-      .sd-hero { padding: 40px 16px 28px; }
     }
   </style>
 </head>
@@ -342,23 +258,44 @@
         </ul>
       </li>
       <li class="navbar__dropdown">
-        <a href="resources.html">Resources</a>
+        <a href="resources.html" class="active">Resources</a>
         <ul class="navbar__dropdown-menu">
-          <li class="navbar__group-label">Core Support</li>
-          <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
-          <li><a href="service-dogs.html" class="active">Service Dogs</a></li>
-          <li><a href="families-support.html">Families &amp; Survivors</a></li>
-          <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
-          <li class="navbar__group-label">Life &amp; Transition</li>
-          <li><a href="education.html">Education</a></li>
-          <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
-          <li class="navbar__group-label">Financial &amp; Legal</li>
-          <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
-          <li><a href="state-benefits.html">State Benefits</a></li>
-          <li><a href="document-templates.html">Document Templates</a></li>
-          <li class="navbar__group-label">Network</li>
-          <li><a href="resources.html">Partner Organizations</a></li>
-          <li><a href="elected-officials.html">Elected Officials</a></li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Health &amp; Crisis</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+              <li><a href="service-dogs.html" class="active">Service Dogs</a></li>
+              <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Family &amp; Survivors</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="families-support.html">Families &amp; Survivors</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Career &amp; Education</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="education.html">Education</a></li>
+              <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Benefits &amp; Financial Aid</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
+              <li><a href="state-benefits.html">State Benefits</a></li>
+              <li><a href="document-templates.html">Document Templates</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Advocacy &amp; Network</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="resources.html">Partner Organizations</a></li>
+              <li><a href="elected-officials.html">Elected Officials</a></li>
+            </ul>
+          </li>
         </ul>
       </li>
       <li><a href="blog.html">Blog</a></li>
@@ -372,11 +309,14 @@
 </nav>
 
 <!-- HERO -->
-<div class="sd-hero">
-  <div class="sd-hero__eyebrow">Resources → Core Support</div>
-  <h1 class="sd-hero__title">Service Dogs for Veterans</h1>
-  <p class="sd-hero__sub">Legal rights, trusted organizations, PTSD service dogs, training paths, financial assistance, and how to avoid scams — everything in one place.</p>
-</div>
+<section class="rp-hero hero-has-image" style="background-image: url('images/hero-service-dogs.png');">
+  <div class="rp-hero__inner">
+    <p class="rp-hero__eyebrow">Resources → Core Support</p>
+    <h1 class="rp-hero__title">Service Dogs for Veterans</h1>
+    <hr class="rp-hero__divider" />
+    <p class="rp-hero__subtitle">Legal rights, trusted organizations, PTSD service dogs, training paths, financial assistance, and how to avoid scams — everything in one place.</p>
+  </div>
+</section>
 
 <!-- QUICK NAV -->
 <div class="sd-page">
@@ -838,23 +778,23 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 
     var html = items.map(function(o) {
       var tags = [];
-      if (o.accredited && o.accreditation && o.accreditation.indexOf('ADI') !== -1) tags.push('<span class="sd-card__tag sd-card__tag--adi">ADI Accredited</span>');
-      if (o.veteran_focused) tags.push('<span class="sd-card__tag sd-card__tag--vet">Veteran-Focused</span>');
-      if (o.cost && /free/i.test(o.cost)) tags.push('<span class="sd-card__tag sd-card__tag--free">Free to Veterans</span>');
+      if (o.accredited && o.accreditation && o.accreditation.indexOf('ADI') !== -1) tags.push('<span class="rp-tag--secondary">ADI Accredited</span>');
+      if (o.veteran_focused) tags.push('<span class="rp-tag--primary">Veteran-Focused</span>');
+      if (o.cost && /free/i.test(o.cost)) tags.push('<span class="rp-tag--neutral">Free to Veterans</span>');
       if (o.service_types) o.service_types.forEach(function(t) {
-        tags.push('<span class="sd-card__tag">' + esc(t) + '</span>');
+        tags.push('<span class="rp-tag--neutral">' + esc(t) + '</span>');
       });
 
-      return '<div class="sd-card">' +
-        '<div class="sd-card__name">' + esc(o.name) + '</div>' +
-        (tags.length ? '<div class="sd-card__tags">' + tags.join('') + '</div>' : '') +
-        '<div class="sd-card__desc">' + esc(o.description) + '</div>' +
-        '<div class="sd-card__meta"><strong>Cost:</strong> ' + esc(o.cost) + '</div>' +
-        (o.wait_time ? '<div class="sd-card__meta"><strong>Wait time:</strong> ' + esc(o.wait_time) + '</div>' : '') +
-        (o.eligibility ? '<div class="sd-card__meta"><strong>Eligibility:</strong> ' + esc(o.eligibility) + '</div>' : '') +
+      return '<div class="rp-card">' +
+        '<div class="rp-card__name">' + esc(o.name) + '</div>' +
+        (tags.length ? '<div class="rp-card__tags">' + tags.join('') + '</div>' : '') +
+        '<div class="rp-card__desc">' + esc(o.description) + '</div>' +
+        '<div class="rp-card__meta"><strong>Cost:</strong> ' + esc(o.cost) + '</div>' +
+        (o.wait_time ? '<div class="rp-card__meta"><strong>Wait time:</strong> ' + esc(o.wait_time) + '</div>' : '') +
+        (o.eligibility ? '<div class="rp-card__meta"><strong>Eligibility:</strong> ' + esc(o.eligibility) + '</div>' : '') +
         (o.application_link
-          ? '<a href="' + esc(o.application_link) + '" target="_blank" rel="noopener noreferrer" class="sd-card__link">Apply / Learn More →</a>'
-          : (o.website ? '<a href="' + esc(o.website) + '" target="_blank" rel="noopener noreferrer" class="sd-card__link">Visit Website →</a>' : '')) +
+          ? '<a href="' + esc(o.application_link) + '" target="_blank" rel="noopener noreferrer" class="rp-card__link">Apply / Learn More →</a>'
+          : (o.website ? '<a href="' + esc(o.website) + '" target="_blank" rel="noopener noreferrer" class="rp-card__link">Visit Website →</a>' : '')) +
       '</div>';
     }).join('');
 

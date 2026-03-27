@@ -3317,10 +3317,6 @@ img {
   min-height: 420px;
 }
 
-.page-hero-image::before {
-  background: linear-gradient(180deg, rgba(0,0,0,0.82) 0%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.78) 100%);
-}
-
 .page-hero-image__content {
   padding: 80px 24px;
 }
@@ -6607,6 +6603,240 @@ a, button, input, select, textarea {
 }
 .navbar__group-label:first-child { border-top: none; margin-top: 0; }
 
+/* ══════════════════════════════════════════════════════
+   2-LEVEL RESOURCES FLYOUT — DESKTOP
+   Structure: .navbar__dropdown > .navbar__dropdown-menu
+              > .navbar__submenu > .navbar__submenu-menu
+   ══════════════════════════════════════════════════════ */
+
+/* ── Submenu container (each category row) ── */
+.navbar__submenu {
+  position: relative;
+  list-style: none;
+}
+
+/* ── Category label (Level 1 item) ── */
+.navbar__submenu-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  color: #333 !important;
+  font-weight: 600;
+  font-size: 0.88rem;
+  text-decoration: none !important;
+  cursor: default;
+  transition: background 0.2s, color 0.2s;
+  border-bottom: 1px solid var(--gray-100);
+  letter-spacing: 0.2px;
+}
+
+/* Right-pointing chevron indicator — needs high specificity to beat
+   .navbar__dropdown-menu a::after { display: none !important } */
+.navbar__dropdown-menu .navbar__submenu > a.navbar__submenu-label::after {
+  content: "\203A";
+  font-size: 1.2rem;
+  color: var(--gray-300);
+  margin-left: 12px;
+  transition: color 0.2s, transform 0.15s;
+  display: inline-block !important;
+  position: static;
+  width: auto;
+  height: auto;
+  background: none;
+}
+
+/* Hover state for category row */
+.navbar__submenu:hover > .navbar__submenu-label {
+  background: var(--gray-50);
+  color: var(--navy) !important;
+}
+
+.navbar__dropdown-menu .navbar__submenu:hover > a.navbar__submenu-label::after {
+  color: var(--gold);
+  transform: translateX(2px);
+}
+
+/* Last category — no bottom border */
+.navbar__submenu:last-child > .navbar__submenu-label {
+  border-bottom: none;
+}
+
+/* ── Flyout panel (Level 2 links) ── */
+.navbar__submenu-menu {
+  position: absolute;
+  top: -8px;
+  left: 100%;
+  min-width: 210px;
+  background: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  padding: 6px 0;
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-6px);
+  transition: opacity 0.18s, visibility 0.18s, transform 0.18s;
+  z-index: 210;
+  box-shadow: var(--shadow-lg);
+  margin-left: 2px;
+}
+
+/* Show flyout on category hover — with bridge area */
+.navbar__submenu:hover > .navbar__submenu-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+/* Invisible bridge to prevent gap between panels */
+.navbar__submenu-menu::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -12px;
+  width: 14px;
+  height: 100%;
+}
+
+/* ── Flyout link items ── */
+.navbar__submenu-menu a {
+  display: block;
+  padding: 10px 16px;
+  color: #333 !important;
+  font-weight: 500;
+  font-size: 0.87rem;
+  text-decoration: none !important;
+  transition: background 0.2s, color 0.2s;
+  border-bottom: 1px solid var(--gray-100);
+  white-space: nowrap;
+}
+
+.navbar__submenu-menu li:last-child a {
+  border-bottom: none;
+}
+
+.navbar__submenu-menu a:hover {
+  background: var(--gray-50);
+  color: var(--navy) !important;
+}
+
+.navbar__submenu-menu a.active {
+  color: var(--navy) !important;
+  font-weight: 700 !important;
+  background: var(--gray-50) !important;
+}
+
+/* Kill external-link icon on submenu items */
+.navbar__submenu-menu a::after {
+  display: none !important;
+}
+
+/* ── Landing page dark variant ── */
+.navbar--landing .navbar__submenu-label {
+  color: rgba(255, 255, 255, 0.85) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.06);
+}
+
+.navbar--landing .navbar__dropdown-menu .navbar__submenu > a.navbar__submenu-label::after {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar--landing .navbar__submenu:hover > .navbar__submenu-label {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white) !important;
+}
+
+.navbar--landing .navbar__dropdown-menu .navbar__submenu:hover > a.navbar__submenu-label::after {
+  color: var(--gold);
+}
+
+.navbar--landing .navbar__submenu-menu {
+  background: rgba(0, 0, 0, 0.92);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar--landing .navbar__submenu-menu a {
+  color: rgba(255, 255, 255, 0.8) !important;
+  border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+.navbar--landing .navbar__submenu-menu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white) !important;
+}
+
+.navbar--landing .navbar__submenu-menu a.active {
+  color: #fff !important;
+  font-weight: 700 !important;
+  background: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ── MOBILE: Flatten submenus ── */
+@media (max-width: 767px) {
+  .navbar__submenu {
+    position: static;
+  }
+
+  .navbar__submenu-label {
+    color: var(--gold) !important;
+    font-weight: 700;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    padding: 12px 20px 4px;
+    pointer-events: none;
+    border-bottom: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    margin-top: 4px;
+  }
+
+  .navbar__submenu:first-child > .navbar__submenu-label {
+    border-top: none;
+    margin-top: 0;
+  }
+
+  .navbar__submenu-label::after {
+    display: none !important;
+  }
+
+  .navbar__submenu-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+
+  .navbar__submenu-menu::before {
+    display: none;
+  }
+
+  .navbar__submenu-menu a {
+    padding: 8px 20px 8px 28px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    white-space: normal;
+  }
+
+  .navbar__submenu-menu a:hover {
+    color: #fff !important;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .navbar__submenu-menu a.active {
+    color: #fff !important;
+    font-weight: 700 !important;
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+}
+
 /* ── Page hero (dark, minimal) ── */
 .rp-hero {
   background: var(--gray-900);
@@ -6614,6 +6844,14 @@ a, button, input, select, textarea {
   text-align: center;
 }
 .rp-hero__inner { max-width: 700px; margin: 0 auto; }
+.rp-hero__eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gold);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
 .rp-hero__title {
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   font-weight: 800;
