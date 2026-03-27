@@ -143,9 +143,12 @@
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + ephemeralKey,
-          'Content-Type': 'application/sdp'
+          'Content-Type': 'application/json'
         },
-        body: offer.sdp
+        body: JSON.stringify({
+          sdp: offer.sdp,
+          type: 'offer'
+        })
       });
 
       if (!sdpResp.ok) {
