@@ -316,7 +316,6 @@
   var streamAbortController = null;
   var activeStreamTimer = null;
   var activeDocumentType = null;       // Phase 3.8: locked to first detected doc type per session
-  var voiceTranscriptRendered = false; // Fix 2: prevents double bubble in voice mode
 
   // ── DOM HELPERS ────────────────────────────────────────
   function $(id) { return document.getElementById(id); }
@@ -580,20 +579,12 @@
       showCaption('AI', text);
       if (isFinal) {
         log('RT.onAITranscript', 'FINAL: ' + text.substring(0, 80));
-        // Fix 2: mark that this turn was already rendered via streamMessage path
-        voiceTranscriptRendered = true;
       }
     };
 
     RealtimeVoice.onAIMessage = function(fullText) {
       log('RT.onAIMessage', 'length=' + fullText.length);
-
-      // Fix 2: onAITranscript already rendered this bubble via streamMessage —
-      // skip addMessage to prevent a duplicate bubble in the chat.
-      if (!voiceTranscriptRendered) {
-        addMessage(fullText, 'ai');
-      }
-      voiceTranscriptRendered = false; // reset for next turn
+      addMessage(fullText, 'ai');
       hideCaption();
 
       // Phase 2: Detect report from voice mode too
