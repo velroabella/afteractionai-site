@@ -946,6 +946,209 @@
     scrollToBottom();
   }
 
+  // ══════════════════════════════════════════════════════
+  //  DOC READINESS GATE (Phase 3.7)
+  //  Gates the Word Doc button behind info-collection checks.
+  //  Readiness shape: { documentType, status, collected, missing }
+  //  Statuses: NOT_READY | ALMOST_READY | READY
+  // ══════════════════════════════════════════════════════
+  var DocReadinessGate = (function () {
+
+    var REQUIRED_FIELDS = {
+      'living-will':                    ['fullName', 'state', 'healthcareAgent'],
+      'last-will-and-testament':        ['fullName', 'state', 'executor'],
+      'general-power-of-attorney':      ['fullName', 'state', 'agentName'],
+      'durable-power-of-attorney':      ['fullName', 'state', 'agentName'],
+      'medical-power-of-attorney':      ['fullName', 'state', 'agentName'],
+      'hipaa-authorization-form':       ['fullName', 'state'],
+      'nexus-letter':                   ['fullName', 'condition', 'serviceConnection'],
+      'va-appeal-letter':               ['fullName', 'condition'],
+      'va-claim-personal-statement':    ['fullName', 'condition'],
+      'records-request-letter':         ['fullName'],
+      'benefits-eligibility-summary':   ['fullName'],
+      'debt-hardship-letter':           ['fullName', 'creditorName'],
+      'credit-dispute-letter':          ['fullName'],
+      'budget-financial-recovery-plan': ['fullName'],
+      'va-loan-readiness-checklist':    ['fullName'],
+      'rental-application-packet':      ['fullName'],
+      'federal-resume-usajobs':         ['fullName', 'branch', 'yearsService'],
+      'resume-builder':                 ['fullName', 'branch'],
+      'military-skills-translator':     ['branch', 'mos'],
+      'linkedin-profile-builder':       ['fullName', 'branch'],
+      'salary-negotiation-script':      ['targetRole', 'branch'],
+      'interview-prep-star':            ['targetRole', 'branch']
+    };
+
+    var FIELD_LABELS = {
+      fullName:          'Full legal name',
+      state:             'State of residence',
+      agentName:         'Agent / attorney-in-fact name',
+      healthcareAgent:   'Healthcare agent name',
+      executor:          'Executor name',
+      condition:         'Disability / condition',
+      serviceConnection: 'Service connection details',
+      branch:            'Military branch',
+      mos:               'MOS / job specialty',
+      yearsService:      'Years of service',
+      targetRole:        'Target job or role',
+      creditorName:      'Creditor or lender name'
+    };
+
+    var DOC_LABELS = {
+      'living-will':                    'Living Will',
+      'last-will-and-testament':        'Last Will & Testament',
+      'general-power-of-attorney':      'General Power of Attorney',
+      'durable-power-of-attorney':      'Durable Power of Attorney',
+      'medical-power-of-attorney':      'Medical Power of Attorney',
+      'hipaa-authorization-form':       'HIPAA Authorization',
+      'nexus-letter':                   'Nexus Letter',
+      'va-appeal-letter':               'VA Appeal Letter',
+      'va-claim-personal-statement':    'VA Claim Personal Statement',
+      'records-request-letter':         'Records Request Letter',
+      'benefits-eligibility-summary':   'Benefits Eligibility Summary',
+      'debt-hardship-letter':           'Debt Hardship Letter',
+      'credit-dispute-letter':          'Credit Dispute Letter',
+      'budget-financial-recovery-plan': 'Budget & Financial Recovery Plan',
+      'va-loan-readiness-checklist':    'VA Loan Readiness Checklist',
+      'rental-application-packet':      'Rental Application Packet',
+      'federal-resume-usajobs':         'Federal Resume (USAJOBS)',
+      'resume-builder':                 'Military Resume',
+      'military-skills-translator':     'Military Skills Translator',
+      'linkedin-profile-builder':       'LinkedIn Profile Builder',
+      'salary-negotiation-script':      'Salary Negotiation Script',
+      'interview-prep-star':            'Interview Prep (STAR Method)'
+    };
+
+    // Field detectors — scan combined conversation text for evidence of each field
+    var FIELD_DETECTORS = {
+      fullName: function (t) {
+        return /(?:my name is|name\s*:|i am|i'm)\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+/i.test(t) ||
+               /\b[A-Z][a-z]{1,20}\s+[A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20})?\b/.test(t);
+      },
+      state: function (t) {
+        return /\b(Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New Hampshire|New Jersey|New Mexico|New York|North Carolina|North Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South Carolina|South Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming)\b/i.test(t);
+      },
+      agentName: function (t) {
+        return /(?:agent|attorney.in.fact|power of attorney for|i authorize|i name|i appoint)\s+(?:is\s+|named?\s+)?[A-Z][a-z]+/i.test(t);
+      },
+      healthcareAgent: function (t) {
+        return /(?:health\s*care\s*(?:agent|proxy|representative)|medical\s*agent|healthcare\s*agent)\s*(?:is\s+|named?\s+|:\s*)?[A-Z][a-z]+/i.test(t) ||
+               /(?:my agent|my proxy)\s+for\s+(?:health|medical)/i.test(t);
+      },
+      executor: function (t) {
+        return /(?:executor|personal representative)\s+(?:is\s+|named?\s+|:\s*)?[A-Z][a-z]+/i.test(t) ||
+               /i name\s+[A-Z][a-z]+\s+(?:as|to be)\s+(?:my\s+)?executor/i.test(t);
+      },
+      condition: function (t) {
+        return /(?:condition|disability|diagnosis|rating for|claiming for|service.connected for|tinnitus|ptsd|tbi|traumatic brain|sleep apnea|hearing loss|back pain|knee|hip|shoulder|anxiety|depression)/i.test(t);
+      },
+      serviceConnection: function (t) {
+        return /(?:in.service|during(?:\s+my)?\s+service|service.connected|nexus|caused by|aggravated by|incurred during|military service caused)/i.test(t);
+      },
+      branch: function (t) {
+        return /\b(army|navy|air force|marine corps|marines|coast guard|space force|national guard|reserve)\b/i.test(t);
+      },
+      mos: function (t) {
+        return /\b(?:\d{2}[A-Z]|[A-Z]\d[A-Z]{1,2})\b/.test(t) ||
+               /\b(?:MOS|AFSC|NEC|military occupation|job specialty|job title)\b/i.test(t);
+      },
+      yearsService: function (t) {
+        return /(?:\d+\s+years?(?:\s+of\s+service)?|served\s+(?:for\s+)?\d+|years?\s+in\s+(?:the\s+)?(?:military|service|army|navy|air force|marines))/i.test(t);
+      },
+      targetRole: function (t) {
+        return /(?:target(?:ing)?\s+(?:role|position|job)|applying\s+(?:for|to)|want(?:ing)?\s+to\s+(?:be|work|get)|career\s+goal|looking\s+for\s+(?:a\s+)?(?:job|position|role))/i.test(t);
+      },
+      creditorName: function (t) {
+        return /(?:creditor|owed?\s+to|debt\s+(?:to|with)|lender|bank|credit\s+card|loan\s+(?:from|with)|account\s+with)/i.test(t);
+      }
+    };
+
+    // Returns true if the AI response is a completed document draft
+    // (vs. an exploratory discussion of the document topic)
+    function isDocumentDraft(text) {
+      if (!text || text.length < 400) return false;
+      var lineBreaks = (text.match(/\n/g) || []).length;
+      if (lineBreaks < 3) return false;
+      var structureTests = [
+        /^#{1,4}\s+\S/m,
+        /\*\*[A-Z][^*\n]{2,}\*\*/,
+        /^[A-Z\s]{6,}$/m,
+        /\[[^\]]{2,40}\]/,
+        /\b(?:WHEREAS|HEREBY|WITNESSETH|THERETO|HERETOFORE)\b/i,
+        /Section\s+\d+/i,
+        /Article\s+[IVX\d]+/i,
+        /THIS\s+\w+\s+(?:AGREEMENT|DOCUMENT|DECLARATION)\b/i
+      ];
+      var matches = structureTests.filter(function (re) { return re.test(text); }).length;
+      return matches >= 1;
+    }
+
+    function assess(formType, responseText, history) {
+      if (!formType) return null;
+
+      // Scan combined history + current response for field evidence
+      var historyText = (history || []).map(function (m) {
+        return (m && m.content) ? m.content : '';
+      }).join('\n');
+      var allText = historyText + '\n' + (responseText || '');
+
+      var requiredFields = REQUIRED_FIELDS[formType] || ['fullName'];
+      var collected = [];
+      var missing = [];
+
+      requiredFields.forEach(function (field) {
+        var detector = FIELD_DETECTORS[field];
+        if (detector && detector(allText)) {
+          collected.push(field);
+        } else {
+          missing.push(field);
+        }
+      });
+
+      // If the response is a full document draft, treat as READY unconditionally
+      var isDraft = isDocumentDraft(responseText);
+
+      var status;
+      if (isDraft || missing.length === 0) {
+        status = 'READY';
+      } else if (collected.length >= 1 && missing.length <= 1) {
+        status = 'ALMOST_READY';
+      } else {
+        status = 'NOT_READY';
+      }
+
+      return { documentType: formType, status: status, collected: collected, missing: missing, isDraft: isDraft };
+    }
+
+    function injectStatusCard(messageDiv, readiness) {
+      var isAlmost = readiness.status === 'ALMOST_READY';
+      var docTitle = DOC_LABELS[readiness.documentType] || readiness.documentType;
+      var icon = isAlmost ? '🔶' : '📋';
+      var statusLabel = isAlmost ? 'Almost Ready' : 'Details Needed';
+
+      var html = '<div style="font-weight:600;margin-bottom:6px;">' + icon + ' ' + docTitle + ' \u2014 ' + statusLabel + '</div>';
+
+      readiness.collected.forEach(function (f) {
+        html += '<div style="color:#1a7a1a;font-size:12px;padding:2px 0;">\u2713 ' + (FIELD_LABELS[f] || f) + '</div>';
+      });
+      readiness.missing.forEach(function (f) {
+        html += '<div style="color:#b03030;font-size:12px;padding:2px 0;">\u2717 ' + (FIELD_LABELS[f] || f) + ' needed</div>';
+      });
+      html += '<div style="margin-top:7px;font-size:12px;color:#555;font-style:italic;">I\'ll generate your Word Doc once we have all the details above.</div>';
+
+      var card = document.createElement('div');
+      card.className = 'doc-readiness-card';
+      card.style.cssText = 'margin-top:12px;padding:11px 14px;border-radius:8px;font-size:13px;line-height:1.6;' +
+        'background:' + (isAlmost ? '#fff8e6' : '#f0f4ff') + ';' +
+        'border:1px solid ' + (isAlmost ? '#f5c518' : '#c7d2f5') + ';';
+      card.innerHTML = html;
+      messageDiv.appendChild(card);
+    }
+
+    return { assess: assess, injectStatusCard: injectStatusCard };
+
+  }());
+
   // Phase 3.5 — detect legal template responses and inject Download Word Doc button
   function injectLegalDocButton(messageDiv, rawText) {
     console.log('[LegalBtn] injectLegalDocButton called, text length:', rawText ? rawText.length : 0);
@@ -955,6 +1158,18 @@
     var formType = AAAI.legalIntegration.detectLegalFormType(rawText);
     console.log('[LegalBtn] detectLegalFormType result:', formType);
     if (!formType) return;
+
+    // ── READINESS GATE (Phase 3.7) ───────────────────────────
+    var readiness = DocReadinessGate.assess(formType, rawText, conversationHistory);
+    console.log('[LegalBtn] readiness:', readiness && readiness.status,
+      '| collected:', readiness && readiness.collected,
+      '| missing:', readiness && readiness.missing,
+      '| isDraft:', readiness && readiness.isDraft);
+    if (readiness && readiness.status !== 'READY') {
+      DocReadinessGate.injectStatusCard(messageDiv, readiness);
+      return;
+    }
+    // ────────────────────────────────────────────────────────
 
     var btn = document.createElement('button');
     btn.className = 'legal-doc-btn';
