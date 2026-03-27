@@ -309,6 +309,7 @@
   var conversationHistory = [];
   var inputMode = 'text';        // 'text' | 'voice'
   var isProcessing = false;
+  var voiceGreetingSent = false; // true after first START_CONVERSATION per voice session
   var captionsEnabled = false;
   var pendingFiles = [];
   var uploadedDocTypes = [];
@@ -529,6 +530,7 @@
     }
 
     log('startVoiceSession', 'wiring callbacks and connecting');
+    voiceGreetingSent = false;
     setVoiceUI('connecting', 'Connecting to voice...');
 
     // Wire callbacks
@@ -544,7 +546,10 @@
           break;
         case 'listening':
           setVoiceUI('listening');
-          RealtimeVoice.sendText('START_CONVERSATION');
+          if (!voiceGreetingSent) {
+            voiceGreetingSent = true;
+            RealtimeVoice.sendText('START_CONVERSATION');
+          }
           break;
         case 'speaking':
           setVoiceUI('speaking');
