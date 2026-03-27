@@ -13,6 +13,7 @@ const HEADERS = {
 };
 
 exports.handler = async (event) => {
+  console.log('REALTIME TOKEN FUNCTION HIT — GA VERSION');
   if (event.httpMethod === 'OPTIONS') {
     return { statusCode: 204, headers: HEADERS, body: '' };
   }
@@ -88,7 +89,7 @@ exports.handler = async (event) => {
     return {
       statusCode: 200,
       headers: HEADERS,
-      body: JSON.stringify({ client_secret: secret })
+      body: JSON.stringify({ client_secret: secret, debug: 'GA_TOKEN_ENDPOINT_V2' })
     };
 
   } catch (err) {
