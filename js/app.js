@@ -315,7 +315,8 @@
   var uploadedDocTypes = [];
   var streamAbortController = null;
   var activeStreamTimer = null;
-  var activeDocumentType = null; // Phase 3.8: locked to first detected doc type per session
+  var activeDocumentType = null;       // Phase 3.8: locked to first detected doc type per session
+  var voiceTranscriptRendered = false; // Fix 2: prevents double bubble in voice mode
 
   // ── DOM HELPERS ────────────────────────────────────────
   function $(id) { return document.getElementById(id); }
@@ -579,12 +580,20 @@
       showCaption('AI', text);
       if (isFinal) {
         log('RT.onAITranscript', 'FINAL: ' + text.substring(0, 80));
+        // Fix 2: mark that this turn was already rendered via streamMessage path
+        voiceTranscriptRendered = true;
       }
     };
 
     RealtimeVoice.onAIMessage = function(fullText) {
       log('RT.onAIMessage', 'length=' + fullText.length);
-      addMessage(fullText, 'ai');
+
+      // Fix 2: onAITranscript already rendered this bubble via streamMessage —
+      // skip addMessage to prevent a duplicate bubble in the chat.
+      if (!voiceTranscriptRendered) {
+        addMessage(fullText, 'ai');
+      }
+      voiceTranscriptRendered = false; // reset for next turn
       hideCaption();
 
       // Phase 2: Detect report from voice mode too
@@ -1030,15 +1039,27 @@
         return /\b(Alabama|Alaska|Arizona|Arkansas|California|Colorado|Connecticut|Delaware|Florida|Georgia|Hawaii|Idaho|Illinois|Indiana|Iowa|Kansas|Kentucky|Louisiana|Maine|Maryland|Massachusetts|Michigan|Minnesota|Mississippi|Missouri|Montana|Nebraska|Nevada|New Hampshire|New Jersey|New Mexico|New York|North Carolina|North Dakota|Ohio|Oklahoma|Oregon|Pennsylvania|Rhode Island|South Carolina|South Dakota|Tennessee|Texas|Utah|Vermont|Virginia|Washington|West Virginia|Wisconsin|Wyoming)\b/i.test(t);
       },
       agentName: function (t) {
-        return /(?:agent|attorney.in.fact|power of attorney for|i authorize|i name|i appoint)\s+(?:is\s+|named?\s+)?[A-Z][a-z]+/i.test(t);
+        // keyword → name  (original)
+        return /(?:agent|attorney.in.fact|power of attorney for|i authorize|i name|i appoint)\s+(?:is\s+|named?\s+)?[A-Z][a-z]+/i.test(t) ||
+        // name → keyword  (natural speech: "My agent is John Smith" / "John Smith as my agent")
+               /\b[A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20}){0,2}\s+(?:is|will be|as)\s+(?:my\s+)?(?:agent|attorney[- ]in[- ]fact)\b/i.test(t) ||
+               /(?:my\s+)?(?:agent|attorney[- ]in[- ]fact)\s+(?:is|will be)\s+\b[A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20}){0,2}\b/i.test(t);
       },
       healthcareAgent: function (t) {
+        // keyword → name  (original)
         return /(?:health\s*care\s*(?:agent|proxy|representative)|medical\s*agent|healthcare\s*agent)\s*(?:is\s+|named?\s+|:\s*)?[A-Z][a-z]+/i.test(t) ||
-               /(?:my agent|my proxy)\s+for\s+(?:health|medical)/i.test(t);
+               /(?:my agent|my proxy)\s+for\s+(?:health|medical)/i.test(t) ||
+        // name → keyword  (natural speech: "John Smith is my healthcare agent")
+               /\b[A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20}){0,2}\s+(?:is|will be|as)\s+(?:my\s+)?(?:health\s*care|medical|healthcare)\s*(?:agent|proxy|representative)\b/i.test(t) ||
+               /(?:my\s+)?(?:health\s*care|medical|healthcare)\s*(?:agent|proxy|representative)\s+(?:is|will be)\s+\b[A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20}){0,2}\b/i.test(t);
       },
       executor: function (t) {
+        // keyword → name  (original)
         return /(?:executor|personal representative)\s+(?:is\s+|named?\s+|:\s*)?[A-Z][a-z]+/i.test(t) ||
-               /i name\s+[A-Z][a-z]+\s+(?:as|to be)\s+(?:my\s+)?executor/i.test(t);
+               /i name\s+[A-Z][a-z]+\s+(?:as|to be)\s+(?:my\s+)?executor/i.test(t) ||
+        // name → keyword  (natural speech: "John Smith is my executor" / "John Smith as executor")
+               /\b[A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20}){0,2}\s+(?:is|will be|as)\s+(?:my\s+)?(?:executor|personal representative)\b/i.test(t) ||
+               /(?:my\s+)?(?:executor|personal representative)\s+(?:is|will be)\s+\b[A-Z][a-z]{1,20}(?:\s+[A-Z][a-z]{1,20}){0,2}\b/i.test(t);
       },
       condition: function (t) {
         return /(?:condition|disability|diagnosis|rating for|claiming for|service.connected for|tinnitus|ptsd|tbi|traumatic brain|sleep apnea|hearing loss|back pain|knee|hip|shoulder|anxiety|depression)/i.test(t);
@@ -1121,6 +1142,8 @@
     }
 
     function injectStatusCard(messageDiv, readiness) {
+      // Hard idempotency guard — scoped to this container only, not global document
+      if (messageDiv.querySelector('.legal-doc-status-card')) return;
       var isAlmost = readiness.status === 'ALMOST_READY';
       var docTitle = DOC_LABELS[readiness.documentType] || readiness.documentType;
       var icon = isAlmost ? '🔶' : '📋';
@@ -1365,28 +1388,20 @@
   function isReportResponse(text) {
     if (!text) return false;
 
-    var markers = [
-      'Action Plan',
-      'Key Findings',
-      'Recommendations',
-      'Next Steps',
-      'Checklist',
-      'Summary'
-    ];
+    // Condition 1: at least 3 markdown headings (## style)
+    var headings = (text.match(/^#{1,3}\s+\S/gm) || []).length;
 
-    var hasMarkers = markers.filter(function(m) {
-      // Must appear as a section heading, not as a word mid-sentence
-      var escaped = m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return new RegExp('^[ \t]*(?:#{1,4}\\s*|\\*{1,2})?\\s*' + escaped + '\\s*\\*{0,2}\\s*:?\\s*$', 'im').test(text);
-      // Must appear as a section heading (start of line, optional ## or **),
-      // not as a word mid-sentence ("In summary..." / "VA Benefits Summary")
-      var escaped = m.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      return new RegExp('^[ \\t]*(?:#{1,4}\\s*|\\*{1,2})?\\s*' + escaped + '\\s*\\*{0,2}\\s*:?\\s*$', 'im').test(text);
-    }).length >= 2;
+    // Condition 2: long enough to be a full report
+    var longEnough = text.length >= 800;
 
-    var longEnough = text.length > 800;
+    // Condition 3: contains a personal data signal — a 4-digit year (DOB / service date)
+    // or a "Last, First" name pattern — distinguishes a veteran-specific report
+    // from a generic formatted explanation (e.g., "## General POA  ## Durable POA")
+    var hasPersonalData =
+      /\b\d{4}\b/.test(text) ||
+      /\b[A-Z][a-z]+,\s+[A-Z][a-z]+\b/.test(text);
 
-    return hasMarkers && longEnough;
+    return headings >= 3 && longEnough && hasPersonalData;
   }
 
   function generateReportPDF(reportText) {
