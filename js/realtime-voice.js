@@ -189,6 +189,7 @@
 
       case 'session.updated':
         log('event', 'session.updated');
+        console.log('[VOICE] session.updated at', Date.now());
         break;
 
       // ── User speech detection ──
@@ -250,6 +251,7 @@
       case 'response.audio_transcript.done':
       case 'response.output_audio_transcript.done':
         log('event', 'AI transcript done: ' + currentAITranscript.substring(0, 80));
+        console.log('[VOICE] AI response complete at', Date.now());
         if (RealtimeVoice.onAITranscript) {
           RealtimeVoice.onAITranscript(currentAITranscript, true);
         }
