@@ -779,6 +779,10 @@
 
     RealtimeVoice.onAIMessage = function(fullText) {
       log('RT.onAIMessage', 'length=' + fullText.length);
+      // Set reportGenerated before addMessage so injectLegalDocButton gate passes for report
+      if (!reportGenerated && isReportResponse(fullText)) {
+        reportGenerated = true;
+      }
       addMessage(fullText, 'ai');
       hideCaption();
 
@@ -1092,6 +1096,10 @@
         activeStreamTimer = null;
         div.classList.remove('message--streaming');
         div.innerHTML = formatMessage(fullText);
+        // Set reportGenerated before injectLegalDocButton so the gate passes for the report message
+        if (!reportGenerated && isReportResponse(fullText)) {
+          reportGenerated = true;
+        }
         // Phase 3.5: inject Download Word Doc button for legal template responses
         injectLegalDocButton(div, fullText);
         scrollToBottom();
