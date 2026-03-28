@@ -318,6 +318,7 @@
   var activeDocumentType = null;       // Phase 3.8: locked to first detected doc type per session
   var selectedTopics = [];             // Session-start topic selections
   var topicBubblesShown = false;       // true after topic bubbles rendered once
+  var reportButtonVisible = false;     // true once Generate Report button is showing
 
   // ── DOM HELPERS ────────────────────────────────────────
   function $(id) { return document.getElementById(id); }
@@ -563,6 +564,70 @@
   }
 
   // ══════════════════════════════════════════════════════
+  //  GENERATE REPORT BUTTON
+  // ══════════════════════════════════════════════════════
+  var REPORT_MIN_USER_MESSAGES = 4;  // minimum real user messages before showing button
+
+  function maybeShowReportButton() {
+    if (reportButtonVisible) return;
+    // Condition A: topic bubbles were submitted (selectedTopics has items)
+    var topicsSubmitted = selectedTopics.length > 0;
+    // Condition B: enough conversation turns (works for both text + voice)
+    var userMsgCount = conversationHistory.filter(function(m) { return m.role === 'user'; }).length;
+    // Also count DOM user messages (voice mode doesn't use conversationHistory)
+    if (chatMessages) {
+      var domUserMsgs = chatMessages.querySelectorAll('.message--user').length;
+      if (domUserMsgs > userMsgCount) userMsgCount = domUserMsgs;
+    }
+    var enoughTurns = userMsgCount >= REPORT_MIN_USER_MESSAGES;
+
+    if (topicsSubmitted || enoughTurns) {
+      showReportButton();
+    }
+  }
+
+  function showReportButton() {
+    if (reportButtonVisible) return;
+    reportButtonVisible = true;
+
+    var existing = document.getElementById('generateReportBar');
+    if (existing) return;
+
+    var bar = document.createElement('div');
+    bar.className = 'generate-report-bar';
+    bar.id = 'generateReportBar';
+
+    var btn = document.createElement('button');
+    btn.className = 'generate-report-btn';
+    btn.innerHTML = '<span class="generate-report-btn__icon">\uD83D\uDCCB</span> Generate My Report';
+    btn.addEventListener('click', function() {
+      if (isProcessing) return;
+      var msg = 'Please generate my personalized report based on our conversation so far.';
+      // Remove the bar
+      bar.remove();
+      // Send through normal pipeline
+      addMessage(msg, 'user');
+      if (inputMode === 'voice' && typeof RealtimeVoice !== 'undefined' && RealtimeVoice.sendText) {
+        RealtimeVoice.sendText(msg);
+      } else {
+        sendToAI(msg);
+      }
+    });
+
+    bar.appendChild(btn);
+
+    // Insert above the input area (between captions overlay and chat-input)
+    var chatInput = document.getElementById('chatInputText');
+    var voiceInput = document.getElementById('chatInputVoice');
+    var anchor = (inputMode === 'voice' && voiceInput) ? voiceInput : chatInput;
+    if (anchor && anchor.parentNode) {
+      anchor.parentNode.insertBefore(bar, anchor);
+    }
+
+    log('reportButton', 'shown');
+  }
+
+  // ══════════════════════════════════════════════════════
   //  START CHAT
   // ══════════════════════════════════════════════════════
   function startChat(mode) {
@@ -675,6 +740,9 @@
         topicBubblesShown = true;
         renderTopicBubbles();
       }
+
+      // Show Generate Report button when conditions met
+      maybeShowReportButton();
 
       // Phase 2: Detect report from voice mode too
       if (isReportResponse(fullText)) {
@@ -916,6 +984,9 @@
           topicBubblesShown = true;
           renderTopicBubbles();
         }
+
+        // Show Generate Report button when conditions met
+        maybeShowReportButton();
 
         // Phase 2: Detect report and show PDF download + checklist
         if (isReportResponse(aiResponse)) {
