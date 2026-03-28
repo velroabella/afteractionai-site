@@ -763,6 +763,7 @@
           return;
         }
         addMessage(text, 'user');
+        conversationHistory.push({ role: 'user', content: text });
         if (checkCrisis(text)) showCrisisBanner();
       } else {
         showCaption('You', text);
@@ -1385,6 +1386,11 @@
     if (!reportGenerated) return;
     console.log('[LegalBtn] injectLegalDocButton called, text length:', rawText ? rawText.length : 0);
     console.log('[LegalBtn] AAAI defined:', typeof AAAI !== 'undefined', '| legalIntegration:', !!(typeof AAAI !== 'undefined' && AAAI.legalIntegration));
+    // Remove any prior status cards so only the newest one remains visible
+    if (chatMessages) {
+      var oldCards = chatMessages.querySelectorAll('.legal-doc-status-card');
+      oldCards.forEach(function(card) { card.remove(); });
+    }
     // Guard: never inject more than one card or button per message div (covers all duplicate-call paths)
     if (messageDiv.querySelector('.legal-doc-status-card') || messageDiv.querySelector('.legal-doc-btn')) return;
     // Only legalIntegration is required for detection; legal (modal) is checked at click time
