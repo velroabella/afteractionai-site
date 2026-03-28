@@ -587,6 +587,25 @@
       // Store as hard system state — survives the entire session
       window.activeUserTopics = labels.slice();
       log('TopicBubbles', 'HARD STATE SET: window.activeUserTopics=' + JSON.stringify(window.activeUserTopics));
+
+      // If voice session is active, inject topics via session.update on the data channel.
+      // session.update REPLACES instructions, so we include the full base + topic block.
+      if (typeof RealtimeVoice !== 'undefined' && RealtimeVoice.getState &&
+          RealtimeVoice.getState() !== 'idle' && RealtimeVoice.getState() !== 'error' &&
+          RealtimeVoice.sendEvent) {
+        var voiceBase = 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational. CRITICAL: Never fabricate, infer, or assume any medical conditions, diagnoses, disability claims, or personal details the veteran has not explicitly stated. If information is missing, say so — do not guess. SENSORY RULE: You have NO camera, video, or visual access. You CANNOT see the user, their screen, or their environment. Never say "I can see" or imply visual awareness.';
+        var topicDirective = ' ACTIVE USER TOPICS (HARD SYSTEM STATE): The user selected these topics via the UI: ' +
+          labels.join(', ') +
+          '. This is CONFIRMED intent. You MUST address these topics. Do NOT ask what they need help with. Do NOT say you cannot see their selections. Immediately proceed with guidance on these specific topics.';
+        RealtimeVoice.sendEvent({
+          type: 'session.update',
+          session: {
+            instructions: voiceBase + topicDirective
+          }
+        });
+        log('TopicBubbles', 'VOICE SESSION UPDATED with active topics');
+      }
+
       var msg = 'I\u2019d like help with: ' + labels.join(', ');
       // Remove the bubble container
       container.remove();
