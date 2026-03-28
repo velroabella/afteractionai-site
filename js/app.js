@@ -2039,6 +2039,28 @@
           }));
           log('Analytics', 'dispatched aaai:report_generated | reportId=' + savedReportId);
 
+          // ── SUCCESS HANDOFF: show confirmation + View Dashboard action ──
+          var handoff = document.createElement('div');
+          handoff.className = 'message message--system';
+          handoff.innerHTML =
+            '<div class="save-success-bar">' +
+              '<span class="save-success-bar__icon">\u2705</span> ' +
+              '<span class="save-success-bar__text">Report saved to your dashboard.</span> ' +
+              '<a href="/profile.html" class="save-success-bar__link">View Dashboard \u2192</a>' +
+            '</div>';
+          if (chatMessages) chatMessages.appendChild(handoff);
+          scrollToBottom();
+
+          // Auto-redirect in text mode only (voice users stay in conversation)
+          if (inputMode !== 'voice') {
+            setTimeout(function() {
+              // Only redirect if user hasn't scrolled away or started typing
+              if (document.activeElement !== userInput) {
+                window.location.href = '/profile.html';
+              }
+            }, 5000);
+          }
+
           // Auto-save action engine checklist items linked to this report
           if (result.data && result.data.id && AAAI.actions && AAAI.actions.autoSaveChecklist && detectedIssues.length > 0) {
             AAAI.actions.autoSaveChecklist(result.data.id, detectedIssues).then(function(clResult) {
