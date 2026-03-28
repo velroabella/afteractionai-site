@@ -569,17 +569,28 @@
   var REPORT_MIN_USER_MESSAGES = 4;  // minimum real user messages before showing button
 
   function maybeShowReportButton() {
-    if (reportButtonVisible) return;
-    // Condition A: topic bubbles were submitted (selectedTopics has items)
+    // Debug: log every evaluation so we can see why it does/doesn't trigger
+    var alreadyVisible = reportButtonVisible;
     var topicsSubmitted = selectedTopics.length > 0;
-    // Condition B: enough conversation turns (works for both text + voice)
     var userMsgCount = conversationHistory.filter(function(m) { return m.role === 'user'; }).length;
-    // Also count DOM user messages (voice mode doesn't use conversationHistory)
     if (chatMessages) {
       var domUserMsgs = chatMessages.querySelectorAll('.message--user').length;
       if (domUserMsgs > userMsgCount) userMsgCount = domUserMsgs;
     }
     var enoughTurns = userMsgCount >= REPORT_MIN_USER_MESSAGES;
+    var chatInput = document.getElementById('chatInputText');
+    var voiceInput = document.getElementById('chatInputVoice');
+    var anchor = (inputMode === 'voice' && voiceInput) ? voiceInput : chatInput;
+
+    log('maybeShowReport', 'alreadyVisible=' + alreadyVisible +
+        ' | topicsSubmitted=' + topicsSubmitted +
+        ' (selectedTopics.length=' + selectedTopics.length + ')' +
+        ' | userMsgCount=' + userMsgCount +
+        ' | enoughTurns=' + enoughTurns +
+        ' | anchorExists=' + !!(anchor && anchor.parentNode) +
+        ' | inputMode=' + inputMode);
+
+    if (alreadyVisible) return;
 
     if (topicsSubmitted || enoughTurns) {
       showReportButton();
@@ -587,11 +598,17 @@
   }
 
   function showReportButton() {
-    if (reportButtonVisible) return;
+    if (reportButtonVisible) {
+      log('showReportButton', 'SKIP — already visible');
+      return;
+    }
     reportButtonVisible = true;
 
     var existing = document.getElementById('generateReportBar');
-    if (existing) return;
+    if (existing) {
+      log('showReportButton', 'SKIP — DOM element already exists');
+      return;
+    }
 
     var bar = document.createElement('div');
     bar.className = 'generate-report-bar';
@@ -616,15 +633,27 @@
 
     bar.appendChild(btn);
 
-    // Insert above the input area (between captions overlay and chat-input)
+    // Insert above the input area — try both anchors for robustness
     var chatInput = document.getElementById('chatInputText');
     var voiceInput = document.getElementById('chatInputVoice');
     var anchor = (inputMode === 'voice' && voiceInput) ? voiceInput : chatInput;
+    // Fallback: if primary anchor not found, try the other one
+    if (!anchor || !anchor.parentNode) {
+      anchor = chatInput || voiceInput;
+    }
     if (anchor && anchor.parentNode) {
       anchor.parentNode.insertBefore(bar, anchor);
+      log('showReportButton', 'INSERTED before ' + anchor.id);
+    } else {
+      // Last resort: append to chatScreen directly
+      var screen = document.getElementById('chatScreen');
+      if (screen) {
+        screen.appendChild(bar);
+        log('showReportButton', 'APPENDED to chatScreen (fallback)');
+      } else {
+        log('showReportButton', 'FAILED — no anchor found');
+      }
     }
-
-    log('reportButton', 'shown');
   }
 
   // ══════════════════════════════════════════════════════
@@ -1006,11 +1035,13 @@
           conversationHistory.push({ role: 'assistant', content: mockResponse });
           isProcessing = false;
           if (btnSend) btnSend.disabled = false;
+          maybeShowReportButton();
         });
       } else {
         addMessage('I\'m having trouble connecting right now. Please try again in a moment. If you need immediate help, call the Veterans Crisis Line at 988 (Press 1).', 'ai');
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
+        maybeShowReportButton();
       }
     });
   }
