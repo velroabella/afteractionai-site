@@ -147,7 +147,11 @@ exports.handler = async (event) => {
   try {
     const body = JSON.parse(event.body);
     const messages = body.messages;
-    const systemPrompt = body.system || SYSTEM_PROMPT;
+    var systemPrompt = body.system || SYSTEM_PROMPT;
+    // Append dynamic topic context from client if present
+    if (body.system_suffix) {
+      systemPrompt = systemPrompt + body.system_suffix;
+    }
 
     if (!messages || !Array.isArray(messages)) {
       return { statusCode: 400, headers: HEADERS, body: JSON.stringify({ error: 'Messages array required' }) };

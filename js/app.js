@@ -572,6 +572,9 @@
         var match = TOPIC_BUBBLES.filter(function(t) { return t.id === id; })[0];
         return match ? match.label : id;
       });
+      // Store as hard system state — survives the entire session
+      window.activeUserTopics = labels.slice();
+      log('TopicBubbles', 'HARD STATE SET: window.activeUserTopics=' + JSON.stringify(window.activeUserTopics));
       var msg = 'I\u2019d like help with: ' + labels.join(', ');
       // Remove the bubble container
       container.remove();
@@ -1147,14 +1150,34 @@
   // ── SERVERLESS PROXY ────────────────────────────────
   function callChatEndpoint(messages) {
     log('callChatEndpoint', 'messages=' + messages.length);
+
+    // Build request payload
+    var payload = {
+      messages: messages.length === 0
+        ? [{ role: 'user', content: 'Begin the conversation. Send your opening welcome message.' }]
+        : messages
+    };
+
+    // Inject active topics as hard system state into the system prompt
+    if (window.activeUserTopics && window.activeUserTopics.length > 0) {
+      var topicBlock = '\n\n## ACTIVE USER TOPICS (HARD SYSTEM STATE)\n' +
+        'The user selected these topics via the session-start interface: ' +
+        window.activeUserTopics.join(', ') + '\n' +
+        'This is CONFIRMED user intent — not a guess, not optional text. These topics were selected by the user clicking buttons in the UI.\n' +
+        'Rules:\n' +
+        '- You MUST treat these as the user\'s confirmed areas of need\n' +
+        '- Do NOT ask "what can I help you with" or "what do you need help with"\n' +
+        '- Do NOT say you cannot see their selections or that you don\'t know what they picked\n' +
+        '- Immediately proceed with guidance on these specific topics\n' +
+        '- If you still need basic info (name, branch, state), weave it naturally into the topic discussion';
+      payload.system_suffix = topicBlock;
+      log('callChatEndpoint', 'injecting ACTIVE USER TOPICS: ' + window.activeUserTopics.join(', '));
+    }
+
     return fetch(CONFIG.apiEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        messages: messages.length === 0
-          ? [{ role: 'user', content: 'Begin the conversation. Send your opening welcome message.' }]
-          : messages
-      })
+      body: JSON.stringify(payload)
     }).then(function(resp) {
       if (!resp.ok) throw new Error('Chat endpoint error: ' + resp.status);
       return resp.json();
