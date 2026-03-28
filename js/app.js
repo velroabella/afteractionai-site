@@ -619,7 +619,7 @@
     btn.innerHTML = '<span class="generate-report-btn__icon">\uD83D\uDCCB</span> Generate My Report';
     btn.addEventListener('click', function() {
       if (isProcessing) return;
-      var msg = 'Please generate my personalized report based on our conversation so far.';
+      var msg = 'Just give me the report. Generate my personalized plan based on everything we\'ve discussed so far. If you still need anything critical, ask only the minimum remaining questions needed to complete it \u2014 then generate the report immediately after.';
       // Remove the bar
       bar.remove();
       // Send through normal pipeline
