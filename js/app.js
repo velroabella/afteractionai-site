@@ -328,6 +328,7 @@
   var selectedTopics = [];             // Session-start topic selections
   var topicBubblesShown = false;       // true after topic bubbles rendered once
   var reportButtonVisible = false;     // true once Generate Report button is showing
+  var reportGenerated = false;         // true after a real report is detected
 
   // ── DOM HELPERS ────────────────────────────────────────
   function $(id) { return document.getElementById(id); }
@@ -792,6 +793,7 @@
       // Phase 2: Detect report from voice mode too
       if (isReportResponse(fullText)) {
         log('Report', 'detected (voice) — showing actions');
+        reportGenerated = true;
         showReportActions(fullText);
       }
     };
@@ -1036,6 +1038,7 @@
         // Phase 2: Detect report and show PDF download + checklist
         if (isReportResponse(aiResponse)) {
           log('Report', 'detected — showing actions');
+          reportGenerated = true;
           showReportActions(aiResponse);
         }
       });
@@ -1378,6 +1381,8 @@
 
   // Phase 3.5 — detect legal template responses and inject Download Word Doc button
   function injectLegalDocButton(messageDiv, rawText) {
+    // Gate: only allow document UI after a real report has been generated
+    if (!reportGenerated) return;
     console.log('[LegalBtn] injectLegalDocButton called, text length:', rawText ? rawText.length : 0);
     console.log('[LegalBtn] AAAI defined:', typeof AAAI !== 'undefined', '| legalIntegration:', !!(typeof AAAI !== 'undefined' && AAAI.legalIntegration));
     // Guard: never inject more than one card or button per message div (covers all duplicate-call paths)
