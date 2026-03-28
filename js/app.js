@@ -754,6 +754,13 @@
       if (isFinal) {
         log('RT.onUserTranscript', 'FINAL: ' + text.substring(0, 80));
         showCaption('You', text);
+        // Quality gate: reject too-short or pure filler transcripts
+        var trimmed = (text || '').trim();
+        if (trimmed.length < 2 ||
+            /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|like|wait|hold on|okay wait|so+|mhm+)\s*$/i.test(trimmed)) {
+          log('RT.onUserTranscript', 'REJECTED (filler/short): "' + trimmed + '"');
+          return;
+        }
         addMessage(text, 'user');
         if (checkCrisis(text)) showCrisisBanner();
       } else {
@@ -847,7 +854,7 @@
   function sendTextMessage() {
     if (!userInput) return;
     var text = userInput.value.trim();
-    if (!text || isProcessing) return;
+    if (!text || text.length < 2 || isProcessing) return;
 
     userInput.value = '';
     userInput.style.height = 'auto';
