@@ -32,7 +32,7 @@ exports.handler = async (event) => {
       session: {
         type: 'realtime',
         model: 'gpt-realtime',
-        instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational.',
+        instructions: 'You are AfterAction AI. Speak clearly, concisely, and in a supportive veteran-focused tone. Keep responses short and conversational. In your opening greeting, let the veteran know they can upload supporting documents anytime — VA letters, denial letters, DD-214, medical records, legal paperwork, or anything relevant — using the upload button on screen.',
         audio: {
           output: {
             voice: 'ash'
