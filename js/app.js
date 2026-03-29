@@ -1001,11 +1001,11 @@
       if (isFinal) {
         log('RT.onUserTranscript', 'FINAL: ' + text.substring(0, 80));
         showCaption('You', text);
-        // Quality gate: reject too-short or pure filler transcripts
+        // Quality gate: reject too-short, pure filler, or background-noise transcripts
         var trimmed = (text || '').trim();
-        if (trimmed.length < 2 ||
-            /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|like|wait|hold on|okay wait|so+|mhm+)\s*$/i.test(trimmed)) {
-          log('RT.onUserTranscript', 'REJECTED (filler/short): "' + trimmed + '"');
+        if (trimmed.length < 4 ||
+            /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|like|wait|hold on|okay wait|so+|mhm+|noise)\s*$/i.test(trimmed)) {
+          log('RT.onUserTranscript', 'REJECTED (filler/short/noise): "' + trimmed + '"');
           return;
         }
         // Phase FBP: dedup guard — OpenAI Realtime can fire isFinal=true more than once
@@ -1173,6 +1173,16 @@
       // Newest submission wins — replace any earlier pending entry
       pendingUserSubmission = { text: trimmed, opts: opts || {} };
       log('[AAAI]', 'queued user submission while processing: "' + trimmed.substring(0, 40) + '"');
+      // Failsafe: if isProcessing never clears (stuck stream, unhandled error), force-flush after 5s
+      var _failsafeText = trimmed;
+      setTimeout(function() {
+        if (pendingUserSubmission && pendingUserSubmission.text === _failsafeText) {
+          var _fallback = pendingUserSubmission;
+          pendingUserSubmission = null;
+          log('[AAAI]', 'FAILSAFE flush triggered: "' + _fallback.text.substring(0, 40) + '"');
+          sendToAI(_fallback.text);
+        }
+      }, 5000);
     }
   }
 
@@ -1361,8 +1371,8 @@
         if (pendingUserSubmission) {
           var _queued = pendingUserSubmission;
           pendingUserSubmission = null;
-          log('[AAAI]', 'flushing queued submission: "' + _queued.text.substring(0, 40) + '"');
-          sendToAI(_queued.text);
+          log('[AAAI]', 'FORCE flush queued submission: "' + _queued.text.substring(0, 40) + '"');
+          setTimeout(function() { sendToAI(_queued.text); }, 50);
         }
 
         // Show topic bubbles once after the opening greeting
@@ -1398,7 +1408,8 @@
           if (pendingUserSubmission) {
             var _queued2 = pendingUserSubmission;
             pendingUserSubmission = null;
-            sendToAI(_queued2.text);
+            log('[AAAI]', 'FORCE flush queued submission (mock path): "' + _queued2.text.substring(0, 40) + '"');
+            setTimeout(function() { sendToAI(_queued2.text); }, 50);
           }
         });
       } else {
@@ -1410,7 +1421,8 @@
         if (pendingUserSubmission) {
           var _queued3 = pendingUserSubmission;
           pendingUserSubmission = null;
-          sendToAI(_queued3.text);
+          log('[AAAI]', 'FORCE flush queued submission (error path): "' + _queued3.text.substring(0, 40) + '"');
+          setTimeout(function() { sendToAI(_queued3.text); }, 50);
         }
       }
     });
