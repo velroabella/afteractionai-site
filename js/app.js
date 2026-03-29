@@ -1538,9 +1538,13 @@
               });
 
               if (aiosRequest && aiosRequest.system && aiosRequest.system.length > 0) {
-                systemPrompt = aiosRequest.system;
+                // Phase 34: AIOS AUGMENTS SYSTEM_PROMPT — never replaces it.
+                // SYSTEM_PROMPT (conversation phases, OPTIONS format, intake flow, tone rules)
+                // stays first. AIOS content (skill prompt, memory, eligibility, mission) is
+                // appended after so the full operational ruleset is always present.
+                systemPrompt = SYSTEM_PROMPT + '\n\n' + aiosRequest.system;
                 aiosActive = true;
-                console.log('[AIOS][REQUEST] systemLen=' + aiosRequest.system.length + ' | intent=' + aiosRequest.meta.intent + ' | skill=' + aiosRequest.meta.skill + ' | hasMemory=' + aiosRequest.meta.hasMemory + ' | hasPageContext=' + aiosRequest.meta.hasPageContext);
+                console.log('[AIOS][REQUEST] systemLen=' + systemPrompt.length + ' (base=' + SYSTEM_PROMPT.length + ' + aios=' + aiosRequest.system.length + ') | intent=' + aiosRequest.meta.intent + ' | skill=' + aiosRequest.meta.skill + ' | hasMemory=' + aiosRequest.meta.hasMemory + ' | hasPageContext=' + aiosRequest.meta.hasPageContext);
               }
             }
           } else {
