@@ -12,7 +12,7 @@
     apiEndpoint: '/api/chat',
     directMode: false,
     model: 'claude-sonnet-4-5-20250929',
-    maxTokens: 1024,
+    maxTokens: 4096,
     streamDelay: 18
   };
 
@@ -1341,6 +1341,38 @@
     isProcessing = true;
     if (btnSend) btnSend.disabled = true;
 
+    // ── Phase 35: Memory extraction on EVERY real user message ──────
+    // Runs BEFORE routing and request building so memory/eligibility
+    // context is available when callChatEndpoint assembles the prompt.
+    if (userText !== 'START_CONVERSATION' && window.AIOS && window.AIOS.Memory) {
+      try {
+        var _extracted = window.AIOS.Memory.extractMemoryFromInput(userText);
+        if (_extracted && Object.keys(_extracted).length > 0) {
+          var _merged = window.AIOS.Memory.mergeMemory(window.AIOS.Memory.profile, _extracted);
+          window.AIOS.Memory.profile = _merged;
+          log('MEMORY', 'extracted: ' + Object.keys(_extracted).join(', '));
+          // Persist to Supabase if authenticated (non-blocking)
+          if (typeof window.AIOS.Memory.save === 'function') {
+            window.AIOS.Memory.save().catch(function() {});
+          }
+        }
+        // Phase 35: Auto-detect mission from user input if none active
+        if (window.AIOS.Mission && !window.AIOS.Mission.isActive() &&
+            typeof window.AIOS.Mission.detectMissionFromInput === 'function') {
+          var _missionSeed = window.AIOS.Mission.detectMissionFromInput(userText);
+          if (_missionSeed && _missionSeed.type) {
+            var _newMission = window.AIOS.Mission.createMission(_missionSeed.type);
+            if (_newMission) {
+              window.AIOS.Mission.current = _newMission;
+              log('MISSION', 'auto-created: ' + _newMission.name + ' (matched: ' + _missionSeed.matched + ')');
+            }
+          }
+        }
+      } catch (_memErr) {
+        console.warn('[AIOS][MEMORY] extraction error:', _memErr.message || _memErr);
+      }
+    }
+
     if (userText !== 'START_CONVERSATION') {
       conversationHistory.push({ role: 'user', content: userText });
       // Fire audit_started on the first real user message only
@@ -1576,7 +1608,30 @@
               }
             }
           } else {
-            log('AIOS', 'no skill routed (intent=' + routeResult.intent + ') — using legacy SYSTEM_PROMPT');
+            // ── Phase 35: GENERAL_QUESTION still gets memory/eligibility/mission context ──
+            // No skill prompt, but veteran profile, eligibility scores, active mission,
+            // and page context are still injected so the AI has conversational memory.
+            log('AIOS', 'no skill routed (intent=' + routeResult.intent + ') — injecting AIOS context without skill');
+            try {
+              var _gqPageCtx = null;
+              if (window.activeUserTopics && window.activeUserTopics.length > 0) {
+                _gqPageCtx = { page: 'chat', topics: window.activeUserTopics, inputMode: inputMode };
+              }
+              var _gqRequest = window.AIOS.RequestBuilder.buildAIOSRequest({
+                userMessage: lastUserMsg,
+                routeResult: routeResult,
+                skillConfig: null,
+                memoryContext: (window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : null,
+                pageContext: _gqPageCtx
+              });
+              if (_gqRequest && _gqRequest.system && _gqRequest.system.length > 0) {
+                systemPrompt = SYSTEM_PROMPT + '\n\n' + _gqRequest.system;
+                aiosActive = true;
+                console.log('[AIOS][GENERAL] systemLen=' + systemPrompt.length + ' | hasMemory=' + _gqRequest.meta.hasMemory + ' | hasMission=' + _gqRequest.meta.hasMission + ' | confidence=' + _gqRequest.meta.confidenceLevel);
+              }
+            } catch (_gqErr) {
+              log('AIOS', 'GENERAL_QUESTION context injection error: ' + _gqErr.message);
+            }
           }
         }
       }
