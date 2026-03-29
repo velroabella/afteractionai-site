@@ -158,8 +158,10 @@
    hero-contact.jpg = C-130 aircraft at colorful sunset.
    ----------------------------------------------------------- */
 .page-hero-bar {
-  background-size: cover !important;
-  background-position: center 70% !important;
+  /* Zoom in so aircraft fills the frame, tail visible behind headline */
+  background-size: 120% auto !important;
+  /* Shift right toward aircraft body, up to show tail fin */
+  background-position: 60% 35% !important;
   min-height: 75vh !important;
   display: flex !important;
   flex-direction: column !important;

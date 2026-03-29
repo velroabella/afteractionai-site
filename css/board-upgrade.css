@@ -21,7 +21,10 @@
   min-height: 75vh !important;
 }
 .page-hero-image--board {
-  background-position: center 75% !important;
+  /* Zoom in to fill frame with guard silhouette + tomb, reduce empty sky */
+  background-size: 115% auto !important;
+  /* Vertically: 40% brings guard head/rifle into headline zone */
+  background-position: center 40% !important;
 }
 .page-hero-image--board::before {
   background: linear-gradient(

@@ -1202,16 +1202,78 @@
   function callChatEndpoint(messages) {
     log('callChatEndpoint', 'messages=' + messages.length);
 
-    // Build request payload — send the full client-side SYSTEM_PROMPT so Claude
-    // uses all rules (data integrity, sensory, options, phased intake, etc.)
+    // ── AIOS Integration (text path only) ─────────────────
+    // If the AIOS layer is loaded, route through it to get a richer system prompt.
+    // Falls back to the original SYSTEM_PROMPT if AIOS is unavailable or errors.
+    var systemPrompt = SYSTEM_PROMPT;  // already a string (joined at definition)
+    var aiosActive = false;
+
+    try {
+      if (window.AIOS && window.AIOS.Router && window.AIOS.RequestBuilder) {
+        // Get the last user message for routing
+        var lastUserMsg = '';
+        for (var i = messages.length - 1; i >= 0; i--) {
+          if (messages[i].role === 'user') { lastUserMsg = messages[i].content; break; }
+        }
+
+        if (lastUserMsg) {
+          // 1. Route — classify intent and select skill
+          var routeResult = window.AIOS.Router.routeAIOSIntent(lastUserMsg);
+          log('AIOS', 'route: intent=' + routeResult.intent + ' skill=' + routeResult.skill + ' confidence=' + routeResult.confidence);
+
+          // 2. Only activate AIOS when a specific skill is routed.
+          //    GENERAL_QUESTION (skill === null) uses the legacy SYSTEM_PROMPT
+          //    so intake phases, OPTIONS, templates, and all existing rules are preserved.
+          if (routeResult.skill && window.AIOS.SkillLoader) {
+            var skill = window.AIOS.SkillLoader.loadAIOSSkill(routeResult.skill);
+            if (skill && typeof skill.run === 'function') {
+              var profile = (window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
+              var skillConfig = skill.run({ profile: profile, history: messages, userInput: lastUserMsg });
+              log('AIOS', 'skill loaded: ' + skill.name);
+
+              // 3. Build AIOS request — core prompt + skill + memory + page context
+              var pageContext = null;
+              if (window.activeUserTopics && window.activeUserTopics.length > 0) {
+                pageContext = { page: 'chat', topics: window.activeUserTopics, inputMode: inputMode };
+              }
+
+              var aiosRequest = window.AIOS.RequestBuilder.buildAIOSRequest({
+                userMessage: lastUserMsg,
+                routeResult: routeResult,
+                skillConfig: skillConfig,
+                memoryContext: (window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : null,
+                pageContext: pageContext
+              });
+
+              if (aiosRequest && aiosRequest.system && aiosRequest.system.length > 0) {
+                systemPrompt = aiosRequest.system;
+                aiosActive = true;
+                log('AIOS', 'system prompt assembled (' + systemPrompt.length + ' chars, intent=' + aiosRequest.meta.intent + ')');
+              }
+            }
+          } else {
+            log('AIOS', 'no skill routed (intent=' + routeResult.intent + ') — using legacy SYSTEM_PROMPT');
+          }
+        }
+      }
+    } catch (aiosErr) {
+      // AIOS failed — fall back silently to original SYSTEM_PROMPT
+      log('AIOS', 'FALLBACK — error: ' + aiosErr.message);
+      systemPrompt = SYSTEM_PROMPT;
+      aiosActive = false;
+    }
+
+    // Build request payload
     var payload = {
-      system: SYSTEM_PROMPT.join('\n'),
+      system: systemPrompt,
       messages: messages.length === 0
         ? [{ role: 'user', content: 'Begin the conversation. Send your opening welcome message.' }]
         : messages
     };
 
-    // Inject active topics as hard system state into the system prompt
+    // Inject active topics as hard system state (preserved for backward compatibility;
+    // AIOS also handles topics via pageContext, but the server-side system_suffix
+    // ensures the existing chat.js topic injection continues to work)
     if (window.activeUserTopics && window.activeUserTopics.length > 0) {
       var topicBlock = '\n\n## ACTIVE USER TOPICS (HARD SYSTEM STATE)\n' +
         'The user selected these topics via the session-start interface: ' +
@@ -1226,6 +1288,8 @@
       payload.system_suffix = topicBlock;
       log('callChatEndpoint', 'injecting ACTIVE USER TOPICS: ' + window.activeUserTopics.join(', '));
     }
+
+    log('callChatEndpoint', 'AIOS=' + (aiosActive ? 'active' : 'fallback') + ', systemLen=' + systemPrompt.length);
 
     return fetch(CONFIG.apiEndpoint, {
       method: 'POST',

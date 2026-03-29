@@ -13,10 +13,11 @@
     profile: {
       name: null,
       branch: null,
-      status: null,
-      discharge: null,
+      serviceEra: null,
+      dischargeStatus: null,
       vaRating: null,
       state: null,
+      primaryNeed: null,
       needs: [],
       documents: []
     },
@@ -52,9 +53,9 @@
      */
     reset: function() {
       MemoryManager.profile = {
-        name: null, branch: null, status: null,
-        discharge: null, vaRating: null, state: null,
-        needs: [], documents: []
+        name: null, branch: null, serviceEra: null,
+        dischargeStatus: null, vaRating: null, state: null,
+        primaryNeed: null, needs: [], documents: []
       };
     },
 

@@ -1,12 +1,25 @@
 /* ══════════════════════════════════════════════════════════
    AIOS — Skill Loader
-   Manages loading, activation, and deactivation of skills.
-   Skills are self-contained modules with prompts, data refs,
-   and response formatting rules.
+   Maps router output (skill name) to the correct skill
+   module from window.AIOS.Skills. Manages activation,
+   deactivation, and safe fallback for unknown skills.
    ══════════════════════════════════════════════════════════ */
 
 (function() {
   'use strict';
+
+  /* ────────────────────────────────────────────────────────
+     Valid skill IDs — must match keys in AIOS.Skills
+     ──────────────────────────────────────────────────────── */
+  var KNOWN_SKILLS = [
+    'benefit-path-finder',
+    'va-disability-claim',
+    'state-benefits',
+    'crisis-support',
+    'next-action-planner',
+    'document-analyzer'
+  ];
+
 
   var SkillLoader = {
 
@@ -14,16 +27,37 @@
     activeSkill: null,
 
     /**
-     * Load and activate a skill by ID.
-     * @param {string} skillId
-     * @returns {Object|null} The loaded skill, or null if not found
+     * Load and activate a skill by name.
+     * Reads from window.AIOS.Skills (populated by each skill's IIFE).
+     * Returns null with a console warning for unknown skills.
+     *
+     * @param {string} skillName - Skill ID from router (e.g. 'crisis-support')
+     * @returns {Object|null} The skill module, or null if not found
      */
-    load: function(skillId) {
-      var skill = SkillLoader._registry[skillId] || null;
+    loadAIOSSkill: function(skillName) {
+      if (!skillName || typeof skillName !== 'string') {
+        return null;
+      }
+
+      var skills = (window.AIOS && window.AIOS.Skills) || {};
+      var skill = skills[skillName] || null;
+
       if (skill) {
         SkillLoader.activeSkill = skill;
+        return skill;
       }
-      return skill;
+
+      // Unknown skill — warn and return null
+      console.warn('[AIOS SkillLoader] Unknown skill: "' + skillName + '". Known skills: ' + KNOWN_SKILLS.join(', '));
+      return null;
+    },
+
+    /**
+     * Get the currently active skill.
+     * @returns {Object|null}
+     */
+    getActive: function() {
+      return SkillLoader.activeSkill;
     },
 
     /**
@@ -34,24 +68,30 @@
     },
 
     /**
-     * Register a skill module.
-     * @param {string} skillId
-     * @param {Object} skillModule - { name, prompt, format, dataSources }
+     * Check if a skill name is known/valid.
+     * @param {string} skillName
+     * @returns {boolean}
      */
-    register: function(skillId, skillModule) {
-      SkillLoader._registry[skillId] = skillModule;
+    isKnown: function(skillName) {
+      return KNOWN_SKILLS.indexOf(skillName) !== -1;
     },
 
     /**
-     * Get all registered skill IDs.
+     * Get all known skill IDs.
      * @returns {string[]}
      */
     list: function() {
-      return Object.keys(SkillLoader._registry);
+      return KNOWN_SKILLS.slice();
     },
 
-    /** Internal registry */
-    _registry: {}
+    /**
+     * Get all currently registered (loaded in DOM) skill IDs.
+     * @returns {string[]}
+     */
+    listRegistered: function() {
+      var skills = (window.AIOS && window.AIOS.Skills) || {};
+      return Object.keys(skills);
+    }
   };
 
   window.AIOS = window.AIOS || {};
