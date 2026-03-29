@@ -600,42 +600,6 @@
     return saveChecklist(reportId, newItems);
   }
 
-  // ── AIOS MEMORY PERSISTENCE (Phase 12) ───────────────
-  // Stores/retrieves structured veteran profile in profiles.aios_memory (JSONB).
-  // Only called by memory-manager.js — not for direct external use.
-
-  /**
-   * Persist a sanitized AIOS memory snapshot for the current user.
-   * @param {Object} profileJson  — only structured fields, no raw logs
-   * @returns {Promise<{data, error}>}
-   */
-  async function saveAIOSMemory(profileJson) {
-    if (!currentUser) return { data: null, error: 'Not logged in' };
-    const { data, error } = await supabase
-      .from('profiles')
-      .update({ aios_memory: profileJson, updated_at: new Date().toISOString() })
-      .eq('id', currentUser.id)
-      .select('aios_memory')
-      .single();
-    if (error) console.warn('[AAAI Auth] saveAIOSMemory error:', error.code, error.message);
-    return { data: data?.aios_memory || null, error };
-  }
-
-  /**
-   * Load persisted AIOS memory for the current user.
-   * @returns {Promise<{data: Object|null, error}>}
-   */
-  async function loadAIOSMemory() {
-    if (!currentUser) return { data: null, error: 'Not logged in' };
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('aios_memory')
-      .eq('id', currentUser.id)
-      .single();
-    if (error) console.warn('[AAAI Auth] loadAIOSMemory error:', error.code, error.message);
-    return { data: data?.aios_memory || null, error };
-  }
-
   // ── PUBLIC API ────────────────────────────────────────
   window.AAAI = window.AAAI || {};
   window.AAAI.auth = {
@@ -666,9 +630,7 @@
     loadActiveChecklist,
     logActivity,
     updateConsent,
-    updateSegmentation,
-    saveAIOSMemory,
-    loadAIOSMemory
+    updateSegmentation
     // C-02 FIX: supabase client intentionally NOT exposed on public API
     // Exposing it allowed any user to run authenticated queries via DevTools
     // All database operations must go through the methods above

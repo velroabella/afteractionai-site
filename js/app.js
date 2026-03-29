@@ -30,6 +30,27 @@
     'planning to end', 'self harm', 'cut myself', 'hurt myself'
   ];
 
+  // ── AT_RISK KEYWORDS (Phase 22) ──────────────────────────
+  // First-person distress signals only. Never overlaps with CRISIS_KEYWORDS.
+  // Checked only AFTER crisis check fails — mutual exclusivity guaranteed.
+  var AT_RISK_KEYWORDS = [
+    'losing my home', 'losing my house', 'about to lose my home',
+    'facing eviction', 'being evicted', 'got evicted', 'getting evicted',
+    'foreclosure', "can't pay rent", "can't afford rent",
+    'behind on rent', 'behind on my mortgage',
+    'living in my car', 'sleeping in my car', 'sleeping outside',
+    'no place to live', "i'm homeless", 'i am homeless',
+    'became homeless', 'just lost my housing',
+    "can't pay my bills", "can't afford food", "can't afford to eat",
+    'behind on bills', 'about to lose everything', 'losing everything',
+    'completely alone', 'no one to turn to',
+    'no one to help me', 'nobody to help me', 'totally isolated',
+    'drinking problem', 'alcohol problem', 'drug problem',
+    "can't stop drinking", "i'm an addict",
+    'being abused', 'domestic violence',
+    'unsafe at home', 'afraid to go home'
+  ];
+
   // ── SYSTEM PROMPT (text mode only — voice mode prompt is in realtime-token.js) ──
   var SYSTEM_PROMPT = [
     'You are AfterAction AI — a free, AI-powered veteran navigator built by Mike Jackson, a retired Senior Master Sergeant with 25 years in the United States Air Force. Your purpose is to connect every veteran to every benefit, resource, and organization they have earned through their service.',
@@ -508,7 +529,8 @@
         // Send the selected option as a user message
         addMessage(option, 'user');
         showCaption('You', option);
-        if (checkCrisis(option)) showCrisisBanner();
+        var _er1 = (window.AIOS && window.AIOS.Router) ? window.AIOS.Router.routeAIOSIntent(option) : null; // Phase 22 fix
+        if (_er1 && _er1.tier === 'CRISIS') { showCrisisBanner(); } else if (_er1 && _er1.tier === 'AT_RISK') { showAtRiskBanner(); }
         sendToAI(option);
       });
     }
@@ -733,6 +755,45 @@
   }
 
   // ══════════════════════════════════════════════════════
+  //  AIOS — ONBOARDING CARD  (Phase 21)
+  //  Shows a brief welcome card for first-time users only.
+  //  Dismissed automatically on first AI response or first user send.
+  //  Skipped entirely if localStorage 'aaai_returning' === '1'.
+  // ══════════════════════════════════════════════════════
+  function _showOnboardingCard() {
+    if (localStorage.getItem('aaai_returning') === '1') return;
+    if (document.getElementById('aiosOnboardCard')) return;
+    if (!chatMessages) return;
+
+    var card = document.createElement('div');
+    card.id = 'aiosOnboardCard';
+    card.className = 'aios-onboard-card';
+    card.innerHTML =
+      '<p class="aios-onboard-card__headline">Your free veteran navigator is ready.</p>' +
+      '<p class="aios-onboard-card__body">I can help you understand your VA benefits, start a disability claim, find state programs, and navigate the paperwork — step by step.</p>' +
+      '<p class="aios-onboard-card__hint">Tap a quick start below, or just type your question.</p>' +
+      '<button class="aios-onboard-card__skip" id="aiosOnboardSkip" aria-label="Skip intro">Skip</button>';
+
+    if (chatMessages.firstChild) {
+      chatMessages.insertBefore(card, chatMessages.firstChild);
+    } else {
+      chatMessages.appendChild(card);
+    }
+
+    var skipBtn = document.getElementById('aiosOnboardSkip');
+    if (skipBtn) {
+      skipBtn.addEventListener('click', function() { _dismissOnboardCard(); });
+    }
+  }
+
+  function _dismissOnboardCard() {
+    var card = document.getElementById('aiosOnboardCard');
+    if (card) {
+      card.classList.add('aios-onboard-card--dismissed');
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
   //  START CHAT
   // ══════════════════════════════════════════════════════
   function startChat(mode) {
@@ -766,11 +827,115 @@
         captionsOverlay.style.display = 'block';
       }
 
+      // Phase 21: show onboarding card for first-time users
+      _showOnboardingCard();
       // Text mode: full API opening message
       sendToAI('START_CONVERSATION');
     }
 
     updateModeIcon();
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  AIOS — VOICE INTELLIGENCE UPDATE  (Phase 19)
+  //  Called after each accepted final voice transcript.
+  //  Runs the same AIOS layer as the text path:
+  //    1. Memory extraction  (extractMemoryFromInput)
+  //    2. Mission detection  (detectMissionFromInput)
+  //    3. Skill routing      (Router.routeAIOSIntent)
+  //    4. session.update     (injects AIOS system prompt into live voice session)
+  //  Steps 1-2 always run.  Steps 3-4 only run when a specific skill is routed
+  //  (matches text-path behavior — GENERAL_QUESTION keeps existing session instructions).
+  //  Fully wrapped in try/catch — voice transport is never affected by AIOS failures.
+  // ══════════════════════════════════════════════════════
+  function _aiosVoiceUpdate(transcript) {
+    try {
+      // ── Guards ──
+      if (!window.AIOS || !window.AIOS.Router || !window.AIOS.RequestBuilder) return;
+      if (!transcript || transcript.trim().length < 3) return;
+      if (transcript === 'START_CONVERSATION') return;
+      if (typeof RealtimeVoice === 'undefined' || !RealtimeVoice.sendEvent) return;
+      var _vs = RealtimeVoice.getState ? RealtimeVoice.getState() : 'idle';
+      if (_vs === 'idle' || _vs === 'error') return;
+
+      // ── 1. Memory extraction ──────────────────────────
+      if (window.AIOS.Memory &&
+          typeof window.AIOS.Memory.extractMemoryFromInput === 'function') {
+        var _extracted = window.AIOS.Memory.extractMemoryFromInput(transcript);
+        if (Object.keys(_extracted).length > 0) {
+          window.AIOS.Memory.profile = window.AIOS.Memory.mergeMemory(
+            window.AIOS.Memory.profile, _extracted
+          );
+          log('AIOS:VOICE', 'memory: ' + JSON.stringify(_extracted));
+          // Persist asynchronously for authenticated users (non-blocking)
+          if (typeof window.AIOS.Memory.save === 'function') {
+            window.AIOS.Memory.save();
+          }
+        }
+      }
+
+      // ── 2. Mission detection ──────────────────────────
+      if (window.AIOS.Mission &&
+          typeof window.AIOS.Mission.detectMissionFromInput === 'function' &&
+          !window.AIOS.Mission.current) {
+        var _mSeed = window.AIOS.Mission.detectMissionFromInput(transcript);
+        if (_mSeed && typeof window.AIOS.Mission.createMission === 'function') {
+          var _newMission = window.AIOS.Mission.createMission(_mSeed.type);
+          if (_newMission) {
+            window.AIOS.Mission.current = _newMission;
+            log('AIOS:VOICE', 'mission: ' + _mSeed.type + ' matched="' + _mSeed.matched + '"');
+          }
+        }
+      }
+
+      // ── 3. Route intent ───────────────────────────────
+      var _vRoute = window.AIOS.Router.routeAIOSIntent(transcript);
+      log('AIOS:VOICE', 'intent=' + _vRoute.intent +
+        ' | skill=' + (_vRoute.skill || 'none') +
+        ' | confidence=' + _vRoute.confidence);
+
+      // Only activate AIOS session.update when a specific skill is routed
+      if (!_vRoute.skill || !window.AIOS.SkillLoader) return;
+
+      var _vSkill = window.AIOS.SkillLoader.loadAIOSSkill(_vRoute.skill);
+      if (!_vSkill || typeof _vSkill.run !== 'function') return;
+
+      // ── 4. Build AIOS system prompt ───────────────────
+      var _vProfile = window.AIOS.Memory ? window.AIOS.Memory.getProfile() : {};
+      var _vSkillCfg = _vSkill.run({
+        profile:   _vProfile,
+        history:   conversationHistory,
+        userInput: transcript
+      });
+      log('AIOS:VOICE', 'skill=' + _vSkill.name);
+
+      var _vReq = window.AIOS.RequestBuilder.buildAIOSRequest({
+        userMessage:   transcript,
+        routeResult:   _vRoute,
+        skillConfig:   _vSkillCfg,
+        memoryContext: window.AIOS.Memory ? window.AIOS.Memory.getProfile() : null
+        // pageContext omitted — voice mode has no topic sidebar
+      });
+
+      // ── 5. Inject via session.update ──────────────────
+      // session.update replaces the live session instructions on OpenAI's side.
+      // This affects the CURRENT response in flight (if not yet complete) and
+      // all subsequent responses — same semantics as topic-bubble injection.
+      if (_vReq && _vReq.system && _vReq.system.length > 0) {
+        RealtimeVoice.sendEvent({
+          type: 'session.update',
+          session: { instructions: _vReq.system }
+        });
+        log('AIOS:VOICE', 'session.update SENT | systemLen=' + _vReq.system.length +
+          ' | skill=' + _vReq.meta.skill +
+          ' | hasMemory=' + _vReq.meta.hasMemory +
+          ' | hasMission=' + _vReq.meta.hasMission);
+      }
+
+    } catch (_aiosVErr) {
+      // AIOS failure is silent — voice transport continues unaffected
+      log('AIOS:VOICE', 'FALLBACK — ' + (_aiosVErr.message || String(_aiosVErr)));
+    }
   }
 
   // ══════════════════════════════════════════════════════
@@ -830,7 +995,10 @@
         }
         addMessage(text, 'user');
         conversationHistory.push({ role: 'user', content: text });
-        if (checkCrisis(text)) showCrisisBanner();
+        var _er2 = (window.AIOS && window.AIOS.Router) ? window.AIOS.Router.routeAIOSIntent(text) : null; // Phase 22 fix
+        if (_er2 && _er2.tier === 'CRISIS') { showCrisisBanner(); } else if (_er2 && _er2.tier === 'AT_RISK') { showAtRiskBanner(); }
+        // Phase 19: AIOS voice intelligence — memory, mission, routing, session.update
+        _aiosVoiceUpdate(text);
       } else {
         showCaption('You', text);
       }
@@ -933,7 +1101,8 @@
     userInput.style.height = 'auto';
     addMessage(text, 'user');
     showCaption('You', text);
-    if (checkCrisis(text)) showCrisisBanner();
+    var _er3 = (window.AIOS && window.AIOS.Router) ? window.AIOS.Router.routeAIOSIntent(text) : null; // Phase 22 fix
+    if (_er3 && _er3.tier === 'CRISIS') { showCrisisBanner(); } else if (_er3 && _er3.tier === 'AT_RISK') { showAtRiskBanner(); }
     sendToAI(text);
   }
 
@@ -1044,6 +1213,26 @@
     return CRISIS_KEYWORDS.some(function(kw) { return lower.includes(kw); });
   }
 
+  // Phase 22 — AT_RISK detection (only call after checkCrisis() returns false)
+  function checkAtRisk(text) {
+    var lower = text.toLowerCase();
+    return AT_RISK_KEYWORDS.some(function(kw) { return lower.includes(kw); });
+  }
+
+  // Phase 22 — AT_RISK in-chat message (softer than crisis — no fixed top bar)
+  function showAtRiskBanner() {
+    var div = document.createElement('div');
+    div.className = 'message message--at-risk';
+    div.innerHTML =
+      '<strong>Veterans Support Resources</strong>' +
+      '<p>VA Emergency Assistance: <a href="tel:18008271000">1-800-827-1000</a></p>' +
+      '<p>Homeless Veterans Hotline: <a href="tel:18774243838">877-424-3838</a></p>' +
+      '<p>Local Services (211): <a href="tel:211">Dial 211</a></p>' +
+      '<p style="margin-top:8px;font-size:0.85rem;">You\'ve come to the right place. Let\'s find the right help together.</p>';
+    if (chatMessages) chatMessages.appendChild(div);
+    scrollToBottom();
+  }
+
   function showCrisisBanner() {
     if (crisisBanner) crisisBanner.style.display = 'block';
     var crisisHtml =
@@ -1079,6 +1268,8 @@
       if (realMsgCount === 1) {
         window.dispatchEvent(new CustomEvent('aaai:audit_started'));
         log('Analytics', 'dispatched aaai:audit_started');
+        localStorage.setItem('aaai_returning', '1'); // Phase 21 — mark as returning
+        _dismissOnboardCard(); // Phase 21 — immediate dismiss on first real send
       }
     }
 
@@ -1146,6 +1337,7 @@
   }
 
   function streamMessage(fullText, onComplete) {
+    _dismissOnboardCard(); // Phase 21
     var div = document.createElement('div');
     div.className = 'message message--ai message--streaming';
     if (chatMessages) chatMessages.appendChild(div);
@@ -1219,7 +1411,21 @@
         if (lastUserMsg) {
           // 1. Route — classify intent and select skill
           var routeResult = window.AIOS.Router.routeAIOSIntent(lastUserMsg);
-          log('AIOS', 'route: intent=' + routeResult.intent + ' skill=' + routeResult.skill + ' confidence=' + routeResult.confidence);
+          console.log('[AIOS][ROUTER] intent=' + routeResult.intent + ' | skill=' + (routeResult.skill || 'none') + ' | confidence=' + routeResult.confidence + (routeResult.matched ? ' | matched="' + routeResult.matched + '"' : ''));
+
+          // [AIOS][MEMORY] — log veteran profile summary (if any data collected)
+          if (window.AIOS.Memory && typeof window.AIOS.Memory.buildMemorySummary === 'function') {
+            var _memSum = window.AIOS.Memory.buildMemorySummary(window.AIOS.Memory.getProfile());
+            console.log('[AIOS][MEMORY] ' + (_memSum || 'no profile data yet'));
+          }
+
+          // [AIOS][MISSION] — log active mission summary (if one is running)
+          if (window.AIOS.Mission && typeof window.AIOS.Mission.buildMissionSummary === 'function') {
+            var _misSum = window.AIOS.Mission.current
+              ? window.AIOS.Mission.buildMissionSummary(window.AIOS.Mission.current)
+              : null;
+            console.log('[AIOS][MISSION] ' + (_misSum || 'no active mission'));
+          }
 
           // 2. Only activate AIOS when a specific skill is routed.
           //    GENERAL_QUESTION (skill === null) uses the legacy SYSTEM_PROMPT
@@ -1228,8 +1434,16 @@
             var skill = window.AIOS.SkillLoader.loadAIOSSkill(routeResult.skill);
             if (skill && typeof skill.run === 'function') {
               var profile = (window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
-              var skillConfig = skill.run({ profile: profile, history: messages, userInput: lastUserMsg });
-              log('AIOS', 'skill loaded: ' + skill.name);
+              var skillConfig = skill.run({ profile: profile, history: messages, userInput: lastUserMsg, tier: routeResult.tier || 'STANDARD' }); // Phase 22
+              console.log('[AIOS][SKILL] ' + skill.name + ' | intent=' + routeResult.intent);
+
+              // Phase 25: Chain — if the skill returned a chain handoff, register it.
+              // Chain.set() applies all safety gates (CRISIS/AT_RISK/cooldown) internally.
+              // The suggestion engine will surface it as S0 after the response streams.
+              if (skillConfig && skillConfig.data && skillConfig.data.chain && window.AIOS.Chain) {
+                window.AIOS.Chain.set(skillConfig.data.chain, routeResult.tier || 'STANDARD');
+                console.log('[AIOS][CHAIN] queued nextSkill=' + skillConfig.data.chain.nextSkill);
+              }
 
               // 3. Build AIOS request — core prompt + skill + memory + page context
               var pageContext = null;
@@ -1248,7 +1462,7 @@
               if (aiosRequest && aiosRequest.system && aiosRequest.system.length > 0) {
                 systemPrompt = aiosRequest.system;
                 aiosActive = true;
-                log('AIOS', 'system prompt assembled (' + systemPrompt.length + ' chars, intent=' + aiosRequest.meta.intent + ')');
+                console.log('[AIOS][REQUEST] systemLen=' + aiosRequest.system.length + ' | intent=' + aiosRequest.meta.intent + ' | skill=' + aiosRequest.meta.skill + ' | hasMemory=' + aiosRequest.meta.hasMemory + ' | hasPageContext=' + aiosRequest.meta.hasPageContext);
               }
             }
           } else {
@@ -1312,6 +1526,7 @@
     div.className = 'message message--' + role;
 
     if (role === 'ai') {
+      _dismissOnboardCard(); // Phase 21
       div.innerHTML = formatMessage(text);
       // Phase 3.5: inject Download Word Doc button for legal template responses
       injectLegalDocButton(div, text);

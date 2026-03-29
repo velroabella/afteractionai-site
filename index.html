@@ -221,6 +221,18 @@
     </div>
   </header>
 
+  <!-- AIOS Active Mission Card (Phase 13) — hidden when no mission is active -->
+  <div class="aios-mission-card" id="aiosMissionCard" style="display:none;"
+       role="status" aria-live="polite" aria-label="Active mission status">
+    <span class="aios-mission-card__label">Mission</span>
+    <span class="aios-mission-card__type" id="aiosMissionType"></span>
+    <span class="aios-mission-card__badge" id="aiosMissionStatus"></span>
+    <span class="aios-mission-card__sep" aria-hidden="true">·</span>
+    <span class="aios-mission-card__step" id="aiosMissionStep"></span>
+    <span class="aios-mission-card__next" id="aiosMissionNext" style="display:none;"></span>
+    <span class="aios-mission-card__blockers" id="aiosMissionBlockers" style="display:none;"></span>
+  </div>
+
   <!-- Conversation -->
   <main class="chat-messages" id="chatMessages" role="log" aria-live="polite"></main>
 
@@ -231,6 +243,39 @@
       <span class="captions-text" id="captionsText"></span>
     </div>
   </div>
+
+  <!-- AIOS Quick-Trigger Chips (Phase 14) — hidden after first user action -->
+  <div class="aios-chips" id="aiosChips" role="toolbar" aria-label="Quick actions">
+    <button class="aios-chip" type="button"
+      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('What benefits am I eligible for?')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      Find My Best Benefits
+    </button>
+    <button class="aios-chip" type="button"
+      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('I want to start a disability claim')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Start a Disability Claim
+    </button>
+    <button class="aios-chip" type="button"
+      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('What state benefits am I eligible for?')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
+      Check State Benefits
+    </button>
+    <button class="aios-chip" type="button"
+      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('What should I do next?')">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"/></svg>
+      What Should I Do Next?
+    </button>
+    <button class="aios-chip aios-chip--upload" type="button"
+      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.upload()">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      Upload a Document
+    </button>
+  </div>
+
+  <!-- AIOS Proactive Suggestion (Phase 15) — hidden when no suggestion is active -->
+  <div class="aios-suggestion" id="aiosSuggestion" style="display:none;"
+       role="status" aria-live="polite" aria-atomic="true"></div>
 
   <!-- Text input mode -->
   <div class="chat-input" id="chatInputText">
@@ -321,6 +366,15 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
 <script src="js/aios/request-builder.js"></script>
 <script src="js/aios/memory-manager.js"></script>
 <script src="js/aios/mission-manager.js"></script>
+<script src="js/aios/mission-card.js"></script>
+<script src="js/aios/chips.js"></script>
+<script src="js/aios/suggestion-engine.js"></script>
+<!-- Phase 23: AIOS Eligibility Engine — scores benefit category relevance from memory profile -->
+<script src="js/aios/eligibility-engine.js"></script>
+<!-- Phase 25: AIOS Chain Manager — skill-to-skill handoff suggestions -->
+<script src="js/aios/chain-manager.js"></script>
+<!-- Phase 26: AIOS Link Validator — async background validation of hardcoded resource links (dev-facing) -->
+<script src="js/aios/link-validator.js"></script>
 
 <!-- AIOS Skills -->
 <script src="js/aios/skills/benefit-path-finder.js"></script>
@@ -331,6 +385,10 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
 <script src="js/aios/skills/document-analyzer.js"></script>
 
 <script src="js/app.js"></script>
+<!-- Phase 20: AIOS Inspector — dev-only, off by default. Enable: localStorage.setItem('aios_dev','1') -->
+<script src="js/aios/inspector.js"></script>
+<!-- Phase 27: AIOS Admin Panel — admin-only, off by default. Enable: localStorage.setItem('aios_admin','1') -->
+<script src="js/aios/admin-panel.js"></script>
 
 <!-- AUTH MODAL -->
 <div class="auth-modal" id="authModal" style="display:none;">

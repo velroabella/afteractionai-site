@@ -62,45 +62,6 @@
   // Values treated as "no data" — never written into memory
   var UNKNOWN_SIGNALS = { 'unknown':1,'not sure':1,'unsure':1,"don't know":1,'n/a':1,'none':1,'null':1,'':1 };
 
-  /* ── Phase 30: Validation whitelists ────────────────────
-     Used exclusively by _validateMemoryFields().
-     Kept adjacent to their source constants for easy maintenance.
-     ──────────────────────────────────────────────────────── */
-
-  /**
-   * Canonical branch values — exact toTitleCase() output of every
-   * entry in MILITARY_BRANCHES.  Any value not in this set is rejected.
-   */
-  var VALID_BRANCHES = {
-    'Army':1, 'Navy':1, 'Air Force':1, 'Marine Corps':1, 'Marines':1,
-    'Coast Guard':1, 'Space Force':1, 'National Guard':1,
-    'Army Reserve':1, 'Navy Reserve':1, 'Marine Reserve':1,
-    'Air Force Reserve':1, 'Coast Guard Reserve':1
-  };
-
-  /**
-   * Canonical discharge status labels — must match DISCHARGE_TYPES[*].label
-   * exactly.  No partial matches allowed.
-   */
-  var VALID_DISCHARGE_STATUSES = {
-    'Honorable':1, 'General':1, 'Other Than Honorable':1,
-    'Bad Conduct':1, 'Dishonorable':1, 'Medical':1
-  };
-
-  /**
-   * Canonical employment status labels — must match
-   * EMPLOYMENT_PATTERNS[*].label exactly.
-   */
-  var VALID_EMPLOYMENT_STATUSES = {
-    'employed':1, 'unemployed':1, 'job searching':1,
-    'retired':1, 'self-employed':1, 'disabled':1
-  };
-
-  /** Minimum char length for free-text fields (currentGoals, activeMissions, serviceEra). */
-  var MIN_TEXT_FIELD_LEN = 4;
-  /** Maximum char length — mirrors the extractor's own cap. */
-  var MAX_TEXT_FIELD_LEN = 120;
-
 
   /* ────────────────────────────────────────────────────────
      Private helpers
@@ -129,151 +90,6 @@
   /** Title-case a string. */
   function toTitleCase(str) {
     return str.replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-  }
-
-  /**
-   * Validate extracted memory fields before they are merged into the profile.
-   * Phase 30 — Memory Quality Filtering.
-   *
-   * Applies whitelists for structured fields, range checks for numeric fields,
-   * length + content guards for free-text fields, and conflict detection where
-   * multiple matches in the source input signal ambiguity.
-   *
-   * Only high-confidence, unambiguous values pass through to mergeMemory().
-   * Dropped fields are logged: [AIOS][MEMORY] filtered: field(reason), ...
-   *
-   * Rules:
-   *   branch           — whitelist (VALID_BRANCHES); conflict if > 1 branch in src
-   *   dischargeStatus  — whitelist (VALID_DISCHARGE_STATUSES)
-   *   state            — whitelist (US_STATES, lowercase key)
-   *   vaRating         — integer in 0–100 inclusive
-   *   employmentStatus — whitelist (VALID_EMPLOYMENT_STATUSES)
-   *   serviceEra       — string ≥ MIN_TEXT_FIELD_LEN (future-proofing)
-   *   currentGoals     — string 4–120 chars containing ≥ 1 letter
-   *   activeMissions   — same rules as currentGoals
-   *
-   * @param  {Object} extracted   - Output of extractMemoryFromInput()
-   * @param  {string} userMessage - Original raw input (for conflict detection)
-   * @returns {Object} Filtered object — only validated fields included
-   */
-  function _validateMemoryFields(extracted, userMessage) {
-    var valid   = {};
-    var dropped = [];
-    var src     = (typeof userMessage === 'string') ? userMessage : '';
-
-    /* ── branch ──────────────────────────────────────────────
-       Whitelist check + conflict detection.
-       Conflict: multiple distinct branch names present in the
-       source text → ambiguous (e.g. "my dad served in the Army,
-       I was in the Navy").  Drop if > 1 branch found.          */
-    if ('branch' in extracted) {
-      var _brHits = 0;
-      for (var _bi = 0; _bi < MILITARY_BRANCHES.length; _bi++) {
-        var _brEsc = MILITARY_BRANCHES[_bi].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-        if (new RegExp('\\b' + _brEsc + '\\b', 'i').test(src)) _brHits++;
-      }
-      if (_brHits > 1) {
-        dropped.push('branch(ambiguous)');
-      } else if (VALID_BRANCHES[extracted.branch]) {
-        valid.branch = extracted.branch;
-      } else {
-        dropped.push('branch(invalid)');
-      }
-    }
-
-    /* ── dischargeStatus ─────────────────────────────────────
-       Whitelist: must be one of the canonical discharge labels.  */
-    if ('dischargeStatus' in extracted) {
-      if (VALID_DISCHARGE_STATUSES[extracted.dischargeStatus]) {
-        valid.dischargeStatus = extracted.dischargeStatus;
-      } else {
-        dropped.push('dischargeStatus(invalid)');
-      }
-    }
-
-    /* ── state ───────────────────────────────────────────────
-       Whitelist: confirm against US_STATES using lowercase key.
-       The extractor already enforces this — re-validate for
-       defense in depth.                                         */
-    if ('state' in extracted) {
-      var _stKey = (typeof extracted.state === 'string') ? extracted.state.toLowerCase() : '';
-      if (US_STATES[_stKey]) {
-        valid.state = extracted.state;
-      } else {
-        dropped.push('state(invalid)');
-      }
-    }
-
-    /* ── vaRating ────────────────────────────────────────────
-       Must be an integer in 0–100.  The extractor enforces this
-       during parseInt, but re-validate and guard against floats. */
-    if ('vaRating' in extracted) {
-      var _rating = extracted.vaRating;
-      if (typeof _rating === 'number' &&
-          _rating >= 0 && _rating <= 100 &&
-          Math.floor(_rating) === _rating) {
-        valid.vaRating = _rating;
-      } else {
-        dropped.push('vaRating(out-of-range)');
-      }
-    }
-
-    /* ── employmentStatus ────────────────────────────────────
-       Whitelist: must be one of the canonical employment labels. */
-    if ('employmentStatus' in extracted) {
-      if (VALID_EMPLOYMENT_STATUSES[extracted.employmentStatus]) {
-        valid.employmentStatus = extracted.employmentStatus;
-      } else {
-        dropped.push('employmentStatus(invalid)');
-      }
-    }
-
-    /* ── serviceEra ──────────────────────────────────────────
-       Not populated by extractMemoryFromInput today, but
-       validate defensively for future code paths.
-       Require non-empty string ≥ MIN_TEXT_FIELD_LEN.           */
-    if ('serviceEra' in extracted) {
-      var _era = (typeof extracted.serviceEra === 'string') ? extracted.serviceEra.trim() : '';
-      if (_era.length >= MIN_TEXT_FIELD_LEN) {
-        valid.serviceEra = _era;
-      } else {
-        dropped.push('serviceEra(too-short)');
-      }
-    }
-
-    /* ── currentGoals ────────────────────────────────────────
-       Free-text: 4–120 chars, must contain ≥ 1 letter.
-       The letter check rejects pure numbers, punctuation noise. */
-    if ('currentGoals' in extracted) {
-      var _goal = (typeof extracted.currentGoals === 'string') ? extracted.currentGoals.trim() : '';
-      if (_goal.length >= MIN_TEXT_FIELD_LEN &&
-          _goal.length <= MAX_TEXT_FIELD_LEN &&
-          /[a-zA-Z]/.test(_goal)) {
-        valid.currentGoals = _goal;
-      } else {
-        dropped.push('currentGoals(noise)');
-      }
-    }
-
-    /* ── activeMissions ──────────────────────────────────────
-       Same rules as currentGoals.                              */
-    if ('activeMissions' in extracted) {
-      var _msn = (typeof extracted.activeMissions === 'string') ? extracted.activeMissions.trim() : '';
-      if (_msn.length >= MIN_TEXT_FIELD_LEN &&
-          _msn.length <= MAX_TEXT_FIELD_LEN &&
-          /[a-zA-Z]/.test(_msn)) {
-        valid.activeMissions = _msn;
-      } else {
-        dropped.push('activeMissions(noise)');
-      }
-    }
-
-    /* ── Log any drops ───────────────────────────────────────*/
-    if (dropped.length > 0) {
-      console.log('[AIOS][MEMORY] filtered: ' + dropped.join(', '));
-    }
-
-    return valid;
   }
 
 
@@ -342,87 +158,23 @@
     },
 
 
-    /* ── Persistence (Supabase — Phase 12) ──────────────── */
+    /* ── Persistence (Supabase — placeholders) ──────────── */
 
     /**
-     * Persist the structured veteran profile to Supabase (authenticated users only).
-     * Only stores the 8 allowed fields — no raw logs, no names, no verbose arrays.
-     * No-ops gracefully for anonymous users or if AAAI.auth is unavailable.
-     *
-     * Allowed fields: branch, dischargeStatus, serviceEra, state,
-     *                 employmentStatus, vaRating, currentGoals, activeMissions
-     *
+     * Persist current profile to Supabase.
      * @returns {Promise}
      */
     save: function() {
-      var PERSIST_FIELDS = [
-        'branch', 'dischargeStatus', 'serviceEra', 'state',
-        'employmentStatus', 'vaRating', 'currentGoals', 'activeMissions'
-      ];
-
-      // Build sanitized snapshot — only persist non-null structured fields
-      var snapshot = {};
-      for (var i = 0; i < PERSIST_FIELDS.length; i++) {
-        var key = PERSIST_FIELDS[i];
-        var val = MemoryManager.profile[key];
-        if (val !== null && val !== undefined) snapshot[key] = val;
-      }
-
-      // Gate: skip if nothing to persist
-      if (Object.keys(snapshot).length === 0) {
-        return Promise.resolve({ skipped: 'no data to persist' });
-      }
-
-      // Gate: skip if not authenticated
-      if (!window.AAAI || !window.AAAI.auth || !window.AAAI.auth.isLoggedIn()) {
-        return Promise.resolve({ skipped: 'not authenticated' });
-      }
-
-      // Gate: skip if saveAIOSMemory not wired yet
-      if (typeof window.AAAI.auth.saveAIOSMemory !== 'function') {
-        return Promise.resolve({ skipped: 'saveAIOSMemory not available' });
-      }
-
-      return window.AAAI.auth.saveAIOSMemory(snapshot).catch(function(err) {
-        console.warn('[AIOS][MEMORY] save error:', err && err.message ? err.message : err);
-        return { error: err };
-      });
+      return Promise.resolve();
     },
 
     /**
-     * Load persisted veteran profile from Supabase and merge into in-session memory.
-     * No-ops gracefully for anonymous users or if AAAI.auth is unavailable.
-     * Merging uses the safe mergeMemory rules — existing valid data is never
-     * overwritten by null or unknown signals.
-     *
-     * @param {string} [userId]  — reserved, unused (auth uses current session internally)
+     * Load profile from Supabase for a returning user.
+     * @param {string} userId
      * @returns {Promise}
      */
     load: function(userId) {
-      // Gate: skip if not authenticated
-      if (!window.AAAI || !window.AAAI.auth || !window.AAAI.auth.isLoggedIn()) {
-        return Promise.resolve(null);
-      }
-
-      // Gate: skip if loadAIOSMemory not wired yet
-      if (typeof window.AAAI.auth.loadAIOSMemory !== 'function') {
-        return Promise.resolve(null);
-      }
-
-      return window.AAAI.auth.loadAIOSMemory().then(function(result) {
-        if (result && result.data && typeof result.data === 'object') {
-          // Safe merge — persisted data flows into in-session profile
-          // but null/unknown values never overwrite existing valid data
-          var merged = MemoryManager.mergeMemory(MemoryManager.profile, result.data);
-          MemoryManager.profile = merged;
-          console.log('[AIOS][MEMORY] Loaded from Supabase — ' +
-            (MemoryManager.buildMemorySummary(MemoryManager.profile) || 'no fields set'));
-        }
-        return result;
-      }).catch(function(err) {
-        console.warn('[AIOS][MEMORY] load error:', err && err.message ? err.message : err);
-        return null;
-      });
+      return Promise.resolve(null);
     },
 
 
@@ -556,8 +308,7 @@
         }
       }
 
-      // Phase 30: validate before returning — only high-confidence fields pass
-      return _validateMemoryFields(extracted, userMessage);
+      return extracted;
     },
 
 
@@ -619,29 +370,6 @@
      * @param {Object} memory - Veteran memory object (or profile snapshot).
      * @returns {string} One-line summary, or empty string if no data.
      */
-    /**
-     * Return a clean subset of the profile containing only the fields
-     * used by the Eligibility Engine for scoring.
-     * Keeps the scoring API decoupled from the full profile shape.
-     * Phase 23.
-     *
-     * @returns {Object} { dischargeStatus, vaRating, branch, serviceEra,
-     *                     state, employmentStatus, currentGoals, activeMissions }
-     */
-    getEligibilityProfile: function() {
-      var p = MemoryManager.profile;
-      return {
-        dischargeStatus:  p.dischargeStatus  || null,
-        vaRating:         (p.vaRating !== null && p.vaRating !== undefined) ? p.vaRating : null,
-        branch:           p.branch           || null,
-        serviceEra:       p.serviceEra       || null,
-        state:            p.state            || null,
-        employmentStatus: p.employmentStatus || null,
-        currentGoals:     p.currentGoals     || null,
-        activeMissions:   p.activeMissions   || null
-      };
-    },
-
     buildMemorySummary: function(memory) {
       if (!memory || typeof memory !== 'object') return '';
 

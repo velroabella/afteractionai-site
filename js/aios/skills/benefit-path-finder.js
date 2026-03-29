@@ -58,6 +58,42 @@
 
 
   /* ────────────────────────────────────────────────────────
+     Phase 24: Top-category helper
+     Returns the top N benefit category labels by eligibility
+     score, filtered above the given threshold.
+     Returns [] when Eligibility engine is unavailable or
+     the profile has no meaningful signal.
+     ──────────────────────────────────────────────────────── */
+  function _topCategories(profile, threshold, limit) {
+    var Elig = window.AIOS && window.AIOS.Eligibility;
+    if (!Elig || !profile || !Elig.hasUsefulSignal(profile)) return [];
+
+    var scores  = Elig.score(profile);
+    var config  = Elig.SCORING_CONFIG;
+
+    // Build label map
+    var labelMap = {};
+    for (var i = 0; i < config.length; i++) {
+      labelMap[config[i].id] = config[i].label;
+    }
+
+    // Filter by threshold and sort descending
+    var floor   = (typeof threshold === 'number') ? threshold : 0.60;
+    var maxItems = (typeof limit === 'number') ? limit : 3;
+    var ids = Object.keys(scores)
+      .filter(function(id) { return scores[id] >= floor; })
+      .sort(function(a, b) { return scores[b] - scores[a]; });
+
+    var result = [];
+    for (var j = 0; j < ids.length && result.length < maxItems; j++) {
+      var lbl = labelMap[ids[j]] || ids[j];
+      result.push(lbl);
+    }
+    return result;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
      Skill module
      ──────────────────────────────────────────────────────── */
   var BenefitPathFinder = {
@@ -121,6 +157,36 @@
 
       if (unknown.length) {
         data.unknownFields = unknown;
+      }
+
+      // Phase 24: Eligibility-ranked top categories — guide AI prioritization.
+      // Only populated when the Eligibility engine has useful signal.
+      // Threshold 0.60 = moderate-to-high confidence only.
+      var profile = context && context.profile;
+      var topCats = _topCategories(profile, 0.60, 3);
+      if (topCats.length) {
+        data.topCategories = topCats;
+      }
+
+      // Phase 25: Chain — when disability indicators are present, suggest
+      // transitioning to the VA Disability Claim skill as the next step.
+      // Only fires on clear disability signals — not on generic benefits questions.
+      var userInput  = (context && context.userInput) || '';
+      var inputLower = userInput.toLowerCase();
+      var hasDisabilitySignal = (
+        (profile && profile.vaRating !== null && profile.vaRating !== undefined) ||
+        (inputLower.indexOf('disab') !== -1) ||
+        (inputLower.indexOf('claim') !== -1) ||
+        (inputLower.indexOf('rating') !== -1) ||
+        (inputLower.indexOf('c&p')   !== -1)
+      );
+      if (hasDisabilitySignal) {
+        data.chain = {
+          nextSkill:   'va-disability-claim',
+          label:       'Ready to work on your VA disability claim?',
+          sendText:    'I want to work on my VA disability claim',
+          missionType: 'disability_claim'
+        };
       }
 
       return {

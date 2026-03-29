@@ -13,6 +13,7 @@
      ──────────────────────────────────────────────────────── */
   var INTENTS = {
     CRISIS_SUPPORT:     'crisis-support',
+    AT_RISK_SUPPORT:    'crisis-support',  // Phase 22: same skill, AT_RISK tier
     BENEFITS_DISCOVERY: 'benefit-path-finder',
     DISABILITY_CLAIM:   'va-disability-claim',
     STATE_BENEFITS:     'state-benefits',
@@ -82,6 +83,30 @@
     'not worth living', 'nothing left', 'no way out'
   ];
 
+  /* ────────────────────────────────────────────────────────
+     AT_RISK keywords — Phase 22
+     Checked after crisis (never fires if crisis matched).
+     First-person distress signals only — no single-word terms
+     that could appear in normal benefit conversations.
+     ──────────────────────────────────────────────────────── */
+  var AT_RISK_KEYWORDS = [
+    'losing my home', 'losing my house', 'about to lose my home',
+    'facing eviction', 'being evicted', 'got evicted', 'getting evicted',
+    'foreclosure', "can't pay rent", "can't afford rent",
+    'behind on rent', 'behind on my mortgage',
+    'living in my car', 'sleeping in my car', 'sleeping outside',
+    'no place to live', "i'm homeless", 'i am homeless',
+    'became homeless', 'just lost my housing',
+    "can't pay my bills", "can't afford food", "can't afford to eat",
+    'behind on bills', 'about to lose everything', 'losing everything',
+    'completely alone', 'no one to turn to',
+    'no one to help me', 'nobody to help me', 'totally isolated',
+    'drinking problem', 'alcohol problem', 'drug problem',
+    "can't stop drinking", "i'm an addict",
+    'being abused', 'domestic violence',
+    'unsafe at home', 'afraid to go home'
+  ];
+
 
   /* ────────────────────────────────────────────────────────
      Helpers
@@ -104,13 +129,18 @@
 
   /**
    * Build a standard routing result.
+   * @param {string} intent
+   * @param {number} confidence
+   * @param {string|null} matched
+   * @param {string} [tier] - 'CRISIS' | 'AT_RISK' | 'STANDARD' (default: 'STANDARD')
    */
-  function result(intent, confidence, matched) {
+  function result(intent, confidence, matched, tier) {
     return {
       intent: intent,
       skill: INTENTS[intent] || null,
       confidence: confidence,
       matched: matched || null,
+      tier: tier || 'STANDARD',   // Phase 22: escalation tier
       needsClarification: false,
       clarificationQuestion: null
     };
@@ -142,7 +172,13 @@
       // ── 1. Crisis override (always first) ──────────────
       var crisisMatch = matchPhrase(text, CRISIS_KEYWORDS);
       if (crisisMatch) {
-        return result('CRISIS_SUPPORT', 1.0, crisisMatch);
+        return result('CRISIS_SUPPORT', 1.0, crisisMatch, 'CRISIS');
+      }
+
+      // ── 1.5 AT_RISK check (Phase 22 — only if not crisis) ─
+      var atRiskMatch = matchPhrase(text, AT_RISK_KEYWORDS);
+      if (atRiskMatch) {
+        return result('AT_RISK_SUPPORT', 0.9, atRiskMatch, 'AT_RISK');
       }
 
       // ── 2. Keyword-based intent matching ───────────────

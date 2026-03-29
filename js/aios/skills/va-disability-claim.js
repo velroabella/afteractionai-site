@@ -39,8 +39,23 @@
      * @returns {Object} { prompt: string, data: Object }
      */
     run: function(context) {
-      // Placeholder — will route to phase-specific logic
-      return { prompt: VADisabilityClaim.prompt, data: {} };
+      var data = {};
+
+      // Phase 25: Chain — after initial claim assessment, offer to build a
+      // full action plan via the Next Action Planner skill.
+      // missionUpdate advances the active disability_claim mission to the
+      // evidence-gathering step if one is already running.
+      data.chain = {
+        nextSkill:   'next-action-planner',
+        label:       'Want a full veterans benefits action plan?',
+        sendText:    'Build me a complete veterans benefits action plan',
+        missionUpdate: {
+          currentStep: 'Gather service records and buddy statements',
+          nextStep:    'Submit VA Form 21-526EZ'
+        }
+      };
+
+      return { prompt: VADisabilityClaim.prompt, data: data };
     }
   };
 
