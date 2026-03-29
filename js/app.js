@@ -363,6 +363,7 @@
   var conversationHistory = [];
   var inputMode = 'text';        // 'text' | 'voice'
   var isProcessing = false;
+  var pendingUserSubmission = null; // Phase 33 queue: holds at most one non-typed submission
   var voiceGreetingSent = false; // true after first START_CONVERSATION per voice session
   var captionsEnabled = false;
   var pendingFiles = [];
@@ -526,12 +527,8 @@
         // Remove all option button groups once one is clicked
         var allOptionGroups = chatMessages.querySelectorAll('.chat-options');
         allOptionGroups.forEach(function(group) { group.remove(); });
-        // Send the selected option as a user message
-        addMessage(option, 'user');
-        showCaption('You', option);
-        var _er1 = (window.AIOS && window.AIOS.Router) ? window.AIOS.Router.routeAIOSIntent(option) : null; // Phase 22 fix
-        if (_er1 && _er1.tier === 'CRISIS') { showCrisisBanner(); } else if (_er1 && _er1.tier === 'AT_RISK') { showAtRiskBanner(); }
-        sendToAI(option);
+        // Send the selected option as a user message (Phase 33: shared submit path)
+        submitUserText(option);
       });
     }
 
@@ -613,8 +610,6 @@
       var msg = 'I\u2019d like help with: ' + labels.join(', ');
       // Remove the bubble container
       container.remove();
-      // Show user message in chat immediately
-      addMessage(msg, 'user');
 
       // If voice session is active, inject topics via session.update on the data channel.
       // session.update REPLACES instructions entirely, so we send the FULL client-side
@@ -627,6 +622,8 @@
           RealtimeVoice.sendEvent;
 
       if (voiceActive) {
+        // Phase 33: render user bubble via shared path (voiceOnly — Realtime drives the response)
+        submitUserText(msg, { voiceOnly: true, path: 'voice' });
         var topicDirective = '\n\n## ACTIVE USER TOPICS (HARD SYSTEM STATE)\n' +
           'The user selected these topics via the session-start interface: ' +
           labels.join(', ') + '\n' +
@@ -652,8 +649,8 @@
           conversationHistory.push({ role: 'user', content: msg });
         }, 500);
       } else {
-        // Text mode — send immediately through normal pipeline
-        sendToAI(msg);
+        // Text mode — Phase 33: render bubble + send via shared path
+        submitUserText(msg);
       }
     });
     container.appendChild(goBtn);
@@ -1002,18 +999,9 @@
           return;
         }
         _lastVoiceText = trimmed;
-        addMessage(trimmed, 'user'); // use trimmed — eliminates invisible whitespace-only bubbles
+        // Phase 33: render bubble + escalation check via shared path (voiceOnly — Realtime drives response)
+        submitUserText(trimmed, { voiceOnly: true, path: 'voice' });
         conversationHistory.push({ role: 'user', content: text });
-        var _er2 = (window.AIOS && window.AIOS.Router) ? window.AIOS.Router.routeAIOSIntent(text) : null; // Phase 22 fix
-        if (_er2 && _er2.tier === 'CRISIS') {
-          showCrisisBanner();
-          // Phase 32: Telemetry — escalation (voice path)
-          if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('escalation_triggered', { tier: 'CRISIS', path: 'voice' }); }
-        } else if (_er2 && _er2.tier === 'AT_RISK') {
-          showAtRiskBanner();
-          // Phase 32: Telemetry — escalation (voice path)
-          if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('escalation_triggered', { tier: 'AT_RISK', path: 'voice' }); }
-        }
         // Phase 32: Telemetry — voice transcript accepted
         if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('voice_transcript_accepted', {}); }
         // Phase 19: AIOS voice intelligence — memory, mission, routing, session.update
@@ -1118,11 +1106,58 @@
 
     userInput.value = '';
     userInput.style.height = 'auto';
-    addMessage(text, 'user');
-    showCaption('You', text);
-    var _er3 = (window.AIOS && window.AIOS.Router) ? window.AIOS.Router.routeAIOSIntent(text) : null; // Phase 22 fix
-    if (_er3 && _er3.tier === 'CRISIS') { showCrisisBanner(); } else if (_er3 && _er3.tier === 'AT_RISK') { showAtRiskBanner(); }
-    sendToAI(text);
+    submitUserText(text);
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  SHARED USER-TEXT SUBMISSION (Phase 33)
+  //  Single canonical path for all non-typed user inputs:
+  //  chips, topic bubbles, option buttons, voice transcripts.
+  //
+  //  opts.voiceOnly  {boolean} — render bubble + escalation check,
+  //                              but skip sendToAI (Realtime API handles response)
+  //  opts.topicLabel {string}  — push label into window.activeUserTopics so
+  //                              callChatEndpoint injects the ACTIVE USER TOPICS block
+  //  opts.path       {string}  — 'voice' | 'text' (telemetry label; defaults 'text')
+  // ══════════════════════════════════════════════════════
+  function submitUserText(text, opts) {
+    opts = opts || {};
+    var trimmed = (text || '').trim();
+    if (!trimmed || trimmed.length < 2) return;
+
+    // Register optional topic label so AIOS callChatEndpoint injects the topic context block
+    if (opts.topicLabel) {
+      if (!Array.isArray(window.activeUserTopics)) { window.activeUserTopics = []; }
+      if (window.activeUserTopics.indexOf(opts.topicLabel) === -1) {
+        window.activeUserTopics.push(opts.topicLabel);
+      }
+    }
+
+    // Always render the user bubble — never silently dropped
+    addMessage(trimmed, 'user');
+    showCaption('You', trimmed);
+
+    // Escalation check — show safety banners and record telemetry
+    var _erS = (window.AIOS && window.AIOS.Router) ? window.AIOS.Router.routeAIOSIntent(trimmed) : null;
+    if (_erS && _erS.tier === 'CRISIS') {
+      showCrisisBanner();
+      if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('escalation_triggered', { tier: 'CRISIS', path: opts.path || 'text' }); }
+    } else if (_erS && _erS.tier === 'AT_RISK') {
+      showAtRiskBanner();
+      if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('escalation_triggered', { tier: 'AT_RISK', path: opts.path || 'text' }); }
+    }
+
+    // Voice-only: bubble + escalation is sufficient; Realtime API drives the response
+    if (opts.voiceOnly) { return; }
+
+    // Text mode: send immediately, or queue for when the current response finishes
+    if (!isProcessing) {
+      sendToAI(trimmed);
+    } else {
+      // Newest submission wins — replace any earlier pending entry
+      pendingUserSubmission = { text: trimmed, opts: opts || {} };
+      log('[AAAI]', 'queued user submission while processing: "' + trimmed.substring(0, 40) + '"');
+    }
   }
 
   // ── Mode switching ──
@@ -1306,6 +1341,13 @@
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
         if (userInput) userInput.focus();
+        // Phase 33: flush any queued non-typed submission (chip/button clicked during AI response)
+        if (pendingUserSubmission) {
+          var _queued = pendingUserSubmission;
+          pendingUserSubmission = null;
+          log('[AAAI]', 'flushing queued submission: "' + _queued.text.substring(0, 40) + '"');
+          sendToAI(_queued.text);
+        }
 
         // Show topic bubbles once after the opening greeting
         if (!topicBubblesShown && userText === 'START_CONVERSATION') {
@@ -1336,12 +1378,24 @@
           isProcessing = false;
           if (btnSend) btnSend.disabled = false;
           maybeShowReportButton();
+          // Phase 33: flush queued submission (mock-response recovery path)
+          if (pendingUserSubmission) {
+            var _queued2 = pendingUserSubmission;
+            pendingUserSubmission = null;
+            sendToAI(_queued2.text);
+          }
         });
       } else {
         addMessage('I\'m having trouble connecting right now. Please try again in a moment. If you need immediate help, call the Veterans Crisis Line at 988 (Press 1).', 'ai');
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
         maybeShowReportButton();
+        // Phase 33: flush queued submission (hard-error recovery path)
+        if (pendingUserSubmission) {
+          var _queued3 = pendingUserSubmission;
+          pendingUserSubmission = null;
+          sendToAI(_queued3.text);
+        }
       }
     });
   }
@@ -2653,6 +2707,7 @@
 
   window.AAAI_startChat = startChat;
   window.AAAI_endVoiceSession = endVoiceSession;
+  window.AAAI_submitUserText = submitUserText; // Phase 33 — shared non-typed submission path
 
   // ── BOOT ────────────────────────────────────────────
   init();
