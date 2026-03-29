@@ -145,6 +145,15 @@
     function _next() {
       if (_queue.length === 0) {
         _running = false;
+        // Phase 32: Telemetry — emit link validation summary when batch completes
+        try {
+          if (window.AIOS && window.AIOS.Telemetry) {
+            var _lv = LinkValidator.getSummary();
+            if (_lv.total > 0) {
+              window.AIOS.Telemetry.record('link_summary', _lv);
+            }
+          }
+        } catch (e) { /* silent */ }
         return;
       }
 

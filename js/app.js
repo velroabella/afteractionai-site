@@ -643,13 +643,14 @@
             instructions: SYSTEM_PROMPT.join('\n') + topicDirective
           }
         });
-        log('TopicBubbles', 'VOICE session.update SENT — delaying sendText 200ms');
-        // Delay the AI trigger so session.update is processed on the server first
+        log('TopicBubbles', 'VOICE session.update SENT — delaying sendText 500ms');
+        // Phase FBP: delay extended from 200ms → 500ms to reduce race condition where
+        // the AI responds before session.update is processed, causing "I can't see your selections"
         setTimeout(function() {
           log('TopicBubbles', 'VOICE sendText firing AFTER session.update delay');
           RealtimeVoice.sendText(msg);
           conversationHistory.push({ role: 'user', content: msg });
-        }, 200);
+        }, 500);
       } else {
         // Text mode — send immediately through normal pipeline
         sendToAI(msg);
@@ -950,6 +951,7 @@
 
     log('startVoiceSession', 'wiring callbacks and connecting');
     voiceGreetingSent = false;
+    var _lastVoiceText = ''; // Phase FBP: per-session dedup guard — prevents duplicate user bubbles
     setVoiceUI('connecting', 'Connecting to voice...');
 
     // Wire callbacks
@@ -993,10 +995,27 @@
           log('RT.onUserTranscript', 'REJECTED (filler/short): "' + trimmed + '"');
           return;
         }
-        addMessage(text, 'user');
+        // Phase FBP: dedup guard — OpenAI Realtime can fire isFinal=true more than once
+        // for the same utterance; skip if identical to the last accepted transcript
+        if (trimmed === _lastVoiceText) {
+          log('RT.onUserTranscript', 'DEDUP (duplicate final): "' + trimmed.substring(0, 40) + '"');
+          return;
+        }
+        _lastVoiceText = trimmed;
+        addMessage(trimmed, 'user'); // use trimmed — eliminates invisible whitespace-only bubbles
         conversationHistory.push({ role: 'user', content: text });
         var _er2 = (window.AIOS && window.AIOS.Router) ? window.AIOS.Router.routeAIOSIntent(text) : null; // Phase 22 fix
-        if (_er2 && _er2.tier === 'CRISIS') { showCrisisBanner(); } else if (_er2 && _er2.tier === 'AT_RISK') { showAtRiskBanner(); }
+        if (_er2 && _er2.tier === 'CRISIS') {
+          showCrisisBanner();
+          // Phase 32: Telemetry — escalation (voice path)
+          if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('escalation_triggered', { tier: 'CRISIS', path: 'voice' }); }
+        } else if (_er2 && _er2.tier === 'AT_RISK') {
+          showAtRiskBanner();
+          // Phase 32: Telemetry — escalation (voice path)
+          if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('escalation_triggered', { tier: 'AT_RISK', path: 'voice' }); }
+        }
+        // Phase 32: Telemetry — voice transcript accepted
+        if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('voice_transcript_accepted', {}); }
         // Phase 19: AIOS voice intelligence — memory, mission, routing, session.update
         _aiosVoiceUpdate(text);
       } else {
@@ -1413,6 +1432,11 @@
           var routeResult = window.AIOS.Router.routeAIOSIntent(lastUserMsg);
           console.log('[AIOS][ROUTER] intent=' + routeResult.intent + ' | skill=' + (routeResult.skill || 'none') + ' | confidence=' + routeResult.confidence + (routeResult.matched ? ' | matched="' + routeResult.matched + '"' : ''));
 
+          // Phase 32: Telemetry — escalation tier (text path)
+          if (routeResult.tier !== 'STANDARD' && window.AIOS && window.AIOS.Telemetry) {
+            window.AIOS.Telemetry.record('escalation_triggered', { tier: routeResult.tier, path: 'text' });
+          }
+
           // [AIOS][MEMORY] — log veteran profile summary (if any data collected)
           if (window.AIOS.Memory && typeof window.AIOS.Memory.buildMemorySummary === 'function') {
             var _memSum = window.AIOS.Memory.buildMemorySummary(window.AIOS.Memory.getProfile());
@@ -1473,6 +1497,12 @@
     } catch (aiosErr) {
       // AIOS failed — fall back silently to original SYSTEM_PROMPT
       log('AIOS', 'FALLBACK — error: ' + aiosErr.message);
+      // Phase 32: Telemetry — record fallback event (error type only, no user text)
+      try {
+        if (window.AIOS && window.AIOS.Telemetry) {
+          window.AIOS.Telemetry.record('aios_fallback', { err: aiosErr.message });
+        }
+      } catch (e) { /* never let telemetry break the fallback path */ }
       systemPrompt = SYSTEM_PROMPT;
       aiosActive = false;
     }

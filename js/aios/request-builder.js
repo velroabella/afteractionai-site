@@ -397,6 +397,11 @@
       // _scoreConfidence reads opts + live AIOS modules — call after
       // all systemParts are assembled so eligibility/mission are resolved.
       var _conf = _scoreConfidence(opts, _tier);
+      // Phase 32: Telemetry — record low-confidence events (STANDARD only)
+      if (_conf.level === 'low' && _tier === 'STANDARD' &&
+          window.AIOS && window.AIOS.Telemetry) {
+        window.AIOS.Telemetry.record('low_confidence', { signals: _conf.signals });
+      }
       // Inject ## CONFIDENCE CONTEXT only for low-confidence STANDARD flows.
       // Never inject for CRISIS or AT_RISK — must not weaken safety responses.
       if (_conf.level === 'low' && _tier === 'STANDARD') {
@@ -411,6 +416,10 @@
       var _finalParts  = _budget.parts;
       var _wasTrimmed  = _budget.wasTrimmed;
       var _trimmedSecs = _budget.trimmedSections;
+      // Phase 32: Telemetry — record when the prompt is trimmed for budget reasons
+      if (_wasTrimmed && window.AIOS && window.AIOS.Telemetry) {
+        window.AIOS.Telemetry.record('prompt_trimmed', { sections: _trimmedSecs });
+      }
 
       var system = _finalParts.join('\n\n');
 

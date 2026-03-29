@@ -118,12 +118,14 @@
     // Gate 1: quiet period from consecutive dismissal fatigue
     if (_quietUntil > now) {
       console.log('[AIOS][SUGGEST] suppressed: fatigue-cap');
+      if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('suggestion_suppressed', { reason: 'quiet-period', id: id }); }
       return false;
     }
 
     // Gate 2: session hard cap
     if (_sessionCount >= SESSION_MAX) {
       console.log('[AIOS][SUGGEST] suppressed: fatigue-cap');
+      if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('suggestion_suppressed', { reason: 'session-max', id: id }); }
       return false;
     }
 
@@ -131,6 +133,7 @@
     _trimWindowLog();
     if (_windowLog.length >= WINDOW_MAX) {
       console.log('[AIOS][SUGGEST] suppressed: fatigue-cap');
+      if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('suggestion_suppressed', { reason: 'window-max', id: id }); }
       return false;
     }
 
@@ -138,6 +141,7 @@
     if (_dismissed[id] && _dismissed[id].lastDismiss) {
       if ((now - _dismissed[id].lastDismiss) < DISMISS_COOLDOWN_MS) {
         console.log('[AIOS][SUGGEST] suppressed: dismissed-recently');
+        if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('suggestion_suppressed', { reason: 'dismissed-recently', id: id }); }
         return false;
       }
     }

@@ -74,17 +74,29 @@
       if (!chainData || typeof chainData.nextSkill !== 'string') return;
 
       // Safety gate: never chain during crisis
-      if (tier === 'CRISIS' || _isCrisisActive()) return;
+      if (tier === 'CRISIS' || _isCrisisActive()) {
+        if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('chain_blocked', { reason: 'crisis', skill: chainData.nextSkill }); }
+        return;
+      }
 
       // Safety gate: suppress during AT_RISK unless explicitly permitted
-      if ((tier === 'AT_RISK' || _isAtRiskActive()) && !chainData.allowAtRisk) return;
+      if ((tier === 'AT_RISK' || _isAtRiskActive()) && !chainData.allowAtRisk) {
+        if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('chain_blocked', { reason: 'at-risk', skill: chainData.nextSkill }); }
+        return;
+      }
 
       // Anti-loop: prevent immediate re-chain to the same skill (cooldown)
-      if (_inCooldown(chainData.nextSkill)) return;
+      if (_inCooldown(chainData.nextSkill)) {
+        if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('chain_blocked', { reason: 'cooldown', skill: chainData.nextSkill }); }
+        return;
+      }
 
       // Anti-loop: reject if this skill already appears in the session history buffer.
       // Prevents cycles like A → B → C → A regardless of cooldown state.
-      if (_recent.indexOf(chainData.nextSkill) !== -1) return;
+      if (_recent.indexOf(chainData.nextSkill) !== -1) {
+        if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('chain_blocked', { reason: 'loop-guard', skill: chainData.nextSkill }); }
+        return;
+      }
 
       _pending = {
         nextSkill:     chainData.nextSkill,

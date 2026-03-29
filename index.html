@@ -247,17 +247,17 @@
   <!-- AIOS Quick-Trigger Chips (Phase 14) — hidden after first user action -->
   <div class="aios-chips" id="aiosChips" role="toolbar" aria-label="Quick actions">
     <button class="aios-chip" type="button"
-      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('What benefits am I eligible for?')">
+      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('What benefits am I eligible for?','VA Benefits')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
       Find My Best Benefits
     </button>
     <button class="aios-chip" type="button"
-      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('I want to start a disability claim')">
+      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('I want to start a disability claim','VA Disability')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
       Start a Disability Claim
     </button>
     <button class="aios-chip" type="button"
-      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('What state benefits am I eligible for?')">
+      onclick="window.AIOS&&window.AIOS.Chips&&window.AIOS.Chips.send('What state benefits am I eligible for?','State Benefits')">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg>
       Check State Benefits
     </button>
@@ -360,6 +360,9 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
 <script src="js/realtime-voice.js"></script>
 
 <!-- AIOS Core Modules -->
+<!-- Phase 32: AIOS Telemetry — silent internal event log. Must load before other AIOS modules. -->
+<!-- Read in console: AIOS.Telemetry.getSummary() / AIOS.Telemetry.getEvents() -->
+<script src="js/aios/telemetry.js"></script>
 <script src="js/aios/core-prompt.js"></script>
 <script src="js/aios/router.js"></script>
 <script src="js/aios/skill-loader.js"></script>

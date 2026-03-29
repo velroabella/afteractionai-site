@@ -32,12 +32,29 @@
   }
 
   /* ── Send a text chip through the existing send flow ── */
-  function send(text) {
+  /**
+   * @param {string} text        — Message to send (displayed in chat and sent to AI)
+   * @param {string} [topicLabel] — Phase FBP: optional topic label (e.g. 'VA Benefits').
+   *                                When provided, registers the topic as window.activeUserTopics
+   *                                so callChatEndpoint injects the ACTIVE USER TOPICS system block.
+   *                                This gives the AI the same strong topic context as topic-bubble
+   *                                selections without requiring the "I'd like help with:" prefix.
+   */
+  function send(text, topicLabel) {
     var input   = _el('userInput');
     var sendBtn = _el('btnSend');
     if (!input || !sendBtn) return;
 
     hide();
+
+    // Phase FBP: register topic label so AIOS callChatEndpoint injects the ACTIVE USER TOPICS
+    // system suffix — this signals confirmed user intent to the AI, preventing generic replies
+    if (topicLabel) {
+      if (!Array.isArray(window.activeUserTopics)) { window.activeUserTopics = []; }
+      if (window.activeUserTopics.indexOf(topicLabel) === -1) {
+        window.activeUserTopics.push(topicLabel);
+      }
+    }
 
     // Populate the textarea and fire an 'input' event so
     // app.js auto-resize listener updates the height correctly.
