@@ -853,13 +853,23 @@
         captionsOverlay.style.display = 'block';
       }
 
-      // Phase 42: detect ?resume=1 from "Continue Mission" link — skip onboarding
+      // Phase 42/46: detect ?resume=1 from "Continue Mission" link — skip onboarding
       var _urlParams = new URLSearchParams(window.location.search);
       if (_urlParams.get('resume') === '1') {
         localStorage.setItem('aaai_returning', '1');
         // Clean URL without reload
         if (window.history.replaceState) {
           window.history.replaceState({}, '', window.location.pathname);
+        }
+        // Phase 46 Part 2: Rehydrate conversation history from saved snapshot
+        if (window.AIOS && window.AIOS.MissionState) {
+          try {
+            var _convSnap = window.AIOS.MissionState.getConversation();
+            if (_convSnap && Array.isArray(_convSnap.history) && _convSnap.history.length > 0) {
+              conversationHistory = _convSnap.history.slice();
+              log('MissionState', 'rehydrated ' + conversationHistory.length + ' turns from snapshot');
+            }
+          } catch(_msErr) { /* non-critical */ }
         }
         // Send resume context so AI picks up where they left off
         sendToAI('RESUME_MISSION');
@@ -1461,6 +1471,17 @@
           reportGenerated = true;
           showReportActions(aiResponse);
         }
+
+        // Phase 46 Parts 1+2: Sync mission state + save conversation snapshot after each turn
+        try {
+          if (window.AIOS && window.AIOS.MissionState) {
+            window.AIOS.MissionState.syncFromAIOS();
+            // Save conversation snapshot (exclude synthetic openers)
+            if (userText !== 'START_CONVERSATION') {
+              window.AIOS.MissionState.saveConversation(conversationHistory);
+            }
+          }
+        } catch(_p46Err) { /* never block the UI */ }
       });
 
     }).catch(function(error) {
@@ -1560,7 +1581,7 @@
       return 'Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\'ll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I\'ll pull the details automatically.\n\nUpload as many as you want, or none at all. Your information is used only to help build your plan. Some data may be securely stored to improve your experience, but it is never sold or shared. Your privacy matters.\n\nWhen you\'re ready \u2014 uploaded or not \u2014 just tell me: what branch did you serve in?\n\n[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\'m a family member]';
     }
     if (userText === 'RESUME_MISSION') {
-      // Phase 43: Smart resume — surface known profile data + resource-driven options
+      // Phase 43/46: Smart resume — surface missionState + profile data + resource options
       var _rProf = (window.AIOS && window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
       var _rName = _rProf.name || null;
       var _rParts = [];
@@ -1571,9 +1592,25 @@
       var _rSummary = _rParts.length > 0
         ? ' I have your profile loaded — ' + _rParts.join(', ') + '.'
         : '';
-      // Build option set — first option is top resource priority if available
+
+      // Phase 46 Part 1: Enrich with missionState if available
+      var _mState = null;
+      var _mStateMsg = '';
+      if (window.AIOS && window.AIOS.MissionState) {
+        try {
+          _mState = window.AIOS.MissionState.get();
+          if (_mState) {
+            if (_mState.missionType) _mStateMsg = ' Your active mission: ' + _mState.missionType.replace(/_/g, ' ').toLowerCase() + '.';
+            if (_mState.currentStep) _mStateMsg += ' Last step: ' + _mState.currentStep + '.';
+          }
+        } catch(_msE) { /* keep default */ }
+      }
+
+      // Build option set — first option driven by missionType or top resource priority
       var _rOpt1 = 'Continue my plan';
-      if (window.AIOS && window.AIOS.Resources && _rProf) {
+      if (_mState && _mState.missionType) {
+        _rOpt1 = 'Continue ' + _mState.missionType.replace(/_/g, ' ').toLowerCase();
+      } else if (window.AIOS && window.AIOS.Resources && _rProf) {
         try {
           var _rPrio = window.AIOS.Resources.getPriority(_rProf);
           if (_rPrio && _rPrio.length > 0) {
@@ -1581,7 +1618,14 @@
           }
         } catch(_rE) { /* keep default */ }
       }
-      return 'Welcome back' + (_rName ? ', ' + _rName : '') + '.' + _rSummary + ' What would you like to work on?\n\n[OPTIONS: ' + _rOpt1 + ' | Upload a document | Check my benefits | Update my info | Start over]';
+
+      // Phase 46: mention conversation history context if rehydrated
+      var _histMsg = '';
+      if (conversationHistory.length > 0) {
+        _histMsg = " I've loaded our previous conversation so we can pick up right where we left off.";
+      }
+
+      return 'Welcome back' + (_rName ? ', ' + _rName : '') + '.' + _rSummary + _mStateMsg + _histMsg + ' What would you like to work on?\n\n[OPTIONS: ' + _rOpt1 + ' | Upload a document | Check my benefits | Update my info | Start over]';
     }
     return null;
   }

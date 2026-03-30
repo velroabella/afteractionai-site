@@ -120,8 +120,13 @@
     </div>
     <!-- Phase 45: mission stage label — derived from completion % -->
     <div id="missionStageLabel" style="font-size:0.8rem;color:var(--gray-500,#6b7280);margin-top:10px;min-height:1.2em;"></div>
-    <div style="margin-top:12px;">
+    <div style="margin-top:12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
       <a href="index.html?resume=1" style="color:var(--gold);font-weight:600;font-size:0.9rem;">Continue Mission →</a>
+      <!-- Phase 46 Part 6: Mission Map trigger -->
+      <button id="btnViewPath" onclick="openMissionMap()"
+        style="background:none;border:1px solid var(--gold,#c4a035);color:var(--gold,#c4a035);border-radius:6px;padding:4px 12px;font-size:0.8rem;font-weight:600;cursor:pointer;">
+        🗺 View My Path
+      </button>
     </div>
   </div>
 
@@ -132,6 +137,9 @@
       <a href="index.html">Start a conversation</a> to generate your mission checklist.
     </div>
   </div>
+
+  <!-- Phase 46 Part 7: Secondary next steps — 2 supporting actions below primary -->
+  <div id="dashSecondarySteps" style="display:none;padding:0 0 4px;"></div>
 
   <!-- Next Recommended Actions — moved up for visibility -->
   <div class="dashboard__card dashboard__actions-panel">
@@ -153,15 +161,16 @@
     <div id="dashCompletedSummary"></div>
   </div>
 
-  <!-- Goals / Focus Areas -->
+  <!-- Goals / Focus Areas — Phase 46 Part 5: action objects -->
   <div class="dashboard__card">
-    <h3>Focus Areas</h3>
+    <h3>Action Focus Areas</h3>
+    <!-- Phase 46: goals rendered as clickable action chips -->
     <div class="dashboard__goals" id="dashGoals">
       <span class="dashboard__goal-tag" style="opacity:0.5;">No goals set yet</span>
     </div>
     <div class="dashboard__goals" id="dashIssueTags" style="margin-top:8px;"></div>
     <p style="font-size:0.85rem;color:var(--gray-500);margin-top:12px;">
-      Focus areas update automatically based on your conversations and templates.
+      Click any area to take action. Focus areas update automatically based on your conversations.
     </p>
   </div>
 
@@ -253,6 +262,7 @@
 
 <script src="js/action-engine.js"></script>
 <script src="js/aios/resource-mapper.js"></script><!-- Phase 43 -->
+<script src="js/aios/mission-state.js"></script><!-- Phase 46 -->
 
 <!-- Phase 42: Dashboard render for uploaded documents -->
 <script>
@@ -357,6 +367,8 @@ function toggleMenu() {
   // All loaded checklist items — kept in memory for client-side filtering
   var _allItems = [];
   var _activeFilter = 'active'; // default filter on load
+  // Phase 46: module-level profile ref so secondary steps + mission map can access it
+  var _dashProfile = null;
 
   // ── NEXT STEP LOGIC ──────────────────────────────────
   // Priority: in_progress first, then not_started by priority asc
@@ -661,6 +673,7 @@ function toggleMenu() {
     // Re-render affected sections
     updateStats(_allItems);
     renderNextStep(_allItems);
+    _renderSecondarySteps(_allItems, _dashProfile); // Phase 46 Part 7
     renderFilterTabs(_allItems);
     renderChecklist(_allItems, _activeFilter);
   };
@@ -687,6 +700,7 @@ function toggleMenu() {
   window.addEventListener('authStateChanged', function(e) {
     var user    = e.detail.user;
     var profile = e.detail.profile;
+    _dashProfile = profile; // Phase 46: store for secondary steps + mission map
     var content = document.getElementById('dashboardContent');
     var login   = document.getElementById('dashboardLogin');
 
@@ -715,6 +729,7 @@ function toggleMenu() {
 
           updateStats(_allItems);
           renderNextStep(_allItems);
+          _renderSecondarySteps(_allItems, _dashProfile); // Phase 46 Part 7
           renderFilterTabs(_allItems);
           renderChecklist(_allItems, _activeFilter);
 
@@ -727,22 +742,8 @@ function toggleMenu() {
         }
       });
 
-      // Load goals
-      if (profile && profile.goals && profile.goals.length > 0) {
-        var goalsEl = document.getElementById('dashGoals');
-        goalsEl.innerHTML = profile.goals.map(function(g) {
-          return '<span class="dashboard__goal-tag">' + escHtml(g) + '</span>';
-        }).join('');
-      }
-
-      // Show issue tags as focus area badges
-      if (profile && profile.issue_tags && profile.issue_tags.length > 0) {
-        var tagsEl = document.getElementById('dashIssueTags');
-        tagsEl.innerHTML = profile.issue_tags.map(function(t) {
-          var label = t.issue.replace(/[-_]/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-          return '<span class="action-panel__tag">' + label + ' (' + (t.count || 1) + ')</span>';
-        }).join('');
-      }
+      // Phase 46 Part 5: Render goals + issue_tags as action objects
+      _renderActionFocusAreas(profile);
 
       // Load template outputs
       if (AAAI.auth.loadTemplateOutputs) {
@@ -825,34 +826,9 @@ function toggleMenu() {
             if (window.AIOS && window.AIOS.Resources) {
               try {
                 var _resActionsEl = document.getElementById('dashActions');
-                // Build synthetic profile from Supabase profile fields
-                var _resSynth = {
-                  vaRating:        null,
-                  dischargeStatus: null,
-                  state:           (profile && profile.state) ? profile.state : null,
-                  employmentStatus: null,
-                  serviceEra:      null,
-                  currentGoals:    null,
-                  dependents:      null
-                };
-                // Parse disability rating band → approximate numeric rating for scoring
-                if (profile && profile.disability_rating) {
-                  var _rb = String(profile.disability_rating);
-                  if (/100/.test(_rb))           _resSynth.vaRating = 100;
-                  else if (/90/.test(_rb))        _resSynth.vaRating = 90;
-                  else if (/7[05]|80/.test(_rb))  _resSynth.vaRating = 70;
-                  else if (/5[05]|60/.test(_rb))  _resSynth.vaRating = 50;
-                  else if (/3[05]|40/.test(_rb))  _resSynth.vaRating = 30;
-                  else if (/[12][05]/.test(_rb))  _resSynth.vaRating = 10;
-                  else                            _resSynth.vaRating = 0;
-                }
-                // Derive employment and housing hints from issue_tags
-                if (profile && profile.issue_tags && profile.issue_tags.length > 0) {
-                  var _tagStr = profile.issue_tags.map(function(t) { return t.issue || ''; }).join(' ');
-                  if (/employ|job|career|work/i.test(_tagStr)) _resSynth.employmentStatus = 'job searching';
-                  if (/hous|home|rent/i.test(_tagStr))         _resSynth.currentGoals = 'housing assistance';
-                }
-                // Get prioritized resource list — now includes destination + actionText
+                // Phase 46: use shared _buildResSynth helper (defined later in this script)
+                var _resSynth = _buildResSynth(profile);
+                // Get prioritized resource list — now includes destination + deepLink + actionText
                 var _resDashPriority = window.AIOS.Resources.getPriority(_resSynth);
                 if (_resDashPriority && _resDashPriority.length > 0 && _resActionsEl) {
                   // Group by scope: federal → state → online
@@ -876,11 +852,12 @@ function toggleMenu() {
                       '<div style="display:flex;flex-direction:column;gap:6px;">';
 
                     _resGroups[sc.key].forEach(function(r) {
-                      // Determine if this is a direct internal page or an AI-guided route
+                      // Phase 46 Part 3: use deepLink (includes profile params) when available
+                      var _href     = r.deepLink || r.destination || 'index.html?resume=1';
                       var _isAiRoute = r.destination && r.destination.indexOf('?resume=1') !== -1;
                       var _destLabel = _isAiRoute ? 'Continue with AI →' : 'Go to page →';
                       _resHtml +=
-                        '<a href="' + escHtml(r.destination) + '" ' +
+                        '<a href="' + escHtml(_href) + '" ' +
                         'style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:' + sc.bg + ';border:1px solid ' + sc.color + '22;border-radius:8px;text-decoration:none;gap:8px;">' +
                           '<div>' +
                             '<div style="font-size:0.85rem;font-weight:600;color:var(--gray-800,#1f2937);">' + escHtml(r.actionText) + '</div>' +
@@ -918,7 +895,318 @@ function toggleMenu() {
     window.aiosSetStatus(itemId, newState ? 'completed' : 'not_started', el);
   };
 
+  /* ══════════════════════════════════════════════════════
+     Phase 46 Part 7 — Enhanced Next Step Engine
+     Adds 2 secondary action suggestions below primary step.
+     ══════════════════════════════════════════════════════ */
+
+  function _renderSecondarySteps(items, profile) {
+    var container = document.getElementById('dashSecondarySteps');
+    if (!container) return;
+    var secondaries = [];
+
+    // S1: Top resource priority (if AIOS.Resources available)
+    if (window.AIOS && window.AIOS.Resources && profile) {
+      try {
+        var _resSynth = _buildResSynth(profile);
+        var _prio = window.AIOS.Resources.getPriority(_resSynth);
+        if (_prio && _prio.length > 0) {
+          var _r = _prio[0];
+          // Use deepLink if available (Phase 46 Part 3), else fall back to destination
+          var _dest = _r.deepLink || _r.destination || 'index.html?resume=1';
+          secondaries.push({
+            type:  'resource',
+            label: _r.actionText || _r.label,
+            sub:   _r.label,
+            href:  _dest,
+            color: '#1a56db'
+          });
+        }
+      } catch(e) { /* skip */ }
+    }
+
+    // S2: Missing profile field prompt — most valuable data not yet collected
+    var missingPrompts = {
+      state:           { label: 'Add your home state', sub: 'Unlock state-specific benefits', href: 'index.html?resume=1', color: '#0e9f6e' },
+      vaRating:        { label: 'Add your VA rating',  sub: 'Required for compensation & TDIU', href: 'index.html?resume=1', color: '#0e9f6e' },
+      dischargeStatus: { label: 'Confirm discharge status', sub: 'Needed for most benefit claims', href: 'index.html?resume=1', color: '#0e9f6e' }
+    };
+    var mState = (window.AIOS && window.AIOS.MissionState) ? window.AIOS.MissionState.get() : null;
+    if (mState && mState.missingFields && mState.missingFields.length > 0) {
+      var topMissing = mState.missingFields[0];
+      if (missingPrompts[topMissing]) {
+        secondaries.push(Object.assign({ type: 'profile' }, missingPrompts[topMissing]));
+      }
+    }
+
+    // S3 fallback: in_progress document lifecycle item
+    if (secondaries.length < 2) {
+      var inProgItem = items && items.filter(function(i) { return i.status === 'in_progress'; })[1];
+      if (inProgItem) {
+        secondaries.push({
+          type:  'checklist',
+          label: inProgItem.title,
+          sub:   'In progress',
+          href:  'index.html?resume=1',
+          color: '#c4a035'
+        });
+      }
+    }
+
+    if (secondaries.length === 0) { container.style.display = 'none'; return; }
+
+    var html = '<div style="display:flex;flex-direction:column;gap:6px;padding:0 0 8px;">' +
+      '<div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-400,#9ca3af);padding:0 4px;">Also suggested</div>';
+    secondaries.slice(0, 2).forEach(function(s) {
+      html +=
+        '<a href="' + escHtml(s.href) + '" ' +
+        'style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--gray-50,#f9fafb);border:1px solid var(--gray-200,#e5e7eb);border-left:3px solid ' + s.color + ';border-radius:8px;text-decoration:none;">' +
+          '<div style="flex:1;min-width:0;">' +
+            '<div style="font-size:0.82rem;font-weight:600;color:var(--gray-800,#1f2937);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(s.label) + '</div>' +
+            '<div style="font-size:0.72rem;color:var(--gray-500,#6b7280);">' + escHtml(s.sub) + '</div>' +
+          '</div>' +
+          '<span style="font-size:0.72rem;color:' + s.color + ';font-weight:600;white-space:nowrap;">→</span>' +
+        '</a>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
+    container.style.display = 'block';
+  }
+
+  /* ══════════════════════════════════════════════════════
+     Phase 46 Part 5 — Focus Areas as Action Objects
+     Converts goals and issue_tags to clickable action chips
+     with type-aware destinations.
+     ══════════════════════════════════════════════════════ */
+
+  function _renderActionFocusAreas(profile) {
+    if (!profile) return;
+
+    // Goals → mission-type action chips
+    if (profile.goals && profile.goals.length > 0) {
+      var goalsEl = document.getElementById('dashGoals');
+      if (goalsEl) {
+        goalsEl.innerHTML = profile.goals.map(function(g) {
+          // Determine destination based on goal keyword
+          var dest = 'index.html?resume=1';
+          if (/school|degree|gi bill|education|training/i.test(g))  dest = 'education.html';
+          if (/hous|home|rent|mortgage/i.test(g))                    dest = 'grants-scholarships.html';
+          if (/job|career|work|employ/i.test(g))                     dest = 'resources.html';
+          if (/legal|attorney|will|claim|appeal/i.test(g))           dest = 'document-templates.html';
+          if (/health|medical|mental|doctor/i.test(g))               dest = 'medical-help.html';
+          var _isMission = dest === 'index.html?resume=1';
+          return '<a href="' + dest + '" ' +
+            'style="display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:0.8rem;font-weight:600;' +
+            'background:' + (_isMission ? 'var(--gold-light,#fdf3d0)' : '#eff6ff') + ';' +
+            'color:' + (_isMission ? 'var(--gold,#c4a035)' : '#1a56db') + ';' +
+            'border:1px solid ' + (_isMission ? 'var(--gold,#c4a035)44' : '#1a56db33') + ';' +
+            'text-decoration:none;margin:3px 4px 3px 0;">' +
+            escHtml(g) +
+            '<span style="font-size:0.65rem;opacity:0.7;">→</span>' +
+          '</a>';
+        }).join('');
+      }
+    }
+
+    // Issue tags → resource action chips with deep links
+    if (profile.issue_tags && profile.issue_tags.length > 0) {
+      var tagsEl = document.getElementById('dashIssueTags');
+      if (tagsEl) {
+        // Build synthetic profile for deep linking
+        var _syn = _buildResSynth(profile);
+        tagsEl.innerHTML = profile.issue_tags.map(function(t) {
+          var label = (t.issue || '').replace(/[-_]/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+          // Map issue to best resource destination
+          var dest = 'index.html?resume=1';
+          var issue = (t.issue || '').toLowerCase();
+          var _stateParam = profile.state ? '?state=' + encodeURIComponent(profile.state) : '';
+          if (/employ|job|career|work/.test(issue))          dest = 'resources.html';
+          else if (/hous|home|rent/.test(issue))             dest = 'grants-scholarships.html';
+          else if (/disab|rating|compensation|claim/.test(issue)) dest = 'index.html?resume=1';
+          else if (/health|medical|mental|ptsd|tbi/.test(issue))  dest = 'medical-help.html';
+          else if (/education|school|gi bill|degree/.test(issue))  dest = 'education.html';
+          else if (/legal|attorney|appeal|will/.test(issue)  )     dest = 'document-templates.html';
+          else if (/state|local/.test(issue))                      dest = 'state-benefits.html' + _stateParam;
+          else if (/family|surviv|depend/.test(issue))             dest = 'families-support.html';
+          else if (/crisis|mental|suicide|hotline/.test(issue))    dest = 'hotlines-escalation.html';
+          var count = t.count || 1;
+          return '<a href="' + escHtml(dest) + '" ' +
+            'style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:0.77rem;font-weight:600;' +
+            'background:#f5f3ff;color:#5b21b6;border:1px solid #7c3aed33;text-decoration:none;margin:3px 4px 3px 0;">' +
+            escHtml(label) + (count > 1 ? ' <span style="opacity:0.6;font-size:0.7rem;">(' + count + ')</span>' : '') +
+            '<span style="font-size:0.65rem;opacity:0.7;">→</span>' +
+          '</a>';
+        }).join('');
+      }
+    }
+  }
+
+  /* ══════════════════════════════════════════════════════
+     Phase 46 Part 6 — Mission Map Modal
+     Vertical node tree showing mission path and status.
+     ══════════════════════════════════════════════════════ */
+
+  // Branch node definitions — static mission tree
+  var MISSION_BRANCHES = [
+    { id: 'disability',  label: 'VA Disability Claim',      icon: '🏅', dest: 'index.html?resume=1',          keywords: /disab|compensation|rating/i },
+    { id: 'healthcare',  label: 'VA Healthcare Enrollment', icon: '🏥', dest: 'medical-help.html',             keywords: /health|medical|enroll/i },
+    { id: 'education',   label: 'GI Bill & Education',      icon: '🎓', dest: 'education.html',                keywords: /school|gi bill|degree|educat/i },
+    { id: 'employment',  label: 'Career Transition',        icon: '💼', dest: 'resources.html',                keywords: /job|career|work|employ/i },
+    { id: 'housing',     label: 'Housing & Home Loan',      icon: '🏠', dest: 'grants-scholarships.html',      keywords: /hous|home|rent|loan/i },
+    { id: 'legal',       label: 'Legal & Document Prep',    icon: '📋', dest: 'document-templates.html',       keywords: /legal|attorney|appeal|document/i },
+    { id: 'state',       label: 'State Benefits',           icon: '🗺', dest: 'state-benefits.html',           keywords: /state|local/i },
+    { id: 'family',      label: 'Family & Survivor Benefits', icon: '👨‍👩‍👦', dest: 'families-support.html',    keywords: /family|surviv|depend/i }
+  ];
+
+  window.openMissionMap = function() {
+    var modal = document.getElementById('missionMapModal');
+    if (!modal) return;
+    // Render latest content
+    _renderMissionMapContent();
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  };
+
+  window.closeMissionMap = function() {
+    var modal = document.getElementById('missionMapModal');
+    if (modal) modal.style.display = 'none';
+    document.body.style.overflow = '';
+  };
+
+  function _renderMissionMapContent() {
+    var treeEl = document.getElementById('missionMapTree');
+    if (!treeEl) return;
+
+    // Gather state
+    var mState    = (window.AIOS && window.AIOS.MissionState) ? window.AIOS.MissionState.get() : null;
+    var mItems    = _allItems || [];
+    var mProf     = null;
+    if (window.AIOS && window.AIOS.Memory) {
+      try { mProf = window.AIOS.Memory.getProfile(); } catch(e) {}
+    }
+
+    // Determine which branches are "active" from checklist + goals + issue_tags
+    var activeBranchIds = {};
+    var completedBranchIds = {};
+
+    // From missionState
+    if (mState && mState.missionType) {
+      var mt = mState.missionType.toLowerCase();
+      MISSION_BRANCHES.forEach(function(b) {
+        if (b.keywords.test(mt)) activeBranchIds[b.id] = true;
+      });
+    }
+
+    // From checklist items
+    mItems.forEach(function(item) {
+      MISSION_BRANCHES.forEach(function(b) {
+        if (b.keywords.test(item.title || '') || (item.category && b.keywords.test(item.category))) {
+          if (item.status === 'completed') completedBranchIds[b.id] = true;
+          else if (item.status === 'in_progress' || item.status === 'not_started') activeBranchIds[b.id] = true;
+        }
+      });
+    });
+
+    // Mission type label
+    var mTypeLabel = 'Your Veteran Journey';
+    if (mState && mState.missionType) mTypeLabel = mState.missionType.replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+
+    // Root node
+    var html = '<div style="display:flex;flex-direction:column;gap:0;">';
+
+    // Root
+    html += '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;">' +
+      '<div style="width:32px;height:32px;border-radius:50%;background:var(--gold,#c4a035);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🎖</div>' +
+      '<div>' +
+        '<div style="font-weight:700;font-size:0.95rem;color:var(--gray-900,#111);">' + escHtml(mTypeLabel) + '</div>' +
+        '<div style="font-size:0.72rem;color:var(--gray-500,#6b7280);">Mission root · Always available</div>' +
+      '</div>' +
+    '</div>';
+
+    // Connector line from root
+    html += '<div style="margin-left:15px;border-left:2px dashed var(--gray-300,#d1d5db);padding-left:26px;padding-bottom:4px;">';
+
+    MISSION_BRANCHES.forEach(function(branch) {
+      var isCompleted = !!completedBranchIds[branch.id];
+      var isActive    = !isCompleted && !!activeBranchIds[branch.id];
+      var isLocked    = !isCompleted && !isActive;
+
+      var statusColor = isCompleted ? '#16a34a' : (isActive ? 'var(--gold,#c4a035)' : 'var(--gray-400,#9ca3af)');
+      var statusBg    = isCompleted ? '#f0fdf4' : (isActive ? 'var(--gold-light,#fdf3d0)' : 'var(--gray-100,#f3f4f6)');
+      var statusBadge = isCompleted ? '✓ Completed' : (isActive ? '● In Progress' : '○ Available');
+      var nodeOpacity = isLocked ? '0.55' : '1';
+
+      html +=
+        '<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;opacity:' + nodeOpacity + ';">' +
+          '<div style="width:26px;height:26px;border-radius:50%;background:' + statusBg + ';border:2px solid ' + statusColor + ';display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;margin-top:1px;">' + branch.icon + '</div>' +
+          '<div style="flex:1;">' +
+            '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
+              '<span style="font-weight:600;font-size:0.85rem;color:var(--gray-800,#1f2937);">' + escHtml(branch.label) + '</span>' +
+              '<span style="font-size:0.68rem;font-weight:700;color:' + statusColor + ';white-space:nowrap;">' + statusBadge + '</span>' +
+            '</div>' +
+            (isLocked ? '' :
+              '<a href="' + escHtml(branch.dest) + '" onclick="closeMissionMap()" ' +
+              'style="font-size:0.75rem;color:var(--gold,#c4a035);font-weight:600;text-decoration:none;">Go to ' + escHtml(branch.label.split(' ')[0]) + ' →</a>') +
+          '</div>' +
+        '</div>';
+    });
+
+    html += '</div></div>'; // close connector + root wrapper
+    treeEl.innerHTML = html;
+  }
+
+  /* ── Shared helper: build synthetic AIOS profile from Supabase profile ── */
+  function _buildResSynth(profile) {
+    var synth = {
+      vaRating: null, dischargeStatus: null,
+      state: (profile && profile.state) ? profile.state : null,
+      employmentStatus: null, serviceEra: null,
+      currentGoals: null, dependents: null
+    };
+    if (profile && profile.disability_rating) {
+      var rb = String(profile.disability_rating);
+      if (/100/.test(rb)) synth.vaRating = 100;
+      else if (/90/.test(rb)) synth.vaRating = 90;
+      else if (/7[05]|80/.test(rb)) synth.vaRating = 70;
+      else if (/5[05]|60/.test(rb)) synth.vaRating = 50;
+      else if (/3[05]|40/.test(rb)) synth.vaRating = 30;
+      else if (/[12][05]/.test(rb)) synth.vaRating = 10;
+      else synth.vaRating = 0;
+    }
+    if (profile && profile.issue_tags && profile.issue_tags.length > 0) {
+      var tagStr = profile.issue_tags.map(function(t) { return t.issue || ''; }).join(' ');
+      if (/employ|job|career|work/i.test(tagStr)) synth.employmentStatus = 'job searching';
+      if (/hous|home|rent/i.test(tagStr))         synth.currentGoals = 'housing assistance';
+    }
+    return synth;
+  }
+
 })();
 </script>
+
+<!-- Phase 46 Part 6: Mission Map Modal -->
+<div id="missionMapModal"
+  style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:16px;"
+  onclick="if(event.target===this)closeMissionMap()">
+  <div style="background:#fff;border-radius:14px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
+    <!-- Modal header -->
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--gray-200,#e5e7eb);position:sticky;top:0;background:#fff;z-index:1;">
+      <div>
+        <div style="font-weight:700;font-size:1rem;color:var(--gray-900,#111);">🗺 My Mission Path</div>
+        <div style="font-size:0.75rem;color:var(--gray-500,#6b7280);margin-top:2px;">Your personalized veteran journey map</div>
+      </div>
+      <button onclick="closeMissionMap()"
+        style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--gray-500,#6b7280);padding:4px 8px;border-radius:6px;line-height:1;"
+        title="Close">×</button>
+    </div>
+    <!-- Mission tree -->
+    <div id="missionMapTree" style="padding:16px 20px;"></div>
+    <!-- Modal footer -->
+    <div style="padding:12px 20px;border-top:1px solid var(--gray-200,#e5e7eb);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
+      <a href="index.html?resume=1" onclick="closeMissionMap()" style="color:var(--gold,#c4a035);font-weight:700;font-size:0.85rem;text-decoration:none;">Continue Mission →</a>
+      <button onclick="closeMissionMap()" style="background:var(--gray-100,#f3f4f6);border:none;border-radius:8px;padding:6px 14px;font-size:0.82rem;cursor:pointer;color:var(--gray-700,#374151);font-weight:600;">Close</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

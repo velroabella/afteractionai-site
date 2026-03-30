@@ -414,11 +414,22 @@
     return { data, error };
   }
 
-  // ── UPLOADED DOCUMENTS (Phase 42) ────────────────────
+  // ── UPLOADED DOCUMENTS (Phase 42 / Phase 46) ─────────
   // Uses template_outputs table with template_type='uploaded_document'
   // so no new Supabase table is needed.
-  async function saveUploadedDocument(fileName, docType, extractedFields) {
+  //
+  // Phase 46 Part 4: Document lifecycle fields stored in metadata JSONB:
+  //   source:  'upload' | 'ai_generated'
+  //   status:  'not_started' | 'in_progress' | 'review_ready' | 'submitted' | 'completed' | 'archived'
+  //   docType: string  (e.g. 'DD-214', 'VA Rating Letter')
+  //   uploadedAt: ISO string
+
+  var VALID_DOC_STATUSES = ['not_started', 'in_progress', 'review_ready', 'submitted', 'completed', 'archived'];
+
+  async function saveUploadedDocument(fileName, docType, extractedFields, initialStatus) {
     if (!currentUser) return { data: null, error: 'Not logged in' };
+    var status = (initialStatus && VALID_DOC_STATUSES.indexOf(initialStatus) !== -1)
+      ? initialStatus : 'not_started';
     const { data, error } = await supabase
       .from('template_outputs')
       .insert({
@@ -426,7 +437,12 @@
         template_type: 'uploaded_document',
         title: fileName,
         content: JSON.stringify({ docType: docType, extractedFields: extractedFields || {} }),
-        metadata: { source: 'upload', docType: docType, uploadedAt: new Date().toISOString() }
+        metadata: {
+          source:     'upload',
+          docType:    docType,
+          status:     status,
+          uploadedAt: new Date().toISOString()
+        }
       })
       .select()
       .single();
@@ -441,6 +457,57 @@
       .eq('user_id', currentUser.id)
       .eq('template_type', 'uploaded_document')
       .order('created_at', { ascending: false });
+    return { data, error };
+  }
+
+  // ── DOCUMENT LIFECYCLE (Phase 46 Part 4) ─────────────
+  // Update the lifecycle status of any document in template_outputs.
+  // Works for both uploaded documents and AI-generated template outputs.
+  async function updateDocumentStatus(docId, status) {
+    if (!currentUser) return { error: 'Not logged in' };
+    if (VALID_DOC_STATUSES.indexOf(status) === -1) {
+      return { error: 'Invalid document status: ' + status + '. Must be one of: ' + VALID_DOC_STATUSES.join(', ') };
+    }
+    // Read current metadata first to avoid overwriting other fields
+    const { data: existing, error: readErr } = await supabase
+      .from('template_outputs')
+      .select('metadata')
+      .eq('id', docId)
+      .eq('user_id', currentUser.id)
+      .single();
+    if (readErr) return { error: readErr };
+
+    var currentMeta = (existing && existing.metadata) ? existing.metadata : {};
+    var updatedMeta = Object.assign({}, currentMeta, {
+      status:    status,
+      updatedAt: new Date().toISOString()
+    });
+
+    const { data, error } = await supabase
+      .from('template_outputs')
+      .update({ metadata: updatedMeta })
+      .eq('id', docId)
+      .eq('user_id', currentUser.id)
+      .select()
+      .single();
+    return { data, error };
+  }
+
+  // Load all documents filtered by lifecycle status.
+  // Pass null to load all regardless of status.
+  async function loadDocumentsByStatus(status) {
+    if (!currentUser) return { data: null, error: 'Not logged in' };
+    // Supabase JSONB containment filter: metadata->>'status' = ?
+    var query = supabase
+      .from('template_outputs')
+      .select('*')
+      .eq('user_id', currentUser.id)
+      .order('created_at', { ascending: false });
+    if (status && VALID_DOC_STATUSES.indexOf(status) !== -1) {
+      // Use ->> to filter on JSONB text value
+      query = query.eq('metadata->>status', status);
+    }
+    const { data, error } = await query;
     return { data, error };
   }
 
@@ -700,7 +767,9 @@
     saveAIOSMemory,
     loadAIOSMemory,
     saveUploadedDocument,
-    loadUploadedDocuments
+    loadUploadedDocuments,
+    updateDocumentStatus,
+    loadDocumentsByStatus
     // C-02 FIX: supabase client intentionally NOT exposed on public API
     // Exposing it allowed any user to run authenticated queries via DevTools
     // All database operations must go through the methods above
