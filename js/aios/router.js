@@ -12,15 +12,17 @@
      Intent → Skill mapping
      ──────────────────────────────────────────────────────── */
   var INTENTS = {
-    CRISIS_SUPPORT:     'crisis-support',
-    AT_RISK_SUPPORT:    'crisis-support',  // Phase 22: same skill, AT_RISK tier
-    BENEFITS_DISCOVERY: 'benefit-path-finder',
-    DISABILITY_CLAIM:   'va-disability-claim',
-    STATE_BENEFITS:     'state-benefits',
-    NEXT_STEP:          'next-action-planner',
-    DOCUMENT_ANALYSIS:  'document-analyzer',
-    FAMILY_SURVIVOR:    'family-survivor-support',  // Phase 38
-    GENERAL_QUESTION:   null   // no skill — handled by core prompt
+    CRISIS_SUPPORT:        'crisis-support',
+    AT_RISK_SUPPORT:       'crisis-support',       // Phase 22: same skill, AT_RISK tier
+    BENEFITS_DISCOVERY:    'benefit-path-finder',
+    DISABILITY_CLAIM:      'va-disability-claim',
+    STATE_BENEFITS:        'state-benefits',
+    NEXT_STEP:             'next-action-planner',
+    DOCUMENT_ANALYSIS:     'document-analyzer',
+    FAMILY_SURVIVOR:       'family-survivor-support',  // Phase 38
+    EMPLOYMENT_TRANSITION: 'next-action-planner',      // Phase 39
+    LEGAL_DOCUMENTS:       'document-analyzer',        // Phase 39
+    GENERAL_QUESTION:      null   // no skill — handled by core prompt
   };
 
   /* ────────────────────────────────────────────────────────
@@ -28,15 +30,27 @@
      Crisis is checked separately via override, not here.
      ──────────────────────────────────────────────────────── */
   var KEYWORD_RULES = [
+    // ── Disability claim — most specific, first ──────────
     {
       intent: 'DISABILITY_CLAIM',
       keywords: [
         'disability claim', 'file a claim', 'va claim', 'disability rating',
         'c&p exam', 'comp and pen', 'nexus letter', 'supplemental claim',
-        'higher-level review', 'board of veterans appeals', 'bva',
-        'claim status', 'claim appeal', 'rating decision', 'increase my rating'
+        'higher-level review', 'higher level review',
+        'board of veterans appeals', 'bva',
+        'claim status', 'claim appeal', 'rating decision', 'increase my rating',
+        // Phase 39: claim status / appeal phrasing
+        'status of my claim', 'check my claim', 'claim denied',
+        'my claim was denied', 'claim decision', 'pending claim',
+        'va appeal', 'appeal status',
+        // Phase 39: claim-support documents
+        'buddy statement', 'nexus letter', 'buddy letter', 'lay statement',
+        'statement in support of claim', 'intent to file',
+        'notice of disagreement', 'substantive appeal',
+        'informal hearing presentation'
       ]
     },
+    // ── State benefits ────────────────────────────────────
     {
       intent: 'STATE_BENEFITS',
       keywords: [
@@ -45,6 +59,7 @@
         'state program', 'my state', 'state bonus'
       ]
     },
+    // ── Document analysis (uploaded files) ───────────────
     {
       intent: 'DOCUMENT_ANALYSIS',
       keywords: [
@@ -54,6 +69,7 @@
         'read my', 'look at my'
       ]
     },
+    // ── Next step / action plan ───────────────────────────
     {
       intent: 'NEXT_STEP',
       keywords: [
@@ -62,12 +78,11 @@
         'what now', 'most important', 'first thing'
       ]
     },
-    // Phase 38: Family/Survivor intent — checked before BENEFITS_DISCOVERY
-    // because survivor-specific phrases are more precise; a surviving spouse
-    // asking about "survivor benefits" or "champva" should never fall to
-    // the generic benefits-discovery path.
-    // NOTE: single-letter acronyms (DIC) are intentionally spelled out as
-    // multi-word phrases to avoid false substring matches.
+    // ── Family / Survivor (Phase 38) ──────────────────────
+    // Checked before BENEFITS_DISCOVERY: survivor phrases are more precise
+    // than the generic benefits path. Multi-word phrases used for short
+    // acronyms (dependency and indemnity vs. bare "DIC") to avoid false
+    // substring matches.
     {
       intent: 'FAMILY_SURVIVOR',
       keywords: [
@@ -85,16 +100,76 @@
         'my family lost', 'family member of a veteran',
         'caregiver stipend', 'pcafc', 'program of comprehensive assistance',
         'survivor benefit plan', 'sbp annuity',
-        'taps grief', 'tragedy assistance'
+        'taps grief', 'tragedy assistance',
+        // Phase 39: caregiver / spouse-helping context
+        'my caregiver', 'helping me navigate my benefits',
+        'spouse is helping me', 'wife is helping me', 'husband is helping me'
       ]
     },
+    // ── Employment / Career Transition (Phase 39) ─────────
+    // Routes to next-action-planner — employment transition is a
+    // planning + prioritization task, which is that skill's core purpose.
+    // Inserted before BENEFITS_DISCOVERY so "resume" / "find a job" don't
+    // dissolve into the generic benefits path.
+    {
+      intent: 'EMPLOYMENT_TRANSITION',
+      keywords: [
+        'find a job', 'finding a job', 'job search', 'job hunting',
+        'looking for a job', 'looking for work', 'help finding work',
+        'help me get a job', 'need a job', 'get a job',
+        'resume', 'interview', 'career transition', 'civilian job',
+        'civilian career', 'military to civilian', 'translate my mos',
+        'mos translation', 'afsc translation',
+        'leaving the military', 'separating from the military',
+        'transitioning out of', 'tap program', 'transition assistance program',
+        'skillbridge', 'skill bridge', 'hire heroes', 'veteran hiring',
+        'veterans preference', 'usajobs', 'federal job',
+        'unemployment compensation', 'career change', 'job fair',
+        'civilian transition', 'employment assistance', 'vocational counseling',
+        'job skills'
+      ]
+    },
+    // ── Legal Documents / Forms (Phase 39) ────────────────
+    // Routes to document-analyzer — the closest existing skill for
+    // document-centric requests. Covers non-claim legal forms (POA,
+    // affidavit, JAG, release of information) and VA form navigation.
+    // Claim-support documents (buddy statement, nexus letter, etc.)
+    // are handled by DISABILITY_CLAIM above.
+    {
+      intent: 'LEGAL_DOCUMENTS',
+      keywords: [
+        'power of attorney', 'poa form', 'affidavit', 'sworn statement',
+        'legal form', 'fill out a form', 'i need a form', 'help with a form',
+        'which form do i need', 'complete a form',
+        'authorization to release', 'hipaa authorization',
+        'medical records release', 'release of information',
+        'jag officer', 'judge advocate', 'legal aid',
+        'legal assistance office', 'legal help', 'va form 21',
+        'va 21-', '21-526', '21-4142', '21-0781'
+      ]
+    },
+    // ── Benefits discovery — broadest catch-all ───────────
+    // Phase 39: expanded with education (GI Bill / VR&E) and
+    // housing (VA loan, HUD-VASH, rental assistance) keyword sets
+    // so these don't fall silently to GENERAL_QUESTION.
     {
       intent: 'BENEFITS_DISCOVERY',
       keywords: [
         'benefits', 'eligible', 'qualify', 'entitled', 'what can i get',
         'what am i eligible', 'gi bill', 'education benefits', 'healthcare',
         'housing', 'va loan', 'pension', 'aid and attendance',
-        'caregiver', 'vocational rehab', 'vr&e', 'vet center'
+        'caregiver', 'vocational rehab', 'vr&e', 'vet center',
+        // Phase 39 — education / GI Bill
+        'chapter 33', 'chapter 31', 'vocational rehabilitation',
+        'yellow ribbon', 'fry scholarship', 'vet tec', 'vettec',
+        'going back to school', 'want to go to school', 'want to go to college',
+        'paying for school', 'finish my degree', 'tuition assistance',
+        'stem scholarship', 'book stipend', 'school benefit',
+        // Phase 39 — housing (non-crisis)
+        'help with rent', 'rental assistance', 'hud-vash', 'hud vash', 'ssvf',
+        'va home loan', 'adapted housing', 'housing grant',
+        'transitional housing', 'mortgage assistance',
+        'homeless veteran program'
       ]
     }
   ];
@@ -231,7 +306,10 @@
           'appeal', 'nexus', 'c&p', 'comp', 'rating',
           // Phase 38 additions — survivor/family short-input terms
           'dic', 'gold star', 'survivor', 'surviving', 'widow', 'widower',
-          'death benefit', 'chapter 35', 'taps', 'sbp'
+          'death benefit', 'chapter 35', 'taps', 'sbp',
+          // Phase 39 additions — employment, education, legal short-input terms
+          'chapter 33', 'chapter 31', 'job', 'interview', 'career',
+          'resume', 'poa', 'legal', 'statement', 'affidavit'
         ];
         // Also treat any US state name (2+ chars) or abbreviation as informative
         var stateTerms = [
