@@ -1562,6 +1562,40 @@ a:hover { color: #000; }
   border-color: rgba(75,90,105,0.35);
 }
 
+/* ── VA Approved — Military OD Green ── */
+.resource-card__category[data-color="va_approved"],
+.category-tag--va_approved {
+  background: rgba(85,107,47,0.30);
+  color: #A3C47A;
+  border-color: rgba(85,107,47,0.45);
+}
+
+/* VA Approved filter button accent */
+.filter-btn--va {
+  border-color: rgba(85,107,47,0.5) !important;
+}
+.filter-btn--va.active {
+  background: rgba(85,107,47,0.25) !important;
+  color: #A3C47A !important;
+  border-color: rgba(85,107,47,0.6) !important;
+}
+
+/* VA sub-filter row */
+.resources-filters--sub {
+  margin-top: -8px;
+  padding-bottom: 8px;
+}
+.filter-btn--sub {
+  font-size: 0.78rem;
+  padding: 4px 12px;
+}
+
+/* VA verified badge inside card */
+.resource-card__va-badge {
+  color: #A3C47A !important;
+  font-weight: 600;
+}
+
 /* ── Federal (legacy) — Navy ── */
 .resource-card__category[data-color="federal"] {
   background: rgba(44,62,80,0.3);

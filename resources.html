@@ -136,6 +136,20 @@
       <button class="filter-btn" onclick="filterByCategory('discounts',this)">Discounts</button>
       <button class="filter-btn" onclick="filterByCategory('community',this)">Community</button>
       <button class="filter-btn" onclick="filterByCategory('legal',this)">Legal</button>
+      <button class="filter-btn filter-btn--va" onclick="filterByCategory('va_approved',this)">VA Approved Programs</button>
+    </div>
+
+    <!-- VA APPROVED SUB-FILTERS (visible only when VA Approved is active) -->
+    <div class="resources-filters resources-filters--sub" id="vaSubFilters" style="display:none;">
+      <button class="filter-btn filter-btn--sub active" onclick="filterVASub('all',this)">All VA Programs</button>
+      <button class="filter-btn filter-btn--sub" onclick="filterVASub('scuba_diving',this)">Scuba &amp; Diving</button>
+      <button class="filter-btn filter-btn--sub" onclick="filterVASub('commercial_diving_maritime',this)">Commercial Diving &amp; Maritime</button>
+      <button class="filter-btn filter-btn--sub" onclick="filterVASub('aviation',this)">Aviation</button>
+      <button class="filter-btn filter-btn--sub" onclick="filterVASub('security_protection',this)">Security &amp; Protection</button>
+      <button class="filter-btn filter-btn--sub" onclick="filterVASub('cyber_intelligence',this)">Cyber &amp; Intelligence</button>
+      <button class="filter-btn filter-btn--sub" onclick="filterVASub('welding_fabrication',this)">Welding &amp; Fabrication</button>
+      <button class="filter-btn filter-btn--sub" onclick="filterVASub('heavy_equipment',this)">Heavy Equipment</button>
+      <button class="filter-btn filter-btn--sub" onclick="filterVASub('other_vocational',this)">Other Vocational</button>
     </div>
 
     <!-- RESOURCES GRID -->
@@ -185,6 +199,7 @@
             <option value="discounts">Discounts</option>
             <option value="community">Community</option>
             <option value="legal">Legal</option>
+            <option value="va_approved">VA Approved Programs</option>
           </select>
         </div>
         <button type="submit" class="form-group__submit">Submit Organization</button>
@@ -2132,6 +2147,453 @@ const resources = [
     "website": "https://eangus.org/",
     "cost": "$30/yr (free 12-mo digital for new members)",
     "sourceType": "Professional Association"
+  },
+
+  // ══════════════════════════════════════════════
+  // VA APPROVED VOCATIONAL PROGRAMS (35 verified)
+  // Phase 47 — Curated nontraditional programs
+  // ══════════════════════════════════════════════
+
+  // ── Scuba & Diving (6) ──
+  {
+    "name": "Sea Experience — PADI Veteran Scuba Program",
+    "category": "va_approved",
+    "vaSubCategory": "scuba_diving",
+    "description": "Full-service PADI dive career training in Fort Lauderdale. Accepts Ch 30, 31, 33, 35. VA specialist on staff. Job placement support. FL Commission for Independent Education licensed.",
+    "eligibility": "Veterans eligible for GI Bill (Ch 30/33), VR&E (Ch 31), or Ch 35. VA specialist assists with enrollment.",
+    "website": "https://seaxp.com/veterans-dive-training/",
+    "cost": "Covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Accepts Ch 30, 31, 33, 35",
+    "location": "Fort Lauderdale, FL",
+    "featured": true
+  },
+  {
+    "name": "Pura Vida Divers — 9 VA-Approved Career Packages",
+    "category": "va_approved",
+    "vaSubCategory": "scuba_diving",
+    "description": "Only VA-approved dive shop in Palm Beach County. 9 professional career packages from Open Water through Instructor. Post-9/11 GI Bill and VR&E (Ch 31) accepted.",
+    "eligibility": "Post-9/11 GI Bill or VR&E (Ch 31) eligible veterans.",
+    "website": "https://pro.puravidadivers.com/veterans-dive-training/",
+    "cost": "Covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Only VA-approved dive shop in Palm Beach County",
+    "location": "Singer Island, FL",
+    "featured": true
+  },
+  {
+    "name": "Emerald Coast Scuba — PADI VA Program + SkillBridge",
+    "category": "va_approved",
+    "vaSubCategory": "scuba_diving",
+    "description": "VA-approved for Post-9/11 GI Bill. DoD SkillBridge partner for active-duty transitions. Warrior Care Program MOU. Northwest Florida location.",
+    "eligibility": "Post-9/11 GI Bill veterans, active duty via SkillBridge, Warrior Care eligible.",
+    "website": "https://emeraldcoastscubapro.com/",
+    "cost": "Covered by VA benefits / SkillBridge",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — GI Bill + SkillBridge + Warrior Care",
+    "location": "Northwest FL",
+    "featured": true
+  },
+  {
+    "name": "Trident Adventures — PADI Divemaster/Instructor + Helicopter Cast Master",
+    "category": "va_approved",
+    "vaSubCategory": "scuba_diving",
+    "description": "Navy SEAL owned. GI Bill approved (Ch 30 & 33). Dedicated VA training website (trident-va.com). Unique Helicopter Cast Master program. Hawaii location.",
+    "eligibility": "GI Bill eligible veterans (Ch 30 & Ch 33).",
+    "website": "https://trident-va.com/",
+    "cost": "Covered by GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Navy SEAL owned, dedicated VA portal",
+    "location": "Honolulu, HI"
+  },
+  {
+    "name": "Dive Right In Scuba — PADI Career Development Course",
+    "category": "va_approved",
+    "vaSubCategory": "scuba_diving",
+    "description": "Founded by Vietnam veteran. IL Dept of Veterans Affairs approved. One of 40 PADI Career Training Centers worldwide. CDC + IDC programs. PTSD support focus. $12,500 tuition covered.",
+    "eligibility": "GI Bill eligible veterans. IL DVA approved.",
+    "website": "https://www.diverightinscuba.com/scuba-diving-courses/special-programs/va-program.html",
+    "cost": "$12,500 (covered by GI Bill)",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Vietnam vet-founded, IL DVA approved",
+    "location": "Orland Park, IL"
+  },
+  {
+    "name": "Florida Dive Company — 18 VA-Approved SDI/TDI Programs",
+    "category": "va_approved",
+    "vaSubCategory": "scuba_diving",
+    "description": "Most VA-approved dive programs of any single dive shop (18 programs). SDI/TDI recreational and technical diving certifications. Dedicated GI Bill page.",
+    "eligibility": "GI Bill eligible veterans.",
+    "website": "https://floridadivecompany.com/collections/va-approved-programs",
+    "cost": "Covered by GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — 18 VA-approved programs",
+    "location": "Daytona area, FL"
+  },
+
+  // ── Commercial Diving & Maritime (9) ──
+  {
+    "name": "Maritime Professional Training (MPT) — USCG Captain's License",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "Largest private maritime school in the US since 1983. 45,000+ sq ft campus near Port Everglades. USCG Captain's License, STCW, Master/Mate, radar, firefighting, sea survival. Training fleet included.",
+    "eligibility": "Post-9/11 GI Bill or VR&E. Must submit VA Certificate of Eligibility (COE).",
+    "website": "https://www.mptusa.com/va",
+    "cost": "Covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Dedicated VA page, staff assists enrollment",
+    "location": "Fort Lauderdale, FL",
+    "featured": true
+  },
+  {
+    "name": "Divers Institute of Technology (DIT) — 7-Month Commercial Diving",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "Gold standard commercial diving school. Veteran-operated since 1968. 7-month program covers surface/underwater welding, cutting, diving physics, salvage, hazmat. Up to $25,162 tuition + $2,748/mo housing.",
+    "eligibility": "Post-9/11 GI Bill. 90+ days active duty after 9/10/2001.",
+    "website": "https://diversinstitute.edu/military-veterans/",
+    "cost": "Up to $25,162 tuition covered + $2,748/mo housing",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Veteran-operated since 1968",
+    "location": "Seattle, WA"
+  },
+  {
+    "name": "Florida Commercial Diving Institute (FCDI)",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "Commercial diving and underwater welding training in Hudson, FL. Accepts Ch 33 (Post-9/11), Ch 31 (VR&E), and Ch 30 (Montgomery GI Bill).",
+    "eligibility": "GI Bill Ch 30/33 or VR&E Ch 31 eligible veterans.",
+    "website": "https://fcdidiving.com/va-benefits/",
+    "cost": "Covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Accepts Ch 30, 31, 33",
+    "location": "Hudson, FL",
+    "featured": true
+  },
+  {
+    "name": "Chapman School of Seamanship — Professional Mariner Training",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "Nonprofit 501(c)(3) maritime school. VA-approved for Ch 33 and Ch 31. USCG direct-entry pipeline via Letter of Intent. Professional Mariner Training + Marine Surveying programs.",
+    "eligibility": "Post-9/11 GI Bill or VR&E (Ch 31) eligible veterans.",
+    "website": "https://chapman.org/veterans/",
+    "cost": "Covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Nonprofit, USCG pipeline, dedicated veterans page",
+    "location": "Stuart, FL",
+    "featured": true
+  },
+  {
+    "name": "IYRS School of Technology & Trades — Marine Systems + Boatbuilding",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "GI Bill, VR&E (Ch 31), AND SkillBridge accepted. ACCSC accredited. Marine Systems, Boatbuilding, and Digital Fabrication programs.",
+    "eligibility": "GI Bill, VR&E, or SkillBridge eligible service members and veterans.",
+    "website": "https://www.iyrs.edu/admissions/veterans-at-iyrs",
+    "cost": "Covered by VA benefits / SkillBridge",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Triple benefit: GI Bill + VR&E + SkillBridge",
+    "location": "Newport, RI"
+  },
+  {
+    "name": "Northwest School of Wooden Boatbuilding — AOS Degree + Marine Systems",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "GI Bill approved. ACCSC accredited. WA State Veteran Supportive Campus designation. AOS degree in Boatbuilding. Veteran Resources Specialist on staff.",
+    "eligibility": "GI Bill eligible veterans.",
+    "website": "https://nwswb.edu/veterans/",
+    "cost": "Covered by GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — WA Veteran Supportive Campus",
+    "location": "Port Hadlock, WA"
+  },
+  {
+    "name": "The Landing School — Marine Systems Technology + Yacht Design",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "Approved for Post-9/11 GI Bill (Ch 33) and VR&E (Ch 31). Maine SAA approved. 50,000+ sq ft campus. Yacht design, composite and wooden boatbuilding since 1978.",
+    "eligibility": "Post-9/11 GI Bill or VR&E (Ch 31) eligible.",
+    "website": "https://www.landingschool.edu/student-body",
+    "cost": "Covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Maine SAA approved",
+    "location": "Arundel, ME"
+  },
+  {
+    "name": "MITAGS — Maritime Apprenticeship through Officer-Level Licenses",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "GI Bill accepted. 80-acre campus. 150+ maritime courses. Full career ladder from AB to Mate, Mate to Master. 30+ year track record.",
+    "eligibility": "GI Bill eligible veterans.",
+    "website": "https://www.mitags.org/gi-bill-maritime-education/",
+    "cost": "Covered by GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Dedicated GI Bill page",
+    "location": "Linthicum Heights, MD"
+  },
+  {
+    "name": "Bluewater Maritime School — USCG Maritime Training",
+    "category": "va_approved",
+    "vaSubCategory": "commercial_diving_maritime",
+    "description": "Montgomery GI Bill approved. VR&E approved. VA conducts regular audits. 501(c)(3) nonprofit. 20% military discount. Jacksonville FL location.",
+    "eligibility": "Montgomery GI Bill or VR&E eligible veterans.",
+    "website": "https://www.edumaritime.net/florida/bluewater-maritime-school-jacksonville",
+    "cost": "Covered by VA benefits (20% military discount)",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — VA-audited nonprofit",
+    "location": "Jacksonville, FL"
+  },
+
+  // ── Aviation (3) ──
+  {
+    "name": "US Aviation Academy — VA Approved Pilot Training",
+    "category": "va_approved",
+    "vaSubCategory": "aviation",
+    "description": "VA Approved Pilot School. ArmyCOOL approved. Part 141 certified. Vocational path ~$15K/yr or collegiate path via Liberty University partnership up to $45K covered.",
+    "eligibility": "GI Bill or ArmyCOOL eligible veterans.",
+    "website": "https://www.usaviationacademy.com/flight-training-va-approved-flight-training-gi-bill/",
+    "cost": "~$15K/yr vocational (covered by GI Bill)",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Part 141, ArmyCOOL approved",
+    "location": "Denton, TX"
+  },
+  {
+    "name": "Flex Air Flight Academy — VR&E (Chapter 31) Flight Training",
+    "category": "va_approved",
+    "vaSubCategory": "aviation",
+    "description": "Specifically designed for VR&E (Ch 31) flight training. Veteran-owned. VA and DOD approved. SkillBridge eligible. No annual limits for 20%+ disability rating. Full airline pilot pipeline.",
+    "eligibility": "VR&E Ch 31 (20%+ disability, no annual cap) or SkillBridge for active duty.",
+    "website": "https://goflexair.com/vr-and-e-for-flight-training-ch31",
+    "cost": "Covered by VR&E / SkillBridge",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Rare VR&E flight training with no annual cap",
+    "location": "San Diego, CA & Kansas"
+  },
+  {
+    "name": "ATP Flight School — Airline Career Pilot Program",
+    "category": "va_approved",
+    "vaSubCategory": "aviation",
+    "description": "Largest flight school in the US with 88+ locations. VA GI Bill Comparison Tool institution #26001110. GI Bill accepted for ATP CTP and type ratings.",
+    "eligibility": "GI Bill eligible veterans. WEAMS institution #26001110.",
+    "website": "https://atpflightschool.com/gi-bill/",
+    "cost": "ATP CTP + type ratings covered by GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — WEAMS #26001110",
+    "location": "88+ locations, Nationwide"
+  },
+
+  // ── Security & Protection (3) ──
+  {
+    "name": "Pacific West Academy — Certified Executive Security Specialist",
+    "category": "va_approved",
+    "vaSubCategory": "security_protection",
+    "description": "ACCET-accredited. CalVet approved. WEAMS confirmed (Institution #25190205). $21,900 tuition = 9 months of benefits. Monthly Housing Allowance during 10-week training.",
+    "eligibility": "Post-9/11 GI Bill eligible. WEAMS institution #25190205.",
+    "website": "https://pwa.edu/program-catalog/certified-executive-security-specialist-cess-course/",
+    "cost": "$21,900 (fully covered by Post-9/11 GI Bill + MHA)",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — WEAMS #25190205, ACCET accredited",
+    "location": "Various locations"
+  },
+  {
+    "name": "ESS Global Corp — Executive Protection Training",
+    "category": "va_approved",
+    "vaSubCategory": "security_protection",
+    "description": "Only GI Bill approved executive protection school in Florida. DOE and VA certified. 3-Day and 28-Day programs. 300+ hours instruction. Active security operations in 60+ countries.",
+    "eligibility": "GI Bill eligible veterans. Both 3-day and 28-day programs VA approved.",
+    "website": "https://esecurityspecialist.com/executive-protection-training-gi-bill-approved-ess-global/",
+    "cost": "Covered by GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Only DOE+VA approved EP school in FL",
+    "location": "Tampa, FL"
+  },
+  {
+    "name": "Covered 6 Security Academy — Executive Protection + Cyber Security",
+    "category": "va_approved",
+    "vaSubCategory": "security_protection",
+    "description": "US Dept of Labor National Training Standard. Post-9/11 GI Bill accepted. Executive Protection and Cyber Security dual training tracks. BAH and stipend for eligible veterans.",
+    "eligibility": "Post-9/11 GI Bill eligible veterans.",
+    "website": "https://c6securityacademy.com/executive-protection-program/",
+    "cost": "Covered by Post-9/11 GI Bill + BAH",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Dept of Labor national standard",
+    "location": "Various locations"
+  },
+
+  // ── Cyber & Intelligence (3) ──
+  {
+    "name": "SANS Technology Institute — Cybersecurity Degree + Certificates",
+    "category": "va_approved",
+    "vaSubCategory": "cyber_intelligence",
+    "description": "World-class cybersecurity training. All programs GI Bill eligible. Accredited. GIAC certifications included. 100% online available. VA pays tuition directly to institution.",
+    "eligibility": "GI Bill Ch 31 or Ch 33 eligible veterans.",
+    "website": "https://www.sans.edu/admissions/veterans/",
+    "cost": "Covered by GI Bill (VA pays directly)",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — GIAC certs included, accredited",
+    "location": "Online + residencies"
+  },
+  {
+    "name": "RapidAscent — Cybersecurity + Cloud Transition Programs",
+    "category": "va_approved",
+    "vaSubCategory": "cyber_intelligence",
+    "description": "Triple-approved: DoD, VA, and SkillBridge. DoL Registered Apprentice. CompTIA partner. 17-week cybersecurity program. Zero cost via SkillBridge.",
+    "eligibility": "GI Bill, SkillBridge, or DoL Apprentice eligible.",
+    "website": "https://www.rapidascent.com/veterans/",
+    "cost": "Zero cost via SkillBridge / Covered by GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Triple-approved (DoD + VA + SkillBridge)",
+    "location": "Online"
+  },
+  {
+    "name": "ACI Learning Tech Academy — IT & Cybersecurity Training",
+    "category": "va_approved",
+    "vaSubCategory": "cyber_intelligence",
+    "description": "Accepts 6 VA benefit types: VET TEC, Ch 30, Ch 31, Ch 33, MyCAA, Army Credentialing Assistance. CompTIA certifications. VET TEC preserves GI Bill entitlement.",
+    "eligibility": "VET TEC, GI Bill, VR&E, MyCAA, or Army Credentialing eligible.",
+    "website": "https://www.acitechacademy.com/veteran-it-training/",
+    "cost": "Covered by VA benefits (6 benefit types accepted)",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — 6 VA benefit types accepted including VET TEC",
+    "location": "Multiple locations"
+  },
+
+  // ── Welding & Fabrication (4) ──
+  {
+    "name": "Workshops for Warriors — Welding + Machining for Veterans",
+    "category": "va_approved",
+    "vaSubCategory": "welding_fabrication",
+    "description": "Nonprofit specifically for veterans. VA-approved. 16-week program to nationally recognized welding certifications. Job placement with Boeing, SpaceX, Ford. Free or GI Bill funded.",
+    "eligibility": "Veterans and transitioning service members. GI Bill + WFW scholarships.",
+    "website": "https://wfw.org/programs/welding-for-warriors/",
+    "cost": "FREE for eligible vets / GI Bill accepted",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Navy veteran founded nonprofit",
+    "location": "San Diego, CA"
+  },
+  {
+    "name": "Elite Welding Academy — GI Bill Approved Welding School",
+    "category": "va_approved",
+    "vaSubCategory": "welding_fabrication",
+    "description": "GI Bill approved in Ohio. WEAMS institution #25146043. Post-9/11 covers 100% tuition + tools. 6-month welding program.",
+    "eligibility": "GI Bill eligible veterans. WEAMS #25146043.",
+    "website": "https://eliteweldingacademy.com/resource-center/veteran-information/",
+    "cost": "100% covered by Post-9/11 GI Bill (tuition + tools)",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — WEAMS #25146043",
+    "location": "Cincinnati / South Point, OH"
+  },
+  {
+    "name": "Arclabs Welding School — Veteran Welding Programs",
+    "category": "va_approved",
+    "vaSubCategory": "welding_fabrication",
+    "description": "GI Bill and VR&E accepted at approved campuses (Piedmont, Columbia, Charleston, Rock Hill, Houston). VA certifying official on every campus.",
+    "eligibility": "GI Bill or VR&E eligible veterans at approved campus locations.",
+    "website": "https://arclabs.edu/veteran-admission-and-benefits/",
+    "cost": "Covered by GI Bill / VR&E",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — VA certifying official on each campus",
+    "location": "SC & TX (multiple campuses)"
+  },
+  {
+    "name": "SCWTTC — Southern California Welding Training",
+    "category": "va_approved",
+    "vaSubCategory": "welding_fabrication",
+    "description": "Dedicated military benefits page. 40-100% VA educational benefits. Southern California welding training with military focus.",
+    "eligibility": "VA educational benefits eligible veterans (40-100%).",
+    "website": "https://socalweldtrainingschool.org/military-benefits/",
+    "cost": "40-100% covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Dedicated military benefits page",
+    "location": "Oxnard, CA"
+  },
+
+  // ── Heavy Equipment (2) ──
+  {
+    "name": "Performance Training Solutions (PTS) — Heavy Equipment + Crane Operator",
+    "category": "va_approved",
+    "vaSubCategory": "heavy_equipment",
+    "description": "Post-9/11 GI Bill AND VR&E accepted. Military Friendly school. 3-week, 120-hour programs. 90% job placement rate. 10+ years serving veterans.",
+    "eligibility": "Post-9/11 GI Bill or VR&E eligible veterans.",
+    "website": "https://www.ptsworks.com/individuals/who-we-serve/veterans/",
+    "cost": "Covered by GI Bill / VR&E",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — Military Friendly, 90% job placement",
+    "location": "Columbus area, OH"
+  },
+  {
+    "name": "National Training Inc. (Earth Movers School) — Heavy Equipment + CDL",
+    "category": "va_approved",
+    "vaSubCategory": "heavy_equipment",
+    "description": "DANTES approved. Post-9/11 GI Bill up to $22,805. Private 350-acre training facility in Florida. 2-week courses for bulldozer, excavator, loader, backhoe.",
+    "eligibility": "GI Bill eligible veterans. DANTES approved.",
+    "website": "https://earthmoverschool.com/military/",
+    "cost": "Up to $22,805 covered by Post-9/11 GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — DANTES approved, FL facility",
+    "location": "Green Cove Springs, FL"
+  },
+
+  // ── Other Vocational (5) ──
+  {
+    "name": "Modern Gun School (MGS) — Advanced Gunsmithing Programs",
+    "category": "va_approved",
+    "vaSubCategory": "other_vocational",
+    "description": "VA-approved online gunsmithing school. GI Bill + VR&E accepted. DEAC accredited. Flexible self-paced learning. Dedicated military veterans page.",
+    "eligibility": "GI Bill or VR&E eligible veterans.",
+    "website": "https://mgs.edu/military-veterans/",
+    "cost": "Covered by GI Bill / VR&E",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — DEAC accredited, online",
+    "location": "Online"
+  },
+  {
+    "name": "American Gunsmithing Institute (AGI) — VA-Approved Gunsmithing",
+    "category": "va_approved",
+    "vaSubCategory": "other_vocational",
+    "description": "VA-approved correspondence school since 1993. DVD/online self-paced format. GI Bill + VR&E accepted. Dedicated veterans program page.",
+    "eligibility": "GI Bill or VR&E eligible veterans.",
+    "website": "https://americangunsmithinginstitute.net/veterans-program/",
+    "cost": "Covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — VA-approved since 1993",
+    "location": "Online"
+  },
+  {
+    "name": "DWS Drone Workforce Solutions — Drone Technology Training",
+    "category": "va_approved",
+    "vaSubCategory": "other_vocational",
+    "description": "Approved by US Dept of Veterans Affairs for GI Bill. Drone technology, VR/3D, and agricultural drone programs. Featured on VA.gov news.",
+    "eligibility": "GI Bill eligible veterans.",
+    "website": "https://dwsdroneschool.com/dws-approved-by-the-us-dept-of-veterans-affairs-to-teach-drone-technology-through-the-gi-bill/",
+    "cost": "Covered by GI Bill",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — VA.gov featured",
+    "location": "Multiple locations"
+  },
+  {
+    "name": "Aerie Backcountry Medicine — Wilderness EMT + WFR",
+    "category": "va_approved",
+    "vaSubCategory": "other_vocational",
+    "description": "VA education benefits eligible for WFR, EMT, WEMT, and Summer Semester. NREMT certified. VA pays tuition directly. Wilderness medicine careers in remote environments.",
+    "eligibility": "GI Bill eligible veterans. Summer Semester GI Bill eligible (Spring/Fall excluded).",
+    "website": "https://www.aeriemedicine.com/gi-bill/",
+    "cost": "Tuition covered by GI Bill (food/lodging out of pocket)",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — NREMT certified, dedicated GI Bill page",
+    "location": "Various locations"
+  },
+  {
+    "name": "Medical Career Academy (MCA) — EMT & Paramedic Training",
+    "category": "va_approved",
+    "vaSubCategory": "other_vocational",
+    "description": "Approved by FL Dept of VA under Title 38, Chapter 36. Ch 33 and Ch 31 accepted. EMT and Paramedic certification programs in Florida.",
+    "eligibility": "Post-9/11 GI Bill (Ch 33) or VR&E (Ch 31) eligible veterans.",
+    "website": "https://mcaedu.org/veterans-and-active-duty/",
+    "cost": "Covered by VA benefits",
+    "sourceType": "VA Approved",
+    "vaNote": "Verified — FL Dept of VA approved, Title 38",
+    "location": "Florida"
   }
 ];
 
@@ -2147,7 +2609,8 @@ const CATEGORY_META = {
   housing:          { label: 'Housing',          color: 'housing' },
   discounts:        { label: 'Discounts',        color: 'discounts' },
   community:        { label: 'Community',        color: 'community' },
-  legal:            { label: 'Legal',            color: 'legal' }
+  legal:            { label: 'Legal',            color: 'legal' },
+  va_approved:      { label: 'VA Approved',      color: 'va_approved' }
 };
 
 // ── Source type icons ──
@@ -2160,6 +2623,15 @@ const SOURCE_ICONS = {
 };
 
 let currentFilter = 'all';
+let currentVASub = 'all';
+
+// ── VA sub-filter logic ──
+function filterVASub(sub, btn) {
+  currentVASub = sub;
+  document.querySelectorAll('.filter-btn--sub').forEach(b => b.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  applyFilters();
+}
 
 // ── Render resource cards ──
 function renderResources(list) {
@@ -2188,11 +2660,20 @@ function renderResources(list) {
       ? `<div class="resource-card__meta-row"><span class="resource-card__meta-label">Source</span><span class="resource-card__meta-value">${sourceIcon} ${escapeHTML(r.sourceType)}</span></div>`
       : '';
 
+    // VA-specific rows
+    const locationHTML = r.location
+      ? `<div class="resource-card__meta-row"><span class="resource-card__meta-label">Location</span><span class="resource-card__meta-value">${escapeHTML(r.location)}</span></div>`
+      : '';
+    const vaHTML = r.vaNote
+      ? `<div class="resource-card__meta-row"><span class="resource-card__meta-label">VA Status</span><span class="resource-card__meta-value resource-card__va-badge">${escapeHTML(r.vaNote)}</span></div>`
+      : '';
+
     card.innerHTML = `
       <span class="resource-card__category" data-color="${meta.color}">${escapeHTML(meta.label)}</span>
       <h3 class="resource-card__name">${escapeHTML(r.name)}</h3>
       <p class="resource-card__description">${escapeHTML(r.description)}</p>
       <div class="resource-card__meta">
+        ${locationHTML}
         <div class="resource-card__meta-row">
           <span class="resource-card__meta-label">Eligibility</span>
           <span class="resource-card__meta-value">${escapeHTML(r.eligibility || 'See website for details')}</span>
@@ -2201,6 +2682,7 @@ function renderResources(list) {
           <span class="resource-card__meta-label">Cost</span>
           <span class="resource-card__meta-value">${escapeHTML(r.cost || 'Unknown')}</span>
         </div>
+        ${vaHTML}
         ${sourceHTML}
       </div>
       ${linkHTML}
@@ -2221,8 +2703,16 @@ function escapeHTML(str) {
 // ── Filter by category (show/hide only) ──
 function filterByCategory(category, btn) {
   currentFilter = category;
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  currentVASub = 'all';
+  document.querySelectorAll('#filterBtns .filter-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
+  // Show/hide VA sub-filters
+  var vaSubEl = document.getElementById('vaSubFilters');
+  if (vaSubEl) {
+    vaSubEl.style.display = (category === 'va_approved') ? '' : 'none';
+    // Reset sub-filter active state
+    vaSubEl.querySelectorAll('.filter-btn--sub').forEach(function(b, i) { b.classList.toggle('active', i === 0); });
+  }
   applyFilters();
 }
 
@@ -2240,14 +2730,26 @@ function applyFilters() {
     filtered = filtered.filter(r => r.category === currentFilter);
   }
 
+  // Apply VA sub-filter when VA Approved is active
+  if (currentFilter === 'va_approved' && currentVASub !== 'all') {
+    filtered = filtered.filter(r => r.vaSubCategory === currentVASub);
+  }
+
   if (search) {
     filtered = filtered.filter(r =>
       r.name.toLowerCase().includes(search) ||
       r.description.toLowerCase().includes(search) ||
       (r.eligibility && r.eligibility.toLowerCase().includes(search)) ||
       (r.category && r.category.toLowerCase().includes(search)) ||
-      (r.sourceType && r.sourceType.toLowerCase().includes(search))
+      (r.sourceType && r.sourceType.toLowerCase().includes(search)) ||
+      (r.vaNote && r.vaNote.toLowerCase().includes(search)) ||
+      (r.location && r.location.toLowerCase().includes(search))
     );
+  }
+
+  // Sort featured programs first within VA Approved
+  if (currentFilter === 'va_approved') {
+    filtered.sort(function(a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
   }
 
   renderResources(filtered);
