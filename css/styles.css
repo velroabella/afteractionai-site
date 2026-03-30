@@ -1562,40 +1562,6 @@ a:hover { color: #000; }
   border-color: rgba(75,90,105,0.35);
 }
 
-/* ── VA Approved — Military OD Green ── */
-.resource-card__category[data-color="va_approved"],
-.category-tag--va_approved {
-  background: rgba(85,107,47,0.30);
-  color: #A3C47A;
-  border-color: rgba(85,107,47,0.45);
-}
-
-/* VA Approved filter button accent */
-.filter-btn--va {
-  border-color: rgba(85,107,47,0.5) !important;
-}
-.filter-btn--va.active {
-  background: rgba(85,107,47,0.25) !important;
-  color: #A3C47A !important;
-  border-color: rgba(85,107,47,0.6) !important;
-}
-
-/* VA sub-filter row */
-.resources-filters--sub {
-  margin-top: -8px;
-  padding-bottom: 8px;
-}
-.filter-btn--sub {
-  font-size: 0.78rem;
-  padding: 4px 12px;
-}
-
-/* VA verified badge inside card */
-.resource-card__va-badge {
-  color: #A3C47A !important;
-  font-weight: 600;
-}
-
 /* ── Federal (legacy) — Navy ── */
 .resource-card__category[data-color="federal"] {
   background: rgba(44,62,80,0.3);
@@ -7318,6 +7284,12 @@ a, button, input, select, textarea {
 .rp-tag--secondary { background: rgba(107,197,240,0.12); color: #6BC5F0; }
 .rp-tag--neutral { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.55); }
 .rp-tag--red { background: rgba(220,38,38,0.15); color: #FCA5A5; }
+.rp-tag--va { background: rgba(85,107,47,0.25); color: #A3C47A; font-weight: 700; border: 1px solid rgba(85,107,47,0.4); }
+.rp-card--va { border-left: 3px solid rgba(85,107,47,0.6); }
+.rp-qa-btn--va { border-color: rgba(85,107,47,0.5); color: #A3C47A; }
+.rp-qa-btn--va:hover { background: rgba(85,107,47,0.15); }
+.rp-pill--va { border-color: rgba(85,107,47,0.4); }
+.rp-pill--va.active { background: rgba(85,107,47,0.25); color: #A3C47A; border-color: rgba(85,107,47,0.6); }
 .rp-card__meta {
   font-size: 0.75rem; color: rgba(255,255,255,0.40);
   display: flex; align-items: center; gap: 4px;

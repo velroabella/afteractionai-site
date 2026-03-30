@@ -961,5 +961,1191 @@
       "goal_type": "career",
       "specialty": "it"
     }
+  },
+  {
+    "id": "va-sea-experience",
+    "branch": "All",
+    "military_job_code": "VA-DIVE",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "PADI Dive Professional \u2014 Instructor & Divemaster Certifications",
+    "certification_name": "Sea Experience \u2014 PADI Veteran Scuba Program",
+    "issuing_agency": "PADI / Sea Experience (Fort Lauderdale, FL)",
+    "requirements_summary": "Full PADI dive career training. Accepts Ch 30, 31, 33, 35. VA specialist on staff assists enrollment. Job placement support. FL Commission for Independent Education licensed.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://seaxp.com/veterans-dive-training/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E",
+      "Ch 35"
+    ],
+    "official_links": [
+      "https://seaxp.com/"
+    ],
+    "source_url": "https://seaxp.com/veterans-dive-training/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Scuba & Diving",
+    "location": "Fort Lauderdale, FL",
+    "featured": true
+  },
+  {
+    "id": "va-pura-vida",
+    "branch": "All",
+    "military_job_code": "VA-DIVE",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "PADI Professional Dive Certifications \u2014 9 Career Packages",
+    "certification_name": "Pura Vida Divers \u2014 9 VA-Approved Career Packages",
+    "issuing_agency": "PADI / Pura Vida Divers (Singer Island, FL)",
+    "requirements_summary": "Only VA-approved dive shop in Palm Beach County. 9 professional career packages from Open Water through Instructor. Post-9/11 GI Bill and VR&E (Ch 31) accepted.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://pro.puravidadivers.com/veterans-dive-training/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://pro.puravidadivers.com/"
+    ],
+    "source_url": "https://pro.puravidadivers.com/veterans-dive-training/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Scuba & Diving",
+    "location": "Singer Island, FL",
+    "featured": true
+  },
+  {
+    "id": "va-emerald-coast",
+    "branch": "All",
+    "military_job_code": "VA-DIVE",
+    "military_job_title": "All Branches / Veterans / Active Duty",
+    "civilian_pathway": "PADI Dive Professional + DoD SkillBridge Pathway",
+    "certification_name": "Emerald Coast Scuba \u2014 PADI VA + SkillBridge",
+    "issuing_agency": "PADI / Emerald Coast Scuba (NW Florida)",
+    "requirements_summary": "VA-approved for Post-9/11 GI Bill. DoD SkillBridge partner for active-duty transitions. Warrior Care Program MOU. Triple pathway: GI Bill + SkillBridge + Warrior Care.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://emeraldcoastscubapro.com/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "SkillBridge"
+    ],
+    "official_links": [
+      "https://emeraldcoastscuba.com/"
+    ],
+    "source_url": "https://emeraldcoastscubapro.com/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Scuba & Diving",
+    "location": "Northwest FL",
+    "featured": true
+  },
+  {
+    "id": "va-trident",
+    "branch": "All",
+    "military_job_code": "VA-DIVE",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "PADI Divemaster/Instructor + Helicopter Cast Master",
+    "certification_name": "Trident Adventures \u2014 Dive + Helicopter Cast Master",
+    "issuing_agency": "PADI / Trident Adventures (Honolulu, HI)",
+    "requirements_summary": "Navy SEAL owned. GI Bill approved (Ch 30 & 33). Dedicated VA training website (trident-va.com). Unique Helicopter Cast Master program unavailable elsewhere.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://trident-va.com/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://tridentadventures.com/"
+    ],
+    "source_url": "https://trident-va.com/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Scuba & Diving",
+    "location": "Honolulu, HI"
+  },
+  {
+    "id": "va-dive-right-in",
+    "branch": "All",
+    "military_job_code": "VA-DIVE",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "PADI Career Development Course (CDC) \u2014 Dive Instructor",
+    "certification_name": "Dive Right In Scuba \u2014 PADI CDC",
+    "issuing_agency": "PADI / Dive Right In Scuba (Orland Park, IL)",
+    "requirements_summary": "Founded by Vietnam veteran. IL Dept of Veterans Affairs approved. One of 40 PADI Career Training Centers worldwide. $12,500 tuition covered by GI Bill. PTSD support focus.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://www.diverightinscuba.com/scuba-diving-courses/special-programs/va-program.html"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://www.diverightinscuba.com/"
+    ],
+    "source_url": "https://www.diverightinscuba.com/scuba-diving-courses/special-programs/va-program.html",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Scuba & Diving",
+    "location": "Orland Park, IL"
+  },
+  {
+    "id": "va-florida-dive-co",
+    "branch": "All",
+    "military_job_code": "VA-DIVE",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "SDI/TDI Dive Certifications \u2014 18 VA-Approved Programs",
+    "certification_name": "Florida Dive Company \u2014 18 VA-Approved Programs",
+    "issuing_agency": "SDI/TDI / Florida Dive Company (Daytona, FL)",
+    "requirements_summary": "Most VA-approved dive programs of any single dive shop (18 programs). SDI/TDI recreational and technical diving certifications.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://floridadivecompany.com/collections/va-approved-programs"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://floridadivecompany.com/"
+    ],
+    "source_url": "https://floridadivecompany.com/collections/va-approved-programs",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Scuba & Diving",
+    "location": "Daytona area, FL"
+  },
+  {
+    "id": "va-mpt",
+    "branch": "All",
+    "military_job_code": "VA-MARITIME",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "USCG Captain's License / Master & Mate Certifications",
+    "certification_name": "Maritime Professional Training (MPT)",
+    "issuing_agency": "USCG / MPT (Fort Lauderdale, FL)",
+    "requirements_summary": "Largest private maritime school in US since 1983. 45,000+ sq ft campus. USCG Captain's License, STCW, radar, firefighting, sea survival. Must submit VA COE. Staff assists enrollment.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.mptusa.com/va"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://www.mptusa.com/"
+    ],
+    "source_url": "https://www.mptusa.com/va",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Fort Lauderdale, FL",
+    "featured": true
+  },
+  {
+    "id": "va-dit",
+    "branch": "All",
+    "military_job_code": "VA-COMMDIVE",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Commercial Diver \u2014 Underwater Welding, Salvage, Hazmat",
+    "certification_name": "Divers Institute of Technology (DIT) \u2014 7-Month Program",
+    "issuing_agency": "DIT (Seattle, WA)",
+    "requirements_summary": "Gold standard commercial diving school. Veteran-operated since 1968. 7-month program. Up to $25,162 tuition + $2,748/mo housing covered by Post-9/11 GI Bill.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://diversinstitute.edu/military-veterans/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://diversinstitute.edu/"
+    ],
+    "source_url": "https://diversinstitute.edu/military-veterans/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Seattle, WA"
+  },
+  {
+    "id": "va-fcdi",
+    "branch": "All",
+    "military_job_code": "VA-COMMDIVE",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Commercial Diver \u2014 Underwater Welding & Diving Operations",
+    "certification_name": "Florida Commercial Diving Institute (FCDI)",
+    "issuing_agency": "FCDI (Hudson, FL)",
+    "requirements_summary": "Commercial diving and underwater welding training. Accepts Ch 33, Ch 31, Ch 30. Dedicated VA benefits page with enrollment guidance.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://fcdidiving.com/va-benefits/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://fcdidiving.com/"
+    ],
+    "source_url": "https://fcdidiving.com/va-benefits/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Hudson, FL",
+    "featured": true
+  },
+  {
+    "id": "va-chapman",
+    "branch": "All",
+    "military_job_code": "VA-MARITIME",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Professional Mariner + Marine Surveyor Certifications",
+    "certification_name": "Chapman School of Seamanship",
+    "issuing_agency": "Chapman School (Stuart, FL)",
+    "requirements_summary": "Nonprofit 501(c)(3) maritime school. VA-approved for Ch 33 and Ch 31. USCG direct-entry pipeline via Letter of Intent. Professional Mariner + Marine Surveying.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://chapman.org/veterans/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://chapman.org/"
+    ],
+    "source_url": "https://chapman.org/veterans/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Stuart, FL",
+    "featured": true
+  },
+  {
+    "id": "va-iyrs",
+    "branch": "All",
+    "military_job_code": "VA-MARITIME",
+    "military_job_title": "All Branches / Veterans / Active Duty",
+    "civilian_pathway": "Marine Systems Technology + Boatbuilding + Digital Fabrication",
+    "certification_name": "IYRS School of Technology & Trades",
+    "issuing_agency": "IYRS (Newport, RI)",
+    "requirements_summary": "GI Bill, VR&E (Ch 31), AND SkillBridge accepted. ACCSC accredited. Marine Systems, Boatbuilding, and Digital Fabrication programs.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://www.iyrs.edu/admissions/veterans-at-iyrs"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E",
+      "SkillBridge"
+    ],
+    "official_links": [
+      "https://www.iyrs.edu/"
+    ],
+    "source_url": "https://www.iyrs.edu/admissions/veterans-at-iyrs",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Newport, RI"
+  },
+  {
+    "id": "va-nwswb",
+    "branch": "All",
+    "military_job_code": "VA-MARITIME",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "AOS Boatbuilding Degree + Marine Systems Diploma",
+    "certification_name": "Northwest School of Wooden Boatbuilding",
+    "issuing_agency": "NWSWB (Port Hadlock, WA)",
+    "requirements_summary": "GI Bill approved. ACCSC accredited. WA State Veteran Supportive Campus. AOS degree. Veteran Resources Specialist on staff.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://nwswb.edu/veterans/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://nwswb.edu/"
+    ],
+    "source_url": "https://nwswb.edu/veterans/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Port Hadlock, WA"
+  },
+  {
+    "id": "va-landing-school",
+    "branch": "All",
+    "military_job_code": "VA-MARITIME",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Marine Systems Technology + Yacht Design",
+    "certification_name": "The Landing School",
+    "issuing_agency": "The Landing School (Arundel, ME)",
+    "requirements_summary": "Approved for Post-9/11 GI Bill and VR&E. Maine SAA approved. 50,000+ sq ft campus. Yacht design, composite and wooden boatbuilding since 1978.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://www.landingschool.edu/student-body"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://www.landingschool.edu/"
+    ],
+    "source_url": "https://www.landingschool.edu/student-body",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Arundel, ME"
+  },
+  {
+    "id": "va-mitags",
+    "branch": "All",
+    "military_job_code": "VA-MARITIME",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Maritime Officer Licenses \u2014 AB to Mate to Master",
+    "certification_name": "MITAGS \u2014 Maritime Apprenticeship to Officer",
+    "issuing_agency": "MITAGS (Linthicum Heights, MD)",
+    "requirements_summary": "GI Bill accepted. 80-acre campus. 150+ maritime courses. Full career ladder from AB to Mate, Mate to Master. 30+ year track record.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.mitags.org/gi-bill-maritime-education/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://www.mitags.org/"
+    ],
+    "source_url": "https://www.mitags.org/gi-bill-maritime-education/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Linthicum Heights, MD"
+  },
+  {
+    "id": "va-bluewater",
+    "branch": "All",
+    "military_job_code": "VA-MARITIME",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "USCG Captain's License \u2014 Maritime Training",
+    "certification_name": "Bluewater Maritime School",
+    "issuing_agency": "Bluewater Maritime (Jacksonville, FL)",
+    "requirements_summary": "Montgomery GI Bill approved. VR&E approved. VA conducts regular audits. 501(c)(3) nonprofit. 20% military discount.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.edumaritime.net/florida/bluewater-maritime-school-jacksonville"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://www.edumaritime.net/florida/bluewater-maritime-school-jacksonville"
+    ],
+    "source_url": "https://www.edumaritime.net/florida/bluewater-maritime-school-jacksonville",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Commercial Diving & Maritime",
+    "location": "Jacksonville, FL"
+  },
+  {
+    "id": "va-us-aviation",
+    "branch": "All",
+    "military_job_code": "VA-AVIATION",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Commercial Pilot License \u2014 Part 141 VA Approved",
+    "certification_name": "US Aviation Academy \u2014 Pilot Training",
+    "issuing_agency": "FAA / US Aviation Academy (Denton, TX)",
+    "requirements_summary": "VA Approved Part 141 pilot school. ArmyCOOL approved. Vocational path ~$15K/yr. Liberty University partnership for degree path up to $45K covered.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.usaviationacademy.com/flight-training-va-approved-flight-training-gi-bill/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "ArmyCOOL"
+    ],
+    "official_links": [
+      "https://www.usaviationacademy.com/"
+    ],
+    "source_url": "https://www.usaviationacademy.com/flight-training-va-approved-flight-training-gi-bill/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Aviation",
+    "location": "Denton, TX"
+  },
+  {
+    "id": "va-flex-air",
+    "branch": "All",
+    "military_job_code": "VA-AVIATION",
+    "military_job_title": "All Branches / Veterans / Active Duty",
+    "civilian_pathway": "Airline Pilot \u2014 VR&E (Ch 31) + SkillBridge Flight Training",
+    "certification_name": "Flex Air Flight Academy \u2014 VR&E Flight Training",
+    "issuing_agency": "FAA / Flex Air (San Diego & Kansas)",
+    "requirements_summary": "Specifically designed for VR&E Ch 31. No annual limits for 20%+ disability rating. Veteran-owned. DOD SkillBridge eligible. Full airline pilot pipeline.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://goflexair.com/vr-and-e-for-flight-training-ch31"
+    ],
+    "benefit_funding_options": [
+      "VR&E",
+      "SkillBridge"
+    ],
+    "official_links": [
+      "https://goflexair.com/"
+    ],
+    "source_url": "https://goflexair.com/vr-and-e-for-flight-training-ch31",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Aviation",
+    "location": "San Diego, CA & Kansas"
+  },
+  {
+    "id": "va-atp",
+    "branch": "All",
+    "military_job_code": "VA-AVIATION",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Airline Transport Pilot \u2014 ATP CTP + Type Ratings",
+    "certification_name": "ATP Flight School \u2014 Airline Career Pilot",
+    "issuing_agency": "FAA / ATP Flight School (88+ locations)",
+    "requirements_summary": "Largest flight school in US. WEAMS institution #26001110. GI Bill accepted for ATP CTP and type ratings. 88+ locations nationwide.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://atpflightschool.com/gi-bill/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://atpflightschool.com/"
+    ],
+    "source_url": "https://atpflightschool.com/gi-bill/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Aviation",
+    "location": "88+ locations, Nationwide"
+  },
+  {
+    "id": "va-pwa",
+    "branch": "All",
+    "military_job_code": "VA-SECURITY",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Certified Executive Security Specialist (CESS)",
+    "certification_name": "Pacific West Academy \u2014 Executive Protection",
+    "issuing_agency": "PWA / ACCET Accredited (WEAMS #25190205)",
+    "requirements_summary": "ACCET-accredited. CalVet approved. $21,900 tuition = 9 months of benefits. Monthly Housing Allowance during 10-week training. Elite executive protection pipeline.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://pwa.edu/program-catalog/certified-executive-security-specialist-cess-course/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://pwa.edu/"
+    ],
+    "source_url": "https://pwa.edu/program-catalog/certified-executive-security-specialist-cess-course/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Security & Protection",
+    "location": "Various locations"
+  },
+  {
+    "id": "va-ess-global",
+    "branch": "All",
+    "military_job_code": "VA-SECURITY",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Executive Protection Agent \u2014 3-Day & 28-Day Programs",
+    "certification_name": "ESS Global Corp \u2014 Executive Protection Training",
+    "issuing_agency": "ESS Global / DOE + VA Certified (Tampa, FL)",
+    "requirements_summary": "Only GI Bill approved executive protection school in Florida. DOE and VA certified. 300+ hours instruction. Active security operations in 60+ countries.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://esecurityspecialist.com/executive-protection-training-gi-bill-approved-ess-global/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://esecurityspecialist.com/"
+    ],
+    "source_url": "https://esecurityspecialist.com/executive-protection-training-gi-bill-approved-ess-global/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Security & Protection",
+    "location": "Tampa, FL"
+  },
+  {
+    "id": "va-covered6",
+    "branch": "All",
+    "military_job_code": "VA-SECURITY",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Executive Protection + Cyber Security Technician",
+    "certification_name": "Covered 6 Security Academy",
+    "issuing_agency": "US Dept of Labor / Covered 6",
+    "requirements_summary": "US Dept of Labor National Training Standard. Post-9/11 GI Bill accepted. EP + Cyber Security dual tracks. BAH and stipend for eligible veterans.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://c6securityacademy.com/executive-protection-program/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://c6securityacademy.com/"
+    ],
+    "source_url": "https://c6securityacademy.com/executive-protection-program/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Security & Protection",
+    "location": "Various locations"
+  },
+  {
+    "id": "va-sans",
+    "branch": "All",
+    "military_job_code": "VA-CYBER",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Cybersecurity Degree + GIAC Certifications",
+    "certification_name": "SANS Technology Institute \u2014 Cybersecurity",
+    "issuing_agency": "SANS.edu / GIAC",
+    "requirements_summary": "World-class cybersecurity training. All programs GI Bill eligible. Accredited. GIAC certifications included. 100% online available. VA pays tuition directly.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.sans.edu/admissions/veterans/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://www.sans.edu/"
+    ],
+    "source_url": "https://www.sans.edu/admissions/veterans/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Cyber & Intelligence",
+    "location": "Online + residencies"
+  },
+  {
+    "id": "va-rapidascent",
+    "branch": "All",
+    "military_job_code": "VA-CYBER",
+    "military_job_title": "All Branches / Veterans / Active Duty",
+    "civilian_pathway": "Cybersecurity + Cloud Engineer \u2014 CompTIA Certifications",
+    "certification_name": "RapidAscent \u2014 Cyber Transition Programs",
+    "issuing_agency": "RapidAscent / CompTIA / DoL",
+    "requirements_summary": "Triple-approved: DoD, VA, and SkillBridge. DoL Registered Apprentice. CompTIA partner. 17-week program. Zero cost via SkillBridge.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.rapidascent.com/veterans/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "SkillBridge"
+    ],
+    "official_links": [
+      "https://www.rapidascent.com/"
+    ],
+    "source_url": "https://www.rapidascent.com/veterans/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Cyber & Intelligence",
+    "location": "Online"
+  },
+  {
+    "id": "va-aci",
+    "branch": "All",
+    "military_job_code": "VA-CYBER",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "IT & Cybersecurity \u2014 CompTIA + Industry Certifications",
+    "certification_name": "ACI Learning Tech Academy \u2014 IT Training",
+    "issuing_agency": "ACI Learning / CompTIA",
+    "requirements_summary": "Accepts 6 VA benefit types: VET TEC, Ch 30, Ch 31, Ch 33, MyCAA, Army Credentialing Assistance. VET TEC preserves GI Bill entitlement.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.acitechacademy.com/veteran-it-training/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E",
+      "VET TEC",
+      "MyCAA"
+    ],
+    "official_links": [
+      "https://www.acitechacademy.com/"
+    ],
+    "source_url": "https://www.acitechacademy.com/veteran-it-training/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Cyber & Intelligence",
+    "location": "Multiple locations"
+  },
+  {
+    "id": "va-wfw",
+    "branch": "All",
+    "military_job_code": "VA-WELD",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Nationally Recognized Welding Certifications \u2014 AWS",
+    "certification_name": "Workshops for Warriors \u2014 Welding + Machining",
+    "issuing_agency": "AWS / Workshops for Warriors (San Diego, CA)",
+    "requirements_summary": "Nonprofit for veterans. 16-week program to national welding certs. Job placement with Boeing, SpaceX, Ford. FREE or GI Bill funded. Navy veteran founded.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://wfw.org/programs/welding-for-warriors/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "Scholarships (free)"
+    ],
+    "official_links": [
+      "https://wfw.org/"
+    ],
+    "source_url": "https://wfw.org/programs/welding-for-warriors/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Welding & Fabrication",
+    "location": "San Diego, CA"
+  },
+  {
+    "id": "va-elite-weld",
+    "branch": "All",
+    "military_job_code": "VA-WELD",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Professional Welder \u2014 AWS Certifications",
+    "certification_name": "Elite Welding Academy \u2014 GI Bill Welding School",
+    "issuing_agency": "AWS / Elite Welding (Ohio, WEAMS #25146043)",
+    "requirements_summary": "GI Bill approved. WEAMS #25146043. Post-9/11 covers 100% tuition + tools. 6-month welding program.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://eliteweldingacademy.com/resource-center/veteran-information/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://eliteweldingacademy.com/"
+    ],
+    "source_url": "https://eliteweldingacademy.com/resource-center/veteran-information/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 3,
+    "va_category": "Welding & Fabrication",
+    "location": "Cincinnati / South Point, OH"
+  },
+  {
+    "id": "va-arclabs",
+    "branch": "All",
+    "military_job_code": "VA-WELD",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Professional Welder \u2014 Multi-Campus Welding Programs",
+    "certification_name": "Arclabs Welding School",
+    "issuing_agency": "Arclabs (SC & TX campuses)",
+    "requirements_summary": "GI Bill and VR&E accepted at approved campuses. VA certifying official on every campus. Piedmont, Columbia, Charleston, Rock Hill, Houston.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://arclabs.edu/veteran-admission-and-benefits/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://arclabs.edu/"
+    ],
+    "source_url": "https://arclabs.edu/veteran-admission-and-benefits/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 3,
+    "va_category": "Welding & Fabrication",
+    "location": "SC & TX"
+  },
+  {
+    "id": "va-scwttc",
+    "branch": "All",
+    "military_job_code": "VA-WELD",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Professional Welder \u2014 Military-Focused Welding Training",
+    "certification_name": "SCWTTC \u2014 Southern California Welding Training",
+    "issuing_agency": "SCWTTC (Oxnard, CA)",
+    "requirements_summary": "Dedicated military benefits page. 40-100% VA educational benefits. Southern California location with military focus.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://socalweldtrainingschool.org/military-benefits/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://socalweldtrainingschool.org/"
+    ],
+    "source_url": "https://socalweldtrainingschool.org/military-benefits/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 3,
+    "va_category": "Welding & Fabrication",
+    "location": "Oxnard, CA"
+  },
+  {
+    "id": "va-pts",
+    "branch": "All",
+    "military_job_code": "VA-EQUIP",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Heavy Equipment Operator + Crane Operator Certification",
+    "certification_name": "Performance Training Solutions (PTS)",
+    "issuing_agency": "PTS / NCCER (Columbus, OH)",
+    "requirements_summary": "Post-9/11 GI Bill AND VR&E accepted. Military Friendly school. 3-week, 120-hour programs. 90% job placement rate. 10+ years serving veterans.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.ptsworks.com/individuals/who-we-serve/veterans/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://www.ptsworks.com/"
+    ],
+    "source_url": "https://www.ptsworks.com/individuals/who-we-serve/veterans/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 1,
+    "va_category": "Heavy Equipment & Trades",
+    "location": "Columbus area, OH"
+  },
+  {
+    "id": "va-earth-movers",
+    "branch": "All",
+    "military_job_code": "VA-EQUIP",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Heavy Equipment Operator + CDL \u2014 2-Week Programs",
+    "certification_name": "National Training Inc. (Earth Movers School)",
+    "issuing_agency": "National Training (Green Cove Springs, FL)",
+    "requirements_summary": "DANTES approved. Post-9/11 GI Bill up to $22,805. Private 350-acre FL training facility. 2-week courses for bulldozer, excavator, loader, backhoe.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://earthmoverschool.com/military/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://earthmoverschool.com/"
+    ],
+    "source_url": "https://earthmoverschool.com/military/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Heavy Equipment & Trades",
+    "location": "Green Cove Springs, FL"
+  },
+  {
+    "id": "va-mgs",
+    "branch": "All",
+    "military_job_code": "VA-GUNS",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Advanced Gunsmithing \u2014 Online Professional Programs",
+    "certification_name": "Modern Gun School (MGS) \u2014 Gunsmithing",
+    "issuing_agency": "MGS / DEAC Accredited",
+    "requirements_summary": "VA-approved online gunsmithing school. GI Bill + VR&E accepted. DEAC accredited. Flexible self-paced learning. Dedicated military veterans page.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://mgs.edu/military-veterans/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://mgs.edu/"
+    ],
+    "source_url": "https://mgs.edu/military-veterans/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Firearms & Gunsmithing",
+    "location": "Online"
+  },
+  {
+    "id": "va-agi",
+    "branch": "All",
+    "military_job_code": "VA-GUNS",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Professional Gunsmithing \u2014 DVD/Online Self-Paced",
+    "certification_name": "American Gunsmithing Institute (AGI)",
+    "issuing_agency": "AGI / VA Approved",
+    "requirements_summary": "VA-approved correspondence school since 1993. DVD/online self-paced format. GI Bill + VR&E accepted. Good for rural veterans.",
+    "additional_testing_required": false,
+    "school_or_exam_links": [
+      "https://americangunsmithinginstitute.net/veterans-program/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://americangunsmithinginstitute.net/"
+    ],
+    "source_url": "https://americangunsmithinginstitute.net/veterans-program/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 3,
+    "va_category": "Firearms & Gunsmithing",
+    "location": "Online"
+  },
+  {
+    "id": "va-dws-drone",
+    "branch": "All",
+    "military_job_code": "VA-DRONE",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "FAA Part 107 Drone Pilot + Advanced Drone Technology",
+    "certification_name": "DWS Drone Workforce Solutions",
+    "issuing_agency": "FAA / DWS / VA Approved",
+    "requirements_summary": "Approved by US Dept of VA for GI Bill. Drone technology, VR/3D, and agricultural drone programs. Featured on VA.gov news.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://dwsdroneschool.com/dws-approved-by-the-us-dept-of-veterans-affairs-to-teach-drone-technology-through-the-gi-bill/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://dwsdroneschool.com/"
+    ],
+    "source_url": "https://dwsdroneschool.com/dws-approved-by-the-us-dept-of-veterans-affairs-to-teach-drone-technology-through-the-gi-bill/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Other Vocational",
+    "location": "Multiple locations"
+  },
+  {
+    "id": "va-aerie",
+    "branch": "All",
+    "military_job_code": "VA-EMS",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "Wilderness EMT + Wilderness First Responder (WFR)",
+    "certification_name": "Aerie Backcountry Medicine \u2014 Wilderness EMT",
+    "issuing_agency": "NREMT / Aerie Backcountry Medicine",
+    "requirements_summary": "VA education benefits eligible for WFR, EMT, WEMT, Summer Semester. NREMT certified. VA pays tuition directly. Spring/Fall semesters excluded.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://www.aeriemedicine.com/gi-bill/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill"
+    ],
+    "official_links": [
+      "https://aeriemedicine.com/"
+    ],
+    "source_url": "https://www.aeriemedicine.com/gi-bill/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Safety & Emergency",
+    "location": "Various locations"
+  },
+  {
+    "id": "va-mca",
+    "branch": "All",
+    "military_job_code": "VA-EMS",
+    "military_job_title": "All Branches / Veterans",
+    "civilian_pathway": "EMT & Paramedic Certification \u2014 FL Title 38 Approved",
+    "certification_name": "Medical Career Academy (MCA) \u2014 EMT & Paramedic",
+    "issuing_agency": "FL Dept of VA / MCA (Florida)",
+    "requirements_summary": "Approved by FL Dept of VA under Title 38, Chapter 36. Ch 33 and Ch 31 accepted. EMT and Paramedic certification programs.",
+    "additional_testing_required": true,
+    "school_or_exam_links": [
+      "https://mcaedu.org/veterans-and-active-duty/"
+    ],
+    "benefit_funding_options": [
+      "GI Bill",
+      "VR&E"
+    ],
+    "official_links": [
+      "https://mcaedu.org/"
+    ],
+    "source_url": "https://mcaedu.org/veterans-and-active-duty/",
+    "last_verified": "2026-03-30",
+    "manual_review": true,
+    "tags": {
+      "branch": "All",
+      "issue_type": "va_approved",
+      "goal_type": "career",
+      "specialty": "va_approved"
+    },
+    "va_approved": true,
+    "va_tier": 2,
+    "va_category": "Safety & Emergency",
+    "location": "Florida"
   }
 ]

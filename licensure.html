@@ -66,6 +66,7 @@
             <ul class="navbar__submenu-menu">
               <li><a href="education.html">Education</a></li>
               <li><a href="licensure.html" class="active">Licensure &amp; Certifications</a></li>
+              <li><a href="licensure.html#va-approved">VA Approved Programs</a></li>
             </ul>
           </li>
           <li class="navbar__submenu">
@@ -113,6 +114,7 @@
     <button class="rp-qa-btn" onclick="applyQA('trades')">🔧 Trades</button>
     <button class="rp-qa-btn" onclick="applyQA('transportation')">🚛 Transportation</button>
     <button class="rp-qa-btn" onclick="applyQA('it')">💻 IT</button>
+    <button class="rp-qa-btn rp-qa-btn--va" onclick="applyQA('va_approved')" id="vaQuickBtn">&#9733; VA Approved Programs</button>
     <button class="rp-qa-btn" onclick="applyQA('all')">All Pathways</button>
   </div>
 </div>
@@ -156,6 +158,21 @@
       <button class="rp-pill" data-filter-group="specialty" data-filter-value="logistics" onclick="setPill(this,'specialty')">Logistics</button>
       <button class="rp-pill" data-filter-group="specialty" data-filter-value="public_safety" onclick="setPill(this,'specialty')">Public Safety</button>
       <button class="rp-pill" data-filter-group="specialty" data-filter-value="management" onclick="setPill(this,'specialty')">Management</button>
+      <button class="rp-pill rp-pill--va" data-filter-group="specialty" data-filter-value="va_approved" onclick="setPill(this,'specialty')">&#9733; VA Approved</button>
+    </div>
+
+    <!-- VA Sub-Category Filter (visible when VA Approved is active) -->
+    <div class="rp-filter-group" id="vaSubFilterGroup" style="display:none;">
+      <div class="rp-filter-label">VA Program Type</div>
+      <button class="rp-pill active" data-filter-group="va_sub" data-filter-value="all" onclick="setPill(this,'va_sub')">All VA Programs</button>
+      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Scuba & Diving" onclick="setPill(this,'va_sub')">Scuba & Diving</button>
+      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Commercial Diving & Maritime" onclick="setPill(this,'va_sub')">Maritime & Diving</button>
+      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Aviation" onclick="setPill(this,'va_sub')">Aviation</button>
+      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Security & Protection" onclick="setPill(this,'va_sub')">Security</button>
+      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Cyber & Intelligence" onclick="setPill(this,'va_sub')">Cyber & IT</button>
+      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Welding & Fabrication" onclick="setPill(this,'va_sub')">Welding</button>
+      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Heavy Equipment & Trades" onclick="setPill(this,'va_sub')">Heavy Equipment</button>
+      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="other" onclick="setPill(this,'va_sub')">Other</button>
     </div>
 
   </aside>
@@ -239,7 +256,7 @@ let allPaths = [];
 let filteredPaths = [];
 let visibleCount = 0;
 
-const activeFilters = { branch: 'all', specialty: 'all' };
+const activeFilters = { branch: 'all', specialty: 'all', va_sub: 'all' };
 
 // ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
@@ -251,6 +268,16 @@ function setPill(btn, group) {
   document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
   btn.classList.add('active');
   activeFilters[group] = btn.dataset.filterValue;
+  // Show/hide VA sub-filter
+  var vaSubEl = document.getElementById('vaSubFilterGroup');
+  if (vaSubEl) {
+    var showVASub = (activeFilters.specialty === 'va_approved');
+    vaSubEl.style.display = showVASub ? '' : 'none';
+    if (!showVASub) {
+      activeFilters.va_sub = 'all';
+      vaSubEl.querySelectorAll('.rp-pill').forEach(function(b, i) { b.classList.toggle('active', i === 0); });
+    }
+  }
   filterAndRender();
 }
 
@@ -259,16 +286,26 @@ function applyQA(val) {
   if (val === 'all') { resetFilters(); return; }
   const pill = document.querySelector(`.rp-pill[data-filter-group="specialty"][data-filter-value="${val}"]`);
   if (pill) setPill(pill, 'specialty');
+  // Scroll to grid when VA Approved is selected via quick-access
+  if (val === 'va_approved') {
+    setTimeout(function() {
+      var grid = document.getElementById('licensureGrid');
+      if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
 }
 
 // ── Reset ─────────────────────────────────────────────────
 function resetFilters() {
   activeFilters.branch = 'all';
   activeFilters.specialty = 'all';
+  activeFilters.va_sub = 'all';
   document.querySelectorAll('.rp-pill').forEach(b => {
     b.classList.toggle('active', b.dataset.filterValue === 'all');
   });
   document.getElementById('searchInput').value = '';
+  var vaSubEl = document.getElementById('vaSubFilterGroup');
+  if (vaSubEl) vaSubEl.style.display = 'none';
   filterAndRender();
 }
 
@@ -278,12 +315,31 @@ function filterAndRender() {
   filteredPaths = allPaths.filter(p => {
     if (activeFilters.branch !== 'all' && p.branch !== activeFilters.branch) return false;
     if (activeFilters.specialty !== 'all' && (p.tags||{}).specialty !== activeFilters.specialty) return false;
+    // VA sub-category filter
+    if (activeFilters.specialty === 'va_approved' && activeFilters.va_sub !== 'all') {
+      var vaCat = p.va_category || '';
+      if (activeFilters.va_sub === 'other') {
+        // "other" catches categories not in the main list
+        var mainCats = ['Scuba & Diving','Commercial Diving & Maritime','Aviation','Security & Protection','Cyber & Intelligence','Welding & Fabrication','Heavy Equipment & Trades'];
+        if (mainCats.indexOf(vaCat) !== -1) return false;
+      } else {
+        if (vaCat !== activeFilters.va_sub) return false;
+      }
+    }
     if (q && !((p.military_job_code||'').toLowerCase().includes(q) ||
                (p.military_job_title||'').toLowerCase().includes(q) ||
                (p.civilian_pathway||'').toLowerCase().includes(q) ||
-               (p.certification_name||'').toLowerCase().includes(q))) return false;
+               (p.certification_name||'').toLowerCase().includes(q) ||
+               (p.issuing_agency||'').toLowerCase().includes(q) ||
+               (p.location||'').toLowerCase().includes(q) ||
+               (p.va_category||'').toLowerCase().includes(q) ||
+               (p.requirements_summary||'').toLowerCase().includes(q))) return false;
     return true;
   });
+  // Sort featured VA programs first when VA filter is active
+  if (activeFilters.specialty === 'va_approved') {
+    filteredPaths.sort(function(a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
+  }
   visibleCount = 0;
   document.getElementById('licensureGrid').innerHTML = '';
   loadMore();
@@ -292,6 +348,11 @@ function filterAndRender() {
 
 // ── Render ────────────────────────────────────────────────
 function renderCard(p) {
+  // VA Approved programs get a different card layout
+  if (p.va_approved) {
+    return renderVACard(p);
+  }
+
   const specialty = (p.tags||{}).specialty || '';
   const fundingList = (p.benefit_funding_options||[]).join(', ');
   const testingBadge = p.additional_testing_required
@@ -323,6 +384,28 @@ function renderCard(p) {
   </div>`;
 }
 
+function renderVACard(p) {
+  const fundingList = (p.benefit_funding_options||[]).join(', ');
+  const link = (p.school_or_exam_links||[])[0] || p.source_url || '';
+  const featuredBadge = p.featured
+    ? '<span style="display:inline-block;background:rgba(85,107,47,0.25);color:#A3C47A;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(85,107,47,0.4);margin-left:6px;">FL PRIORITY</span>'
+    : '';
+
+  return `<div class="rp-card rp-card--va" id="${esc(p.id||'')}">
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
+      <span class="rp-tag--va">VA Approved</span>
+      <span class="rp-tag--secondary">${esc((p.va_category||'').replace(/_/g,' '))}</span>
+      ${featuredBadge}
+    </div>
+    <h3 class="rp-card__name" style="margin-bottom:4px;">${esc(p.certification_name||'')}</h3>
+    <p class="rp-card__org">${esc(p.civilian_pathway||'')}</p>
+    <p style="font-size:0.8rem;color:#A3C47A;margin-bottom:4px;font-weight:600;">${esc(p.location||'')}</p>
+    <p style="font-size:0.82rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">${esc(p.requirements_summary||'')}</p>
+    ${fundingList ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;">&#9733; Benefits: ${esc(fundingList)}</p>` : ''}
+    ${link ? `<a href="${esc(link)}" target="_blank" rel="noopener noreferrer" class="rp-card__phone" style="text-decoration:none;font-size:0.85rem;">View Program &amp; Enroll &#8599;</a>` : ''}
+  </div>`;
+}
+
 function esc(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -349,7 +432,12 @@ fetch('data/licensure.json')
   .then(r => r.json())
   .then(data => {
     allPaths = Array.isArray(data) ? data : (data.resources || []);
-    filterAndRender();
+    // Check for #va-approved hash — auto-activate VA filter
+    if (window.location.hash === '#va-approved') {
+      applyQA('va_approved');
+    } else {
+      filterAndRender();
+    }
   })
   .catch(err => {
     console.error('Error loading licensure:', err);
