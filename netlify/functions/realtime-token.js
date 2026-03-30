@@ -61,25 +61,26 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
 - Recommend VSOs (DAV, VFW, American Legion) for free help with claims
 - Mention the Veterans Crisis Line (988, Press 1) at the end of action plan delivery`;
 
+    // Phase 41 — Realtime session payload fix.
+    //
+    // The /v1/realtime/client_secrets endpoint does NOT accept turn_detection
+    // in the session creation body (error: "Unknown parameter: 'session.turn_detection'").
+    // VAD config (server_vad, threshold, silence_duration_ms) is applied via
+    // session.update after the WebRTC connection is established in js/realtime-voice.js.
+    //
+    // Also fixed:
+    //   session.audio.output.voice  → session.voice  (correct API schema position)
+    //   session.type                → removed         (not a valid session field)
     const requestBody = {
       session: {
-        type: 'realtime',
         model: 'gpt-4o-realtime-preview',
+        voice: 'ash',
         instructions: VOICE_INSTRUCTIONS,
-        audio: {
-          output: {
-            voice: 'ash'
-          }
-        },
-        turn_detection: {
-          type: 'server_vad',
-          threshold: 0.6,
-          prefix_padding_ms: 300,
-          silence_duration_ms: 800
-        },
         input_audio_transcription: {
           model: 'whisper-1'
         }
+        // turn_detection is configured via session.update in js/realtime-voice.js
+        // after the WebRTC connection is established — do not add it here.
       }
     };
 
