@@ -108,6 +108,13 @@
     'Then add options:',
     '[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\'m a family member]',
     '',
+    '## RESUME MESSAGE',
+    'When the user sends RESUME_MISSION, they are returning from their dashboard.',
+    'Use the VETERAN CONTEXT block (if present) to welcome them back by name and with any known profile info.',
+    'Say something like: "Welcome back[, Name]. I have your profile loaded — [summary of known info]. What would you like to work on next?"',
+    'Then offer relevant options based on their profile status:',
+    '[OPTIONS: Continue my plan | Upload a document | Check my benefits | Update my info | Start over]',
+    '',
     '## CONVERSATION FLOW — GUIDED INTAKE WITH OPTIONS',
     '',
     '### Phase 1: Service Profile (Messages 1-8)',
@@ -247,6 +254,11 @@
     'Then generate a comprehensive action plan organized by:',
     '1. Priority recommendations (urgent items flagged)',
     '2. Category-by-category breakdown with specific resources and next steps',
+    '   RESOURCE GROUPING: If ## RESOURCE CONTEXT is present in your context, organize resources under these sections:',
+    '   - Federal Resources: VA programs, federal benefits, federal agencies (applies to all veterans)',
+    '   - State Resources: State-specific programs for the veteran\'s state (only if state is known)',
+    '   - Online/Community Resources: VSOs, nonprofits, hotlines, community organizations',
+    '   For each resource listed: name, one-line description, and one concrete action step (phone number, website, or office visit)',
     '3. Benefits they may be missing (hidden value)',
     '4. Quick wins they can do today',
     '5. Next steps checklist with timelines',
@@ -841,10 +853,22 @@
         captionsOverlay.style.display = 'block';
       }
 
-      // Phase 21: show onboarding card for first-time users
-      _showOnboardingCard();
-      // Text mode: full API opening message
-      sendToAI('START_CONVERSATION');
+      // Phase 42: detect ?resume=1 from "Continue Mission" link — skip onboarding
+      var _urlParams = new URLSearchParams(window.location.search);
+      if (_urlParams.get('resume') === '1') {
+        localStorage.setItem('aaai_returning', '1');
+        // Clean URL without reload
+        if (window.history.replaceState) {
+          window.history.replaceState({}, '', window.location.pathname);
+        }
+        // Send resume context so AI picks up where they left off
+        sendToAI('RESUME_MISSION');
+      } else {
+        // Phase 21: show onboarding card for first-time users
+        _showOnboardingCard();
+        // Text mode: full API opening message
+        sendToAI('START_CONVERSATION');
+      }
     }
 
     updateModeIcon();
@@ -1359,7 +1383,7 @@
     // ── Phase 35: Memory extraction on EVERY real user message ──────
     // Runs BEFORE routing and request building so memory/eligibility
     // context is available when callChatEndpoint assembles the prompt.
-    if (userText !== 'START_CONVERSATION' && window.AIOS && window.AIOS.Memory) {
+    if (userText !== 'START_CONVERSATION' && userText !== 'RESUME_MISSION' && window.AIOS && window.AIOS.Memory) {
       try {
         var _extracted = window.AIOS.Memory.extractMemoryFromInput(userText);
         if (_extracted && Object.keys(_extracted).length > 0) {
@@ -1388,7 +1412,7 @@
       }
     }
 
-    if (userText !== 'START_CONVERSATION') {
+    if (userText !== 'START_CONVERSATION' && userText !== 'RESUME_MISSION') {
       conversationHistory.push({ role: 'user', content: userText });
       // Fire audit_started on the first real user message only
       var realMsgCount = conversationHistory.filter(function(m) { return m.role === 'user'; }).length;
@@ -1423,7 +1447,7 @@
         }
 
         // Show topic bubbles once after the opening greeting
-        if (!topicBubblesShown && userText === 'START_CONVERSATION') {
+        if (!topicBubblesShown && (userText === 'START_CONVERSATION' || userText === 'RESUME_MISSION')) {
           topicBubblesShown = true;
           renderTopicBubbles();
         }
@@ -1534,6 +1558,30 @@
   function getMockResponse(userText) {
     if (userText === 'START_CONVERSATION') {
       return 'Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\'ll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I\'ll pull the details automatically.\n\nUpload as many as you want, or none at all. Your information is used only to help build your plan. Some data may be securely stored to improve your experience, but it is never sold or shared. Your privacy matters.\n\nWhen you\'re ready \u2014 uploaded or not \u2014 just tell me: what branch did you serve in?\n\n[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\'m a family member]';
+    }
+    if (userText === 'RESUME_MISSION') {
+      // Phase 43: Smart resume — surface known profile data + resource-driven options
+      var _rProf = (window.AIOS && window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
+      var _rName = _rProf.name || null;
+      var _rParts = [];
+      if (_rProf.branch)           _rParts.push(_rProf.branch);
+      if (_rProf.dischargeStatus)  _rParts.push(_rProf.dischargeStatus + ' discharge');
+      if (_rProf.vaRating !== null && _rProf.vaRating !== undefined) _rParts.push(_rProf.vaRating + '% VA rating');
+      if (_rProf.state)            _rParts.push('based in ' + _rProf.state);
+      var _rSummary = _rParts.length > 0
+        ? ' I have your profile loaded — ' + _rParts.join(', ') + '.'
+        : '';
+      // Build option set — first option is top resource priority if available
+      var _rOpt1 = 'Continue my plan';
+      if (window.AIOS && window.AIOS.Resources && _rProf) {
+        try {
+          var _rPrio = window.AIOS.Resources.getPriority(_rProf);
+          if (_rPrio && _rPrio.length > 0) {
+            _rOpt1 = _rPrio[0].label;
+          }
+        } catch(_rE) { /* keep default */ }
+      }
+      return 'Welcome back' + (_rName ? ', ' + _rName : '') + '.' + _rSummary + ' What would you like to work on?\n\n[OPTIONS: ' + _rOpt1 + ' | Upload a document | Check my benefits | Update my info | Start over]';
     }
     return null;
   }
@@ -2103,6 +2151,22 @@
 
     addMessage('Uploaded: ' + fileNames, 'user');
 
+    // Phase 42: persist uploaded documents to dashboard if logged in
+    if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn() &&
+        AAAI.auth.saveUploadedDocument) {
+      pendingFiles.forEach(function(pf) {
+        var extractedProfile = (window.AIOS && window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
+        AAAI.auth.saveUploadedDocument(pf.name, pf.docType, extractedProfile).then(function(res) {
+          if (res && !res.error) log('Upload', 'saved ' + pf.name + ' to dashboard');
+        }).catch(function(e) { log('Upload', 'save error: ' + (e && e.message)); });
+      });
+    }
+
+    // Phase 42: voice immediate acknowledgment — let the user know we received the file
+    if (inputMode === 'voice' && typeof RealtimeVoice !== 'undefined' && RealtimeVoice.getState() !== 'idle' && RealtimeVoice.sendText) {
+      RealtimeVoice.sendText('[SYSTEM: The veteran just uploaded ' + files.length + ' document(s). Say ONLY: "Got it — I\'m reviewing your document now." Do NOT say anything else until you receive the full document content.]');
+    }
+
     var notice = document.createElement('div');
     notice.className = 'message message--upload-notice';
     notice.innerHTML = '<strong>Processing ' + files.length + ' document' + (files.length > 1 ? 's' : '') + '...</strong><br>Extracting your service information to personalize your plan.';
@@ -2111,7 +2175,23 @@
 
     processUploads(pendingFiles).then(function(extractedText) {
       notice.remove();
-      var uploadContext = '[SYSTEM: Veteran uploaded ' + files.length + ' document(s): ' + docTypes + '. ' +
+      // Phase 42: build missing-fields hint from memory profile after extraction
+      var _missingHint = '';
+      if (window.AIOS && window.AIOS.Memory) {
+        var _prof42 = window.AIOS.Memory.getProfile();
+        var _missing42 = [];
+        if (!_prof42.branch)                                             _missing42.push('branch of service');
+        if (_prof42.vaRating === null || _prof42.vaRating === undefined) _missing42.push('VA disability rating');
+        if (!_prof42.dischargeStatus)                                    _missing42.push('character of discharge');
+        if (!_prof42.state)                                              _missing42.push('state of residence');
+        if (!_prof42.rank)                                               _missing42.push('rank/pay grade');
+        if (!_prof42.mos)                                                _missing42.push('MOS/AFSC');
+        if (!_prof42.separationDate)                                     _missing42.push('separation date');
+        if (_missing42.length > 0) {
+          _missingHint = ' Fields still needed: ' + _missing42.join(', ') + '.';
+        }
+      }
+      var uploadContext = '[SYSTEM: Veteran uploaded ' + files.length + ' document(s): ' + docTypes + '.' + _missingHint + ' ' +
         'Extracted content below. Use this to skip questions you can answer from the documents. ' +
         'Confirm what you found with the veteran before proceeding.]\n\n' +
         'Document content:\n' + extractedText;
@@ -2138,6 +2218,15 @@
       chain = chain.then(function() {
         if (pf.file.type === 'text/plain') {
           return pf.file.text().then(function(text) {
+            // Phase 42: extract structured memory fields from document text
+            if (window.AIOS &&
+                window.AIOS.Skills && window.AIOS.Skills['document-analyzer'] &&
+                window.AIOS.Memory) {
+              var _da = window.AIOS.Skills['document-analyzer'];
+              var _typeId = _da.detectType(text);
+              var _extracted = _da.extractDocumentFields(_typeId, text);
+              window.AIOS.Memory.mergeDocumentMemory(_extracted);
+            }
             results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n' + text);
           });
         } else if (pf.file.type.startsWith('image/')) {

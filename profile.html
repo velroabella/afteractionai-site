@@ -103,10 +103,14 @@
     <div class="dashboard__stat">
       <div class="dashboard__stat-item">
         <div class="dashboard__stat-number" id="statTotal">0</div>
-        <div class="dashboard__stat-label">Total Tasks</div>
+        <div class="dashboard__stat-label">Total</div>
       </div>
       <div class="dashboard__stat-item">
-        <div class="dashboard__stat-number" id="statCompleted">0</div>
+        <div class="dashboard__stat-number" id="statInProgress" style="color:var(--gold,#c4a035);">0</div>
+        <div class="dashboard__stat-label">In Progress</div>
+      </div>
+      <div class="dashboard__stat-item">
+        <div class="dashboard__stat-number" id="statCompleted" style="color:#16a34a;">0</div>
         <div class="dashboard__stat-label">Completed</div>
       </div>
       <div class="dashboard__stat-item">
@@ -114,8 +118,10 @@
         <div class="dashboard__stat-label">Progress</div>
       </div>
     </div>
-    <div style="margin-top:16px;">
-      <a href="index.html" style="color:var(--gold);font-weight:600;font-size:0.9rem;">Continue Mission →</a>
+    <!-- Phase 45: mission stage label — derived from completion % -->
+    <div id="missionStageLabel" style="font-size:0.8rem;color:var(--gray-500,#6b7280);margin-top:10px;min-height:1.2em;"></div>
+    <div style="margin-top:12px;">
+      <a href="index.html?resume=1" style="color:var(--gold);font-weight:600;font-size:0.9rem;">Continue Mission →</a>
     </div>
   </div>
 
@@ -143,6 +149,8 @@
     <div id="dashChecklist">
       <p style="font-size:0.9rem;color:var(--gray-500);">No checklist items yet. Complete a conversation to generate your mission checklist.</p>
     </div>
+    <!-- Phase 45: completed summary strip — populated by renderCompletedSummary() -->
+    <div id="dashCompletedSummary"></div>
   </div>
 
   <!-- Goals / Focus Areas -->
@@ -178,6 +186,14 @@
     <h3>My Documents</h3>
     <div id="dashOutputs">
       <p style="font-size:0.9rem;color:var(--gray-500);">No templates completed yet. Start a task from your Mission Checklist to generate documents.</p>
+    </div>
+  </div>
+
+  <!-- Uploaded Documents — Phase 42 -->
+  <div class="dashboard__card">
+    <h3>My Uploaded Documents</h3>
+    <div id="dashUploadedDocs">
+      <p style="font-size:0.9rem;color:var(--gray-500);">No documents uploaded yet. <a href="index.html" style="color:var(--gold);">Start a conversation</a> and upload your DD-214, VA letters, or other documents.</p>
     </div>
   </div>
 
@@ -236,6 +252,43 @@
 </div>
 
 <script src="js/action-engine.js"></script>
+<script src="js/aios/resource-mapper.js"></script><!-- Phase 43 -->
+
+<!-- Phase 42: Dashboard render for uploaded documents -->
+<script>
+(function() {
+  // Wait for auth to be ready
+  function renderUploadedDocs() {
+    if (!window.AAAI || !AAAI.auth || !AAAI.auth.isLoggedIn || !AAAI.auth.isLoggedIn()) return;
+    if (!AAAI.auth.loadUploadedDocuments) return;
+    AAAI.auth.loadUploadedDocuments().then(function(result) {
+      var el = document.getElementById('dashUploadedDocs');
+      if (!el || !result || !result.data || result.data.length === 0) return;
+      var html = '';
+      result.data.forEach(function(doc) {
+        var meta = doc.metadata || {};
+        var date = doc.created_at ? new Date(doc.created_at).toLocaleDateString() : '';
+        html += '<div style="padding:10px 0;border-bottom:1px solid var(--gray-200,#eee);">' +
+          '<strong style="color:var(--gold,#c4a035);">' + (meta.docType || 'Document') + '</strong>' +
+          '<span style="margin-left:8px;font-size:0.85rem;color:var(--gray-500,#888);">' + (doc.title || '') + '</span>' +
+          '<span style="float:right;font-size:0.8rem;color:var(--gray-500,#888);">' + date + '</span>' +
+          '</div>';
+      });
+      el.innerHTML = html;
+    }).catch(function() {});
+  }
+  // Retry until auth is initialized
+  var _retries = 0;
+  var _intv = setInterval(function() {
+    _retries++;
+    if (_retries > 20) { clearInterval(_intv); return; }
+    if (window.AAAI && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn()) {
+      clearInterval(_intv);
+      renderUploadedDocs();
+    }
+  }, 500);
+})();
+</script>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -333,10 +386,22 @@ function toggleMenu() {
     var btnClass = isInProg ? 'aios-next-step__btn--resume' : 'aios-next-step__btn--start';
     var btnLabel = isInProg ? '↩ Resume Task' : '▶ Start This Task';
     var catBadge = CAT_LABELS[next.category] || next.category || '';
+    // Phase 45: mission context line — shows completed + remaining counts
+    var _completedCnt  = items.filter(function(i) { return i.status === 'completed'; }).length;
+    var _remainingCnt  = items.filter(function(i) { return i.status === 'not_started' || i.status === 'in_progress'; }).length;
+    var _inProgCnt     = items.filter(function(i) { return i.status === 'in_progress'; }).length;
+    var _ctxParts = [];
+    if (_completedCnt > 0)  _ctxParts.push(_completedCnt + ' completed');
+    if (_inProgCnt > 0)     _ctxParts.push(_inProgCnt + ' in progress');
+    if (_remainingCnt > 0)  _ctxParts.push(_remainingCnt + ' remaining');
+    var _ctxLine = _ctxParts.length > 0
+      ? '<div style="font-size:0.73rem;color:var(--gray-400,#9ca3af);margin-top:5px;">' + _ctxParts.join(' · ') + '</div>'
+      : '';
     banner.innerHTML =
       '<div class="aios-next-step__label">' + (isInProg ? '↩ Resume Where You Left Off' : '▶ Your Next Step') + '</div>' +
       '<div class="aios-next-step__title">' + escHtml(next.title) + '</div>' +
       (next.description ? '<div class="aios-next-step__desc">' + escHtml(next.description) + '</div>' : '') +
+      _ctxLine +
       '<div class="aios-next-step__actions">' +
         '<button class="aios-next-step__btn ' + btnClass + '" ' +
           'onclick="aiosNextStepClick(\'' + next.id + '\',\'' + escAttr(next.title) + '\',\'' + next.status + '\')">' +
@@ -363,9 +428,13 @@ function toggleMenu() {
     tabs.forEach(function(t) {
       var c = counts[t.key] || 0;
       var isActive = _activeFilter === t.key;
+      // Phase 45: tint the Done tab count green when there are completed items
+      var countStyle = (t.key === 'completed' && c > 0 && !isActive)
+        ? ' style="color:#16a34a;font-weight:700;"'
+        : '';
       html += '<button class="aios-filter-tab' + (isActive ? ' aios-filter-tab--active' : '') + '" ' +
         'onclick="aiosSetFilter(\'' + t.key + '\')">' +
-        t.label + '<span class="aios-filter-count">' + c + '</span></button>';
+        t.label + '<span class="aios-filter-count"' + countStyle + '>' + c + '</span></button>';
     });
     html += '</div>';
     var filtersEl = document.getElementById('dashChecklistFilters');
@@ -373,9 +442,17 @@ function toggleMenu() {
   }
 
   // ── CHECKLIST RENDERER ────────────────────────────────
+  // Phase 45 additions:
+  //   • in_progress rows get a gold left-border for visual priority
+  //   • 'all' filter separates active from completed groups with a heading
+  //   • completed summary strip is hidden when Done tab is active
   function renderChecklist(items, filter) {
     var checklistEl = document.getElementById('dashChecklist');
     if (!checklistEl) return;
+
+    // Phase 45: hide completed summary strip when Done tab is active (avoids duplication)
+    var summaryEl = document.getElementById('dashCompletedSummary');
+    if (summaryEl) summaryEl.style.display = (filter === 'completed') ? 'none' : '';
 
     var filtered = items.filter(function(i) {
       if (filter === 'active')      return i.status === 'not_started' || i.status === 'in_progress';
@@ -396,77 +473,151 @@ function toggleMenu() {
     var html = '';
 
     // ── INTELLIGENCE SIGNAL ─────────────────────────────
-    // Show guidance text above the list when viewing active/in_progress tasks
     var hasActiveItems = filtered.some(function(i) { return i.status === 'not_started' || i.status === 'in_progress'; });
     if ((filter === 'active' || filter === 'in_progress') && hasActiveItems) {
       html += '<div class="aios-intelligence-signal">Based on your situation, we recommend starting here:</div>';
     }
 
-    // Cap visible items — show more link if needed
-    var maxShow = 10;
-    var showItems = filtered.slice(0, maxShow);
-
-    showItems.forEach(function(item) {
-      var s = item.status || 'not_started';
-      var isDone = s === 'completed';
-      var isSkip = s === 'skipped';
-      var isInProg = s === 'in_progress';
-      var catCls = 'aios-item__badge--' + (item.category || 'optional');
-      var catLabel = CAT_LABELS[item.category] || item.category || '';
-      var statusCls = 'aios-item__status-badge--' + s;
-      var statusLabel = STATUS_LABELS[s] || s;
-      var rowCls = 'aios-item' + (isDone ? ' aios-item--completed' : '') + (isSkip ? ' aios-item--skipped' : '') + (isInProg ? ' aios-item--in_progress' : '');
-
-      // Action buttons based on current status
-      var actionBtns = '';
-      if (s === 'not_started') {
-        actionBtns = '<button class="aios-item__btn aios-item__btn--start" onclick="aiosSetStatus(\'' + item.id + '\',\'in_progress\',this)">▶ Start</button>' +
-                     '<button class="aios-item__btn aios-item__btn--skip"  onclick="aiosSetStatus(\'' + item.id + '\',\'skipped\',this)">Skip</button>';
-      } else if (s === 'in_progress') {
-        actionBtns = '<button class="aios-item__btn aios-item__btn--done" onclick="aiosSetStatus(\'' + item.id + '\',\'completed\',this)">✓ Done</button>' +
-                     '<button class="aios-item__btn aios-item__btn--skip"  onclick="aiosSetStatus(\'' + item.id + '\',\'skipped\',this)">Skip</button>';
-      } else if (s === 'completed' || s === 'skipped') {
-        actionBtns = '<button class="aios-item__btn aios-item__btn--undo"  onclick="aiosSetStatus(\'' + item.id + '\',\'not_started\',this)">Undo</button>';
-      }
-
-      var resourceLinkHtml = '';
-      if (item.resource_link) {
-        var isExt = /^https?:\/\//.test(item.resource_link);
-        var linkTarget = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
-        resourceLinkHtml = '<a href="' + escHtml(item.resource_link) + '" class="aios-item__resource-link"' + linkTarget + '>Take action →</a>';
-      }
-
-      html += '<div class="' + rowCls + '" data-id="' + item.id + '" data-status="' + s + '">' +
-        '<div class="aios-item__body">' +
-          '<div class="aios-item__title' + (isDone ? ' aios-item__title--done' : '') + '">' + escHtml(item.title) + '</div>' +
-          (item.description ? '<div class="aios-item__desc">' + escHtml(item.description) + '</div>' : '') +
-          '<div class="aios-item__meta">' +
-            '<span class="aios-item__badge ' + catCls + '">' + catLabel + '</span>' +
-            '<span class="aios-item__status-badge ' + statusCls + '">' + statusLabel + '</span>' +
-            resourceLinkHtml +
-          '</div>' +
-        '</div>' +
-        '<div class="aios-item__actions">' + actionBtns + '</div>' +
-      '</div>';
-    });
-
-    if (filtered.length > maxShow) {
-      html += '<p style="font-size:0.8rem;color:var(--gray-500);margin-top:10px;">Showing ' + maxShow + ' of ' + filtered.length + ' tasks in this view.</p>';
+    // Phase 45: for 'all' filter split into active + completed groups with a separator
+    var renderGroups;
+    if (filter === 'all') {
+      var activeGroup = filtered.filter(function(i) { return i.status === 'not_started' || i.status === 'in_progress'; });
+      var doneGroup   = filtered.filter(function(i) { return i.status === 'completed' || i.status === 'skipped'; });
+      renderGroups = [];
+      if (activeGroup.length > 0) renderGroups.push({ label: null,                                 items: activeGroup });
+      if (doneGroup.length > 0)   renderGroups.push({ label: '✓ Completed & Skipped (' + doneGroup.length + ')', items: doneGroup });
+    } else {
+      renderGroups = [{ label: null, items: filtered }];
     }
+
+    // Cap visible items per group
+    var maxShow = 10;
+
+    renderGroups.forEach(function(group) {
+      if (group.label) {
+        html += '<div style="margin-top:16px;margin-bottom:8px;font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#16a34a;">' + group.label + '</div>';
+      }
+      var showItems = group.items.slice(0, maxShow);
+      showItems.forEach(function(item) {
+        var s        = item.status || 'not_started';
+        var isDone   = s === 'completed';
+        var isSkip   = s === 'skipped';
+        var isInProg = s === 'in_progress';
+        var catCls   = 'aios-item__badge--' + (item.category || 'optional');
+        var catLabel = CAT_LABELS[item.category] || item.category || '';
+        var statusCls   = 'aios-item__status-badge--' + s;
+        var statusLabel = STATUS_LABELS[s] || s;
+        var rowCls = 'aios-item' + (isDone ? ' aios-item--completed' : '') + (isSkip ? ' aios-item--skipped' : '') + (isInProg ? ' aios-item--in_progress' : '');
+        // Phase 45: gold left-border on in_progress rows for visual priority
+        var inlineStyle = isInProg
+          ? ' style="border-left:3px solid var(--gold,#c4a035);padding-left:9px;margin-left:-9px;"'
+          : '';
+
+        var actionBtns = '';
+        if (s === 'not_started') {
+          actionBtns = '<button class="aios-item__btn aios-item__btn--start" onclick="aiosSetStatus(\'' + item.id + '\',\'in_progress\',this)">▶ Start</button>' +
+                       '<button class="aios-item__btn aios-item__btn--skip"  onclick="aiosSetStatus(\'' + item.id + '\',\'skipped\',this)">Skip</button>';
+        } else if (s === 'in_progress') {
+          actionBtns = '<button class="aios-item__btn aios-item__btn--done" onclick="aiosSetStatus(\'' + item.id + '\',\'completed\',this)">✓ Done</button>' +
+                       '<button class="aios-item__btn aios-item__btn--skip"  onclick="aiosSetStatus(\'' + item.id + '\',\'skipped\',this)">Skip</button>';
+        } else if (s === 'completed' || s === 'skipped') {
+          actionBtns = '<button class="aios-item__btn aios-item__btn--undo"  onclick="aiosSetStatus(\'' + item.id + '\',\'not_started\',this)">Undo</button>';
+        }
+
+        var resourceLinkHtml = '';
+        if (item.resource_link) {
+          var isExt = /^https?:\/\//.test(item.resource_link);
+          var linkTarget = isExt ? ' target="_blank" rel="noopener noreferrer"' : '';
+          resourceLinkHtml = '<a href="' + escHtml(item.resource_link) + '" class="aios-item__resource-link"' + linkTarget + '>Take action →</a>';
+        }
+
+        html += '<div class="' + rowCls + '" data-id="' + item.id + '" data-status="' + s + '"' + inlineStyle + '>' +
+          '<div class="aios-item__body">' +
+            '<div class="aios-item__title' + (isDone ? ' aios-item__title--done' : '') + '">' + escHtml(item.title) + '</div>' +
+            (item.description ? '<div class="aios-item__desc">' + escHtml(item.description) + '</div>' : '') +
+            '<div class="aios-item__meta">' +
+              '<span class="aios-item__badge ' + catCls + '">' + catLabel + '</span>' +
+              '<span class="aios-item__status-badge ' + statusCls + '">' + statusLabel + '</span>' +
+              resourceLinkHtml +
+            '</div>' +
+          '</div>' +
+          '<div class="aios-item__actions">' + actionBtns + '</div>' +
+        '</div>';
+      });
+      if (group.items.length > maxShow) {
+        html += '<p style="font-size:0.8rem;color:var(--gray-500);margin-top:10px;">Showing ' + maxShow + ' of ' + group.items.length + ' tasks in this view.</p>';
+      }
+    });
 
     checklistEl.innerHTML = html;
   }
 
   // ── PROGRESS STATS ────────────────────────────────────
   function updateStats(items) {
-    var total     = items.length;
-    var completed = items.filter(function(i) { return i.status === 'completed'; }).length;
-    var pct       = total > 0 ? Math.round((completed / total) * 100) : 0;
+    var total      = items.length;
+    var completed  = items.filter(function(i) { return i.status === 'completed'; }).length;
+    var inProgress = items.filter(function(i) { return i.status === 'in_progress'; }).length;
+    var pct        = total > 0 ? Math.round((completed / total) * 100) : 0;
+
     document.getElementById('statTotal').textContent     = total;
     document.getElementById('statCompleted').textContent = completed;
     document.getElementById('statProgress').textContent  = pct + '%';
     document.getElementById('progressFill').style.width  = pct + '%';
     document.getElementById('progressPct').textContent   = pct + '%';
+
+    // Phase 45: in-progress count
+    var ipEl = document.getElementById('statInProgress');
+    if (ipEl) ipEl.textContent = inProgress;
+
+    // Phase 45: mission stage label — derived from completion %
+    var stageEl = document.getElementById('missionStageLabel');
+    if (stageEl) {
+      var stage = '';
+      if (total === 0)    stage = '';
+      else if (pct === 0) stage = '🎯 Getting Started — begin your first task below';
+      else if (pct < 25)  stage = '📋 Early Progress — ' + completed + ' of ' + total + ' tasks done';
+      else if (pct < 50)  stage = '🔄 On Track — keep going, ' + (total - completed) + ' tasks remaining';
+      else if (pct < 75)  stage = '⚡ Making Progress — past the halfway point';
+      else if (pct < 100) stage = '🏁 Near Complete — ' + (total - completed) + ' tasks left';
+      else                stage = '🎖 Mission Complete — all tasks done';
+      stageEl.textContent = stage;
+    }
+
+    // Phase 45: update completed summary strip in checklist card
+    renderCompletedSummary(items);
+  }
+
+  // ── COMPLETED SUMMARY STRIP (Phase 45) ───────────────
+  // Shows last 3 completions inline in the checklist card with a "View all" link.
+  // Hides itself when filter is already showing completed items (avoids duplicate).
+  function renderCompletedSummary(items) {
+    var el = document.getElementById('dashCompletedSummary');
+    if (!el) return;
+    // Don't show when user is already viewing the Done tab
+    if (_activeFilter === 'completed') { el.innerHTML = ''; return; }
+    var done = items.filter(function(i) { return i.status === 'completed'; });
+    if (done.length === 0) { el.innerHTML = ''; return; }
+    var recent = done.slice(0, 3);
+    var html =
+      '<div style="margin-top:14px;border-top:1px solid var(--gray-200,#e5e7eb);padding-top:12px;">' +
+        '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">' +
+          '<span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:#16a34a;">✓ Completed (' + done.length + ')</span>' +
+          '<button onclick="window.aiosSetFilter(\'completed\')" ' +
+            'style="font-size:0.75rem;color:var(--gold,#c4a035);background:none;border:none;cursor:pointer;font-weight:600;padding:0;">' +
+            'View all →</button>' +
+        '</div>';
+    recent.forEach(function(item) {
+      html +=
+        '<div style="display:flex;align-items:center;gap:7px;padding:4px 0;font-size:0.83rem;color:var(--gray-500,#6b7280);">' +
+          '<span style="color:#16a34a;font-weight:700;flex-shrink:0;">✓</span>' +
+          '<span style="text-decoration:line-through;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">' + escHtml(item.title) + '</span>' +
+        '</div>';
+    });
+    if (done.length > 3) {
+      html += '<p style="font-size:0.73rem;color:var(--gray-400,#9ca3af);margin-top:4px;margin-bottom:0;">+ ' + (done.length - 3) + ' more completed</p>';
+    }
+    html += '</div>';
+    el.innerHTML = html;
   }
 
   // ── GLOBAL HANDLERS (called from inline onclick) ──────
@@ -664,6 +815,90 @@ function toggleMenu() {
                 }
               } catch(e) {
                 console.error('ActionEngine dashboard error:', e);
+              }
+            }
+
+            // Phase 44: Resource Priority Panel — linked action cards
+            // Constructs a synthetic AIOS-compatible profile from the Supabase profile
+            // so AIOS.Resources can score and prioritize without a live session.
+            // Each resource card now routes to its real internal destination (not just resume).
+            if (window.AIOS && window.AIOS.Resources) {
+              try {
+                var _resActionsEl = document.getElementById('dashActions');
+                // Build synthetic profile from Supabase profile fields
+                var _resSynth = {
+                  vaRating:        null,
+                  dischargeStatus: null,
+                  state:           (profile && profile.state) ? profile.state : null,
+                  employmentStatus: null,
+                  serviceEra:      null,
+                  currentGoals:    null,
+                  dependents:      null
+                };
+                // Parse disability rating band → approximate numeric rating for scoring
+                if (profile && profile.disability_rating) {
+                  var _rb = String(profile.disability_rating);
+                  if (/100/.test(_rb))           _resSynth.vaRating = 100;
+                  else if (/90/.test(_rb))        _resSynth.vaRating = 90;
+                  else if (/7[05]|80/.test(_rb))  _resSynth.vaRating = 70;
+                  else if (/5[05]|60/.test(_rb))  _resSynth.vaRating = 50;
+                  else if (/3[05]|40/.test(_rb))  _resSynth.vaRating = 30;
+                  else if (/[12][05]/.test(_rb))  _resSynth.vaRating = 10;
+                  else                            _resSynth.vaRating = 0;
+                }
+                // Derive employment and housing hints from issue_tags
+                if (profile && profile.issue_tags && profile.issue_tags.length > 0) {
+                  var _tagStr = profile.issue_tags.map(function(t) { return t.issue || ''; }).join(' ');
+                  if (/employ|job|career|work/i.test(_tagStr)) _resSynth.employmentStatus = 'job searching';
+                  if (/hous|home|rent/i.test(_tagStr))         _resSynth.currentGoals = 'housing assistance';
+                }
+                // Get prioritized resource list — now includes destination + actionText
+                var _resDashPriority = window.AIOS.Resources.getPriority(_resSynth);
+                if (_resDashPriority && _resDashPriority.length > 0 && _resActionsEl) {
+                  // Group by scope: federal → state → online
+                  var _resGroups = { federal: [], state: [], online: [] };
+                  _resDashPriority.forEach(function(r) {
+                    var grp = (r.scope === 'federal' || r.scope === 'state') ? r.scope : 'online';
+                    _resGroups[grp].push(r);
+                  });
+                  var _scopeConfig = [
+                    { key: 'federal', label: 'Federal Resources',           color: '#1a56db', bg: '#eff6ff' },
+                    { key: 'state',   label: 'State Resources',             color: '#0e9f6e', bg: '#f0fdf4' },
+                    { key: 'online',  label: 'Community & Online Resources', color: '#7e3af2', bg: '#faf5ff' }
+                  ];
+                  var _resHtml = '<div style="margin-top:18px;border-top:1px solid var(--gray-200,#eee);padding-top:14px;">' +
+                    '<div style="font-size:0.75rem;font-weight:700;letter-spacing:.07em;color:var(--gray-500,#888);text-transform:uppercase;margin-bottom:12px;">Recommended Resources</div>';
+
+                  _scopeConfig.forEach(function(sc) {
+                    if (_resGroups[sc.key].length === 0) return;
+                    _resHtml += '<div style="margin-bottom:14px;">' +
+                      '<div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:' + sc.color + ';letter-spacing:.06em;margin-bottom:7px;">' + sc.label + '</div>' +
+                      '<div style="display:flex;flex-direction:column;gap:6px;">';
+
+                    _resGroups[sc.key].forEach(function(r) {
+                      // Determine if this is a direct internal page or an AI-guided route
+                      var _isAiRoute = r.destination && r.destination.indexOf('?resume=1') !== -1;
+                      var _destLabel = _isAiRoute ? 'Continue with AI →' : 'Go to page →';
+                      _resHtml +=
+                        '<a href="' + escHtml(r.destination) + '" ' +
+                        'style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:' + sc.bg + ';border:1px solid ' + sc.color + '22;border-radius:8px;text-decoration:none;gap:8px;">' +
+                          '<div>' +
+                            '<div style="font-size:0.85rem;font-weight:600;color:var(--gray-800,#1f2937);">' + escHtml(r.actionText) + '</div>' +
+                            '<div style="font-size:0.75rem;color:var(--gray-500,#6b7280);margin-top:2px;">' + escHtml(r.label) + '</div>' +
+                          '</div>' +
+                          '<span style="font-size:0.75rem;color:' + sc.color + ';font-weight:600;white-space:nowrap;">' + _destLabel + '</span>' +
+                        '</a>';
+                    });
+
+                    _resHtml += '</div></div>';
+                  });
+
+                  _resHtml += '</div>';
+                  _resActionsEl.innerHTML += _resHtml;
+                  console.log('[AIOS][RESOURCES] Dashboard: rendered ' + _resDashPriority.length + ' resource cards');
+                }
+              } catch(_resE) {
+                console.warn('[AIOS] Resource panel error:', _resE);
               }
             }
           }

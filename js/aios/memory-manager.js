@@ -358,7 +358,12 @@
       activeMissions:   null,
       // Phase 37 additions
       mos:              null,
-      dependents:       null
+      dependents:       null,
+      // Phase 42 additions — document extraction fields
+      rank:             null,
+      serviceEntryDate: null,
+      separationDate:   null,
+      conditions:       null
     },
 
 
@@ -399,7 +404,8 @@
         dischargeStatus: null, vaRating: null, state: null,
         primaryNeed: null, needs: [], documents: [],
         employmentStatus: null, currentGoals: null, activeMissions: null,
-        mos: null, dependents: null
+        mos: null, dependents: null,
+        rank: null, serviceEntryDate: null, separationDate: null, conditions: null
       };
     },
 
@@ -775,6 +781,24 @@
       };
     },
 
+    /**
+     * Merge structured fields extracted from an uploaded document into
+     * the session profile.  Phase 42 — Document-Driven Planning Flow.
+     *
+     * Uses mergeMemory safe-merge rules: existing valid profile data is
+     * NEVER overwritten by incoming values — only fills in missing fields.
+     * Accepts the output of DocumentAnalyzer.extractDocumentFields() directly.
+     *
+     * @param {Object} extractedFields - Partial memory object from document extraction
+     */
+    mergeDocumentMemory: function(extractedFields) {
+      if (!extractedFields || typeof extractedFields !== 'object') return;
+      if (Object.keys(extractedFields).length === 0) return;
+      MemoryManager.profile = MemoryManager.mergeMemory(MemoryManager.profile, extractedFields);
+      console.log('[AIOS][MEMORY] Document merge — ' +
+        (MemoryManager.buildMemorySummary(MemoryManager.profile) || 'no fields set'));
+    },
+
     buildMemorySummary: function(memory) {
       if (!memory || typeof memory !== 'object') return '';
 
@@ -789,7 +813,11 @@
       if (isValidValue(memory.vaRating) || memory.vaRating === 0)
                                                   parts.push('VA rating: ' + memory.vaRating + '%');
       if (isValidValue(memory.mos))              parts.push('MOS/AFSC: ' + memory.mos);
+      if (isValidValue(memory.rank))             parts.push('Rank: ' + memory.rank);
       if (isValidValue(memory.dependents))       parts.push('Dependents: ' + memory.dependents);
+      if (isValidValue(memory.serviceEntryDate)) parts.push('Entered: ' + memory.serviceEntryDate);
+      if (isValidValue(memory.separationDate))   parts.push('Separated: ' + memory.separationDate);
+      if (isValidValue(memory.conditions))       parts.push('Conditions: ' + memory.conditions);
       if (isValidValue(memory.currentGoals))     parts.push('Goal: ' + memory.currentGoals);
       if (isValidValue(memory.activeMissions))   parts.push('Mission: ' + memory.activeMissions);
 

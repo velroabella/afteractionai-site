@@ -252,6 +252,89 @@
 
   };
 
+  /* ── Phase 42: Extraction maps — structured field regex per doc type ── */
+  // Keyed by TYPE_PATTERNS id. Each field is an array of regex patterns;
+  // the first match wins. extractDocumentFields() uses these to populate
+  // AIOS.Memory without touching the AI layer.
+  var EXTRACTION_MAPS = {
+
+    'dd214': {
+      branch: [
+        /branch\s+of\s+service[:\s]+([A-Za-z][A-Za-z\s]{2,28}?)(?:\s*[-\n]|\s{2,}|,|$)/i,
+        /component\s+type[:\s]+([A-Za-z][A-Za-z\s]{2,28}?)(?:\s*[-\n]|\s{2,}|,|$)/i
+      ],
+      dischargeStatus: [
+        /character\s+of\s+(?:discharge|service)[:\s]+(honorable|general(?:\s*[-\/]\s*under\s+honorable\s+conditions)?|other\s+than\s+honorable|bad\s+conduct|dishonorable|medical|uncharacterized)/i,
+        /type\s+of\s+(?:separation|discharge)[:\s]+(honorable|general|other\s+than\s+honorable|bad\s+conduct|dishonorable|medical)/i
+      ],
+      mos: [
+        /(?:military\s+occupational\s+specialty(?:\s+or\s+(?:rate|title))?)[:\s]+([A-Z0-9]{2,10})/i,
+        /(?:\bmos\b|\bafsc\b|\bnec\b)[:\s]+([A-Z0-9]{2,10})/i
+      ],
+      rank: [
+        /(?:grade|rank|rate)[,:\s]+([A-Za-z][A-Za-z0-9\s\/\-]{1,30}?)(?:\s*[-\n]|\s{2,}|,|$)/i,
+        /pay\s+grade[:\s]+((?:E|O|W)-?\d{1,2})/i
+      ],
+      serviceEntryDate: [
+        /(?:date\s+entered\s+(?:ad|active\s+duty)(?:\s+this\s+period)?|entry\s+date|enlistment\s+date)[:\s]+(\d{1,2}[\s\/\-]\w{3,9}[\s\/\-]\d{2,4})/i,
+        /(?:12a|entered)[.\s:]+(\d{1,2}[\s\/\-]\d{1,2}[\s\/\-]\d{2,4})/i
+      ],
+      separationDate: [
+        /(?:separation\s+date|date\s+of\s+separation|discharge\s+date)[:\s]+(\d{1,2}[\s\/\-]\w{3,9}[\s\/\-]\d{2,4})/i,
+        /(?:12b|separated)[.\s:]+(\d{1,2}[\s\/\-]\d{1,2}[\s\/\-]\d{2,4})/i
+      ]
+    },
+
+    'rating-decision': {
+      vaRating: [
+        /combined\s+(?:disability\s+)?(?:rating|evaluation)[:\s]+(\d{1,3})\s*%/i,
+        /your\s+(?:combined\s+)?(?:rating|evaluation)\s+is\s+(\d{1,3})\s*%/i,
+        /(\d{1,3})\s*%\s+(?:combined|total\s+disability)/i,
+        /combined\s+evaluation\s+for\s+compensation[:\s]+(\d{1,3})\s*%/i
+      ],
+      conditions: [
+        /(?:service[- ]connected|rated)\s+(?:conditions?|disabilities?)[:\s]+(.{10,200}?)(?:\n\n|\beffective\b|$)/i
+      ]
+    },
+
+    'va-letter': {
+      vaRating: [
+        /(?:combined\s+)?(?:disability\s+)?rating[:\s]+(\d{1,3})\s*%/i,
+        /rated\s+(?:at\s+)?(\d{1,3})\s*%\s+(?:disabled|for\s+disability)/i,
+        /service[- ]connected\s+disability\s+rating[:\s]+(\d{1,3})\s*%/i
+      ]
+    },
+
+    'transcript': {
+      mos: [
+        /(?:military\s+occupational\s+specialty|mos|afsc)[:\s]+([A-Z0-9]{2,10})/i
+      ],
+      branch: [
+        /branch[:\s]+(army|navy|air\s+force|marine\s+corps|coast\s+guard|space\s+force|national\s+guard)/i,
+        /(?:service\s+component|military\s+service)[:\s]+(army|navy|air\s+force|marine\s+corps|coast\s+guard|space\s+force|national\s+guard)/i
+      ]
+    }
+
+  };
+
+  /* Normalize extracted discharge value → canonical label for AIOS.Memory */
+  function _normalizeDischarge(raw) {
+    if (!raw) return null;
+    var s = raw.toLowerCase().trim();
+    if (s === 'honorable') return 'Honorable';
+    if (s.indexOf('bad conduct') !== -1 || s === 'bcd') return 'Bad Conduct';
+    if (s === 'dishonorable') return 'Dishonorable';
+    if (s === 'medical') return 'Medical';
+    if (s.indexOf('other than') !== -1) return 'Other Than Honorable';
+    if (s.indexOf('general') !== -1) return 'General';
+    return null;
+  }
+
+  /* Title-case a string (e.g. "AIR FORCE" → "Air Force") */
+  function _docTitleCase(str) {
+    return str.toLowerCase().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+  }
+
   /* ── Placeholder prompt (PDF/image not readable) ────────── */
   var PLACEHOLDER_PROMPT = [
     '## DOCUMENT ANALYSIS MODE — FILE NOT READABLE AS TEXT',
@@ -299,6 +382,83 @@
     requiredFields: [],
 
     supportedTypes: ['dd214', 'va-letter', 'medical', 'rating-decision', 'appeal', 'transcript', 'unknown'],
+
+    /**
+     * Expose internal type detector so app.js upload flow can identify
+     * a document type before calling extractDocumentFields.
+     * Phase 42.
+     * @param {string} text - Raw document text
+     * @returns {string} Doc type ID (e.g. 'dd214', 'rating-decision', 'unknown')
+     */
+    detectType: function(text) {
+      return _detectDocType(text);
+    },
+
+    /**
+     * Extract structured veteran-profile fields from document text.
+     * Phase 42 — Document-Driven Planning Flow.
+     *
+     * Uses EXTRACTION_MAPS regex patterns; only fields with high-confidence
+     * matches are returned. Result is suitable for AIOS.Memory.mergeDocumentMemory().
+     *
+     * Normalization:
+     *   - vaRating       → integer 0–100
+     *   - dischargeStatus → canonical label via _normalizeDischarge()
+     *   - branch          → Title Case via _docTitleCase()
+     *   - mos             → UPPER CASE (standard code format)
+     *
+     * @param {string} docType      - Doc type ID from EXTRACTION_MAPS keys
+     * @param {string} documentText - Raw extracted text content
+     * @returns {Object} Partial memory object — only matched keys present
+     */
+    extractDocumentFields: function(docType, documentText) {
+      if (!documentText || typeof documentText !== 'string') return {};
+      var map = EXTRACTION_MAPS[docType];
+      if (!map) return {};
+
+      var result = {};
+      var fields = Object.keys(map);
+      for (var fi = 0; fi < fields.length; fi++) {
+        var fieldName = fields[fi];
+        var patterns = map[fieldName];
+        for (var pi = 0; pi < patterns.length; pi++) {
+          var m = documentText.match(patterns[pi]);
+          if (m && m[1]) {
+            var val = m[1].trim().replace(/\s+/g, ' ');
+            if (fieldName === 'vaRating') {
+              var num = parseInt(val, 10);
+              if (!isNaN(num) && num >= 0 && num <= 100) {
+                result.vaRating = num;
+                break;
+              }
+            } else if (fieldName === 'dischargeStatus') {
+              var norm = _normalizeDischarge(val);
+              if (norm) {
+                result.dischargeStatus = norm;
+                break;
+              }
+            } else if (fieldName === 'branch') {
+              result.branch = _docTitleCase(val);
+              break;
+            } else if (fieldName === 'rank') {
+              result.rank = _docTitleCase(val);
+              break;
+            } else if (fieldName === 'serviceEntryDate' || fieldName === 'separationDate') {
+              result[fieldName] = val;
+              break;
+            } else if (fieldName === 'conditions') {
+              result.conditions = val.trim();
+              break;
+            } else {
+              // MOS and other code-style fields — uppercase
+              result[fieldName] = val.toUpperCase();
+              break;
+            }
+          }
+        }
+      }
+      return result;
+    },
 
     /**
      * Execute the skill against the current context.

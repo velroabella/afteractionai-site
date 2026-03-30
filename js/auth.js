@@ -414,6 +414,36 @@
     return { data, error };
   }
 
+  // ── UPLOADED DOCUMENTS (Phase 42) ────────────────────
+  // Uses template_outputs table with template_type='uploaded_document'
+  // so no new Supabase table is needed.
+  async function saveUploadedDocument(fileName, docType, extractedFields) {
+    if (!currentUser) return { data: null, error: 'Not logged in' };
+    const { data, error } = await supabase
+      .from('template_outputs')
+      .insert({
+        user_id: currentUser.id,
+        template_type: 'uploaded_document',
+        title: fileName,
+        content: JSON.stringify({ docType: docType, extractedFields: extractedFields || {} }),
+        metadata: { source: 'upload', docType: docType, uploadedAt: new Date().toISOString() }
+      })
+      .select()
+      .single();
+    return { data, error };
+  }
+
+  async function loadUploadedDocuments() {
+    if (!currentUser) return { data: null, error: 'Not logged in' };
+    const { data, error } = await supabase
+      .from('template_outputs')
+      .select('*')
+      .eq('user_id', currentUser.id)
+      .eq('template_type', 'uploaded_document')
+      .order('created_at', { ascending: false });
+    return { data, error };
+  }
+
   async function loadReports() {
     if (!currentUser) return { data: null, error: 'Not logged in' };
     const { data, error } = await supabase
@@ -668,7 +698,9 @@
     updateConsent,
     updateSegmentation,
     saveAIOSMemory,
-    loadAIOSMemory
+    loadAIOSMemory,
+    saveUploadedDocument,
+    loadUploadedDocuments
     // C-02 FIX: supabase client intentionally NOT exposed on public API
     // Exposing it allowed any user to run authenticated queries via DevTools
     // All database operations must go through the methods above

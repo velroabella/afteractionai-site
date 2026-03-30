@@ -66,6 +66,12 @@
     /* ── Pass 1: Remove eligibility block (lowest priority) ── */
     _removeSection('## ELIGIBILITY CONTEXT', 'eligibility');
 
+    /* ── Pass 1.5: Remove resource context (Phase 43) ────────
+       Lower value than eligibility under budget pressure because
+       eligibility drives direct benefit routing; resource context
+       is supplemental category guidance.                       */
+    _removeSection('## RESOURCE CONTEXT', 'resource-context');
+
     /* ── Pass 2: Strip soft memory fields ────────────────────
        Keep only: header, Name, Branch, Era, Discharge, VA Rating.
        Remove: State, Employment, Goals, Needs, PrimaryNeed.
@@ -314,6 +320,32 @@
         }
       }
 
+      // Resource context — Phase 43
+      // Source: window.AIOS.Resources.getPriority() using current memory profile.
+      // Injected when at least one resource category matches the veteran's profile.
+      // Top 4 priority categories shown with scope label so AI can focus its recommendations.
+      // Omitted entirely when no profile data is present (nothing to score against).
+      var _Resources = window.AIOS && window.AIOS.Resources;
+      var _hasResourceCtx = false; // hoisted for meta access below
+      if (_Resources && opts.memoryContext) {
+        try {
+          var _resPriority = _Resources.getPriority(opts.memoryContext);
+          if (_resPriority && _resPriority.length > 0) {
+            var _resLines = ['## RESOURCE CONTEXT'];
+            var _topRes = _resPriority.slice(0, 4);
+            for (var _ri = 0; _ri < _topRes.length; _ri++) {
+              _resLines.push('- [' + _topRes[_ri].scope.toUpperCase() + '] ' + _topRes[_ri].label);
+            }
+            if (opts.memoryContext.state) {
+              _resLines.push('- State context: ' + opts.memoryContext.state + ' (state-specific programs may apply)');
+            }
+            _resLines.push('Use these categories to guide your recommendations and structure any report sections.');
+            systemParts.push(_resLines.join('\n'));
+            _hasResourceCtx = true;
+          }
+        } catch (_resErr) { /* skip if resource mapper unavailable */ }
+      }
+
       // Eligibility context — Phase 23
       // Source: window.AIOS.Eligibility.score() using current memory profile.
       // Injected only when the profile has at least one scoring signal.
@@ -437,6 +469,7 @@
         matched: (opts.routeResult && opts.routeResult.matched) || null,
         escalationTier: _tier,                        // Phase 22
         hasEligibilityContext: !!(_eligSummary),      // Phase 23
+        hasResourceContext: !!_hasResourceCtx,        // Phase 43
         hasMemory: !!opts.memoryContext,
         hasMission: !!(_Mission && _Mission.current),
         hasPageContext: !!opts.pageContext,
