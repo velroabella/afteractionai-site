@@ -61,26 +61,34 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
 - Recommend VSOs (DAV, VFW, American Legion) for free help with claims
 - Mention the Veterans Crisis Line (988, Press 1) at the end of action plan delivery`;
 
-    // Phase 41 — Realtime session payload fix.
+    // Phase 41 (repaired) — Correct client_secrets session payload structure.
     //
-    // The /v1/realtime/client_secrets endpoint does NOT accept turn_detection
-    // in the session creation body (error: "Unknown parameter: 'session.turn_detection'").
-    // VAD config (server_vad, threshold, silence_duration_ms) is applied via
-    // session.update after the WebRTC connection is established in js/realtime-voice.js.
+    // session.type = 'realtime' is REQUIRED — omitting it causes
+    //   "Missing required parameter: 'session.type'"
     //
-    // Also fixed:
-    //   session.audio.output.voice  → session.voice  (correct API schema position)
-    //   session.type                → removed         (not a valid session field)
+    // Schema rules for /v1/realtime/client_secrets:
+    //   • turn_detection lives under audio.input   (not session.turn_detection)
+    //   • transcription  lives under audio.input.transcription
+    //   • voice          lives under audio.output  (not session.voice)
     const requestBody = {
       session: {
+        type: 'realtime',
         model: 'gpt-4o-realtime-preview',
-        voice: 'ash',
         instructions: VOICE_INSTRUCTIONS,
-        input_audio_transcription: {
-          model: 'whisper-1'
+        audio: {
+          input: {
+            transcription: { model: 'whisper-1' },
+            turn_detection: {
+              type: 'server_vad',
+              threshold: 0.6,
+              prefix_padding_ms: 300,
+              silence_duration_ms: 800
+            }
+          },
+          output: {
+            voice: 'ash'
+          }
         }
-        // turn_detection is configured via session.update in js/realtime-voice.js
-        // after the WebRTC connection is established — do not add it here.
       }
     };
 
