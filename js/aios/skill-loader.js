@@ -17,7 +17,8 @@
     'state-benefits',
     'crisis-support',
     'next-action-planner',
-    'document-analyzer'
+    'document-analyzer',
+    'family-survivor-support'   // Phase 38
   ];
 
 

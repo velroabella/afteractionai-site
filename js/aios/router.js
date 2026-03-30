@@ -19,6 +19,7 @@
     STATE_BENEFITS:     'state-benefits',
     NEXT_STEP:          'next-action-planner',
     DOCUMENT_ANALYSIS:  'document-analyzer',
+    FAMILY_SURVIVOR:    'family-survivor-support',  // Phase 38
     GENERAL_QUESTION:   null   // no skill — handled by core prompt
   };
 
@@ -59,6 +60,32 @@
         'action plan', 'next steps', 'what should i do', 'where do i start',
         'priorities', 'checklist', 'after action', 'my report', 'summary',
         'what now', 'most important', 'first thing'
+      ]
+    },
+    // Phase 38: Family/Survivor intent — checked before BENEFITS_DISCOVERY
+    // because survivor-specific phrases are more precise; a surviving spouse
+    // asking about "survivor benefits" or "champva" should never fall to
+    // the generic benefits-discovery path.
+    // NOTE: single-letter acronyms (DIC) are intentionally spelled out as
+    // multi-word phrases to avoid false substring matches.
+    {
+      intent: 'FAMILY_SURVIVOR',
+      keywords: [
+        'surviving spouse', 'gold star', 'survivor benefits', 'survivor pension',
+        'survivors pension', 'killed in action', 'killed in the line of duty',
+        'died in service', 'died serving', 'fell in combat', 'fallen service member',
+        'husband was killed', 'wife was killed', 'my spouse was killed',
+        'husband died in', 'wife died in', 'my partner died',
+        'dependency and indemnity', 'champva', 'champ va',
+        'chapter 35', 'dea education', 'dependents educational assistance',
+        'gold star family', 'gold star wife', 'gold star mother',
+        'death benefit', 'burial allowance', 'burial benefit',
+        'widow of a veteran', 'widower of a veteran',
+        "i'm a family member", 'i am a family member',
+        'my family lost', 'family member of a veteran',
+        'caregiver stipend', 'pcafc', 'program of comprehensive assistance',
+        'survivor benefit plan', 'sbp annuity',
+        'taps grief', 'tragedy assistance'
       ]
     },
     {
@@ -201,7 +228,10 @@
           'resume', 'education', 'healthcare', 'pension', 'dental',
           'vision', 'caregiver', 'homeless', 'employment', 'burial',
           'loan', 'insurance', 'aid', 'vet center', 'champva',
-          'appeal', 'nexus', 'c&p', 'comp', 'rating'
+          'appeal', 'nexus', 'c&p', 'comp', 'rating',
+          // Phase 38 additions — survivor/family short-input terms
+          'dic', 'gold star', 'survivor', 'surviving', 'widow', 'widower',
+          'death benefit', 'chapter 35', 'taps', 'sbp'
         ];
         // Also treat any US state name (2+ chars) or abbreviation as informative
         var stateTerms = [
