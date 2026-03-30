@@ -923,12 +923,17 @@
       });
       log('AIOS:VOICE', 'skill=' + _vSkill.name);
 
+      // Phase 36: include activeUserTopics so voice AIOS prompt stays in sync with
+      // any topic selections the user made via the sidebar or chip buttons.
+      var _vPageCtx = (window.activeUserTopics && window.activeUserTopics.length > 0)
+        ? { page: 'chat', topics: window.activeUserTopics, inputMode: 'voice' }
+        : null;
       var _vReq = window.AIOS.RequestBuilder.buildAIOSRequest({
         userMessage:   transcript,
         routeResult:   _vRoute,
         skillConfig:   _vSkillCfg,
-        memoryContext: window.AIOS.Memory ? window.AIOS.Memory.getProfile() : null
-        // pageContext omitted — voice mode has no topic sidebar
+        memoryContext: window.AIOS.Memory ? window.AIOS.Memory.getProfile() : null,
+        pageContext:   _vPageCtx
       });
 
       // ── 5. Inject via session.update ──────────────────
@@ -1001,10 +1006,14 @@
       if (isFinal) {
         log('RT.onUserTranscript', 'FINAL: ' + text.substring(0, 80));
         showCaption('You', text);
-        // Quality gate: reject too-short, pure filler, or background-noise transcripts
+        // Quality gate: reject single-char, pure filler, or background-noise transcripts.
+        // Phase 36: threshold lowered to 2 so valid short replies ("yes", "no", "ok",
+        // "yep", "nope") are never silently dropped.  Pure-numeric strings (tones/beeps
+        // transcribed as digits) and the tightest filler-only patterns are still blocked.
         var trimmed = (text || '').trim();
-        if (trimmed.length < 4 ||
-            /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|like|wait|hold on|okay wait|so+|mhm+|noise)\s*$/i.test(trimmed)) {
+        if (trimmed.length < 2 ||
+            /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|mhm+)\s*\.?$/i.test(trimmed) ||
+            /^[\d\s\.\,\!\?\-]+$/.test(trimmed)) {
           log('RT.onUserTranscript', 'REJECTED (filler/short/noise): "' + trimmed + '"');
           return;
         }
@@ -1017,7 +1026,8 @@
         _lastVoiceText = trimmed;
         // Phase 33: render bubble + escalation check via shared path (voiceOnly — Realtime drives response)
         submitUserText(trimmed, { voiceOnly: true, path: 'voice' });
-        conversationHistory.push({ role: 'user', content: text });
+        // Phase 36: use trimmed (consistent with bubble + memory extraction)
+        conversationHistory.push({ role: 'user', content: trimmed });
         // Phase 32: Telemetry — voice transcript accepted
         if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('voice_transcript_accepted', {}); }
         // Phase 19: AIOS voice intelligence — memory, mission, routing, session.update
@@ -1036,6 +1046,11 @@
 
     RealtimeVoice.onAIMessage = function(fullText) {
       log('RT.onAIMessage', 'length=' + fullText.length);
+      // Phase 36: Add AI voice response to conversationHistory so the Claude text model
+      // has continuity if the user switches from voice to text mid-session.
+      // Compact to 800 chars max — preserves meaningful context without flooding the token window.
+      var _vcAI = fullText.length > 800 ? fullText.substring(0, 797) + '…' : fullText;
+      conversationHistory.push({ role: 'assistant', content: _vcAI });
       // Set reportGenerated before addMessage so injectLegalDocButton gate passes for report
       if (!reportGenerated && isReportResponse(fullText)) {
         reportGenerated = true;
@@ -1518,7 +1533,7 @@
   // ── MOCK RESPONSES ──────────────────────────────────
   function getMockResponse(userText) {
     if (userText === 'START_CONVERSATION') {
-      return 'Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\'ll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I\'ll pull the details automatically.\n\nUpload as many as you want, or none at all. Everything is processed to build your plan and nothing is stored. Your privacy matters.\n\nWhen you\'re ready \u2014 uploaded or not \u2014 just tell me: what branch did you serve in?\n\n[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\'m a family member]';
+      return 'Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\'ll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I\'ll pull the details automatically.\n\nUpload as many as you want, or none at all. Your information is used only to help build your plan. Some data may be securely stored to improve your experience, but it is never sold or shared. Your privacy matters.\n\nWhen you\'re ready \u2014 uploaded or not \u2014 just tell me: what branch did you serve in?\n\n[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\'m a family member]';
     }
     return null;
   }

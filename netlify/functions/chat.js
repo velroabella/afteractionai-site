@@ -38,7 +38,7 @@ Before we start talking, here's a tip: the more documents you upload up front, t
 
 Tap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I'll pull the details automatically.
 
-Upload as many as you want, or none at all. Everything is processed to build your plan and nothing is stored. Your privacy matters.
+Upload as many as you want, or none at all. Your information is used only to help build your plan. Some data may be securely stored to improve your experience, but it is never sold or shared. Your privacy matters.
 
 When you're ready — uploaded or not — just tell me: what branch did you serve in, and what do people call you?"
 
@@ -147,7 +147,7 @@ const HEADERS = {
 function getMockResponse(messages) {
   if (!messages || messages.length === 0 ||
       (messages.length === 1 && messages[0].content.includes('Begin the conversation'))) {
-    return "Welcome to AfterAction AI. I'm here to help you find every benefit, resource, and organization you've earned through your service — and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here's a tip: the more documents you upload up front, the more accurate and personalized your plan will be — and the fewer questions I'll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I'll pull the details automatically.\n\nUpload as many as you want, or none at all. Everything is processed to build your plan and nothing is stored. Your privacy matters.\n\nWhen you're ready — uploaded or not — just tell me: what branch did you serve in, and what do people call you?";
+    return "Welcome to AfterAction AI. I'm here to help you find every benefit, resource, and organization you've earned through your service — and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here's a tip: the more documents you upload up front, the more accurate and personalized your plan will be — and the fewer questions I'll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I'll pull the details automatically.\n\nUpload as many as you want, or none at all. Your information is used only to help build your plan. Some data may be securely stored to improve your experience, but it is never sold or shared. Your privacy matters.\n\nWhen you're ready — uploaded or not — just tell me: what branch did you serve in, and what do people call you?";
   }
   return "Copy that. I'm currently running in demo mode while the AI backend is being configured. To enable full AI conversations, the site administrator needs to set the ANTHROPIC_API_KEY environment variable in the Netlify dashboard under Site Settings > Environment Variables.\n\nOnce that's done, I'll be fully operational and ready to help you navigate every benefit you've earned. In the meantime, you can explore the site's Resources and Education pages for immediate help.";
 }

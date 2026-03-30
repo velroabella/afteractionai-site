@@ -278,6 +278,23 @@
         log('event', 'AI audio playback ended');
         break;
 
+      // ── Response cancelled (user interrupted AI mid-speech via VAD) ──
+      // OpenAI's server_vad cancels the in-flight response when it detects the user
+      // speaking; response.cancelled fires instead of response.done.
+      // We fire onAIMessage with any partial transcript already accumulated (if
+      // meaningful) so it reaches conversationHistory in app.js for continuity.
+      case 'response.cancelled':
+        log('event', 'response cancelled — user interrupted, partialLen=' + currentAITranscript.length);
+        if (currentAITranscript && currentAITranscript.trim().length > 20) {
+          if (RealtimeVoice.onAIMessage) {
+            try { RealtimeVoice.onAIMessage(currentAITranscript); } catch(e) {}
+          }
+        }
+        currentAITranscript = '';
+        currentResponseId = null;
+        setState('listening');
+        break;
+
       // ── Error ──
       case 'error':
         log('event', 'server error: ' + JSON.stringify(msg.error || msg));

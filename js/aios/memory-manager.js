@@ -40,6 +40,22 @@
     { label: 'disabled',       patterns: [/\btoo\s+disabled\s+to\s+work\b/i, /\bdisability\s+prevents\s+(?:me\s+from\s+)?working\b/i] }
   ];
 
+  // Phase 37: Service era labels — ordered most-specific first.
+  // First match wins; single value per session.
+  var ERA_PATTERNS = [
+    { label: 'Gulf War',       rx: /\b(?:gulf\s+war|desert\s+storm|desert\s+shield|operation\s+desert)\b/i },
+    { label: 'OEF',            rx: /\b(?:oef|operation\s+enduring\s+freedom|afghanistan\s+(?:war|deployment|tour|vet(?:eran)?))\b/i },
+    { label: 'OIF',            rx: /\b(?:oif|operation\s+iraqi?\s+freedom|iraq(?:i)?\s+(?:war|deployment|tour))\b/i },
+    { label: 'OND',            rx: /\b(?:ond|operation\s+new\s+dawn)\b/i },
+    { label: 'OIR',            rx: /\b(?:oir|operation\s+inherent\s+resolve)\b/i },
+    { label: 'Post-9/11',      rx: /\bpost[- ]9\/11\b/i },
+    { label: 'GWOT',           rx: /\b(?:gwot|global\s+war\s+on\s+terror(?:ism)?)\b/i },
+    { label: 'Vietnam',        rx: /\bvietnam(?:\s+(?:war|era|vet(?:eran)?))?/i },
+    { label: 'Korea',          rx: /\b(?:korean?\s+(?:war|conflict|era)|i\s+served\s+in\s+korea)\b/i },
+    { label: 'Cold War',       rx: /\bcold\s+war\b/i },
+    { label: 'World War II',   rx: /\b(?:world\s+war\s+(?:2|ii|two)|ww2|wwii)\b/i }
+  ];
+
   var US_STATES = {
     'alabama':1,'alaska':1,'arizona':1,'arkansas':1,'california':1,'colorado':1,
     'connecticut':1,'delaware':1,'florida':1,'georgia':1,'hawaii':1,'idaho':1,
@@ -229,12 +245,13 @@
     }
 
     /* ── serviceEra ──────────────────────────────────────────
-       Not populated by extractMemoryFromInput today, but
-       validate defensively for future code paths.
-       Require non-empty string ≥ MIN_TEXT_FIELD_LEN.           */
+       Require non-empty string ≥ 3 chars.
+       Phase 37: minimum is 3 (not MIN_TEXT_FIELD_LEN=4) because
+       canonical 3-char era codes like OEF, OIF, OND, OIR are
+       fully valid; a 4-char floor would silently drop them.     */
     if ('serviceEra' in extracted) {
       var _era = (typeof extracted.serviceEra === 'string') ? extracted.serviceEra.trim() : '';
-      if (_era.length >= MIN_TEXT_FIELD_LEN) {
+      if (_era.length >= 3) {
         valid.serviceEra = _era;
       } else {
         dropped.push('serviceEra(too-short)');
@@ -268,6 +285,47 @@
       }
     }
 
+    /* ── name ────────────────────────────────────────────────
+       Phase 37. Basic string: 2–30 chars, ≥ 1 letter.
+       Rejects single initials, pure numbers, and empty values.
+       mergeMemory safe-merge means existing name is never
+       overwritten by null — no special conflict guard needed.  */
+    if ('name' in extracted) {
+      var _nm = (typeof extracted.name === 'string') ? extracted.name.trim() : '';
+      if (_nm.length >= 2 && _nm.length <= 30 && /[a-zA-Z]/.test(_nm)) {
+        valid.name = _nm;
+      } else {
+        dropped.push('name(invalid)');
+      }
+    }
+
+    /* ── mos ─────────────────────────────────────────────────
+       Phase 37. Alphanumeric code: 2–8 chars, must contain
+       at least one alphanumeric character.
+       Covers Army MOS (11B, 68W), Air Force AFSC (1C7X1),
+       Navy NEC (2514), and Marine MOS.                        */
+    if ('mos' in extracted) {
+      var _mos = (typeof extracted.mos === 'string') ? extracted.mos.trim() : '';
+      if (_mos.length >= 2 && _mos.length <= 8 && /[a-zA-Z0-9]/.test(_mos)) {
+        valid.mos = _mos;
+      } else {
+        dropped.push('mos(invalid)');
+      }
+    }
+
+    /* ── dependents ──────────────────────────────────────────
+       Phase 37. Short descriptive string: 2–50 chars, ≥ 1
+       letter.  Stores one of the canonical dependents labels
+       produced by the extractor.                              */
+    if ('dependents' in extracted) {
+      var _dep = (typeof extracted.dependents === 'string') ? extracted.dependents.trim() : '';
+      if (_dep.length >= 2 && _dep.length <= 50 && /[a-zA-Z]/.test(_dep)) {
+        valid.dependents = _dep;
+      } else {
+        dropped.push('dependents(invalid)');
+      }
+    }
+
     /* ── Log any drops ───────────────────────────────────────*/
     if (dropped.length > 0) {
       console.log('[AIOS][MEMORY] filtered: ' + dropped.join(', '));
@@ -297,7 +355,10 @@
       // Phase 9 additions
       employmentStatus: null,
       currentGoals:     null,
-      activeMissions:   null
+      activeMissions:   null,
+      // Phase 37 additions
+      mos:              null,
+      dependents:       null
     },
 
 
@@ -337,7 +398,8 @@
         name: null, branch: null, serviceEra: null,
         dischargeStatus: null, vaRating: null, state: null,
         primaryNeed: null, needs: [], documents: [],
-        employmentStatus: null, currentGoals: null, activeMissions: null
+        employmentStatus: null, currentGoals: null, activeMissions: null,
+        mos: null, dependents: null
       };
     },
 
@@ -556,6 +618,77 @@
         }
       }
 
+      // ── Name (Phase 37) ────────────────────────────────
+      // Only extract from explicit self-identification phrases.
+      // "I'm X" and "I am X" are intentionally excluded — they
+      // false-match too many non-name phrases ("I'm retired").
+      var NAME_STOPWORDS = /^(the|a|an|my|your|his|her|their|our|its|this|that|here|there|just|really|very|so|too|not|no|yes|also|still|now|then|well|ok|okay|hi|hey|sir|not\s+sure|a\s+veteran|veteran|vet|retired|married|single|disabled)$/i;
+      var namePatterns = [
+        /\bmy\s+name\s+is\s+([A-Z][a-zA-Z'\-]{1,18}(?:\s+[A-Z][a-zA-Z'\-]{1,18})?)\b/i,
+        /\bcall\s+me\s+([A-Z][a-zA-Z'\-]{1,18})\b/i,
+        /\bi\s+go\s+by\s+([A-Z][a-zA-Z'\-]{1,18})\b/i,
+        /\byou\s+can\s+call\s+me\s+([A-Z][a-zA-Z'\-]{1,18})\b/i,
+        /\bname[:\s]+([A-Z][a-zA-Z'\-]{1,18}(?:\s+[A-Z][a-zA-Z'\-]{1,18})?)\b/i
+      ];
+      for (var np = 0; np < namePatterns.length; np++) {
+        var nameM = userMessage.match(namePatterns[np]);
+        if (nameM && nameM[1]) {
+          var nameCandidate = nameM[1].trim();
+          var firstWord = nameCandidate.split(/\s+/)[0];
+          if (!NAME_STOPWORDS.test(firstWord) &&
+              nameCandidate.length >= 2 && nameCandidate.length <= 30) {
+            extracted.name = nameCandidate;
+            break;
+          }
+        }
+      }
+
+      // ── Service era (Phase 37) ──────────────────────────
+      for (var er = 0; er < ERA_PATTERNS.length; er++) {
+        if (ERA_PATTERNS[er].rx.test(userMessage)) {
+          extracted.serviceEra = ERA_PATTERNS[er].label;
+          break;
+        }
+      }
+
+      // ── MOS / AFSC (Phase 37) ───────────────────────────
+      // Captures explicit code labels only: "MOS 11B", "AFSC 1C7X1",
+      // "my MOS is 68W", "my AFSC was 3D0X2".
+      // Does NOT attempt to extract verbose job titles to avoid
+      // false positives.
+      var mosPatterns = [
+        /\b(?:mos|afsc|nec|aoc)[:\s]+([A-Z0-9]{2,8})\b/i,
+        /\bmy\s+mos\s+(?:was|is|has\s+been)\s+([A-Z0-9]{2,8})\b/i,
+        /\bmy\s+afsc\s+(?:was|is|has\s+been)\s+([A-Z0-9]{2,8})\b/i
+      ];
+      for (var mop = 0; mop < mosPatterns.length; mop++) {
+        var mosM = userMessage.match(mosPatterns[mop]);
+        if (mosM && mosM[1]) {
+          var mosCandidate = mosM[1].trim().toUpperCase();
+          if (mosCandidate.length >= 2 && mosCandidate.length <= 8) {
+            extracted.mos = mosCandidate;
+            break;
+          }
+        }
+      }
+
+      // ── Dependents (Phase 37) ───────────────────────────
+      // Detect spouse / children status from explicit statements.
+      // "married with children" is checked before plain "married"
+      // to capture the more specific case first.
+      var DEPENDENT_PATTERNS = [
+        { label: 'married with children', rx: /\bmarried\s+(?:and\s+)?(?:with|have|having)\s+(?:\d+\s+)?(?:kids?|child(?:ren)?)\b/i },
+        { label: 'married',               rx: /\b(?:i\s+am|i'm|currently)\s+married\b|\bmy\s+(?:wife|husband|spouse)\b/i },
+        { label: 'children',              rx: /\b(?:i\s+have|i\s+got|have\s+got)\s+(?:\d+\s+)?(?:kids?|child(?:ren)?)\b/i },
+        { label: 'no dependents',         rx: /\bno\s+(?:kids?|dependents?|children)\b|\b(?:single\s+(?:and\s+)?(?:no|without)|not\s+married(?:\s+and\s+no)?)\b/i }
+      ];
+      for (var dp = 0; dp < DEPENDENT_PATTERNS.length; dp++) {
+        if (DEPENDENT_PATTERNS[dp].rx.test(userMessage)) {
+          extracted.dependents = DEPENDENT_PATTERNS[dp].label;
+          break;
+        }
+      }
+
       // Phase 30: validate before returning — only high-confidence fields pass
       return _validateMemoryFields(extracted, userMessage);
     },
@@ -647,6 +780,7 @@
 
       var parts = [];
 
+      if (isValidValue(memory.name))             parts.push('Name: ' + memory.name);
       if (isValidValue(memory.branch))           parts.push('Branch: ' + memory.branch);
       if (isValidValue(memory.dischargeStatus))  parts.push('Discharge: ' + memory.dischargeStatus);
       if (isValidValue(memory.serviceEra))       parts.push('Era: ' + memory.serviceEra);
@@ -654,6 +788,8 @@
       if (isValidValue(memory.employmentStatus)) parts.push('Employment: ' + memory.employmentStatus);
       if (isValidValue(memory.vaRating) || memory.vaRating === 0)
                                                   parts.push('VA rating: ' + memory.vaRating + '%');
+      if (isValidValue(memory.mos))              parts.push('MOS/AFSC: ' + memory.mos);
+      if (isValidValue(memory.dependents))       parts.push('Dependents: ' + memory.dependents);
       if (isValidValue(memory.currentGoals))     parts.push('Goal: ' + memory.currentGoals);
       if (isValidValue(memory.activeMissions))   parts.push('Mission: ' + memory.activeMissions);
 
