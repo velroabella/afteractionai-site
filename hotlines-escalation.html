@@ -135,52 +135,51 @@
 </div>
 
 <!-- TWO-COLUMN LAYOUT -->
-<div class="rp-page-wrapper">
+<div class="mh-page-wrapper">
 
   <!-- SIDEBAR -->
-  <aside class="rp-sidebar">
+  <aside class="mh-sidebar">
 
-    <!-- Search -->
-    <div style="margin-bottom:20px;">
-      <input type="text" id="searchInput" placeholder="Search hotlines..."
-        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
-        oninput="filterAndRender()" />
+    <div class="mh-sidebar-header">
+      <h3>Filters</h3>
+      <button class="mh-clear-btn" onclick="hlClearAll()">Clear all</button>
     </div>
 
+    <input type="text" class="mh-search-input" id="hlSearchInput"
+           placeholder="Search hotlines..."
+           oninput="hlApplyFilters()" />
+
     <!-- Issue Type Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Issue Type</div>
-      <button class="rp-pill active" data-filter-group="issue" data-filter-value="all" onclick="setPill(this,'issue')">All Issues</button>
-      <button class="rp-pill" data-filter-group="issue" data-filter-value="crisis" onclick="setPill(this,'issue')">Crisis Support</button>
-      <button class="rp-pill" data-filter-group="issue" data-filter-value="benefits_complaint" onclick="setPill(this,'issue')">Benefits Complaint</button>
-      <button class="rp-pill" data-filter-group="issue" data-filter-value="ig" onclick="setPill(this,'issue')">Inspector General</button>
-      <button class="rp-pill" data-filter-group="issue" data-filter-value="legal" onclick="setPill(this,'issue')">Legal Assistance</button>
-      <button class="rp-pill" data-filter-group="issue" data-filter-value="healthcare" onclick="setPill(this,'issue')">Healthcare</button>
-      <button class="rp-pill" data-filter-group="issue" data-filter-value="housing" onclick="setPill(this,'issue')">Housing</button>
-      <button class="rp-pill" data-filter-group="issue" data-filter-value="employment" onclick="setPill(this,'issue')">Employment</button>
-      <button class="rp-pill" data-filter-group="issue" data-filter-value="complaint" onclick="setPill(this,'issue')">General Complaint</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Issue Type</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="issue_type" data-value="crisis" onclick="hlTogglePill(this)">Crisis Support</button>
+        <button class="mh-pill" data-filter="issue_type" data-value="benefits_complaint" onclick="hlTogglePill(this)">Benefits Complaint</button>
+        <button class="mh-pill" data-filter="issue_type" data-value="ig" onclick="hlTogglePill(this)">Inspector General</button>
+        <button class="mh-pill" data-filter="issue_type" data-value="legal" onclick="hlTogglePill(this)">Legal Assistance</button>
+        <button class="mh-pill" data-filter="issue_type" data-value="healthcare" onclick="hlTogglePill(this)">Healthcare</button>
+        <button class="mh-pill" data-filter="issue_type" data-value="housing" onclick="hlTogglePill(this)">Housing</button>
+        <button class="mh-pill" data-filter="issue_type" data-value="employment" onclick="hlTogglePill(this)">Employment</button>
+        <button class="mh-pill" data-filter="issue_type" data-value="complaint" onclick="hlTogglePill(this)">General Complaint</button>
+      </div>
+    </div>
+
+    <div class="mh-result-count">
+      Showing <strong id="hlResultCount">0</strong> of <strong id="hlTotalCount">0</strong> hotlines
     </div>
 
   </aside>
 
   <!-- MAIN CONTENT -->
-  <main>
-    <!-- Results count -->
-    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
-
-    <!-- Cards grid -->
-    <div class="rp-grid" id="hotlinesGrid"></div>
-
-    <!-- Empty state -->
-    <div class="rp-empty" id="emptyState" style="display:none;">
-      <div class="rp-empty__icon">🔍</div>
-      <p>No hotlines match your current filters. Try adjusting the issue type.</p>
-      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <div class="mh-toolbar-left"><strong id="hlResultLabel">0</strong> hotlines found</div>
     </div>
 
-    <!-- Load more -->
-    <div style="text-align:center;margin-top:24px;">
-      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More</button>
+    <div class="mh-grid" id="hotlinesGrid"></div>
+
+    <div class="mh-load-more" id="hlLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="hlLoadMore()">Load More Hotlines</button>
     </div>
   </main>
 
@@ -242,64 +241,87 @@
 <script>
 // ── State ──────────────────────────────────────────────────
 const PAGE_SIZE = 24;
-let allHotlines = [];
-let filteredHotlines = [];
-let visibleCount = 0;
+let ALL_HOTLINES = [];
+let FILTERED = [];
+let DISPLAYED = 0;
 
-const activeFilters = { issue: 'all' };
+const filters = {
+  search: '',
+  issue_type: new Set()
+};
 
 // ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
   document.getElementById('navMenu').classList.toggle('active');
 }
 
-// ── Pills ─────────────────────────────────────────────────
-function setPill(btn, group) {
-  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeFilters[group] = btn.dataset.filterValue;
-  filterAndRender();
-}
+// ── Pill toggle (multi-select, Set-based) ─────────────────
+window.hlTogglePill = function(btn) {
+  const filterType = btn.dataset.filter;
+  const value = btn.dataset.value;
+  if (btn.classList.contains('active')) {
+    btn.classList.remove('active');
+    filters[filterType].delete(value);
+  } else {
+    btn.classList.add('active');
+    filters[filterType].add(value);
+  }
+  hlApplyFilters();
+};
 
-// ── Quick Access ──────────────────────────────────────────
-function applyQA(val) {
-  if (val === 'all') { resetFilters(); return; }
-  const pill = document.querySelector(`.rp-pill[data-filter-group="issue"][data-filter-value="${val}"]`);
-  if (pill) setPill(pill, 'issue');
-}
-
-// ── Reset ─────────────────────────────────────────────────
-function resetFilters() {
-  activeFilters.issue = 'all';
-  document.querySelectorAll('.rp-pill').forEach(b => {
-    b.classList.toggle('active', b.dataset.filterValue === 'all');
+// ── Clear all ─────────────────────────────────────────────
+window.hlClearAll = function() {
+  Object.keys(filters).forEach(k => {
+    if (k === 'search') filters[k] = '';
+    else filters[k].clear();
   });
-  document.getElementById('searchInput').value = '';
-  filterAndRender();
+  document.querySelectorAll('.mh-page-wrapper .mh-pill').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('hlSearchInput');
+  if (el) el.value = '';
+  hlApplyFilters();
+};
+
+// ── Quick Access (clear then apply single issue type) ─────
+function applyQA(val) {
+  if (val === 'all') { hlClearAll(); return; }
+  hlClearAll();
+  const pill = document.querySelector(`.mh-pill[data-filter="issue_type"][data-value="${val}"]`);
+  if (pill) { pill.classList.add('active'); filters.issue_type.add(val); }
+  hlApplyFilters();
 }
 
-// ── Filter ────────────────────────────────────────────────
-function filterAndRender() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  filteredHotlines = allHotlines.filter(h => {
-    if (activeFilters.issue !== 'all' && h.issue_type !== activeFilters.issue) return false;
-    if (q && !((h.name||'').toLowerCase().includes(q) ||
-               (h.description||'').toLowerCase().includes(q) ||
-               (h.phone||'').toLowerCase().includes(q))) return false;
+// ── Filter engine ─────────────────────────────────────────
+function hlApplyFilters() {
+  const searchEl = document.getElementById('hlSearchInput');
+  filters.search = searchEl ? searchEl.value.toLowerCase() : '';
+
+  FILTERED = ALL_HOTLINES.filter(h => {
+    // Search across name, description, phone, who_should_use
+    if (filters.search) {
+      const hay = [(h.name||''), (h.description||''), (h.phone||''), (h.who_should_use||'')].join(' ').toLowerCase();
+      if (!hay.includes(filters.search)) return false;
+    }
+    // Issue type — OR within dimension
+    if (filters.issue_type.size > 0 && !filters.issue_type.has(h.issue_type)) return false;
     return true;
   });
 
-  // Sort: crisis first
-  filteredHotlines.sort((a, b) => {
+  // Sort: crisis first, then alphabetical
+  FILTERED.sort((a, b) => {
     if (a.issue_type === 'crisis' && b.issue_type !== 'crisis') return -1;
     if (b.issue_type === 'crisis' && a.issue_type !== 'crisis') return 1;
-    return 0;
+    return (a.name || '').localeCompare(b.name || '');
   });
 
-  visibleCount = 0;
+  // Reset grid and counts
+  DISPLAYED = 0;
   document.getElementById('hotlinesGrid').innerHTML = '';
-  loadMore();
-  updateCount();
+  const rc = document.getElementById('hlResultCount');
+  const rl = document.getElementById('hlResultLabel');
+  if (rc) rc.textContent = FILTERED.length;
+  if (rl) rl.textContent = FILTERED.length;
+
+  hlLoadMore();
 }
 
 // ── Render ────────────────────────────────────────────────
@@ -342,37 +364,41 @@ function renderCard(h) {
 }
 
 function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 // ── Load More ─────────────────────────────────────────────
-function loadMore() {
+function hlLoadMore() {
   const grid = document.getElementById('hotlinesGrid');
-  const batch = filteredHotlines.slice(visibleCount, visibleCount + PAGE_SIZE);
-  batch.forEach(h => { grid.insertAdjacentHTML('beforeend', renderCard(h)); });
-  visibleCount += batch.length;
-  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredHotlines.length ? 'inline-block' : 'none';
-  document.getElementById('emptyState').style.display = filteredHotlines.length === 0 ? 'block' : 'none';
+  const batch = FILTERED.slice(DISPLAYED, DISPLAYED + PAGE_SIZE);
+
+  if (batch.length === 0 && DISPLAYED === 0) {
+    grid.innerHTML = '<div class="mh-empty"><div class="mh-empty-icon">🔍</div><h3>No hotlines found</h3><p>Try adjusting your filters or search terms.</p></div>';
+  } else {
+    batch.forEach(h => { grid.insertAdjacentHTML('beforeend', renderCard(h)); });
+  }
+
+  DISPLAYED += batch.length;
+  const lm = document.getElementById('hlLoadMore');
+  if (lm) lm.style.display = DISPLAYED < FILTERED.length ? 'block' : 'none';
 }
 
-function updateCount() {
-  document.getElementById('resultsCount').textContent =
-    filteredHotlines.length === allHotlines.length
-      ? `Showing all ${allHotlines.length} hotlines & escalation resources`
-      : `Showing ${filteredHotlines.length} of ${allHotlines.length} resources`;
-}
+window.hlLoadMore = hlLoadMore;
+window.hlApplyFilters = hlApplyFilters;
 
 // ── Init ──────────────────────────────────────────────────
 fetch('data/hotlines-escalation.json')
   .then(r => r.json())
   .then(data => {
-    allHotlines = Array.isArray(data) ? data : (data.resources || []);
-    filterAndRender();
+    ALL_HOTLINES = Array.isArray(data) ? data : (data.resources || []);
+    const tc = document.getElementById('hlTotalCount');
+    if (tc) tc.textContent = ALL_HOTLINES.length;
+    hlApplyFilters();
   })
   .catch(err => {
     console.error('Error loading hotlines:', err);
     document.getElementById('hotlinesGrid').innerHTML =
-      '<div class="rp-empty"><p>Error loading hotlines. Please try again later.</p></div>';
+      '<div class="mh-empty"><div class="mh-empty-icon">⚠️</div><h3>Could not load hotlines</h3><p>Please refresh the page.</p></div>';
   });
 </script>
 
