@@ -61,16 +61,24 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
 - Recommend VSOs (DAV, VFW, American Legion) for free help with claims
 - Mention the Veterans Crisis Line (988, Press 1) at the end of action plan delivery`;
 
-    // Phase 41 (repaired) — Correct client_secrets session payload structure.
+    // Phase 42 — ROOT CAUSE FIX: Added required top-level expires_after field.
     //
-    // session.type = 'realtime' is REQUIRED — omitting it causes
-    //   "Missing required parameter: 'session.type'"
+    // /v1/realtime/client_secrets requires TWO top-level keys:
+    //   • expires_after  ← REQUIRED — was missing, caused API rejection & token failure
+    //   • session        ← was present
     //
     // Schema rules for /v1/realtime/client_secrets:
+    //   • expires_after.anchor  = 'created_at'
+    //   • expires_after.seconds = token lifetime (60–3600)
     //   • turn_detection lives under audio.input   (not session.turn_detection)
     //   • transcription  lives under audio.input.transcription
     //   • voice          lives under audio.output  (not session.voice)
+    //   • create_response + interrupt_response enable VAD to trigger AI responses
     const requestBody = {
+      expires_after: {
+        anchor: 'created_at',
+        seconds: 600
+      },
       session: {
         type: 'realtime',
         model: 'gpt-4o-realtime-preview',
@@ -82,7 +90,9 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
               type: 'server_vad',
               threshold: 0.6,
               prefix_padding_ms: 300,
-              silence_duration_ms: 800
+              silence_duration_ms: 800,
+              create_response: true,
+              interrupt_response: true
             }
           },
           output: {
@@ -92,8 +102,8 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
       }
     };
 
+    console.log('[realtime-token] REQUEST BODY:', JSON.stringify(requestBody, null, 2));
     console.log('[realtime-token] POST https://api.openai.com/v1/realtime/client_secrets');
-    console.log('[realtime-token] Body:', JSON.stringify(requestBody));
 
     const response = await fetch('https://api.openai.com/v1/realtime/client_secrets', {
       method: 'POST',
@@ -148,7 +158,7 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
     return {
       statusCode: 200,
       headers: HEADERS,
-      body: JSON.stringify({ client_secret: secret, debug: 'CLIENT_SECRETS_V3' })
+      body: JSON.stringify({ client_secret: secret, debug: 'CLIENT_SECRETS_V4' })
     };
 
   } catch (err) {
