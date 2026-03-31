@@ -390,33 +390,38 @@ function onSearch(val) {
   applyFilters();
 }
 
+/* ── HTML escape ── */
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 /* ── Render a single card ── */
 function renderCard(r) {
   const audiences = (r.audience||[]).map(a =>
-    `<span class="fam-badge fam-badge--audience">${AUDIENCE_LABELS[a]||a}</span>`
+    `<span class="fam-badge fam-badge--audience">${esc(AUDIENCE_LABELS[a]||a)}</span>`
   ).join('');
-  const catLabel = CATEGORY_LABELS[r.category] || r.category;
-  const location = r.state ? `${r.city?r.city+', ':''}${r.state}` : (r.city||'National');
+  const catLabel = esc(CATEGORY_LABELS[r.category] || r.category);
+  const location = r.state ? `${r.city?esc(r.city)+', ':''}${esc(r.state)}` : esc(r.city||'National');
   const flagshipBadge = r.credibility_level==='flagship'
     ? '<span class="fam-card__flagship">Flagship</span>' : '';
   const link = r.website
-    ? `<a href="${r.website}" target="_blank" rel="noopener noreferrer" class="fam-card__link">Visit Website →</a>` : '';
+    ? `<a href="${esc(r.website)}" target="_blank" rel="noopener noreferrer" class="fam-card__link">Visit Website →</a>` : '';
   const contact = r.contact_info
-    ? `<span style="font-size:0.72rem;color:rgba(255,255,255,0.35);">${r.contact_info}</span>` : '';
+    ? `<span style="font-size:0.72rem;color:rgba(255,255,255,0.35);">${esc(r.contact_info)}</span>` : '';
   return `<div class="fam-card aa-card">
     <div class="fam-card__top">
-      <div class="fam-card__name">${r.name}</div>${flagshipBadge}
+      <div class="fam-card__name">${esc(r.name)}</div>${flagshipBadge}
     </div>
     <div class="fam-card__meta-row">
       ${audiences}
       <span class="fam-badge fam-badge--category">${catLabel}</span>
-      <span class="fam-badge fam-badge--format">${r.format||''}</span>
+      <span class="fam-badge fam-badge--format">${esc(r.format||'')}</span>
     </div>
     <div class="fam-card__location">
       <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
       ${location}
     </div>
-    <p class="fam-card__desc">${r.description||''}</p>
+    <p class="fam-card__desc">${esc(r.description||'')}</p>
     ${(link||contact)?`<div class="fam-card__footer">${link}${contact}</div>`:''}
   </div>`;
 }
