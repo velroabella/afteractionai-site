@@ -109,89 +109,100 @@
 <!-- QUICK ACCESS BAR -->
 <div class="rp-quickaccess">
   <div class="rp-quickaccess__inner">
-    <button class="rp-qa-btn" onclick="applyQA('healthcare')">🏥 Healthcare</button>
-    <button class="rp-qa-btn" onclick="applyQA('cybersecurity')">🔒 Cybersecurity</button>
-    <button class="rp-qa-btn" onclick="applyQA('aviation')">✈️ Aviation</button>
-    <button class="rp-qa-btn" onclick="applyQA('trades')">🔧 Trades</button>
-    <button class="rp-qa-btn" onclick="applyQA('transportation')">🚛 Transportation</button>
-    <button class="rp-qa-btn" onclick="applyQA('it')">💻 IT</button>
-    <button class="rp-qa-btn rp-qa-btn--va" onclick="applyQA('va_approved')" id="vaQuickBtn">&#9733; VA Approved Programs</button>
-    <button class="rp-qa-btn" onclick="applyQA('all')">All Pathways</button>
+    <button class="rp-qa-btn" onclick="licApplyQA('healthcare')">🏥 Healthcare</button>
+    <button class="rp-qa-btn" onclick="licApplyQA('cybersecurity')">🔒 Cybersecurity</button>
+    <button class="rp-qa-btn" onclick="licApplyQA('aviation')">✈️ Aviation</button>
+    <button class="rp-qa-btn" onclick="licApplyQA('trades')">🔧 Trades</button>
+    <button class="rp-qa-btn" onclick="licApplyQA('transportation')">🚛 Transportation</button>
+    <button class="rp-qa-btn" onclick="licApplyQA('it')">💻 IT</button>
+    <button class="rp-qa-btn rp-qa-btn--va" onclick="licApplyQA('va_approved')" id="vaQuickBtn">&#9733; VA Approved Programs</button>
+    <button class="rp-qa-btn" onclick="licClearAll()">All Pathways</button>
   </div>
 </div>
 
 <!-- TWO-COLUMN LAYOUT -->
-<div class="rp-page-wrapper">
+<div class="mh-page-wrapper">
 
   <!-- SIDEBAR -->
-  <aside class="rp-sidebar">
-
-    <!-- Search -->
-    <div style="margin-bottom:20px;">
-      <input type="text" id="searchInput" placeholder="Search by job code, title, or cert..."
-        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
-        oninput="filterAndRender()" />
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <span>Filters</span>
+      <button class="mh-clear-btn" onclick="licClearAll()">Clear all</button>
     </div>
 
+    <!-- Search -->
+    <input type="text" class="mh-search-input" id="licSearch" placeholder="Search by job code, title, or cert..." oninput="licApplyFilters()" />
+
     <!-- Branch Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Branch</div>
-      <button class="rp-pill active" data-filter-group="branch" data-filter-value="all" onclick="setPill(this,'branch')">All Branches</button>
-      <button class="rp-pill" data-filter-group="branch" data-filter-value="Army" onclick="setPill(this,'branch')">Army</button>
-      <button class="rp-pill" data-filter-group="branch" data-filter-value="Navy" onclick="setPill(this,'branch')">Navy</button>
-      <button class="rp-pill" data-filter-group="branch" data-filter-value="Air Force" onclick="setPill(this,'branch')">Air Force</button>
-      <button class="rp-pill" data-filter-group="branch" data-filter-value="Space Force" onclick="setPill(this,'branch')">Space Force</button>
-      <button class="rp-pill" data-filter-group="branch" data-filter-value="All" onclick="setPill(this,'branch')">All Branches / Cross</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Branch</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="branch" data-value="Army" onclick="licTogglePill(this)">Army</button>
+        <button class="mh-pill" data-filter="branch" data-value="Navy" onclick="licTogglePill(this)">Navy</button>
+        <button class="mh-pill" data-filter="branch" data-value="Air Force" onclick="licTogglePill(this)">Air Force</button>
+        <button class="mh-pill" data-filter="branch" data-value="Space Force" onclick="licTogglePill(this)">Space Force</button>
+        <button class="mh-pill" data-filter="branch" data-value="All" onclick="licTogglePill(this)">All Branches / Cross</button>
+      </div>
     </div>
 
     <!-- Specialty Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Civilian Specialty</div>
-      <button class="rp-pill active" data-filter-group="specialty" data-filter-value="all" onclick="setPill(this,'specialty')">All</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="healthcare" onclick="setPill(this,'specialty')">Healthcare</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="medical" onclick="setPill(this,'specialty')">Medical</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="cybersecurity" onclick="setPill(this,'specialty')">Cybersecurity</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="it" onclick="setPill(this,'specialty')">IT</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="aviation" onclick="setPill(this,'specialty')">Aviation</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="transportation" onclick="setPill(this,'specialty')">Transportation</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="trades" onclick="setPill(this,'specialty')">Trades</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="construction" onclick="setPill(this,'specialty')">Construction</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="logistics" onclick="setPill(this,'specialty')">Logistics</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="public_safety" onclick="setPill(this,'specialty')">Public Safety</button>
-      <button class="rp-pill" data-filter-group="specialty" data-filter-value="management" onclick="setPill(this,'specialty')">Management</button>
-      <button class="rp-pill rp-pill--va" data-filter-group="specialty" data-filter-value="va_approved" onclick="setPill(this,'specialty')">&#9733; VA Approved</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Civilian Specialty</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="specialty" data-value="healthcare" onclick="licTogglePill(this)">Healthcare</button>
+        <button class="mh-pill" data-filter="specialty" data-value="medical" onclick="licTogglePill(this)">Medical</button>
+        <button class="mh-pill" data-filter="specialty" data-value="cybersecurity" onclick="licTogglePill(this)">Cybersecurity</button>
+        <button class="mh-pill" data-filter="specialty" data-value="it" onclick="licTogglePill(this)">IT</button>
+        <button class="mh-pill" data-filter="specialty" data-value="aviation" onclick="licTogglePill(this)">Aviation</button>
+        <button class="mh-pill" data-filter="specialty" data-value="transportation" onclick="licTogglePill(this)">Transportation</button>
+        <button class="mh-pill" data-filter="specialty" data-value="trades" onclick="licTogglePill(this)">Trades</button>
+        <button class="mh-pill" data-filter="specialty" data-value="construction" onclick="licTogglePill(this)">Construction</button>
+        <button class="mh-pill" data-filter="specialty" data-value="logistics" onclick="licTogglePill(this)">Logistics</button>
+        <button class="mh-pill" data-filter="specialty" data-value="public_safety" onclick="licTogglePill(this)">Public Safety</button>
+        <button class="mh-pill" data-filter="specialty" data-value="management" onclick="licTogglePill(this)">Management</button>
+        <button class="mh-pill mh-pill--va" data-filter="specialty" data-value="va_approved" onclick="licTogglePill(this)">&#9733; VA Approved</button>
+      </div>
     </div>
 
     <!-- VA Sub-Category Filter (visible when VA Approved is active) -->
-    <div class="rp-filter-group" id="vaSubFilterGroup" style="display:none;">
-      <div class="rp-filter-label">VA Program Type</div>
-      <button class="rp-pill active" data-filter-group="va_sub" data-filter-value="all" onclick="setPill(this,'va_sub')">All VA Programs</button>
-      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Scuba & Diving" onclick="setPill(this,'va_sub')">Scuba & Diving</button>
-      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Commercial Diving & Maritime" onclick="setPill(this,'va_sub')">Maritime & Diving</button>
-      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Aviation" onclick="setPill(this,'va_sub')">Aviation</button>
-      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Security & Protection" onclick="setPill(this,'va_sub')">Security</button>
-      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Cyber & Intelligence" onclick="setPill(this,'va_sub')">Cyber & IT</button>
-      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Welding & Fabrication" onclick="setPill(this,'va_sub')">Welding</button>
-      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="Heavy Equipment & Trades" onclick="setPill(this,'va_sub')">Heavy Equipment</button>
-      <button class="rp-pill" data-filter-group="va_sub" data-filter-value="other" onclick="setPill(this,'va_sub')">Other</button>
+    <div class="mh-filter-group" id="vaSubFilterGroup" style="display:none;">
+      <div class="mh-filter-group-label">VA Program Type</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="va_sub" data-value="Scuba & Diving" onclick="licTogglePill(this)">Scuba &amp; Diving</button>
+        <button class="mh-pill" data-filter="va_sub" data-value="Commercial Diving & Maritime" onclick="licTogglePill(this)">Maritime &amp; Diving</button>
+        <button class="mh-pill" data-filter="va_sub" data-value="Aviation" onclick="licTogglePill(this)">Aviation</button>
+        <button class="mh-pill" data-filter="va_sub" data-value="Security & Protection" onclick="licTogglePill(this)">Security</button>
+        <button class="mh-pill" data-filter="va_sub" data-value="Cyber & Intelligence" onclick="licTogglePill(this)">Cyber &amp; IT</button>
+        <button class="mh-pill" data-filter="va_sub" data-value="Welding & Fabrication" onclick="licTogglePill(this)">Welding</button>
+        <button class="mh-pill" data-filter="va_sub" data-value="Heavy Equipment & Trades" onclick="licTogglePill(this)">Heavy Equipment</button>
+        <button class="mh-pill" data-filter="va_sub" data-value="other" onclick="licTogglePill(this)">Other</button>
+      </div>
     </div>
 
+    <!-- Result Count -->
+    <div class="mh-result-count" id="licResultCount"></div>
   </aside>
 
   <!-- MAIN CONTENT -->
-  <main>
-    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
-
-    <div class="rp-grid" id="licensureGrid"></div>
-
-    <div class="rp-empty" id="emptyState" style="display:none;">
-      <div class="rp-empty__icon">🎓</div>
-      <p>No pathways match your filters. Try adjusting the branch or specialty.</p>
-      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <select class="mh-sort-select" id="licSort" onchange="licApplyFilters()">
+        <option value="default">Sort: Default</option>
+        <option value="az">Sort: A–Z by Pathway</option>
+        <option value="branch">Sort: By Branch</option>
+      </select>
     </div>
 
-    <div style="text-align:center;margin-top:24px;">
-      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More</button>
+    <div class="mh-grid" id="licensureGrid"></div>
+
+    <div class="mh-empty" id="emptyState" style="display:none;">
+      <div class="rp-empty__icon">🎓</div>
+      <p>No pathways match your filters. Try adjusting the branch or specialty.</p>
+      <button class="mh-clear-btn" onclick="licClearAll()">Clear Filters</button>
+    </div>
+
+    <div class="mh-load-more" id="licLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" id="loadMoreBtn" onclick="licLoadMore()">Load More</button>
     </div>
   </main>
 
@@ -252,41 +263,65 @@
 <script src="js/newsletter.js"></script>
 <script>
 // ── State ──────────────────────────────────────────────────
-const PAGE_SIZE = 24;
-let allPaths = [];
-let filteredPaths = [];
-let visibleCount = 0;
+const LIC_PAGE_SIZE = 24;
+let licAllPaths = [];
+let licFilteredPaths = [];
+let licVisibleCount = 0;
 
-const activeFilters = { branch: 'all', specialty: 'all', va_sub: 'all' };
+const licFilters = { search: '', branch: new Set(), specialty: new Set(), va_sub: new Set() };
+
+const LIC_VA_MAIN_CATS = ['Scuba & Diving','Commercial Diving & Maritime','Aviation','Security & Protection','Cyber & Intelligence','Welding & Fabrication','Heavy Equipment & Trades'];
 
 // ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
   document.getElementById('navMenu').classList.toggle('active');
 }
 
-// ── Pills ─────────────────────────────────────────────────
-function setPill(btn, group) {
-  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeFilters[group] = btn.dataset.filterValue;
-  // Show/hide VA sub-filter
-  var vaSubEl = document.getElementById('vaSubFilterGroup');
-  if (vaSubEl) {
-    var showVASub = (activeFilters.specialty === 'va_approved');
-    vaSubEl.style.display = showVASub ? '' : 'none';
-    if (!showVASub) {
-      activeFilters.va_sub = 'all';
-      vaSubEl.querySelectorAll('.rp-pill').forEach(function(b, i) { b.classList.toggle('active', i === 0); });
-    }
+// ── Escape (null-safe) ────────────────────────────────────
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── Pills (Set-based multi-select) ────────────────────────
+function licTogglePill(btn) {
+  var dim = btn.getAttribute('data-filter');
+  var val = btn.getAttribute('data-value');
+  btn.classList.toggle('active');
+  if (licFilters[dim].has(val)) {
+    licFilters[dim].delete(val);
+  } else {
+    licFilters[dim].add(val);
   }
-  filterAndRender();
+  // Show/hide VA sub-filter based on specialty selection
+  licSyncVASubFilter();
+  licApplyFilters();
+}
+
+// ── VA Sub-Filter Visibility ──────────────────────────────
+function licSyncVASubFilter() {
+  var vaSubEl = document.getElementById('vaSubFilterGroup');
+  if (!vaSubEl) return;
+  var showVA = licFilters.specialty.has('va_approved');
+  vaSubEl.style.display = showVA ? '' : 'none';
+  if (!showVA) {
+    // Clear VA sub-filter selections when VA Approved is deselected
+    licFilters.va_sub.clear();
+    vaSubEl.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
+  }
 }
 
 // ── Quick Access ──────────────────────────────────────────
-function applyQA(val) {
-  if (val === 'all') { resetFilters(); return; }
-  const pill = document.querySelector(`.rp-pill[data-filter-group="specialty"][data-filter-value="${val}"]`);
-  if (pill) setPill(pill, 'specialty');
+function licApplyQA(val) {
+  // Clear specialty, then activate the requested one
+  licFilters.specialty.clear();
+  document.querySelectorAll('.mh-pill[data-filter="specialty"]').forEach(function(b) { b.classList.remove('active'); });
+  var pill = document.querySelector('.mh-pill[data-filter="specialty"][data-value="' + val + '"]');
+  if (pill) {
+    pill.classList.add('active');
+    licFilters.specialty.add(val);
+  }
+  licSyncVASubFilter();
+  licApplyFilters();
   // Scroll to grid when VA Approved is selected via quick-access
   if (val === 'va_approved') {
     setTimeout(function() {
@@ -296,154 +331,174 @@ function applyQA(val) {
   }
 }
 
-// ── Reset ─────────────────────────────────────────────────
-function resetFilters() {
-  activeFilters.branch = 'all';
-  activeFilters.specialty = 'all';
-  activeFilters.va_sub = 'all';
-  document.querySelectorAll('.rp-pill').forEach(b => {
-    b.classList.toggle('active', b.dataset.filterValue === 'all');
-  });
-  document.getElementById('searchInput').value = '';
+// ── Clear All ─────────────────────────────────────────────
+function licClearAll() {
+  licFilters.search = '';
+  licFilters.branch.clear();
+  licFilters.specialty.clear();
+  licFilters.va_sub.clear();
+  document.getElementById('licSearch').value = '';
+  document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
   var vaSubEl = document.getElementById('vaSubFilterGroup');
   if (vaSubEl) vaSubEl.style.display = 'none';
-  filterAndRender();
+  document.getElementById('licSort').value = 'default';
+  licApplyFilters();
 }
 
-// ── Filter ────────────────────────────────────────────────
-function filterAndRender() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  filteredPaths = allPaths.filter(p => {
-    if (activeFilters.branch !== 'all' && p.branch !== activeFilters.branch) return false;
-    if (activeFilters.specialty !== 'all' && (p.tags||{}).specialty !== activeFilters.specialty) return false;
-    // VA sub-category filter
-    if (activeFilters.specialty === 'va_approved' && activeFilters.va_sub !== 'all') {
+// ── Filter + Sort ─────────────────────────────────────────
+function licApplyFilters() {
+  licFilters.search = (document.getElementById('licSearch').value || '').toLowerCase();
+  var q = licFilters.search;
+  var hasBranch = licFilters.branch.size > 0;
+  var hasSpecialty = licFilters.specialty.size > 0;
+  var hasVASub = licFilters.va_sub.size > 0;
+
+  licFilteredPaths = licAllPaths.filter(function(p) {
+    // Branch: AND across dimensions, OR within
+    if (hasBranch && !licFilters.branch.has(p.branch)) return false;
+    // Specialty: OR within dimension
+    if (hasSpecialty) {
+      var spec = (p.tags || {}).specialty || '';
+      if (!licFilters.specialty.has(spec)) return false;
+    }
+    // VA sub-category: only constrains VA items when va_approved is active
+    if (licFilters.specialty.has('va_approved') && hasVASub && p.va_approved) {
       var vaCat = p.va_category || '';
-      if (activeFilters.va_sub === 'other') {
-        // "other" catches categories not in the main list
-        var mainCats = ['Scuba & Diving','Commercial Diving & Maritime','Aviation','Security & Protection','Cyber & Intelligence','Welding & Fabrication','Heavy Equipment & Trades'];
-        if (mainCats.indexOf(vaCat) !== -1) return false;
+      if (licFilters.va_sub.has('other')) {
+        // "other" selected — if this item IS in a main category, only show if that category is also selected
+        if (LIC_VA_MAIN_CATS.indexOf(vaCat) !== -1) {
+          if (!licFilters.va_sub.has(vaCat)) return false;
+        }
+        // Items NOT in main cats pass via "other"
       } else {
-        if (vaCat !== activeFilters.va_sub) return false;
+        if (!licFilters.va_sub.has(vaCat)) return false;
       }
     }
-    if (q && !((p.military_job_code||'').toLowerCase().includes(q) ||
-               (p.military_job_title||'').toLowerCase().includes(q) ||
-               (p.civilian_pathway||'').toLowerCase().includes(q) ||
-               (p.certification_name||'').toLowerCase().includes(q) ||
-               (p.issuing_agency||'').toLowerCase().includes(q) ||
-               (p.location||'').toLowerCase().includes(q) ||
-               (p.va_category||'').toLowerCase().includes(q) ||
-               (p.requirements_summary||'').toLowerCase().includes(q))) return false;
+    // Text search
+    if (q && !((p.military_job_code || '').toLowerCase().indexOf(q) !== -1 ||
+               (p.military_job_title || '').toLowerCase().indexOf(q) !== -1 ||
+               (p.civilian_pathway || '').toLowerCase().indexOf(q) !== -1 ||
+               (p.certification_name || '').toLowerCase().indexOf(q) !== -1 ||
+               (p.issuing_agency || '').toLowerCase().indexOf(q) !== -1 ||
+               (p.location || '').toLowerCase().indexOf(q) !== -1 ||
+               (p.va_category || '').toLowerCase().indexOf(q) !== -1 ||
+               (p.requirements_summary || '').toLowerCase().indexOf(q) !== -1)) return false;
     return true;
   });
-  // Sort featured VA programs first when VA filter is active
-  if (activeFilters.specialty === 'va_approved') {
-    filteredPaths.sort(function(a, b) { return (b.featured ? 1 : 0) - (a.featured ? 1 : 0); });
+
+  // Sort
+  var sortVal = document.getElementById('licSort').value;
+  if (sortVal === 'az') {
+    licFilteredPaths.sort(function(a, b) { return (a.civilian_pathway || '').localeCompare(b.civilian_pathway || ''); });
+  } else if (sortVal === 'branch') {
+    licFilteredPaths.sort(function(a, b) {
+      var c = (a.branch || '').localeCompare(b.branch || '');
+      return c !== 0 ? c : (a.civilian_pathway || '').localeCompare(b.civilian_pathway || '');
+    });
+  } else {
+    // Default: featured VA programs first when VA filter is active, then alpha
+    if (licFilters.specialty.has('va_approved')) {
+      licFilteredPaths.sort(function(a, b) {
+        var fa = b.featured ? 1 : 0, fb = a.featured ? 1 : 0;
+        if (fa !== fb) return fa - fb;
+        return (a.civilian_pathway || '').localeCompare(b.civilian_pathway || '');
+      });
+    } else {
+      licFilteredPaths.sort(function(a, b) { return (a.civilian_pathway || '').localeCompare(b.civilian_pathway || ''); });
+    }
   }
-  visibleCount = 0;
+
+  licVisibleCount = 0;
   document.getElementById('licensureGrid').innerHTML = '';
-  loadMore();
-  updateCount();
+  licLoadMore();
+  licUpdateCount();
 }
 
 // ── Render ────────────────────────────────────────────────
-function renderCard(p) {
-  // VA Approved programs get a different card layout
-  if (p.va_approved) {
-    return renderVACard(p);
-  }
+function licRenderCard(p) {
+  if (p.va_approved) return licRenderVACard(p);
 
-  const specialty = (p.tags||{}).specialty || '';
-  const fundingList = (p.benefit_funding_options||[]).join(', ');
-  const testingBadge = p.additional_testing_required
+  var specialty = (p.tags || {}).specialty || '';
+  var fundingList = (p.benefit_funding_options || []).join(', ');
+  var testingBadge = p.additional_testing_required
     ? '<span class="rp-tag--neutral" style="font-size:0.7rem;">Add\'l Testing Required</span>'
     : '<span class="rp-tag--neutral" style="font-size:0.7rem;">No Add\'l Testing</span>';
 
-  let examLinks = '';
-  if ((p.school_or_exam_links||[]).length) {
-    const links = p.school_or_exam_links.slice(0,2).map(l =>
-      `<a href="${esc(l)}" target="_blank" rel="noopener noreferrer" class="rp-card__phone" style="text-decoration:none;font-size:0.8rem;margin-right:6px;">Exam Info →</a>`
-    ).join('');
-    examLinks = links;
+  var examLinks = '';
+  if ((p.school_or_exam_links || []).length) {
+    examLinks = p.school_or_exam_links.slice(0, 2).map(function(l) {
+      return '<a href="' + esc(l) + '" target="_blank" rel="noopener noreferrer" class="rp-card__phone" style="text-decoration:none;font-size:0.8rem;margin-right:6px;">Exam Info →</a>';
+    }).join('');
   }
 
-  return `<div class="rp-card">
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-      <span class="rp-tag--primary">${esc(p.branch||'')}</span>
-      ${specialty ? `<span class="rp-tag--secondary">${esc(specialty.replace(/_/g,' '))}</span>` : ''}
-      ${testingBadge}
-    </div>
-    <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;flex-wrap:wrap;">
-      <span style="font-size:0.85rem;color:#C5A55A;font-weight:700;">${esc(p.military_job_code||'')} — ${esc(p.military_job_title||'')}</span>
-    </div>
-    <h3 class="rp-card__name" style="margin-bottom:4px;">${esc(p.civilian_pathway||'')}</h3>
-    <p class="rp-card__org">${esc(p.certification_name||'')} · ${esc(p.issuing_agency||'')}</p>
-    <p style="font-size:0.82rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">${esc(p.requirements_summary||'')}</p>
-    ${fundingList ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;">💰 Funding: ${esc(fundingList)}</p>` : ''}
-    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">${examLinks}</div>
-  </div>`;
+  return '<div class="rp-card">' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">' +
+      '<span class="rp-tag--primary">' + esc(p.branch || '') + '</span>' +
+      (specialty ? '<span class="rp-tag--secondary">' + esc(specialty.replace(/_/g, ' ')) + '</span>' : '') +
+      testingBadge +
+    '</div>' +
+    '<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:6px;flex-wrap:wrap;">' +
+      '<span style="font-size:0.85rem;color:#C5A55A;font-weight:700;">' + esc(p.military_job_code || '') + ' — ' + esc(p.military_job_title || '') + '</span>' +
+    '</div>' +
+    '<h3 class="rp-card__name" style="margin-bottom:4px;">' + esc(p.civilian_pathway || '') + '</h3>' +
+    '<p class="rp-card__org">' + esc(p.certification_name || '') + ' · ' + esc(p.issuing_agency || '') + '</p>' +
+    '<p style="font-size:0.82rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">' + esc(p.requirements_summary || '') + '</p>' +
+    (fundingList ? '<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;">💰 Funding: ' + esc(fundingList) + '</p>' : '') +
+    '<div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;">' + examLinks + '</div>' +
+  '</div>';
 }
 
-function renderVACard(p) {
-  const fundingList = (p.benefit_funding_options||[]).join(', ');
-  const link = (p.school_or_exam_links||[])[0] || p.source_url || '';
-  const featuredBadge = p.featured
-    ? '<span style="display:inline-block;background:rgba(85,107,47,0.25);color:#A3C47A;font-size:0.7rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(85,107,47,0.4);margin-left:6px;">FL PRIORITY</span>'
-    : '';
+function licRenderVACard(p) {
+  var fundingList = (p.benefit_funding_options || []).join(', ');
+  var link = (p.school_or_exam_links || [])[0] || p.source_url || '';
 
-  return `<div class="rp-card rp-card--va" id="${esc(p.id||'')}">
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-      <span class="rp-tag--va">VA Approved</span>
-      <span class="rp-tag--secondary">${esc((p.va_category||'').replace(/_/g,' '))}</span>
-      ${featuredBadge}
-    </div>
-    <h3 class="rp-card__name" style="margin-bottom:4px;">${esc(p.certification_name||'')}</h3>
-    <p class="rp-card__org">${esc(p.civilian_pathway||'')}</p>
-    <p style="font-size:0.8rem;color:#A3C47A;margin-bottom:4px;font-weight:600;">${esc(p.location||'')}</p>
-    <p style="font-size:0.82rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">${esc(p.requirements_summary||'')}</p>
-    ${fundingList ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;">&#9733; Benefits: ${esc(fundingList)}</p>` : ''}
-    ${link ? `<a href="${esc(link)}" target="_blank" rel="noopener noreferrer" class="rp-card__phone" style="text-decoration:none;font-size:0.85rem;">View Program &amp; Enroll &#8599;</a>` : ''}
-  </div>`;
-}
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return '<div class="rp-card rp-card--va" id="' + esc(p.id || '') + '">' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">' +
+      '<span class="rp-tag--va">VA Approved</span>' +
+      '<span class="rp-tag--secondary">' + esc((p.va_category || '').replace(/_/g, ' ')) + '</span>' +
+    '</div>' +
+    '<h3 class="rp-card__name" style="margin-bottom:4px;">' + esc(p.certification_name || '') + '</h3>' +
+    '<p class="rp-card__org">' + esc(p.civilian_pathway || '') + '</p>' +
+    '<p style="font-size:0.8rem;color:#A3C47A;margin-bottom:4px;font-weight:600;">' + esc(p.location || '') + '</p>' +
+    '<p style="font-size:0.82rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">' + esc(p.requirements_summary || '') + '</p>' +
+    (fundingList ? '<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;">&#9733; Benefits: ' + esc(fundingList) + '</p>' : '') +
+    (link ? '<a href="' + esc(link) + '" target="_blank" rel="noopener noreferrer" class="rp-card__phone" style="text-decoration:none;font-size:0.85rem;">View Program &amp; Enroll &#8599;</a>' : '') +
+  '</div>';
 }
 
 // ── Load More ─────────────────────────────────────────────
-function loadMore() {
-  const grid = document.getElementById('licensureGrid');
-  const batch = filteredPaths.slice(visibleCount, visibleCount + PAGE_SIZE);
-  batch.forEach(p => { grid.insertAdjacentHTML('beforeend', renderCard(p)); });
-  visibleCount += batch.length;
-  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredPaths.length ? 'inline-block' : 'none';
-  document.getElementById('emptyState').style.display = filteredPaths.length === 0 ? 'block' : 'none';
+function licLoadMore() {
+  var grid = document.getElementById('licensureGrid');
+  var batch = licFilteredPaths.slice(licVisibleCount, licVisibleCount + LIC_PAGE_SIZE);
+  batch.forEach(function(p) { grid.insertAdjacentHTML('beforeend', licRenderCard(p)); });
+  licVisibleCount += batch.length;
+  document.getElementById('licLoadMore').style.display = licVisibleCount < licFilteredPaths.length ? '' : 'none';
+  document.getElementById('emptyState').style.display = licFilteredPaths.length === 0 ? 'block' : 'none';
 }
 
-function updateCount() {
-  document.getElementById('resultsCount').textContent =
-    filteredPaths.length === allPaths.length
-      ? `Showing all ${allPaths.length} licensure pathways`
-      : `Showing ${filteredPaths.length} of ${allPaths.length} pathways`;
+function licUpdateCount() {
+  var el = document.getElementById('licResultCount');
+  el.textContent = licFilteredPaths.length === licAllPaths.length
+    ? 'Showing all ' + licAllPaths.length + ' licensure pathways'
+    : 'Showing ' + licFilteredPaths.length + ' of ' + licAllPaths.length + ' pathways';
 }
 
 // ── Init ──────────────────────────────────────────────────
 fetch('data/licensure.json')
-  .then(r => r.json())
-  .then(data => {
-    allPaths = Array.isArray(data) ? data : (data.resources || []);
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    licAllPaths = Array.isArray(data) ? data : (data.resources || []);
     // Check for #va-approved hash — auto-activate VA filter
     if (window.location.hash === '#va-approved') {
-      applyQA('va_approved');
+      licApplyQA('va_approved');
     } else {
-      filterAndRender();
+      licApplyFilters();
     }
   })
-  .catch(err => {
+  .catch(function(err) {
     console.error('Error loading licensure:', err);
     document.getElementById('licensureGrid').innerHTML =
-      '<div class="rp-empty"><p>Error loading licensure data. Please try again later.</p></div>';
+      '<div class="mh-empty"><p>Error loading licensure data. Please try again later.</p></div>';
   });
 </script>
 
