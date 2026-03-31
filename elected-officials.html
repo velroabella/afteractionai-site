@@ -109,33 +109,32 @@
 <!-- QUICK ACCESS BAR -->
 <div class="rp-quickaccess">
   <div class="rp-quickaccess__inner">
-    <button class="rp-qa-btn" onclick="applyQA('Senate')">🏛 Senators</button>
-    <button class="rp-qa-btn" onclick="applyQA('House')">🏛 Representatives</button>
-    <button class="rp-qa-btn" onclick="applyQA('R')">Party: Republican</button>
-    <button class="rp-qa-btn" onclick="applyQA('D')">Party: Democrat</button>
-    <button class="rp-qa-btn" onclick="applyQA('all')">All Officials</button>
+    <button class="rp-qa-btn" onclick="eoApplyQA('chamber','Senate')">🏛 Senators</button>
+    <button class="rp-qa-btn" onclick="eoApplyQA('chamber','House')">🏛 Representatives</button>
+    <button class="rp-qa-btn" onclick="eoApplyQA('party','R')">Party: Republican</button>
+    <button class="rp-qa-btn" onclick="eoApplyQA('party','D')">Party: Democrat</button>
+    <button class="rp-qa-btn" onclick="eoClearAll()">All Officials</button>
   </div>
 </div>
 
 <!-- TWO-COLUMN LAYOUT -->
-<div class="rp-page-wrapper">
+<div class="mh-page-wrapper">
 
   <!-- SIDEBAR -->
-  <aside class="rp-sidebar">
-
-    <!-- Search -->
-    <div style="margin-bottom:20px;">
-      <input type="text" id="searchInput" placeholder="Search by name, state, or committee..."
-        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
-        oninput="filterAndRender()" />
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <span>Filters</span>
+      <button class="mh-clear-btn" onclick="eoClearAll()">Clear all</button>
     </div>
 
-    <!-- State Selector -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">State</div>
-      <select id="stateSelect" onchange="filterAndRender()"
-        style="width:100%;padding:8px 10px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;cursor:pointer;">
-        <option value="all">All States</option>
+    <!-- Search -->
+    <input type="text" class="mh-search-input" id="eoSearch" placeholder="Search by name, state, or committee..." oninput="eoApplyFilters()" />
+
+    <!-- State Selector (preserved as dropdown) -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">State</div>
+      <select id="eoStateSelect" class="mh-sort-select" onchange="eoApplyFilters()" style="width:100%;">
+        <option value="">All States</option>
         <option value="AK">Alaska (AK)</option>
         <option value="AL">Alabama (AL)</option>
         <option value="AR">Arkansas (AR)</option>
@@ -190,38 +189,48 @@
     </div>
 
     <!-- Chamber Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Chamber</div>
-      <button class="rp-pill active" data-filter-group="chamber" data-filter-value="all" onclick="setPill(this,'chamber')">All</button>
-      <button class="rp-pill" data-filter-group="chamber" data-filter-value="Senate" onclick="setPill(this,'chamber')">Senate</button>
-      <button class="rp-pill" data-filter-group="chamber" data-filter-value="House" onclick="setPill(this,'chamber')">House</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Chamber</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="chamber" data-value="Senate" onclick="eoTogglePill(this)">Senate</button>
+        <button class="mh-pill" data-filter="chamber" data-value="House" onclick="eoTogglePill(this)">House</button>
+      </div>
     </div>
 
     <!-- Party Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Party</div>
-      <button class="rp-pill active" data-filter-group="party" data-filter-value="all" onclick="setPill(this,'party')">All Parties</button>
-      <button class="rp-pill" data-filter-group="party" data-filter-value="R" onclick="setPill(this,'party')">Republican</button>
-      <button class="rp-pill" data-filter-group="party" data-filter-value="D" onclick="setPill(this,'party')">Democrat</button>
-      <button class="rp-pill" data-filter-group="party" data-filter-value="I" onclick="setPill(this,'party')">Independent</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Party</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="party" data-value="R" onclick="eoTogglePill(this)">Republican</button>
+        <button class="mh-pill" data-filter="party" data-value="D" onclick="eoTogglePill(this)">Democrat</button>
+        <button class="mh-pill" data-filter="party" data-value="I" onclick="eoTogglePill(this)">Independent</button>
+      </div>
     </div>
 
+    <!-- Result Count -->
+    <div class="mh-result-count" id="eoResultCount"></div>
   </aside>
 
   <!-- MAIN CONTENT -->
-  <main>
-    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
-
-    <div class="rp-grid" id="officialsGrid"></div>
-
-    <div class="rp-empty" id="emptyState" style="display:none;">
-      <div class="rp-empty__icon">🏛</div>
-      <p>No officials match your search. Try selecting a different state or chamber.</p>
-      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <select class="mh-sort-select" id="eoSort" onchange="eoApplyFilters()">
+        <option value="default">Sort: Senate first, then State</option>
+        <option value="az">Sort: A–Z by Name</option>
+        <option value="state">Sort: By State</option>
+      </select>
     </div>
 
-    <div style="text-align:center;margin-top:24px;">
-      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More</button>
+    <div class="mh-grid" id="officialsGrid"></div>
+
+    <div class="mh-empty" id="emptyState" style="display:none;">
+      <div class="rp-empty__icon">🏛</div>
+      <p>No officials match your search. Try selecting a different state or chamber.</p>
+      <button class="mh-clear-btn" onclick="eoClearAll()">Clear Filters</button>
+    </div>
+
+    <div class="mh-load-more" id="eoLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" id="loadMoreBtn" onclick="eoLoadMore()">Load More</button>
     </div>
   </main>
 
@@ -282,148 +291,171 @@
 <script src="js/newsletter.js"></script>
 <script>
 // ── State ──────────────────────────────────────────────────
-const PAGE_SIZE = 24;
-let allOfficials = [];
-let filteredOfficials = [];
-let visibleCount = 0;
+var EO_PAGE_SIZE = 24;
+var eoAllOfficials = [];
+var eoFilteredOfficials = [];
+var eoVisibleCount = 0;
 
-const activeFilters = { chamber: 'all', party: 'all' };
+var eoFilters = { search: '', chamber: new Set(), party: new Set() };
 
-const PARTY_LABELS = { R:'Republican', D:'Democrat', I:'Independent' };
-const PARTY_COLORS = { R:'rp-tag--red', D:'rp-tag--primary', I:'rp-tag--neutral' };
+var EO_PARTY_LABELS = { R: 'Republican', D: 'Democrat', I: 'Independent' };
+var EO_PARTY_COLORS = { R: 'rp-tag--red', D: 'rp-tag--primary', I: 'rp-tag--neutral' };
 
 // ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
   document.getElementById('navMenu').classList.toggle('active');
 }
 
-// ── Pills ─────────────────────────────────────────────────
-function setPill(btn, group) {
-  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeFilters[group] = btn.dataset.filterValue;
-  filterAndRender();
+// ── Escape (null-safe) ────────────────────────────────────
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ── Pills (Set-based multi-select) ────────────────────────
+function eoTogglePill(btn) {
+  var dim = btn.getAttribute('data-filter');
+  var val = btn.getAttribute('data-value');
+  btn.classList.toggle('active');
+  if (eoFilters[dim].has(val)) {
+    eoFilters[dim].delete(val);
+  } else {
+    eoFilters[dim].add(val);
+  }
+  eoApplyFilters();
 }
 
 // ── Quick Access ──────────────────────────────────────────
-function applyQA(val) {
-  if (val === 'all') { resetFilters(); return; }
-  if (val === 'Senate' || val === 'House') {
-    const pill = document.querySelector(`.rp-pill[data-filter-group="chamber"][data-filter-value="${val}"]`);
-    if (pill) setPill(pill, 'chamber');
-  } else if (val === 'R' || val === 'D') {
-    const pill = document.querySelector(`.rp-pill[data-filter-group="party"][data-filter-value="${val}"]`);
-    if (pill) setPill(pill, 'party');
+function eoApplyQA(dim, val) {
+  // Clear the target dimension, then activate the requested value
+  eoFilters[dim].clear();
+  document.querySelectorAll('.mh-pill[data-filter="' + dim + '"]').forEach(function(b) { b.classList.remove('active'); });
+  var pill = document.querySelector('.mh-pill[data-filter="' + dim + '"][data-value="' + val + '"]');
+  if (pill) {
+    pill.classList.add('active');
+    eoFilters[dim].add(val);
   }
+  eoApplyFilters();
 }
 
-// ── Reset ─────────────────────────────────────────────────
-function resetFilters() {
-  activeFilters.chamber = 'all';
-  activeFilters.party = 'all';
-  document.getElementById('stateSelect').value = 'all';
-  document.querySelectorAll('.rp-pill').forEach(b => {
-    b.classList.toggle('active', b.dataset.filterValue === 'all');
-  });
-  document.getElementById('searchInput').value = '';
-  filterAndRender();
+// ── Clear All ─────────────────────────────────────────────
+function eoClearAll() {
+  eoFilters.search = '';
+  eoFilters.chamber.clear();
+  eoFilters.party.clear();
+  document.getElementById('eoSearch').value = '';
+  document.getElementById('eoStateSelect').value = '';
+  document.getElementById('eoSort').value = 'default';
+  document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
+  eoApplyFilters();
 }
 
-// ── Filter ────────────────────────────────────────────────
-function filterAndRender() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const selectedState = document.getElementById('stateSelect').value;
+// ── Filter + Sort ─────────────────────────────────────────
+function eoApplyFilters() {
+  eoFilters.search = (document.getElementById('eoSearch').value || '').toLowerCase();
+  var q = eoFilters.search;
+  var selectedState = document.getElementById('eoStateSelect').value;
+  var hasChamber = eoFilters.chamber.size > 0;
+  var hasParty = eoFilters.party.size > 0;
 
-  filteredOfficials = allOfficials.filter(o => {
-    if (activeFilters.chamber !== 'all' && o.chamber !== activeFilters.chamber) return false;
-    if (activeFilters.party !== 'all' && o.party !== activeFilters.party) return false;
-    if (selectedState !== 'all' && o.state !== selectedState) return false;
-    if (q && !((o.full_name||'').toLowerCase().includes(q) ||
-               (o.state||'').toLowerCase().includes(q) ||
-               (o.title||'').toLowerCase().includes(q) ||
-               (o.committees||[]).some(c => c.toLowerCase().includes(q)))) return false;
+  eoFilteredOfficials = eoAllOfficials.filter(function(o) {
+    if (hasChamber && !eoFilters.chamber.has(o.chamber)) return false;
+    if (hasParty && !eoFilters.party.has(o.party)) return false;
+    if (selectedState && o.state !== selectedState) return false;
+    if (q && !((o.full_name || '').toLowerCase().indexOf(q) !== -1 ||
+               (o.state || '').toLowerCase().indexOf(q) !== -1 ||
+               (o.title || '').toLowerCase().indexOf(q) !== -1 ||
+               (o.committees || []).some(function(c) { return c.toLowerCase().indexOf(q) !== -1; }))) return false;
     return true;
   });
 
-  // Sort: Senate first, then by state, then by name
-  filteredOfficials.sort((a, b) => {
-    if (a.chamber !== b.chamber) return a.chamber === 'Senate' ? -1 : 1;
-    if (a.state !== b.state) return (a.state||'').localeCompare(b.state||'');
-    return (a.full_name||'').localeCompare(b.full_name||'');
-  });
+  // Sort
+  var sortVal = document.getElementById('eoSort').value;
+  if (sortVal === 'az') {
+    eoFilteredOfficials.sort(function(a, b) { return (a.full_name || '').localeCompare(b.full_name || ''); });
+  } else if (sortVal === 'state') {
+    eoFilteredOfficials.sort(function(a, b) {
+      var c = (a.state || '').localeCompare(b.state || '');
+      return c !== 0 ? c : (a.full_name || '').localeCompare(b.full_name || '');
+    });
+  } else {
+    // Default: Senate first, then by state, then by name
+    eoFilteredOfficials.sort(function(a, b) {
+      if (a.chamber !== b.chamber) return a.chamber === 'Senate' ? -1 : 1;
+      var c = (a.state || '').localeCompare(b.state || '');
+      return c !== 0 ? c : (a.full_name || '').localeCompare(b.full_name || '');
+    });
+  }
 
-  visibleCount = 0;
+  eoVisibleCount = 0;
   document.getElementById('officialsGrid').innerHTML = '';
-  loadMore();
-  updateCount();
+  eoLoadMore();
+  eoUpdateCount();
 }
 
 // ── Render ────────────────────────────────────────────────
-function renderCard(o) {
-  const partyLabel = PARTY_LABELS[o.party] || o.party;
-  const partyClass = PARTY_COLORS[o.party] || 'rp-tag--neutral';
-  const committees = (o.committees||[]).slice(0,3).map(c => `<li style="font-size:0.78rem;color:#6c757d;margin-bottom:3px;">${esc(c)}</li>`).join('');
+function eoRenderCard(o) {
+  var partyLabel = EO_PARTY_LABELS[o.party] || o.party;
+  var partyClass = EO_PARTY_COLORS[o.party] || 'rp-tag--neutral';
+  var committees = (o.committees || []).slice(0, 3).map(function(c) {
+    return '<li style="font-size:0.78rem;color:#6c757d;margin-bottom:3px;">' + esc(c) + '</li>';
+  }).join('');
 
-  let phoneBtn = '';
+  var phoneBtn = '';
   if (o.phone) {
-    phoneBtn = `<a href="tel:${esc(o.phone)}" class="rp-card__phone">${esc(o.phone)}</a>`;
+    phoneBtn = '<a href="tel:' + esc(o.phone) + '" class="rp-card__phone">' + esc(o.phone) + '</a>';
   }
 
-  let contactBtn = '';
+  var contactBtn = '';
   if (o.contact_form) {
-    contactBtn = `<a href="${esc(o.contact_form)}" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;margin-left:8px;background:#1d4ed8;">Contact Form</a>`;
+    contactBtn = '<a href="' + esc(o.contact_form) + '" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;margin-left:8px;background:#1d4ed8;">Contact Form</a>';
   }
 
-  let websiteBtn = '';
+  var websiteBtn = '';
   if (o.website) {
-    websiteBtn = `<a href="${esc(o.website)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Website →</a>`;
+    websiteBtn = '<a href="' + esc(o.website) + '" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Website →</a>';
   }
 
-  return `<div class="rp-card">
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-      <span class="rp-tag--neutral">${esc(o.state||'')}</span>
-      <span class="rp-tag--secondary">${esc(o.chamber||'')}</span>
-      <span class="${partyClass}">${partyLabel}</span>
-    </div>
-    <h3 class="rp-card__name">${esc(o.full_name||'')}</h3>
-    <p class="rp-card__org">${esc(o.title||'')}</p>
-    ${committees ? `<ul style="list-style:none;padding:0;margin:0 0 12px 0;">${committees}</ul>` : ''}
-    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">${phoneBtn}${contactBtn}${websiteBtn}</div>
-  </div>`;
-}
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return '<div class="rp-card">' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">' +
+      '<span class="rp-tag--neutral">' + esc(o.state || '') + '</span>' +
+      '<span class="rp-tag--secondary">' + esc(o.chamber || '') + '</span>' +
+      '<span class="' + partyClass + '">' + partyLabel + '</span>' +
+    '</div>' +
+    '<h3 class="rp-card__name">' + esc(o.full_name || '') + '</h3>' +
+    '<p class="rp-card__org">' + esc(o.title || '') + '</p>' +
+    (committees ? '<ul style="list-style:none;padding:0;margin:0 0 12px 0;">' + committees + '</ul>' : '') +
+    '<div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">' + phoneBtn + contactBtn + websiteBtn + '</div>' +
+  '</div>';
 }
 
 // ── Load More ─────────────────────────────────────────────
-function loadMore() {
-  const grid = document.getElementById('officialsGrid');
-  const batch = filteredOfficials.slice(visibleCount, visibleCount + PAGE_SIZE);
-  batch.forEach(o => { grid.insertAdjacentHTML('beforeend', renderCard(o)); });
-  visibleCount += batch.length;
-  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredOfficials.length ? 'inline-block' : 'none';
-  document.getElementById('emptyState').style.display = filteredOfficials.length === 0 ? 'block' : 'none';
+function eoLoadMore() {
+  var grid = document.getElementById('officialsGrid');
+  var batch = eoFilteredOfficials.slice(eoVisibleCount, eoVisibleCount + EO_PAGE_SIZE);
+  batch.forEach(function(o) { grid.insertAdjacentHTML('beforeend', eoRenderCard(o)); });
+  eoVisibleCount += batch.length;
+  document.getElementById('eoLoadMore').style.display = eoVisibleCount < eoFilteredOfficials.length ? '' : 'none';
+  document.getElementById('emptyState').style.display = eoFilteredOfficials.length === 0 ? 'block' : 'none';
 }
 
-function updateCount() {
-  document.getElementById('resultsCount').textContent =
-    filteredOfficials.length === allOfficials.length
-      ? `Showing all ${allOfficials.length} elected officials`
-      : `Showing ${filteredOfficials.length} of ${allOfficials.length} officials`;
+function eoUpdateCount() {
+  var el = document.getElementById('eoResultCount');
+  el.textContent = eoFilteredOfficials.length === eoAllOfficials.length
+    ? 'Showing all ' + eoAllOfficials.length + ' elected officials'
+    : 'Showing ' + eoFilteredOfficials.length + ' of ' + eoAllOfficials.length + ' officials';
 }
 
 // ── Init ──────────────────────────────────────────────────
 fetch('data/elected-officials.json')
-  .then(r => r.json())
-  .then(data => {
-    allOfficials = Array.isArray(data) ? data : (data.resources || []);
-    filterAndRender();
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    eoAllOfficials = Array.isArray(data) ? data : (data.resources || []);
+    eoApplyFilters();
   })
-  .catch(err => {
+  .catch(function(err) {
     console.error('Error loading elected officials:', err);
     document.getElementById('officialsGrid').innerHTML =
-      '<div class="rp-empty"><p>Error loading officials data. Please try again later.</p></div>';
+      '<div class="mh-empty"><p>Error loading officials data. Please try again later.</p></div>';
   });
 </script>
 
