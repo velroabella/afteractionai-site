@@ -73,14 +73,43 @@
     try {
       // ── Step 1: Get ephemeral token from our server ──
       log('connect', 'fetching ephemeral token from ' + TOKEN_ENDPOINT);
-      var tokenResp = await fetch(TOKEN_ENDPOINT);
-      if (!tokenResp.ok) {
-        var errBody = await tokenResp.text();
-        throw new Error('Token endpoint returned ' + tokenResp.status + ': ' + errBody);
+
+      // 12s timeout — prevents UI from hanging on "requesting token..." indefinitely
+      var tokenController = new AbortController();
+      var tokenTimeout = setTimeout(function() { tokenController.abort(); }, 12000);
+      var tokenResp;
+      try {
+        tokenResp = await fetch(TOKEN_ENDPOINT, { signal: tokenController.signal });
+      } catch (fetchErr) {
+        clearTimeout(tokenTimeout);
+        var isAbortErr = fetchErr.name === 'AbortError';
+        log('connect', 'token fetch ' + (isAbortErr ? 'timed out (12s)' : 'network error: ' + fetchErr.message));
+        throw new Error('Voice is temporarily unavailable. Please try again in a moment or use text chat.');
       }
-      var tokenData = await tokenResp.json();
+      clearTimeout(tokenTimeout);
+
+      if (!tokenResp.ok) {
+        // Parse our own error shape; never expose raw body in the thrown message
+        var errText = '';
+        try { errText = await tokenResp.text(); } catch(e) {}
+        var cleanErrMsg = 'Voice is temporarily unavailable. Please try again in a moment.';
+        try {
+          var errJson = JSON.parse(errText);
+          if (errJson.error && typeof errJson.error === 'string' && errJson.error.length < 120 &&
+              !/</.test(errJson.error)) {
+            cleanErrMsg = errJson.error;
+          }
+        } catch(e) {} // HTML or unparseable — use generic message
+        log('connect', 'token endpoint returned ' + tokenResp.status);
+        throw new Error(cleanErrMsg);
+      }
+
+      var tokenData;
+      try { tokenData = await tokenResp.json(); } catch(e) {
+        throw new Error('Voice is temporarily unavailable. Please try again in a moment.');
+      }
       var ephemeralKey = tokenData.client_secret;
-      if (!ephemeralKey) throw new Error('No client_secret in token response');
+      if (!ephemeralKey) throw new Error('Voice is temporarily unavailable. Please try again in a moment.');
       log('connect', 'ephemeral token received (ek_...)');
 
       // ── Step 2: Get microphone ──
@@ -139,18 +168,33 @@
 
       // ── Step 8: Send offer to OpenAI Realtime API ──
       setState('connecting', 'establishing WebRTC...');
-      var sdpResp = await fetch(REALTIME_BASE, {
-        method: 'POST',
-        headers: {
-          'Authorization': 'Bearer ' + ephemeralKey,
-          'Content-Type': 'application/sdp'
-        },
-        body: offer.sdp
-      });
+
+      // 10s timeout — SDP exchange should complete quickly; hang = dead session
+      var sdpController = new AbortController();
+      var sdpTimeout = setTimeout(function() { sdpController.abort(); }, 10000);
+      var sdpResp;
+      try {
+        sdpResp = await fetch(REALTIME_BASE, {
+          method: 'POST',
+          headers: {
+            'Authorization': 'Bearer ' + ephemeralKey,
+            'Content-Type': 'application/sdp'
+          },
+          body: offer.sdp,
+          signal: sdpController.signal
+        });
+      } catch (sdpErr) {
+        clearTimeout(sdpTimeout);
+        var isSdpAbort = sdpErr.name === 'AbortError';
+        log('connect', 'SDP exchange ' + (isSdpAbort ? 'timed out (10s)' : 'network error'));
+        throw new Error('Voice connection timed out. Please try again in a moment.');
+      }
+      clearTimeout(sdpTimeout);
 
       if (!sdpResp.ok) {
-        var sdpErr = await sdpResp.text();
-        throw new Error('Realtime calls endpoint returned ' + sdpResp.status + ': ' + sdpErr);
+        // Log status only — never surface raw SDP/HTML body to UI
+        log('connect', 'SDP endpoint returned ' + sdpResp.status);
+        throw new Error('Voice is temporarily unavailable (connection ' + sdpResp.status + '). Please try again.');
       }
 
       // ── Step 9: Set remote description (SDP answer) ──

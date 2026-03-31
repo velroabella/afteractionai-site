@@ -465,7 +465,14 @@
         wavesIdle = true;
         break;
       case 'error':
-        statusText = detail || 'Error. Try again.';
+        // Sanitize: strip HTML tags, truncate — raw upstream errors must never render in UI
+        var rawDetail = detail || '';
+        var cleanDetail = rawDetail.replace(/<[^>]*>/g, '').trim().substring(0, 120);
+        // If it still looks like HTML garbage, use a safe fallback
+        if (!cleanDetail || /^\s*$/.test(cleanDetail) || /<|&[a-z]+;/.test(cleanDetail)) {
+          cleanDetail = 'Voice is temporarily unavailable. Try again or use text chat.';
+        }
+        statusText = cleanDetail;
         wavesIdle = true;
         break;
       default:
@@ -1006,6 +1013,20 @@
     var _lastVoiceText = ''; // Phase FBP: per-session dedup guard — prevents duplicate user bubbles
     setVoiceUI('connecting', 'Connecting to voice...');
 
+    // ── Watchdog: if voice never reaches listening/connected within 20s, abort cleanly ──
+    // Prevents UI from hanging on "Connecting..." or "requesting token..." indefinitely.
+    var _voiceWatchdog = setTimeout(function() {
+      var currentVoiceState = typeof RealtimeVoice !== 'undefined' ? RealtimeVoice.getState() : 'idle';
+      if (currentVoiceState === 'connecting') {
+        log('startVoiceSession', 'WATCHDOG — voice never connected after 20s, aborting');
+        if (typeof RealtimeVoice !== 'undefined') RealtimeVoice.disconnect();
+        setVoiceUI('error', 'Voice is taking too long to connect. Please try again or use text chat.');
+        inputMode = 'text';
+        if (chatInputVoice) chatInputVoice.style.display = 'none';
+        showToast('Voice timed out. Switched to text mode.');
+      }
+    }, 20000);
+
     // Wire callbacks
     RealtimeVoice.onStateChange = function(state, detail) {
       log('RT.onStateChange', state + (detail ? ': ' + detail : ''));
@@ -1015,9 +1036,11 @@
           setVoiceUI('connecting', detail || 'Connecting...');
           break;
         case 'connected':
+          clearTimeout(_voiceWatchdog); // voice is live — watchdog no longer needed
           setVoiceUI('listening');
           break;
         case 'listening':
+          clearTimeout(_voiceWatchdog); // voice is live — watchdog no longer needed
           setVoiceUI('listening');
           if (!voiceGreetingSent) {
             voiceGreetingSent = true;
@@ -1028,9 +1051,11 @@
           setVoiceUI('speaking');
           break;
         case 'error':
+          clearTimeout(_voiceWatchdog);
           setVoiceUI('error', detail || 'Connection error');
           break;
         case 'idle':
+          clearTimeout(_voiceWatchdog);
           setVoiceUI('idle');
           break;
       }
@@ -1110,7 +1135,9 @@
     };
 
     RealtimeVoice.onError = function(error) {
-      log('RT.onError', error);
+      clearTimeout(_voiceWatchdog);
+      log('RT.onError', typeof error === 'string' ? error.substring(0, 200) : String(error));
+      // error is already sanitized upstream (realtime-voice.js + realtime-token.js)
       setVoiceUI('error', error);
     };
 

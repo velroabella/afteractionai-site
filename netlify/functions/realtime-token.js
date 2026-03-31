@@ -105,28 +105,96 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
     console.log('[realtime-token] REQUEST BODY:', JSON.stringify(requestBody, null, 2));
     console.log('[realtime-token] POST https://api.openai.com/v1/realtime/client_secrets');
 
-    const response = await fetch('https://api.openai.com/v1/realtime/client_secrets', {
-      method: 'POST',
-      headers: {
-        'Authorization': 'Bearer ' + OPENAI_API_KEY,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
-    });
+    // ── Fetch with 8s timeout — prevents indefinite hang ──
+    const fetchController = new AbortController();
+    const fetchTimeout = setTimeout(() => fetchController.abort(), 8000);
+
+    let response;
+    try {
+      response = await fetch('https://api.openai.com/v1/realtime/client_secrets', {
+        method: 'POST',
+        headers: {
+          'Authorization': 'Bearer ' + OPENAI_API_KEY,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(requestBody),
+        signal: fetchController.signal
+      });
+    } catch (fetchErr) {
+      clearTimeout(fetchTimeout);
+      const isTimeout = fetchErr.name === 'AbortError';
+      console.error('[realtime-token] Fetch failed:', isTimeout ? 'TIMEOUT (8s)' : fetchErr.message);
+      return {
+        statusCode: 503,
+        headers: HEADERS,
+        body: JSON.stringify({
+          ok: false,
+          error: 'Voice is temporarily unavailable',
+          code: isTimeout ? 'VOICE_TOKEN_TIMEOUT' : 'VOICE_TOKEN_NETWORK_ERROR',
+          status: 503
+        })
+      };
+    }
+    clearTimeout(fetchTimeout);
 
     const rawBody = await response.text();
+    const upstreamContentType = response.headers.get('content-type') || '';
+    const upstreamIsHTML = upstreamContentType.includes('text/html') || rawBody.trimStart().startsWith('<!');
+
     console.log('[realtime-token] Status:', response.status);
-    console.log('[realtime-token] Raw response:', rawBody);
+    console.log('[realtime-token] Content-Type:', upstreamContentType.substring(0, 60));
 
     if (!response.ok) {
+      // NEVER pass raw upstream body (may be HTML from Cloudflare/proxy) to the client.
+      // Log sanitized summary server-side only.
+      if (upstreamIsHTML) {
+        console.error('[realtime-token] Upstream returned HTML (CDN/proxy error), status:', response.status);
+      } else {
+        console.error('[realtime-token] Upstream error body:', rawBody.substring(0, 300));
+      }
       return {
         statusCode: response.status,
         headers: HEADERS,
-        body: JSON.stringify({ error: 'Failed to create realtime session', detail: rawBody })
+        body: JSON.stringify({
+          ok: false,
+          error: 'Voice is temporarily unavailable',
+          code: 'VOICE_TOKEN_UPSTREAM_ERROR',
+          status: response.status
+        })
       };
     }
 
-    const data = JSON.parse(rawBody);
+    // Guard against upstream returning HTML on a 200 (e.g., login redirect)
+    if (upstreamIsHTML) {
+      console.error('[realtime-token] Upstream returned HTML on 200 — not a valid token response');
+      return {
+        statusCode: 502,
+        headers: HEADERS,
+        body: JSON.stringify({
+          ok: false,
+          error: 'Voice is temporarily unavailable',
+          code: 'VOICE_TOKEN_UNEXPECTED_HTML',
+          status: 502
+        })
+      };
+    }
+
+    let data;
+    try {
+      data = JSON.parse(rawBody);
+    } catch (parseErr) {
+      console.error('[realtime-token] JSON parse failed on upstream 200 response:', rawBody.substring(0, 200));
+      return {
+        statusCode: 502,
+        headers: HEADERS,
+        body: JSON.stringify({
+          ok: false,
+          error: 'Voice is temporarily unavailable',
+          code: 'VOICE_TOKEN_PARSE_ERROR',
+          status: 502
+        })
+      };
+    }
     console.log('[realtime-token] Parsed keys:', Object.keys(data));
 
     // /v1/realtime/client_secrets returns { value: "ek_...", expires_at: ... }
