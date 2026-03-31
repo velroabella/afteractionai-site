@@ -4,7 +4,11 @@
     "category": "veteran_org",
     "name": "Canine Companions",
     "description": "One of the largest and most established nonprofit providers of trained service dogs in the United States. Provides highly trained assistance dogs free of charge to veterans and adults with physical disabilities, including PTSD service dogs through the Veterans Initiative program. Dogs learn 45+ tasks over 18+ months of training. Nationally recognized with rigorous training process and lifetime support.",
-    "service_types": ["Mobility", "PTSD", "Hearing"],
+    "service_types": [
+      "Mobility",
+      "PTSD",
+      "Hearing"
+    ],
     "eligibility": "Veterans and adults with physical, cognitive, or PTSD-related disabilities. No income requirements.",
     "cost": "Free — all training, placement, and follow-up support covered",
     "wait_time": "2–3 years average (varies by region and dog type)",
@@ -17,28 +21,15 @@
     "source_quality": "High"
   },
   {
-    "id": "sd-org-2",
-    "category": "veteran_org",
-    "name": "Puppies Behind Bars — Dog Tags",
-    "description": "Dog Tags is the veteran-specific program from Puppies Behind Bars. Prison inmates raise service dogs for veterans with PTSD and traumatic brain injury. A unique dual-mission organization that transforms both veterans and incarcerated individuals. Dogs are trained for 24 months in federal prisons before placement.",
-    "service_types": ["PTSD", "TBI"],
-    "eligibility": "Post-9/11 veterans with PTSD or TBI. Priority given to those with combat-related conditions.",
-    "cost": "Free",
-    "wait_time": "1–2 years",
-    "website": "https://puppiesbehindbarsdogtags.org",
-    "application_link": "https://puppiesbehindbarsdogtags.org/apply",
-    "phone": "212-209-9600",
-    "accredited": true,
-    "accreditation": "ADI",
-    "veteran_focused": true,
-    "source_quality": "High"
-  },
-  {
     "id": "sd-org-3",
     "category": "veteran_org",
     "name": "K9s For Warriors",
     "description": "The nation's largest provider of trained service dogs specifically for veterans with PTSD, TBI, or MST. Rescues dogs from shelters and trains them for 15–18 months before pairing. Covers the complete process: dog, training, travel, lodging for the 3-week bonding program. NIH-funded clinical trial showed 66% lower odds of PTSD diagnosis for graduates. 1,100+ veterans served since 2011.",
-    "service_types": ["PTSD", "TBI", "MST"],
+    "service_types": [
+      "PTSD",
+      "TBI",
+      "MST"
+    ],
     "eligibility": "Post-9/11 combat veterans (served after Sept 11, 2001) with diagnosis of PTSD, TBI, or MST from a military source.",
     "cost": "Free — including dog, training, and 3-week residential bonding program in Florida",
     "wait_time": "12–18 months",
@@ -55,12 +46,15 @@
     "category": "veteran_org",
     "name": "Warrior Canine Connection",
     "description": "Uses a 'Mission Based Trauma Recovery' model — veterans with PTSD help train service dogs for other veterans. This dual-benefit program is used in VA Medical Centers nationwide. ADI-accredited since 2015. The founder was elected to the ADI North America board. 80-acre campus at Seneca Creek State Park, Boyds, MD.",
-    "service_types": ["PTSD", "TBI"],
+    "service_types": [
+      "PTSD",
+      "TBI"
+    ],
     "eligibility": "Combat veterans with PTSD or TBI. Also has therapist-supervised training participation programs at VA Medical Centers.",
     "cost": "Free",
     "wait_time": "2–3 years",
     "website": "https://warriorcanineconnection.org",
-    "application_link": "https://warriorcanineconnection.org/request-a-service-dog",
+    "application_link": "https://warriorcanineconnection.org/service-dogs/dog-applicants/",
     "phone": "301-428-0366",
     "accredited": true,
     "accreditation": "ADI",
@@ -72,12 +66,16 @@
     "category": "veteran_org",
     "name": "Southeastern Guide Dogs / Dogs Inc. — Paws for Veterans",
     "description": "Paws for Veterans is the veteran-specific program within Southeastern Guide Dogs (recently rebranded as Dogs Inc.). The only organization in the Southeastern US with DUAL ADI and IGDF accreditation — the highest credibility tier. Provides guide dogs for visually impaired veterans and service dogs for veterans with PTSD. 400+ active graduates, 100+ placements per year. All services free with no government funding.",
-    "service_types": ["Guide/Vision", "PTSD", "Mobility"],
+    "service_types": [
+      "Guide/Vision",
+      "PTSD",
+      "Mobility"
+    ],
     "eligibility": "Veterans with vision impairment, PTSD, or mobility disabilities.",
     "cost": "Free including training, dog, and all ongoing support",
     "wait_time": "Varies by program (6 months–2 years)",
-    "website": "https://www.guidedogs.org",
-    "application_link": "https://www.guidedogs.org/get-a-dog",
+    "website": "https://dogsinc.org",
+    "application_link": "https://dogsinc.org/get-a-dog/",
     "phone": "866-433-4853",
     "accredited": true,
     "accreditation": "ADI + IGDF",
@@ -89,7 +87,11 @@
     "category": "veteran_org",
     "name": "Freedom Service Dogs of America",
     "description": "Rescues and repurposes shelter dogs to serve veterans and people with disabilities. Provides PTSD service dogs, mobility assistance dogs, and facility dogs for VA Medical Centers. The facility dog program is integrated directly into VA mental health treatment.",
-    "service_types": ["PTSD", "Mobility", "Facility Dogs (VA)"],
+    "service_types": [
+      "PTSD",
+      "Mobility",
+      "Facility Dogs (VA)"
+    ],
     "eligibility": "Veterans and individuals with physical or PTSD-related disabilities.",
     "cost": "No cost to recipient for the dog; fundraising may be required",
     "wait_time": "2–3 years",
@@ -106,12 +108,16 @@
     "category": "veteran_org",
     "name": "America's VetDogs",
     "description": "Established program from the Guide Dog Foundation, exclusively serving veterans and active-duty military. Provides guide dogs for visually impaired veterans and service dogs for veterans with other physical disabilities. Residential training on Long Island, NY. Strong alumni community and lifetime vet support.",
-    "service_types": ["Guide/Vision", "Mobility", "Hearing"],
+    "service_types": [
+      "Guide/Vision",
+      "Mobility",
+      "Hearing"
+    ],
     "eligibility": "Veterans with visual impairment, hearing loss, or mobility disabilities.",
     "cost": "Free",
     "wait_time": "6–18 months",
     "website": "https://www.vetdogs.org",
-    "application_link": "https://www.vetdogs.org/get-a-dog",
+    "application_link": "https://www.vetdogs.org/consumerapplicants",
     "phone": "631-930-9000",
     "accredited": true,
     "accreditation": "ADI",
@@ -123,7 +129,11 @@
     "category": "veteran_org",
     "name": "NEADS World Class Service Dogs",
     "description": "ADI charter member and one of the original service dog organizations in the US (founded 1976). Developed the first PTSD service dog program for veterans in conjunction with Walter Reed National Military Medical Center. Trains dogs for veterans with PTSD, physical disabilities, and hearing loss. Uses both professional trainers and prison-based training programs. 100+ veteran placements.",
-    "service_types": ["PTSD", "Mobility", "Hearing"],
+    "service_types": [
+      "PTSD",
+      "Mobility",
+      "Hearing"
+    ],
     "eligibility": "Veterans with PTSD, physical disabilities, or hearing impairment.",
     "cost": "Free or greatly reduced",
     "wait_time": "18 months–3 years",
@@ -140,7 +150,9 @@
     "category": "veteran_org",
     "name": "Assistance Dogs International (ADI) — Provider Directory",
     "description": "ADI is the gold-standard accreditation body for assistance dog organizations worldwide. Their public directory lists every ADI-accredited provider. Always verify any service dog organization against this directory before applying. As of 2026, approximately 173 accredited organizations worldwide, ~91 in North America. VA requires ADI or IGDF accreditation for veterans to receive vet care benefits.",
-    "service_types": ["All types"],
+    "service_types": [
+      "All types"
+    ],
     "eligibility": "Varies by member organization",
     "cost": "Varies by member organization",
     "wait_time": "Varies",
@@ -157,7 +169,10 @@
     "category": "veteran_org",
     "name": "Paws and Stripes",
     "description": "New Mexico-based organization providing trained service dogs for veterans with PTSD and TBI. Unique model: the veteran adopts a rescue dog and then participates in a structured training program together. Veteran and dog are trained as a team from the start. Built around human-animal bond research.",
-    "service_types": ["PTSD", "TBI"],
+    "service_types": [
+      "PTSD",
+      "TBI"
+    ],
     "eligibility": "Veterans with PTSD or TBI, primarily serving New Mexico and surrounding areas but open to others.",
     "cost": "Minimal to free (sliding scale assistance)",
     "wait_time": "6–12 months",
@@ -174,7 +189,11 @@
     "category": "veteran_org",
     "name": "Patriot PAWS Service Dogs",
     "description": "ADI-accredited nonprofit that has placed 500+ service dogs for disabled American veterans since 2006. Dogs undergo 18–24 months of specialized training. Uses a prison training partnership with the Texas Department of Criminal Justice. Provides free lifetime veterinary care and monthly check-ins after placement.",
-    "service_types": ["PTSD", "TBI", "Mobility"],
+    "service_types": [
+      "PTSD",
+      "TBI",
+      "Mobility"
+    ],
     "eligibility": "Disabled American veterans with service-connected PTSD, TBI, or mobility challenges.",
     "cost": "Free",
     "wait_time": "2–3 years",
@@ -191,7 +210,12 @@
     "category": "veteran_org",
     "name": "Canines for Service",
     "description": "North Carolina's longest-running ADI-accredited service dog provider, in operation since 1996. Exclusively serves veterans with service-connected disabilities — PTSD, MST, TBI, and mobility challenges. Custom-trains each dog for the specific veteran's needs. All dogs, training, and travel provided at no cost.",
-    "service_types": ["PTSD", "MST", "TBI", "Mobility"],
+    "service_types": [
+      "PTSD",
+      "MST",
+      "TBI",
+      "Mobility"
+    ],
     "eligibility": "Veterans with service-connected disabilities (PTSD, MST, TBI, or mobility).",
     "cost": "Free — dog, training, and travel all covered",
     "wait_time": "1–2 years",
@@ -208,7 +232,12 @@
     "category": "veteran_org",
     "name": "Mutts With A Mission",
     "description": "ADI-accredited (re-accredited 2024) nonprofit serving veterans, wounded warriors, law enforcement, and first responders in Virginia and surrounding region. One of only 4 ADI-accredited programs in Virginia. VA-qualifying — veteran graduates receive lifetime veterinary care from the VA. All services free.",
-    "service_types": ["PTSD", "MST", "TBI", "Mobility"],
+    "service_types": [
+      "PTSD",
+      "MST",
+      "TBI",
+      "Mobility"
+    ],
     "eligibility": "Veterans, wounded warriors, law enforcement, and first responders with qualifying disabilities.",
     "cost": "Free",
     "wait_time": "1–3 years",
@@ -225,7 +254,11 @@
     "category": "veteran_org",
     "name": "Dog Tag Buddies",
     "description": "The only ADI-accredited service dog organization in Montana (accredited January 2025). Serves veterans with hidden injuries — PTSD, TBI, MST. Unique model: veterans pair with rescue puppies and train together as a team across 7 regional training locations statewide. All services free to veterans.",
-    "service_types": ["PTSD", "TBI", "MST"],
+    "service_types": [
+      "PTSD",
+      "TBI",
+      "MST"
+    ],
     "eligibility": "Veterans with hidden injuries including PTSD, TBI, and MST in Montana.",
     "cost": "Free",
     "wait_time": "1–2 years",
@@ -242,7 +275,12 @@
     "category": "veteran_org",
     "name": "The Dog Alliance",
     "description": "ADI full member since 2021, based in Cedar Park, Texas. One of fewer than 150 organizations worldwide to hold this accreditation. Provides free service dogs to Texas veterans with PTSD, MST, TBI, or mobility challenges. Dogs undergo 18–22 months of training. Also serves at-risk children and seniors.",
-    "service_types": ["PTSD", "MST", "TBI", "Mobility"],
+    "service_types": [
+      "PTSD",
+      "MST",
+      "TBI",
+      "Mobility"
+    ],
     "eligibility": "Texas veterans with service-related PTSD, MST, TBI, or mobility challenges who reside full-time in Texas.",
     "cost": "Free to veterans",
     "wait_time": "18 months–3 years",
@@ -259,7 +297,11 @@
     "category": "veteran_org",
     "name": "Service Dogs of Virginia",
     "description": "ADI-accredited program based in Charlottesville, VA. Trains PTSD service dogs with a specific anti-guarding philosophy — dogs are trained to provide grounding and support without encouraging guarding, protecting, or threat-searching behaviors, which is clinically important for PTSD management.",
-    "service_types": ["PTSD", "Mobility", "Psychiatric"],
+    "service_types": [
+      "PTSD",
+      "Mobility",
+      "Psychiatric"
+    ],
     "eligibility": "Veterans and civilians with PTSD or mobility disabilities in Virginia.",
     "cost": "Free",
     "wait_time": "Varies",
@@ -276,7 +318,11 @@
     "category": "veteran_org",
     "name": "PAVE — Paws Assisting Veterans",
     "description": "ADI-accredited program serving U.S. veterans nationwide. No restriction on dates of service — serves veterans from any era with military-related psychological and/or physical disabilities. Customized training for each team and provides lifetime support after placement.",
-    "service_types": ["PTSD", "Mobility", "Psychiatric"],
+    "service_types": [
+      "PTSD",
+      "Mobility",
+      "Psychiatric"
+    ],
     "eligibility": "U.S. veterans with military-related psychological or physical disabilities. No service-date restrictions.",
     "cost": "Free",
     "wait_time": "Varies",
@@ -293,7 +339,11 @@
     "category": "veteran_org",
     "name": "Brigadoon Service Dogs",
     "description": "ADI-accredited since 2012. The only ADI-accredited program serving the Pacific Northwest (WA, OR, ID, MT, AK, WY). Canines and Heroes for Independence veteran program. Uses Washington State Department of Corrections cooperative prison training programs. 50+ veteran placements.",
-    "service_types": ["PTSD", "TBI", "Mobility"],
+    "service_types": [
+      "PTSD",
+      "TBI",
+      "Mobility"
+    ],
     "eligibility": "Veterans with PTSD, TBI, or mobility disabilities in the Pacific Northwest.",
     "cost": "Free",
     "wait_time": "2–3 years",
@@ -310,7 +360,14 @@
     "category": "veteran_org",
     "name": "Little Angels Service Dogs",
     "description": "ADI-accredited nonprofit with the broadest range of disability types served among ADI programs. 300+ dogs trained since 2006. Covers Southern CA, Eastern TX, and New England. Trains dogs for mobility, diabetic alert, seizure alert, hearing, psychiatric, and autism assistance. Positive reinforcement only.",
-    "service_types": ["Mobility", "Diabetic Alert", "Seizure Alert", "Hearing", "Psychiatric", "Autism"],
+    "service_types": [
+      "Mobility",
+      "Diabetic Alert",
+      "Seizure Alert",
+      "Hearing",
+      "Psychiatric",
+      "Autism"
+    ],
     "eligibility": "Veterans and civilians with qualifying disabilities in service regions (CA, TX, New England).",
     "cost": "Free",
     "wait_time": "2–3 years",
@@ -327,7 +384,11 @@
     "category": "veteran_org",
     "name": "Paragon Service Dogs",
     "description": "ADI-accredited since 2023 (rebranded from IHDI in 2024). Expanding scope of service. Veteran graduates qualify for VA veterinary health insurance benefits. VA-benefit-qualifying program.",
-    "service_types": ["Mobility", "Psychiatric", "Facility"],
+    "service_types": [
+      "Mobility",
+      "Psychiatric",
+      "Facility"
+    ],
     "eligibility": "Veterans and individuals with mobility or psychiatric disabilities.",
     "cost": "Free",
     "wait_time": "Varies",
@@ -344,7 +405,12 @@
     "category": "veteran_org",
     "name": "Service Dogs for America",
     "description": "ADI-accredited since 2010, based in Jud, North Dakota. The only ADI-accredited program in the United States with NO WAITLIST — a critical differentiator. Uses inmate training programs at three North Dakota correctional facilities. Trains mobility, PTSD, seizure response, and diabetes alert dogs.",
-    "service_types": ["Mobility", "PTSD", "Seizure Response", "Diabetic Alert"],
+    "service_types": [
+      "Mobility",
+      "PTSD",
+      "Seizure Response",
+      "Diabetic Alert"
+    ],
     "eligibility": "Veterans and individuals with qualifying disabilities nationwide.",
     "cost": "Free",
     "wait_time": "No waitlist",
@@ -361,7 +427,10 @@
     "category": "veteran_org",
     "name": "Helping Paws",
     "description": "ADI-accredited since 2007 (re-accredited every 5 years), based in Eden Prairie, MN. Trains dogs to 80+ cues — one of the highest training standards in the industry. Serves veterans with PTSD (military disability category). Requires 3-week Team Training course and ADI Public Access Test within first year of placement.",
-    "service_types": ["Mobility", "PTSD"],
+    "service_types": [
+      "Mobility",
+      "PTSD"
+    ],
     "eligibility": "Adults and veterans with physical or PTSD-related disabilities in Minnesota and neighboring states.",
     "cost": "Free",
     "wait_time": "2–3 years",
@@ -378,7 +447,12 @@
     "category": "veteran_org",
     "name": "Paws With A Cause",
     "description": "ADI-accredited since inception, based in Wayland, MI. One of the oldest and largest assistance dog programs in the US — 3,500+ dogs placed since 1979. Custom-trained for physical disabilities, hearing loss, seizures, and autism. Serves 20+ states. Programs include service dogs for mobility, hearing, seizure response, and autism assistance.",
-    "service_types": ["Mobility", "Hearing", "Seizure Response", "Autism"],
+    "service_types": [
+      "Mobility",
+      "Hearing",
+      "Seizure Response",
+      "Autism"
+    ],
     "eligibility": "Adults and children with qualifying disabilities in 20+ states. Veterans welcome.",
     "cost": "Free",
     "wait_time": "2–4 years",
@@ -395,7 +469,11 @@
     "category": "veteran_org",
     "name": "Ability Dogs of Arizona",
     "description": "The oldest service dog training organization in the United States (founded 1973). ADI-accredited and one of only two ADI programs in Arizona. Unique owner-train model — veterans are actively involved in training their own dog over 12–18 months. Serves Tucson, Phoenix, and Las Vegas. Trains mobility, psychiatric, and medical alert dogs.",
-    "service_types": ["Mobility", "Psychiatric", "Medical Alert"],
+    "service_types": [
+      "Mobility",
+      "Psychiatric",
+      "Medical Alert"
+    ],
     "eligibility": "Veterans and individuals with qualifying disabilities in AZ and NV.",
     "cost": "Varies by program (owner-train model)",
     "wait_time": "12–18 months",
@@ -412,7 +490,11 @@
     "category": "veteran_org",
     "name": "ICAN — Indiana Canine Assistant Network",
     "description": "ADI-accredited nonprofit based in Indianapolis, IN. 300+ dogs placed since 2002. Dogs trained to 60–80 cues. Uses prison training model at 3 Indiana correctional facilities. Includes a psychiatric assistance category specifically for military veterans. Each dog represents a $30,000+ training investment.",
-    "service_types": ["Mobility", "Psychiatric/Veteran", "Facility"],
+    "service_types": [
+      "Mobility",
+      "Psychiatric/Veteran",
+      "Facility"
+    ],
     "eligibility": "Veterans and individuals with qualifying disabilities in Indiana.",
     "cost": "Free",
     "wait_time": "2–3 years",
@@ -429,7 +511,14 @@
     "category": "veteran_org",
     "name": "4 Paws for Ability",
     "description": "ADI-accredited (accredited February 2026) nonprofit in Xenia, OH. 2,000+ dogs placed since 1998. Places 120+ dogs per year — one of the highest annual placement rates. Trains 10+ types of service dogs including autism, seizure, diabetes, hearing, mobility, and PTSD dogs for veterans and children. One of 5 ADI-accredited organizations in Ohio.",
-    "service_types": ["PTSD", "Autism", "Seizure Response", "Diabetic Alert", "Hearing", "Mobility"],
+    "service_types": [
+      "PTSD",
+      "Autism",
+      "Seizure Response",
+      "Diabetic Alert",
+      "Hearing",
+      "Mobility"
+    ],
     "eligibility": "Children and veterans with qualifying disabilities nationwide.",
     "cost": "Free",
     "wait_time": "Varies by dog type (1–3 years)",
@@ -446,12 +535,17 @@
     "category": "veteran_org",
     "name": "Susquehanna Service Dogs (Keystone Human Services)",
     "description": "ADI-accredited program operating since 1993, part of the Keystone Human Services network in Pennsylvania. 300+ dogs placed. Trains service dogs for mobility, hearing, balance, seizure response, and veteran support. Serves PA and surrounding states.",
-    "service_types": ["Mobility", "Hearing", "Balance", "Seizure Response"],
+    "service_types": [
+      "Mobility",
+      "Hearing",
+      "Balance",
+      "Seizure Response"
+    ],
     "eligibility": "Veterans and adults with qualifying disabilities in PA and surrounding states.",
     "cost": "Free",
     "wait_time": "2–3 years",
-    "website": "https://keystonehumanservices.org/susquehanna-service-dogs/",
-    "application_link": "https://keystonehumanservices.org/susquehanna-service-dogs/",
+    "website": "https://khs.org/what-we-do/assistance-dogs/",
+    "application_link": "https://khs.org/what-we-do/assistance-dogs/",
     "phone": null,
     "accredited": true,
     "accreditation": "ADI",
@@ -463,7 +557,14 @@
     "category": "veteran_org",
     "name": "Guardian Angels Medical Service Dogs",
     "description": "ADI-accredited nonprofit based in Williston, FL, serving 30+ states. Primary focus is the veteran population. Unique distinction: one of the only programs in the US with a college-accredited training curriculum. VA-approved training standards. Dogs undergo a 2-year training process. Free to all recipients. Lifetime follow-up support.",
-    "service_types": ["PTSD", "TBI", "Mobility", "Seizure Response", "Diabetic Alert", "Hearing"],
+    "service_types": [
+      "PTSD",
+      "TBI",
+      "Mobility",
+      "Seizure Response",
+      "Diabetic Alert",
+      "Hearing"
+    ],
     "eligibility": "Veterans (primary population) and civilians with qualifying disabilities in 30+ states.",
     "cost": "Free — $25,000+ investment per dog",
     "wait_time": "Varies",
@@ -480,7 +581,11 @@
     "category": "veteran_org",
     "name": "Guide Dogs of America / Tender Loving Canines",
     "description": "ADI-accredited organization based on a 7.5-acre campus in Sylmar (Los Angeles), CA. Merged Guide Dogs of America and Tender Loving Canines in 2020. Dual mission: guide dogs for blind/visually impaired AND service dogs for veterans and children with autism. Serves the US and Canada. All services free.",
-    "service_types": ["Guide/Vision", "Autism", "Veteran Service"],
+    "service_types": [
+      "Guide/Vision",
+      "Autism",
+      "Veteran Service"
+    ],
     "eligibility": "Adults with visual impairment; veterans with qualifying disabilities; children with autism. US and Canada.",
     "cost": "Free",
     "wait_time": "1–2 years",
@@ -497,7 +602,9 @@
     "category": "veteran_org",
     "name": "Leader Dogs for the Blind",
     "description": "Dual ADI and IGDF accredited guide dog school operating since 1939, based in Rochester Hills, MI. One of the oldest guide dog schools in the US. All programs completely free including guide dogs, transportation, room and board, and ongoing support. WWII veteran history — has served blind veterans since its founding.",
-    "service_types": ["Guide/Vision"],
+    "service_types": [
+      "Guide/Vision"
+    ],
     "eligibility": "Adults with visual impairment. Historical veteran connection since WWII.",
     "cost": "Free — all programs including transportation and accommodations",
     "wait_time": "Varies",
@@ -514,7 +621,9 @@
     "category": "veteran_org",
     "name": "Guide Dogs of the Desert",
     "description": "Dual ADI and IGDF accredited guide dog school founded in 1972, based in North Palm Springs, CA. One of only 14 guide dog schools in the United States. Specializes in custom training for individuals over 55 and those with multiple disabilities — unique in the industry. All services free.",
-    "service_types": ["Guide/Vision"],
+    "service_types": [
+      "Guide/Vision"
+    ],
     "eligibility": "Adults with visual impairment, particularly specializing in those over 55 or with multiple disabilities.",
     "cost": "Free",
     "wait_time": "Varies",
@@ -531,7 +640,9 @@
     "category": "veteran_org",
     "name": "Guide Dogs for the Blind",
     "description": "IGDF-accredited guide dog school with two campuses: San Rafael, CA and Boring, OR. Premier guide dog school with staff who serve on the IGDF Accreditation Committee and board. Two-week classes with 6–8 students and 2:1 student-to-instructor ratio. All services free including transportation. Blind or visually impaired veterans are eligible.",
-    "service_types": ["Guide/Vision"],
+    "service_types": [
+      "Guide/Vision"
+    ],
     "eligibility": "Adults with visual impairment. Blind and visually impaired veterans welcome.",
     "cost": "Free — including transportation to campus",
     "wait_time": "6–12 months",
@@ -548,7 +659,9 @@
     "category": "veteran_org",
     "name": "The Seeing Eye",
     "description": "The oldest guide dog school in the United States and an IGDF founding member. Based in Morris Township, NJ on a 60-acre campus. Places 260 guide dogs per year — the highest annual volume among US guide dog schools. Breeds German Shepherds, Labs, Goldens, and Lab/Golden crosses. 330-acre breeding station in Chester, NJ.",
-    "service_types": ["Guide/Vision"],
+    "service_types": [
+      "Guide/Vision"
+    ],
     "eligibility": "Adults with visual impairment, including veterans.",
     "cost": "Minimal nominal fee ($150–$200 symbolic — substantially subsidized)",
     "wait_time": "3–12 months",
@@ -565,7 +678,9 @@
     "category": "veteran_org",
     "name": "Guiding Eyes for the Blind",
     "description": "IGDF-accredited guide dog school founded in 1954, based in Yorktown Heights, NY. 10,000+ guide dog teams graduated — one of the largest totals among US guide dog schools. Three facilities (Yorktown Heights, Patterson, and White Plains for urban training). All services completely free.",
-    "service_types": ["Guide/Vision"],
+    "service_types": [
+      "Guide/Vision"
+    ],
     "eligibility": "Adults with visual impairment, including veterans.",
     "cost": "Free",
     "wait_time": "6–18 months",
@@ -582,7 +697,9 @@
     "category": "veteran_org",
     "name": "Fidelco Guide Dog Foundation",
     "description": "IGDF-accredited guide dog school based in Bloomfield, CT, specializing exclusively in German Shepherds — the longest-running single-breed program in the US. 50+ years of operation. 1,450+ dogs placed. Each dog represents a $65,000+ training investment. 24/7 client support for the entire 10-year working life of the dog. All services free.",
-    "service_types": ["Guide/Vision"],
+    "service_types": [
+      "Guide/Vision"
+    ],
     "eligibility": "Adults with visual impairment, including veterans.",
     "cost": "Free",
     "wait_time": "Varies",
@@ -664,7 +781,14 @@
     "name": "Service Dog",
     "description": "A dog individually trained to perform specific tasks for a person with a physical, sensory, psychiatric, intellectual, or other mental disability. The work or task must be directly related to the disability. Full public access rights under ADA. Cannot be required to wear a vest or carry documentation.",
     "legal_status": "Protected under ADA Title II and III (public access), Fair Housing Act, Air Carrier Access Act (revised 2021)",
-    "examples": ["Guide dog for visual impairment", "Seizure alert dog", "Mobility assistance dog", "Psychiatric service dog for PTSD (interrupts nightmares, creates safe space, grounds during flashbacks)", "Diabetic alert dog", "Hearing alert dog"],
+    "examples": [
+      "Guide dog for visual impairment",
+      "Seizure alert dog",
+      "Mobility assistance dog",
+      "Psychiatric service dog for PTSD (interrupts nightmares, creates safe space, grounds during flashbacks)",
+      "Diabetic alert dog",
+      "Hearing alert dog"
+    ],
     "source_quality": "High"
   },
   {
@@ -673,7 +797,10 @@
     "name": "Emotional Support Animal (ESA)",
     "description": "A dog (or other animal) that provides comfort, companionship, and emotional support through its presence alone. Does NOT require specific task training. NOT protected under ADA for public access — cannot bring into stores, restaurants, or other public accommodations. IS protected under Fair Housing Act for housing accommodations with proper documentation.",
     "legal_status": "Protected under Fair Housing Act for housing only. NOT covered under ADA for public access. No longer required accommodation under Air Carrier Access Act (post-Jan 2021).",
-    "examples": ["Cat or dog providing comfort during panic attacks", "Any animal prescribed by licensed mental health provider for emotional wellbeing"],
+    "examples": [
+      "Cat or dog providing comfort during panic attacks",
+      "Any animal prescribed by licensed mental health provider for emotional wellbeing"
+    ],
     "source_quality": "High"
   },
   {
@@ -682,7 +809,12 @@
     "name": "Therapy Dog",
     "description": "Dogs trained to provide comfort, affection, and emotional support in settings like hospitals, nursing homes, schools, and disaster relief. Therapy dogs are brought BY volunteers TO facilities — they do NOT belong to the person receiving therapy. No public access rights under ADA. Typically certified by therapy dog organizations (not the same as ADA certification).",
     "legal_status": "No ADA public access rights. Access depends on permission from individual facilities.",
-    "examples": ["Hospital comfort dogs", "VA Medical Center facility dogs", "Campus crisis response dogs", "Disaster relief comfort dogs"],
+    "examples": [
+      "Hospital comfort dogs",
+      "VA Medical Center facility dogs",
+      "Campus crisis response dogs",
+      "Disaster relief comfort dogs"
+    ],
     "source_quality": "High"
   },
   {
@@ -691,7 +823,15 @@
     "name": "Psychiatric Service Dog (PSD)",
     "description": "A specific type of service dog trained to perform tasks for people with psychiatric or mental health conditions including PTSD, anxiety disorders, depression, and bipolar disorder. Full ADA protections apply. Tasks must be specific and trained — not merely providing comfort. Common for veterans with PTSD.",
     "legal_status": "Full service animal protections under ADA, FHA, and (with proper documentation) air travel.",
-    "examples": ["Wake handler from nightmares", "Tactile interruption during panic attacks", "Create physical space in crowds", "Remind handler to take medication", "Turn on lights in dark rooms", "Check rooms for safety ('room clearing')", "Guide handler away from stressful environments"],
+    "examples": [
+      "Wake handler from nightmares",
+      "Tactile interruption during panic attacks",
+      "Create physical space in crowds",
+      "Remind handler to take medication",
+      "Turn on lights in dark rooms",
+      "Check rooms for safety ('room clearing')",
+      "Guide handler away from stressful environments"
+    ],
     "source_quality": "High"
   },
   {
@@ -788,5 +928,11 @@
     "description": "While not a service dog resource, VA's PTSD Coach is widely used alongside service dog programs to support veterans managing PTSD symptoms. Many veterans use both. Free app available on iOS and Android.",
     "website": "https://mobile.va.gov/app/ptsd-coach",
     "source_quality": "High"
+  },
+  {
+    "id": "sd-org-2",
+    "name": "Puppies Behind Bars",
+    "website": "https://puppiesbehindbars.com",
+    "application_link": "https://puppiesbehindbars.com/apply/"
   }
 ]
