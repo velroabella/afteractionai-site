@@ -42,15 +42,20 @@
   function send(text, topicLabel) {
     hide();
 
-    // Phase 33: route directly through the shared submitUserText path.
-    // Avoids the fragile DOM-manipulation → sendTextMessage() path which could
-    // silently drop the chip if isProcessing is true at click time.
+    // Route through the shared submitUserText path.
+    // path:'chip' is picked up by the VOICE SESSION GUARD in submitUserText —
+    // during a voice session this routes to RealtimeVoice.sendText, NOT sendToAI.
+    // During text mode it falls through to the normal sendToAI / queue path.
     if (typeof window.AAAI_submitUserText === 'function') {
-      window.AAAI_submitUserText(text, topicLabel ? { topicLabel: topicLabel } : {});
+      var chipOpts = { path: 'chip' };
+      if (topicLabel) { chipOpts.topicLabel = topicLabel; }
+      window.AAAI_submitUserText(text, chipOpts);
       return;
     }
 
-    // Fallback: DOM path (used only if app.js has not yet exposed submitUserText)
+    // Fallback: DOM path (only if app.js has not yet exposed submitUserText).
+    // NOTE: sendBtn.click() triggers sendTextMessage() → submitUserText({ path:'text' }),
+    // which will still hit the VOICE SESSION GUARD correctly if voice is active.
     var input   = _el('userInput');
     var sendBtn = _el('btnSend');
     if (!input || !sendBtn) return;

@@ -562,8 +562,10 @@
         // Remove all option button groups once one is clicked
         var allOptionGroups = chatMessages.querySelectorAll('.chat-options');
         allOptionGroups.forEach(function(group) { group.remove(); });
-        // Send the selected option as a user message (Phase 33: shared submit path)
-        submitUserText(option);
+        // Send the selected option as a user message.
+        // path:'option-btn' is picked up by the VOICE SESSION GUARD in submitUserText —
+        // during a voice session this routes to RealtimeVoice.sendText, NOT sendToAI.
+        submitUserText(option, { path: 'option-btn' });
       });
     }
 
@@ -1198,7 +1200,7 @@
 
     userInput.value = '';
     userInput.style.height = 'auto';
-    submitUserText(text);
+    submitUserText(text, { path: 'text' });
   }
 
   // ══════════════════════════════════════════════════════
@@ -1210,7 +1212,17 @@
   //                              but skip sendToAI (Realtime API handles response)
   //  opts.topicLabel {string}  — push label into window.activeUserTopics so
   //                              callChatEndpoint injects the ACTIVE USER TOPICS block
-  //  opts.path       {string}  — 'voice' | 'text' (telemetry label; defaults 'text')
+  //  opts.path       {string}  — source label for logging:
+  //                              'voice'       — voice transcript (always voiceOnly:true)
+  //                              'text'        — typed text submission
+  //                              'chip'        — AIOS.Chips quick-trigger
+  //                              'option-btn'  — in-chat option button click
+  //                              'ui-click'    — any other UI element (default)
+  //
+  //  INPUT ROUTING RULES (enforced inside this function):
+  //    1. opts.voiceOnly=true          → return after bubble+escalation (Realtime drives)
+  //    2. inputMode='voice' + active   → route via RealtimeVoice.sendText (NOT sendToAI)
+  //    3. text mode                    → sendToAI / queue
   // ══════════════════════════════════════════════════════
   function submitUserText(text, opts) {
     opts = opts || {};
@@ -1242,7 +1254,31 @@
     // Voice-only: bubble + escalation is sufficient; Realtime API drives the response
     if (opts.voiceOnly) { return; }
 
+    // ── VOICE SESSION GUARD ────────────────────────────────────────────────────────
+    // Any UI-triggered call (chip, option button, topic bubble, etc.) that reaches
+    // submitUserText during an ACTIVE voice session MUST route through the Realtime
+    // API — never through sendToAI (text path).
+    //
+    // Root cause of "clicks trigger AI responses" bug:
+    //   option buttons and chips called submitUserText() without voiceOnly:true,
+    //   so they fell through to sendToAI() while the Realtime session was live.
+    //
+    // Fix: if voice session is active (not idle/error), inject via RealtimeVoice.sendText
+    //      and return — NEVER call sendToAI.
+    if (inputMode === 'voice' && typeof RealtimeVoice !== 'undefined' && RealtimeVoice.getState) {
+      var _vsGuard = RealtimeVoice.getState();
+      if (_vsGuard !== 'idle' && _vsGuard !== 'error') {
+        var _guardSrc = opts.path || 'ui-click';
+        log('[INPUT]', 'VOICE guard — src=' + _guardSrc + ' state=' + _vsGuard + ' text="' + trimmed.substring(0, 40) + '"');
+        if (RealtimeVoice.sendText) { RealtimeVoice.sendText(trimmed); }
+        conversationHistory.push({ role: 'user', content: trimmed });
+        return;
+      }
+    }
+    // ── END VOICE SESSION GUARD ───────────────────────────────────────────────────
+
     // Text mode: send immediately, or queue for when the current response finishes
+    log('[INPUT]', 'TEXT path — src=' + (opts.path || 'text') + ' text="' + trimmed.substring(0, 40) + '"');
     if (!isProcessing) {
       sendToAI(trimmed);
     } else {
