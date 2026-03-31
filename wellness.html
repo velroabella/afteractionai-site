@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
   <title>Wellness &amp; Fitness — AfterAction AI</title>
   <meta name="description" content="Veteran fitness programs, adaptive sports, nutrition coaching, yoga, equine therapy, outdoor adventure, and wellness resources — free and low-cost for U.S. veterans." />
-  <meta name="keywords" content="veteran fitness, adaptive sports, veteran nutrition, veteran wellness, veteran yoga, equine therapy, veteran gym, Team RWB, Catch A Lift, WarriorWOD, We Defy Foundation" />
+  <meta name="keywords" content="veteran fitness, adaptive sports, veteran nutrition, veteran wellness, veteran yoga, equine therapy, veteran gym, Team RWB, Catch A Lift, WarriorWOD, We Defy Foundation, PGA HOPE" />
   <meta property="og:title" content="Wellness &amp; Fitness — AfterAction AI" />
   <meta property="og:description" content="46 verified fitness, sports, nutrition, and wellness programs for veterans — most free." />
   <meta property="og:type" content="website" />
@@ -98,156 +98,311 @@
 </nav>
 
 <!-- HERO -->
-<section class="page-hero-text" style="background: linear-gradient(135deg, #0f1f15 0%, #1a3a22 60%, #0f1f15 100%); padding: 64px 0 52px;">
-  <div class="page-hero-text__inner">
-    <h1 class="page-hero-text__title">Wellness &amp; Fitness</h1>
-    <div class="page-hero-bar__divider"></div>
-    <p class="page-hero-text__subtitle">Fitness programs, adaptive sports, nutrition coaching, and wellness resources — verified for veterans</p>
+<section class="rp-hero">
+  <div class="rp-hero__inner">
+    <div class="rp-hero__eyebrow">Health &amp; Crisis — Wellness &amp; Fitness</div>
+    <h1 class="rp-hero__title">Wellness &amp; Fitness</h1>
+    <hr class="rp-hero__divider" />
+    <p class="rp-hero__subtitle">Fitness programs, adaptive sports, nutrition coaching, yoga, equine therapy, and recovery resources — verified for veterans, most free.</p>
   </div>
 </section>
 
-<!-- QUICK ACCESS -->
-<div class="mh-quick-access">
-  <div class="mh-quick-access-inner">
-    <div class="mh-quick-label">Quick Access</div>
-    <div class="mh-quick-buttons">
-      <button class="mh-quick-btn mh-quick-btn--crisis" onclick="setCategory('all')">
-        <span class="mh-quick-btn__icon">⭐</span> Show All
-      </button>
-      <button class="mh-quick-btn" onclick="setCategory('Fitness Programs')">
-        <span class="mh-quick-btn__icon">💪</span> Fitness
-      </button>
-      <button class="mh-quick-btn" onclick="setCategory('Adaptive Sports')">
-        <span class="mh-quick-btn__icon">🏅</span> Adaptive Sports
-      </button>
-      <button class="mh-quick-btn" onclick="setCategory('Nutrition & Meal Programs')">
-        <span class="mh-quick-btn__icon">🥗</span> Nutrition
-      </button>
-      <button class="mh-quick-btn" onclick="setCategory('free')">
-        <span class="mh-quick-btn__icon">💚</span> Free Only
-      </button>
-      <button class="mh-quick-btn" onclick="setCategory('florida')">
-        <span class="mh-quick-btn__icon">🌴</span> FL / Southeast
-      </button>
-    </div>
+<!-- QUICK ACCESS BAR -->
+<div class="rp-quickaccess">
+  <div class="rp-quickaccess__inner">
+    <button class="rp-qa-btn" onclick="applyQA('all')">All Programs</button>
+    <button class="rp-qa-btn" onclick="applyQA('Fitness Programs')">💪 Fitness</button>
+    <button class="rp-qa-btn" onclick="applyQA('Adaptive Sports')">🏅 Adaptive Sports</button>
+    <button class="rp-qa-btn" onclick="applyQA('Nutrition & Meal Programs')">🥗 Nutrition</button>
+    <button class="rp-qa-btn" onclick="applyQA('Yoga & Mindfulness')">🧘 Yoga &amp; Mindfulness</button>
+    <button class="rp-qa-btn" onclick="applyQA('Outdoor & Adventure Therapy')">🏕 Outdoor &amp; Adventure</button>
+    <button class="rp-qa-btn" onclick="applyQA('free')">💚 Free Only</button>
+    <button class="rp-qa-btn" onclick="applyQA('florida')">🌴 FL / Southeast</button>
   </div>
 </div>
 
-<!-- MAIN CONTENT WRAPPER -->
-<div class="mh-page-wrapper" id="wellness-database">
+<!-- TWO-COLUMN LAYOUT -->
+<div class="rp-page-wrapper">
 
-  <!-- SIDEBAR FILTERS -->
-  <aside class="mh-sidebar">
-    <div class="mh-sidebar-header">
-      <h3>Filters</h3>
-      <button class="mh-clear-btn" onclick="clearWellnessFilters()">Clear all</button>
+  <!-- SIDEBAR -->
+  <aside class="rp-sidebar">
+
+    <!-- Search -->
+    <div style="margin-bottom:20px;">
+      <input type="text" id="wellnessSearch" placeholder="Search programs..."
+        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
+        oninput="filterAndRender()" />
     </div>
 
-    <input type="text" class="mh-search-input" id="wellnessSearch"
-           placeholder="🔍 Search programs..."
-           oninput="renderWellness()" />
-
-    <div class="mh-filter-group">
-      <div class="mh-filter-group-label">Program Type</div>
-      <div class="mh-filter-pills">
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Fitness Programs" onclick="toggleWellnessPill(this)">Fitness &amp; Training</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Adaptive Sports" onclick="toggleWellnessPill(this)">Adaptive Sports</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Nutrition & Meal Programs" onclick="toggleWellnessPill(this)">Nutrition &amp; Meals</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Yoga & Mindfulness" onclick="toggleWellnessPill(this)">Yoga &amp; Mindfulness</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Martial Arts" onclick="toggleWellnessPill(this)">Martial Arts</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Endurance Sports" onclick="toggleWellnessPill(this)">Endurance Sports</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Outdoor & Adventure Therapy" onclick="toggleWellnessPill(this)">Outdoor &amp; Adventure</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Equine Therapy" onclick="toggleWellnessPill(this)">Equine Therapy</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Surf Therapy" onclick="toggleWellnessPill(this)">Surf Therapy</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Golf" onclick="toggleWellnessPill(this)">Golf</button>
-        <button class="mh-pill" data-wfilter="category" data-wvalue="Certification / Career" onclick="toggleWellnessPill(this)">Fitness Career</button>
-      </div>
+    <!-- Program Type -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Program Type</div>
+      <button class="rp-pill active" data-filter-group="category" data-filter-value="all" onclick="setPill(this,'category')">All Types</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Fitness Programs" onclick="setPill(this,'category')">Fitness &amp; Training</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Adaptive Sports" onclick="setPill(this,'category')">Adaptive Sports</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Nutrition & Meal Programs" onclick="setPill(this,'category')">Nutrition &amp; Meals</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Yoga & Mindfulness" onclick="setPill(this,'category')">Yoga &amp; Mindfulness</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Martial Arts" onclick="setPill(this,'category')">Martial Arts</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Endurance Sports" onclick="setPill(this,'category')">Endurance Sports</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Outdoor & Adventure Therapy" onclick="setPill(this,'category')">Outdoor &amp; Adventure</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Equine Therapy" onclick="setPill(this,'category')">Equine Therapy</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Surf Therapy" onclick="setPill(this,'category')">Surf Therapy</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Golf" onclick="setPill(this,'category')">Golf</button>
+      <button class="rp-pill" data-filter-group="category" data-filter-value="Certification / Career" onclick="setPill(this,'category')">Fitness Career</button>
     </div>
 
-    <div class="mh-filter-group">
-      <div class="mh-filter-group-label">Cost</div>
-      <div class="mh-filter-pills">
-        <button class="mh-pill" data-wfilter="cost" data-wvalue="free" onclick="toggleWellnessPill(this)">Free</button>
-        <button class="mh-pill" data-wfilter="cost" data-wvalue="gibill" onclick="toggleWellnessPill(this)">GI Bill Eligible</button>
-      </div>
+    <!-- Cost -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Cost</div>
+      <button class="rp-pill active" data-filter-group="cost" data-filter-value="all" onclick="setPill(this,'cost')">All Costs</button>
+      <button class="rp-pill" data-filter-group="cost" data-filter-value="free" onclick="setPill(this,'cost')">Free</button>
+      <button class="rp-pill" data-filter-group="cost" data-filter-value="gibill" onclick="setPill(this,'cost')">GI Bill Eligible</button>
     </div>
 
-    <div class="mh-filter-group">
-      <div class="mh-filter-group-label">Priority</div>
-      <div class="mh-filter-pills">
-        <button class="mh-pill" data-wfilter="priority" data-wvalue="High" onclick="toggleWellnessPill(this)">⭐ High Priority</button>
-        <button class="mh-pill" data-wfilter="florida" data-wvalue="true" onclick="toggleWellnessPill(this)">🌴 Florida / SE</button>
-      </div>
+    <!-- Location -->
+    <div class="rp-filter-group">
+      <div class="rp-filter-label">Location</div>
+      <button class="rp-pill active" data-filter-group="location" data-filter-value="all" onclick="setPill(this,'location')">All Locations</button>
+      <button class="rp-pill" data-filter-group="location" data-filter-value="florida" onclick="setPill(this,'location')">🌴 Florida / Southeast</button>
     </div>
 
-    <div class="mh-result-count">
-      Showing <strong id="wellnessCount">46</strong> of <strong id="wellnessTotal">46</strong> programs
-    </div>
   </aside>
 
-  <!-- MAIN GRID -->
-  <main class="mh-main">
-    <div class="mh-toolbar">
-      <div class="mh-toolbar-left"><strong id="wellnessLabel">46</strong> programs found</div>
-      <select class="mh-sort-select" id="wellnessSortSelect" onchange="renderWellness()">
-        <option value="default">Sort: Default</option>
-        <option value="name">Sort: A–Z</option>
-        <option value="priority">Sort: Priority First</option>
-        <option value="free">Sort: Free First</option>
-      </select>
+  <!-- MAIN CONTENT -->
+  <main>
+    <!-- Results count -->
+    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
+
+    <!-- Cards grid -->
+    <div class="rp-grid" id="wellnessGrid"></div>
+
+    <!-- Empty state -->
+    <div class="rp-empty" id="emptyState" style="display:none;">
+      <div class="rp-empty__icon">🔍</div>
+      <p>No programs match your current filters. Try adjusting the type or location.</p>
+      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
     </div>
 
-    <div class="mh-grid" id="wellnessGrid"></div>
-
-    <div class="mh-load-more" id="wellnessLoadMore" style="display:none;">
-      <button class="mh-load-more-btn" onclick="wellnessLoadMore()">Load More Programs</button>
+    <!-- Load more -->
+    <div style="text-align:center;margin-top:24px;">
+      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More Programs</button>
     </div>
   </main>
+
 </div>
 
-<!-- AUTH MODAL -->
-<div class="auth-modal" id="authModal" style="display:none;">
-  <div class="auth-modal__box">
-    <button class="auth-modal__close" aria-label="Close">&times;</button>
-    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="login">Sign In</button>
-      <button class="auth-tab" data-tab="signup">Create Account</button>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer__inner">
+    <div class="footer__crisis">
+      <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
     </div>
-    <form id="loginForm" class="auth-form" autocomplete="on">
-      <div class="auth-error" style="display:none;"></div>
-      <div class="auth-success" style="display:none;"></div>
-      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
-      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
-      <button type="submit" class="auth-submit">Sign In</button>
-      <a href="#" class="auth-forgot">Forgot password?</a>
-    </form>
-    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
-      <div class="auth-error" style="display:none;"></div>
-      <div class="auth-success" style="display:none;"></div>
-      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
-      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
-      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
-      <button type="submit" class="auth-submit">Create Account</button>
-      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
-    </form>
+    <div class="footer__grid">
+      <div class="footer__section footer__section--nav">
+        <h3>Navigate</h3>
+        <div class="footer__nav-columns">
+          <div class="footer__nav-col">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="board.html">Board</a>
+          </div>
+          <div class="footer__nav-col">
+            <a href="resources.html">Resources</a>
+            <a href="blog.html">Blog</a>
+            <a href="contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+      <div class="footer__section">
+        <h3>Resource Hub</h3>
+        <a href="elected-officials.html">Elected Officials</a>
+        <a href="licensure.html">Licensure &amp; Certifications</a>
+        <a href="grants-scholarships.html">Grants &amp; Scholarships</a>
+        <a href="hotlines-escalation.html">Hotlines &amp; Escalation</a>
+        <a href="wellness.html">Wellness &amp; Fitness</a>
+        <a href="state-benefits.html">State Benefits</a>
+        <a href="document-templates.html">Document Templates</a>
+      </div>
+      <div class="footer__section">
+        <h3>Legal</h3>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="disclaimer.html">Disclaimer</a>
+      </div>
+      <div class="footer__section">
+        <h3>Connect</h3>
+      </div>
+    </div>
+    <div class="footer__nonprofit">
+      AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+    </div>
+    <div class="footer__bottom">
+      <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+    </div>
   </div>
-</div>
+</footer>
 
 <script src="js/auth.js"></script>
-<script src="js/app.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/newsletter.js"></script>
 
 <script>
-// ============================================================
-// WELLNESS & FITNESS — DATA
-// ============================================================
-const WELLNESS_DATA = [
+// ── Nav toggle ─────────────────────────────────────────────
+function toggleMenu() {
+  document.getElementById('navMenu').classList.toggle('active');
+}
+
+// ── State ──────────────────────────────────────────────────
+const PAGE_SIZE = 24;
+let allPrograms = [];
+let filteredPrograms = [];
+let visibleCount = 0;
+
+const activeFilters = { category: 'all', cost: 'all', location: 'all' };
+
+// ── Pills (radio — one active per group) ──────────────────
+function setPill(btn, group) {
+  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  activeFilters[group] = btn.dataset.filterValue;
+  filterAndRender();
+}
+
+// ── Quick Access ───────────────────────────────────────────
+function applyQA(val) {
+  if (val === 'all') { resetFilters(); return; }
+  if (val === 'free') {
+    resetFilters();
+    const pill = document.querySelector('.rp-pill[data-filter-group="cost"][data-filter-value="free"]');
+    if (pill) setPill(pill, 'cost');
+    return;
+  }
+  if (val === 'florida') {
+    resetFilters();
+    const pill = document.querySelector('.rp-pill[data-filter-group="location"][data-filter-value="florida"]');
+    if (pill) setPill(pill, 'location');
+    return;
+  }
+  // Category filter — find matching pill by value
+  resetFilters();
+  document.querySelectorAll('.rp-pill[data-filter-group="category"]').forEach(p => {
+    if (p.dataset.filterValue === val) setPill(p, 'category');
+  });
+}
+
+// ── Reset ──────────────────────────────────────────────────
+function resetFilters() {
+  activeFilters.category = 'all';
+  activeFilters.cost = 'all';
+  activeFilters.location = 'all';
+  document.querySelectorAll('.rp-pill').forEach(b => {
+    b.classList.toggle('active', b.dataset.filterValue === 'all');
+  });
+  document.getElementById('wellnessSearch').value = '';
+  filterAndRender();
+}
+
+// ── Filter & sort ──────────────────────────────────────────
+function filterAndRender() {
+  const q = (document.getElementById('wellnessSearch').value || '').toLowerCase();
+
+  filteredPrograms = allPrograms.filter(p => {
+    if (activeFilters.category !== 'all' && p.category !== activeFilters.category) return false;
+    if (activeFilters.cost === 'free' && !p.cost.toLowerCase().includes('free')) return false;
+    if (activeFilters.cost === 'gibill' && !(p.tags||[]).includes('gi-bill')) return false;
+    if (activeFilters.location === 'florida' && !p.florida) return false;
+    if (q) {
+      const hay = [p.name, p.category, p.sub, p.desc, p.location, p.org, (p.tags||[]).join(' ')].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  // High priority first, then Florida, then alpha
+  filteredPrograms.sort((a, b) => {
+    const pa = a.priority === 'High' ? 0 : 1;
+    const pb = b.priority === 'High' ? 0 : 1;
+    if (pa !== pb) return pa - pb;
+    return (a.florida ? 0 : 1) - (b.florida ? 0 : 1);
+  });
+
+  visibleCount = 0;
+  document.getElementById('wellnessGrid').innerHTML = '';
+  loadMore();
+  updateCount();
+}
+
+// ── Card renderer ──────────────────────────────────────────
+const CAT_TAG_CLASS = {
+  'Fitness Programs':            'rp-tag--primary',
+  'Adaptive Sports':             'rp-tag--secondary',
+  'Nutrition & Meal Programs':   'rp-tag--secondary',
+  'Yoga & Mindfulness':          'rp-tag--primary',
+  'Martial Arts':                'rp-tag--primary',
+  'Endurance Sports':            'rp-tag--secondary',
+  'Outdoor & Adventure Therapy': 'rp-tag--neutral',
+  'Equine Therapy':              'rp-tag--neutral',
+  'Surf Therapy':                'rp-tag--neutral',
+  'Golf':                        'rp-tag--neutral',
+  'Certification / Career':      'rp-tag--primary'
+};
+
+function renderCard(p) {
+  const tagClass = CAT_TAG_CLASS[p.category] || 'rp-tag--primary';
+  const costTag = p.cost.toLowerCase().includes('free')
+    ? '<span class="rp-tag--neutral" style="background:rgba(40,167,69,0.15);color:#7bc67e;border:1px solid rgba(40,167,69,0.2);">Free</span>'
+    : (p.tags||[]).includes('gi-bill')
+    ? '<span class="rp-tag--neutral" style="background:rgba(13,110,253,0.12);color:#7aaeff;border:1px solid rgba(13,110,253,0.2);">GI Bill</span>'
+    : '';
+  const flTag = p.florida
+    ? '<span class="rp-tag--neutral" style="background:rgba(85,107,47,0.15);color:#A3C47A;border:1px solid rgba(85,107,47,0.25);">FL / SE</span>'
+    : '';
+
+  const learnBtn = p.website
+    ? `<a href="${esc(p.website)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;">Visit Program →</a>`
+    : '';
+
+  return `<div class="rp-card">
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;">
+      <span class="${tagClass}">${esc(p.category)}</span>
+      ${costTag}${flTag}
+    </div>
+    <h3 class="rp-card__name">${esc(p.name)}</h3>
+    <p style="font-size:0.78rem;color:rgba(255,255,255,0.42);margin:2px 0 6px;line-height:1.4;">${esc(p.org)} &nbsp;·&nbsp; ${esc(p.location)}</p>
+    <p class="rp-card__desc" style="font-size:0.85rem;color:#adb5bd;margin-bottom:12px;line-height:1.5;">${esc(p.desc)}</p>
+    <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">${learnBtn}</div>
+  </div>`;
+}
+
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Load More ──────────────────────────────────────────────
+function loadMore() {
+  const grid = document.getElementById('wellnessGrid');
+  const batch = filteredPrograms.slice(visibleCount, visibleCount + PAGE_SIZE);
+  batch.forEach(p => { grid.insertAdjacentHTML('beforeend', renderCard(p)); });
+  visibleCount += batch.length;
+  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredPrograms.length ? 'inline-block' : 'none';
+  document.getElementById('emptyState').style.display = filteredPrograms.length === 0 ? 'block' : 'none';
+}
+
+function updateCount() {
+  document.getElementById('resultsCount').textContent =
+    filteredPrograms.length === allPrograms.length
+      ? `Showing all ${allPrograms.length} wellness & fitness programs`
+      : `Showing ${filteredPrograms.length} of ${allPrograms.length} programs`;
+}
+
+// ── Program data (46 verified programs) ───────────────────
+allPrograms = [
   // ── FITNESS PROGRAMS ──
   { name: "Catch A Lift Fund", category: "Fitness Programs", sub: "Gym & Strength",
     org: "Nonprofit 501(c)(3)", website: "https://catchaliftfund.org/apply",
-    desc: "Free gym memberships, equipment, coaching & 8-week wellness program (nutrition + mental health) for post-9/11 combat-injured veterans with 50%+ VA disability rating.",
+    desc: "Free gym memberships, equipment, coaching, and 8-week wellness program (nutrition + mental health) for post-9/11 combat-injured veterans with 50%+ VA disability rating.",
     location: "National (HQ: Baltimore, MD)", cost: "Free", priority: "High", florida: false,
-    tags: ["fitness","free","gym","strength","nonprofit"] },
+    tags: ["fitness","free","gym","strength"] },
 
   { name: "Home Base — Warrior Health & Fitness (Florida)", category: "Fitness Programs", sub: "Holistic Fitness",
     org: "Nonprofit (MGH / Red Sox Foundation)", website: "https://homebase.org/program/florida-warrior-health-fitness/",
@@ -257,13 +412,13 @@ const WELLNESS_DATA = [
 
   { name: "Team Red, White & Blue (Team RWB)", category: "Fitness Programs", sub: "Community Fitness",
     org: "Nonprofit 501(c)(3)", website: "https://teamrwb.org/find-your-chapter",
-    desc: "232,000+ member national community. Free weekly fitness events (running, cycling, yoga, functional fitness), social events, and volunteer projects. Chapters in all 50 states.",
+    desc: "232,000+ member national community. Free weekly fitness events — running, cycling, yoga, functional fitness — plus social events and volunteer projects. Chapters in all 50 states.",
     location: "National — all 50 states", cost: "Free", priority: "High", florida: true,
     tags: ["fitness","free","community","running","cycling"] },
 
   { name: "WarriorWOD", category: "Fitness Programs", sub: "Gym & Strength",
     org: "Nonprofit", website: "https://warriorwod.org",
-    desc: "6-month free gym membership + virtual nutrition coaching for each veteran. Exercise and nutrition as a prescription for recovery from PTSD and combat stress.",
+    desc: "6-month free gym membership plus virtual nutrition coaching for each veteran. Exercise and nutrition as a prescription for recovery from PTSD and combat stress.",
     location: "National", cost: "Free", priority: "High", florida: false,
     tags: ["fitness","free","gym","nutrition","ptsd"] },
 
@@ -271,11 +426,11 @@ const WELLNESS_DATA = [
     org: "Nonprofit 501(c)(3)", website: "https://www.woundedwarriorproject.org/programs/physical-health-wellness",
     desc: "Comprehensive physical health programs including fitness coaching, adaptive sports, nutrition support, and national events for post-9/11 injured veterans.",
     location: "National", cost: "Free", priority: "High", florida: false,
-    tags: ["fitness","free","wwp","adaptive","nonprofit"] },
+    tags: ["fitness","free","adaptive","nonprofit"] },
 
   { name: "VA Whole Health Program", category: "Fitness Programs", sub: "VA Fitness",
     org: "Government (VA)", website: "https://www.va.gov/WHOLEHEALTH/veteran-resources/Well-Being-Programs.asp",
-    desc: "Holistic wellness available at most VA medical centers: health coaching, well-being classes, complementary/integrative health, nutrition, mindfulness, and sleep support.",
+    desc: "Holistic wellness at most VA medical centers: health coaching, well-being classes, complementary and integrative health, nutrition, mindfulness, and sleep support.",
     location: "National — most VA Medical Centers", cost: "Free (VA enrolled)", priority: "High", florida: true,
     tags: ["va","free","holistic","coaching","nutrition"] },
 
@@ -287,7 +442,7 @@ const WELLNESS_DATA = [
 
   { name: "VA Gerofit Program", category: "Fitness Programs", sub: "VA Fitness",
     org: "Government (VA)", website: "https://news.va.gov/128631/physical-fitness-resources/",
-    desc: "VA-supervised exercise program for older veterans. Available at select VA medical centers with trained staff, progressive strength and endurance programming.",
+    desc: "VA-supervised exercise program for older veterans, available at select VA medical centers with trained staff and progressive strength/endurance programming.",
     location: "Select VA Medical Centers nationwide", cost: "Free (VA enrolled)", priority: "Medium", florida: false,
     tags: ["va","free","seniors","strength"] },
 
@@ -299,32 +454,32 @@ const WELLNESS_DATA = [
 
   { name: "The Resilience Project", category: "Fitness Programs", sub: "Community Fitness",
     org: "Nonprofit", website: "https://theresilienceproject.us",
-    desc: "Resilience-centered wellness program connecting veterans to physical activity, peer support, mindset training, and community-based fitness resources.",
+    desc: "Resilience-centered wellness connecting veterans to physical activity, peer support, mindset training, and community-based fitness resources.",
     location: "National", cost: "Free", priority: "Medium", florida: false,
-    tags: ["fitness","free","community","resilience","peer"] },
+    tags: ["fitness","free","community","resilience"] },
 
   // ── ADAPTIVE SPORTS ──
   { name: "VA National Veterans Sports Programs", category: "Adaptive Sports", sub: "Multi-Sport",
     org: "Government (VA)", website: "https://www.va.gov/adaptive-sports/",
-    desc: "VA-sponsored adaptive sports programs: National Veterans Wheelchair Games, Winter/Summer Sports Clinics, Golden Age Games, Creative Arts Festival, and TEE Tournament.",
+    desc: "VA-sponsored adaptive sports: National Veterans Wheelchair Games, Winter/Summer Sports Clinics, Golden Age Games, Creative Arts Festival, and TEE Tournament.",
     location: "National — various event locations", cost: "Free (VA enrolled)", priority: "High", florida: false,
-    tags: ["va","free","adaptive","wheelchair","multi-sport"] },
+    tags: ["va","free","adaptive","wheelchair"] },
 
   { name: "Paralyzed Veterans of America (PVA) Sports", category: "Adaptive Sports", sub: "Multi-Sport",
     org: "Nonprofit 501(c)(3)", website: "https://pva.org/programs-services/sports-recreation/",
     desc: "Wheelchair basketball, rugby, tennis, handcycling, air rifle, and more for paralyzed and spinal cord injured veterans. Chapters nationwide with competitive and recreational options.",
     location: "National", cost: "Free", priority: "High", florida: true,
-    tags: ["adaptive","free","wheelchair","nonprofit","spinal-cord"] },
+    tags: ["adaptive","free","wheelchair","spinal-cord"] },
 
   { name: "DoD Warrior Games", category: "Adaptive Sports", sub: "Competitive",
     org: "Government (DoD)", website: "https://www.defense.gov/News/Feature-Stories/story/Article/2999753/",
     desc: "Annual multi-sport adaptive competition for wounded, ill, and injured service members and veterans. 13 sports including powerlifting, cycling, swimming, and track & field.",
     location: "Annual — varies nationally", cost: "Free (selected athletes)", priority: "High", florida: false,
-    tags: ["adaptive","free","competitive","dod","multi-sport"] },
+    tags: ["adaptive","free","competitive","dod"] },
 
   { name: "BlazeSports America", category: "Adaptive Sports", sub: "Multi-Sport",
     org: "Nonprofit 501(c)(3)", website: "https://blazesports.org",
-    desc: "Adaptive sports programming for veterans and individuals with disabilities. Born from the legacy of the 1996 Atlanta Paralympics — recreational through competitive levels.",
+    desc: "Adaptive sports programming for veterans and individuals with disabilities. Born from the 1996 Atlanta Paralympics legacy — recreational through competitive levels.",
     location: "Atlanta, GA / Southeast", cost: "Free / Low-cost", priority: "Medium", florida: false,
     tags: ["adaptive","southeast","disability","nonprofit"] },
 
@@ -332,20 +487,20 @@ const WELLNESS_DATA = [
     org: "Nonprofit 501(c)(3)", website: "https://dasasports.org",
     desc: "Wheelchair basketball, sled hockey, competitive teams, and recreational adaptive sports for disabled veterans and civilians.",
     location: "St. Louis & Columbia, MO", cost: "Low-cost", priority: "Medium", florida: false,
-    tags: ["adaptive","wheelchair","nonprofit","low-cost"] },
+    tags: ["adaptive","wheelchair","nonprofit"] },
 
   // ── NUTRITION & MEAL PROGRAMS ──
   { name: "God's Love We Deliver — CONNECTED", category: "Nutrition & Meal Programs", sub: "Meal Delivery",
     org: "Nonprofit 501(c)(3)", website: "https://www.glwd.org/get-meals/for-former-u-s-military-service-members-with-a-chronic-disease-severe-illness-mental-health-condition-and-or-substance-use-challenge/",
     desc: "FREE medically tailored meals for veterans with chronic disease, PTSD, depression, bipolar disorder, or substance use challenges. Personalized by a Registered Dietitian.",
     location: "New York City metro area", cost: "Free", priority: "High", florida: false,
-    tags: ["nutrition","free","meal-delivery","chronic-illness","ptsd"] },
+    tags: ["nutrition","free","meal-delivery","ptsd"] },
 
   { name: "VA Nutrition & Food Services", category: "Nutrition & Meal Programs", sub: "Nutrition Counseling",
     org: "Government (VA)", website: "https://www.nutrition.va.gov/food_insecurity.asp",
     desc: "VA Registered Dietitian counseling, food security screening, and referrals to community food resources. Available at all VA Medical Centers.",
     location: "National — all VA Medical Centers", cost: "Free (VA enrolled)", priority: "High", florida: true,
-    tags: ["va","free","nutrition","dietitian","food-security"] },
+    tags: ["va","free","nutrition","dietitian"] },
 
   { name: "USDA Military & Veteran Nutrition Programs", category: "Nutrition & Meal Programs", sub: "Government Programs",
     org: "Government (USDA)", website: "https://www.fns.usda.gov/military-veteran",
@@ -357,20 +512,20 @@ const WELLNESS_DATA = [
     org: "Nonprofit", website: "https://www.collaborate.vet/food",
     desc: "Online directory connecting veterans to food assistance programs including meal delivery services, food pantries, and nutrition coaching resources.",
     location: "National (online directory)", cost: "Free", priority: "Medium", florida: false,
-    tags: ["nutrition","free","directory","food-assistance"] },
+    tags: ["nutrition","free","directory"] },
 
   // ── YOGA & MINDFULNESS ──
   { name: "Veterans Yoga Project (VYP)", category: "Yoga & Mindfulness", sub: "Yoga",
     org: "Nonprofit 501(c)(3)", website: "https://veteransyogaproject.org/find-a-class",
-    desc: "National nonprofit (est. 2011) working directly with the VA. Free daily classes, Mindful Resilience Training for Trauma Recovery, and yoga teacher training for veteran instructors.",
+    desc: "National nonprofit (est. 2011) partnered with the VA. Free daily classes, Mindful Resilience Training for Trauma Recovery, and yoga teacher training for veteran instructors.",
     location: "National — classes throughout the country", cost: "Free", priority: "High", florida: false,
     tags: ["yoga","free","va","mindfulness","ptsd","trauma"] },
 
   { name: "Warriors at Ease", category: "Yoga & Mindfulness", sub: "Yoga & Meditation",
     org: "Nonprofit 501(c)(3)", website: "https://www.warriorsatease.org",
-    desc: "Trauma-informed yoga & meditation training for the military community. Certified teachers serve in VA facilities, military installations, and Vet Centers nationwide.",
+    desc: "Trauma-informed yoga and meditation training for the military community. Certified teachers serve in VA facilities, military installations, and Vet Centers nationwide.",
     location: "National — VA facilities & military bases", cost: "Free for veterans", priority: "High", florida: false,
-    tags: ["yoga","meditation","trauma","va","military","free"] },
+    tags: ["yoga","meditation","trauma","va","free"] },
 
   { name: "VEToga", category: "Yoga & Mindfulness", sub: "Yoga",
     org: "Nonprofit", website: "https://vetoga.org",
@@ -389,26 +544,26 @@ const WELLNESS_DATA = [
     org: "Nonprofit 501(c)(3)", website: "https://wedefyfoundation.org/apply",
     desc: "Free Brazilian Jiu Jitsu and fitness training for combat veterans with military-connected disabilities. Operates across all 50 states, 2 US territories, and Japan.",
     location: "National — all 50 states", cost: "Free", priority: "High", florida: true,
-    tags: ["bjj","martial-arts","free","disability","combat-veteran"] },
+    tags: ["bjj","martial-arts","free","disability"] },
 
   { name: "V-MAT (Veterans Martial Arts Training)", category: "Martial Arts", sub: "Mixed Martial Arts",
     org: "Nonprofit 501(c)(3)", website: "https://v-mat.org",
-    desc: "100% free martial arts training for veterans, reservists, and active duty. Accommodates physical disabilities, ADD, PTSD, and TBI. Located in Portsmouth, NH.",
+    desc: "100% free martial arts training for veterans, reservists, and active duty. Accommodates physical disabilities, ADD, PTSD, and TBI.",
     location: "Portsmouth, NH Seacoast Area", cost: "Free", priority: "Medium", florida: false,
-    tags: ["martial-arts","free","ptsd","tbi","disability"] },
+    tags: ["martial-arts","free","ptsd","tbi"] },
 
   { name: "Kobukan Martial Arts — Warriors Program", category: "Martial Arts", sub: "Multi-Discipline",
     org: "Nonprofit", website: "https://kmadojo.org/warriors/",
-    desc: "100% FREE Jiu-Jitsu, Karate, and MMA training for combat veterans and first responders with PTSD/TBI disability. Check website for current locations.",
+    desc: "100% FREE Jiu-Jitsu, Karate, and MMA training for combat veterans and first responders with PTSD/TBI disability.",
     location: "Check website for locations", cost: "Free", priority: "Medium", florida: false,
-    tags: ["martial-arts","free","ptsd","tbi","first-responders"] },
+    tags: ["martial-arts","free","ptsd","tbi"] },
 
   // ── ENDURANCE SPORTS ──
   { name: "US Military Endurance Sports (USMES)", category: "Endurance Sports", sub: "Multi-Sport Endurance",
     org: "Nonprofit 501(c)(3)", website: "https://usmes.org/programs/",
-    desc: "Cycling, triathlon, running, and adventure racing for current, retired, and veteran military. 20 regional chapters nationwide. Camps, clinics, team competitions, and wounded veteran programs.",
+    desc: "Cycling, triathlon, running, and adventure racing for current, retired, and veteran military. 20 regional chapters nationwide with camps, clinics, and wounded veteran adaptive programs.",
     location: "National — 20 regional chapters", cost: "Low membership fee", priority: "High", florida: true,
-    tags: ["endurance","cycling","triathlon","running","military"] },
+    tags: ["endurance","cycling","triathlon","running"] },
 
   { name: "Frontline OCR", category: "Endurance Sports", sub: "Obstacle Course Racing",
     org: "Veteran-owned business", website: "https://frontlineocr.com",
@@ -427,45 +582,45 @@ const WELLNESS_DATA = [
     org: "Nonprofit 501(c)(3)", website: "https://www.vetexpeditions.com",
     desc: "Wilderness exploration and therapeutic outdoor recreation. Founded by Iraq/Afghanistan combat veterans. Expeditions nationwide with a trauma-informed approach.",
     location: "Colorado (expeditions nationwide)", cost: "Free", priority: "Medium", florida: false,
-    tags: ["outdoor","wilderness","therapy","free","combat-veteran"] },
+    tags: ["outdoor","wilderness","therapy","free"] },
 
   { name: "Veterans Adventure Group", category: "Outdoor & Adventure Therapy", sub: "Extreme Adventure",
     org: "Nonprofit", website: "https://veteransadventuregroup.org",
     desc: "Extreme outdoor adventures — skydiving, mountaineering, scuba, rock climbing — building veteran communities through shared high-adventure experiences.",
     location: "National", cost: "Free / Subsidized", priority: "Medium", florida: false,
-    tags: ["adventure","outdoor","extreme","community","free"] },
+    tags: ["adventure","outdoor","extreme","free"] },
 
   { name: "The Warrior's Keep", category: "Outdoor & Adventure Therapy", sub: "Hiking & Climbing",
     org: "Nonprofit", website: "https://www.thewarriorskeep.org/programs",
     desc: "Vet-Rec hiking program and Keep Climbing rock climbing program. Reduces stress, anxiety, and depression through outdoor social engagement and peer connection.",
     location: "Check website for locations", cost: "Free", priority: "Medium", florida: false,
-    tags: ["hiking","climbing","outdoor","free","peer"] },
+    tags: ["hiking","climbing","outdoor","free"] },
 
   // ── SURF THERAPY ──
   { name: "Warrior Surf Foundation", category: "Surf Therapy", sub: "Surf Therapy",
     org: "Nonprofit 501(c)(3)", website: "https://www.warriorsurf.org/programs",
-    desc: "Free 12-week surf therapy program including yoga and wellness coaching for veterans with PTSD, anxiety, and depression. Includes psycho-education component.",
+    desc: "Free 12-week surf therapy program — yoga and wellness coaching for veterans with PTSD, anxiety, and depression. Includes a psycho-education component.",
     location: "Folly Beach, SC", cost: "Free", priority: "High", florida: false,
-    tags: ["surf","free","ptsd","yoga","therapy","southeast"] },
+    tags: ["surf","free","ptsd","yoga","southeast"] },
 
   { name: "Operation Surf", category: "Surf Therapy", sub: "Surf Therapy",
     org: "Nonprofit", website: "https://operationsurf.org",
     desc: "Curriculum-based surf programs for injured military and veterans. Includes wellness resources, tools, and peer-to-peer support for lasting recovery.",
     location: "California / Events nationally", cost: "Free", priority: "Medium", florida: false,
-    tags: ["surf","free","therapy","peer","injury"] },
+    tags: ["surf","free","therapy","peer"] },
 
   { name: "Operation Amped", category: "Surf Therapy", sub: "Adaptive Surf",
     org: "Nonprofit", website: "https://www.operationamped.org",
     desc: "Adaptive surf therapy for seriously ill, injured, and disabled veterans and their families. Therapeutic ocean-based programs in Southern California.",
     location: "California", cost: "Free", priority: "Medium", florida: false,
-    tags: ["surf","adaptive","free","disability","family"] },
+    tags: ["surf","adaptive","free","disability"] },
 
   // ── EQUINE THERAPY ──
   { name: "PATH International — Equine Programs", category: "Equine Therapy", sub: "Therapeutic Riding",
     org: "Nonprofit", website: "https://pathintl.org/programs/veterans/",
     desc: "National credentialing organization for equine-assisted services. Directory of accredited centers offering veteran therapeutic riding, equine psychotherapy, and physical therapy with horses.",
     location: "National — member centers across USA", cost: "Varies (many free for veterans)", priority: "High", florida: true,
-    tags: ["equine","horses","therapy","directory","national"] },
+    tags: ["equine","horses","therapy","national"] },
 
   { name: "Vinceremos — Freedom Reins Program", category: "Equine Therapy", sub: "Therapeutic Riding",
     org: "Nonprofit", website: "https://www.vinceremos.org/freedom-reins-program-veterans",
@@ -477,11 +632,11 @@ const WELLNESS_DATA = [
     org: "Nonprofit 501(c)(3)", website: "https://vetsct.org",
     desc: "Ground program (horse handling, no riding) plus Mounted program (riding and horsemanship) for veterans. Focused on connection, confidence, and calm.",
     location: "Connecticut", cost: "Free for veterans", priority: "Medium", florida: false,
-    tags: ["equine","horses","free","therapy","nonprofit"] },
+    tags: ["equine","horses","free","therapy"] },
 
   { name: "NCEFT — Veterans & First Responders", category: "Equine Therapy", sub: "Clinical Hippotherapy",
     org: "Nonprofit", website: "https://nceft.org/services/veterans/",
-    desc: "Clinical hippotherapy, adaptive riding, and veteran programs for PTSD, substance use, and TBI. Peer-to-peer support on the farm environment.",
+    desc: "Clinical hippotherapy, adaptive riding, and veteran programs for PTSD, substance use, and TBI. Peer-to-peer support in a farm environment.",
     location: "Woodside, CA", cost: "Free for veterans", priority: "Medium", florida: false,
     tags: ["equine","hippotherapy","ptsd","tbi","free"] },
 
@@ -489,32 +644,32 @@ const WELLNESS_DATA = [
     org: "Nonprofit", website: "https://equest.org/veterans-program/",
     desc: "Equine-assisted activities for veterans in the Dallas/Fort Worth area. Therapeutic riding and equine-facilitated learning for healing and growth.",
     location: "Dallas/Fort Worth, TX", cost: "Free for veterans", priority: "Medium", florida: false,
-    tags: ["equine","horses","free","texas","nonprofit"] },
+    tags: ["equine","horses","free","texas"] },
 
   // ── GOLF ──
   { name: "PGA HOPE", category: "Golf", sub: "Golf Instruction",
     org: "Nonprofit (PGA REACH Foundation)", website: "https://www.pgareach.org/pgahope",
     desc: "Free 6-8 week developmental golf curriculum led by PGA Professionals. Available at 340+ locations in 47 states. All skill levels — no prior golf experience needed.",
     location: "National — 340+ locations, 47 states", cost: "Free", priority: "High", florida: true,
-    tags: ["golf","free","pga","national","rehab"] },
+    tags: ["golf","free","pga","national"] },
 
   { name: "Salute Military Golf Association (SMGA)", category: "Golf", sub: "Rehabilitative Golf",
     org: "Nonprofit", website: "https://smga.org",
     desc: "Golf for mental and physical rehabilitation of post-9/11 wounded veterans. Co-founded by former PGA Tour player Jim Estes. Community-driven healing through the sport.",
     location: "National", cost: "Free", priority: "High", florida: false,
-    tags: ["golf","free","rehab","post-9/11","nonprofit"] },
+    tags: ["golf","free","rehab","post-9/11"] },
 
   { name: "National Disabled Veterans Golf Clinic", category: "Golf", sub: "Adaptive Golf",
     org: "Government (VA / DAV)", website: "https://www.veteransgolfclinic.org",
     desc: "Annual week-long adaptive golf program presented by the VA and DAV. Instruction for veterans with life-changing disabilities — rehabilitation through adaptive golf.",
     location: "Annual event — location varies", cost: "Free", priority: "Medium", florida: false,
-    tags: ["golf","adaptive","free","va","dav","disability"] },
+    tags: ["golf","adaptive","free","va","dav"] },
 
   { name: "Links to Freedom", category: "Golf", sub: "Adaptive Golf",
     org: "Nonprofit", website: "https://www.linkstofreedom.org",
     desc: "Adaptive golf taught by PGA and LPGA professionals for injured service members and disabled veterans. Focus on physical, emotional, mental, and social recovery.",
     location: "National", cost: "Free", priority: "Medium", florida: false,
-    tags: ["golf","adaptive","free","pga","lpga","disability"] },
+    tags: ["golf","adaptive","free","pga","lpga"] },
 
   // ── CERTIFICATION / CAREER ──
   { name: "National Personal Training Institute (NPTI)", category: "Certification / Career", sub: "Fitness Certification",
@@ -530,174 +685,8 @@ const WELLNESS_DATA = [
     tags: ["certification","gi-bill","career","strength","coach"] }
 ];
 
-// ============================================================
-// FILTER STATE
-// ============================================================
-let wFilters = {
-  category: new Set(),
-  cost: new Set(),
-  priority: new Set(),
-  florida: new Set()
-};
-let wDisplayed = 0;
-const W_PAGE_SIZE = 20;
-let wFiltered = [];
-
-function setCategory(val) {
-  clearWellnessFilters();
-  if (val === 'all') { renderWellness(); return; }
-  if (val === 'free') { wFilters.cost.add('free'); }
-  else if (val === 'florida') { wFilters.florida.add('true'); }
-  else { wFilters.category.add(val); }
-  // Sync pills
-  document.querySelectorAll('.mh-pill[data-wvalue]').forEach(p => {
-    const v = p.getAttribute('data-wvalue');
-    const f = p.getAttribute('data-wfilter');
-    if ((f === 'category' && wFilters.category.has(v)) ||
-        (f === 'cost' && wFilters.cost.has(v)) ||
-        (f === 'priority' && wFilters.priority.has(v)) ||
-        (f === 'florida' && wFilters.florida.has(v))) {
-      p.classList.add('active');
-    }
-  });
-  renderWellness();
-}
-
-function toggleWellnessPill(btn) {
-  const f = btn.getAttribute('data-wfilter');
-  const v = btn.getAttribute('data-wvalue');
-  if (btn.classList.contains('active')) {
-    btn.classList.remove('active');
-    wFilters[f] && wFilters[f].delete(v);
-  } else {
-    btn.classList.add('active');
-    wFilters[f] && wFilters[f].add(v);
-  }
-  renderWellness();
-}
-
-function clearWellnessFilters() {
-  wFilters = { category: new Set(), cost: new Set(), priority: new Set(), florida: new Set() };
-  document.querySelectorAll('.mh-pill[data-wvalue]').forEach(p => p.classList.remove('active'));
-  document.getElementById('wellnessSearch').value = '';
-  renderWellness();
-}
-
-// ============================================================
-// FILTER & RENDER ENGINE
-// ============================================================
-function renderWellness() {
-  const search = (document.getElementById('wellnessSearch').value || '').toLowerCase().trim();
-  const sort = document.getElementById('wellnessSortSelect').value;
-
-  wFiltered = WELLNESS_DATA.filter(p => {
-    if (search) {
-      const hay = [p.name, p.category, p.sub, p.desc, p.location, (p.tags||[]).join(' ')].join(' ').toLowerCase();
-      if (!hay.includes(search)) return false;
-    }
-    if (wFilters.category.size > 0) {
-      if (!wFilters.category.has(p.category)) return false;
-    }
-    if (wFilters.cost.has('free')) {
-      if (!p.cost.toLowerCase().includes('free')) return false;
-    }
-    if (wFilters.cost.has('gibill')) {
-      if (!(p.tags||[]).includes('gi-bill')) return false;
-    }
-    if (wFilters.priority.has('High')) {
-      if (p.priority !== 'High') return false;
-    }
-    if (wFilters.florida.has('true')) {
-      if (!p.florida) return false;
-    }
-    return true;
-  });
-
-  // Sort
-  if (sort === 'name') {
-    wFiltered.sort((a,b) => a.name.localeCompare(b.name));
-  } else if (sort === 'priority') {
-    wFiltered.sort((a,b) => (a.priority === 'High' ? 0 : 1) - (b.priority === 'High' ? 0 : 1));
-  } else if (sort === 'free') {
-    wFiltered.sort((a,b) => (a.cost.includes('Free') ? 0 : 1) - (b.cost.includes('Free') ? 0 : 1));
-  } else {
-    // Default: High priority first, then Florida first
-    wFiltered.sort((a,b) => {
-      const pa = a.priority === 'High' ? 0 : 1;
-      const pb = b.priority === 'High' ? 0 : 1;
-      if (pa !== pb) return pa - pb;
-      return (a.florida ? 0 : 1) - (b.florida ? 0 : 1);
-    });
-  }
-
-  const count = wFiltered.length;
-  document.getElementById('wellnessCount').textContent = Math.min(W_PAGE_SIZE, count);
-  document.getElementById('wellnessTotal').textContent = count;
-  document.getElementById('wellnessLabel').textContent = count;
-
-  wDisplayed = 0;
-  document.getElementById('wellnessGrid').innerHTML = '';
-  wellnessLoadMore();
-}
-
-function wellnessLoadMore() {
-  const batch = wFiltered.slice(wDisplayed, wDisplayed + W_PAGE_SIZE);
-  batch.forEach(p => {
-    document.getElementById('wellnessGrid').insertAdjacentHTML('beforeend', renderWellnessCard(p));
-  });
-  wDisplayed += batch.length;
-  document.getElementById('wellnessCount').textContent = wDisplayed;
-  const loadMoreBtn = document.getElementById('wellnessLoadMore');
-  loadMoreBtn.style.display = wDisplayed < wFiltered.length ? 'block' : 'none';
-}
-
-function renderWellnessCard(p) {
-  const isHigh = p.priority === 'High';
-  const isFl = p.florida;
-  const costBadge = p.cost.includes('Free') ? '<span style="background:rgba(40,167,69,0.2);color:#7bc67e;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(40,167,69,0.3);">FREE</span>' :
-                    p.cost.includes('GI Bill') ? '<span style="background:rgba(13,110,253,0.15);color:#7aaeff;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(13,110,253,0.3);">GI BILL</span>' :
-                    '<span style="background:rgba(108,117,125,0.15);color:#adb5bd;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;">LOW COST</span>';
-  const flBadge = isFl ? '<span style="background:rgba(85,107,47,0.2);color:#A3C47A;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(85,107,47,0.3);">FL / SE</span>' : '';
-  const highBadge = isHigh ? '<span style="background:rgba(255,193,7,0.1);color:#ffd54f;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(255,193,7,0.25);">⭐ PRIORITY</span>' : '';
-
-  return `<div class="mh-card" style="border-left: 3px solid ${isHigh ? '#A3C47A' : 'rgba(108,117,125,0.3)'};">
-    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;align-items:center;">
-      ${costBadge}${flBadge}${highBadge}
-      <span style="background:rgba(255,255,255,0.06);color:#adb5bd;font-size:0.68rem;padding:2px 8px;border-radius:4px;">${esc(p.category)}</span>
-    </div>
-    <div class="mh-card__name">${esc(p.name)}</div>
-    <div class="mh-card__org" style="font-size:0.8rem;color:#8a9bb0;margin-bottom:4px;">${esc(p.org)}</div>
-    <div style="font-size:0.8rem;color:#A3C47A;margin-bottom:6px;font-weight:600;">${esc(p.location)}</div>
-    <div class="mh-card__desc">${esc(p.desc)}</div>
-    <a href="${esc(p.website)}" target="_blank" rel="noopener noreferrer" class="mh-card__phone" style="text-decoration:none;font-size:0.85rem;margin-top:10px;display:inline-block;">View Program ↗</a>
-  </div>`;
-}
-
-function esc(s) {
-  if (!s) return '';
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ============================================================
-// NAV / MENU TOGGLE
-// ============================================================
-function toggleMenu() {
-  document.getElementById('navMenu').classList.toggle('open');
-}
-document.addEventListener('click', function(e) {
-  const nav = document.querySelector('.navbar');
-  if (nav && !nav.contains(e.target)) {
-    const menu = document.getElementById('navMenu');
-    if (menu) menu.classList.remove('open');
-  }
-});
-
-// ============================================================
-// INIT
-// ============================================================
-document.addEventListener('DOMContentLoaded', function() {
-  renderWellness();
-});
+// ── Init ───────────────────────────────────────────────────
+filterAndRender();
 </script>
 
 </body>
