@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Wellness &amp; Fitness — AfterAction AI</title>
+  <meta name="description" content="Veteran fitness programs, adaptive sports, nutrition coaching, yoga, equine therapy, outdoor adventure, and wellness resources — free and low-cost for U.S. veterans." />
+  <meta name="keywords" content="veteran fitness, adaptive sports, veteran nutrition, veteran wellness, veteran yoga, equine therapy, veteran gym, Team RWB, Catch A Lift, WarriorWOD, We Defy Foundation" />
+  <meta property="og:title" content="Wellness &amp; Fitness — AfterAction AI" />
+  <meta property="og:description" content="46 verified fitness, sports, nutrition, and wellness programs for veterans — most free." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/wellness" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html" class="active">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Health &amp; Crisis</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+              <li><a href="service-dogs.html">Service Dogs</a></li>
+              <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+              <li><a href="wellness.html" class="active">Wellness &amp; Fitness</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Family &amp; Survivors</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="families-support.html">Families &amp; Survivors</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Career &amp; Education</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="education.html">Education</a></li>
+              <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+              <li><a href="licensure.html#va-approved">VA Approved Programs</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Benefits &amp; Financial Aid</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
+              <li><a href="state-benefits.html">State Benefits</a></li>
+              <li><a href="document-templates.html">Document Templates</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Advocacy &amp; Network</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="resources.html">Partner Organizations</a></li>
+              <li><a href="elected-officials.html">Elected Officials</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero-text" style="background: linear-gradient(135deg, #0f1f15 0%, #1a3a22 60%, #0f1f15 100%); padding: 64px 0 52px;">
+  <div class="page-hero-text__inner">
+    <h1 class="page-hero-text__title">Wellness &amp; Fitness</h1>
+    <div class="page-hero-bar__divider"></div>
+    <p class="page-hero-text__subtitle">Fitness programs, adaptive sports, nutrition coaching, and wellness resources — verified for veterans</p>
+  </div>
+</section>
+
+<!-- QUICK ACCESS -->
+<div class="mh-quick-access">
+  <div class="mh-quick-access-inner">
+    <div class="mh-quick-label">Quick Access</div>
+    <div class="mh-quick-buttons">
+      <button class="mh-quick-btn mh-quick-btn--crisis" onclick="setCategory('all')">
+        <span class="mh-quick-btn__icon">⭐</span> Show All
+      </button>
+      <button class="mh-quick-btn" onclick="setCategory('Fitness Programs')">
+        <span class="mh-quick-btn__icon">💪</span> Fitness
+      </button>
+      <button class="mh-quick-btn" onclick="setCategory('Adaptive Sports')">
+        <span class="mh-quick-btn__icon">🏅</span> Adaptive Sports
+      </button>
+      <button class="mh-quick-btn" onclick="setCategory('Nutrition & Meal Programs')">
+        <span class="mh-quick-btn__icon">🥗</span> Nutrition
+      </button>
+      <button class="mh-quick-btn" onclick="setCategory('free')">
+        <span class="mh-quick-btn__icon">💚</span> Free Only
+      </button>
+      <button class="mh-quick-btn" onclick="setCategory('florida')">
+        <span class="mh-quick-btn__icon">🌴</span> FL / Southeast
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT WRAPPER -->
+<div class="mh-page-wrapper" id="wellness-database">
+
+  <!-- SIDEBAR FILTERS -->
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <h3>Filters</h3>
+      <button class="mh-clear-btn" onclick="clearWellnessFilters()">Clear all</button>
+    </div>
+
+    <input type="text" class="mh-search-input" id="wellnessSearch"
+           placeholder="🔍 Search programs..."
+           oninput="renderWellness()" />
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Program Type</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Fitness Programs" onclick="toggleWellnessPill(this)">Fitness &amp; Training</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Adaptive Sports" onclick="toggleWellnessPill(this)">Adaptive Sports</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Nutrition & Meal Programs" onclick="toggleWellnessPill(this)">Nutrition &amp; Meals</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Yoga & Mindfulness" onclick="toggleWellnessPill(this)">Yoga &amp; Mindfulness</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Martial Arts" onclick="toggleWellnessPill(this)">Martial Arts</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Endurance Sports" onclick="toggleWellnessPill(this)">Endurance Sports</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Outdoor & Adventure Therapy" onclick="toggleWellnessPill(this)">Outdoor &amp; Adventure</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Equine Therapy" onclick="toggleWellnessPill(this)">Equine Therapy</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Surf Therapy" onclick="toggleWellnessPill(this)">Surf Therapy</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Golf" onclick="toggleWellnessPill(this)">Golf</button>
+        <button class="mh-pill" data-wfilter="category" data-wvalue="Certification / Career" onclick="toggleWellnessPill(this)">Fitness Career</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Cost</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-wfilter="cost" data-wvalue="free" onclick="toggleWellnessPill(this)">Free</button>
+        <button class="mh-pill" data-wfilter="cost" data-wvalue="gibill" onclick="toggleWellnessPill(this)">GI Bill Eligible</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Priority</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-wfilter="priority" data-wvalue="High" onclick="toggleWellnessPill(this)">⭐ High Priority</button>
+        <button class="mh-pill" data-wfilter="florida" data-wvalue="true" onclick="toggleWellnessPill(this)">🌴 Florida / SE</button>
+      </div>
+    </div>
+
+    <div class="mh-result-count">
+      Showing <strong id="wellnessCount">46</strong> of <strong id="wellnessTotal">46</strong> programs
+    </div>
+  </aside>
+
+  <!-- MAIN GRID -->
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <div class="mh-toolbar-left"><strong id="wellnessLabel">46</strong> programs found</div>
+      <select class="mh-sort-select" id="wellnessSortSelect" onchange="renderWellness()">
+        <option value="default">Sort: Default</option>
+        <option value="name">Sort: A–Z</option>
+        <option value="priority">Sort: Priority First</option>
+        <option value="free">Sort: Free First</option>
+      </select>
+    </div>
+
+    <div class="mh-grid" id="wellnessGrid"></div>
+
+    <div class="mh-load-more" id="wellnessLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="wellnessLoadMore()">Load More Programs</button>
+    </div>
+  </main>
+</div>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+
+<script>
+// ============================================================
+// WELLNESS & FITNESS — DATA
+// ============================================================
+const WELLNESS_DATA = [
+  // ── FITNESS PROGRAMS ──
+  { name: "Catch A Lift Fund", category: "Fitness Programs", sub: "Gym & Strength",
+    org: "Nonprofit 501(c)(3)", website: "https://catchaliftfund.org/apply",
+    desc: "Free gym memberships, equipment, coaching & 8-week wellness program (nutrition + mental health) for post-9/11 combat-injured veterans with 50%+ VA disability rating.",
+    location: "National (HQ: Baltimore, MD)", cost: "Free", priority: "High", florida: false,
+    tags: ["fitness","free","gym","strength","nonprofit"] },
+
+  { name: "Home Base — Warrior Health & Fitness (Florida)", category: "Fitness Programs", sub: "Holistic Fitness",
+    org: "Nonprofit (MGH / Red Sox Foundation)", website: "https://homebase.org/program/florida-warrior-health-fitness/",
+    desc: "FREE 6-month program — supervised strength training, nutrition education, sleep hygiene, stress management. Up to 60 veterans per cohort. Serving Naples, Fort Myers, and Tampa.",
+    location: "Naples / Fort Myers / Tampa, FL", cost: "Free", priority: "High", florida: true,
+    tags: ["fitness","free","florida","holistic","nutrition"] },
+
+  { name: "Team Red, White & Blue (Team RWB)", category: "Fitness Programs", sub: "Community Fitness",
+    org: "Nonprofit 501(c)(3)", website: "https://teamrwb.org/find-your-chapter",
+    desc: "232,000+ member national community. Free weekly fitness events (running, cycling, yoga, functional fitness), social events, and volunteer projects. Chapters in all 50 states.",
+    location: "National — all 50 states", cost: "Free", priority: "High", florida: true,
+    tags: ["fitness","free","community","running","cycling"] },
+
+  { name: "WarriorWOD", category: "Fitness Programs", sub: "Gym & Strength",
+    org: "Nonprofit", website: "https://warriorwod.org",
+    desc: "6-month free gym membership + virtual nutrition coaching for each veteran. Exercise and nutrition as a prescription for recovery from PTSD and combat stress.",
+    location: "National", cost: "Free", priority: "High", florida: false,
+    tags: ["fitness","free","gym","nutrition","ptsd"] },
+
+  { name: "Wounded Warrior Project — Physical Health & Wellness", category: "Fitness Programs", sub: "Holistic Fitness",
+    org: "Nonprofit 501(c)(3)", website: "https://www.woundedwarriorproject.org/programs/physical-health-wellness",
+    desc: "Comprehensive physical health programs including fitness coaching, adaptive sports, nutrition support, and national events for post-9/11 injured veterans.",
+    location: "National", cost: "Free", priority: "High", florida: false,
+    tags: ["fitness","free","wwp","adaptive","nonprofit"] },
+
+  { name: "VA Whole Health Program", category: "Fitness Programs", sub: "VA Fitness",
+    org: "Government (VA)", website: "https://www.va.gov/WHOLEHEALTH/veteran-resources/Well-Being-Programs.asp",
+    desc: "Holistic wellness available at most VA medical centers: health coaching, well-being classes, complementary/integrative health, nutrition, mindfulness, and sleep support.",
+    location: "National — most VA Medical Centers", cost: "Free (VA enrolled)", priority: "High", florida: true,
+    tags: ["va","free","holistic","coaching","nutrition"] },
+
+  { name: "ValorFit", category: "Fitness Programs", sub: "Gym & Strength",
+    org: "Nonprofit", website: "https://www.valorfit.org",
+    desc: "Free or discounted gym access, strength training, and community connections for veterans. Focused on building physical and mental strength together.",
+    location: "National", cost: "Free / Discounted", priority: "Medium", florida: false,
+    tags: ["fitness","free","gym","community"] },
+
+  { name: "VA Gerofit Program", category: "Fitness Programs", sub: "VA Fitness",
+    org: "Government (VA)", website: "https://news.va.gov/128631/physical-fitness-resources/",
+    desc: "VA-supervised exercise program for older veterans. Available at select VA medical centers with trained staff, progressive strength and endurance programming.",
+    location: "Select VA Medical Centers nationwide", cost: "Free (VA enrolled)", priority: "Medium", florida: false,
+    tags: ["va","free","seniors","strength"] },
+
+  { name: "Freedom Fitness America", category: "Fitness Programs", sub: "Community Fitness",
+    org: "Nonprofit", website: "https://freedomfitnessamerica.org",
+    desc: "Fitness services, personal training, nutrition counseling, and wellness programs for veterans and first responders. Community-driven approach to recovery and health.",
+    location: "National", cost: "Free / Low-cost", priority: "Medium", florida: false,
+    tags: ["fitness","nonprofit","training","nutrition"] },
+
+  { name: "The Resilience Project", category: "Fitness Programs", sub: "Community Fitness",
+    org: "Nonprofit", website: "https://theresilienceproject.us",
+    desc: "Resilience-centered wellness program connecting veterans to physical activity, peer support, mindset training, and community-based fitness resources.",
+    location: "National", cost: "Free", priority: "Medium", florida: false,
+    tags: ["fitness","free","community","resilience","peer"] },
+
+  // ── ADAPTIVE SPORTS ──
+  { name: "VA National Veterans Sports Programs", category: "Adaptive Sports", sub: "Multi-Sport",
+    org: "Government (VA)", website: "https://www.va.gov/adaptive-sports/",
+    desc: "VA-sponsored adaptive sports programs: National Veterans Wheelchair Games, Winter/Summer Sports Clinics, Golden Age Games, Creative Arts Festival, and TEE Tournament.",
+    location: "National — various event locations", cost: "Free (VA enrolled)", priority: "High", florida: false,
+    tags: ["va","free","adaptive","wheelchair","multi-sport"] },
+
+  { name: "Paralyzed Veterans of America (PVA) Sports", category: "Adaptive Sports", sub: "Multi-Sport",
+    org: "Nonprofit 501(c)(3)", website: "https://pva.org/programs-services/sports-recreation/",
+    desc: "Wheelchair basketball, rugby, tennis, handcycling, air rifle, and more for paralyzed and spinal cord injured veterans. Chapters nationwide with competitive and recreational options.",
+    location: "National", cost: "Free", priority: "High", florida: true,
+    tags: ["adaptive","free","wheelchair","nonprofit","spinal-cord"] },
+
+  { name: "DoD Warrior Games", category: "Adaptive Sports", sub: "Competitive",
+    org: "Government (DoD)", website: "https://www.defense.gov/News/Feature-Stories/story/Article/2999753/",
+    desc: "Annual multi-sport adaptive competition for wounded, ill, and injured service members and veterans. 13 sports including powerlifting, cycling, swimming, and track & field.",
+    location: "Annual — varies nationally", cost: "Free (selected athletes)", priority: "High", florida: false,
+    tags: ["adaptive","free","competitive","dod","multi-sport"] },
+
+  { name: "BlazeSports America", category: "Adaptive Sports", sub: "Multi-Sport",
+    org: "Nonprofit 501(c)(3)", website: "https://blazesports.org",
+    desc: "Adaptive sports programming for veterans and individuals with disabilities. Born from the legacy of the 1996 Atlanta Paralympics — recreational through competitive levels.",
+    location: "Atlanta, GA / Southeast", cost: "Free / Low-cost", priority: "Medium", florida: false,
+    tags: ["adaptive","southeast","disability","nonprofit"] },
+
+  { name: "Disabled Athlete Sports Association (DASA)", category: "Adaptive Sports", sub: "Multi-Sport",
+    org: "Nonprofit 501(c)(3)", website: "https://dasasports.org",
+    desc: "Wheelchair basketball, sled hockey, competitive teams, and recreational adaptive sports for disabled veterans and civilians.",
+    location: "St. Louis & Columbia, MO", cost: "Low-cost", priority: "Medium", florida: false,
+    tags: ["adaptive","wheelchair","nonprofit","low-cost"] },
+
+  // ── NUTRITION & MEAL PROGRAMS ──
+  { name: "God's Love We Deliver — CONNECTED", category: "Nutrition & Meal Programs", sub: "Meal Delivery",
+    org: "Nonprofit 501(c)(3)", website: "https://www.glwd.org/get-meals/for-former-u-s-military-service-members-with-a-chronic-disease-severe-illness-mental-health-condition-and-or-substance-use-challenge/",
+    desc: "FREE medically tailored meals for veterans with chronic disease, PTSD, depression, bipolar disorder, or substance use challenges. Personalized by a Registered Dietitian.",
+    location: "New York City metro area", cost: "Free", priority: "High", florida: false,
+    tags: ["nutrition","free","meal-delivery","chronic-illness","ptsd"] },
+
+  { name: "VA Nutrition & Food Services", category: "Nutrition & Meal Programs", sub: "Nutrition Counseling",
+    org: "Government (VA)", website: "https://www.nutrition.va.gov/food_insecurity.asp",
+    desc: "VA Registered Dietitian counseling, food security screening, and referrals to community food resources. Available at all VA Medical Centers.",
+    location: "National — all VA Medical Centers", cost: "Free (VA enrolled)", priority: "High", florida: true,
+    tags: ["va","free","nutrition","dietitian","food-security"] },
+
+  { name: "USDA Military & Veteran Nutrition Programs", category: "Nutrition & Meal Programs", sub: "Government Programs",
+    org: "Government (USDA)", website: "https://www.fns.usda.gov/military-veteran",
+    desc: "SNAP, WIC, school meals, and other USDA nutrition assistance with military/veteran-specific eligibility guidance and application support.",
+    location: "National", cost: "Free / Income-based", priority: "Medium", florida: true,
+    tags: ["nutrition","snap","wic","government","free"] },
+
+  { name: "Veterans Collaborative — Food Programs", category: "Nutrition & Meal Programs", sub: "Food Assistance",
+    org: "Nonprofit", website: "https://www.collaborate.vet/food",
+    desc: "Online directory connecting veterans to food assistance programs including meal delivery services, food pantries, and nutrition coaching resources.",
+    location: "National (online directory)", cost: "Free", priority: "Medium", florida: false,
+    tags: ["nutrition","free","directory","food-assistance"] },
+
+  // ── YOGA & MINDFULNESS ──
+  { name: "Veterans Yoga Project (VYP)", category: "Yoga & Mindfulness", sub: "Yoga",
+    org: "Nonprofit 501(c)(3)", website: "https://veteransyogaproject.org/find-a-class",
+    desc: "National nonprofit (est. 2011) working directly with the VA. Free daily classes, Mindful Resilience Training for Trauma Recovery, and yoga teacher training for veteran instructors.",
+    location: "National — classes throughout the country", cost: "Free", priority: "High", florida: false,
+    tags: ["yoga","free","va","mindfulness","ptsd","trauma"] },
+
+  { name: "Warriors at Ease", category: "Yoga & Mindfulness", sub: "Yoga & Meditation",
+    org: "Nonprofit 501(c)(3)", website: "https://www.warriorsatease.org",
+    desc: "Trauma-informed yoga & meditation training for the military community. Certified teachers serve in VA facilities, military installations, and Vet Centers nationwide.",
+    location: "National — VA facilities & military bases", cost: "Free for veterans", priority: "High", florida: false,
+    tags: ["yoga","meditation","trauma","va","military","free"] },
+
+  { name: "VEToga", category: "Yoga & Mindfulness", sub: "Yoga",
+    org: "Nonprofit", website: "https://vetoga.org",
+    desc: "Free monthly yoga classes, community events, and a veteran-specific 200-hour Teacher Training program. Yoga, meditation, and healing arts for military, veterans, and families.",
+    location: "National — various locations", cost: "Free", priority: "High", florida: false,
+    tags: ["yoga","free","community","teacher-training"] },
+
+  { name: "The Mindfulness Center — Veterans Program", category: "Yoga & Mindfulness", sub: "Meditation",
+    org: "Nonprofit", website: "https://www.themindfulnesscenter.org/programs/veterans/",
+    desc: "Free classes in meditation, yoga, tai chi, and mind-body practices. Individualized acupuncture and mental health counseling for veterans.",
+    location: "Washington, DC area", cost: "Free", priority: "Medium", florida: false,
+    tags: ["mindfulness","meditation","yoga","tai-chi","free"] },
+
+  // ── MARTIAL ARTS ──
+  { name: "We Defy Foundation", category: "Martial Arts", sub: "Brazilian Jiu Jitsu",
+    org: "Nonprofit 501(c)(3)", website: "https://wedefyfoundation.org/apply",
+    desc: "Free Brazilian Jiu Jitsu and fitness training for combat veterans with military-connected disabilities. Operates across all 50 states, 2 US territories, and Japan.",
+    location: "National — all 50 states", cost: "Free", priority: "High", florida: true,
+    tags: ["bjj","martial-arts","free","disability","combat-veteran"] },
+
+  { name: "V-MAT (Veterans Martial Arts Training)", category: "Martial Arts", sub: "Mixed Martial Arts",
+    org: "Nonprofit 501(c)(3)", website: "https://v-mat.org",
+    desc: "100% free martial arts training for veterans, reservists, and active duty. Accommodates physical disabilities, ADD, PTSD, and TBI. Located in Portsmouth, NH.",
+    location: "Portsmouth, NH Seacoast Area", cost: "Free", priority: "Medium", florida: false,
+    tags: ["martial-arts","free","ptsd","tbi","disability"] },
+
+  { name: "Kobukan Martial Arts — Warriors Program", category: "Martial Arts", sub: "Multi-Discipline",
+    org: "Nonprofit", website: "https://kmadojo.org/warriors/",
+    desc: "100% FREE Jiu-Jitsu, Karate, and MMA training for combat veterans and first responders with PTSD/TBI disability. Check website for current locations.",
+    location: "Check website for locations", cost: "Free", priority: "Medium", florida: false,
+    tags: ["martial-arts","free","ptsd","tbi","first-responders"] },
+
+  // ── ENDURANCE SPORTS ──
+  { name: "US Military Endurance Sports (USMES)", category: "Endurance Sports", sub: "Multi-Sport Endurance",
+    org: "Nonprofit 501(c)(3)", website: "https://usmes.org/programs/",
+    desc: "Cycling, triathlon, running, and adventure racing for current, retired, and veteran military. 20 regional chapters nationwide. Camps, clinics, team competitions, and wounded veteran programs.",
+    location: "National — 20 regional chapters", cost: "Low membership fee", priority: "High", florida: true,
+    tags: ["endurance","cycling","triathlon","running","military"] },
+
+  { name: "Frontline OCR", category: "Endurance Sports", sub: "Obstacle Course Racing",
+    org: "Veteran-owned business", website: "https://frontlineocr.com",
+    desc: "Veteran-focused obstacle course racing community. Training programs, team events, and competitive OCR for military and veteran athletes.",
+    location: "National", cost: "Varies", priority: "Medium", florida: false,
+    tags: ["ocr","obstacle-racing","endurance","veteran-owned"] },
+
+  // ── OUTDOOR & ADVENTURE THERAPY ──
+  { name: "Project Healing Waters Fly Fishing", category: "Outdoor & Adventure Therapy", sub: "Fly Fishing",
+    org: "Nonprofit 501(c)(3)", website: "https://projecthealingwaters.org/find-a-program/",
+    desc: "Fly fishing, fly tying, and rod building for active-duty military and veterans. Served 6,000+ veterans in 2023. Programs across the USA with 6,500+ volunteers.",
+    location: "National — programs across USA", cost: "Free", priority: "High", florida: true,
+    tags: ["outdoor","fly-fishing","free","nature","therapy"] },
+
+  { name: "Veterans Exploration Therapy", category: "Outdoor & Adventure Therapy", sub: "Outdoor Recreation",
+    org: "Nonprofit 501(c)(3)", website: "https://www.vetexpeditions.com",
+    desc: "Wilderness exploration and therapeutic outdoor recreation. Founded by Iraq/Afghanistan combat veterans. Expeditions nationwide with a trauma-informed approach.",
+    location: "Colorado (expeditions nationwide)", cost: "Free", priority: "Medium", florida: false,
+    tags: ["outdoor","wilderness","therapy","free","combat-veteran"] },
+
+  { name: "Veterans Adventure Group", category: "Outdoor & Adventure Therapy", sub: "Extreme Adventure",
+    org: "Nonprofit", website: "https://veteransadventuregroup.org",
+    desc: "Extreme outdoor adventures — skydiving, mountaineering, scuba, rock climbing — building veteran communities through shared high-adventure experiences.",
+    location: "National", cost: "Free / Subsidized", priority: "Medium", florida: false,
+    tags: ["adventure","outdoor","extreme","community","free"] },
+
+  { name: "The Warrior's Keep", category: "Outdoor & Adventure Therapy", sub: "Hiking & Climbing",
+    org: "Nonprofit", website: "https://www.thewarriorskeep.org/programs",
+    desc: "Vet-Rec hiking program and Keep Climbing rock climbing program. Reduces stress, anxiety, and depression through outdoor social engagement and peer connection.",
+    location: "Check website for locations", cost: "Free", priority: "Medium", florida: false,
+    tags: ["hiking","climbing","outdoor","free","peer"] },
+
+  // ── SURF THERAPY ──
+  { name: "Warrior Surf Foundation", category: "Surf Therapy", sub: "Surf Therapy",
+    org: "Nonprofit 501(c)(3)", website: "https://www.warriorsurf.org/programs",
+    desc: "Free 12-week surf therapy program including yoga and wellness coaching for veterans with PTSD, anxiety, and depression. Includes psycho-education component.",
+    location: "Folly Beach, SC", cost: "Free", priority: "High", florida: false,
+    tags: ["surf","free","ptsd","yoga","therapy","southeast"] },
+
+  { name: "Operation Surf", category: "Surf Therapy", sub: "Surf Therapy",
+    org: "Nonprofit", website: "https://operationsurf.org",
+    desc: "Curriculum-based surf programs for injured military and veterans. Includes wellness resources, tools, and peer-to-peer support for lasting recovery.",
+    location: "California / Events nationally", cost: "Free", priority: "Medium", florida: false,
+    tags: ["surf","free","therapy","peer","injury"] },
+
+  { name: "Operation Amped", category: "Surf Therapy", sub: "Adaptive Surf",
+    org: "Nonprofit", website: "https://www.operationamped.org",
+    desc: "Adaptive surf therapy for seriously ill, injured, and disabled veterans and their families. Therapeutic ocean-based programs in Southern California.",
+    location: "California", cost: "Free", priority: "Medium", florida: false,
+    tags: ["surf","adaptive","free","disability","family"] },
+
+  // ── EQUINE THERAPY ──
+  { name: "PATH International — Equine Programs", category: "Equine Therapy", sub: "Therapeutic Riding",
+    org: "Nonprofit", website: "https://pathintl.org/programs/veterans/",
+    desc: "National credentialing organization for equine-assisted services. Directory of accredited centers offering veteran therapeutic riding, equine psychotherapy, and physical therapy with horses.",
+    location: "National — member centers across USA", cost: "Varies (many free for veterans)", priority: "High", florida: true,
+    tags: ["equine","horses","therapy","directory","national"] },
+
+  { name: "Vinceremos — Freedom Reins Program", category: "Equine Therapy", sub: "Therapeutic Riding",
+    org: "Nonprofit", website: "https://www.vinceremos.org/freedom-reins-program-veterans",
+    desc: "Freedom Reins therapeutic riding program for veterans in South Florida. Equine-assisted activities focused on veteran healing, confidence-building, and recovery.",
+    location: "Loxahatchee, FL", cost: "Free for veterans", priority: "High", florida: true,
+    tags: ["equine","florida","free","horses","therapy"] },
+
+  { name: "Veterans Equine Therapeutic Services (V.E.T.S.)", category: "Equine Therapy", sub: "Therapeutic Riding",
+    org: "Nonprofit 501(c)(3)", website: "https://vetsct.org",
+    desc: "Ground program (horse handling, no riding) plus Mounted program (riding and horsemanship) for veterans. Focused on connection, confidence, and calm.",
+    location: "Connecticut", cost: "Free for veterans", priority: "Medium", florida: false,
+    tags: ["equine","horses","free","therapy","nonprofit"] },
+
+  { name: "NCEFT — Veterans & First Responders", category: "Equine Therapy", sub: "Clinical Hippotherapy",
+    org: "Nonprofit", website: "https://nceft.org/services/veterans/",
+    desc: "Clinical hippotherapy, adaptive riding, and veteran programs for PTSD, substance use, and TBI. Peer-to-peer support on the farm environment.",
+    location: "Woodside, CA", cost: "Free for veterans", priority: "Medium", florida: false,
+    tags: ["equine","hippotherapy","ptsd","tbi","free"] },
+
+  { name: "Equest — Veterans Program", category: "Equine Therapy", sub: "Therapeutic Riding",
+    org: "Nonprofit", website: "https://equest.org/veterans-program/",
+    desc: "Equine-assisted activities for veterans in the Dallas/Fort Worth area. Therapeutic riding and equine-facilitated learning for healing and growth.",
+    location: "Dallas/Fort Worth, TX", cost: "Free for veterans", priority: "Medium", florida: false,
+    tags: ["equine","horses","free","texas","nonprofit"] },
+
+  // ── GOLF ──
+  { name: "PGA HOPE", category: "Golf", sub: "Golf Instruction",
+    org: "Nonprofit (PGA REACH Foundation)", website: "https://www.pgareach.org/pgahope",
+    desc: "Free 6-8 week developmental golf curriculum led by PGA Professionals. Available at 340+ locations in 47 states. All skill levels — no prior golf experience needed.",
+    location: "National — 340+ locations, 47 states", cost: "Free", priority: "High", florida: true,
+    tags: ["golf","free","pga","national","rehab"] },
+
+  { name: "Salute Military Golf Association (SMGA)", category: "Golf", sub: "Rehabilitative Golf",
+    org: "Nonprofit", website: "https://smga.org",
+    desc: "Golf for mental and physical rehabilitation of post-9/11 wounded veterans. Co-founded by former PGA Tour player Jim Estes. Community-driven healing through the sport.",
+    location: "National", cost: "Free", priority: "High", florida: false,
+    tags: ["golf","free","rehab","post-9/11","nonprofit"] },
+
+  { name: "National Disabled Veterans Golf Clinic", category: "Golf", sub: "Adaptive Golf",
+    org: "Government (VA / DAV)", website: "https://www.veteransgolfclinic.org",
+    desc: "Annual week-long adaptive golf program presented by the VA and DAV. Instruction for veterans with life-changing disabilities — rehabilitation through adaptive golf.",
+    location: "Annual event — location varies", cost: "Free", priority: "Medium", florida: false,
+    tags: ["golf","adaptive","free","va","dav","disability"] },
+
+  { name: "Links to Freedom", category: "Golf", sub: "Adaptive Golf",
+    org: "Nonprofit", website: "https://www.linkstofreedom.org",
+    desc: "Adaptive golf taught by PGA and LPGA professionals for injured service members and disabled veterans. Focus on physical, emotional, mental, and social recovery.",
+    location: "National", cost: "Free", priority: "Medium", florida: false,
+    tags: ["golf","adaptive","free","pga","lpga","disability"] },
+
+  // ── CERTIFICATION / CAREER ──
+  { name: "National Personal Training Institute (NPTI)", category: "Certification / Career", sub: "Fitness Certification",
+    org: "School (VA Approved)", website: "https://www.npti.edu/veteran-programs",
+    desc: "VA-approved Personal Trainer diploma program. Accepts GI Bill (Ch 30, 33) and VR&E (Ch 31). Hands-on campus training leading to a career in fitness and personal training.",
+    location: "Multiple US campuses incl. Florida", cost: "GI Bill eligible", priority: "High", florida: true,
+    tags: ["certification","gi-bill","career","personal-training","va-approved"] },
+
+  { name: "NCSF Certified Strength Coach", category: "Certification / Career", sub: "Fitness Certification",
+    org: "Certification Body", website: "https://www.ncsf.org/certifications/cscs/",
+    desc: "Strength Coach certification with GI Bill eligibility. Military Support Plan available for active duty and veteran military. Nationally recognized credential.",
+    location: "Online / National", cost: "GI Bill eligible", priority: "Medium", florida: false,
+    tags: ["certification","gi-bill","career","strength","coach"] }
+];
+
+// ============================================================
+// FILTER STATE
+// ============================================================
+let wFilters = {
+  category: new Set(),
+  cost: new Set(),
+  priority: new Set(),
+  florida: new Set()
+};
+let wDisplayed = 0;
+const W_PAGE_SIZE = 20;
+let wFiltered = [];
+
+function setCategory(val) {
+  clearWellnessFilters();
+  if (val === 'all') { renderWellness(); return; }
+  if (val === 'free') { wFilters.cost.add('free'); }
+  else if (val === 'florida') { wFilters.florida.add('true'); }
+  else { wFilters.category.add(val); }
+  // Sync pills
+  document.querySelectorAll('.mh-pill[data-wvalue]').forEach(p => {
+    const v = p.getAttribute('data-wvalue');
+    const f = p.getAttribute('data-wfilter');
+    if ((f === 'category' && wFilters.category.has(v)) ||
+        (f === 'cost' && wFilters.cost.has(v)) ||
+        (f === 'priority' && wFilters.priority.has(v)) ||
+        (f === 'florida' && wFilters.florida.has(v))) {
+      p.classList.add('active');
+    }
+  });
+  renderWellness();
+}
+
+function toggleWellnessPill(btn) {
+  const f = btn.getAttribute('data-wfilter');
+  const v = btn.getAttribute('data-wvalue');
+  if (btn.classList.contains('active')) {
+    btn.classList.remove('active');
+    wFilters[f] && wFilters[f].delete(v);
+  } else {
+    btn.classList.add('active');
+    wFilters[f] && wFilters[f].add(v);
+  }
+  renderWellness();
+}
+
+function clearWellnessFilters() {
+  wFilters = { category: new Set(), cost: new Set(), priority: new Set(), florida: new Set() };
+  document.querySelectorAll('.mh-pill[data-wvalue]').forEach(p => p.classList.remove('active'));
+  document.getElementById('wellnessSearch').value = '';
+  renderWellness();
+}
+
+// ============================================================
+// FILTER & RENDER ENGINE
+// ============================================================
+function renderWellness() {
+  const search = (document.getElementById('wellnessSearch').value || '').toLowerCase().trim();
+  const sort = document.getElementById('wellnessSortSelect').value;
+
+  wFiltered = WELLNESS_DATA.filter(p => {
+    if (search) {
+      const hay = [p.name, p.category, p.sub, p.desc, p.location, (p.tags||[]).join(' ')].join(' ').toLowerCase();
+      if (!hay.includes(search)) return false;
+    }
+    if (wFilters.category.size > 0) {
+      if (!wFilters.category.has(p.category)) return false;
+    }
+    if (wFilters.cost.has('free')) {
+      if (!p.cost.toLowerCase().includes('free')) return false;
+    }
+    if (wFilters.cost.has('gibill')) {
+      if (!(p.tags||[]).includes('gi-bill')) return false;
+    }
+    if (wFilters.priority.has('High')) {
+      if (p.priority !== 'High') return false;
+    }
+    if (wFilters.florida.has('true')) {
+      if (!p.florida) return false;
+    }
+    return true;
+  });
+
+  // Sort
+  if (sort === 'name') {
+    wFiltered.sort((a,b) => a.name.localeCompare(b.name));
+  } else if (sort === 'priority') {
+    wFiltered.sort((a,b) => (a.priority === 'High' ? 0 : 1) - (b.priority === 'High' ? 0 : 1));
+  } else if (sort === 'free') {
+    wFiltered.sort((a,b) => (a.cost.includes('Free') ? 0 : 1) - (b.cost.includes('Free') ? 0 : 1));
+  } else {
+    // Default: High priority first, then Florida first
+    wFiltered.sort((a,b) => {
+      const pa = a.priority === 'High' ? 0 : 1;
+      const pb = b.priority === 'High' ? 0 : 1;
+      if (pa !== pb) return pa - pb;
+      return (a.florida ? 0 : 1) - (b.florida ? 0 : 1);
+    });
+  }
+
+  const count = wFiltered.length;
+  document.getElementById('wellnessCount').textContent = Math.min(W_PAGE_SIZE, count);
+  document.getElementById('wellnessTotal').textContent = count;
+  document.getElementById('wellnessLabel').textContent = count;
+
+  wDisplayed = 0;
+  document.getElementById('wellnessGrid').innerHTML = '';
+  wellnessLoadMore();
+}
+
+function wellnessLoadMore() {
+  const batch = wFiltered.slice(wDisplayed, wDisplayed + W_PAGE_SIZE);
+  batch.forEach(p => {
+    document.getElementById('wellnessGrid').insertAdjacentHTML('beforeend', renderWellnessCard(p));
+  });
+  wDisplayed += batch.length;
+  document.getElementById('wellnessCount').textContent = wDisplayed;
+  const loadMoreBtn = document.getElementById('wellnessLoadMore');
+  loadMoreBtn.style.display = wDisplayed < wFiltered.length ? 'block' : 'none';
+}
+
+function renderWellnessCard(p) {
+  const isHigh = p.priority === 'High';
+  const isFl = p.florida;
+  const costBadge = p.cost.includes('Free') ? '<span style="background:rgba(40,167,69,0.2);color:#7bc67e;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(40,167,69,0.3);">FREE</span>' :
+                    p.cost.includes('GI Bill') ? '<span style="background:rgba(13,110,253,0.15);color:#7aaeff;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(13,110,253,0.3);">GI BILL</span>' :
+                    '<span style="background:rgba(108,117,125,0.15);color:#adb5bd;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;">LOW COST</span>';
+  const flBadge = isFl ? '<span style="background:rgba(85,107,47,0.2);color:#A3C47A;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(85,107,47,0.3);">FL / SE</span>' : '';
+  const highBadge = isHigh ? '<span style="background:rgba(255,193,7,0.1);color:#ffd54f;font-size:0.68rem;font-weight:700;padding:2px 8px;border-radius:4px;border:1px solid rgba(255,193,7,0.25);">⭐ PRIORITY</span>' : '';
+
+  return `<div class="mh-card" style="border-left: 3px solid ${isHigh ? '#A3C47A' : 'rgba(108,117,125,0.3)'};">
+    <div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;align-items:center;">
+      ${costBadge}${flBadge}${highBadge}
+      <span style="background:rgba(255,255,255,0.06);color:#adb5bd;font-size:0.68rem;padding:2px 8px;border-radius:4px;">${esc(p.category)}</span>
+    </div>
+    <div class="mh-card__name">${esc(p.name)}</div>
+    <div class="mh-card__org" style="font-size:0.8rem;color:#8a9bb0;margin-bottom:4px;">${esc(p.org)}</div>
+    <div style="font-size:0.8rem;color:#A3C47A;margin-bottom:6px;font-weight:600;">${esc(p.location)}</div>
+    <div class="mh-card__desc">${esc(p.desc)}</div>
+    <a href="${esc(p.website)}" target="_blank" rel="noopener noreferrer" class="mh-card__phone" style="text-decoration:none;font-size:0.85rem;margin-top:10px;display:inline-block;">View Program ↗</a>
+  </div>`;
+}
+
+function esc(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ============================================================
+// NAV / MENU TOGGLE
+// ============================================================
+function toggleMenu() {
+  document.getElementById('navMenu').classList.toggle('open');
+}
+document.addEventListener('click', function(e) {
+  const nav = document.querySelector('.navbar');
+  if (nav && !nav.contains(e.target)) {
+    const menu = document.getElementById('navMenu');
+    if (menu) menu.classList.remove('open');
+  }
+});
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', function() {
+  renderWellness();
+});
+</script>
+
+</body>
+</html>
