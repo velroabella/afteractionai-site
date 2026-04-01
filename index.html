@@ -223,9 +223,11 @@
     </div>
   </header>
 
-  <!-- AIOS Active Mission Card (Phase 13) — hidden when no mission is active -->
+  <!-- AIOS Active Mission Card (Phase 13 / Phase 51) — hidden when no mission is active -->
   <div class="aios-mission-card" id="aiosMissionCard" style="display:none;"
        role="status" aria-live="polite" aria-label="Active mission status">
+    <!-- Phase 51: Multi-mission tabs — rendered by MissionCard.js, hidden when only 1 mission -->
+    <div class="aios-mission-tabs" id="aiosMissionTabs" style="display:none;"></div>
     <span class="aios-mission-card__label">Mission</span>
     <span class="aios-mission-card__type" id="aiosMissionType"></span>
     <span class="aios-mission-card__badge" id="aiosMissionStatus"></span>

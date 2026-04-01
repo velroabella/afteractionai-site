@@ -21,8 +21,10 @@
   var _stepEl     = null;
   var _nextEl     = null;
   var _blockersEl = null;
+  var _tabsEl     = null;   // Phase 51: multi-mission tab container
 
-  var _lastHash = null;
+  var _lastHash     = null;
+  var _lastTabsHash = null; // Phase 51: change-detection hash for mission tabs
 
   /** Lazy-init DOM refs once the card exists in the document. */
   function _initRefs() {
@@ -33,6 +35,7 @@
     _stepEl     = document.getElementById('aiosMissionStep');
     _nextEl     = document.getElementById('aiosMissionNext');
     _blockersEl = document.getElementById('aiosMissionBlockers');
+    _tabsEl     = document.getElementById('aiosMissionTabs');
     return !!_card;
   }
 
@@ -47,8 +50,13 @@
     if (!mission || typeof mission !== 'object') {
       _card.style.display = 'none';
       _lastHash = null;
+      _lastTabsHash = null;
+      if (_tabsEl) _tabsEl.style.display = 'none';
       return;
     }
+
+    // Phase 51: Render mission switcher tabs (auto-hides when < 2 missions)
+    _renderTabs();
 
     // ── Build a cheap change-detection hash ───────────────
     var blockerStr = (Array.isArray(mission.blockers) && mission.blockers.length)
@@ -110,6 +118,73 @@
     return map[status] || status.replace(/_/g, ' ');
   }
 
+  /** Escape HTML special characters for safe inline rendering. */
+  function _escHtml(str) {
+    return String(str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  /**
+   * Phase 51: Render (or hide) the multi-mission tab switcher.
+   * Skipped when < 2 non-archived missions exist.
+   * Cheap hash guard prevents unnecessary DOM re-writes on every poll tick.
+   */
+  function _renderTabs() {
+    if (!_tabsEl) return;
+    var Mission = window.AIOS && window.AIOS.Mission;
+    if (!Mission || typeof Mission.getAll !== 'function') {
+      _tabsEl.style.display = 'none';
+      return;
+    }
+    var all = Mission.getAll();
+    var cur = Mission.current;
+    var curKey = cur ? (cur._memId || '') : '';
+    var tabHash = all.map(function(m) {
+      return (m._memId || '') + ':' + (m.name || m.type || '');
+    }).join('|') + '@' + curKey;
+    if (tabHash === _lastTabsHash) return;
+    _lastTabsHash = tabHash;
+
+    if (all.length < 2) {
+      _tabsEl.style.display = 'none';
+      _tabsEl.innerHTML = '';
+      return;
+    }
+
+    var html = '';
+    all.forEach(function(m) {
+      var id    = m._dbId || m._memId || '';
+      var label = _escHtml(m.name || _formatType(m.type) || 'Mission');
+      var isCur = cur && (m._memId === cur._memId);
+      var cls   = 'aios-mission-tab' + (isCur ? ' aios-mission-tab--active' : '');
+      var safeId = id.replace(/'/g, '');
+      html += '<button class="' + cls + '" type="button" ' +
+              'onclick="window.AIOS.MissionCard.switchTo(\'' + safeId + '\')">' +
+              label + '</button>';
+    });
+    _tabsEl.innerHTML = html;
+    _tabsEl.style.display = '';
+  }
+
+  /**
+   * Phase 51: Switch the active mission and immediately refresh the card.
+   * Called by the tab buttons via inline onclick.
+   * @param {string} id  _dbId or _memId of the target mission
+   */
+  function switchTo(id) {
+    if (!window.AIOS || !window.AIOS.Mission) return;
+    var m = window.AIOS.Mission.setActive(id);
+    if (m) {
+      _lastHash     = null; // force full detail re-render
+      _lastTabsHash = null; // force tabs re-render
+      update(m);
+    }
+  }
+
   /**
    * Internal poll tick — runs every 2 seconds while chat screen is visible.
    * Skips entirely if AIOS or Mission modules aren't loaded yet.
@@ -136,6 +211,6 @@
 
   // ── Public API ─────────────────────────────────────────
   window.AIOS = window.AIOS || {};
-  window.AIOS.MissionCard = { update: update };
+  window.AIOS.MissionCard = { update: update, switchTo: switchTo };
 
 })();

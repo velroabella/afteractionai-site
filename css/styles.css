@@ -8403,6 +8403,47 @@ a[data-restricted="true"]::before {
 }
 
 /* ══════════════════════════════════════════════════════
+   AIOS — MULTI-MISSION TAB SWITCHER  (Phase 51)
+   Full-width row inside the mission card — auto-hidden
+   when only 1 mission exists. Clicking switches focus.
+   ══════════════════════════════════════════════════════ */
+.aios-mission-tabs {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(197, 165, 90, 0.15);
+  margin-bottom: 2px;
+}
+
+.aios-mission-tab {
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 3px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(197, 165, 90, 0.25);
+  background: transparent;
+  color: var(--gray-400);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.aios-mission-tab--active {
+  background: rgba(197, 165, 90, 0.18);
+  color: var(--gold-light);
+  border-color: rgba(197, 165, 90, 0.6);
+}
+
+.aios-mission-tab:hover:not(.aios-mission-tab--active) {
+  background: rgba(197, 165, 90, 0.08);
+  color: var(--gray-200);
+}
+
+/* ══════════════════════════════════════════════════════
    AIOS — QUICK-TRIGGER CHIPS  (Phase 14)
    Compact pill row above the text input.
    Visible on chat open, hidden after first user action.
