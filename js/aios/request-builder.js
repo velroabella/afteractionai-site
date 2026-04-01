@@ -72,6 +72,11 @@
        is supplemental category guidance.                       */
     _removeSection('## RESOURCE CONTEXT', 'resource-context');
 
+    /* ── Pass 1.6: Remove prior document context (Phase 6) ───
+       Session continuity is helpful but not required for core
+       benefit routing; trimmed after resource context.         */
+    _removeSection('## PRIOR DOCUMENTS', 'prior-documents');
+
     /* ── Pass 2: Strip soft memory fields ────────────────────
        Keep only: header, Name, Branch, Era, Discharge, VA Rating.
        Remove: State, Employment, Goals, Needs, PrimaryNeed.
@@ -346,6 +351,26 @@
         } catch (_resErr) { /* skip if resource mapper unavailable */ }
       }
 
+      // Prior document continuity — Phase 6
+      // Source: window.AIOS._priorDocSummary — compact array set once in
+      // _initCaseModel() when an authenticated user resumes a case.
+      // Fields: type, file, status only — no extracted text injected.
+      // Capped at 10 items. Omitted for new users and anonymous sessions.
+      // Prevents AI from asking the veteran to re-upload documents already on file.
+      var _priorDocs = window.AIOS && window.AIOS._priorDocSummary;
+      var _hasPriorDocCtx = false; // hoisted for meta access below
+      if (_priorDocs && _priorDocs.length > 0) {
+        var _pdLines = ['## PRIOR DOCUMENTS'];
+        _pdLines.push('The following documents were uploaded by this veteran in a prior session:');
+        for (var _pdi = 0; _pdi < _priorDocs.length; _pdi++) {
+          var _pd = _priorDocs[_pdi];
+          _pdLines.push('- ' + _pd.type + ': ' + _pd.file + ' (' + _pd.status + ')');
+        }
+        _pdLines.push('Do not ask the veteran to re-upload documents already on file. Reference them naturally when relevant.');
+        systemParts.push(_pdLines.join('\n'));
+        _hasPriorDocCtx = true;
+      }
+
       // Eligibility context — Phase 23
       // Source: window.AIOS.Eligibility.score() using current memory profile.
       // Injected only when the profile has at least one scoring signal.
@@ -470,6 +495,7 @@
         escalationTier: _tier,                        // Phase 22
         hasEligibilityContext: !!(_eligSummary),      // Phase 23
         hasResourceContext: !!_hasResourceCtx,        // Phase 43
+        hasPriorDocContext: !!_hasPriorDocCtx,        // Phase 6
         hasMemory: !!opts.memoryContext,
         hasMission: !!(_Mission && _Mission.current),
         hasPageContext: !!opts.pageContext,

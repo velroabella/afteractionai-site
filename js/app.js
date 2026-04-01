@@ -617,6 +617,31 @@
         log('Phase2', 'migration helper exception (non-fatal): ' +
             (_migErr && _migErr.message ? _migErr.message : String(_migErr)));
       }
+
+      // Phase 6: Prior document continuity — fetch uploaded docs for this case.
+      // Stores a compact summary (type + filename + status, no extracted text) in
+      // window.AIOS._priorDocSummary so RequestBuilder injects ## PRIOR DOCUMENTS
+      // into the system prompt on every turn of this resumed session.
+      // Guard: !_priorDocSummary prevents overwrite if _initCaseModel() is retried
+      // via authStateChanged (e.g. late sign-in after page load).
+      // Fire-and-forget — failure never blocks the conversation flow.
+      if (window.AIOS &&
+          AAAI.DataAccess.documents &&
+          !window.AIOS._priorDocSummary) {
+        AAAI.DataAccess.documents.listByCase(_activeCaseId)
+          .then(function(dResult) {
+            if (dResult.error || !dResult.data || dResult.data.length === 0) return;
+            window.AIOS._priorDocSummary = dResult.data.slice(0, 10).map(function(row) {
+              return {
+                type:   row.document_type || 'unknown',
+                file:   row.file_name     || 'unnamed',
+                status: row.status        || 'uploaded'
+              };
+            });
+            log('Phase6', 'prior doc summary loaded — ' + window.AIOS._priorDocSummary.length + ' doc(s)');
+          })
+          .catch(function() { /* non-critical — session continues without document context */ });
+      }
     }).catch(function(err) {
       // Non-fatal — old code paths continue as normal
       log('Phase2', 'getOrCreateActiveCase exception — localStorage fallback active: ' +
@@ -738,6 +763,8 @@
         if (window.AIOS && window.AIOS.Checklist) {
           window.AIOS.Checklist.reset();
         }
+        // Phase 6: clear prior doc summary so next session fetches fresh on resume
+        if (window.AIOS) { window.AIOS._priorDocSummary = null; }
         // PHASE 2 DEBUG HELPER — keep shared namespace in sync with private var
         if (window.AAAI) { window.AAAI._activeCaseId = null; }
         log('Phase2', 'user signed out — _activeCaseId cleared');
