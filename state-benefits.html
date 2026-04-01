@@ -109,35 +109,34 @@
 <!-- QUICK ACCESS BAR -->
 <div class="rp-quickaccess">
   <div class="rp-quickaccess__inner">
-    <button class="rp-qa-btn" onclick="applyQA('property_tax')">🏠 Property Tax</button>
-    <button class="rp-qa-btn" onclick="applyQA('income_tax')">💰 Income Tax</button>
-    <button class="rp-qa-btn" onclick="applyQA('education')">🎓 Education</button>
-    <button class="rp-qa-btn" onclick="applyQA('healthcare')">🏥 Healthcare</button>
-    <button class="rp-qa-btn" onclick="applyQA('disabled_veteran')">♿ Disabled Vet</button>
-    <button class="rp-qa-btn" onclick="applyQA('dependent')">👨‍👩‍👧 Spouse/Dependent</button>
-    <button class="rp-qa-btn" onclick="applyQA('all')">All Benefits</button>
+    <button class="rp-qa-btn" onclick="sbApplyQA('property_tax')">🏠 Property Tax</button>
+    <button class="rp-qa-btn" onclick="sbApplyQA('income_tax')">💰 Income Tax</button>
+    <button class="rp-qa-btn" onclick="sbApplyQA('education')">🎓 Education</button>
+    <button class="rp-qa-btn" onclick="sbApplyQA('healthcare')">🏥 Healthcare</button>
+    <button class="rp-qa-btn" onclick="sbApplyQA('disabled_veteran')">♿ Disabled Vet</button>
+    <button class="rp-qa-btn" onclick="sbApplyQA('dependent')">👨‍👩‍👧 Spouse/Dependent</button>
+    <button class="rp-qa-btn" onclick="sbClearAll()">All Benefits</button>
   </div>
 </div>
 
 <!-- TWO-COLUMN LAYOUT -->
-<div class="rp-page-wrapper">
+<div class="mh-page-wrapper">
 
   <!-- SIDEBAR -->
-  <aside class="rp-sidebar">
-
-    <!-- Search -->
-    <div style="margin-bottom:20px;">
-      <input type="text" id="searchInput" placeholder="Search benefits..."
-        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
-        oninput="filterAndRender()" />
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <span>Filters</span>
+      <button class="mh-clear-btn" onclick="sbClearAll()">Clear all</button>
     </div>
 
-    <!-- State Selector -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Your State</div>
-      <select id="stateSelect" onchange="filterAndRender()"
-        style="width:100%;padding:8px 10px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;cursor:pointer;">
-        <option value="all">All States</option>
+    <!-- Search -->
+    <input type="text" class="mh-search-input" id="sbSearch" placeholder="Search benefits..." oninput="sbApplyFilters()" />
+
+    <!-- State Selector (preserved as dropdown) -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Your State</div>
+      <select id="sbStateSelect" class="mh-sort-select" onchange="sbApplyFilters()" style="width:100%;">
+        <option value="">All States</option>
         <option value="AK">Alaska (AK)</option>
         <option value="AL">Alabama (AL)</option>
         <option value="AR">Arkansas (AR)</option>
@@ -193,41 +192,50 @@
     </div>
 
     <!-- Category Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Benefit Type</div>
-      <button class="rp-pill active" data-filter-group="category" data-filter-value="all" onclick="setPill(this,'category')">All Types</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="property_tax" onclick="setPill(this,'category')">Property Tax</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="income_tax" onclick="setPill(this,'category')">Income Tax</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="education" onclick="setPill(this,'category')">Education</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="employment" onclick="setPill(this,'category')">Employment</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="healthcare" onclick="setPill(this,'category')">Healthcare</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="housing" onclick="setPill(this,'category')">Housing</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="vehicle" onclick="setPill(this,'category')">Vehicle</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="recreation" onclick="setPill(this,'category')">Recreation</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="burial" onclick="setPill(this,'category')">Burial</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="disabled_veteran" onclick="setPill(this,'category')">Disabled Veteran</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="dependent" onclick="setPill(this,'category')">Spouse / Dependent</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="licensing" onclick="setPill(this,'category')">Licensing</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Benefit Type</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="category" data-value="property_tax" onclick="sbTogglePill(this)">Property Tax</button>
+        <button class="mh-pill" data-filter="category" data-value="income_tax" onclick="sbTogglePill(this)">Income Tax</button>
+        <button class="mh-pill" data-filter="category" data-value="education" onclick="sbTogglePill(this)">Education</button>
+        <button class="mh-pill" data-filter="category" data-value="employment" onclick="sbTogglePill(this)">Employment</button>
+        <button class="mh-pill" data-filter="category" data-value="healthcare" onclick="sbTogglePill(this)">Healthcare</button>
+        <button class="mh-pill" data-filter="category" data-value="housing" onclick="sbTogglePill(this)">Housing</button>
+        <button class="mh-pill" data-filter="category" data-value="vehicle" onclick="sbTogglePill(this)">Vehicle</button>
+        <button class="mh-pill" data-filter="category" data-value="recreation" onclick="sbTogglePill(this)">Recreation</button>
+        <button class="mh-pill" data-filter="category" data-value="burial" onclick="sbTogglePill(this)">Burial</button>
+        <button class="mh-pill" data-filter="category" data-value="disabled_veteran" onclick="sbTogglePill(this)">Disabled Veteran</button>
+        <button class="mh-pill" data-filter="category" data-value="dependent" onclick="sbTogglePill(this)">Spouse / Dependent</button>
+        <button class="mh-pill" data-filter="category" data-value="licensing" onclick="sbTogglePill(this)">Licensing</button>
+      </div>
     </div>
 
+    <!-- Result Count -->
+    <div class="mh-result-count" id="sbResultCount"></div>
   </aside>
 
   <!-- MAIN CONTENT -->
-  <main>
-    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <select class="mh-sort-select" id="sbSort" onchange="sbApplyFilters()">
+        <option value="default">Sort: State, then Category</option>
+        <option value="az">Sort: A–Z by Name</option>
+        <option value="category">Sort: By Category</option>
+      </select>
+    </div>
 
-    <div class="rp-grid" id="benefitsGrid">
+    <div class="mh-grid" id="benefitsGrid">
       <div style="color:#adb5bd;padding:40px;text-align:center;">Loading state benefits&hellip;</div>
     </div>
 
-    <div class="rp-empty" id="emptyState" style="display:none;">
+    <div class="mh-empty" id="emptyState" style="display:none;">
       <div class="rp-empty__icon">🗺️</div>
       <p>No benefits match your current filters. Try selecting a different state or benefit type.</p>
-      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+      <button class="mh-clear-btn" onclick="sbClearAll()">Clear Filters</button>
     </div>
 
-    <div style="text-align:center;margin-top:24px;">
-      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More Benefits</button>
+    <div class="mh-load-more" id="sbLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" id="loadMoreBtn" onclick="sbLoadMore()">Load More Benefits</button>
     </div>
   </main>
 
@@ -288,19 +296,19 @@
 <script src="js/newsletter.js"></script>
 <script>
 // ── State ──────────────────────────────────────────────────
-const PAGE_SIZE = 24;
-let allBenefits = [];
-let filteredBenefits = [];
-let visibleCount = 0;
+var SB_PAGE_SIZE = 24;
+var sbAllBenefits = [];
+var sbFilteredBenefits = [];
+var sbVisibleCount = 0;
 
-const activeFilters = { category: 'all' };
+var sbFilters = { search: '', category: new Set() };
 
-const CAT_LABELS = {
-  property_tax:'Property Tax', education:'Education', recreation:'Recreation',
-  employment:'Employment', healthcare:'Healthcare', housing:'Housing',
-  vehicle:'Vehicle / Registration', burial:'Burial / Cemetery',
-  licensing:'Professional Licensing', disabled_veteran:'Disabled Veteran',
-  dependent:'Spouse / Dependent', income_tax:'Income Tax'
+var SB_CAT_LABELS = {
+  property_tax: 'Property Tax', education: 'Education', recreation: 'Recreation',
+  employment: 'Employment', healthcare: 'Healthcare', housing: 'Housing',
+  vehicle: 'Vehicle / Registration', burial: 'Burial / Cemetery',
+  licensing: 'Professional Licensing', disabled_veteran: 'Disabled Veteran',
+  dependent: 'Spouse / Dependent', income_tax: 'Income Tax'
 };
 
 // ── Nav ───────────────────────────────────────────────────
@@ -308,120 +316,153 @@ function toggleMenu() {
   document.getElementById('navMenu').classList.toggle('active');
 }
 
-// ── Pills ─────────────────────────────────────────────────
-function setPill(btn, group) {
-  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeFilters[group] = btn.dataset.filterValue;
-  filterAndRender();
+// ── Escape (null-safe) ────────────────────────────────────
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ── Pills (Set-based multi-select) ────────────────────────
+function sbTogglePill(btn) {
+  var dim = btn.getAttribute('data-filter');
+  var val = btn.getAttribute('data-value');
+  btn.classList.toggle('active');
+  if (sbFilters[dim].has(val)) {
+    sbFilters[dim].delete(val);
+  } else {
+    sbFilters[dim].add(val);
+  }
+  sbApplyFilters();
 }
 
 // ── Quick Access ──────────────────────────────────────────
-function applyQA(val) {
-  if (val === 'all') { resetFilters(); return; }
-  const pill = document.querySelector(`.rp-pill[data-filter-group="category"][data-filter-value="${val}"]`);
-  if (pill) setPill(pill, 'category');
+function sbApplyQA(val) {
+  // Clear category, then activate the requested one
+  sbFilters.category.clear();
+  document.querySelectorAll('.mh-pill[data-filter="category"]').forEach(function(b) { b.classList.remove('active'); });
+  var pill = document.querySelector('.mh-pill[data-filter="category"][data-value="' + val + '"]');
+  if (pill) {
+    pill.classList.add('active');
+    sbFilters.category.add(val);
+  }
+  sbApplyFilters();
 }
 
-// ── Reset ─────────────────────────────────────────────────
-function resetFilters() {
-  activeFilters.category = 'all';
-  document.getElementById('stateSelect').value = 'all';
-  document.querySelectorAll('.rp-pill').forEach(b => {
-    b.classList.toggle('active', b.dataset.filterValue === 'all');
-  });
-  document.getElementById('searchInput').value = '';
-  filterAndRender();
+// ── Clear All ─────────────────────────────────────────────
+function sbClearAll() {
+  sbFilters.search = '';
+  sbFilters.category.clear();
+  document.getElementById('sbSearch').value = '';
+  document.getElementById('sbStateSelect').value = '';
+  document.getElementById('sbSort').value = 'default';
+  document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
+  sbApplyFilters();
 }
 
-// ── Filter ────────────────────────────────────────────────
-function filterAndRender() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  const selectedState = document.getElementById('stateSelect').value;
+// ── Filter + Sort ─────────────────────────────────────────
+function sbApplyFilters() {
+  sbFilters.search = (document.getElementById('sbSearch').value || '').toLowerCase();
+  var q = sbFilters.search;
+  var selectedState = document.getElementById('sbStateSelect').value;
+  var hasCategory = sbFilters.category.size > 0;
 
-  filteredBenefits = allBenefits.filter(b => {
-    if (activeFilters.category !== 'all' && b.category !== activeFilters.category) return false;
-    if (selectedState !== 'all' && b.state !== selectedState) return false;
-    if (q && !((b.benefit_name||'').toLowerCase().includes(q) ||
-               (b.summary||'').toLowerCase().includes(q) ||
-               (b.eligibility||'').toLowerCase().includes(q))) return false;
+  sbFilteredBenefits = sbAllBenefits.filter(function(b) {
+    if (hasCategory && !sbFilters.category.has(b.category)) return false;
+    if (selectedState && b.state !== selectedState) return false;
+    if (q && !((b.benefit_name || '').toLowerCase().indexOf(q) !== -1 ||
+               (b.summary || '').toLowerCase().indexOf(q) !== -1 ||
+               (b.eligibility || '').toLowerCase().indexOf(q) !== -1)) return false;
     return true;
   });
 
-  visibleCount = 0;
+  // Sort
+  var sortVal = document.getElementById('sbSort').value;
+  if (sortVal === 'az') {
+    sbFilteredBenefits.sort(function(a, b) { return (a.benefit_name || '').localeCompare(b.benefit_name || ''); });
+  } else if (sortVal === 'category') {
+    sbFilteredBenefits.sort(function(a, b) {
+      var c = (a.category || '').localeCompare(b.category || '');
+      return c !== 0 ? c : (a.state || '').localeCompare(b.state || '');
+    });
+  } else {
+    // Default: by state, then by category, then by name
+    sbFilteredBenefits.sort(function(a, b) {
+      var c = (a.state || '').localeCompare(b.state || '');
+      if (c !== 0) return c;
+      var d = (a.category || '').localeCompare(b.category || '');
+      return d !== 0 ? d : (a.benefit_name || '').localeCompare(b.benefit_name || '');
+    });
+  }
+
+  sbVisibleCount = 0;
   document.getElementById('benefitsGrid').innerHTML = '';
-  loadMore();
-  updateCount();
+  sbLoadMore();
+  sbUpdateCount();
 }
 
 // ── Render ────────────────────────────────────────────────
-function renderCard(b) {
-  const catLabel = CAT_LABELS[b.category] || (b.category||'').replace(/_/g,' ');
-  const appliesTo = (Array.isArray(b.applies_to) ? b.applies_to : [b.applies_to||'']).filter(Boolean).join(', ').replace(/_/g,' ');
+function sbRenderCard(b) {
+  var catLabel = SB_CAT_LABELS[b.category] || (b.category || '').replace(/_/g, ' ');
+  var appliesTo = (Array.isArray(b.applies_to) ? b.applies_to : [b.applies_to || '']).filter(Boolean).join(', ').replace(/_/g, ' ');
 
-  const guardBadge = b.guard_reserve_eligible === true
+  var guardBadge = b.guard_reserve_eligible === true
     ? '<span class="rp-tag--neutral" style="font-size:0.7rem;">Guard/Reserve Eligible</span>' : '';
-  const spouseBadge = b.spouse_survivor_eligible === true
+  var spouseBadge = b.spouse_survivor_eligible === true
     ? '<span class="rp-tag--neutral" style="font-size:0.7rem;">Spouse/Survivor Eligible</span>' : '';
 
-  let officialBtn = '';
+  var officialBtn = '';
   if (b.official_link) {
-    officialBtn = `<a href="${esc(b.official_link)}" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Official Info</a>`;
+    officialBtn = '<a href="' + esc(b.official_link) + '" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Official Info</a>';
   }
-  let applyBtn = '';
+  var applyBtn = '';
   if (b.application_link) {
-    applyBtn = `<a href="${esc(b.application_link)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Apply →</a>`;
+    applyBtn = '<a href="' + esc(b.application_link) + '" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Apply →</a>';
   }
 
-  return `<div class="rp-card">
-    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-      <span class="rp-tag--primary">${esc(b.state||'')}</span>
-      <span class="rp-tag--secondary">${catLabel}</span>
-      ${guardBadge}${spouseBadge}
-    </div>
-    <h3 class="rp-card__name">${esc(b.benefit_name||'')}</h3>
-    <p style="font-size:0.85rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">${esc(b.summary||'')}</p>
-    ${b.eligibility ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:6px;"><strong style="color:#9ca3af;">Eligibility:</strong> ${esc(b.eligibility)}</p>` : ''}
-    ${b.disability_threshold ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:6px;"><strong style="color:#9ca3af;">Disability:</strong> ${esc(b.disability_threshold)}</p>` : ''}
-    ${appliesTo ? `<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;"><strong style="color:#9ca3af;">Applies to:</strong> ${esc(appliesTo)}</p>` : ''}
-    <div style="display:flex;align-items:center;">${officialBtn}${applyBtn}</div>
-  </div>`;
-}
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return '<div class="rp-card">' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">' +
+      '<span class="rp-tag--primary">' + esc(b.state || '') + '</span>' +
+      '<span class="rp-tag--secondary">' + esc(catLabel) + '</span>' +
+      guardBadge + spouseBadge +
+    '</div>' +
+    '<h3 class="rp-card__name">' + esc(b.benefit_name || '') + '</h3>' +
+    '<p style="font-size:0.85rem;color:#adb5bd;margin-bottom:10px;line-height:1.5;">' + esc(b.summary || '') + '</p>' +
+    (b.eligibility ? '<p style="font-size:0.8rem;color:#6c757d;margin-bottom:6px;"><strong style="color:#9ca3af;">Eligibility:</strong> ' + esc(b.eligibility) + '</p>' : '') +
+    (b.disability_threshold ? '<p style="font-size:0.8rem;color:#6c757d;margin-bottom:6px;"><strong style="color:#9ca3af;">Disability:</strong> ' + esc(b.disability_threshold) + '</p>' : '') +
+    (appliesTo ? '<p style="font-size:0.8rem;color:#6c757d;margin-bottom:12px;"><strong style="color:#9ca3af;">Applies to:</strong> ' + esc(appliesTo) + '</p>' : '') +
+    '<div style="display:flex;align-items:center;">' + officialBtn + applyBtn + '</div>' +
+  '</div>';
 }
 
 // ── Load More ─────────────────────────────────────────────
-function loadMore() {
-  const grid = document.getElementById('benefitsGrid');
-  const batch = filteredBenefits.slice(visibleCount, visibleCount + PAGE_SIZE);
-  batch.forEach(b => { grid.insertAdjacentHTML('beforeend', renderCard(b)); });
-  visibleCount += batch.length;
-  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredBenefits.length ? 'inline-block' : 'none';
-  document.getElementById('emptyState').style.display = filteredBenefits.length === 0 ? 'block' : 'none';
+function sbLoadMore() {
+  var grid = document.getElementById('benefitsGrid');
+  var batch = sbFilteredBenefits.slice(sbVisibleCount, sbVisibleCount + SB_PAGE_SIZE);
+  batch.forEach(function(b) { grid.insertAdjacentHTML('beforeend', sbRenderCard(b)); });
+  sbVisibleCount += batch.length;
+  document.getElementById('sbLoadMore').style.display = sbVisibleCount < sbFilteredBenefits.length ? '' : 'none';
+  document.getElementById('emptyState').style.display = sbFilteredBenefits.length === 0 ? 'block' : 'none';
 }
 
-function updateCount() {
-  const sel = document.getElementById('stateSelect').value;
-  const stateName = sel === 'all' ? 'all states' : sel;
-  document.getElementById('resultsCount').textContent =
-    `Showing ${Math.min(visibleCount, filteredBenefits.length)} of ${filteredBenefits.length} benefits (${stateName})`;
+function sbUpdateCount() {
+  var sel = document.getElementById('sbStateSelect').value;
+  var stateName = sel ? sel : 'all states';
+  var el = document.getElementById('sbResultCount');
+  el.textContent = 'Showing ' + sbFilteredBenefits.length + ' of ' + sbAllBenefits.length + ' benefits (' + stateName + ')';
 }
 
-// ── Init ──────────────────────────────────────────────────
+// ── Init (multi-file JSON loading preserved) ──────────────
 Promise.all([
-  fetch('data/state-benefits.json').then(r => r.json()),
-  fetch('data/state-benefits-batch1.json').then(r => r.json()),
-  fetch('data/state-benefits-batch2.json').then(r => r.json()),
-  fetch('data/state-benefits-batch3.json').then(r => r.json())
-]).then(results => {
-  allBenefits = [].concat(...results.map(r => Array.isArray(r) ? r : []));
-  filterAndRender();
-}).catch(err => {
+  fetch('data/state-benefits.json').then(function(r) { return r.json(); }),
+  fetch('data/state-benefits-batch1.json').then(function(r) { return r.json(); }),
+  fetch('data/state-benefits-batch2.json').then(function(r) { return r.json(); }),
+  fetch('data/state-benefits-batch3.json').then(function(r) { return r.json(); })
+]).then(function(results) {
+  sbAllBenefits = [].concat.apply([], results.map(function(r) { return Array.isArray(r) ? r : []; }));
+  sbApplyFilters();
+}).catch(function(err) {
   console.error('Error loading state benefits:', err);
   document.getElementById('benefitsGrid').innerHTML =
-    '<div class="rp-empty"><p>Error loading state benefits. Please try again later.</p></div>';
+    '<div class="mh-empty"><p>Error loading state benefits. Please try again later.</p></div>';
 });
 </script>
 
