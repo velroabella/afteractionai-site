@@ -136,12 +136,12 @@ Do NOT say "let me know if you have questions," "feel free to ask," or any passi
 The conversation must always move forward.`;
 
 // ── Phase 4.1: Structured Output Tool ─────────────────────────────────────
-// Claude calls this alongside its text response whenever the response contains
-// actionable structured content — missions, checklists, actions, reports.
-// tool_choice: "auto" — Claude decides when to call it; never forced.
+// Claude calls this on EVERY response (tool_choice: any).
+// For simple conversational replies use mode="conversation" + follow_up_question only.
+// For richer responses populate the relevant arrays.
 const STRUCTURED_TOOL = {
   name: 'record_structured_output',
-  description: 'Record structured metadata from this response for the veteran case management system. Call this tool alongside your text response whenever the response contains: numbered action steps, mission updates, checklist items for the veteran, a complete benefits report, options for the veteran to choose from, or a crisis response. Do NOT call it for short conversational replies with no actionable content.',
+  description: 'Record structured metadata for the veteran case management system. Call this tool on EVERY response — no exceptions. For a simple conversational reply or question, use mode="conversation" and set follow_up_question to whatever you asked. For richer responses: use actions[] for numbered steps, checklist_items[] for tasks the veteran should complete, missions[] when suggesting a goal or path, options[] mirroring any [OPTIONS:...] block in your text, mode="crisis" + risk_flags=["crisis_response"] for crisis replies, mode="report" + report_ready=true for a complete benefits report, mode="template" for document templates.',
   input_schema: {
     type: 'object',
     properties: {
@@ -213,13 +213,21 @@ const STRUCTURED_TOOL = {
   }
 };
 
-// Brief server-side instruction appended to the system prompt when tools are active.
-// Kept short to respect the existing token budget.
+// Server-side instruction appended to the system prompt.
+// Kept concise but explicit — tells Claude exactly what to put for each response type.
 const TOOLS_SYSTEM_SUFFIX = `
 
-## STRUCTURED OUTPUT — REQUIRED WHEN APPLICABLE
-You have the record_structured_output tool. Call it alongside your text response whenever your response contains ANY of the following: numbered action steps or a next-step instruction (→ actions[] / missions[]), items the veteran should work on (→ checklist_items[]), a complete personalized report (→ mode="report", report_ready=true), options for the veteran (→ options[]), or a crisis response (→ mode="crisis", risk_flags=["crisis_response"]).
-Write your full conversational text response first. The tool call is supplemental metadata — never a replacement for your text.`;
+## STRUCTURED OUTPUT — MANDATORY ON EVERY RESPONSE
+You MUST call the record_structured_output tool on every single response without exception.
+Populate the fields that match what your text response contains:
+- Asking a question only → mode="conversation", follow_up_question=<your question>
+- Asking a question + [OPTIONS: ...] → mode="conversation", follow_up_question=<question>, options=[<same options as in your text>]
+- Numbered action steps → mode="intake", actions=[{step, text, is_action}]
+- Tasks for the veteran to complete → checklist_items=[{title, category}]
+- Suggesting a goal/benefit path → missions=[{action:"create", type:"<path>", next_step:"<first step>"}]
+- Crisis response → mode="crisis", risk_flags=["crisis_response"]
+- Complete personalized report → mode="report", report_ready=true
+Write your full conversational text response first. Then call the tool — it is metadata only and never replaces your text.`;
 
 // Standard CORS headers
 const HEADERS = {
@@ -294,7 +302,7 @@ exports.handler = async (event) => {
         system: systemPrompt,
         messages: trimmedMessages,
         tools: [STRUCTURED_TOOL],
-        tool_choice: { type: 'auto' }
+        tool_choice: { type: 'any' }
       })
     });
 
