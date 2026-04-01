@@ -1,0 +1,13 @@
+{
+  "name": "afteraction-ai-site",
+  "version": "1.0.0",
+  "description": "AfterAction AI static site — Phase 1 safety tests",
+  "scripts": {
+    "test": "node --test tests/basic-safety-tests.js tests/phase5-regression-tests.js",
+    "test:safety": "node --test tests/basic-safety-tests.js",
+    "test:regression": "node --test tests/phase5-regression-tests.js"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
