@@ -2444,6 +2444,50 @@
     };
   }
 
+  // ── Phase 4.3: Feature flags / capability tier ──────────────────────────
+  (function() {
+    if (!window.AIOS) window.AIOS = {};
+    if (window.AIOS.Features) return; // already registered
+
+    var _FLAGS = {
+      ADVANCED_REPORTS:         'advanced_reports',
+      DOCUMENT_EXPORT_ENHANCED: 'document_export_enhanced'
+    };
+
+    function getTier() {
+      // Phase 4.3: all users are free. Premium gating activates in a future phase.
+      // When auth is available, read tier from session:
+      //   window.AAAI.DataAccess.auth.getSession().tier
+      try {
+        if (window.AAAI && window.AAAI.DataAccess &&
+            window.AAAI.DataAccess.auth &&
+            typeof window.AAAI.DataAccess.auth.getSession === 'function') {
+          var sess = window.AAAI.DataAccess.auth.getSession();
+          if (sess && sess.tier) return sess.tier;
+        }
+      } catch (e) {}
+      return 'free';
+    }
+
+    function hasFeature(flag) {
+      // Phase 4.3: gate NOT activated — always returns true.
+      // To activate gating in a future phase, replace with:
+      //   var tier = getTier();
+      //   var TIER_MAP = { free: [], premium_ready: [_FLAGS.ADVANCED_REPORTS, _FLAGS.DOCUMENT_EXPORT_ENHANCED] };
+      //   return (TIER_MAP[tier] || []).indexOf(flag) !== -1;
+      return true;
+    }
+
+    window.AIOS.Features = {
+      ADVANCED_REPORTS:         _FLAGS.ADVANCED_REPORTS,
+      DOCUMENT_EXPORT_ENHANCED: _FLAGS.DOCUMENT_EXPORT_ENHANCED,
+      getTier:    getTier,
+      hasFeature: hasFeature
+    };
+
+    console.log('[AIOS][Features] P4.3 capability flags registered — tier:', getTier());
+  })();
+
   // ══════════════════════════════════════════════════════
   //  UI HELPERS
   // ══════════════════════════════════════════════════════

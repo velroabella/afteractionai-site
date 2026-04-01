@@ -378,6 +378,13 @@
     if (!ReportBuilder.isAvailable()) {
       return Promise.reject(new Error('[ReportBuilder] docx library not loaded.'));
     }
+    // Phase 4.3: advanced_reports feature flag (gate not activated — always proceeds)
+    var _p43AdvFlag = window.AIOS && window.AIOS.Features
+      ? window.AIOS.Features.hasFeature(window.AIOS.Features.ADVANCED_REPORTS)
+      : true;
+    console.log('[ReportBuilder][P4.3] advanced_reports flag=' + _p43AdvFlag +
+      ' tier=' + (window.AIOS && window.AIOS.Features ? window.AIOS.Features.getTier() : 'unknown'));
+    // Gate not activated — always proceeds regardless of flag value
     var D = _D();
 
     return _fetchData(caseId).then(function (data) {
@@ -393,8 +400,13 @@
       // 3. Missions + checklist items
       _buildMissions(data.missions).forEach(function (p) { children.push(p); });
 
-      // 4. Uploaded documents (only when present)
+      // 4. Uploaded documents — Phase 4.3: document_export_enhanced gate (not activated)
       if (data.documents.length > 0) {
+        var _p43DocFlag = window.AIOS && window.AIOS.Features
+          ? window.AIOS.Features.hasFeature(window.AIOS.Features.DOCUMENT_EXPORT_ENHANCED)
+          : true;
+        console.log('[ReportBuilder][P4.3] document_export_enhanced flag=' + _p43DocFlag);
+        // Gate not activated — always proceeds
         _buildDocuments(data.documents).forEach(function (p) { children.push(p); });
       }
 

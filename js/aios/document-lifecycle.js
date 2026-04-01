@@ -158,7 +158,12 @@
       }
     }
 
-    // 2. Fill in gaps from AIOS Memory profile
+    // 2. Fill in gaps from AIOS Memory profile — Phase 4.3: document_export_enhanced gate (not activated)
+    var _p43DocFlag = window.AIOS && window.AIOS.Features
+      ? window.AIOS.Features.hasFeature(window.AIOS.Features.DOCUMENT_EXPORT_ENHANCED)
+      : true;
+    console.log('[DocLifecycle][P4.3] document_export_enhanced flag=' + _p43DocFlag);
+    // Gate not activated — always proceeds
     if (window.AIOS && window.AIOS.Memory &&
         typeof window.AIOS.Memory.getProfile === 'function') {
       try {
