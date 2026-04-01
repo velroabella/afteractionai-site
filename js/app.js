@@ -2127,6 +2127,21 @@
         log('sendToAI', 'P4.4 STALE error discarded — seq=' + _p44ReqSeq + ' current=' + _apiRequestSeq);
         return;
       }
+      // Phase 5: timeout recovery — guaranteed isProcessing reset + queue flush
+      if (error.message === 'AI_TIMEOUT') {
+        removeTyping();
+        log('sendToAI', 'P5 TIMEOUT — aborted after 15s, seq=' + _p44ReqSeq);
+        addMessage('It\'s taking longer than usual to connect. Please try again in a moment. If you need immediate help, call the Veterans Crisis Line at 988 (Press 1).', 'ai');
+        isProcessing = false;
+        if (btnSend) btnSend.disabled = false;
+        if (pendingUserSubmission) {
+          var _queuedTimeout = pendingUserSubmission;
+          pendingUserSubmission = null;
+          log('[AAAI]', 'FORCE flush queued submission (timeout path): "' + _queuedTimeout.text.substring(0, 40) + '"');
+          setTimeout(function() { sendToAI(_queuedTimeout.text); }, 50);
+        }
+        return;
+      }
       removeTyping();
       log('sendToAI', 'ERROR — ' + error.message);
       console.error('AI Error:', error);
@@ -2425,17 +2440,31 @@
 
     log('callChatEndpoint', 'AIOS=' + (aiosActive ? 'active' : 'fallback') + ', systemLen=' + systemPrompt.length);
 
+    // Phase 5: 15-second AbortController — prevents isProcessing locking forever on hung requests
+    var _p5Controller = new AbortController();
+    var _p5Timeout = setTimeout(function() {
+      _p5Controller.abort();
+    }, 15000);
+
     return fetch(CONFIG.apiEndpoint, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload)
+      body: JSON.stringify(payload),
+      signal: _p5Controller.signal
     }).then(function(resp) {
+      clearTimeout(_p5Timeout);
       if (!resp.ok) throw new Error('Chat endpoint error: ' + resp.status);
       return resp.json();
     }).then(function(data) {
       log('callChatEndpoint', 'response received, length=' + (data.response || '').length +
         (data.structured ? ' [+structured mode=' + data.structured.mode + ']' : ''));
       return { text: data.response || '', structured: data.structured || null };
+    }).catch(function(err) {
+      clearTimeout(_p5Timeout);
+      if (err.name === 'AbortError') {
+        throw new Error('AI_TIMEOUT');
+      }
+      throw err;
     });
   }
 

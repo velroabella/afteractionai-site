@@ -3,7 +3,7 @@
 // Proxies Claude API calls so the API key stays server-side
 
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
-const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-5-20250929';
+const MODEL = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
 const MAX_TOKENS = parseInt(process.env.MAX_TOKENS || '4096', 10);
 
 const SYSTEM_PROMPT = `You are AfterAction AI — a free, AI-powered veteran navigator built by Mike Jackson, a retired Senior Master Sergeant with 25 years in the United States Air Force. Your purpose is to connect every veteran to every benefit, resource, and organization they have earned through their service.
