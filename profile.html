@@ -143,6 +143,39 @@
   <!-- Phase 46 Part 7: Secondary next steps — 2 supporting actions below primary -->
   <div id="dashSecondarySteps" style="display:none;padding:0 0 4px;"></div>
 
+  <!-- Phase 48: Active Mission Panel -->
+  <div class="dashboard__card" id="p48MissionPanel" style="display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
+      <h3 style="margin:0;">Active Mission</h3>
+      <span id="p48MissionStatus" style="font-size:0.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:12px;"></span>
+    </div>
+    <div id="p48MissionName" style="font-weight:700;font-size:1rem;color:var(--gray-900,#111);"></div>
+    <div id="p48MissionSteps" style="margin-top:10px;font-size:0.88rem;color:var(--gray-700,#374151);"></div>
+    <!-- Blockers -->
+    <div id="p48Blockers" style="display:none;margin-top:14px;">
+      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#dc2626;margin-bottom:6px;">Blockers</div>
+      <div id="p48BlockersList"></div>
+    </div>
+    <!-- Risk Flags -->
+    <div id="p48RiskFlags" style="display:none;margin-top:12px;" ></div>
+    <!-- Last Actions -->
+    <div id="p48LastActions" style="display:none;margin-top:14px;">
+      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-500,#6b7280);margin-bottom:6px;">Recent Guidance</div>
+      <div id="p48LastActionsList"></div>
+    </div>
+    <!-- Last Resources -->
+    <div id="p48LastResources" style="display:none;margin-top:12px;">
+      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-500,#6b7280);margin-bottom:6px;">Referenced Resources</div>
+      <div id="p48LastResourcesList"></div>
+    </div>
+  </div>
+
+  <!-- Phase 48: AI-Extracted Checklist (from ResponseContract + MissionExtractor) -->
+  <div class="dashboard__card" id="p48AiChecklist" style="display:none;">
+    <h3>AI Action Items</h3>
+    <div id="p48AiChecklistItems"></div>
+  </div>
+
   <!-- Next Recommended Actions — moved up for visibility -->
   <div class="dashboard__card dashboard__actions-panel">
     <h3>Next Recommended Actions</h3>
@@ -264,7 +297,10 @@
 
 <script src="js/action-engine.js"></script>
 <script src="js/aios/resource-mapper.js"></script><!-- Phase 43 -->
+<script src="js/aios/mission-manager.js"></script><!-- Phase 48: needed for MissionExtractor -->
 <script src="js/aios/mission-state.js"></script><!-- Phase 46 -->
+<script src="js/aios/response-contract.js"></script><!-- Phase 47 -->
+<script src="js/aios/mission-extractor.js"></script><!-- Phase 47/48 -->
 
 <!-- Phase 42: Dashboard render for uploaded documents -->
 <script>
@@ -1182,6 +1218,232 @@ function toggleMenu() {
     }
     return synth;
   }
+
+  /* ══════════════════════════════════════════════════════
+     Phase 48 — Active Mission Panel + AI Checklist
+     Reads MissionManager.current + MissionExtractor.buildDashboardSnapshot()
+     + window.AIOS._lastContract to populate the mission panel
+     and AI-extracted checklist on the profile dashboard.
+     ══════════════════════════════════════════════════════ */
+
+  function _p48Render() {
+    try {
+      var panel        = document.getElementById('p48MissionPanel');
+      var aiChecklist  = document.getElementById('p48AiChecklist');
+      if (!panel) return;
+
+      // ── Gather data ────────────────────────────────────
+      var AIOS    = window.AIOS || {};
+      var Manager = AIOS.Mission || null;
+      var mission = (Manager && Manager.current) ? Manager.current : null;
+
+      // Also try MissionState for persisted mission if Manager has nothing
+      if (!mission && AIOS.MissionState) {
+        var mState = AIOS.MissionState.get();
+        if (mState && mState.missionType) {
+          mission = {
+            type:        mState.missionType,
+            name:        (mState.missionType || '').replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); }),
+            status:      'in_progress',
+            currentStep: mState.currentStep || null,
+            nextStep:    null,
+            blockers:    mState.missingFields ? mState.missingFields.map(function(f) { return 'Missing: ' + f; }) : [],
+            data:        {}
+          };
+        }
+      }
+
+      var contract = AIOS._lastContract || null;
+      var snapshot = null;
+
+      if (AIOS.MissionExtractor && mission) {
+        snapshot = AIOS.MissionExtractor.buildDashboardSnapshot(contract, mission);
+      }
+
+      // ── No mission — show empty state ──────────────────
+      if (!mission) {
+        panel.style.display = 'block';
+        document.getElementById('p48MissionName').textContent = 'No active mission yet';
+        document.getElementById('p48MissionName').style.color = 'var(--gray-500,#6b7280)';
+        document.getElementById('p48MissionSteps').innerHTML =
+          '<p style="font-size:0.88rem;color:var(--gray-500);">' +
+          '<a href="index.html" style="color:var(--gold,#c4a035);">Start a conversation</a> to begin your first mission.' +
+          '</p>';
+        document.getElementById('p48MissionStatus').style.display = 'none';
+        document.getElementById('p48Blockers').style.display = 'none';
+        document.getElementById('p48RiskFlags').style.display = 'none';
+        document.getElementById('p48LastActions').style.display = 'none';
+        document.getElementById('p48LastResources').style.display = 'none';
+        if (aiChecklist) aiChecklist.style.display = 'none';
+        return;
+      }
+
+      // ── Has mission — populate panel ───────────────────
+      panel.style.display = 'block';
+
+      // Name
+      var nameEl = document.getElementById('p48MissionName');
+      nameEl.textContent = mission.name || mission.type || 'Active Mission';
+      nameEl.style.color = 'var(--gray-900,#111)';
+
+      // Status badge
+      var statusEl = document.getElementById('p48MissionStatus');
+      var st = mission.status || 'in_progress';
+      var statusConfig = {
+        'in_progress': { label: 'In Progress',  bg: 'var(--gold-light,#fdf3d0)', color: 'var(--gold,#c4a035)' },
+        'paused':      { label: 'Paused',        bg: '#f3f4f6',                    color: '#6b7280' },
+        'complete':    { label: 'Complete',       bg: '#f0fdf4',                    color: '#16a34a' },
+        'blocked':     { label: 'Blocked',        bg: '#fef2f2',                    color: '#dc2626' }
+      };
+      var sc = statusConfig[st] || statusConfig['in_progress'];
+      statusEl.textContent = sc.label;
+      statusEl.style.background = sc.bg;
+      statusEl.style.color = sc.color;
+      statusEl.style.display = '';
+
+      // Steps
+      var stepsEl = document.getElementById('p48MissionSteps');
+      var stepsHtml = '';
+      if (mission.currentStep) {
+        stepsHtml += '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;">' +
+          '<span style="color:var(--gold,#c4a035);font-weight:700;flex-shrink:0;">●</span>' +
+          '<div><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-500);">Current Step</span>' +
+          '<div style="margin-top:2px;">' + escHtml(mission.currentStep) + '</div></div></div>';
+      }
+      if (mission.nextStep && mission.nextStep !== mission.currentStep) {
+        stepsHtml += '<div style="display:flex;align-items:flex-start;gap:8px;">' +
+          '<span style="color:var(--gray-400,#9ca3af);flex-shrink:0;">○</span>' +
+          '<div><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-400);">Next Step</span>' +
+          '<div style="margin-top:2px;color:var(--gray-600,#4b5563);">' + escHtml(mission.nextStep) + '</div></div></div>';
+      }
+      if (!stepsHtml) {
+        stepsHtml = '<p style="font-size:0.85rem;color:var(--gray-500);">Continue your conversation to unlock the next step.</p>';
+      }
+      stepsEl.innerHTML = stepsHtml;
+
+      // ── Blockers ───────────────────────────────────────
+      var blockers = (snapshot && snapshot.blockers && snapshot.blockers.length > 0) ? snapshot.blockers : (mission.blockers || []);
+      var blockersDiv = document.getElementById('p48Blockers');
+      var blockersListDiv = document.getElementById('p48BlockersList');
+      if (blockers.length > 0) {
+        blockersDiv.style.display = '';
+        blockersListDiv.innerHTML = blockers.map(function(b) {
+          return '<div style="display:flex;align-items:flex-start;gap:7px;padding:5px 0;font-size:0.85rem;color:#dc2626;">' +
+            '<span style="flex-shrink:0;font-weight:700;">⚠</span>' +
+            '<span>' + escHtml(b) + '</span></div>';
+        }).join('');
+      } else {
+        blockersDiv.style.display = 'none';
+      }
+
+      // ── Risk Flags ─────────────────────────────────────
+      var riskFlags = (snapshot && snapshot.riskFlags && snapshot.riskFlags.length > 0) ? snapshot.riskFlags : [];
+      var riskEl = document.getElementById('p48RiskFlags');
+      if (riskFlags.length > 0) {
+        var flagConfig = {
+          'crisis_response':      { label: 'Crisis',     bg: '#fef2f2', color: '#dc2626', border: '#dc262633' },
+          'has_deadline':          { label: 'Deadline',   bg: '#fffbeb', color: '#d97706', border: '#d9770633' },
+          'appeal_context':       { label: 'Appeal',     bg: '#eff6ff', color: '#1a56db', border: '#1a56db33' },
+          'housing_instability':  { label: 'Housing',    bg: '#fef2f2', color: '#dc2626', border: '#dc262633' }
+        };
+        riskEl.style.display = '';
+        riskEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px;">' +
+          riskFlags.map(function(f) {
+            var fc = flagConfig[f] || { label: f, bg: '#f3f4f6', color: '#6b7280', border: '#6b728033' };
+            return '<span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;' +
+              'padding:3px 9px;border-radius:10px;background:' + fc.bg + ';color:' + fc.color + ';border:1px solid ' + fc.border + ';">' +
+              fc.label + '</span>';
+          }).join('') + '</div>';
+      } else {
+        riskEl.style.display = 'none';
+      }
+
+      // ── Last Actions (max 3) ───────────────────────────
+      var lastActions = (snapshot && snapshot.lastActions) ? snapshot.lastActions.slice(0, 3) : [];
+      var actDiv = document.getElementById('p48LastActions');
+      var actList = document.getElementById('p48LastActionsList');
+      if (lastActions.length > 0) {
+        actDiv.style.display = '';
+        actList.innerHTML = lastActions.map(function(a, idx) {
+          return '<div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:0.85rem;color:var(--gray-700,#374151);">' +
+            '<span style="color:var(--gold,#c4a035);font-weight:700;flex-shrink:0;">' + (idx + 1) + '.</span>' +
+            '<span>' + escHtml(a.text) + '</span></div>';
+        }).join('');
+      } else {
+        actDiv.style.display = 'none';
+      }
+
+      // ── Last Resources (max 3) ─────────────────────────
+      var lastRes = (snapshot && snapshot.lastResources) ? snapshot.lastResources.slice(0, 3) : [];
+      var resDiv = document.getElementById('p48LastResources');
+      var resList = document.getElementById('p48LastResourcesList');
+      if (lastRes.length > 0) {
+        resDiv.style.display = '';
+        resList.innerHTML = lastRes.map(function(r) {
+          if (r.type === 'url') {
+            return '<div style="padding:3px 0;font-size:0.83rem;">' +
+              '<a href="' + escHtml(r.value) + '" target="_blank" rel="noopener noreferrer" style="color:var(--gold,#c4a035);word-break:break-all;">' +
+              escHtml(r.value.length > 60 ? r.value.substring(0, 60) + '…' : r.value) + '</a></div>';
+          }
+          return '<div style="padding:3px 0;font-size:0.83rem;color:var(--gray-700,#374151);">' +
+            '<a href="tel:' + escHtml(r.value) + '" style="color:var(--gold,#c4a035);">' + escHtml(r.value) + '</a></div>';
+        }).join('');
+      } else {
+        resDiv.style.display = 'none';
+      }
+
+      // ── AI-Extracted Checklist (max 10) ────────────────
+      if (aiChecklist && snapshot && snapshot.checklist && snapshot.checklist.length > 0) {
+        aiChecklist.style.display = 'block';
+        var checkItems = snapshot.checklist.slice(0, 10);
+        var checkHtml = '';
+        checkItems.forEach(function(item, idx) {
+          var sourceLabel = item.source === 'mission_template' ? 'Mission' : 'AI';
+          var sourceBg    = item.source === 'mission_template' ? '#eff6ff' : 'var(--gold-light,#fdf3d0)';
+          var sourceColor = item.source === 'mission_template' ? '#1a56db' : 'var(--gold,#c4a035)';
+          checkHtml +=
+            '<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;' +
+              (idx < checkItems.length - 1 ? 'border-bottom:1px solid var(--gray-200,#e5e7eb);' : '') + '">' +
+              '<input type="checkbox" id="p48chk_' + idx + '" ' +
+                'style="margin-top:3px;accent-color:var(--gold,#c4a035);flex-shrink:0;width:16px;height:16px;cursor:pointer;" ' +
+                'onchange="this.parentElement.style.opacity=this.checked?\'0.5\':\'1\'">' +
+              '<div style="flex:1;min-width:0;">' +
+                '<label for="p48chk_' + idx + '" style="font-size:0.88rem;color:var(--gray-800,#1f2937);cursor:pointer;display:block;">' +
+                  escHtml(item.text) +
+                '</label>' +
+                '<span style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;' +
+                  'padding:1px 6px;border-radius:8px;background:' + sourceBg + ';color:' + sourceColor + ';margin-top:3px;display:inline-block;">' +
+                  sourceLabel + '</span>' +
+              '</div>' +
+            '</div>';
+        });
+        if (snapshot.checklist.length > 10) {
+          checkHtml += '<p style="font-size:0.8rem;color:var(--gray-500);margin-top:8px;">Showing 10 of ' + snapshot.checklist.length + ' items.</p>';
+        }
+        document.getElementById('p48AiChecklistItems').innerHTML = checkHtml;
+      } else if (aiChecklist) {
+        aiChecklist.style.display = 'none';
+      }
+
+    } catch (_p48Err) {
+      console.warn('[Phase 48] render error:', _p48Err.message || _p48Err);
+    }
+  }
+
+  // ── Phase 48: trigger render after auth + checklist load ──
+  // Hooks into the existing authStateChanged event (fires from auth.js).
+  // Runs after a short delay to allow MissionState.refreshFromSupabase()
+  // and other AIOS modules to initialize.
+  window.addEventListener('authStateChanged', function(e) {
+    if (!e.detail.user) return;
+    // Delay to let mission-state sync complete
+    setTimeout(_p48Render, 800);
+  });
+
+  // Also re-render when MissionState explicitly syncs (e.g., after returning from chat)
+  window.addEventListener('aaai:mission_state_synced', function() {
+    _p48Render();
+  });
 
 })();
 </script>
