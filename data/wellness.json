@@ -1,0 +1,845 @@
+[
+  {
+    "name": "Catch A Lift Fund",
+    "category": "Fitness Programs",
+    "sub": "Gym & Strength",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://catchaliftfund.org/apply",
+    "desc": "Free gym memberships, equipment, coaching, and 8-week wellness program (nutrition + mental health) for post-9/11 combat-injured veterans with 50%+ VA disability rating.",
+    "location": "National (HQ: Baltimore, MD)",
+    "cost": "Free",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "fitness",
+      "free",
+      "gym",
+      "strength"
+    ]
+  },
+  {
+    "name": "Home Base — Warrior Health & Fitness (Florida)",
+    "category": "Fitness Programs",
+    "sub": "Holistic Fitness",
+    "org": "Nonprofit (MGH / Red Sox Foundation)",
+    "website": "https://homebase.org/program/florida-warrior-health-fitness/",
+    "desc": "FREE 6-month program — supervised strength training, nutrition education, sleep hygiene, stress management. Up to 60 veterans per cohort. Serving Naples, Fort Myers, and Tampa.",
+    "location": "Naples / Fort Myers / Tampa, FL",
+    "cost": "Free",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "fitness",
+      "free",
+      "florida",
+      "holistic",
+      "nutrition"
+    ]
+  },
+  {
+    "name": "Team Red, White & Blue (Team RWB)",
+    "category": "Fitness Programs",
+    "sub": "Community Fitness",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://teamrwb.org/find-your-chapter",
+    "desc": "232,000+ member national community. Free weekly fitness events — running, cycling, yoga, functional fitness — plus social events and volunteer projects. Chapters in all 50 states.",
+    "location": "National — all 50 states",
+    "cost": "Free",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "fitness",
+      "free",
+      "community",
+      "running",
+      "cycling"
+    ]
+  },
+  {
+    "name": "WarriorWOD",
+    "category": "Fitness Programs",
+    "sub": "Gym & Strength",
+    "org": "Nonprofit",
+    "website": "https://warriorwod.org",
+    "desc": "6-month free gym membership plus virtual nutrition coaching for each veteran. Exercise and nutrition as a prescription for recovery from PTSD and combat stress.",
+    "location": "National",
+    "cost": "Free",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "fitness",
+      "free",
+      "gym",
+      "nutrition",
+      "ptsd"
+    ]
+  },
+  {
+    "name": "Wounded Warrior Project — Physical Health & Wellness",
+    "category": "Fitness Programs",
+    "sub": "Holistic Fitness",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://www.woundedwarriorproject.org/programs/physical-health-wellness",
+    "desc": "Comprehensive physical health programs including fitness coaching, adaptive sports, nutrition support, and national events for post-9/11 injured veterans.",
+    "location": "National",
+    "cost": "Free",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "fitness",
+      "free",
+      "adaptive",
+      "nonprofit"
+    ]
+  },
+  {
+    "name": "VA Whole Health Program",
+    "category": "Fitness Programs",
+    "sub": "VA Fitness",
+    "org": "Government (VA)",
+    "website": "https://www.va.gov/WHOLEHEALTH/veteran-resources/Well-Being-Programs.asp",
+    "desc": "Holistic wellness at most VA medical centers: health coaching, well-being classes, complementary and integrative health, nutrition, mindfulness, and sleep support.",
+    "location": "National — most VA Medical Centers",
+    "cost": "Free (VA enrolled)",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "va",
+      "free",
+      "holistic",
+      "coaching",
+      "nutrition"
+    ]
+  },
+  {
+    "name": "ValorFit",
+    "category": "Fitness Programs",
+    "sub": "Gym & Strength",
+    "org": "Nonprofit",
+    "website": "https://www.valorfit.org/join-our-program",
+    "desc": "Free or discounted gym access, strength training, and community connections for veterans. Focused on building physical and mental strength together.",
+    "location": "National",
+    "cost": "Free / Discounted",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "fitness",
+      "free",
+      "gym",
+      "community"
+    ]
+  },
+  {
+    "name": "VA Gerofit Program",
+    "category": "Fitness Programs",
+    "sub": "VA Fitness",
+    "org": "Government (VA)",
+    "website": "https://news.va.gov/128631/physical-fitness-resources/",
+    "desc": "VA-supervised exercise program for older veterans, available at select VA medical centers with trained staff and progressive strength/endurance programming.",
+    "location": "Select VA Medical Centers nationwide",
+    "cost": "Free (VA enrolled)",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "va",
+      "free",
+      "seniors",
+      "strength"
+    ]
+  },
+  {
+    "name": "Freedom Fitness America",
+    "category": "Fitness Programs",
+    "sub": "Community Fitness",
+    "org": "Nonprofit",
+    "website": "https://freedomfitnessamerica.org",
+    "desc": "Fitness services, personal training, nutrition counseling, and wellness programs for veterans and first responders. Community-driven approach to recovery and health.",
+    "location": "National",
+    "cost": "Free / Low-cost",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "fitness",
+      "nonprofit",
+      "training",
+      "nutrition"
+    ]
+  },
+  {
+    "name": "The Resilience Project",
+    "category": "Fitness Programs",
+    "sub": "Community Fitness",
+    "org": "Nonprofit",
+    "website": "https://www.resilienceproject.net/general-6",
+    "desc": "Resilience-centered wellness connecting veterans to physical activity, peer support, mindset training, and community-based fitness resources.",
+    "location": "National",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "fitness",
+      "free",
+      "community",
+      "resilience"
+    ]
+  },
+  {
+    "name": "VA National Veterans Sports Programs",
+    "category": "Adaptive Sports",
+    "sub": "Multi-Sport",
+    "org": "Government (VA)",
+    "website": "https://department.va.gov/veteran-sports/",
+    "desc": "VA-sponsored adaptive sports: National Veterans Wheelchair Games, Winter/Summer Sports Clinics, Golden Age Games, Creative Arts Festival, and TEE Tournament.",
+    "location": "National — various event locations",
+    "cost": "Free (VA enrolled)",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "va",
+      "free",
+      "adaptive",
+      "wheelchair"
+    ]
+  },
+  {
+    "name": "Paralyzed Veterans of America (PVA) Sports",
+    "category": "Adaptive Sports",
+    "sub": "Multi-Sport",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://pva.org/sports-recreation/",
+    "desc": "Wheelchair basketball, rugby, tennis, handcycling, air rifle, and more for paralyzed and spinal cord injured veterans. Chapters nationwide with competitive and recreational options.",
+    "location": "National",
+    "cost": "Free",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "adaptive",
+      "free",
+      "wheelchair",
+      "spinal-cord"
+    ]
+  },
+  {
+    "name": "DoD Warrior Games",
+    "category": "Adaptive Sports",
+    "sub": "Competitive",
+    "org": "Government (DoD)",
+    "website": "https://dodwarriorgames.com/about/",
+    "desc": "Annual multi-sport adaptive competition for wounded, ill, and injured service members and veterans. 13 sports including powerlifting, cycling, swimming, and track & field.",
+    "location": "Annual — varies nationally",
+    "cost": "Free (selected athletes)",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "adaptive",
+      "free",
+      "competitive",
+      "dod"
+    ]
+  },
+  {
+    "name": "BlazeSports America",
+    "category": "Adaptive Sports",
+    "sub": "Multi-Sport",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://blazesports.org",
+    "desc": "Adaptive sports programming for veterans and individuals with disabilities. Born from the 1996 Atlanta Paralympics legacy — recreational through competitive levels.",
+    "location": "Atlanta, GA / Southeast",
+    "cost": "Free / Low-cost",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "adaptive",
+      "southeast",
+      "disability",
+      "nonprofit"
+    ]
+  },
+  {
+    "name": "Disabled Athlete Sports Association (DASA)",
+    "category": "Adaptive Sports",
+    "sub": "Multi-Sport",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://dasasports.org/sports-and-fitness/",
+    "desc": "Wheelchair basketball, sled hockey, competitive teams, and recreational adaptive sports for disabled veterans and civilians.",
+    "location": "St. Louis & Columbia, MO",
+    "cost": "Low-cost",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "adaptive",
+      "wheelchair",
+      "nonprofit"
+    ]
+  },
+  {
+    "name": "God's Love We Deliver — CONNECTED",
+    "category": "Nutrition & Meal Programs",
+    "sub": "Meal Delivery",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://www.glwd.org/",
+    "desc": "FREE medically tailored meals for veterans with chronic disease, PTSD, depression, bipolar disorder, or substance use challenges. Personalized by a Registered Dietitian.",
+    "location": "New York City metro area",
+    "cost": "Free",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "nutrition",
+      "free",
+      "meal-delivery",
+      "ptsd"
+    ]
+  },
+  {
+    "name": "VA Nutrition & Food Services",
+    "category": "Nutrition & Meal Programs",
+    "sub": "Nutrition Counseling",
+    "org": "Government (VA)",
+    "website": "https://www.nutrition.va.gov/food_insecurity.asp",
+    "desc": "VA Registered Dietitian counseling, food security screening, and referrals to community food resources. Available at all VA Medical Centers.",
+    "location": "National — all VA Medical Centers",
+    "cost": "Free (VA enrolled)",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "va",
+      "free",
+      "nutrition",
+      "dietitian"
+    ]
+  },
+  {
+    "name": "USDA Military & Veteran Nutrition Programs",
+    "category": "Nutrition & Meal Programs",
+    "sub": "Government Programs",
+    "org": "Government (USDA)",
+    "website": "https://www.fns.usda.gov/military-veteran",
+    "desc": "SNAP, WIC, school meals, and other USDA nutrition assistance with military/veteran-specific eligibility guidance and application support.",
+    "location": "National",
+    "cost": "Free / Income-based",
+    "priority": "Medium",
+    "florida": true,
+    "tags": [
+      "nutrition",
+      "snap",
+      "wic",
+      "government",
+      "free"
+    ]
+  },
+  {
+    "name": "Veterans Collaborative — Food Programs",
+    "category": "Nutrition & Meal Programs",
+    "sub": "Food Assistance",
+    "org": "Nonprofit",
+    "website": "https://www.collaborate.vet/food",
+    "desc": "Online directory connecting veterans to food assistance programs including meal delivery services, food pantries, and nutrition coaching resources.",
+    "location": "National (online directory)",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "nutrition",
+      "free",
+      "directory"
+    ]
+  },
+  {
+    "name": "Veterans Yoga Project (VYP)",
+    "category": "Yoga & Mindfulness",
+    "sub": "Yoga",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://veteransyogaproject.org/regions/",
+    "desc": "National nonprofit (est. 2011) partnered with the VA. Free daily classes, Mindful Resilience Training for Trauma Recovery, and yoga teacher training for veteran instructors.",
+    "location": "National — classes throughout the country",
+    "cost": "Free",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "yoga",
+      "free",
+      "va",
+      "mindfulness",
+      "ptsd",
+      "trauma"
+    ]
+  },
+  {
+    "name": "Warriors at Ease",
+    "category": "Yoga & Mindfulness",
+    "sub": "Yoga & Meditation",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://www.warriorsatease.org",
+    "desc": "Trauma-informed yoga and meditation training for the military community. Certified teachers serve in VA facilities, military installations, and Vet Centers nationwide.",
+    "location": "National — VA facilities & military bases",
+    "cost": "Free for veterans",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "yoga",
+      "meditation",
+      "trauma",
+      "va",
+      "free"
+    ]
+  },
+  {
+    "name": "VEToga",
+    "category": "Yoga & Mindfulness",
+    "sub": "Yoga",
+    "org": "Nonprofit",
+    "website": "https://vetoga.org",
+    "desc": "Free monthly yoga classes, community events, and a veteran-specific 200-hour Teacher Training program. Yoga, meditation, and healing arts for military, veterans, and families.",
+    "location": "National — various locations",
+    "cost": "Free",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "yoga",
+      "free",
+      "community",
+      "teacher-training"
+    ]
+  },
+  {
+    "name": "The Mindfulness Center — Veterans Program",
+    "category": "Yoga & Mindfulness",
+    "sub": "Meditation",
+    "org": "Nonprofit",
+    "website": "https://www.themindfulnesscenter.org/programs/veterans/",
+    "desc": "Free classes in meditation, yoga, tai chi, and mind-body practices. Individualized acupuncture and mental health counseling for veterans.",
+    "location": "Washington, DC area",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "mindfulness",
+      "meditation",
+      "yoga",
+      "tai-chi",
+      "free"
+    ]
+  },
+  {
+    "name": "We Defy Foundation",
+    "category": "Martial Arts",
+    "sub": "Brazilian Jiu Jitsu",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://wedefyfoundation.org/pages/athlete-application-1",
+    "desc": "Free Brazilian Jiu Jitsu and fitness training for combat veterans with military-connected disabilities. Operates across all 50 states, 2 US territories, and Japan.",
+    "location": "National — all 50 states",
+    "cost": "Free",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "bjj",
+      "martial-arts",
+      "free",
+      "disability"
+    ]
+  },
+  {
+    "name": "V-MAT (Veterans Martial Arts Training)",
+    "category": "Martial Arts",
+    "sub": "Mixed Martial Arts",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://v-mat.org",
+    "desc": "100% free martial arts training for veterans, reservists, and active duty. Accommodates physical disabilities, ADD, PTSD, and TBI.",
+    "location": "Portsmouth, NH Seacoast Area",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "martial-arts",
+      "free",
+      "ptsd",
+      "tbi"
+    ]
+  },
+  {
+    "name": "Kobukan Martial Arts — Warriors Program",
+    "category": "Martial Arts",
+    "sub": "Multi-Discipline",
+    "org": "Nonprofit",
+    "website": "https://kmadojo.org/warriors/",
+    "desc": "100% FREE Jiu-Jitsu, Karate, and MMA training for combat veterans and first responders with PTSD/TBI disability.",
+    "location": "Check website for locations",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "martial-arts",
+      "free",
+      "ptsd",
+      "tbi"
+    ]
+  },
+  {
+    "name": "US Military Endurance Sports (USMES)",
+    "category": "Endurance Sports",
+    "sub": "Multi-Sport Endurance",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "",
+    "desc": "Cycling, triathlon, running, and adventure racing for current, retired, and veteran military. 20 regional chapters nationwide with camps, clinics, and wounded veteran adaptive programs.",
+    "location": "National — 20 regional chapters",
+    "cost": "Low membership fee",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "endurance",
+      "cycling",
+      "triathlon",
+      "running"
+    ]
+  },
+  {
+    "name": "Frontline OCR",
+    "category": "Endurance Sports",
+    "sub": "Obstacle Course Racing",
+    "org": "Veteran-owned business",
+    "website": "https://frontlineocr.com",
+    "desc": "Veteran-focused obstacle course racing community. Training programs, team events, and competitive OCR for military and veteran athletes.",
+    "location": "National",
+    "cost": "Varies",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "ocr",
+      "obstacle-racing",
+      "endurance",
+      "veteran-owned"
+    ]
+  },
+  {
+    "name": "Project Healing Waters Fly Fishing",
+    "category": "Outdoor & Adventure Therapy",
+    "sub": "Fly Fishing",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://projecthealingwaters.org/get-involved/locations/",
+    "desc": "Fly fishing, fly tying, and rod building for active-duty military and veterans. Served 6,000+ veterans in 2023. Programs across the USA with 6,500+ volunteers.",
+    "location": "National — programs across USA",
+    "cost": "Free",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "outdoor",
+      "fly-fishing",
+      "free",
+      "nature",
+      "therapy"
+    ]
+  },
+  {
+    "name": "Veterans Exploration Therapy",
+    "category": "Outdoor & Adventure Therapy",
+    "sub": "Outdoor Recreation",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://www.vetexpeditions.com",
+    "desc": "Wilderness exploration and therapeutic outdoor recreation. Founded by Iraq/Afghanistan combat veterans. Expeditions nationwide with a trauma-informed approach.",
+    "location": "Colorado (expeditions nationwide)",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "outdoor",
+      "wilderness",
+      "therapy",
+      "free"
+    ]
+  },
+  {
+    "name": "Veterans Adventure Group",
+    "category": "Outdoor & Adventure Therapy",
+    "sub": "Extreme Adventure",
+    "org": "Nonprofit",
+    "website": "https://veteransadventuregroup.org",
+    "desc": "Extreme outdoor adventures — skydiving, mountaineering, scuba, rock climbing — building veteran communities through shared high-adventure experiences.",
+    "location": "National",
+    "cost": "Free / Subsidized",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "adventure",
+      "outdoor",
+      "extreme",
+      "free"
+    ]
+  },
+  {
+    "name": "The Warrior's Keep",
+    "category": "Outdoor & Adventure Therapy",
+    "sub": "Hiking & Climbing",
+    "org": "Nonprofit",
+    "website": "https://www.thewarriorskeep.org/programs",
+    "desc": "Vet-Rec hiking program and Keep Climbing rock climbing program. Reduces stress, anxiety, and depression through outdoor social engagement and peer connection.",
+    "location": "Check website for locations",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "hiking",
+      "climbing",
+      "outdoor",
+      "free"
+    ]
+  },
+  {
+    "name": "Warrior Surf Foundation",
+    "category": "Surf Therapy",
+    "sub": "Surf Therapy",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://www.warriorsurf.org/program",
+    "desc": "Free 12-week surf therapy program — yoga and wellness coaching for veterans with PTSD, anxiety, and depression. Includes a psycho-education component.",
+    "location": "Folly Beach, SC",
+    "cost": "Free",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "surf",
+      "free",
+      "ptsd",
+      "yoga",
+      "southeast"
+    ]
+  },
+  {
+    "name": "Operation Surf",
+    "category": "Surf Therapy",
+    "sub": "Surf Therapy",
+    "org": "Nonprofit",
+    "website": "https://operationsurf.org",
+    "desc": "Curriculum-based surf programs for injured military and veterans. Includes wellness resources, tools, and peer-to-peer support for lasting recovery.",
+    "location": "California / Events nationally",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "surf",
+      "free",
+      "therapy",
+      "peer"
+    ]
+  },
+  {
+    "name": "Operation Amped",
+    "category": "Surf Therapy",
+    "sub": "Adaptive Surf",
+    "org": "Nonprofit",
+    "website": "https://www.operationamped.org",
+    "desc": "Adaptive surf therapy for seriously ill, injured, and disabled veterans and their families. Therapeutic ocean-based programs in Southern California.",
+    "location": "California",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "surf",
+      "adaptive",
+      "free",
+      "disability"
+    ]
+  },
+  {
+    "name": "PATH International — Equine Programs",
+    "category": "Equine Therapy",
+    "sub": "Therapeutic Riding",
+    "org": "Nonprofit",
+    "website": "https://pathintl.org/programs/veterans/",
+    "desc": "National credentialing organization for equine-assisted services. Directory of accredited centers offering veteran therapeutic riding, equine psychotherapy, and physical therapy with horses.",
+    "location": "National — member centers across USA",
+    "cost": "Varies (many free for veterans)",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "equine",
+      "horses",
+      "therapy",
+      "national"
+    ]
+  },
+  {
+    "name": "Vinceremos — Freedom Reins Program",
+    "category": "Equine Therapy",
+    "sub": "Therapeutic Riding",
+    "org": "Nonprofit",
+    "website": "https://www.vinceremos.org/freedom-reins-program-veterans",
+    "desc": "Freedom Reins therapeutic riding program for veterans in South Florida. Equine-assisted activities focused on veteran healing, confidence-building, and recovery.",
+    "location": "Loxahatchee, FL",
+    "cost": "Free for veterans",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "equine",
+      "florida",
+      "free",
+      "horses",
+      "therapy"
+    ]
+  },
+  {
+    "name": "Veterans Equine Therapeutic Services (V.E.T.S.)",
+    "category": "Equine Therapy",
+    "sub": "Therapeutic Riding",
+    "org": "Nonprofit 501(c)(3)",
+    "website": "https://vetsct.org",
+    "desc": "Ground program (horse handling, no riding) plus Mounted program (riding and horsemanship) for veterans. Focused on connection, confidence, and calm.",
+    "location": "Connecticut",
+    "cost": "Free for veterans",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "equine",
+      "horses",
+      "free",
+      "therapy"
+    ]
+  },
+  {
+    "name": "NCEFT — Veterans & First Responders",
+    "category": "Equine Therapy",
+    "sub": "Clinical Hippotherapy",
+    "org": "Nonprofit",
+    "website": "https://nceft.org/services/",
+    "desc": "Clinical hippotherapy, adaptive riding, and veteran programs for PTSD, substance use, and TBI. Peer-to-peer support in a farm environment.",
+    "location": "Woodside, CA",
+    "cost": "Free for veterans",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "equine",
+      "hippotherapy",
+      "ptsd",
+      "tbi",
+      "free"
+    ]
+  },
+  {
+    "name": "Equest — Veterans Program",
+    "category": "Equine Therapy",
+    "sub": "Therapeutic Riding",
+    "org": "Nonprofit",
+    "website": "https://equest.org/veterans-program/",
+    "desc": "Equine-assisted activities for veterans in the Dallas/Fort Worth area. Therapeutic riding and equine-facilitated learning for healing and growth.",
+    "location": "Dallas/Fort Worth, TX",
+    "cost": "Free for veterans",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "equine",
+      "horses",
+      "free",
+      "texas"
+    ]
+  },
+  {
+    "name": "PGA HOPE",
+    "category": "Golf",
+    "sub": "Golf Instruction",
+    "org": "Nonprofit (PGA REACH Foundation)",
+    "website": "https://www.pgareach.org/pgahope",
+    "desc": "Free 6-8 week developmental golf curriculum led by PGA Professionals. Available at 340+ locations in 47 states. All skill levels — no prior golf experience needed.",
+    "location": "National — 340+ locations, 47 states",
+    "cost": "Free",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "golf",
+      "free",
+      "pga",
+      "national"
+    ]
+  },
+  {
+    "name": "Salute Military Golf Association (SMGA)",
+    "category": "Golf",
+    "sub": "Rehabilitative Golf",
+    "org": "Nonprofit",
+    "website": "https://smga.org",
+    "desc": "Golf for mental and physical rehabilitation of post-9/11 wounded veterans. Co-founded by former PGA Tour player Jim Estes. Community-driven healing through the sport.",
+    "location": "National",
+    "cost": "Free",
+    "priority": "High",
+    "florida": false,
+    "tags": [
+      "golf",
+      "free",
+      "rehab",
+      "post-9/11"
+    ]
+  },
+  {
+    "name": "National Disabled Veterans Golf Clinic",
+    "category": "Golf",
+    "sub": "Adaptive Golf",
+    "org": "Government (VA / DAV)",
+    "website": "https://www.veteransgolfclinic.org",
+    "desc": "Annual week-long adaptive golf program presented by the VA and DAV. Instruction for veterans with life-changing disabilities — rehabilitation through adaptive golf.",
+    "location": "Annual event — location varies",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "golf",
+      "adaptive",
+      "free",
+      "va",
+      "dav"
+    ]
+  },
+  {
+    "name": "Links to Freedom",
+    "category": "Golf",
+    "sub": "Adaptive Golf",
+    "org": "Nonprofit",
+    "website": "https://www.linkstofreedom.org",
+    "desc": "Adaptive golf taught by PGA and LPGA professionals for injured service members and disabled veterans. Focus on physical, emotional, mental, and social recovery.",
+    "location": "National",
+    "cost": "Free",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "golf",
+      "adaptive",
+      "free",
+      "pga",
+      "lpga"
+    ]
+  },
+  {
+    "name": "National Personal Training Institute (NPTI)",
+    "category": "Certification / Career",
+    "sub": "Fitness Certification",
+    "org": "School (VA Approved)",
+    "website": "https://nationalpti.org/gi-bill-personal-trainer-certification-personal-training-certification-for-veterans/",
+    "desc": "VA-approved Personal Trainer diploma program. Accepts GI Bill (Ch 30, 33) and VR&E (Ch 31). Hands-on campus training leading to a career in fitness and personal training.",
+    "location": "Multiple US campuses incl. Florida",
+    "cost": "GI Bill eligible",
+    "priority": "High",
+    "florida": true,
+    "tags": [
+      "certification",
+      "gi-bill",
+      "career",
+      "personal-training",
+      "va-approved"
+    ]
+  },
+  {
+    "name": "NCSF Certified Strength Coach",
+    "category": "Certification / Career",
+    "sub": "Fitness Certification",
+    "org": "Certification Body",
+    "website": "https://www.ncsf.org/military/",
+    "desc": "Strength Coach certification with GI Bill eligibility. Military Support Plan available for active duty and veteran military. Nationally recognized credential.",
+    "location": "Online / National",
+    "cost": "GI Bill eligible",
+    "priority": "Medium",
+    "florida": false,
+    "tags": [
+      "certification",
+      "gi-bill",
+      "career",
+      "strength",
+      "coach"
+    ]
+  }
+]
