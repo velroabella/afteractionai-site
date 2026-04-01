@@ -480,27 +480,40 @@
 
     /**
      * Save a document record after analysis.
-     * @param {string} caseId
-     * @param {Object} docData
-     * @param {string} [missionId]  Optional — link to specific mission
+     * Accepts EITHER:
+     *   save(caseId, docData, missionId)   — legacy positional form
+     *   save({ case_id, mission_id, ... }) — flat-object form (Phase 3.4+)
      * @returns {Promise<{data, error}>}
      */
-    save: function(caseId, docData, missionId) {
+    save: function(caseIdOrObj, docData, missionId) {
       var db = getClient();
       if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+
+      // Detect flat-object form: first arg is an object with a case_id key
+      var _caseId, _docData, _missionId;
+      if (caseIdOrObj && typeof caseIdOrObj === 'object' && !Array.isArray(caseIdOrObj)) {
+        _caseId    = caseIdOrObj.case_id    || null;
+        _missionId = caseIdOrObj.mission_id || null;
+        _docData   = caseIdOrObj;
+      } else {
+        _caseId    = caseIdOrObj;
+        _docData   = docData || {};
+        _missionId = missionId || null;
+      }
+
       var row = {
-        case_id:         caseId,
-        mission_id:      missionId || null,
-        file_name:       docData.file_name       || 'unknown',
-        document_type:   docData.document_type   || null,
-        storage_path:    docData.storage_path    || null,
-        mime_type:       docData.mime_type        || null,
-        file_size:       docData.file_size        || null,
-        extracted_text:  docData.extracted_text  || null,
-        analysis_result: docData.analysis_result
-                           ? JSON.stringify(docData.analysis_result)
+        case_id:         _caseId,
+        mission_id:      _missionId,
+        file_name:       _docData.file_name       || 'unknown',
+        document_type:   _docData.document_type   || null,
+        storage_path:    _docData.storage_path    || null,
+        mime_type:       _docData.mime_type        || null,
+        file_size:       _docData.file_size        || null,
+        extracted_text:  _docData.extracted_text  || null,
+        analysis_result: _docData.analysis_result
+                           ? JSON.stringify(_docData.analysis_result)
                            : '{}',
-        status:          docData.status          || 'complete'
+        status:          _docData.status          || 'uploaded'
       };
       return wrap(
         db.from('documents').insert(row).select().single()
@@ -524,6 +537,22 @@
     },
 
     /**
+     * List documents linked to a specific mission.
+     * @param {string} missionId
+     * @returns {Promise<{data, error}>}
+     */
+    listByMission: function(missionId) {
+      var db = getClient();
+      if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      return wrap(
+        db.from('documents')
+          .select('id, file_name, document_type, status, created_at, mission_id, analysis_result')
+          .eq('mission_id', missionId)
+          .order('created_at', { ascending: false })
+      );
+    },
+
+    /**
      * Get a single document with full analysis result.
      * @param {string} documentId
      * @returns {Promise<{data, error}>}
@@ -533,6 +562,59 @@
       if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
       return wrap(
         db.from('documents').select('*').eq('id', documentId).single()
+      );
+    },
+
+    /**
+     * Update the lifecycle status of a document.
+     * @param {string} documentId
+     * @param {string} status  — 'uploaded'|'processed'|'reviewed'|'action_required'
+     * @returns {Promise<{data, error}>}
+     */
+    updateStatus: function(documentId, status) {
+      var db = getClient();
+      if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      return wrap(
+        db.from('documents')
+          .update({ status: status })
+          .eq('id', documentId)
+          .select()
+          .single()
+      );
+    },
+
+    /**
+     * Link a document to a mission.
+     * @param {string} documentId
+     * @param {string} missionId
+     * @returns {Promise<{data, error}>}
+     */
+    linkToMission: function(documentId, missionId) {
+      var db = getClient();
+      if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      return wrap(
+        db.from('documents')
+          .update({ mission_id: missionId })
+          .eq('id', documentId)
+          .select()
+          .single()
+      );
+    },
+
+    /**
+     * Remove a document's mission link.
+     * @param {string} documentId
+     * @returns {Promise<{data, error}>}
+     */
+    unlinkFromMission: function(documentId) {
+      var db = getClient();
+      if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      return wrap(
+        db.from('documents')
+          .update({ mission_id: null })
+          .eq('id', documentId)
+          .select()
+          .single()
       );
     }
 

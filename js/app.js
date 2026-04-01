@@ -2807,7 +2807,13 @@
           analysis_result: _fields || {},
           mission_id:      _missionId,
           case_id:         _caseId,
-          status:          'complete'
+          status:          'uploaded'
+        }).then(function(res) {
+          // Phase 3.5: advance lifecycle to 'processed' after successful save
+          if (res && res.data && res.data.id &&
+              window.AIOS && window.AIOS.DocumentLifecycle) {
+            window.AIOS.DocumentLifecycle.transition(res.data.id, 'processed');
+          }
         }).catch(function(err) {
           console.warn('[DocIntel] documents.save failed (non-blocking):', err);
         });
