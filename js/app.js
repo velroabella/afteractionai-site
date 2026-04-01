@@ -404,6 +404,18 @@
   var reportButtonVisible = false;     // true once Generate Report button is showing
   var reportGenerated = false;         // true after a real report is detected
 
+  // PHASE 2 INTEGRATION - Step 3
+  // Holds the DB UUID of the active case once resolved via DataAccess.
+  // null = not yet resolved (user not logged in, DataAccess unavailable, or init pending).
+  // All Phase 2 writes (missions, checklist, reports) gate on this being non-null.
+  var _activeCaseId = null;
+
+  // PHASE 2 INTEGRATION - Step 4
+  // Maps checklist item index (DOM data-index) → DB UUID from case_checklist_items.
+  // Populated after DataAccess.checklistItems.saveBatch() succeeds in buildChecklist().
+  // Used by toggleChecklistItem() to persist toggle state to the DB alongside localStorage.
+  var _checklistDbIds = {};
+
   // ── DOM HELPERS ────────────────────────────────────────
   function $(id) { return document.getElementById(id); }
 
@@ -489,6 +501,69 @@
   }
 
   // ── INIT ────────────────────────────────────────────────
+  // PHASE 2 INTEGRATION - Step 3
+  // ── PERSISTENT CASE MODEL INIT ──────────────────────────
+  // Lazy resolver for the active case ID.
+  //
+  // Why lazy and not called directly from init():
+  //   auth.js loads AFTER app.js in index.html (line 433 vs 399).
+  //   AAAI.auth is undefined when init() runs synchronously.
+  //   We defer via setTimeout(0) from init(), and also expose this
+  //   function so any code path that needs _activeCaseId can call
+  //   it on first need (e.g., saveReport, saveMission).
+  //
+  // Fallback guarantee:
+  //   If DataAccess is unavailable or the call fails, _activeCaseId
+  //   stays null and ALL existing localStorage / ai_reports / checklist_items
+  //   code paths continue to operate exactly as before. Zero data loss.
+  function _initCaseModel() {
+    // Guard: already resolved
+    if (_activeCaseId) return;
+
+    // Guard: auth.js not yet loaded or user not signed in
+    if (typeof AAAI === 'undefined' || !AAAI.auth || !AAAI.auth.isLoggedIn || !AAAI.auth.isLoggedIn()) {
+      return; // silent — will be retried on next action that needs a case ID
+    }
+
+    // Guard: DataAccess not yet loaded (script load order issue or file missing)
+    if (!AAAI.DataAccess || !AAAI.DataAccess.dashboard) {
+      log('Phase2', 'DataAccess not available — localStorage fallback active');
+      return;
+    }
+
+    // PHASE 2 INTEGRATION - Step 3
+    AAAI.DataAccess.dashboard.getOrCreateActiveCase().then(function(result) {
+      if (result.error || !result.data) {
+        // Non-fatal — old code paths (localStorage, ai_reports) are unchanged
+        log('Phase2', 'getOrCreateActiveCase failed — localStorage fallback active: ' +
+            (result.error ? JSON.stringify(result.error) : 'no data'));
+        return;
+      }
+      _activeCaseId = result.data.id;
+      // PHASE 2 DEBUG HELPER — expose on shared namespace so AAAI.DataAccess.getActiveCaseId() works
+      window.AAAI = window.AAAI || {};
+      window.AAAI._activeCaseId = _activeCaseId;
+      log('Phase2', 'active case resolved — id: ' + _activeCaseId + ' title: ' + result.data.title);
+
+      // PHASE 2 MIGRATION HELPER - Step 4
+      // One-time-per-session migration: sync existing in-memory mission +
+      // localStorage checklist items into the new persistent tables.
+      // Wrapped in try/catch so any failure never affects existing flow.
+      try {
+        if (window.AAAI.MigrationHelpers && window.AAAI.MigrationHelpers.migrateExistingDataToCase) {
+          window.AAAI.MigrationHelpers.migrateExistingDataToCase(_activeCaseId);
+        }
+      } catch(_migErr) {
+        log('Phase2', 'migration helper exception (non-fatal): ' +
+            (_migErr && _migErr.message ? _migErr.message : String(_migErr)));
+      }
+    }).catch(function(err) {
+      // Non-fatal — old code paths continue as normal
+      log('Phase2', 'getOrCreateActiveCase exception — localStorage fallback active: ' +
+          (err && err.message ? err.message : String(err)));
+    });
+  }
+
   function init() {
     cacheDom();
     log('init', 'DOM cached');
@@ -568,6 +643,42 @@
         submitUserText(option, { path: 'option-btn' });
       });
     }
+
+    // PERSISTENCE ADDED - Phase 1 Fix
+    // Re-render checklist items from localStorage on every page load so completed
+    // state is ready to display even after a browser refresh.
+    restoreChecklistFromStorage();
+
+    // PHASE 2 INTEGRATION - Step 3
+    // Defer case model init by one tick so auth.js (which loads after app.js
+    // in index.html) has time to run and set AAAI.auth. If the user is already
+    // signed in from a prior session, getSession() resolves before the tick fires
+    // and _initCaseModel() will find AAAI.auth.isLoggedIn() === true.
+    // If not signed in yet, _initCaseModel() is a no-op and will be retried
+    // via authStateChanged listener below.
+    setTimeout(_initCaseModel, 0);
+
+    // PHASE 2 INTEGRATION - Step 4
+    // Retry _initCaseModel() when the user signs in mid-session.
+    // auth.js dispatches 'authStateChanged' from updateAuthUI() on every
+    // SIGNED_IN and SIGNED_OUT event. On SIGNED_IN, _activeCaseId will be
+    // null (init() deferred tick missed the sign-in), so _initCaseModel()
+    // will resolve the case and trigger migration. On SIGNED_OUT, _activeCaseId
+    // is cleared so writes correctly fall back to the old code paths.
+    window.addEventListener('authStateChanged', function(e) {
+      var user = e && e.detail && e.detail.user;
+      if (user) {
+        // User just signed in — resolve the active case if not yet set
+        _initCaseModel();
+      } else {
+        // User signed out — clear case context so next session starts fresh
+        _activeCaseId = null;
+        _checklistDbIds = {};
+        // PHASE 2 DEBUG HELPER — keep shared namespace in sync with private var
+        if (window.AAAI) { window.AAAI._activeCaseId = null; }
+        log('Phase2', 'user signed out — _activeCaseId cleared'); // PHASE 2 INTEGRATION - Step 4
+      }
+    });
 
     log('init', 'complete — RealtimeVoice available: ' + (typeof window.RealtimeVoice !== 'undefined'));
   }
@@ -941,6 +1052,21 @@
           if (_newMission) {
             window.AIOS.Mission.current = _newMission;
             log('AIOS:VOICE', 'mission: ' + _mSeed.type + ' matched="' + _mSeed.matched + '"');
+
+            // PHASE 2 - Use new persistent layer if activeCaseId present
+            // Persist the new mission to Supabase alongside the in-memory state.
+            // Fire-and-forget — failure never blocks voice flow.
+            if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
+              (function(_m) {
+                window.AAAI.DataAccess.missions.create(_activeCaseId, _m)
+                  .then(function(r) {
+                    if (!r.error && r.data && r.data.id) {
+                      _m._dbId = r.data.id; // attach DB UUID for future sync()
+                      log('Phase2', 'voice mission persisted — ' + _m.type + ' | dbId: ' + r.data.id);
+                    }
+                  }).catch(function() {});
+              })(_newMission);
+            }
           }
         }
       }
@@ -997,6 +1123,110 @@
     } catch (_aiosVErr) {
       // AIOS failure is silent — voice transport continues unaffected
       log('AIOS:VOICE', 'FALLBACK — ' + (_aiosVErr.message || String(_aiosVErr)));
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  VOICE INTELLIGENCE PIPELINE  (Phase 1 Fix)
+  //  VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+  //
+  //  Runs the Phase 47-50 intelligence layer on each
+  //  completed voice AI response. Mirrors the text-path
+  //  pipeline in sendToAI() without re-calling the API.
+  //
+  //  Voice responses come from OpenAI Realtime — calling
+  //  sendToAI() would wrongly re-route to Anthropic/Claude.
+  //  This function runs the same downstream enrichment
+  //  that text responses already receive, applied here
+  //  to the completed voice AI transcript.
+  //
+  //  What runs:
+  //    Phase 47: ResponseContract.parse()  → structured contract
+  //    Phase 47: MissionExtractor.process() → mission update
+  //    Phase 49: ActionBar.render()         → contextual buttons
+  //    Phase 50: ResourceMatcher.match()    → internal resource links
+  //
+  //  Fully wrapped in try/catch — voice transport is NEVER
+  //  affected by any failure in this pipeline.
+  // ══════════════════════════════════════════════════════
+  function _voiceIntelligencePipeline(aiResponse, userTranscript) {
+    try {
+      // Guards — same pattern as _aiosVoiceUpdate
+      if (!window.AIOS || !window.AIOS.ResponseContract) return;
+      if (!aiResponse || aiResponse.trim().length < 10) return;
+
+      // ── Build context (mirrors Phase 47 ctx in sendToAI) ──────────
+      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+      var _vtCtx = {};
+      if (window.AIOS.Router && userTranscript) {
+        _vtCtx.routeResult = window.AIOS.Router.routeAIOSIntent(userTranscript);
+      }
+      if (window.AIOS.Memory) {
+        _vtCtx.profile = window.AIOS.Memory.getProfile();
+      }
+      if (window.AIOS.Mission) {
+        _vtCtx.mission = window.AIOS.Mission.current || null;
+      }
+
+      // ── Phase 47: Parse ResponseContract ─────────────────────────
+      var _vtContract = window.AIOS.ResponseContract.parse(aiResponse, _vtCtx);
+      console.log('[AIOS][VOICE-CONTRACT] mode=' + _vtContract.mode +
+        ' | confidence=' + _vtContract.confidence.toFixed(2) +
+        ' | actions=' + (_vtContract.recommended_actions ? _vtContract.recommended_actions.length : 0) +
+        ' | missionSignal=' + !!_vtContract.mission_signals);
+
+      // ── Phase 47: MissionExtractor ────────────────────────────────
+      if (window.AIOS.MissionExtractor) {
+        var _vtMissionAction = window.AIOS.MissionExtractor.process(
+          _vtContract,
+          (window.AIOS.Mission && window.AIOS.Mission.current) || null
+        );
+        if (_vtMissionAction) {
+          console.log('[AIOS][VOICE-MISSION] action=' + _vtMissionAction.action +
+            ' | type=' + (_vtMissionAction.mission ? _vtMissionAction.mission.type : 'none'));
+        }
+      }
+
+      // Store on window for Inspector/dashboard access
+      window.AIOS._lastContract = _vtContract; // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+
+      // ── Phase 50: Resource Matcher (async, non-blocking) ──────────
+      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+      if (window.AIOS.ResourceMatcher) {
+        var _vtProfile = _vtCtx.profile || null;
+        (function(_contract) {
+          window.AIOS.ResourceMatcher.match(_contract, _vtProfile).then(function(matches) {
+            _contract.matched_resources = matches; // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+            window.AIOS._lastMatches = matches;    // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+            if (matches.length > 0) {
+              console.log('[AIOS][VOICE-MATCHER] matched ' + matches.length +
+                ' resources | top=' + matches[0].name +
+                ' (confidence=' + matches[0].confidence + ')');
+            } else {
+              console.log('[AIOS][VOICE-MATCHER] no matches for this voice response');
+            }
+          });
+        })(_vtContract);
+      }
+
+      // ── Phase 49: ActionBar — render on last AI message bubble ────
+      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+      // Called after addMessage() so the .message--ai DOM element exists.
+      if (window.AIOS.ActionBar && chatMessages) {
+        var _vtMsgs = chatMessages.querySelectorAll('.message--ai');
+        var _vtLastMsg = _vtMsgs.length > 0 ? _vtMsgs[_vtMsgs.length - 1] : null;
+        if (_vtLastMsg) {
+          var _vtRendered = window.AIOS.ActionBar.render(_vtContract, _vtLastMsg);
+          if (_vtRendered) {
+            scrollToBottom();
+          }
+        }
+      }
+
+    } catch (_vtErr) {
+      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+      // Failure is always silent — voice transport continues unaffected.
+      console.warn('[AIOS][VOICE-INTELLIGENCE] pipeline error:', _vtErr.message || _vtErr);
     }
   }
 
@@ -1134,6 +1364,13 @@
         reportGenerated = true;
         showReportActions(fullText);
       }
+
+      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+      // Run Phase 47-50 pipeline on this completed voice AI response.
+      // Called here (after addMessage) so the .message--ai DOM element
+      // exists for ActionBar.render(). Passes _lastVoiceText so
+      // ResponseContract gets the same routing context as text mode.
+      _voiceIntelligencePipeline(fullText, _lastVoiceText);
     };
 
     RealtimeVoice.onError = function(error) {
@@ -1477,6 +1714,20 @@
             if (_newMission) {
               window.AIOS.Mission.current = _newMission;
               log('MISSION', 'auto-created: ' + _newMission.name + ' (matched: ' + _missionSeed.matched + ')');
+
+              // PHASE 2 - Use new persistent layer if activeCaseId present
+              // Persist new mission to Supabase. Fire-and-forget — no UI impact.
+              if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
+                (function(_m) {
+                  window.AAAI.DataAccess.missions.create(_activeCaseId, _m)
+                    .then(function(r) {
+                      if (!r.error && r.data && r.data.id) {
+                        _m._dbId = r.data.id; // attach DB UUID for future sync()
+                        log('Phase2', 'text mission persisted — ' + _m.type + ' | dbId: ' + r.data.id);
+                      }
+                    }).catch(function() {});
+                })(_newMission);
+              }
             }
           }
         }
@@ -1539,11 +1790,61 @@
             if (_p47MissionAction) {
               console.log('[AIOS][MISSION-EXT] action=' + _p47MissionAction.action +
                 ' | type=' + (_p47MissionAction.mission ? _p47MissionAction.mission.type : 'none'));
+
+              // PHASE 2 - Use new persistent layer if activeCaseId present
+              // Sync MissionExtractor result to Supabase. Fire-and-forget.
+              if (_activeCaseId && window.AAAI && window.AAAI.DataAccess &&
+                  _p47MissionAction.mission) {
+                (function(_ma) {
+                  var _mObj = _ma.mission;
+                  if (_ma.action === 'create' && !_mObj._dbId) {
+                    // MissionExtractor created a brand-new mission
+                    window.AAAI.DataAccess.missions.create(_activeCaseId, _mObj)
+                      .then(function(r) {
+                        if (!r.error && r.data && r.data.id) {
+                          _mObj._dbId = r.data.id;
+                          if (window.AIOS.Mission) window.AIOS.Mission.current = _mObj;
+                          log('Phase2', 'MissionExt create persisted — dbId: ' + r.data.id);
+                        }
+                      }).catch(function() {});
+                  } else if ((_ma.action === 'update' || _ma.action === 'complete') && _mObj._dbId) {
+                    // MissionExtractor updated an existing persisted mission
+                    window.AAAI.DataAccess.missions.sync(_mObj._dbId, _mObj)
+                      .then(function(r) {
+                        if (!r.error) {
+                          log('Phase2', 'MissionExt ' + _ma.action + ' synced — dbId: ' + _mObj._dbId);
+                        }
+                      }).catch(function() {});
+                  }
+                })(_p47MissionAction);
+              }
             }
           }
 
           // Store latest contract on window for dashboard/inspector access
           window.AIOS._lastContract = _p47Contract;
+
+          // ── Phase 50: Resource Matcher — RESOURCE MATCHER ACTIVATED - Phase 1 Fix ──
+          // Async — fires while the message streams, never blocks the chat.
+          // Attaches matched_resources to the contract + window.AIOS._lastMatches
+          // so ActionBar, Inspector, and dashboard can consume them.
+          if (window.AIOS.ResourceMatcher) {
+            var _p50Profile = (_p47Ctx && _p47Ctx.profile) ? _p47Ctx.profile : null;
+            (function(_contract) {
+              window.AIOS.ResourceMatcher.match(_contract, _p50Profile).then(function(matches) {
+                _contract.matched_resources = matches; // RESOURCE MATCHER ACTIVATED - Phase 1 Fix
+                window.AIOS._lastMatches = matches;    // RESOURCE MATCHER ACTIVATED - Phase 1 Fix
+                if (matches.length > 0) {
+                  console.log('[AIOS][RESOURCE-MATCHER] matched ' + matches.length +
+                    ' resources | top=' + matches[0].name +
+                    ' (confidence=' + matches[0].confidence + ')');
+                } else {
+                  console.log('[AIOS][RESOURCE-MATCHER] no matches for this response');
+                }
+              });
+            })(_p47Contract);
+          }
+          // ── End Phase 50 ─────────────────────────────────────────────────────────
         }
       } catch (_p47Err) {
         // Never block the chat — contract parsing is enhancement only
@@ -2753,6 +3054,22 @@
 
     // Save report to Supabase if logged in + auto-generate checklist
     if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn()) {
+      // PHASE 2 - Use new persistent layer if activeCaseId present
+      // Save to new reports table (case-linked) alongside existing ai_reports save.
+      // Fire-and-forget — does not affect the existing flow in any way.
+      if (_activeCaseId && AAAI.DataAccess && AAAI.DataAccess.reports) {
+        AAAI.DataAccess.reports.save(_activeCaseId, {
+          report_type:          'after_action',
+          content:              reportText,
+          conversation_history: conversationHistory,
+          model_used:           CONFIG.model
+        }).then(function(r) {
+          if (!r.error && r.data) {
+            log('Phase2', 'report saved to cases/reports table — id: ' + r.data.id);
+          }
+        }).catch(function() {});
+      }
+
       AAAI.auth.saveReport(reportText, conversationHistory).then(function(result) {
         if (result && !result.error) {
           log('Report', 'saved to Supabase');
@@ -2899,6 +3216,147 @@
   }
 
   // ══════════════════════════════════════════════════════
+  //  CHECKLIST PERSISTENCE - Phase 1 Fix
+  //  Saves item list + completed indices to localStorage.
+  //  Key: afteraction_checklist_progress_v1
+  //  Progress survives page refresh.
+  // ══════════════════════════════════════════════════════
+
+  var CHECKLIST_STORAGE_KEY = 'afteraction_checklist_progress_v1'; // PERSISTENCE ADDED - Phase 1 Fix
+
+  // PERSISTENCE ADDED - Phase 1 Fix
+  // Read completed item indices from DOM and write to localStorage
+  function saveChecklistState() {
+    try {
+      var all = document.querySelectorAll('.checklist-item');
+      var completedIndices = [];
+      all.forEach(function(el) {
+        if (el.classList.contains('completed')) {
+          completedIndices.push(parseInt(el.getAttribute('data-index'), 10));
+        }
+      });
+      var stored = JSON.parse(localStorage.getItem(CHECKLIST_STORAGE_KEY) || '{}');
+      stored.completedIndices = completedIndices;
+      localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(stored));
+      log('Checklist', 'saved ' + completedIndices.length + ' completed items to localStorage');
+    } catch(e) {
+      log('Checklist', 'localStorage save failed: ' + e.message);
+    }
+  }
+
+  // PERSISTENCE ADDED - Phase 1 Fix
+  // Apply saved completed indices to already-rendered DOM items
+  function loadChecklistState() {
+    try {
+      var stored = JSON.parse(localStorage.getItem(CHECKLIST_STORAGE_KEY) || '{}');
+      var indices = stored.completedIndices || [];
+      if (indices.length === 0) return;
+      indices.forEach(function(idx) {
+        var el = document.querySelector('.checklist-item[data-index="' + idx + '"]');
+        if (el) {
+          el.classList.add('completed');
+          var check = el.querySelector('.checklist-item__check');
+          if (check) check.classList.add('checked');
+        }
+      });
+      log('Checklist', 'restored ' + indices.length + ' completed items from localStorage');
+    } catch(e) {
+      log('Checklist', 'localStorage load failed: ' + e.message);
+    }
+  }
+
+  // PERSISTENCE ADDED - Phase 1 Fix
+  // Called from init() — if items were saved, re-render checklist DOM on page load
+  // so completed state is available even after a refresh
+  function restoreChecklistFromStorage() {
+    try {
+      var stored = JSON.parse(localStorage.getItem(CHECKLIST_STORAGE_KEY) || '{}');
+      if (!stored.items || stored.items.length === 0) return;
+      log('Checklist', 'page load restore — ' + stored.items.length + ' items from localStorage');
+      renderChecklistItems(stored.items);
+      loadChecklistState();
+      updateChecklistProgress();
+    } catch(e) {
+      log('Checklist', 'localStorage page-load restore failed: ' + e.message);
+    }
+  }
+
+  // PERSISTENCE ADDED - Phase 1 Fix
+  // Replaces the old inline onclick toggle — now also saves state after each toggle
+  window.toggleChecklistItem = function(checkEl) {
+    checkEl.classList.toggle('checked');
+    var itemEl = checkEl.closest('.checklist-item');
+    itemEl.classList.toggle('completed');
+    var isNowCompleted = itemEl.classList.contains('completed');
+    saveChecklistState(); // Phase 1 — localStorage always runs first
+
+    // PHASE 2 - Use new persistent layer if activeCaseId present
+    // Sync toggle to case_checklist_items if we have a DB row ID for this item.
+    var itemIdx = parseInt(itemEl.getAttribute('data-index'), 10);
+    if (_activeCaseId && window.AAAI && window.AAAI.DataAccess &&
+        !isNaN(itemIdx) && _checklistDbIds[itemIdx]) {
+      (function(_dbId, _completed) {
+        window.AAAI.DataAccess.checklistItems.toggle(_dbId, _completed)
+          .then(function(r) {
+            if (!r.error) {
+              log('Phase2', 'checklist toggle synced — dbId: ' + _dbId +
+                  ' completed: ' + _completed);
+            }
+          }).catch(function() {});
+      })(_checklistDbIds[itemIdx], isNowCompleted);
+    }
+  };
+
+  // PERSISTENCE ADDED - Phase 1 Fix
+  // Extracted from buildChecklist — shared render path used by both
+  // buildChecklist (fresh report) and restoreChecklistFromStorage (page load)
+  function renderChecklistItems(items) {
+    var sections = {
+      immediate: document.querySelector('#checklistImmediate .checklist-section__items'),
+      short_term: document.querySelector('#checklistShortTerm .checklist-section__items'),
+      strategic: document.querySelector('#checklistStrategic .checklist-section__items'),
+      optional: document.querySelector('#checklistOptional .checklist-section__items')
+    };
+
+    var keys = Object.keys(sections);
+    for (var k = 0; k < keys.length; k++) {
+      if (sections[keys[k]]) sections[keys[k]].innerHTML = '';
+    }
+
+    items.forEach(function(item, index) {
+      var section = sections[item.category];
+      if (!section) return;
+
+      var el = document.createElement('div');
+      el.className = 'checklist-item';
+      el.setAttribute('data-index', index);
+
+      // PERSISTENCE ADDED - Phase 1 Fix: onclick now calls toggleChecklistItem (saves state)
+      el.innerHTML =
+        '<div class="checklist-item__check" onclick="toggleChecklistItem(this);updateChecklistProgress();">' +
+          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' +
+        '</div>' +
+        '<div class="checklist-item__content">' +
+          '<div class="checklist-item__title">' + item.title + '</div>' +
+          (item.description ? '<div class="checklist-item__desc">' + item.description + '</div>' : '') +
+          '<div class="checklist-item__actions">' +
+            '<button class="checklist-btn checklist-btn--assist" data-index="' + index + '" title="AI explains this step">AI Assist</button>' +
+          '</div>' +
+        '</div>';
+      section.appendChild(el);
+    });
+
+    document.querySelectorAll('.checklist-btn--assist').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        var itemEl = this.closest('.checklist-item');
+        var title = itemEl.querySelector('.checklist-item__title').textContent;
+        var desc = itemEl.querySelector('.checklist-item__desc');
+        showAIAssist(itemEl, title, desc ? desc.textContent : '');
+      });
+    });
+  }
+
+  // ══════════════════════════════════════════════════════
   //  CHECKLIST INTEGRATION
   // ══════════════════════════════════════════════════════
   function showChecklistPrompt(reportText) {
@@ -2922,48 +3380,54 @@
   function buildChecklist(reportText) {
     var items = parseReportToChecklist(reportText);
 
-    var sections = {
-      immediate: document.querySelector('#checklistImmediate .checklist-section__items'),
-      short_term: document.querySelector('#checklistShortTerm .checklist-section__items'),
-      strategic: document.querySelector('#checklistStrategic .checklist-section__items'),
-      optional: document.querySelector('#checklistOptional .checklist-section__items')
-    };
-
-    var keys = Object.keys(sections);
-    for (var k = 0; k < keys.length; k++) {
-      if (sections[keys[k]]) sections[keys[k]].innerHTML = '';
+    // PERSISTENCE ADDED - Phase 1 Fix
+    // Save items to localStorage so they survive page refresh.
+    // completedIndices preserved if this is same session re-open;
+    // reset to [] if this is a brand-new report (items will differ).
+    try {
+      var existing = JSON.parse(localStorage.getItem(CHECKLIST_STORAGE_KEY) || '{}');
+      var isSameReport = existing.items && existing.items.length === items.length &&
+        existing.items[0] && items[0] && existing.items[0].title === items[0].title;
+      existing.items = items;
+      if (!isSameReport) existing.completedIndices = []; // fresh report — clear old progress
+      localStorage.setItem(CHECKLIST_STORAGE_KEY, JSON.stringify(existing));
+      log('Checklist', 'items saved to localStorage (' + items.length + ' items, ' +
+        (isSameReport ? 'same report — kept progress' : 'new report — progress reset') + ')');
+    } catch(e) {
+      log('Checklist', 'could not save items to localStorage: ' + e.message);
     }
 
-    items.forEach(function(item, index) {
-      var section = sections[item.category];
-      if (!section) return;
+    renderChecklistItems(items); // PERSISTENCE ADDED - Phase 1 Fix: uses shared render function
 
-      var el = document.createElement('div');
-      el.className = 'checklist-item';
-      el.setAttribute('data-index', index);
+    loadChecklistState(); // PERSISTENCE ADDED - Phase 1 Fix: restore completed state from localStorage
 
-      el.innerHTML =
-        '<div class="checklist-item__check" onclick="this.classList.toggle(\'checked\');this.closest(\'.checklist-item\').classList.toggle(\'completed\');updateChecklistProgress();">' +
-          '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' +
-        '</div>' +
-        '<div class="checklist-item__content">' +
-          '<div class="checklist-item__title">' + item.title + '</div>' +
-          (item.description ? '<div class="checklist-item__desc">' + item.description + '</div>' : '') +
-          '<div class="checklist-item__actions">' +
-            '<button class="checklist-btn checklist-btn--assist" data-index="' + index + '" title="AI explains this step">AI Assist</button>' +
-          '</div>' +
-        '</div>';
-      section.appendChild(el);
-    });
-
-    document.querySelectorAll('.checklist-btn--assist').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        var itemEl = this.closest('.checklist-item');
-        var title = itemEl.querySelector('.checklist-item__title').textContent;
-        var desc = itemEl.querySelector('.checklist-item__desc');
-        showAIAssist(itemEl, title, desc ? desc.textContent : '');
-      });
-    });
+    // PHASE 2 - Use new persistent layer if activeCaseId present
+    // Save checklist items to case_checklist_items table.
+    // Requires both an active case AND an active mission (FK constraint).
+    // Fire-and-forget — localStorage path above is always the source of truth for now.
+    if (_activeCaseId && window.AAAI && window.AAAI.DataAccess &&
+        window.AIOS && window.AIOS.Mission && window.AIOS.Mission.current &&
+        window.AIOS.Mission.current._dbId) {
+      var _missionDbId = window.AIOS.Mission.current._dbId;
+      (function(_items, _caseId, _mId) {
+        window.AAAI.DataAccess.checklistItems.saveBatch(_caseId, _mId, _items)
+          .then(function(r) {
+            if (r.error) {
+              log('Phase2', 'checklistItems.saveBatch failed (non-fatal): ' + JSON.stringify(r.error));
+              return;
+            }
+            // Build index→dbId map so toggleChecklistItem can sync to DB
+            _checklistDbIds = {}; // reset before populating
+            if (r.data && r.data.length) {
+              r.data.forEach(function(row, i) {
+                _checklistDbIds[i] = row.id; // sort_order matches array index
+              });
+              log('Phase2', 'checklist items saved — ' + r.data.length +
+                  ' rows | _checklistDbIds populated');
+            }
+          }).catch(function() {});
+      })(items, _activeCaseId, _missionDbId);
+    }
 
     var checklistScreen = $('checklistScreen');
     if (chatScreen) chatScreen.style.display = 'none';
