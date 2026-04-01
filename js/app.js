@@ -545,6 +545,33 @@
       window.AAAI._activeCaseId = _activeCaseId;
       log('Phase2', 'active case resolved — id: ' + _activeCaseId + ' title: ' + result.data.title);
 
+      // PHASE 3.2 — Restore active mission from DB into AIOS.Mission.current
+      // Without this, every page reload nulls Mission.current, causing the keyword
+      // detector to INSERT a duplicate mission row on the next user message.
+      // Restoring from DB gives Mission.current._dbId so the sync/complete/
+      // checklistItems.saveBatch paths all work from turn one.
+      // Fire-and-forget — failure never blocks the conversation flow.
+      if (window.AIOS && window.AIOS.Mission && !window.AIOS.Mission.current) {
+        AAAI.DataAccess.missions.list(_activeCaseId, { status: 'active' })
+          .then(function(mResult) {
+            if (mResult.error || !mResult.data || mResult.data.length === 0) {
+              log('Phase3.2', 'no active DB mission to restore — fresh detection active');
+              return;
+            }
+            // list() orders ASC by started_at — last element is most recent active mission
+            var row = mResult.data[mResult.data.length - 1];
+            var restored = AAAI.DataAccess.missions.toMemoryShape(row);
+            if (!window.AIOS.Mission.current) { // race guard: another path may have set it
+              window.AIOS.Mission.current = restored;
+              log('Phase3.2', 'mission restored — type: ' + restored.type +
+                  ' | dbId: ' + restored._dbId + ' | step: ' + (restored.currentStep || 'none'));
+              // Let profile dashboard re-render if it has already loaded
+              window.dispatchEvent(new CustomEvent('aaai:mission_state_synced'));
+            }
+          })
+          .catch(function() { /* non-critical — keyword detection still creates fresh missions */ });
+      }
+
       // PHASE 2 MIGRATION HELPER - Step 4
       // One-time-per-session migration: sync existing in-memory mission +
       // localStorage checklist items into the new persistent tables.
