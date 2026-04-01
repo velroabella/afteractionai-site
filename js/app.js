@@ -3058,8 +3058,17 @@
     var pdfBtn = document.getElementById('btnDownloadPDF');
     if (pdfBtn) {
       pdfBtn.addEventListener('click', function() {
-        // Phase 3.5: Legal forms route through acknowledgment modal + .docx
+        // Legal forms route through acknowledgment modal + .docx (unchanged)
         if (typeof AAAI !== 'undefined' && AAAI.legalIntegration && AAAI.legalIntegration.detectAndHandle(reportText)) {
+          return;
+        }
+        // Phase 3.6: structured DOCX export when case data is available
+        if (_activeCaseId && window.AIOS && window.AIOS.ReportBuilder &&
+            window.AIOS.ReportBuilder.isAvailable()) {
+          window.AIOS.ReportBuilder.generate(_activeCaseId, reportText).catch(function(err) {
+            console.warn('[ReportBuilder] DOCX failed, falling back to PDF:', err);
+            generateReportPDF(reportText);
+          });
           return;
         }
         generateReportPDF(reportText);
