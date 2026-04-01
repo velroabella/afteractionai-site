@@ -403,6 +403,7 @@
   var topicBubblesShown = false;       // true after topic bubbles rendered once
   var reportButtonVisible = false;     // true once Generate Report button is showing
   var reportGenerated = false;         // true after a real report is detected
+  var _voiceStructuredSeq = 0;        // Phase 4.2: dedup seq for async voice structured calls
 
   // PHASE 2 INTEGRATION - Step 3
   // Holds the DB UUID of the active case once resolved via DataAccess.
@@ -1247,8 +1248,20 @@
       if (!window.AIOS || !window.AIOS.ResponseContract) return;
       if (!aiResponse || aiResponse.trim().length < 10) return;
 
+      // ── Phase 4.2: Response fingerprint dedup guard ────────────────
+      // Prevents double-processing when both response.audio_transcript.done
+      // and response.cancelled fire for the same response in edge cases.
+      var _vtFingerprint = aiResponse.length + '|' + aiResponse.substring(0, 30);
+      if (_voiceIntelligencePipeline._lastFingerprint === _vtFingerprint) {
+        log('_voiceIntelligencePipeline', 'DEDUP — skipping duplicate voice response');
+        return;
+      }
+      _voiceIntelligencePipeline._lastFingerprint = _vtFingerprint;
+
+      // ── Phase 4.2: Capture seq number for async structured call guard ──
+      var _vtSeq = ++_voiceStructuredSeq;
+
       // ── Build context (mirrors Phase 47 ctx in sendToAI) ──────────
-      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
       var _vtCtx = {};
       if (window.AIOS.Router && userTranscript) {
         _vtCtx.routeResult = window.AIOS.Router.routeAIOSIntent(userTranscript);
@@ -1260,7 +1273,7 @@
         _vtCtx.mission = window.AIOS.Mission.current || null;
       }
 
-      // ── Phase 47: Parse ResponseContract ─────────────────────────
+      // ── Phase 47: Immediate regex fallback (preserves instant UX) ─
       var _vtContract = window.AIOS.ResponseContract.parse(aiResponse, _vtCtx);
       console.log('[AIOS][VOICE-CONTRACT] mode=' + _vtContract.mode +
         ' | confidence=' + _vtContract.confidence.toFixed(2) +
@@ -1280,16 +1293,15 @@
       }
 
       // Store on window for Inspector/dashboard access
-      window.AIOS._lastContract = _vtContract; // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+      window.AIOS._lastContract = _vtContract;
 
       // ── Phase 50: Resource Matcher (async, non-blocking) ──────────
-      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
       if (window.AIOS.ResourceMatcher) {
         var _vtProfile = _vtCtx.profile || null;
         (function(_contract) {
           window.AIOS.ResourceMatcher.match(_contract, _vtProfile).then(function(matches) {
-            _contract.matched_resources = matches; // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
-            window.AIOS._lastMatches = matches;    // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+            _contract.matched_resources = matches;
+            window.AIOS._lastMatches = matches;
             if (matches.length > 0) {
               console.log('[AIOS][VOICE-MATCHER] matched ' + matches.length +
                 ' resources | top=' + matches[0].name +
@@ -1301,8 +1313,7 @@
         })(_vtContract);
       }
 
-      // ── Phase 49: ActionBar — render on last AI message bubble ────
-      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
+      // ── Phase 49: ActionBar — immediate render with regex contract ─
       // Called after addMessage() so the .message--ai DOM element exists.
       if (window.AIOS.ActionBar && chatMessages) {
         var _vtMsgs = chatMessages.querySelectorAll('.message--ai');
@@ -1315,8 +1326,57 @@
         }
       }
 
+      // ── Phase 4.2: Async structured classification via Claude ──────
+      // Fire-and-forget: sends voice response text to Claude for Phase 4.1
+      // structured output. Runs in background — voice transport and UI never blocked.
+      // When structured arrives, upgrades contract from regex → Phase 4.1 quality
+      // using the same _buildContractFromStructured() path as the text pipeline.
+      // Seq guard ensures stale results from prior responses are discarded.
+      (function(_seq, _aiText) {
+        fetch(CONFIG.apiEndpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: [
+              {
+                role: 'user',
+                content: '[VOICE RESPONSE CLASSIFICATION]\n' + _aiText
+              }
+            ],
+            system_suffix: '\n\n## VOICE CLASSIFICATION\nThe user message above is a completed AI voice response already delivered to the veteran. Call record_structured_output to classify its content. Write no response text — the tool call is the only output needed.'
+          })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          // Seq guard: discard if a newer voice response has since started processing
+          if (_voiceStructuredSeq !== _seq) return;
+          if (!data || !data.structured) {
+            console.log('[AIOS][VOICE-STRUCTURED] no structured output from classification call');
+            return;
+          }
+          // ── Upgrade contract using same Phase 4.1 path as text pipeline ──
+          var _upgraded = _buildContractFromStructured(data.structured, _aiText);
+          window.AIOS._lastStructured = data.structured;
+          window.AIOS._lastContract   = _upgraded;
+          console.log('[AIOS][VOICE-STRUCTURED] mode=' + _upgraded.mode +
+            ' | checklist_items=' + (data.structured.checklist_items ? data.structured.checklist_items.length : 0) +
+            ' | missions=' + (data.structured.missions ? data.structured.missions.length : 0) +
+            ' | report_ready=' + !!data.structured.report_ready);
+          // Re-render ActionBar with upgraded structured contract
+          if (window.AIOS.ActionBar && chatMessages) {
+            var _vtMsgs2 = chatMessages.querySelectorAll('.message--ai');
+            var _vtLastMsg2 = _vtMsgs2.length > 0 ? _vtMsgs2[_vtMsgs2.length - 1] : null;
+            if (_vtLastMsg2) {
+              window.AIOS.ActionBar.render(_upgraded, _vtLastMsg2);
+            }
+          }
+        })
+        .catch(function(e) {
+          console.warn('[AIOS][VOICE-STRUCTURED] classification call failed:', e.message || e);
+        });
+      })(_vtSeq, aiResponse);
+
     } catch (_vtErr) {
-      // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
       // Failure is always silent — voice transport continues unaffected.
       console.warn('[AIOS][VOICE-INTELLIGENCE] pipeline error:', _vtErr.message || _vtErr);
     }
@@ -1335,6 +1395,7 @@
     log('startVoiceSession', 'wiring callbacks and connecting');
     voiceGreetingSent = false;
     var _lastVoiceText = ''; // Phase FBP: per-session dedup guard — prevents duplicate user bubbles
+    var _lastAIMessageText = ''; // Phase 4.2: dedup guard — prevents double-processing same AI response
     setVoiceUI('connecting', 'Connecting to voice...');
 
     // ── Watchdog: if voice never reaches listening/connected within 20s, abort cleanly ──
@@ -1428,6 +1489,15 @@
     };
 
     RealtimeVoice.onAIMessage = function(fullText) {
+      // Phase 4.2: dedup guard — response.audio_transcript.done and response.cancelled
+      // can both fire for the same response in edge cases (user interrupts then reconnects).
+      // Skip if this exact text was already processed in this voice session.
+      if (fullText === _lastAIMessageText) {
+        log('RT.onAIMessage', 'DEDUP — identical response skipped, len=' + fullText.length);
+        return;
+      }
+      _lastAIMessageText = fullText;
+
       log('RT.onAIMessage', 'length=' + fullText.length);
       // Phase 36: Add AI voice response to conversationHistory so the Claude text model
       // has continuity if the user switches from voice to text mid-session.
