@@ -597,7 +597,15 @@
      * @returns {Promise<{data: caseRow, error}>}
      */
     getOrCreateActiveCase: function() {
-      return cases.list({ status: 'active' }).then(function(result) {
+      // PHASE 2 FIX - Prime the Supabase v2 auth session before any RLS-guarded
+      // query. createClient() restores the JWT asynchronously from localStorage;
+      // calling getSession() first ensures auth.uid() is populated before the
+      // INSERT, preventing a 42501 RLS violation on the first page load.
+      var client = getClient();
+      if (!client) return Promise.resolve({ data: null, error: { message: '[AAAI] DataAccess: Supabase client unavailable' } });
+      return client.auth.getSession().then(function() {
+        return cases.list({ status: 'active' });
+      }).then(function(result) {
         if (result.error) return result;
         var activeCases = result.data || [];
         if (activeCases.length > 0) {
