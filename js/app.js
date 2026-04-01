@@ -1293,6 +1293,17 @@
         }
       }
 
+      // ── Phase 4.5: MissionState sync — mirrors Phase 46 text-path behavior ──
+      // Text path calls MissionState.syncFromAIOS() + saveConversation() after every
+      // AI response. Voice path ran MissionExtractor but never synced, so
+      // voice-created/updated missions never reached the snapshot store.
+      try {
+        if (window.AIOS && window.AIOS.MissionState) {
+          window.AIOS.MissionState.syncFromAIOS();
+          window.AIOS.MissionState.saveConversation(conversationHistory);
+        }
+      } catch (_p45SyncErr) { /* never block voice transport */ }
+
       // Store on window for Inspector/dashboard access
       window.AIOS._lastContract = _vtContract;
 
