@@ -149,102 +149,104 @@
   <div class="fam-quickaccess__inner">
     <div class="fam-quickaccess__label">Quick Access</div>
     <div class="fam-quickaccess__row" id="qaRow">
-      <button class="fam-qa-btn fam-qa-btn--crisis" data-qa="crisis" onclick="setQA(this)">🆘 Crisis Support</button>
-      <button class="fam-qa-btn" data-qa="gold_star" onclick="setQA(this)">Gold Star &amp; Survivors</button>
-      <button class="fam-qa-btn" data-qa="military_spouse" onclick="setQA(this)">Military Spouses</button>
-      <button class="fam-qa-btn" data-qa="caregiver" onclick="setQA(this)">Caregivers</button>
-      <button class="fam-qa-btn" data-qa="benefits" onclick="setQA(this)">Benefits &amp; Guidance</button>
-      <button class="fam-qa-btn" data-qa="top" onclick="setQA(this)">⭐ Top Recommended</button>
-      <button class="fam-qa-btn" onclick="clearAllFilters()">📋 Show All</button>
+      <button class="fam-qa-btn fam-qa-btn--crisis" onclick="fsApplyQA('crisis')">🆘 Crisis Support</button>
+      <button class="fam-qa-btn" onclick="fsApplyQA('gold_star')">Gold Star &amp; Survivors</button>
+      <button class="fam-qa-btn" onclick="fsApplyQA('military_spouse')">Military Spouses</button>
+      <button class="fam-qa-btn" onclick="fsApplyQA('caregiver')">Caregivers</button>
+      <button class="fam-qa-btn" onclick="fsApplyQA('benefits')">Benefits &amp; Guidance</button>
+      <button class="fam-qa-btn" onclick="fsApplyQA('top')">⭐ Top Recommended</button>
+      <button class="fam-qa-btn" onclick="fsClearAll()">📋 Show All</button>
     </div>
   </div>
 </div>
 
 <!-- TWO-COLUMN LAYOUT -->
-<div class="fam-page-wrapper" id="resource-database">
+<div class="mh-page-wrapper" id="resource-database">
 
   <!-- FILTER SIDEBAR -->
-  <aside class="fam-sidebar">
-    <div class="fam-sidebar-header">
-      <h3>Filters</h3>
-      <button class="fam-clear-btn" onclick="clearAllFilters()">Clear all</button>
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <span>Filters</span>
+      <button class="mh-clear-btn" onclick="fsClearAll()">Clear all</button>
     </div>
 
-    <input type="text" class="fam-search-input" id="famSearchInput"
-           placeholder="🔍 Search resources…"
-           oninput="onSearch(this.value)" />
+    <input type="text" class="mh-search-input" id="fsSearch"
+           placeholder="Search resources..." oninput="fsApplyFilters()" />
 
-    <div class="fam-filter-group">
-      <div class="fam-filter-group-label">Audience</div>
-      <div class="fam-filter-pills" id="pillsAudience">
-        <button class="fam-pill" data-filter="audience" data-value="gold_star_families" onclick="togglePill(this,'audience')">Gold Star Families</button>
-        <button class="fam-pill" data-filter="audience" data-value="surviving_spouses" onclick="togglePill(this,'audience')">Surviving Spouses</button>
-        <button class="fam-pill" data-filter="audience" data-value="military_spouses" onclick="togglePill(this,'audience')">Military Spouses</button>
-        <button class="fam-pill" data-filter="audience" data-value="caregivers" onclick="togglePill(this,'audience')">Caregivers</button>
-        <button class="fam-pill" data-filter="audience" data-value="veteran_families" onclick="togglePill(this,'audience')">Veteran Families</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Audience</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="audience" data-value="gold_star_families" onclick="fsTogglePill(this)">Gold Star Families</button>
+        <button class="mh-pill" data-filter="audience" data-value="surviving_spouses" onclick="fsTogglePill(this)">Surviving Spouses</button>
+        <button class="mh-pill" data-filter="audience" data-value="military_spouses" onclick="fsTogglePill(this)">Military Spouses</button>
+        <button class="mh-pill" data-filter="audience" data-value="caregivers" onclick="fsTogglePill(this)">Caregivers</button>
+        <button class="mh-pill" data-filter="audience" data-value="veteran_families" onclick="fsTogglePill(this)">Veteran Families</button>
       </div>
     </div>
 
-    <div class="fam-filter-group">
-      <div class="fam-filter-group-label">Category</div>
-      <div class="fam-filter-pills" id="pillsCategory">
-        <button class="fam-pill" data-filter="category" data-value="grief_bereavement" onclick="togglePill(this,'category')">Grief &amp; Bereavement</button>
-        <button class="fam-pill" data-filter="category" data-value="mental_health" onclick="togglePill(this,'category')">Mental Health</button>
-        <button class="fam-pill" data-filter="category" data-value="financial_assistance" onclick="togglePill(this,'category')">Financial</button>
-        <button class="fam-pill" data-filter="category" data-value="survivor_benefits" onclick="togglePill(this,'category')">Survivor Benefits</button>
-        <button class="fam-pill" data-filter="category" data-value="caregiver_support" onclick="togglePill(this,'category')">Caregiver Support</button>
-        <button class="fam-pill" data-filter="category" data-value="employment_education" onclick="togglePill(this,'category')">Employment &amp; Ed</button>
-        <button class="fam-pill" data-filter="category" data-value="children_youth" onclick="togglePill(this,'category')">Children &amp; Youth</button>
-        <button class="fam-pill" data-filter="category" data-value="housing" onclick="togglePill(this,'category')">Housing</button>
-        <button class="fam-pill" data-filter="category" data-value="legal_services" onclick="togglePill(this,'category')">Legal Services</button>
-        <button class="fam-pill" data-filter="category" data-value="community_connection" onclick="togglePill(this,'category')">Community</button>
-        <button class="fam-pill" data-filter="category" data-value="crisis_emergency" onclick="togglePill(this,'category')">Crisis &amp; Emergency</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Category</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="category" data-value="grief_bereavement" onclick="fsTogglePill(this)">Grief &amp; Bereavement</button>
+        <button class="mh-pill" data-filter="category" data-value="mental_health" onclick="fsTogglePill(this)">Mental Health</button>
+        <button class="mh-pill" data-filter="category" data-value="financial_assistance" onclick="fsTogglePill(this)">Financial</button>
+        <button class="mh-pill" data-filter="category" data-value="survivor_benefits" onclick="fsTogglePill(this)">Survivor Benefits</button>
+        <button class="mh-pill" data-filter="category" data-value="caregiver_support" onclick="fsTogglePill(this)">Caregiver Support</button>
+        <button class="mh-pill" data-filter="category" data-value="employment_education" onclick="fsTogglePill(this)">Employment &amp; Ed</button>
+        <button class="mh-pill" data-filter="category" data-value="children_youth" onclick="fsTogglePill(this)">Children &amp; Youth</button>
+        <button class="mh-pill" data-filter="category" data-value="housing" onclick="fsTogglePill(this)">Housing</button>
+        <button class="mh-pill" data-filter="category" data-value="legal_services" onclick="fsTogglePill(this)">Legal Services</button>
+        <button class="mh-pill" data-filter="category" data-value="community_connection" onclick="fsTogglePill(this)">Community</button>
+        <button class="mh-pill" data-filter="category" data-value="crisis_emergency" onclick="fsTogglePill(this)">Crisis &amp; Emergency</button>
       </div>
     </div>
 
-    <div class="fam-filter-group">
-      <div class="fam-filter-group-label">Location</div>
-      <div class="fam-filter-pills" id="pillsLocation">
-        <button class="fam-pill" data-filter="location" data-value="national" onclick="togglePill(this,'location')">National</button>
-        <button class="fam-pill" data-filter="location" data-value="CA" onclick="togglePill(this,'location')">California</button>
-        <button class="fam-pill" data-filter="location" data-value="GA" onclick="togglePill(this,'location')">Georgia</button>
-        <button class="fam-pill" data-filter="location" data-value="MA" onclick="togglePill(this,'location')">Massachusetts</button>
-        <button class="fam-pill" data-filter="location" data-value="VA" onclick="togglePill(this,'location')">Virginia</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Location</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="location" data-value="national" onclick="fsTogglePill(this)">National</button>
+        <button class="mh-pill" data-filter="location" data-value="CA" onclick="fsTogglePill(this)">California</button>
+        <button class="mh-pill" data-filter="location" data-value="GA" onclick="fsTogglePill(this)">Georgia</button>
+        <button class="mh-pill" data-filter="location" data-value="MA" onclick="fsTogglePill(this)">Massachusetts</button>
+        <button class="mh-pill" data-filter="location" data-value="VA" onclick="fsTogglePill(this)">Virginia</button>
       </div>
     </div>
 
-    <div class="fam-filter-group">
-      <div class="fam-filter-group-label">Format</div>
-      <div class="fam-filter-pills" id="pillsFormat">
-        <button class="fam-pill" data-filter="format" data-value="nonprofit" onclick="togglePill(this,'format')">Nonprofit</button>
-        <button class="fam-pill" data-filter="format" data-value="government" onclick="togglePill(this,'format')">Government</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Format</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="format" data-value="nonprofit" onclick="fsTogglePill(this)">Nonprofit</button>
+        <button class="mh-pill" data-filter="format" data-value="government" onclick="fsTogglePill(this)">Government</button>
       </div>
     </div>
 
-    <div class="fam-result-count" id="sidebarCount">Loading…</div>
+    <div class="mh-result-count" id="fsResultCount">Loading…</div>
   </aside>
 
   <!-- MAIN RESULTS -->
-  <div class="fam-main">
-    <div class="fam-toolbar">
-      <div class="fam-toolbar-left" id="toolbarLabel">Loading resources…</div>
-      <select class="fam-sort-select" id="sortSelect" onchange="applyFilters()">
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <select class="mh-sort-select" id="fsSort" onchange="fsApplyFilters()">
         <option value="default">Sort: Recommended</option>
-        <option value="alpha">Sort: A → Z</option>
-        <option value="category">Sort: Category</option>
+        <option value="alpha">Sort: A–Z</option>
+        <option value="category">Sort: By Category</option>
       </select>
     </div>
 
-    <div class="fam-grid" id="famGrid">
-      <div class="fam-empty"><h3>Loading…</h3></div>
+    <div class="mh-grid" id="fsGrid"></div>
+
+    <div class="mh-empty" id="fsEmpty" style="display:none;">
+      <div class="rp-empty__icon">🔍</div>
+      <p>No resources match your current filters. Try adjusting the audience or category.</p>
+      <button class="mh-clear-btn" onclick="fsClearAll()">Clear Filters</button>
     </div>
 
-    <div class="fam-load-more" id="loadMoreArea" style="display:none;">
-      <button class="fam-load-more-btn" onclick="loadMore()">Load More Resources</button>
+    <div class="mh-load-more" id="fsLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="fsLoadMore()">Load More Resources</button>
     </div>
-  </div>
+  </main>
 
-</div><!-- end fam-page-wrapper -->
+</div>
 
 <!-- FOOTER -->
 <footer class="footer">
@@ -298,210 +300,255 @@
 </footer>
 
 <script>
-/* ── Navbar toggle ── */
+// ── State ──────────────────────────────────────────────────
+var FS_PAGE_SIZE = 24;
+var fsAllResources = [];
+var fsFilteredResources = [];
+var fsVisibleCount = 0;
+var fsActiveQA = null;
+
+var fsFilters = { search: '', audience: new Set(), category: new Set(), location: new Set(), format: new Set() };
+
+// ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
-  const menu = document.getElementById('navMenu');
-  menu.style.display = menu.style.display === 'flex' ? 'none' : 'flex';
-}
-document.querySelectorAll('.navbar__nav a').forEach(link => {
-  link.addEventListener('click', () => {
-    if (window.innerWidth < 768) document.getElementById('navMenu').style.display = 'none';
-  });
-});
-
-/* ── Label maps ── */
-const AUDIENCE_LABELS = {
-  gold_star_families:'Gold Star Families', surviving_spouses:'Surviving Spouses',
-  military_spouses:'Military Spouses', caregivers:'Caregivers', veteran_families:'Veteran Families'
-};
-const CATEGORY_LABELS = {
-  grief_bereavement:'Grief & Bereavement', mental_health:'Mental Health',
-  financial_assistance:'Financial Assistance', housing:'Housing', legal_services:'Legal Services',
-  caregiver_support:'Caregiver Support', employment_education:'Employment & Education',
-  children_youth:'Children & Youth', community_connection:'Community Connection',
-  crisis_emergency:'Crisis & Emergency', survivor_benefits:'Survivor Benefits'
-};
-
-/* ── QA filter map ── */
-const QA_MAP = {
-  crisis:         { type:'category', values:['crisis_emergency'] },
-  gold_star:      { type:'audience', values:['gold_star_families','surviving_spouses'] },
-  military_spouse:{ type:'audience', values:['military_spouses'] },
-  caregiver:      { type:'audience', values:['caregivers'] },
-  benefits:       { type:'category', values:['survivor_benefits','financial_assistance','legal_services'] },
-  top:            { type:'credibility', values:['flagship'] }
-};
-
-/* ── State ── */
-let allResources = [];
-const activeFilters = { audience:null, category:null, location:null, format:null, search:'', qa:null };
-const PAGE_SIZE = 24;
-let visibleCount = PAGE_SIZE;
-
-/* ── Toggle sidebar pill (single-select per group) ── */
-function togglePill(el, filterType) {
-  const val = el.dataset.value;
-  const group = el.closest('.fam-filter-pills');
-  const wasActive = el.classList.contains('active');
-  group.querySelectorAll('.fam-pill').forEach(p => p.classList.remove('active'));
-  // Clear QA when using manual pills
-  clearQAButtons();
-  activeFilters.qa = null;
-  if (!wasActive) {
-    el.classList.add('active');
-    activeFilters[filterType] = val;
-  } else {
-    activeFilters[filterType] = null;
-  }
-  visibleCount = PAGE_SIZE;
-  applyFilters();
+  document.getElementById('navMenu').classList.toggle('active');
 }
 
-/* ── Quick-access buttons ── */
-function setQA(btn) {
-  const qa = btn.dataset.qa;
-  const wasActive = btn.classList.contains('active');
-  clearQAButtons();
-  clearPills();
-  Object.keys(activeFilters).forEach(k => activeFilters[k] = k === 'search' ? activeFilters.search : null);
-  if (!wasActive) {
-    btn.classList.add('active');
-    activeFilters.qa = qa;
-  }
-  visibleCount = PAGE_SIZE;
-  applyFilters();
-}
-function clearQAButtons() {
-  document.querySelectorAll('#qaRow .fam-qa-btn').forEach(b => b.classList.remove('active'));
-}
-function clearPills() {
-  document.querySelectorAll('.fam-pill').forEach(p => p.classList.remove('active'));
-}
-function clearAllFilters() {
-  clearQAButtons(); clearPills();
-  Object.keys(activeFilters).forEach(k => activeFilters[k] = k === 'search' ? '' : null);
-  document.getElementById('famSearchInput').value = '';
-  visibleCount = PAGE_SIZE;
-  applyFilters();
-}
-function onSearch(val) {
-  activeFilters.search = val.trim();
-  visibleCount = PAGE_SIZE;
-  applyFilters();
-}
-
-/* ── HTML escape ── */
+// ── Escape (null-safe) ────────────────────────────────────
 function esc(s) {
   return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-/* ── Render a single card ── */
-function renderCard(r) {
-  const audiences = (r.audience||[]).map(a =>
-    `<span class="fam-badge fam-badge--audience">${esc(AUDIENCE_LABELS[a]||a)}</span>`
-  ).join('');
-  const catLabel = esc(CATEGORY_LABELS[r.category] || r.category);
-  const location = r.state ? `${r.city?esc(r.city)+', ':''}${esc(r.state)}` : esc(r.city||'National');
-  const flagshipBadge = r.credibility_level==='flagship'
-    ? '<span class="fam-card__flagship">Flagship</span>' : '';
-  const link = r.website
-    ? `<a href="${esc(r.website)}" target="_blank" rel="noopener noreferrer" class="fam-card__link">Visit Website →</a>` : '';
-  const contact = r.contact_info
-    ? `<span style="font-size:0.72rem;color:rgba(255,255,255,0.35);">${esc(r.contact_info)}</span>` : '';
-  return `<div class="fam-card aa-card">
-    <div class="fam-card__top">
-      <div class="fam-card__name">${esc(r.name)}</div>${flagshipBadge}
-    </div>
-    <div class="fam-card__meta-row">
-      ${audiences}
-      <span class="fam-badge fam-badge--category">${catLabel}</span>
-      <span class="fam-badge fam-badge--format">${esc(r.format||'')}</span>
-    </div>
-    <div class="fam-card__location">
-      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      ${location}
-    </div>
-    <p class="fam-card__desc">${esc(r.description||'')}</p>
-    ${(link||contact)?`<div class="fam-card__footer">${link}${contact}</div>`:''}
-  </div>`;
+// ── Label maps ────────────────────────────────────────────
+var FS_AUDIENCE_LABELS = {
+  gold_star_families: 'Gold Star Families', surviving_spouses: 'Surviving Spouses',
+  military_spouses: 'Military Spouses', caregivers: 'Caregivers', veteran_families: 'Veteran Families'
+};
+var FS_CATEGORY_LABELS = {
+  grief_bereavement: 'Grief & Bereavement', mental_health: 'Mental Health',
+  financial_assistance: 'Financial Assistance', housing: 'Housing', legal_services: 'Legal Services',
+  caregiver_support: 'Caregiver Support', employment_education: 'Employment & Education',
+  children_youth: 'Children & Youth', community_connection: 'Community Connection',
+  crisis_emergency: 'Crisis & Emergency', survivor_benefits: 'Survivor Benefits'
+};
+
+// ── QA filter map ─────────────────────────────────────────
+var FS_QA_MAP = {
+  crisis:          { type: 'category', values: ['crisis_emergency'] },
+  gold_star:       { type: 'audience', values: ['gold_star_families', 'surviving_spouses'] },
+  military_spouse: { type: 'audience', values: ['military_spouses'] },
+  caregiver:       { type: 'audience', values: ['caregivers'] },
+  benefits:        { type: 'category', values: ['survivor_benefits', 'financial_assistance', 'legal_services'] },
+  top:             { type: 'credibility', values: ['flagship'] }
+};
+
+// ── Pills (Set-based multi-select) ────────────────────────
+function fsTogglePill(btn) {
+  var dim = btn.getAttribute('data-filter');
+  var val = btn.getAttribute('data-value');
+  btn.classList.toggle('active');
+  if (fsFilters[dim].has(val)) {
+    fsFilters[dim].delete(val);
+  } else {
+    fsFilters[dim].add(val);
+  }
+  // Clear QA when using manual pills
+  fsClearQAButtons();
+  fsActiveQA = null;
+  fsApplyFilters();
 }
 
-/* ── Apply all filters and render ── */
-function applyFilters() {
-  const f = activeFilters;
-  const sort = document.getElementById('sortSelect').value;
+// ── Quick Access ──────────────────────────────────────────
+function fsApplyQA(qaKey) {
+  var qa = FS_QA_MAP[qaKey];
+  if (!qa) return;
+  // Clear all pill filters and QA state
+  fsFilters.audience.clear();
+  fsFilters.category.clear();
+  fsFilters.location.clear();
+  fsFilters.format.clear();
+  document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
+  fsClearQAButtons();
 
-  let results = allResources.filter(r => {
-    // QA filter
-    if (f.qa) {
-      const qa = QA_MAP[f.qa];
-      if (qa.type==='audience' && !r.audience.some(a=>qa.values.includes(a))) return false;
-      if (qa.type==='category' && !qa.values.includes(r.category)) return false;
-      if (qa.type==='credibility' && !qa.values.includes(r.credibility_level)) return false;
+  if (fsActiveQA === qaKey) {
+    // Toggle off — already cleared above
+    fsActiveQA = null;
+  } else {
+    fsActiveQA = qaKey;
+    // Highlight the QA button
+    var qaBtns = document.querySelectorAll('#qaRow .fam-qa-btn');
+    qaBtns.forEach(function(b) {
+      if (b.textContent.toLowerCase().indexOf(qaKey === 'gold_star' ? 'gold star' : qaKey === 'military_spouse' ? 'military spouses' : qaKey === 'top' ? 'top recommended' : qaKey) !== -1) {
+        b.classList.add('active');
+      }
+    });
+    // Activate corresponding pills if the QA maps to a pill dimension
+    if (qa.type === 'audience') {
+      qa.values.forEach(function(v) {
+        fsFilters.audience.add(v);
+        var pill = document.querySelector('.mh-pill[data-filter="audience"][data-value="' + v + '"]');
+        if (pill) pill.classList.add('active');
+      });
+    } else if (qa.type === 'category') {
+      qa.values.forEach(function(v) {
+        fsFilters.category.add(v);
+        var pill = document.querySelector('.mh-pill[data-filter="category"][data-value="' + v + '"]');
+        if (pill) pill.classList.add('active');
+      });
     }
-    // Pill filters
-    if (f.audience && !r.audience.includes(f.audience)) return false;
-    if (f.category && r.category!==f.category) return false;
-    if (f.location) {
-      if (f.location==='national' && r.state!=='') return false;
-      if (f.location!=='national' && r.state!==f.location) return false;
+    // credibility type has no pills — handled in filter logic
+  }
+  fsApplyFilters();
+}
+
+function fsClearQAButtons() {
+  document.querySelectorAll('#qaRow .fam-qa-btn').forEach(function(b) { b.classList.remove('active'); });
+}
+
+// ── Clear All ─────────────────────────────────────────────
+function fsClearAll() {
+  fsFilters.search = '';
+  fsFilters.audience.clear();
+  fsFilters.category.clear();
+  fsFilters.location.clear();
+  fsFilters.format.clear();
+  fsActiveQA = null;
+  document.getElementById('fsSearch').value = '';
+  document.getElementById('fsSort').value = 'default';
+  document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
+  fsClearQAButtons();
+  fsApplyFilters();
+}
+
+// ── Filter + Sort ─────────────────────────────────────────
+function fsApplyFilters() {
+  fsFilters.search = (document.getElementById('fsSearch').value || '').toLowerCase();
+  var q = fsFilters.search;
+  var hasAudience = fsFilters.audience.size > 0;
+  var hasCategory = fsFilters.category.size > 0;
+  var hasLocation = fsFilters.location.size > 0;
+  var hasFormat = fsFilters.format.size > 0;
+  var isCredQA = fsActiveQA && FS_QA_MAP[fsActiveQA] && FS_QA_MAP[fsActiveQA].type === 'credibility';
+
+  fsFilteredResources = fsAllResources.filter(function(r) {
+    // Credibility-based QA filter (e.g. "top" = flagship only)
+    if (isCredQA) {
+      var cqa = FS_QA_MAP[fsActiveQA];
+      if (cqa.values.indexOf(r.credibility_level) === -1) return false;
     }
-    if (f.format && r.format!==f.format) return false;
+    // Audience: within-dimension OR (resource has array field)
+    if (hasAudience) {
+      var audMatch = false;
+      (r.audience || []).forEach(function(a) { if (fsFilters.audience.has(a)) audMatch = true; });
+      if (!audMatch) return false;
+    }
+    // Category: within-dimension OR
+    if (hasCategory && !fsFilters.category.has(r.category)) return false;
+    // Location: within-dimension OR
+    if (hasLocation) {
+      var locMatch = false;
+      if (fsFilters.location.has('national') && r.state === '') locMatch = true;
+      if (r.state && fsFilters.location.has(r.state)) locMatch = true;
+      if (!locMatch) return false;
+    }
+    // Format: within-dimension OR
+    if (hasFormat && !fsFilters.format.has(r.format)) return false;
     // Search
-    if (f.search) {
-      const q=f.search.toLowerCase();
-      if (![r.name,r.description,r.category,...(r.audience||[])].join(' ').toLowerCase().includes(q)) return false;
+    if (q) {
+      var hay = [r.name, r.description, r.category, (r.audience || []).join(' '), r.city, r.state, (r.tags || []).join(' ')].join(' ').toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
     }
     return true;
   });
 
   // Sort
-  if (sort==='alpha') results.sort((a,b)=>a.name.localeCompare(b.name));
-  else if (sort==='category') results.sort((a,b)=>a.category.localeCompare(b.category));
-  else results.sort((a,b)=>(a.credibility_level==='flagship'?0:1)-(b.credibility_level==='flagship'?0:1));
-
-  const total = results.length;
-  const shown = results.slice(0, visibleCount);
-
-  // Toolbar
-  const activeLabel = f.qa ? Object.keys(QA_MAP).includes(f.qa) ? '' : '' : '';
-  document.getElementById('toolbarLabel').innerHTML =
-    `Showing <strong>${shown.length}</strong> of <strong>${total}</strong> resources`;
-  document.getElementById('sidebarCount').innerHTML =
-    `<strong>${total}</strong> resource${total!==1?'s':''}`;
-
-  // Grid
-  const grid = document.getElementById('famGrid');
-  if (total===0) {
-    grid.innerHTML=`<div class="fam-empty"><h3>No resources found</h3><p>Try adjusting your filters.</p></div>`;
+  var sortVal = document.getElementById('fsSort').value;
+  if (sortVal === 'alpha') {
+    fsFilteredResources.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
+  } else if (sortVal === 'category') {
+    fsFilteredResources.sort(function(a, b) {
+      var c = (a.category || '').localeCompare(b.category || '');
+      return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
+    });
   } else {
-    grid.innerHTML = shown.map(renderCard).join('');
+    // Default: flagship first, then alphabetical
+    fsFilteredResources.sort(function(a, b) {
+      var ca = a.credibility_level === 'flagship' ? 0 : 1;
+      var cb = b.credibility_level === 'flagship' ? 0 : 1;
+      if (ca !== cb) return ca - cb;
+      return (a.name || '').localeCompare(b.name || '');
+    });
   }
 
-  // Load more
-  const lma = document.getElementById('loadMoreArea');
-  lma.style.display = total > visibleCount ? 'block' : 'none';
+  fsVisibleCount = 0;
+  document.getElementById('fsGrid').innerHTML = '';
+  fsLoadMore();
+  fsUpdateCount();
 }
 
-function loadMore() {
-  visibleCount += PAGE_SIZE;
-  applyFilters();
+// ── Card renderer ─────────────────────────────────────────
+function fsRenderCard(r) {
+  var audiences = (r.audience || []).map(function(a) {
+    return '<span class="fam-badge fam-badge--audience">' + esc(FS_AUDIENCE_LABELS[a] || a) + '</span>';
+  }).join('');
+  var catLabel = esc(FS_CATEGORY_LABELS[r.category] || r.category);
+  var location = r.state ? (r.city ? esc(r.city) + ', ' : '') + esc(r.state) : esc(r.city || 'National');
+  var flagshipBadge = r.credibility_level === 'flagship'
+    ? '<span class="fam-card__flagship">Flagship</span>' : '';
+  var link = r.website
+    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="fam-card__link">Visit Website →</a>' : '';
+  var contact = r.contact_info
+    ? '<span style="font-size:0.72rem;color:rgba(255,255,255,0.35);">' + esc(r.contact_info) + '</span>' : '';
+
+  return '<div class="fam-card aa-card">' +
+    '<div class="fam-card__top">' +
+      '<div class="fam-card__name">' + esc(r.name) + '</div>' + flagshipBadge +
+    '</div>' +
+    '<div class="fam-card__meta-row">' +
+      audiences +
+      '<span class="fam-badge fam-badge--category">' + catLabel + '</span>' +
+      '<span class="fam-badge fam-badge--format">' + esc(r.format || '') + '</span>' +
+    '</div>' +
+    '<div class="fam-card__location">' +
+      '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>' +
+      location +
+    '</div>' +
+    '<p class="fam-card__desc">' + esc(r.description || '') + '</p>' +
+    ((link || contact) ? '<div class="fam-card__footer">' + link + contact + '</div>' : '') +
+  '</div>';
 }
 
-/* ── Load JSON data ── */
+// ── Load More ─────────────────────────────────────────────
+function fsLoadMore() {
+  var grid = document.getElementById('fsGrid');
+  var batch = fsFilteredResources.slice(fsVisibleCount, fsVisibleCount + FS_PAGE_SIZE);
+  batch.forEach(function(r) { grid.insertAdjacentHTML('beforeend', fsRenderCard(r)); });
+  fsVisibleCount += batch.length;
+  document.getElementById('fsLoadMore').style.display = fsVisibleCount < fsFilteredResources.length ? '' : 'none';
+  document.getElementById('fsEmpty').style.display = fsFilteredResources.length === 0 ? 'block' : 'none';
+}
+
+function fsUpdateCount() {
+  var el = document.getElementById('fsResultCount');
+  el.textContent = fsFilteredResources.length === fsAllResources.length
+    ? 'Showing all ' + fsAllResources.length + ' resources'
+    : 'Showing ' + fsFilteredResources.length + ' of ' + fsAllResources.length + ' resources';
+}
+
+// ── Init (external JSON) ─────────────────────────────────
 Promise.all([
-  fetch('families_support_database.json').then(r=>r.json()),
-  fetch('families_support_curated.json').then(r=>r.json())
-]).then(([db]) => {
-  allResources = db.resources || [];
+  fetch('data/families-support.json').then(function(r) { return r.json(); }),
+  fetch('data/families-support-curated.json').then(function(r) { return r.json(); })
+]).then(function(results) {
+  var db = results[0];
+  fsAllResources = Array.isArray(db.resources) ? db.resources : [];
   // Default: show top recommended (flagship)
-  document.querySelector('[data-qa="top"]').classList.add('active');
-  activeFilters.qa = 'top';
-  applyFilters();
-}).catch(err => {
-  document.getElementById('famGrid').innerHTML =
-    `<div class="fam-empty"><h3>Could not load resources</h3><p>Please refresh the page.</p></div>`;
+  fsActiveQA = 'top';
+  fsApplyQA('top');
+}).catch(function(err) {
   console.error('Families data error:', err);
+  document.getElementById('fsGrid').innerHTML =
+    '<div class="mh-empty"><p>Could not load resources. Please refresh the page.</p></div>';
 });
 </script>
 

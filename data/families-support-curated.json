@@ -1,0 +1,117 @@
+{
+  "metadata": {
+    "title": "AfterActionAI Families & Survivors \u2014 Curated Resource Groups",
+    "version": "1.0",
+    "generated": "2026-03",
+    "description": "Five hand-curated groups of highest-priority resources for key audience segments"
+  },
+  "groups": [
+    {
+      "group_id": "CUR-01",
+      "group_name": "Gold Star & Surviving Spouse \u2014 First Calls",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses"
+      ],
+      "description": "The most critical organizations to contact immediately after the loss of a service member. These flagships cover grief support, survivor benefits, housing, and financial relief.",
+      "resources": [
+        "FAM-001",
+        "FAM-002",
+        "FAM-003",
+        "FAM-022",
+        "FAM-023",
+        "FAM-024",
+        "FAM-025",
+        "FAM-012",
+        "FAM-087",
+        "FAM-100"
+      ]
+    },
+    {
+      "group_id": "CUR-02",
+      "group_name": "Military Caregiver Toolkit",
+      "audience": [
+        "caregivers"
+      ],
+      "description": "The complete support system for family members caring for a wounded, ill, or injured veteran. Covers stipends, respite, peer support, TBI resources, and mental health.",
+      "resources": [
+        "FAM-027",
+        "FAM-028",
+        "FAM-029",
+        "FAM-067",
+        "FAM-088",
+        "FAM-089",
+        "FAM-076",
+        "FAM-077",
+        "FAM-030",
+        "FAM-097"
+      ]
+    },
+    {
+      "group_id": "CUR-03",
+      "group_name": "Military Spouse Career & Community",
+      "audience": [
+        "military_spouses"
+      ],
+      "description": "Top resources for military spouses navigating career challenges, isolation, and frequent moves. Covers scholarships, employment programs, mentoring, and community connection.",
+      "resources": [
+        "FAM-032",
+        "FAM-033",
+        "FAM-036",
+        "FAM-073",
+        "FAM-095",
+        "FAM-026",
+        "FAM-019",
+        "FAM-018",
+        "FAM-034",
+        "FAM-099"
+      ]
+    },
+    {
+      "group_id": "CUR-04",
+      "group_name": "Children & Youth of Military Families",
+      "audience": [
+        "gold_star_families",
+        "veteran_families",
+        "military_spouses"
+      ],
+      "description": "Scholarships, grief camps, and support programs specifically designed for the children of fallen, wounded, or serving military members.",
+      "resources": [
+        "FAM-059",
+        "FAM-004",
+        "FAM-008",
+        "FAM-060",
+        "FAM-061",
+        "FAM-062",
+        "FAM-063",
+        "FAM-064",
+        "FAM-069",
+        "FAM-074"
+      ]
+    },
+    {
+      "group_id": "CUR-05",
+      "group_name": "Crisis Lines & Benefits Navigation",
+      "audience": [
+        "gold_star_families",
+        "surviving_spouses",
+        "military_spouses",
+        "caregivers",
+        "veteran_families"
+      ],
+      "description": "Immediate crisis resources and the most important government benefit programs every military family should know. Call these first in an emergency or benefits question.",
+      "resources": [
+        "FAM-043",
+        "FAM-044",
+        "FAM-045",
+        "FAM-094",
+        "FAM-022",
+        "FAM-023",
+        "FAM-092",
+        "FAM-093",
+        "FAM-055",
+        "FAM-087"
+      ]
+    }
+  ]
+}
