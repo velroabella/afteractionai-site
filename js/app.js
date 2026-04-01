@@ -1852,13 +1852,17 @@
 
     var apiPromise = callChatEndpoint(conversationHistory);
 
-    apiPromise.then(function(aiResponse) {
-      log('sendToAI', 'API returned ' + aiResponse.length + ' chars');
+    apiPromise.then(function(apiResult) {
+      var aiResponse = (apiResult && typeof apiResult === 'object') ? (apiResult.text || '') : (apiResult || '');
+      var _p41Structured = (apiResult && typeof apiResult === 'object') ? (apiResult.structured || null) : null;
+      log('sendToAI', 'API returned ' + aiResponse.length + ' chars' +
+        (_p41Structured ? ' [+structured]' : ''));
       removeTyping();
       conversationHistory.push({ role: 'assistant', content: aiResponse });
 
-      // ── Phase 47: Structured Response Contract ─────────────────────
-      // Parse the raw AI response into a structured contract object.
+      // ── Phase 47 / 4.1: Structured Response Contract ───────────────
+      // Phase 4.1: prefer Claude tool_use structured output when present.
+      // Phase 47 regex fallback used when structured is null.
       // This is ADDITIVE — the raw aiResponse string is still passed to
       // streamMessage unchanged. The contract enriches downstream systems.
       var _p47Contract = null;
@@ -1875,11 +1879,20 @@
           if (window.AIOS.Mission) {
             _p47Ctx.mission = window.AIOS.Mission.current || null;
           }
-          _p47Contract = window.AIOS.ResponseContract.parse(aiResponse, _p47Ctx);
-          console.log('[AIOS][CONTRACT] mode=' + _p47Contract.mode +
-            ' | confidence=' + _p47Contract.confidence.toFixed(2) +
-            ' | actions=' + (_p47Contract.recommended_actions ? _p47Contract.recommended_actions.length : 0) +
-            ' | missionSignal=' + !!_p47Contract.mission_signals);
+          if (_p41Structured) {
+            _p47Contract = _buildContractFromStructured(_p41Structured, aiResponse);
+            window.AIOS._lastStructured = _p41Structured;
+            console.log('[AIOS][STRUCTURED] mode=' + _p47Contract.mode +
+              ' | checklist_items=' + (_p41Structured.checklist_items ? _p41Structured.checklist_items.length : 0) +
+              ' | missions=' + (_p41Structured.missions ? _p41Structured.missions.length : 0) +
+              ' | report_ready=' + !!_p41Structured.report_ready);
+          } else {
+            _p47Contract = window.AIOS.ResponseContract.parse(aiResponse, _p47Ctx);
+            console.log('[AIOS][CONTRACT] mode=' + _p47Contract.mode +
+              ' | confidence=' + _p47Contract.confidence.toFixed(2) +
+              ' | actions=' + (_p47Contract.recommended_actions ? _p47Contract.recommended_actions.length : 0) +
+              ' | missionSignal=' + !!_p47Contract.mission_signals);
+          }
 
           // Mission extraction — create or update missions from the response
           if (window.AIOS.MissionExtractor) {
@@ -2318,9 +2331,47 @@
       if (!resp.ok) throw new Error('Chat endpoint error: ' + resp.status);
       return resp.json();
     }).then(function(data) {
-      log('callChatEndpoint', 'response received, length=' + (data.response || '').length);
-      return data.response;
+      log('callChatEndpoint', 'response received, length=' + (data.response || '').length +
+        (data.structured ? ' [+structured mode=' + data.structured.mode + ']' : ''));
+      return { text: data.response || '', structured: data.structured || null };
     });
+  }
+
+  // ── Phase 4.1: Build ResponseContract from structured tool output ──────────
+  function _buildContractFromStructured(structured, rawText) {
+    var actions = null;
+    if (structured.actions && structured.actions.length > 0) {
+      actions = structured.actions.map(function(a, i) {
+        return { step: a.step || (i + 1), text: a.text, isAction: a.is_action !== false };
+      });
+    }
+    var missionSignals = null;
+    if (structured.missions && structured.missions.length > 0) {
+      var m = structured.missions[0];
+      missionSignals = {
+        suggestedType: m.type || null,
+        stepUpdate: m.next_step ? { nextStep: m.next_step } : null,
+        blockers: m.blockers || [],
+        action: m.action || 'none'
+      };
+    }
+    return {
+      mode: structured.mode || 'conversation',
+      raw: rawText,
+      summary: structured.report_ready ? 'Personalized veteran benefits report generated.' : '',
+      options: (structured.options && structured.options.length) ? structured.options : null,
+      recommended_actions: actions,
+      follow_up_question: structured.follow_up_question || null,
+      resources: null,
+      risk_flags: (structured.risk_flags && structured.risk_flags.length) ? structured.risk_flags : null,
+      mission_signals: missionSignals,
+      checklist_items: structured.checklist_items || null,
+      report_ready: structured.report_ready || false,
+      confidence: 0.95,
+      missing_information: null,
+      timestamp: Date.now(),
+      _source: 'structured'
+    };
   }
 
   // ══════════════════════════════════════════════════════

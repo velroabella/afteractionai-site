@@ -135,6 +135,92 @@ ALWAYS end with one of: a direct question, a specific next step, or OPTIONS butt
 Do NOT say "let me know if you have questions," "feel free to ask," or any passive close.
 The conversation must always move forward.`;
 
+// ── Phase 4.1: Structured Output Tool ─────────────────────────────────────
+// Claude calls this alongside its text response whenever the response contains
+// actionable structured content — missions, checklists, actions, reports.
+// tool_choice: "auto" — Claude decides when to call it; never forced.
+const STRUCTURED_TOOL = {
+  name: 'record_structured_output',
+  description: 'Record structured metadata from this response for the veteran case management system. Call this tool alongside your text response whenever the response contains: numbered action steps, mission updates, checklist items for the veteran, a complete benefits report, options for the veteran to choose from, or a crisis response. Do NOT call it for short conversational replies with no actionable content.',
+  input_schema: {
+    type: 'object',
+    properties: {
+      mode: {
+        type: 'string',
+        enum: ['conversation', 'intake', 'report', 'template', 'skill_action', 'crisis'],
+        description: 'Primary type of this response'
+      },
+      missions: {
+        type: 'array',
+        description: 'Mission updates suggested by this response',
+        items: {
+          type: 'object',
+          properties: {
+            action:    { type: 'string', enum: ['create', 'update', 'complete', 'none'] },
+            type:      { type: 'string', description: 'Mission type slug (e.g. disability_claim, education_path, housing_path, employment_transition)' },
+            next_step: { type: 'string', description: 'The next concrete step for this mission' },
+            blockers:  { type: 'array', items: { type: 'string' }, description: 'Things preventing progress' }
+          },
+          required: ['action']
+        }
+      },
+      checklist_items: {
+        type: 'array',
+        description: 'Action items the veteran should complete, extracted from this response',
+        items: {
+          type: 'object',
+          properties: {
+            title:       { type: 'string', description: 'Short action title (under 80 chars)' },
+            category:    { type: 'string', enum: ['immediate', 'short_term', 'strategic', 'optional'] },
+            description: { type: 'string', description: 'Optional detail or context' }
+          },
+          required: ['title', 'category']
+        }
+      },
+      actions: {
+        type: 'array',
+        description: 'Numbered action steps explicitly listed in this response',
+        items: {
+          type: 'object',
+          properties: {
+            step:      { type: 'integer' },
+            text:      { type: 'string' },
+            is_action: { type: 'boolean', description: 'True if this step starts with an action verb (call, file, submit, etc.)' }
+          },
+          required: ['step', 'text']
+        }
+      },
+      options: {
+        type: 'array',
+        description: 'Choice options presented to the veteran — mirrors the [OPTIONS: ...] block',
+        items: { type: 'string' }
+      },
+      follow_up_question: {
+        type: 'string',
+        description: 'The primary question being asked of the veteran in this response'
+      },
+      risk_flags: {
+        type: 'array',
+        description: 'Risk signals present: crisis_response, has_deadline, appeal_context, housing_instability',
+        items: { type: 'string' }
+      },
+      report_ready: {
+        type: 'boolean',
+        description: 'True only when this response IS a complete personalized veteran benefits report'
+      }
+    },
+    required: ['mode']
+  }
+};
+
+// Brief server-side instruction appended to the system prompt when tools are active.
+// Kept short to respect the existing token budget.
+const TOOLS_SYSTEM_SUFFIX = `
+
+## STRUCTURED OUTPUT — REQUIRED WHEN APPLICABLE
+You have the record_structured_output tool. Call it alongside your text response whenever your response contains ANY of the following: numbered action steps or a next-step instruction (→ actions[] / missions[]), items the veteran should work on (→ checklist_items[]), a complete personalized report (→ mode="report", report_ready=true), options for the veteran (→ options[]), or a crisis response (→ mode="crisis", risk_flags=["crisis_response"]).
+Write your full conversational text response first. The tool call is supplemental metadata — never a replacement for your text.`;
+
 // Standard CORS headers
 const HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -170,6 +256,8 @@ exports.handler = async (event) => {
     if (body.system_suffix) {
       systemPrompt = systemPrompt + body.system_suffix;
     }
+    // Phase 4.1: append tool instruction suffix
+    systemPrompt = systemPrompt + TOOLS_SYSTEM_SUFFIX;
 
     if (!messages || !Array.isArray(messages)) {
       return { statusCode: 400, headers: HEADERS, body: JSON.stringify({ error: 'Messages array required' }) };
@@ -183,6 +271,7 @@ exports.handler = async (event) => {
         headers: HEADERS,
         body: JSON.stringify({
           response: getMockResponse(messages),
+          structured: null,
           mock: true,
           usage: { input_tokens: 0, output_tokens: 0 }
         })
@@ -203,7 +292,9 @@ exports.handler = async (event) => {
         model: MODEL,
         max_tokens: MAX_TOKENS,
         system: systemPrompt,
-        messages: trimmedMessages
+        messages: trimmedMessages,
+        tools: [STRUCTURED_TOOL],
+        tool_choice: { type: 'auto' }
       })
     });
 
@@ -218,6 +309,7 @@ exports.handler = async (event) => {
           headers: HEADERS,
           body: JSON.stringify({
             response: "I'm having trouble connecting to my AI backend. The API key may need to be updated. If you need immediate help, call the Veterans Crisis Line at 988 (Press 1).",
+            structured: null,
             mock: true,
             usage: { input_tokens: 0, output_tokens: 0 }
           })
@@ -232,13 +324,32 @@ exports.handler = async (event) => {
     }
 
     const data = await response.json();
-    const aiResponse = data.content[0].text;
+
+    // Phase 4.1: extract text content and structured tool_use separately
+    let aiResponse = '';
+    let structuredOutput = null;
+
+    if (data.content && Array.isArray(data.content)) {
+      for (const block of data.content) {
+        if (block.type === 'text') {
+          aiResponse += block.text;
+        } else if (block.type === 'tool_use' && block.name === 'record_structured_output') {
+          structuredOutput = block.input || null;
+        }
+      }
+    }
+
+    // Fallback: older single-block response shape
+    if (!aiResponse && data.content && data.content[0] && data.content[0].text) {
+      aiResponse = data.content[0].text;
+    }
 
     return {
       statusCode: 200,
       headers: HEADERS,
       body: JSON.stringify({
         response: aiResponse,
+        structured: structuredOutput,
         usage: {
           input_tokens: data.usage.input_tokens,
           output_tokens: data.usage.output_tokens
