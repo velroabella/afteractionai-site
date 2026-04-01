@@ -545,31 +545,58 @@
       window.AAAI._activeCaseId = _activeCaseId;
       log('Phase2', 'active case resolved — id: ' + _activeCaseId + ' title: ' + result.data.title);
 
-      // PHASE 3.2 — Restore active mission from DB into AIOS.Mission.current
-      // Without this, every page reload nulls Mission.current, causing the keyword
-      // detector to INSERT a duplicate mission row on the next user message.
-      // Restoring from DB gives Mission.current._dbId so the sync/complete/
-      // checklistItems.saveBatch paths all work from turn one.
+      // PHASE 3.2 — Restore ALL active missions from DB (multi-mission support)
+      // Loads every 'active' row into AIOS.Mission array via the getter/setter.
+      // Benefits:
+      //   1. getByType() dedup guard prevents duplicate INSERTs on detection
+      //   2. _dbId present from turn one — sync/complete/saveBatch all work
+      //   3. Multiple mission types (disability + education + housing) all restored
+      // list() is ASC by started_at — last setter call makes most recent the focus.
+      // Guard: only runs if no missions loaded yet (_missions array is empty).
       // Fire-and-forget — failure never blocks the conversation flow.
-      if (window.AIOS && window.AIOS.Mission && !window.AIOS.Mission.current) {
-        AAAI.DataAccess.missions.list(_activeCaseId, { status: 'active' })
-          .then(function(mResult) {
-            if (mResult.error || !mResult.data || mResult.data.length === 0) {
-              log('Phase3.2', 'no active DB mission to restore — fresh detection active');
-              return;
-            }
-            // list() orders ASC by started_at — last element is most recent active mission
-            var row = mResult.data[mResult.data.length - 1];
-            var restored = AAAI.DataAccess.missions.toMemoryShape(row);
-            if (!window.AIOS.Mission.current) { // race guard: another path may have set it
-              window.AIOS.Mission.current = restored;
-              log('Phase3.2', 'mission restored — type: ' + restored.type +
-                  ' | dbId: ' + restored._dbId + ' | step: ' + (restored.currentStep || 'none'));
-              // Let profile dashboard re-render if it has already loaded
-              window.dispatchEvent(new CustomEvent('aaai:mission_state_synced'));
-            }
-          })
-          .catch(function() { /* non-critical — keyword detection still creates fresh missions */ });
+      if (window.AIOS && window.AIOS.Mission) {
+        var _hasMissions = typeof window.AIOS.Mission.getAll === 'function'
+          ? window.AIOS.Mission.getAll().length > 0
+          : !!window.AIOS.Mission.current;
+        if (!_hasMissions) {
+          AAAI.DataAccess.missions.list(_activeCaseId, { status: 'active' })
+            .then(function(mResult) {
+              if (mResult.error || !mResult.data || mResult.data.length === 0) {
+                log('Phase3.2', 'no active DB missions — fresh detection active');
+                return;
+              }
+              // Iterate oldest→newest (ASC) so Mission.current ends up as most recent
+              var _restoredCount = 0;
+              mResult.data.forEach(function(row) {
+                var alreadyIn = typeof window.AIOS.Mission.getById === 'function'
+                  ? window.AIOS.Mission.getById(row.id)
+                  : null;
+                if (!alreadyIn) {
+                  window.AIOS.Mission.current = AAAI.DataAccess.missions.toMemoryShape(row);
+                  _restoredCount++;
+                }
+              });
+              if (_restoredCount > 0) {
+                // Fix 2: explicit active mission guarantee — if setter did not
+                // set _activeMemId for any reason, force focus to the most recent
+                if (!window.AIOS.Mission.current &&
+                    typeof window.AIOS.Mission.getAll === 'function') {
+                  var _all = window.AIOS.Mission.getAll();
+                  if (_all.length > 0) {
+                    var _latest = _all[_all.length - 1];
+                    if (typeof window.AIOS.Mission.setActive === 'function' && _latest._memId) {
+                      window.AIOS.Mission.setActive(_latest._memId);
+                    }
+                  }
+                }
+                var _focused = window.AIOS.Mission.current;
+                log('Phase3.2', _restoredCount + ' mission(s) restored' +
+                  (_focused ? ' | focused: ' + _focused.type + ' | dbId: ' + _focused._dbId : ''));
+                window.dispatchEvent(new CustomEvent('aaai:mission_state_synced'));
+              }
+            })
+            .catch(function() { /* non-critical */ });
+        }
       }
 
       // PHASE 2 MIGRATION HELPER - Step 4
@@ -1070,29 +1097,36 @@
       }
 
       // ── 2. Mission detection ──────────────────────────
+      // Phase 3.2: removed !Mission.current outer gate — now allows multiple
+      // mission types simultaneously. Type-based dedup prevents duplicates.
       if (window.AIOS.Mission &&
-          typeof window.AIOS.Mission.detectMissionFromInput === 'function' &&
-          !window.AIOS.Mission.current) {
+          typeof window.AIOS.Mission.detectMissionFromInput === 'function') {
         var _mSeed = window.AIOS.Mission.detectMissionFromInput(transcript);
         if (_mSeed && typeof window.AIOS.Mission.createMission === 'function') {
-          var _newMission = window.AIOS.Mission.createMission(_mSeed.type);
-          if (_newMission) {
-            window.AIOS.Mission.current = _newMission;
-            log('AIOS:VOICE', 'mission: ' + _mSeed.type + ' matched="' + _mSeed.matched + '"');
+          // Only create if no non-archived mission of this type already exists
+          var _voiceExisting = typeof window.AIOS.Mission.getByType === 'function'
+            ? window.AIOS.Mission.getByType(_mSeed.type)
+            : window.AIOS.Mission.current;
+          if (!_voiceExisting) {
+            var _newMission = window.AIOS.Mission.createMission(_mSeed.type);
+            if (_newMission) {
+              window.AIOS.Mission.current = _newMission;
+              log('AIOS:VOICE', 'mission: ' + _mSeed.type + ' matched="' + _mSeed.matched + '"');
 
-            // PHASE 2 - Use new persistent layer if activeCaseId present
-            // Persist the new mission to Supabase alongside the in-memory state.
-            // Fire-and-forget — failure never blocks voice flow.
-            if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
-              (function(_m) {
-                window.AAAI.DataAccess.missions.create(_activeCaseId, _m)
-                  .then(function(r) {
-                    if (!r.error && r.data && r.data.id) {
-                      _m._dbId = r.data.id; // attach DB UUID for future sync()
-                      log('Phase2', 'voice mission persisted — ' + _m.type + ' | dbId: ' + r.data.id);
-                    }
-                  }).catch(function() {});
-              })(_newMission);
+              // PHASE 2 - Use new persistent layer if activeCaseId present
+              // Persist the new mission to Supabase alongside the in-memory state.
+              // Fire-and-forget — failure never blocks voice flow.
+              if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
+                (function(_m) {
+                  window.AAAI.DataAccess.missions.create(_activeCaseId, _m)
+                    .then(function(r) {
+                      if (!r.error && r.data && r.data.id) {
+                        _m._dbId = r.data.id; // attach DB UUID for future sync()
+                        log('Phase2', 'voice mission persisted — ' + _m.type + ' | dbId: ' + r.data.id);
+                      }
+                    }).catch(function() {});
+                })(_newMission);
+              }
             }
           }
         }
@@ -1732,28 +1766,36 @@
             window.AIOS.Memory.save().catch(function() {});
           }
         }
-        // Phase 35: Auto-detect mission from user input if none active
-        if (window.AIOS.Mission && !window.AIOS.Mission.isActive() &&
+        // Phase 35 / Phase 3.2: Auto-detect mission — multi-mission aware.
+        // Removed !Mission.isActive() outer gate so multiple types can coexist.
+        // Type-based dedup (getByType) prevents duplicate rows for the same type.
+        if (window.AIOS.Mission &&
             typeof window.AIOS.Mission.detectMissionFromInput === 'function') {
           var _missionSeed = window.AIOS.Mission.detectMissionFromInput(userText);
           if (_missionSeed && _missionSeed.type) {
-            var _newMission = window.AIOS.Mission.createMission(_missionSeed.type);
-            if (_newMission) {
-              window.AIOS.Mission.current = _newMission;
-              log('MISSION', 'auto-created: ' + _newMission.name + ' (matched: ' + _missionSeed.matched + ')');
+            // Only create if no non-archived mission of this type already exists
+            var _textExisting = typeof window.AIOS.Mission.getByType === 'function'
+              ? window.AIOS.Mission.getByType(_missionSeed.type)
+              : (window.AIOS.Mission.isActive() ? window.AIOS.Mission.current : null);
+            if (!_textExisting) {
+              var _newMission = window.AIOS.Mission.createMission(_missionSeed.type);
+              if (_newMission) {
+                window.AIOS.Mission.current = _newMission;
+                log('MISSION', 'auto-created: ' + _newMission.name + ' (matched: ' + _missionSeed.matched + ')');
 
-              // PHASE 2 - Use new persistent layer if activeCaseId present
-              // Persist new mission to Supabase. Fire-and-forget — no UI impact.
-              if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
-                (function(_m) {
-                  window.AAAI.DataAccess.missions.create(_activeCaseId, _m)
-                    .then(function(r) {
-                      if (!r.error && r.data && r.data.id) {
-                        _m._dbId = r.data.id; // attach DB UUID for future sync()
-                        log('Phase2', 'text mission persisted — ' + _m.type + ' | dbId: ' + r.data.id);
-                      }
-                    }).catch(function() {});
-                })(_newMission);
+                // PHASE 2 - Use new persistent layer if activeCaseId present
+                // Persist new mission to Supabase. Fire-and-forget — no UI impact.
+                if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
+                  (function(_m) {
+                    window.AAAI.DataAccess.missions.create(_activeCaseId, _m)
+                      .then(function(r) {
+                        if (!r.error && r.data && r.data.id) {
+                          _m._dbId = r.data.id; // attach DB UUID for future sync()
+                          log('Phase2', 'text mission persisted — ' + _m.type + ' | dbId: ' + r.data.id);
+                        }
+                      }).catch(function() {});
+                  })(_newMission);
+                }
               }
             }
           }

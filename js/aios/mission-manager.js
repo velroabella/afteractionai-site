@@ -372,4 +372,135 @@
   window.AIOS = window.AIOS || {};
   window.AIOS.Mission = MissionManager;
 
+  /* ── Phase 3.2: Multi-mission support ─────────────────────
+     Replaces the single `current` plain property with a managed
+     array. `Mission.current` becomes a getter/setter so every
+     existing `Mission.current = x` and `if (Mission.current)`
+     site continues to work unchanged while syncing automatically
+     into the _missions array.
+     ──────────────────────────────────────────────────────── */
+
+  var _missions    = [];   // All in-memory missions (active + archived)
+  var _activeMemId = null; // _memId of the currently focused mission
+  var _memSeq      = 0;    // Monotonic counter — stable in-memory IDs
+
+  function _nextMemId() { return 'mm_' + (++_memSeq); }
+
+  // Redefine `current` as a getter/setter.
+  // All existing code that reads/writes Mission.current is unaffected.
+  delete MissionManager.current;
+  Object.defineProperty(MissionManager, 'current', {
+    get: function() {
+      if (_activeMemId === null) return null;
+      for (var i = 0; i < _missions.length; i++) {
+        if (_missions[i]._memId === _activeMemId) return _missions[i];
+      }
+      return null;
+    },
+    set: function(mission) {
+      if (mission === null || mission === undefined) {
+        _activeMemId = null;
+        return;
+      }
+      // Assign stable in-memory ID if not already present
+      if (!mission._memId) mission._memId = _nextMemId();
+      // Normalize status — default to 'active' if missing or empty
+      if (!mission.status) mission.status = 'active';
+      // Upsert by _memId — repeated assignments to the same object won't duplicate
+      var found = false;
+      for (var i = 0; i < _missions.length; i++) {
+        if (_missions[i]._memId === mission._memId) {
+          _missions[i] = mission;
+          found = true;
+          break;
+        }
+      }
+      if (!found) _missions.push(mission);
+      _activeMemId = mission._memId;
+    },
+    enumerable: true,
+    configurable: true
+  });
+
+  /**
+   * Return all non-archived missions (copy of array).
+   * @param {{ includeArchived?: boolean }} [opts]
+   */
+  MissionManager.getAll = function(opts) {
+    var incl = opts && opts.includeArchived;
+    return _missions.filter(function(m) {
+      return incl || m.status !== 'archived';
+    }).slice();
+  };
+
+  /**
+   * Find the first non-archived mission of the given type.
+   * Used by detection to prevent duplicate type creation.
+   * @param {string} type
+   * @returns {Object|null}
+   */
+  MissionManager.getByType = function(type) {
+    for (var i = 0; i < _missions.length; i++) {
+      if (_missions[i].type === type && _missions[i].status !== 'archived') {
+        return _missions[i];
+      }
+    }
+    return null;
+  };
+
+  /**
+   * Find a mission by its Supabase DB id (_dbId).
+   * @param {string} dbId
+   * @returns {Object|null}
+   */
+  MissionManager.getById = function(dbId) {
+    for (var i = 0; i < _missions.length; i++) {
+      if (_missions[i]._dbId === dbId) return _missions[i];
+    }
+    return null;
+  };
+
+  /**
+   * Switch the focused mission to the one with the given DB id or _memId.
+   * @param {string} id  _dbId or _memId
+   * @returns {Object|null} The focused mission, or null if not found.
+   */
+  MissionManager.setActive = function(id) {
+    for (var i = 0; i < _missions.length; i++) {
+      var m = _missions[i];
+      if (m._dbId === id || m._memId === id) {
+        _activeMemId = m._memId;
+        return m;
+      }
+    }
+    return null;
+  };
+
+  /**
+   * Archive a mission by DB id or _memId. If it was the focused mission,
+   * automatically shift focus to the next available active mission.
+   * @param {string} id  _dbId or _memId
+   * @returns {boolean}
+   */
+  MissionManager.archiveMission = function(id) {
+    for (var i = 0; i < _missions.length; i++) {
+      var m = _missions[i];
+      if (m._dbId === id || m._memId === id) {
+        m.status = 'archived';
+        if (_activeMemId === m._memId) {
+          _activeMemId = null;
+          // Auto-focus the next available active mission
+          for (var j = 0; j < _missions.length; j++) {
+            if (_missions[j]._memId !== m._memId && _missions[j].status === 'active') {
+              _activeMemId = _missions[j]._memId;
+              break;
+            }
+          }
+        }
+        return true;
+      }
+    }
+    return false;
+  };
+
 })();
