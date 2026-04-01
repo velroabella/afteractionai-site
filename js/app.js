@@ -101,7 +101,11 @@
     'When the conversation starts (user sends START_CONVERSATION), say exactly:',
     '"Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service — and build you a personalized plan. Free. No forms. No judgment.',
     '',
-    'Before we dive in, feel free to upload any documents that may help — VA letters, denial letters, DD-214, medical records, legal paperwork, or anything else relevant. Just use the upload button below. The more I have, the fewer questions I\'ll need to ask.',
+    'Before we start, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be — and the fewer questions I\'ll need to ask.',
+    '',
+    'Tap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, resume, bio, VA Disability Rating Letter, VA Benefits Summary, military transcripts, certificates, diplomas, or medical records. I\'ll pull the details automatically.',
+    '',
+    'Upload as many as you want, or none at all — uploads are helpful but not required.',
     '',
     'Let\'s start with the basics — what branch did you serve in?"',
     '',
@@ -1081,10 +1085,25 @@
         // Send resume context so AI picks up where they left off
         sendToAI('RESUME_MISSION');
       } else {
-        // Phase 21: show onboarding card for first-time users
-        _showOnboardingCard();
-        // Text mode: full API opening message
-        sendToAI('START_CONVERSATION');
+        // Phase 5 greeting fix: render welcome immediately — no API latency, no generic card.
+        // addMessage() calls _dismissOnboardCard() internally.
+        // Push to conversationHistory so subsequent AI turns have the opening context.
+        var _sg = [
+          'Welcome to AfterAction AI. I\u2019m here to help you find every benefit, resource, and organization you\u2019ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.',
+          '',
+          'Before we start, here\u2019s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\u2019ll need to ask.',
+          '',
+          'Tap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, resume, bio, VA Disability Rating Letter, VA Benefits Summary, military transcripts, certificates, diplomas, or medical records. I\u2019ll pull the details automatically.',
+          '',
+          'Upload as many as you want, or none at all \u2014 uploads are helpful but not required.',
+          '',
+          'Let\u2019s start with the basics \u2014 what branch did you serve in?',
+          '',
+          '[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\u2019m a family member]'
+        ].join('\n');
+        addMessage(_sg, 'ai');
+        conversationHistory.push({ role: 'assistant', content: _sg });
+        if (!topicBubblesShown) { topicBubblesShown = true; renderTopicBubbles(); }
       }
     }
 
@@ -1466,10 +1485,12 @@
         // Phase 36: threshold lowered to 2 so valid short replies ("yes", "no", "ok",
         // "yep", "nope") are never silently dropped.  Pure-numeric strings (tones/beeps
         // transcribed as digits) and the tightest filler-only patterns are still blocked.
+        // Phase 5 noise fix: expanded filler list + stopword-only pattern.
         var trimmed = (text || '').trim();
         if (trimmed.length < 2 ||
-            /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|mhm+)\s*\.?$/i.test(trimmed) ||
-            /^[\d\s\.\,\!\?\-]+$/.test(trimmed)) {
+            /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|mhm+|mm+|hm+|okay|ok|yeah|yep|nope|hey|hi+|bye+|ugh+|whoa|wow|oh\s+wow|well+|so+|right|sure|cool|great|thanks|thank\s+you)\s*[\.\!\?]?\s*$/i.test(trimmed) ||
+            /^[\d\s\.\,\!\?\-\(\)]+$/.test(trimmed) ||
+            /^(the|a|an|and|or|but|is|it|in|on|at|to|of|for|with|that|this|was|be|are|i|he|she|we|they|you|my|your|his|her|its|our|their|me|him|us|them|what|who|when|where|how|why|yes|no|not|do|did|have|has|had|will|would|could|should|can|may|might|like|just|so|then|there|these|those|some|any|all|no|if|as|by|up|out|about|into|than|more|also|very|too|much|many|now|just|here|from|get|got|go|going|been|being|said|say|know|think|want|need|really|actually|basically|literally|honestly)\s*$/i.test(trimmed)) {
           log('RT.onUserTranscript', 'REJECTED (filler/short/noise): "' + trimmed + '"');
           return;
         }
