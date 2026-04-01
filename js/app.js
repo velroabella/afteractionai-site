@@ -1375,7 +1375,15 @@
       // When structured arrives, upgrades contract from regex → Phase 4.1 quality
       // using the same _buildContractFromStructured() path as the text pipeline.
       // Seq guard ensures stale results from prior responses are discarded.
+      // Phase 5: AbortController + 15s timeout — mirrors callChatEndpoint() pattern.
       (function(_seq, _aiText) {
+        // Phase 5: 15-second AbortController — prevents classification fetch from
+        // hanging indefinitely. Matches the timeout used in callChatEndpoint().
+        var _vtController = new AbortController();
+        var _vtTimeout = setTimeout(function() {
+          _vtController.abort();
+        }, 15000);
+
         fetch(CONFIG.apiEndpoint, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -1387,9 +1395,13 @@
               }
             ],
             system_suffix: '\n\n## VOICE CLASSIFICATION\nThe user message above is a completed AI voice response already delivered to the veteran. Call record_structured_output to classify its content. Write no response text — the tool call is the only output needed.'
-          })
+          }),
+          signal: _vtController.signal
         })
-        .then(function(r) { return r.json(); })
+        .then(function(r) {
+          clearTimeout(_vtTimeout);
+          return r.json();
+        })
         .then(function(data) {
           // Seq guard: discard if a newer voice response has since started processing
           if (_voiceStructuredSeq !== _seq) return;
@@ -1415,6 +1427,12 @@
           }
         })
         .catch(function(e) {
+          clearTimeout(_vtTimeout);
+          if (e.name === 'AbortError') {
+            // Timeout — fail silently. Voice transport and UI are unaffected.
+            console.log('[AIOS][VOICE-STRUCTURED] classification timed out after 15s — ignored');
+            return;
+          }
           console.warn('[AIOS][VOICE-STRUCTURED] classification call failed:', e.message || e);
         });
       })(_vtSeq, aiResponse);
