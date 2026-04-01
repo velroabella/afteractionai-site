@@ -1550,8 +1550,19 @@
     RealtimeVoice.onError = function(error) {
       clearTimeout(_voiceWatchdog);
       log('RT.onError', typeof error === 'string' ? error.substring(0, 200) : String(error));
-      // error is already sanitized upstream (realtime-voice.js + realtime-token.js)
-      setVoiceUI('error', error);
+      // Phase 5: voice error recovery — clean shutdown + guaranteed state reset + text fallback
+      try { if (typeof RealtimeVoice !== 'undefined') RealtimeVoice.disconnect(); } catch(e) {}
+      voiceGreetingSent = false;
+      isProcessing = false;
+      if (btnSend) btnSend.disabled = false;
+      inputMode = 'text';
+      if (chatInputVoice) chatInputVoice.style.display = 'none';
+      if (chatInputText) chatInputText.style.display = 'block';
+      hideCaption();
+      updateModeIcon();
+      setVoiceUI('idle');
+      addMessage('Voice session ended \u2014 switching to text so we can keep going.', 'ai');
+      if (userInput) userInput.focus();
     };
 
     // Connect
