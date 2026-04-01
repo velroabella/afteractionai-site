@@ -3054,8 +3054,13 @@
       if (window.AAAI && window.AAAI.DataAccess && window.AAAI.DataAccess.documents) {
         var _missionId = (window.AIOS.Mission && window.AIOS.Mission.current)
           ? window.AIOS.Mission.current._dbId || null : null;
-        var _caseId = (window.AIOS.Mission && window.AIOS.Mission.current)
-          ? window.AIOS.Mission.current._caseId || null : null;
+        // Prefer _caseId from the restored/active mission object; fall back to
+        // _activeCaseId (module-level, always set on login) so documents are
+        // never orphaned even when no mission is active or _caseId is absent.
+        var _caseId = (window.AIOS.Mission && window.AIOS.Mission.current &&
+                       window.AIOS.Mission.current._caseId)
+          ? window.AIOS.Mission.current._caseId
+          : (_activeCaseId || null);
         window.AAAI.DataAccess.documents.save({
           file_name:       pf.file.name,
           document_type:   _typeId,

@@ -271,6 +271,7 @@
     toMemoryShape: function(row) {
       return {
         _dbId:       row.id,        // keep DB ID alongside in-memory mission
+        _caseId:     row.case_id,   // keep case ID so downstream writes (documents, etc.) have it
         type:        row.mission_type,
         name:        row.name,
         status:      row.status,
