@@ -726,12 +726,43 @@
         _initCaseModel();
       } else {
         // User signed out — clear case context so next session starts fresh
-        _activeCaseId = null;
+        _activeCaseId   = null;
         _checklistDbIds = {};
+        // Phase 3.3: reset ChecklistManager maps on sign-out
+        if (window.AIOS && window.AIOS.Checklist) {
+          window.AIOS.Checklist.reset();
+        }
         // PHASE 2 DEBUG HELPER — keep shared namespace in sync with private var
         if (window.AAAI) { window.AAAI._activeCaseId = null; }
-        log('Phase2', 'user signed out — _activeCaseId cleared'); // PHASE 2 INTEGRATION - Step 4
+        log('Phase2', 'user signed out — _activeCaseId cleared');
       }
+    });
+
+    // Phase 3.3: Late DB id restore — mission loaded AFTER checklist was rendered.
+    // Handles the race where restoreChecklistFromStorage() fires before
+    // _initCaseModel() resolves Mission._dbId. When the mission sync event
+    // fires, check if we still have un-mapped checklist DOM items and fill them.
+    window.addEventListener('aaai:mission_state_synced', function() {
+      if (!window.AIOS || !window.AIOS.Checklist) return;
+      if (window.AIOS.Checklist.hasDbIds()) return;  // already populated
+      var _m = window.AIOS.Mission && window.AIOS.Mission.current;
+      if (!_m || !_m._dbId) return;
+      var _stored = {};
+      try { _stored = JSON.parse(localStorage.getItem(CHECKLIST_STORAGE_KEY) || '{}'); } catch(e) {}
+      if (!_stored.items || !_stored.items.length) return;  // nothing rendered
+      window.AIOS.Checklist.restoreFromDB(_m._dbId)
+        .then(function(r) {
+          if (r && r.data && r.data.length) {
+            _checklistDbIds = {};
+            r.data.forEach(function(row, i) {
+              var idx = (row.sort_order !== undefined && row.sort_order !== null)
+                ? row.sort_order : i;
+              _checklistDbIds[idx] = row.id;
+            });
+            log('Phase3.3', 'late DB id restore — ' + r.data.length + ' items');
+            _applyDbStatusToDOM();
+          }
+        }).catch(function() {});
     });
 
     log('init', 'complete — RealtimeVoice available: ' + (typeof window.RealtimeVoice !== 'undefined'));
@@ -3345,9 +3376,51 @@
       renderChecklistItems(stored.items);
       loadChecklistState();
       updateChecklistProgress();
+
+      // Phase 3.3: Restore DB id + status maps from DB after re-render.
+      // Runs immediately if Mission is already resolved; the aaai:mission_state_synced
+      // listener in init() covers the delayed case.
+      if (_activeCaseId && window.AIOS && window.AIOS.Checklist &&
+          window.AIOS.Mission && window.AIOS.Mission.current &&
+          window.AIOS.Mission.current._dbId) {
+        window.AIOS.Checklist.restoreFromDB(window.AIOS.Mission.current._dbId)
+          .then(function(r) {
+            if (r && r.data && r.data.length) {
+              _checklistDbIds = {};
+              r.data.forEach(function(row, i) {
+                var idx = (row.sort_order !== undefined && row.sort_order !== null)
+                  ? row.sort_order : i;
+                _checklistDbIds[idx] = row.id;
+              });
+              log('Phase3.3', '_checklistDbIds restored from DB — ' + r.data.length + ' items');
+              _applyDbStatusToDOM();
+            }
+          }).catch(function() {});
+      }
     } catch(e) {
       log('Checklist', 'localStorage page-load restore failed: ' + e.message);
     }
+  }
+
+  // Phase 3.3: Apply DB-sourced lifecycle status to rendered checklist DOM items.
+  // Called after _checklistDbIds + _statusMap are populated from DB.
+  function _applyDbStatusToDOM() {
+    if (!window.AIOS || !window.AIOS.Checklist) return;
+    var all = document.querySelectorAll('.checklist-item');
+    all.forEach(function(el) {
+      var idx = parseInt(el.getAttribute('data-index'), 10);
+      if (isNaN(idx)) return;
+      var status = window.AIOS.Checklist.getStatus(idx);
+      el.setAttribute('data-status', status);
+      if (status === 'completed' && !el.classList.contains('completed')) {
+        el.classList.add('completed');
+        var checkEl = el.querySelector('.checklist-item__check');
+        if (checkEl) checkEl.classList.add('checked');
+      }
+      if (status === 'in_progress') el.classList.add('in-progress');
+      if (status === 'skipped')     el.classList.add('skipped');
+    });
+    updateChecklistProgress();
   }
 
   // PERSISTENCE ADDED - Phase 1 Fix
@@ -3357,22 +3430,75 @@
     var itemEl = checkEl.closest('.checklist-item');
     itemEl.classList.toggle('completed');
     var isNowCompleted = itemEl.classList.contains('completed');
+
+    // Phase 3.3: sync data-status attribute; clear in-progress/skipped visual state
+    itemEl.setAttribute('data-status', isNowCompleted ? 'completed' : 'not_started');
+    itemEl.classList.remove('in-progress', 'skipped');
+
     saveChecklistState(); // Phase 1 — localStorage always runs first
 
-    // PHASE 2 - Use new persistent layer if activeCaseId present
-    // Sync toggle to case_checklist_items if we have a DB row ID for this item.
-    var itemIdx = parseInt(itemEl.getAttribute('data-index'), 10);
-    if (_activeCaseId && window.AAAI && window.AAAI.DataAccess &&
-        !isNaN(itemIdx) && _checklistDbIds[itemIdx]) {
+    var itemIdx  = parseInt(itemEl.getAttribute('data-index'), 10);
+    var newStatus = isNowCompleted ? 'completed' : 'not_started';
+
+    // Phase 3.3: prefer ChecklistManager route (handles reopen vs toggle correctly)
+    if (!isNaN(itemIdx) && window.AIOS && window.AIOS.Checklist &&
+        window.AIOS.Checklist.getDbId(itemIdx)) {
+      window.AIOS.Checklist.transition(itemIdx, newStatus)
+        .then(function(r) {
+          if (!r.error) {
+            log('Phase3.3', 'checklist transition — idx:' + itemIdx + ' status:' + newStatus);
+          }
+        }).catch(function() {});
+    } else if (_activeCaseId && window.AAAI && window.AAAI.DataAccess &&
+               !isNaN(itemIdx) && _checklistDbIds[itemIdx]) {
+      // Phase 2 fallback — direct toggle (no ChecklistManager available)
       (function(_dbId, _completed) {
         window.AAAI.DataAccess.checklistItems.toggle(_dbId, _completed)
           .then(function(r) {
             if (!r.error) {
-              log('Phase2', 'checklist toggle synced — dbId: ' + _dbId +
+              log('Phase2', 'checklist toggle fallback — dbId: ' + _dbId +
                   ' completed: ' + _completed);
             }
           }).catch(function() {});
       })(_checklistDbIds[itemIdx], isNowCompleted);
+    }
+  };
+
+  // Phase 3.3: Mark item in_progress (or toggle back to not_started on second click)
+  window.markItemInProgress = function(btnEl) {
+    var itemEl = btnEl.closest ? btnEl.closest('.checklist-item') : null;
+    if (!itemEl) return;
+    var curStatus = itemEl.getAttribute('data-status') || 'not_started';
+    var newStatus = (curStatus === 'in_progress') ? 'not_started' : 'in_progress';
+    itemEl.setAttribute('data-status', newStatus);
+    itemEl.classList.remove('completed', 'in-progress', 'skipped');
+    if (newStatus === 'in_progress') itemEl.classList.add('in-progress');
+    var checkEl = itemEl.querySelector('.checklist-item__check');
+    if (checkEl && newStatus !== 'completed') checkEl.classList.remove('checked');
+    saveChecklistState();
+    var itemIdx = parseInt(itemEl.getAttribute('data-index'), 10);
+    if (!isNaN(itemIdx) && window.AIOS && window.AIOS.Checklist &&
+        window.AIOS.Checklist.getDbId(itemIdx)) {
+      window.AIOS.Checklist.transition(itemIdx, newStatus).catch(function() {});
+    }
+  };
+
+  // Phase 3.3: Skip item (or toggle back to not_started on second click)
+  window.skipChecklistItem = function(btnEl) {
+    var itemEl = btnEl.closest ? btnEl.closest('.checklist-item') : null;
+    if (!itemEl) return;
+    var curStatus = itemEl.getAttribute('data-status') || 'not_started';
+    var newStatus = (curStatus === 'skipped') ? 'not_started' : 'skipped';
+    itemEl.setAttribute('data-status', newStatus);
+    itemEl.classList.remove('completed', 'in-progress', 'skipped');
+    if (newStatus === 'skipped') itemEl.classList.add('skipped');
+    var checkEl2 = itemEl.querySelector('.checklist-item__check');
+    if (checkEl2 && newStatus !== 'completed') checkEl2.classList.remove('checked');
+    saveChecklistState();
+    var itemIdx2 = parseInt(itemEl.getAttribute('data-index'), 10);
+    if (!isNaN(itemIdx2) && window.AIOS && window.AIOS.Checklist &&
+        window.AIOS.Checklist.getDbId(itemIdx2)) {
+      window.AIOS.Checklist.transition(itemIdx2, newStatus).catch(function() {});
     }
   };
 
@@ -3399,8 +3525,10 @@
       var el = document.createElement('div');
       el.className = 'checklist-item';
       el.setAttribute('data-index', index);
+      el.setAttribute('data-status', 'not_started'); // Phase 3.3: lifecycle status attr
 
       // PERSISTENCE ADDED - Phase 1 Fix: onclick now calls toggleChecklistItem (saves state)
+      // Phase 3.3: added In Progress + Skip action buttons
       el.innerHTML =
         '<div class="checklist-item__check" onclick="toggleChecklistItem(this);updateChecklistProgress();">' +
           '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>' +
@@ -3410,6 +3538,8 @@
           (item.description ? '<div class="checklist-item__desc">' + item.description + '</div>' : '') +
           '<div class="checklist-item__actions">' +
             '<button class="checklist-btn checklist-btn--assist" data-index="' + index + '" title="AI explains this step">AI Assist</button>' +
+            '<button class="checklist-btn checklist-btn--progress" data-index="' + index + '" title="Mark as in progress" onclick="markItemInProgress(this);">In Progress</button>' +
+            '<button class="checklist-btn checklist-btn--skip" data-index="' + index + '" title="Skip this item" onclick="skipChecklistItem(this);">Skip</button>' +
           '</div>' +
         '</div>';
       section.appendChild(el);
@@ -3470,10 +3600,10 @@
 
     loadChecklistState(); // PERSISTENCE ADDED - Phase 1 Fix: restore completed state from localStorage
 
-    // PHASE 2 - Use new persistent layer if activeCaseId present
-    // Save checklist items to case_checklist_items table.
-    // Requires both an active case AND an active mission (FK constraint).
-    // Fire-and-forget — localStorage path above is always the source of truth for now.
+    // PHASE 3.3 — Persist to DB with idempotency guard + ChecklistManager sync.
+    // saveBatch() checks for existing rows server-side; returns existing rows
+    // unchanged if already saved. Mirrors result into AIOS.Checklist so all
+    // lifecycle ops (toggle, in_progress, skip, reopen) work immediately.
     if (_activeCaseId && window.AAAI && window.AAAI.DataAccess &&
         window.AIOS && window.AIOS.Mission && window.AIOS.Mission.current &&
         window.AIOS.Mission.current._dbId) {
@@ -3482,17 +3612,21 @@
         window.AAAI.DataAccess.checklistItems.saveBatch(_caseId, _mId, _items)
           .then(function(r) {
             if (r.error) {
-              log('Phase2', 'checklistItems.saveBatch failed (non-fatal): ' + JSON.stringify(r.error));
+              log('Phase3.3', 'checklistItems.saveBatch failed (non-fatal): ' + JSON.stringify(r.error));
               return;
             }
-            // Build index→dbId map so toggleChecklistItem can sync to DB
-            _checklistDbIds = {}; // reset before populating
+            _checklistDbIds = {};
             if (r.data && r.data.length) {
               r.data.forEach(function(row, i) {
-                _checklistDbIds[i] = row.id; // sort_order matches array index
+                var idx = (row.sort_order !== undefined && row.sort_order !== null)
+                  ? row.sort_order : i;
+                _checklistDbIds[idx] = row.id;
               });
-              log('Phase2', 'checklist items saved — ' + r.data.length +
-                  ' rows | _checklistDbIds populated');
+              // Phase 3.3: mirror into ChecklistManager for full lifecycle support
+              if (window.AIOS && window.AIOS.Checklist) {
+                window.AIOS.Checklist.buildDbIds(r.data, _mId);
+              }
+              log('Phase3.3', 'checklist synced — ' + r.data.length + ' rows | missionId: ' + _mId);
             }
           }).catch(function() {});
       })(items, _activeCaseId, _missionDbId);
@@ -3558,13 +3692,30 @@
   }
 
   window.updateChecklistProgress = function() {
-    var all = document.querySelectorAll('.checklist-item');
+    // DOM-based progress — instant, always runs as primary source
+    var all       = document.querySelectorAll('.checklist-item');
     var completed = document.querySelectorAll('.checklist-item.completed');
-    var pct = all.length > 0 ? Math.round((completed.length / all.length) * 100) : 0;
-    var fill = $('checklistProgressFill');
-    var text = $('checklistProgressText');
+    var pct       = all.length > 0 ? Math.round((completed.length / all.length) * 100) : 0;
+    var fill      = $('checklistProgressFill');
+    var text      = $('checklistProgressText');
     if (fill) fill.style.width = pct + '%';
     if (text) text.textContent = pct + '% Complete \u2014 ' + completed.length + ' of ' + all.length + ' tasks';
+
+    // Phase 3.3: async DB-authoritative progress — overwrites DOM count when available.
+    // DB is source of truth: counts completed rows only.
+    if (window.AIOS && window.AIOS.Checklist) {
+      window.AIOS.Checklist.getProgress()
+        .then(function(r) {
+          if (r && r.data && r.data.total > 0) {
+            var dbPct  = r.data.pct;
+            var dbDone = r.data.completed;
+            var dbTot  = r.data.total;
+            if (fill) fill.style.width = dbPct + '%';
+            if (text) text.textContent = dbPct + '% Complete \u2014 ' + dbDone + ' of ' + dbTot + ' tasks';
+            log('Phase3.3', 'progress from DB — ' + dbDone + '/' + dbTot + ' (' + dbPct + '%)');
+          }
+        }).catch(function() {});
+    }
   };
 
   function showAIAssist(itemEl, title, description) {

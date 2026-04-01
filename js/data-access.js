@@ -293,39 +293,48 @@
 
     /**
      * Save a batch of checklist items to a mission.
-     * Call after a report generates checklist items to persist them.
+     * PHASE 3.3: Idempotency guard — if items already exist for missionId,
+     * returns existing rows instead of inserting duplicates.
      * @param {string} caseId
      * @param {string} missionId
      * @param {Array}  items      Array of item objects from parseReportToChecklist()
      * @returns {Promise<{data, error}>}
      */
     saveBatch: function(caseId, missionId, items) {
-      var db = getClient();
+      var db   = getClient();
+      var self = this;
       if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
-      var PRIORITY = { immediate: 1, short_term: 2, strategic: 3, optional: 4 };
-      var rows = items.map(function(item, i) {
-        return {
-          mission_id:    missionId,
-          case_id:       caseId,
-          title:         item.title,
-          description:   item.description  || null,
-          category:      item.category     || 'general',
-          is_completed:  false,
-          status:        'not_started',
-          sort_order:    item.sort_order !== undefined ? item.sort_order : i,
-          priority:      item.priority || PRIORITY[item.category] || 2,
-          source:        item.source   || 'ai_report',
-          resource_link: item.resource_link || null,
-          due_context:   item.due_context   || null
-        };
+      // Phase 3.3: idempotency — check for existing rows before inserting
+      return self.listByMission(missionId).then(function(existing) {
+        if (!existing.error && existing.data && existing.data.length > 0) {
+          // Items already saved — return existing rows so callers can build dbId maps
+          return { data: existing.data, error: null };
+        }
+        var PRIORITY = { immediate: 1, short_term: 2, strategic: 3, optional: 4 };
+        var rows = items.map(function(item, i) {
+          return {
+            mission_id:    missionId,
+            case_id:       caseId,
+            title:         item.title,
+            description:   item.description  || null,
+            category:      item.category     || 'general',
+            is_completed:  false,
+            status:        'not_started',
+            sort_order:    item.sort_order !== undefined ? item.sort_order : i,
+            priority:      item.priority || PRIORITY[item.category] || 2,
+            source:        item.source   || 'ai_report',
+            resource_link: item.resource_link || null,
+            due_context:   item.due_context   || null
+          };
+        });
+        return wrap(
+          db.from('case_checklist_items').insert(rows).select()
+        );
       });
-      return wrap(
-        db.from('case_checklist_items').insert(rows).select()
-      );
     },
 
     /**
-     * List all checklist items for a mission.
+     * List all checklist items for a mission (ordered by category, sort_order).
      * @param {string} missionId
      * @returns {Promise<{data, error}>}
      */
@@ -385,6 +394,8 @@
 
     /**
      * Update status of a single item (for in_progress, blocked, skipped).
+     * PHASE 3.3: Clears is_completed and completed_at when transitioning
+     * away from 'completed' status.
      * @param {string} itemId
      * @param {string} status  not_started | in_progress | completed | blocked | skipped
      * @returns {Promise<{data, error}>}
@@ -396,10 +407,66 @@
       if (status === 'completed') {
         updates.is_completed = true;
         updates.completed_at = new Date().toISOString();
+      } else {
+        // Phase 3.3: clear completion fields when leaving 'completed' state
+        updates.is_completed = false;
+        updates.completed_at = null;
       }
       return wrap(
         db.from('case_checklist_items').update(updates).eq('id', itemId).select().single()
       );
+    },
+
+    /**
+     * Reopen a completed item — sets status back to not_started.
+     * PHASE 3.3: Explicit reopen path, separate from toggle.
+     * @param {string} itemId
+     * @returns {Promise<{data, error}>}
+     */
+    reopen: function(itemId) {
+      var db = getClient();
+      if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      return wrap(
+        db.from('case_checklist_items')
+          .update({
+            is_completed: false,
+            status:       'not_started',
+            completed_at: null
+          })
+          .eq('id', itemId)
+          .select()
+          .single()
+      );
+    },
+
+    /**
+     * Get progress counts for a mission — total, completed, skipped, in_progress.
+     * PHASE 3.3: Used by updateChecklistProgress() as DB-authoritative source.
+     * @param {string} missionId
+     * @returns {Promise<{data: {total, completed, skipped, in_progress, pct}, error}>}
+     */
+    getProgress: function(missionId) {
+      return this.listByMission(missionId).then(function(result) {
+        if (result.error || !result.data) {
+          return { data: null, error: result.error };
+        }
+        var rows      = result.data;
+        var total     = rows.length;
+        var completed = rows.filter(function(r) { return r.status === 'completed'; }).length;
+        var skipped   = rows.filter(function(r) { return r.status === 'skipped'; }).length;
+        var inProg    = rows.filter(function(r) { return r.status === 'in_progress'; }).length;
+        var pct       = total > 0 ? Math.round((completed / total) * 100) : 0;
+        return {
+          data: {
+            total:       total,
+            completed:   completed,
+            skipped:     skipped,
+            in_progress: inProg,
+            pct:         pct
+          },
+          error: null
+        };
+      });
     }
 
   };
