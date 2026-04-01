@@ -744,30 +744,42 @@
       }
     });
 
-    // Phase 3.3: Late DB id restore — mission loaded AFTER checklist was rendered.
-    // Handles the race where restoreChecklistFromStorage() fires before
-    // _initCaseModel() resolves Mission._dbId. When the mission sync event
-    // fires, check if we still have un-mapped checklist DOM items and fill them.
+    // Phase 5: DB-authoritative checklist restore — fires after _initCaseModel()
+    // resolves Mission._dbId. Always queries Supabase regardless of localStorage
+    // state. If DB has rows, re-renders from DB data (overwrites any stale
+    // localStorage render). If DB is empty, the earlier restoreChecklistFromStorage()
+    // localStorage render remains in place as-is.
+    // Root cause fixed: prior guard `if (!_stored.items...) return` caused DB rows
+    // to be silently skipped whenever localStorage was empty (new device, hard
+    // refresh, incognito). That guard is removed here.
     window.addEventListener('aaai:mission_state_synced', function() {
       if (!window.AIOS || !window.AIOS.Checklist) return;
       if (window.AIOS.Checklist.hasDbIds()) return;  // already populated
       var _m = window.AIOS.Mission && window.AIOS.Mission.current;
       if (!_m || !_m._dbId) return;
-      var _stored = {};
-      try { _stored = JSON.parse(localStorage.getItem(CHECKLIST_STORAGE_KEY) || '{}'); } catch(e) {}
-      if (!_stored.items || !_stored.items.length) return;  // nothing rendered
       window.AIOS.Checklist.restoreFromDB(_m._dbId)
         .then(function(r) {
-          if (r && r.data && r.data.length) {
-            _checklistDbIds = {};
-            r.data.forEach(function(row, i) {
-              var idx = (row.sort_order !== undefined && row.sort_order !== null)
-                ? row.sort_order : i;
-              _checklistDbIds[idx] = row.id;
-            });
-            log('Phase3.3', 'late DB id restore — ' + r.data.length + ' items');
-            _applyDbStatusToDOM();
-          }
+          if (!r || r.error || !r.data || !r.data.length) return;
+          // Build legacy _checklistDbIds alongside ChecklistManager maps
+          _checklistDbIds = {};
+          r.data.forEach(function(row, i) {
+            var idx = (row.sort_order !== undefined && row.sort_order !== null)
+              ? row.sort_order : i;
+            _checklistDbIds[idx] = row.id;
+          });
+          // Re-render from DB rows — overwrites any stale localStorage render.
+          // DB rows carry title/description/category from saveBatch() insert.
+          var renderItems = r.data.map(function(row) {
+            return {
+              title:       row.title       || '',
+              description: row.description || '',
+              category:    row.category    || 'immediate'
+            };
+          });
+          renderChecklistItems(renderItems);
+          _applyDbStatusToDOM();
+          updateChecklistProgress();
+          log('Phase5', 'checklist DB-authoritative restore — ' + r.data.length + ' items');
         }).catch(function() {});
     });
 

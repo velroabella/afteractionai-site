@@ -8,8 +8,8 @@
      _activeMissionId — DB UUID of mission whose items are loaded
 
    All DB calls delegate to window.AAAI.DataAccess.checklistItems.
-   localStorage remains the primary render/restore source (backward
-   compatible). DB is the authoritative lifecycle source.
+   DB is the authoritative render/restore source on session load (Phase 5).
+   localStorage is the fallback when DB is unreachable or has no rows.
 
    Registers: window.AIOS.Checklist
    ══════════════════════════════════════════════════════════ */
