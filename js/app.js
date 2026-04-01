@@ -2781,6 +2781,40 @@
     event.target.value = '';
   }
 
+  /* ── Phase 3.4: shared post-extraction pipeline ────────── */
+  function _runDocAnalysis(text, pf) {
+    // Merge extracted fields into AIOS Memory
+    if (window.AIOS &&
+        window.AIOS.Skills && window.AIOS.Skills['document-analyzer'] &&
+        window.AIOS.Memory) {
+      var _da     = window.AIOS.Skills['document-analyzer'];
+      var _typeId = _da.detectType(text);
+      var _fields = _da.extractDocumentFields(_typeId, text);
+      window.AIOS.Memory.mergeDocumentMemory(_fields);
+
+      // Fire-and-forget: persist to Phase 2 documents table
+      if (window.AAAI && window.AAAI.DataAccess && window.AAAI.DataAccess.documents) {
+        var _missionId = (window.AIOS.Mission && window.AIOS.Mission.current)
+          ? window.AIOS.Mission.current._dbId || null : null;
+        var _caseId = (window.AIOS.Mission && window.AIOS.Mission.current)
+          ? window.AIOS.Mission.current._caseId || null : null;
+        window.AAAI.DataAccess.documents.save({
+          file_name:       pf.file.name,
+          document_type:   _typeId,
+          mime_type:       pf.file.type,
+          file_size:       pf.file.size,
+          extracted_text:  text,
+          analysis_result: _fields || {},
+          mission_id:      _missionId,
+          case_id:         _caseId,
+          status:          'complete'
+        }).catch(function(err) {
+          console.warn('[DocIntel] documents.save failed (non-blocking):', err);
+        });
+      }
+    }
+  }
+
   function processUploads(files) {
     var results = [];
     var chain = Promise.resolve();
@@ -2789,23 +2823,29 @@
       chain = chain.then(function() {
         if (pf.file.type === 'text/plain') {
           return pf.file.text().then(function(text) {
-            // Phase 42: extract structured memory fields from document text
-            if (window.AIOS &&
-                window.AIOS.Skills && window.AIOS.Skills['document-analyzer'] &&
-                window.AIOS.Memory) {
-              var _da = window.AIOS.Skills['document-analyzer'];
-              var _typeId = _da.detectType(text);
-              var _extracted = _da.extractDocumentFields(_typeId, text);
-              window.AIOS.Memory.mergeDocumentMemory(_extracted);
-            }
+            _runDocAnalysis(text, pf);
             results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n' + text);
           });
-        } else if (pf.file.type.startsWith('image/')) {
-          results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n[Image uploaded. Please ask the veteran about the contents of this ' + pf.docType + '.]');
-          return Promise.resolve();
         } else if (pf.file.type === 'application/pdf') {
-          results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n[PDF uploaded. Please ask the veteran to confirm the key details from their ' + pf.docType + '.]');
-          return Promise.resolve();
+          if (window.AIOS && window.AIOS.DocumentIntelligence) {
+            return window.AIOS.DocumentIntelligence.extractText(pf.file).then(function(text) {
+              _runDocAnalysis(text, pf);
+              results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n' + text);
+            });
+          } else {
+            results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n[PDF uploaded. Please ask the veteran to confirm the key details from their ' + pf.docType + '.]');
+            return Promise.resolve();
+          }
+        } else if (pf.file.type && pf.file.type.startsWith('image/')) {
+          if (window.AIOS && window.AIOS.DocumentIntelligence) {
+            return window.AIOS.DocumentIntelligence.extractText(pf.file).then(function(text) {
+              _runDocAnalysis(text, pf);
+              results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n' + text);
+            });
+          } else {
+            results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n[Image uploaded. Please ask the veteran about the contents of this ' + pf.docType + '.]');
+            return Promise.resolve();
+          }
         } else {
           results.push('--- ' + pf.docType + ' (' + pf.file.name + ') ---\n[' + pf.file.type + ' file uploaded. Please ask the veteran about the contents.]');
           return Promise.resolve();
