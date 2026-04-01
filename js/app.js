@@ -1506,6 +1506,51 @@
       removeTyping();
       conversationHistory.push({ role: 'assistant', content: aiResponse });
 
+      // ── Phase 47: Structured Response Contract ─────────────────────
+      // Parse the raw AI response into a structured contract object.
+      // This is ADDITIVE — the raw aiResponse string is still passed to
+      // streamMessage unchanged. The contract enriches downstream systems.
+      var _p47Contract = null;
+      try {
+        if (window.AIOS && window.AIOS.ResponseContract) {
+          var _p47Ctx = {};
+          // Attach router context if available from the callChatEndpoint scope
+          if (window.AIOS.Router) {
+            _p47Ctx.routeResult = window.AIOS.Router.routeAIOSIntent(userText);
+          }
+          if (window.AIOS.Memory) {
+            _p47Ctx.profile = window.AIOS.Memory.getProfile();
+          }
+          if (window.AIOS.Mission) {
+            _p47Ctx.mission = window.AIOS.Mission.current || null;
+          }
+          _p47Contract = window.AIOS.ResponseContract.parse(aiResponse, _p47Ctx);
+          console.log('[AIOS][CONTRACT] mode=' + _p47Contract.mode +
+            ' | confidence=' + _p47Contract.confidence.toFixed(2) +
+            ' | actions=' + (_p47Contract.recommended_actions ? _p47Contract.recommended_actions.length : 0) +
+            ' | missionSignal=' + !!_p47Contract.mission_signals);
+
+          // Mission extraction — create or update missions from the response
+          if (window.AIOS.MissionExtractor) {
+            var _p47MissionAction = window.AIOS.MissionExtractor.process(
+              _p47Contract,
+              (window.AIOS.Mission && window.AIOS.Mission.current) || null
+            );
+            if (_p47MissionAction) {
+              console.log('[AIOS][MISSION-EXT] action=' + _p47MissionAction.action +
+                ' | type=' + (_p47MissionAction.mission ? _p47MissionAction.mission.type : 'none'));
+            }
+          }
+
+          // Store latest contract on window for dashboard/inspector access
+          window.AIOS._lastContract = _p47Contract;
+        }
+      } catch (_p47Err) {
+        // Never block the chat — contract parsing is enhancement only
+        console.warn('[AIOS][CONTRACT] parse error:', _p47Err.message || _p47Err);
+      }
+      // ── End Phase 47 ──────────────────────────────────────────────
+
       streamMessage(aiResponse, function() {
         log('sendToAI', 'stream complete');
         isProcessing = false;
@@ -1545,6 +1590,24 @@
             }
           }
         } catch(_p46Err) { /* never block the UI */ }
+
+        // ── Phase 49: Action Bar — contextual buttons from response contract ──
+        try {
+          if (_p47Contract && window.AIOS && window.AIOS.ActionBar) {
+            // Find the last AI message div in the chat (the one just streamed)
+            var _p49Msgs = chatMessages ? chatMessages.querySelectorAll('.message--ai') : [];
+            var _p49LastMsg = _p49Msgs.length > 0 ? _p49Msgs[_p49Msgs.length - 1] : null;
+            if (_p49LastMsg) {
+              var _p49Rendered = window.AIOS.ActionBar.render(_p47Contract, _p49LastMsg);
+              if (_p49Rendered) {
+                scrollToBottom();
+              }
+            }
+          }
+        } catch (_p49Err) {
+          console.warn('[AIOS][ACTION-BAR] render error:', _p49Err.message || _p49Err);
+        }
+        // ── End Phase 49 ─────────────────────────────────────────────────────
       });
 
     }).catch(function(error) {

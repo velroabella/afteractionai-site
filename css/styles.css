@@ -8610,3 +8610,85 @@ a[data-restricted="true"]::before {
 .aios-onboard-card.aios-onboard-card--dismissed {
   display: none;
 }
+
+/* ══════════════════════════════════════════════════════════
+   Phase 49: Action Bar — contextual buttons under AI messages
+   ══════════════════════════════════════════════════════════ */
+.p49-action-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(197, 165, 90, 0.2);
+}
+
+.p49-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 7px 14px;
+  background: var(--navy);
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  border-radius: 20px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: var(--font);
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+  white-space: nowrap;
+}
+
+.p49-action-btn svg {
+  flex-shrink: 0;
+}
+
+.p49-action-btn:hover {
+  background: var(--gold);
+  color: var(--gray-900);
+  transform: translateY(-1px);
+}
+
+.p49-action-btn:active {
+  transform: translateY(0);
+}
+
+.p49-action-btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+  pointer-events: none;
+}
+
+/* Button variant: primary emphasis for Create Mission */
+.p49-action-btn--create-mission {
+  background: var(--gold);
+  color: var(--gray-900);
+  border-color: var(--gold);
+}
+.p49-action-btn--create-mission:hover {
+  background: var(--gold-light);
+}
+
+/* Button variant: subtle for Open Resources */
+.p49-action-btn--open-resources {
+  background: transparent;
+  border-color: rgba(197, 165, 90, 0.5);
+  color: var(--gold-light);
+}
+.p49-action-btn--open-resources:hover {
+  background: rgba(197, 165, 90, 0.15);
+  color: var(--gold);
+  border-color: var(--gold);
+}
+
+/* Responsive: stack on narrow screens */
+@media (max-width: 480px) {
+  .p49-action-bar {
+    gap: 6px;
+  }
+  .p49-action-btn {
+    font-size: 0.78rem;
+    padding: 6px 11px;
+  }
+}
