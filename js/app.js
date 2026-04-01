@@ -404,6 +404,7 @@
   var reportButtonVisible = false;     // true once Generate Report button is showing
   var reportGenerated = false;         // true after a real report is detected
   var _voiceStructuredSeq = 0;        // Phase 4.2: dedup seq for async voice structured calls
+  var _apiRequestSeq = 0;             // Phase 4.4: monotonic request counter for stale-response guard
 
   // PHASE 2 INTEGRATION - Step 3
   // Holds the DB UUID of the active case once resolved via DataAccess.
@@ -1848,7 +1849,17 @@
   //  AI COMMUNICATION (text mode only — voice uses Realtime)
   // ══════════════════════════════════════════════════════
   function sendToAI(userText) {
-    log('sendToAI', 'input="' + (userText || '').substring(0, 60) + '"');
+    // Phase 4.4: concurrent-request guard
+    // sendToAI() can be called directly (bypassing submitUserText queue) while isProcessing is true.
+    // Non-system calls queue via pendingUserSubmission so they fire after the active stream ends.
+    var _p44IsSystem = (userText === 'START_CONVERSATION' || userText === 'RESUME_MISSION');
+    if (isProcessing && !_p44IsSystem) {
+      pendingUserSubmission = { text: userText, opts: {} };
+      log('sendToAI', 'P4.4 concurrent guard — queued while in-flight, seq=' + _apiRequestSeq);
+      return;
+    }
+    var _p44ReqSeq = ++_apiRequestSeq;
+    log('sendToAI', 'request seq=' + _p44ReqSeq + ' input="' + (userText || '').substring(0, 60) + '"');
     isProcessing = true;
     if (btnSend) btnSend.disabled = true;
 
@@ -1923,6 +1934,11 @@
     var apiPromise = callChatEndpoint(conversationHistory);
 
     apiPromise.then(function(apiResult) {
+      // Phase 4.4: stale-response guard — discard if a newer request has superseded this one
+      if (_p44ReqSeq !== _apiRequestSeq) {
+        log('sendToAI', 'P4.4 STALE response discarded — seq=' + _p44ReqSeq + ' current=' + _apiRequestSeq);
+        return;
+      }
       var aiResponse = (apiResult && typeof apiResult === 'object') ? (apiResult.text || '') : (apiResult || '');
       var _p41Structured = (apiResult && typeof apiResult === 'object') ? (apiResult.structured || null) : null;
       log('sendToAI', 'API returned ' + aiResponse.length + ' chars' +
@@ -2095,6 +2111,11 @@
       });
 
     }).catch(function(error) {
+      // Phase 4.4: stale-error guard — discard error from a superseded request
+      if (_p44ReqSeq !== _apiRequestSeq) {
+        log('sendToAI', 'P4.4 STALE error discarded — seq=' + _p44ReqSeq + ' current=' + _apiRequestSeq);
+        return;
+      }
       removeTyping();
       log('sendToAI', 'ERROR — ' + error.message);
       console.error('AI Error:', error);
