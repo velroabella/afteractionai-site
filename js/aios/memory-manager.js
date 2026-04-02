@@ -516,12 +516,22 @@
       var extracted = {};
 
       // ── Branch ────────────────────────────────────────
-      // Check longer branch names before shorter ones to avoid false partial matches
+      // Check longer branch names before shorter ones to avoid false partial matches.
+      // Four safe alternations — all require first-person or explicit self-reference:
+      //   1. First-person verb: "I served in the Army", "I joined the Navy", "I left the Marines"
+      //   2. Branch + role noun: "Army veteran", "Navy sailor", "Air Force airman"
+      //   3. Self-reference:    "I'm Army", "I was Air Force", "my branch is Navy"
+      //   4. Whole-message:     "Army" as the entire user message (button click / one-word answer)
+      // The old bare-word match (\bBRANCH\b) is removed — it false-positived on
+      // incidental mentions like "I drove past an Army base" or "My brother was in the Navy".
       for (var b = 0; b < MILITARY_BRANCHES.length; b++) {
         var branchName = MILITARY_BRANCHES[b];
         var escaped = branchName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
         var branchRx = new RegExp(
-          '\\b(?:(?:served|(?:was|am)\\s+(?:a\\s+)?(?:member\\s+of\\s+the|in(?:\\s+the)?))|joined(?:\\s+the)?|left(?:\\s+the)?)\\s+' + escaped + '\\b|\\b' + escaped + '\\s+(?:veteran|vet|soldier|sailor|airman|marine|guardian)\\b|\\b' + escaped + '\\b',
+          '\\bi\\s+(?:served(?:\\s+in(?:\\s+the)?)?|(?:was|am)\\s+(?:a\\s+)?(?:member\\s+of\\s+the|in(?:\\s+the)?)|joined(?:\\s+the)?|left(?:\\s+the)?)\\s+' + escaped + '\\b' +
+          '|\\b' + escaped + '\\s+(?:veteran|vet|soldier|sailor|airman|marine|guardian)\\b' +
+          '|\\b(?:i\'m|i\\s+am|i\\s+was|my\\s+branch\\s+(?:is|was))\\s+(?:(?:in|with)\\s+(?:the\\s+)?)?' + escaped + '\\b' +
+          '|^\\s*' + escaped + '\\s*[.!?]?\\s*$',
           'i'
         );
         if (branchRx.test(userMessage)) {
