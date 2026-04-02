@@ -86,6 +86,14 @@
     'If you are unsure whether a user provided something, say: "I don\'t have that in front of me — could you describe it or upload it so I can help?"',
     'This rule overrides all other behavior and applies to every single message.',
     '',
+    '## IDENTITY GUARD',
+    '- NEVER address the veteran by name until they have explicitly stated their name in this conversation.',
+    '- NEVER confirm, repeat, or assert their branch of service unless they have explicitly stated it in this conversation.',
+    '- If VETERAN CONTEXT contains a name or branch, treat these as profile data to CONFIRM — not to assert as fact.',
+    '- Before using a name or branch from context, ask: "I have [X] on file — is that still accurate?"',
+    '- The [branch] and [name] placeholders in CONVERSATION FLOW below must ONLY be substituted AFTER the veteran has confirmed those values in this session.',
+    '- If a transcript is ambiguous or unclear, ask: "I want to make sure I caught that — did you say [X]?"',
+    '',
     '## CONVERSATION RULES',
     '- You are warm, direct, and veteran-to-veteran in tone',
     '- Ask ONE thing per message, never more',
@@ -114,8 +122,11 @@
     '',
     '## RESUME MESSAGE',
     'When the user sends RESUME_MISSION, they are returning from their dashboard.',
-    'Use the VETERAN CONTEXT block (if present) to welcome them back by name and with any known profile info.',
-    'Say something like: "Welcome back[, Name]. I have your profile loaded — [summary of known info]. What would you like to work on next?"',
+    'Use the VETERAN CONTEXT block (if present) to welcome them back with any known profile info.',
+    '- If VETERAN CONTEXT contains a Name field: use it — "Welcome back, [Name]."',
+    '- If VETERAN CONTEXT has NO Name field: say "Welcome back." — do NOT invent or guess a name.',
+    '- Offer to confirm existing profile data: "I still have [summary] on file — anything to update?"',
+    'Say something like: "Welcome back[, Name — only if present in VETERAN CONTEXT]. I have your profile loaded — [summary of known info]. What would you like to work on next?"',
     'Then offer relevant options based on their profile status:',
     '[OPTIONS: Continue my plan | Upload a document | Check my benefits | Update my info | Start over]',
     '',
@@ -1249,11 +1260,22 @@
       var _vPageCtx = (window.activeUserTopics && window.activeUserTopics.length > 0)
         ? { page: 'chat', topics: window.activeUserTopics, inputMode: 'voice' }
         : null;
+      // Phase ID-GUARD: Strip name and branch from the profile injected via session.update
+      // unless they were freshly extracted from THIS transcript. Prevents prior-session
+      // identity data (e.g. persisted "Lewis" / "Army") from causing the voice AI to assert
+      // identity the user has not confirmed in this session — the root cause of "Lewis. Army it is."
+      var _vSessionProfile = Object.assign({}, _vProfile);
+      var _vFreshId = (window.AIOS.Memory &&
+          typeof window.AIOS.Memory.extractMemoryFromInput === 'function')
+        ? window.AIOS.Memory.extractMemoryFromInput(transcript)
+        : {};
+      if (!_vFreshId.name)   delete _vSessionProfile.name;
+      if (!_vFreshId.branch) delete _vSessionProfile.branch;
       var _vReq = window.AIOS.RequestBuilder.buildAIOSRequest({
         userMessage:   transcript,
         routeResult:   _vRoute,
         skillConfig:   _vSkillCfg,
-        memoryContext: window.AIOS.Memory ? window.AIOS.Memory.getProfile() : null,
+        memoryContext: _vSessionProfile,
         pageContext:   _vPageCtx
       });
 
