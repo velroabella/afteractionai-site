@@ -1256,6 +1256,16 @@ function toggleMenu() {
       }
 
       var contract = AIOS._lastContract || null;
+      // Phase CR: cross-navigation continuity — restore display subset from localStorage
+      // if no live contract is present (reload / cross-page navigation).
+      if (!contract) {
+        try {
+          var _crStored = JSON.parse(localStorage.getItem('aaai_contract_display') || 'null');
+          if (_crStored && (_crStored.recommended_actions || _crStored.resources || _crStored.risk_flags)) {
+            contract = _crStored;
+          }
+        } catch (_crErr) { /* parse error — no contract fallback */ }
+      }
       var snapshot = null;
 
       if (AIOS.MissionExtractor && mission) {

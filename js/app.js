@@ -1364,6 +1364,8 @@
 
       // Store on window for Inspector/dashboard access
       window.AIOS._lastContract = _vtContract;
+      // Phase CR: persist display subset for cross-navigation continuity
+      try { localStorage.setItem('aaai_contract_display', JSON.stringify({ recommended_actions: (_vtContract.recommended_actions || []).slice(0, 5), resources: (_vtContract.resources || []).slice(0, 10), risk_flags: _vtContract.risk_flags || [], _savedAt: Date.now() })); } catch (_cr1) { /* non-critical */ }
 
       // ── Phase 50: Resource Matcher (async, non-blocking) ──────────
       if (window.AIOS.ResourceMatcher) {
@@ -1440,6 +1442,8 @@
           var _upgraded = _buildContractFromStructured(data.structured, _aiText);
           window.AIOS._lastStructured = data.structured;
           window.AIOS._lastContract   = _upgraded;
+          // Phase CR: persist display subset for cross-navigation continuity
+          try { localStorage.setItem('aaai_contract_display', JSON.stringify({ recommended_actions: (_upgraded.recommended_actions || []).slice(0, 5), resources: (_upgraded.resources || []).slice(0, 10), risk_flags: _upgraded.risk_flags || [], _savedAt: Date.now() })); } catch (_cr2) { /* non-critical */ }
           console.log('[AIOS][VOICE-STRUCTURED] mode=' + _upgraded.mode +
             ' | checklist_items=' + (data.structured.checklist_items ? data.structured.checklist_items.length : 0) +
             ' | missions=' + (data.structured.missions ? data.structured.missions.length : 0) +
@@ -2122,6 +2126,8 @@
 
           // Store latest contract on window for dashboard/inspector access
           window.AIOS._lastContract = _p47Contract;
+          // Phase CR: persist display subset for cross-navigation continuity
+          try { localStorage.setItem('aaai_contract_display', JSON.stringify({ recommended_actions: (_p47Contract.recommended_actions || []).slice(0, 5), resources: (_p47Contract.resources || []).slice(0, 10), risk_flags: _p47Contract.risk_flags || [], _savedAt: Date.now() })); } catch (_cr3) { /* non-critical */ }
 
           // ── Phase 50: Resource Matcher — RESOURCE MATCHER ACTIVATED - Phase 1 Fix ──
           // Async — fires while the message streams, never blocks the chat.
