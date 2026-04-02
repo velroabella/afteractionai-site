@@ -2469,11 +2469,22 @@
                 pageContext = { page: 'chat', topics: window.activeUserTopics, inputMode: inputMode };
               }
 
+              // Phase ID-GUARD (text path): Strip stale name and branch from the profile
+              // injected into the AIOS request — mirrors the voice-path filter at line ~1267.
+              // Prevents prior-session identity data from being asserted without confirmation.
+              var _textProfile = Object.assign({}, profile);
+              var _textFreshId = (window.AIOS.Memory &&
+                  typeof window.AIOS.Memory.extractMemoryFromInput === 'function')
+                ? window.AIOS.Memory.extractMemoryFromInput(lastUserMsg)
+                : {};
+              if (!_textFreshId.name)   delete _textProfile.name;
+              if (!_textFreshId.branch) delete _textProfile.branch;
+
               var aiosRequest = window.AIOS.RequestBuilder.buildAIOSRequest({
                 userMessage: lastUserMsg,
                 routeResult: routeResult,
                 skillConfig: skillConfig,
-                memoryContext: (window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : null,
+                memoryContext: _textProfile,
                 pageContext: pageContext
               });
 
