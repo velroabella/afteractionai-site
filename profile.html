@@ -696,11 +696,20 @@ function toggleMenu() {
     // Persist
     AAAI.auth.updateChecklistItemStatus(itemId, newStatus).then(function(result) {
       if (result && result.error) {
-        // Revert on failure
+        // Revert on failure and re-render so UI reflects true state
         item.status = oldStatus;
         item.is_completed = oldStatus === 'completed';
-        console.warn('[AIOS] status update error:', result.error);
+        console.error('[AAAI ERROR][aiosSetStatus] checklist item update failed — id:', itemId, '| error:', result.error);
+        updateStats(_allItems);
+        renderChecklist(_allItems, _activeFilter);
       }
+    }).catch(function(e) {
+      // Revert and re-render on exception (network error, etc.)
+      item.status = oldStatus;
+      item.is_completed = oldStatus === 'completed';
+      console.error('[AAAI ERROR][aiosSetStatus] exception — id:', itemId, '|', e);
+      updateStats(_allItems);
+      renderChecklist(_allItems, _activeFilter);
     });
 
     // Dispatch analytics event

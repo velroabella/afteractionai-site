@@ -2238,8 +2238,7 @@
         return;
       }
       removeTyping();
-      log('sendToAI', 'ERROR — ' + error.message);
-      console.error('AI Error:', error);
+      console.error('[AAAI ERROR][sendToAI]', error.message, error);
 
       var mockResponse = getMockResponse(userText);
       if (mockResponse) {
@@ -3135,13 +3134,22 @@
           case_id:         _caseId,
           status:          'uploaded'
         }).then(function(res) {
+          if (res && res.error) {
+            throw Object.assign(new Error('DB record failed'), { _dbErr: res.error });
+          }
           // Phase 3.5: advance lifecycle to 'processed' after successful save
           if (res && res.data && res.data.id &&
               window.AIOS && window.AIOS.DocumentLifecycle) {
             window.AIOS.DocumentLifecycle.transition(res.data.id, 'processed');
           }
         }).catch(function(err) {
-          console.warn('[DocIntel] documents.save failed (non-blocking):', err);
+          console.error('[AAAI ERROR][documents.save] failed — file:', pf.file.name, '|', err._dbErr || err);
+          if (_activeCaseId && chatMessages) {
+            var _de = document.createElement('div');
+            _de.className = 'message message--system';
+            _de.innerHTML = '<div class="save-success-bar" style="background:#fef2f2;border-color:#fca5a5;"><span style="color:#dc2626;">⚠</span> <span style="color:#991b1b;">Document analyzed but could not be saved to your account. Your conversation is unaffected.</span></div>';
+            chatMessages.appendChild(_de);
+          }
         });
       }
     }
@@ -3545,10 +3553,14 @@
           conversation_history: conversationHistory,
           model_used:           CONFIG.model
         }).then(function(r) {
-          if (!r.error && r.data) {
+          if (r.error) {
+            console.error('[AAAI ERROR][DataAccess.reports.save] failed:', r.error);
+          } else if (r.data) {
             log('Phase2', 'report saved to cases/reports table — id: ' + r.data.id);
           }
-        }).catch(function() {});
+        }).catch(function(e) {
+          console.error('[AAAI ERROR][DataAccess.reports.save] exception:', e);
+        });
       }
 
       AAAI.auth.saveReport(reportText, conversationHistory).then(function(result) {
@@ -3605,9 +3617,18 @@
               log('Segmentation', 'update error: ' + e.message);
             });
           }
+        } else {
+          throw new Error('saveReport:' + (result && result.error ? JSON.stringify(result.error) : 'null result'));
         }
       }).catch(function(e) {
-        log('Report', 'save error: ' + e.message);
+        console.error('[AAAI ERROR][saveReport]', e.message || e);
+        if (chatMessages) {
+          var _rpErr = document.createElement('div');
+          _rpErr.className = 'message message--system';
+          _rpErr.innerHTML = '<div class="save-success-bar" style="background:#fef2f2;border-color:#fca5a5;"><span style="color:#dc2626;">⚠</span> <span style="color:#991b1b;">Report could not be saved to your account. Your session data is intact.</span></div>';
+          chatMessages.appendChild(_rpErr);
+          scrollToBottom();
+        }
       });
     }
   }
@@ -3993,7 +4014,7 @@
         window.AAAI.DataAccess.checklistItems.saveBatch(_caseId, _mId, _items)
           .then(function(r) {
             if (r.error) {
-              log('Phase3.3', 'checklistItems.saveBatch failed (non-fatal): ' + JSON.stringify(r.error));
+              console.error('[AAAI ERROR][checklistItems.saveBatch] failed — missionId:', _mId, '| error:', r.error);
               return;
             }
             _checklistDbIds = {};
@@ -4009,7 +4030,9 @@
               }
               log('Phase3.3', 'checklist synced — ' + r.data.length + ' rows | missionId: ' + _mId);
             }
-          }).catch(function() {});
+          }).catch(function(e) {
+            console.error('[AAAI ERROR][checklistItems.saveBatch] exception — missionId:', _mId, '|', e);
+          });
       })(items, _activeCaseId, _missionDbId);
     }
 
