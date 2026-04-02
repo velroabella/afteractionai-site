@@ -80,14 +80,22 @@
       return Promise.resolve({ data: null, error: 'DataAccess not ready' });
     }
     var DA = window.AAAI.DataAccess.checklistItems;
-    var promise;
+    // Phase R: resolve DA method + retry context label before calling withRetry
+    var _retryFn;
+    var _retryCtx;
     if (newStatus === 'completed') {
-      promise = DA.toggle(dbId, true);
+      _retryFn  = function() { return DA.toggle(dbId, true); };
+      _retryCtx = 'checklist.toggle';
     } else if (newStatus === 'not_started' && _statusMap[idx] === 'completed') {
-      promise = DA.reopen(dbId);
+      _retryFn  = function() { return DA.reopen(dbId); };
+      _retryCtx = 'checklist.reopen';
     } else {
-      promise = DA.updateStatus(dbId, newStatus);
+      _retryFn  = function() { return DA.updateStatus(dbId, newStatus); };
+      _retryCtx = 'checklist.updateStatus';
     }
+    // Use withRetry if available (registered by app.js at load time); fall back to direct call.
+    var _retry = (window.AAAI && window.AAAI.withRetry) || function(fn) { return fn(); };
+    var promise = _retry(_retryFn, _retryCtx);
     return promise.then(function(result) {
       if (!result.error) {
         _statusMap[idx] = newStatus;

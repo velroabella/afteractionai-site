@@ -21,6 +21,74 @@
     console.log('[AAAI] ' + label + (detail ? ' — ' + detail : ''));
   }
 
+  /* ── Phase R: withRetry ────────────────────────────────────
+     Wraps network calls with exponential backoff.
+     max 3 total attempts (2 retries after the initial attempt).
+
+     Delays:  attempt 2 → 300ms  |  attempt 3 → 800ms
+     Retries: network TypeError | AbortError | AI_TIMEOUT | HTTP 5xx
+     Skips:   4xx | auth errors | non-network errors
+     Shape:   preserves { data, error } for DataAccess callers;
+              re-throws for fetch/promise-rejection callers.
+
+     Usage:
+       withRetry(function() { return someNetworkCall(); }, 'context.label')
+     ──────────────────────────────────────────────────────── */
+  function _isTransientError(err) {
+    if (!err) return false;
+    // AbortError from browser fetch, or our AI_TIMEOUT sentinel
+    if (err.name === 'AbortError' || err.message === 'AI_TIMEOUT') return true;
+    // Network-level failure (no HTTP response at all)
+    if (err instanceof TypeError && /fetch|network|failed to fetch/i.test(err.message)) return true;
+    // HTTP 5xx stringified into Error message (callChatEndpoint pattern)
+    if (err.message && /Chat endpoint error: 5\d\d/.test(err.message)) return true;
+    // Supabase error object with numeric .status (5xx or network 0)
+    if (typeof err.status === 'number' && (err.status >= 500 || err.status === 0)) return true;
+    // Supabase error as plain string mentioning network/timeout
+    if (typeof err === 'string' && /network|fetch|timeout/i.test(err)) return true;
+    return false;
+  }
+
+  // Delays before retry attempt 2 and attempt 3 (attempt 1 is always immediate)
+  var _RETRY_DELAYS = [300, 800];
+
+  async function withRetry(fn, contextLabel) {
+    var lastErr = null;
+    for (var attempt = 1; attempt <= 3; attempt++) {
+      if (attempt > 1) {
+        var delay = _RETRY_DELAYS[attempt - 2];
+        console.log('[AAAI RETRY][' + contextLabel + '] attempt ' + attempt + '/3 — waiting ' + delay + 'ms');
+        await new Promise(function(resolve) { setTimeout(resolve, delay); });
+      }
+      try {
+        var result = await fn();
+        // DataAccess { data, error } shape: check resolved error for transience
+        if (result !== null && typeof result === 'object' &&
+            'data' in result && 'error' in result && result.error) {
+          if (_isTransientError(result.error)) {
+            lastErr = result.error;
+            if (attempt < 3) continue;
+            console.error('[AAAI RETRY][' + contextLabel + '] all 3 attempts failed:', result.error);
+            return { data: null, error: lastErr };
+          }
+        }
+        return result; // success or non-transient { data, error }
+      } catch (e) {
+        if (_isTransientError(e)) {
+          lastErr = e;
+          if (attempt < 3) continue;
+          console.error('[AAAI RETRY][' + contextLabel + '] all 3 attempts failed:', e.message);
+          throw lastErr;
+        }
+        throw e; // non-transient: propagate immediately, no retry
+      }
+    }
+  }
+
+  // Phase R: expose on window.AAAI so cross-module files (checklist-manager.js) can use it
+  // This runs synchronously at script-load time — well before any user interaction.
+  (window.AAAI = window.AAAI || {}).withRetry = withRetry;
+
   // ── CRISIS KEYWORDS ─────────────────────────────────────
   var CRISIS_KEYWORDS = [
     'suicide', 'kill myself', 'end it all', 'want to die', 'no point in living',
@@ -1220,7 +1288,7 @@
               // Fire-and-forget — failure never blocks voice flow.
               if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
                 (function(_m) {
-                  window.AAAI.DataAccess.missions.create(_activeCaseId, _m)
+                  withRetry(function() { return window.AAAI.DataAccess.missions.create(_activeCaseId, _m); }, 'missions.create:voice')
                     .then(function(r) {
                       if (!r.error && r.data && r.data.id) {
                         _m._dbId = r.data.id; // attach DB UUID for future sync()
@@ -2025,7 +2093,7 @@
                 // Persist new mission to Supabase. Fire-and-forget — no UI impact.
                 if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
                   (function(_m) {
-                    window.AAAI.DataAccess.missions.create(_activeCaseId, _m)
+                    withRetry(function() { return window.AAAI.DataAccess.missions.create(_activeCaseId, _m); }, 'missions.create:text')
                       .then(function(r) {
                         if (!r.error && r.data && r.data.id) {
                           _m._dbId = r.data.id; // attach DB UUID for future sync()
@@ -2124,7 +2192,7 @@
                   var _mObj = _ma.mission;
                   if (_ma.action === 'create' && !_mObj._dbId) {
                     // MissionExtractor created a brand-new mission
-                    window.AAAI.DataAccess.missions.create(_activeCaseId, _mObj)
+                    withRetry(function() { return window.AAAI.DataAccess.missions.create(_activeCaseId, _mObj); }, 'missions.create:MissionExt')
                       .then(function(r) {
                         if (!r.error && r.data && r.data.id) {
                           _mObj._dbId = r.data.id;
@@ -2134,7 +2202,7 @@
                       }).catch(function(e) { console.error('[AAAI ERROR][missions.create] MissionExt — type:', _mObj.type, '| case:', _activeCaseId, '|', e); });
                   } else if ((_ma.action === 'update' || _ma.action === 'complete') && _mObj._dbId) {
                     // MissionExtractor updated an existing persisted mission
-                    window.AAAI.DataAccess.missions.sync(_mObj._dbId, _mObj)
+                    withRetry(function() { return window.AAAI.DataAccess.missions.sync(_mObj._dbId, _mObj); }, 'missions.sync:MissionExt')
                       .then(function(r) {
                         if (!r.error) {
                           log('Phase2', 'MissionExt ' + _ma.action + ' synced — dbId: ' + _mObj._dbId);
@@ -2579,32 +2647,31 @@
 
     log('callChatEndpoint', 'AIOS=' + (aiosActive ? 'active' : 'fallback') + ', systemLen=' + systemPrompt.length);
 
-    // Phase 5: 15-second AbortController — prevents isProcessing locking forever on hung requests
-    var _p5Controller = new AbortController();
-    var _p5Timeout = setTimeout(function() {
-      _p5Controller.abort();
-    }, 15000);
-
-    return fetch(CONFIG.apiEndpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: _p5Controller.signal
-    }).then(function(resp) {
-      clearTimeout(_p5Timeout);
-      if (!resp.ok) throw new Error('Chat endpoint error: ' + resp.status);
-      return resp.json();
-    }).then(function(data) {
-      log('callChatEndpoint', 'response received, length=' + (data.response || '').length +
-        (data.structured ? ' [+structured mode=' + data.structured.mode + ']' : ''));
-      return { text: data.response || '', structured: data.structured || null };
-    }).catch(function(err) {
-      clearTimeout(_p5Timeout);
-      if (err.name === 'AbortError') {
-        throw new Error('AI_TIMEOUT');
-      }
-      throw err;
-    });
+    // Phase R: Each retry attempt gets a fresh AbortController + 15s timeout so the
+    // clock resets cleanly. AI_TIMEOUT and 5xx trigger retry; 4xx propagates immediately.
+    var _payloadJSON = JSON.stringify(payload);
+    return withRetry(function() {
+      var _ctrl = new AbortController();
+      var _timer = setTimeout(function() { _ctrl.abort(); }, 15000);
+      return fetch(CONFIG.apiEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: _payloadJSON,
+        signal: _ctrl.signal
+      }).then(function(resp) {
+        clearTimeout(_timer);
+        if (!resp.ok) throw new Error('Chat endpoint error: ' + resp.status);
+        return resp.json();
+      }).then(function(data) {
+        log('callChatEndpoint', 'response received, length=' + (data.response || '').length +
+          (data.structured ? ' [+structured mode=' + data.structured.mode + ']' : ''));
+        return { text: data.response || '', structured: data.structured || null };
+      }).catch(function(err) {
+        clearTimeout(_timer);
+        if (err.name === 'AbortError') throw new Error('AI_TIMEOUT');
+        throw err;
+      });
+    }, 'callChatEndpoint');
   }
 
   // ── Phase 4.1: Build ResponseContract from structured tool output ──────────
@@ -3168,7 +3235,7 @@
                        window.AIOS.Mission.current._caseId)
           ? window.AIOS.Mission.current._caseId
           : (_activeCaseId || null);
-        window.AAAI.DataAccess.documents.save({
+        var _docPayload = {
           file_name:       pf.file.name,
           document_type:   _typeId,
           mime_type:       pf.file.type,
@@ -3178,24 +3245,26 @@
           mission_id:      _missionId,
           case_id:         _caseId,
           status:          'uploaded'
-        }).then(function(res) {
-          if (res && res.error) {
-            throw Object.assign(new Error('DB record failed'), { _dbErr: res.error });
-          }
-          // Phase 3.5: advance lifecycle to 'processed' after successful save
-          if (res && res.data && res.data.id &&
-              window.AIOS && window.AIOS.DocumentLifecycle) {
-            window.AIOS.DocumentLifecycle.transition(res.data.id, 'processed');
-          }
-        }).catch(function(err) {
-          console.error('[AAAI ERROR][documents.save] failed — file:', pf.file.name, '|', err._dbErr || err);
-          if (_activeCaseId && chatMessages) {
-            var _de = document.createElement('div');
-            _de.className = 'message message--system';
-            _de.innerHTML = '<div class="save-success-bar" style="background:#fef2f2;border-color:#fca5a5;"><span style="color:#dc2626;">⚠</span> <span style="color:#991b1b;">Document analyzed but could not be saved to your account. Your conversation is unaffected.</span></div>';
-            chatMessages.appendChild(_de);
-          }
-        });
+        };
+        withRetry(function() { return window.AAAI.DataAccess.documents.save(_docPayload); }, 'documents.save')
+          .then(function(res) {
+            if (res && res.error) {
+              throw Object.assign(new Error('DB record failed'), { _dbErr: res.error });
+            }
+            // Phase 3.5: advance lifecycle to 'processed' after successful save
+            if (res && res.data && res.data.id &&
+                window.AIOS && window.AIOS.DocumentLifecycle) {
+              window.AIOS.DocumentLifecycle.transition(res.data.id, 'processed');
+            }
+          }).catch(function(err) {
+            console.error('[AAAI ERROR][documents.save] failed — file:', pf.file.name, '|', err._dbErr || err);
+            if (_activeCaseId && chatMessages) {
+              var _de = document.createElement('div');
+              _de.className = 'message message--system';
+              _de.innerHTML = '<div class="save-success-bar" style="background:#fef2f2;border-color:#fca5a5;"><span style="color:#dc2626;">⚠</span> <span style="color:#991b1b;">Document analyzed but could not be saved to your account. Your conversation is unaffected.</span></div>';
+              chatMessages.appendChild(_de);
+            }
+          });
       }
     }
   }
@@ -3900,7 +3969,7 @@
                !isNaN(itemIdx) && _checklistDbIds[itemIdx]) {
       // Phase 2 fallback — direct toggle (no ChecklistManager available)
       (function(_dbId, _completed) {
-        window.AAAI.DataAccess.checklistItems.toggle(_dbId, _completed)
+        withRetry(function() { return window.AAAI.DataAccess.checklistItems.toggle(_dbId, _completed); }, 'checklist.toggle:fallback')
           .then(function(r) {
             if (!r.error) {
               log('Phase2', 'checklist toggle fallback — dbId: ' + _dbId +
