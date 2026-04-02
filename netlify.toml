@@ -10,3 +10,8 @@
   from = "/api/realtime-token"
   to = "/.netlify/functions/realtime-token"
   status = 200
+
+[[redirects]]
+  from = "/api/voice-bridge"
+  to = "/.netlify/functions/voice-bridge"
+  status = 200

@@ -231,6 +231,7 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
     }
 
     console.log('[realtime-token] Token obtained:', secret.substring(0, 10) + '...', 'expires_at:', data.expires_at);
+    console.log('[voice-session] NEW SESSION | ts=' + new Date().toISOString() + ' | expires_in=600s');
     return {
       statusCode: 200,
       headers: HEADERS,

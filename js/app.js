@@ -1308,6 +1308,11 @@
         ' | skill=' + (_vRoute.skill || 'none') +
         ' | confidence=' + _vRoute.confidence);
 
+      // ── Phase 1 Bridge: async Claude classification for ALL intents ──
+      // shouldInjectContext=true only when no skill fires, so the bridge
+      // session.update does not overwrite a skill-specific context block.
+      _voiceBridgeProcess(transcript, !_vRoute.skill);
+
       // Only activate AIOS session.update when a specific skill is routed
       if (!_vRoute.skill || !window.AIOS.SkillLoader) return;
 
@@ -1365,6 +1370,199 @@
     } catch (_aiosVErr) {
       // AIOS failure is silent — voice transport continues unaffected
       log('AIOS:VOICE', 'FALLBACK — ' + (_aiosVErr.message || String(_aiosVErr)));
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  VOICE BRIDGE PROCESS  (Phase 1)
+  //  Fire-and-forget. Sends the accepted user voice transcript
+  //  to voice-bridge Netlify Function for Claude-powered
+  //  structured classification. Voice transport is NEVER
+  //  affected by any failure in this function.
+  //
+  //  @param {string}  transcript          Accepted voice transcript
+  //  @param {boolean} shouldInjectContext True = no skill session.update
+  //                                       fired this turn (GENERAL_QUESTION)
+  // ══════════════════════════════════════════════════════
+  function _voiceBridgeProcess(transcript, shouldInjectContext) {
+    try {
+      if (!transcript || transcript.trim().length < 3) return;
+
+      // ── Identity guard: strip unconfirmed name/branch ──
+      var _vbProfile = (window.AIOS && window.AIOS.Memory)
+        ? window.AIOS.Memory.getProfile() : {};
+      var _vbFreshId = (window.AIOS && window.AIOS.Memory &&
+          typeof window.AIOS.Memory.extractMemoryFromInput === 'function')
+        ? window.AIOS.Memory.extractMemoryFromInput(transcript) : {};
+      var _vbSafeProfile = Object.assign({}, _vbProfile);
+      if (!_vbFreshId.name)   delete _vbSafeProfile.name;
+      if (!_vbFreshId.branch) delete _vbSafeProfile.branch;
+
+      var _vbController = new AbortController();
+      var _vbTimeout    = setTimeout(function() { _vbController.abort(); }, 12000);
+
+      fetch('/api/voice-bridge', {
+        method:  'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          transcript: transcript,
+          history:    conversationHistory.slice(-8),
+          profile:    _vbSafeProfile,
+          case_id:    _activeCaseId || null
+        }),
+        signal: _vbController.signal
+      })
+      .then(function(r) {
+        clearTimeout(_vbTimeout);
+        if (!r.ok) throw new Error('voice-bridge HTTP ' + r.status);
+        return r.json();
+      })
+      .then(function(data) {
+        if (!data || !data.structured) {
+          log('VoiceBridge', 'no structured output — session continues normally');
+          return;
+        }
+        log('VoiceBridge', 'OK' +
+          ' | mode=' + data.structured.mode +
+          ' | in='   + (data.usage ? data.usage.input_tokens  : '?') +
+          ' | out='  + (data.usage ? data.usage.output_tokens : '?'));
+        _applyVoiceStructured(data.structured, transcript, shouldInjectContext);
+      })
+      .catch(function(e) {
+        clearTimeout(_vbTimeout);
+        log('VoiceBridge', e.name === 'AbortError'
+          ? 'timed out (12s) — session continues normally'
+          : 'fetch error: ' + (e.message || String(e)));
+        // Always graceful — voice session never blocked by bridge failure
+      });
+
+    } catch (_vbErr) {
+      log('VoiceBridge', 'FALLBACK — ' + (_vbErr.message || String(_vbErr)));
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  APPLY VOICE STRUCTURED  (Phase 1)
+  //  Processes Claude's structured classification output:
+  //    1. Crisis escalation (highest priority, always first)
+  //    2. Mission detection + fire-and-forget DB persist
+  //    3. Checklist item creation
+  //    4. Session context injection via RequestBuilder
+  //       (only for GENERAL_QUESTION turns — fills the gap
+  //        where _aiosVoiceUpdate previously returned early)
+  //  Fully wrapped in try/catch — voice transport never affected.
+  // ══════════════════════════════════════════════════════
+  function _applyVoiceStructured(structured, transcript, shouldInjectContext) {
+    try {
+
+      // ── 1. Crisis escalation ────────────────────────────────────────
+      if (structured.risk_flags &&
+          structured.risk_flags.indexOf('crisis_response') !== -1) {
+        log('VoiceBridge', 'CRISIS detected via Claude — escalating');
+        if (window.AIOS && window.AIOS.CrisisSupport &&
+            typeof window.AIOS.CrisisSupport.escalate === 'function') {
+          window.AIOS.CrisisSupport.escalate({ source: 'voice_bridge', transcript: transcript });
+        }
+      }
+
+      // ── 2. Mission processing ────────────────────────────────────────
+      if (structured.missions && Array.isArray(structured.missions) &&
+          window.AIOS && window.AIOS.Mission) {
+        structured.missions.forEach(function(mSpec) {
+          if (!mSpec || mSpec.action !== 'create' || !mSpec.type) return;
+          var _ex = typeof window.AIOS.Mission.getByType === 'function'
+            ? window.AIOS.Mission.getByType(mSpec.type)
+            : window.AIOS.Mission.current;
+          if (_ex) return;
+          if (typeof window.AIOS.Mission.createMission !== 'function') return;
+          var _newM = window.AIOS.Mission.createMission(mSpec.type);
+          if (!_newM) return;
+          window.AIOS.Mission.current = _newM;
+          log('VoiceBridge', 'mission created: ' + mSpec.type);
+          // Fire-and-forget DB persist — same pattern as _aiosVoiceUpdate
+          if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
+            (function(_m) {
+              withRetry(function() {
+                return window.AAAI.DataAccess.missions.create(_activeCaseId, _m);
+              }, 'missions.create:bridge')
+              .then(function(r) {
+                if (!r.error && r.data && r.data.id) { _m._dbId = r.data.id; }
+              })
+              .catch(function(e) {
+                console.error('[VoiceBridge][missions.create]', _m.type, e);
+              });
+            })(_newM);
+          }
+        });
+      }
+
+      // ── 3. Checklist items ───────────────────────────────────────────
+      if (structured.checklist_items && Array.isArray(structured.checklist_items) &&
+          window.AIOS && window.AIOS.Checklist &&
+          typeof window.AIOS.Checklist.addItem === 'function') {
+        structured.checklist_items.forEach(function(item) {
+          if (!item || !item.title) return;
+          window.AIOS.Checklist.addItem({
+            title:       item.title,
+            category:    item.category    || 'immediate',
+            description: item.description || ''
+          });
+          log('VoiceBridge', 'checklist: ' + item.title);
+        });
+      }
+
+      // ── 4. Session context injection (GENERAL_QUESTION gap fill) ─────
+      // Only fires when no skill session.update was sent this turn.
+      // Uses RequestBuilder.buildAIOSRequest() — identical prompt-assembly
+      // path to the existing skill session.update — budget trimming and
+      // identity guards are handled the same way.
+      if (!shouldInjectContext) return;
+      if (!window.AIOS || !window.AIOS.RequestBuilder) return;
+      if (typeof RealtimeVoice === 'undefined' || !RealtimeVoice.sendEvent) return;
+      var _vsNow = RealtimeVoice.getState ? RealtimeVoice.getState() : 'idle';
+      if (_vsNow === 'idle' || _vsNow === 'error') return;
+
+      // Identity-guarded profile (same logic as _aiosVoiceUpdate)
+      var _avProfile = window.AIOS.Memory ? window.AIOS.Memory.getProfile() : {};
+      var _avFreshId = (window.AIOS.Memory &&
+          typeof window.AIOS.Memory.extractMemoryFromInput === 'function')
+        ? window.AIOS.Memory.extractMemoryFromInput(transcript) : {};
+      var _avSafeProfile = Object.assign({}, _avProfile);
+      if (!_avFreshId.name)   delete _avSafeProfile.name;
+      if (!_avFreshId.branch) delete _avSafeProfile.branch;
+
+      var _avPageCtx = (window.activeUserTopics && window.activeUserTopics.length > 0)
+        ? { page: 'chat', topics: window.activeUserTopics, inputMode: 'voice' }
+        : null;
+
+      var _avReq = window.AIOS.RequestBuilder.buildAIOSRequest({
+        userMessage:   transcript,
+        routeResult:   {
+          intent:             'GENERAL_QUESTION',
+          skill:              null,
+          confidence:         0.4,
+          matched:            null,
+          tier:               'STANDARD',
+          needsClarification: false
+        },
+        skillConfig:   null,
+        memoryContext: _avSafeProfile,
+        pageContext:   _avPageCtx
+      });
+
+      if (_avReq && _avReq.system && _avReq.system.length > 0) {
+        RealtimeVoice.sendEvent({
+          type:    'session.update',
+          session: { instructions: _avReq.system }
+        });
+        log('VoiceBridge', 'session.update SENT (GENERAL_QUESTION enrichment)' +
+          ' | len='        + _avReq.system.length +
+          ' | hasMemory='  + _avReq.meta.hasMemory +
+          ' | hasMission=' + _avReq.meta.hasMission);
+      }
+
+    } catch (_avsErr) {
+      log('VoiceBridge', 'applyStructured FALLBACK — ' + (_avsErr.message || String(_avsErr)));
     }
   }
 
