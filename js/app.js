@@ -2454,7 +2454,20 @@
             var skill = window.AIOS.SkillLoader.loadAIOSSkill(routeResult.skill);
             if (skill && typeof skill.run === 'function') {
               var profile = (window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
-              var skillConfig = skill.run({ profile: profile, history: messages, userInput: lastUserMsg, tier: routeResult.tier || 'STANDARD' }); // Phase 22
+
+              // Phase ID-GUARD (skill path): Strip stale name and branch before passing
+              // the profile to skill.run() — mirrors the voice filter (~line 1267) and
+              // the memoryContext filter below. Prevents stale identity from reaching
+              // the prompt via skillConfig if a skill surfaces profile.name or profile.branch.
+              var _skillProfile = Object.assign({}, profile);
+              var _skillFreshId = (window.AIOS.Memory &&
+                  typeof window.AIOS.Memory.extractMemoryFromInput === 'function')
+                ? window.AIOS.Memory.extractMemoryFromInput(lastUserMsg)
+                : {};
+              if (!_skillFreshId.name)   delete _skillProfile.name;
+              if (!_skillFreshId.branch) delete _skillProfile.branch;
+
+              var skillConfig = skill.run({ profile: _skillProfile, history: messages, userInput: lastUserMsg, tier: routeResult.tier || 'STANDARD' }); // Phase 22
               console.log('[AIOS][SKILL] ' + skill.name + ' | intent=' + routeResult.intent);
 
               // Phase 25: Chain — if the skill returned a chain handoff, register it.
@@ -2475,10 +2488,7 @@
               // injected into the AIOS request — mirrors the voice-path filter at line ~1267.
               // Prevents prior-session identity data from being asserted without confirmation.
               var _textProfile = Object.assign({}, profile);
-              var _textFreshId = (window.AIOS.Memory &&
-                  typeof window.AIOS.Memory.extractMemoryFromInput === 'function')
-                ? window.AIOS.Memory.extractMemoryFromInput(lastUserMsg)
-                : {};
+              var _textFreshId = _skillFreshId; // reuse extraction result — same message, same result
               if (!_textFreshId.name)   delete _textProfile.name;
               if (!_textFreshId.branch) delete _textProfile.branch;
 
