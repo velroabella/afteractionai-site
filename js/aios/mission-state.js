@@ -200,8 +200,8 @@
           auth.loadAIOSMemory().then(function(result) {
             var mem = (result && result.data) ? result.data : {};
             delete mem.missionState;
-            auth.saveAIOSMemory(mem).catch(function() {});
-          }).catch(function() {});
+            auth.saveAIOSMemory(mem).catch(function(e) { console.error('[AAAI ERROR][mission-state.clear] saveAIOSMemory failed |', e); });
+          }).catch(function(e) { console.error('[AAAI ERROR][mission-state.clear] loadAIOSMemory failed |', e); });
         }
       } catch(e) {}
     },

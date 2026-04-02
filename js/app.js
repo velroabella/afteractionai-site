@@ -818,7 +818,7 @@
           _applyDbStatusToDOM();
           updateChecklistProgress();
           log('Phase5', 'checklist DB-authoritative restore — ' + r.data.length + ' items');
-        }).catch(function() {});
+        }).catch(function(e) { console.error('[AAAI ERROR][checklist.restore] DB-authoritative restore failed — case:', _activeCaseId, '|', e); });
     });
 
     log('init', 'complete — RealtimeVoice available: ' + (typeof window.RealtimeVoice !== 'undefined'));
@@ -2001,7 +2001,7 @@
           log('MEMORY', 'extracted: ' + Object.keys(_extracted).join(', '));
           // Persist to Supabase if authenticated (non-blocking)
           if (typeof window.AIOS.Memory.save === 'function') {
-            window.AIOS.Memory.save().catch(function() {});
+            window.AIOS.Memory.save().catch(function(e) { console.error('[AAAI ERROR][memory.save] profile persist failed |', e); });
           }
         }
         // Phase 35 / Phase 3.2: Auto-detect mission — multi-mission aware.
@@ -3832,7 +3832,7 @@
               log('Phase3.3', '_checklistDbIds restored from DB — ' + r.data.length + ' items');
               _applyDbStatusToDOM();
             }
-          }).catch(function() {});
+          }).catch(function(e) { console.error('[AAAI ERROR][checklist.dbIds] page-load DB restore failed — case:', _activeCaseId, '|', e); });
       }
     } catch(e) {
       log('Checklist', 'localStorage page-load restore failed: ' + e.message);
@@ -3885,7 +3885,7 @@
           if (!r.error) {
             log('Phase3.3', 'checklist transition — idx:' + itemIdx + ' status:' + newStatus);
           }
-        }).catch(function() {});
+        }).catch(function(e) { console.error('[AAAI ERROR][checklist.transition] toggle failed — idx:', itemIdx, '| status:', newStatus, '|', e); });
     } else if (_activeCaseId && window.AAAI && window.AAAI.DataAccess &&
                !isNaN(itemIdx) && _checklistDbIds[itemIdx]) {
       // Phase 2 fallback — direct toggle (no ChecklistManager available)
@@ -3896,7 +3896,7 @@
               log('Phase2', 'checklist toggle fallback — dbId: ' + _dbId +
                   ' completed: ' + _completed);
             }
-          }).catch(function() {});
+          }).catch(function(e) { console.error('[AAAI ERROR][checklist.toggle] fallback failed — dbId:', _dbId, '| completed:', _completed, '|', e); });
       })(_checklistDbIds[itemIdx], isNowCompleted);
     }
   };
@@ -3916,7 +3916,7 @@
     var itemIdx = parseInt(itemEl.getAttribute('data-index'), 10);
     if (!isNaN(itemIdx) && window.AIOS && window.AIOS.Checklist &&
         window.AIOS.Checklist.getDbId(itemIdx)) {
-      window.AIOS.Checklist.transition(itemIdx, newStatus).catch(function() {});
+      window.AIOS.Checklist.transition(itemIdx, newStatus).catch(function(e) { console.error('[AAAI ERROR][checklist.transition] in_progress failed — idx:', itemIdx, '| status:', newStatus, '|', e); });
     }
   };
 
@@ -3935,7 +3935,7 @@
     var itemIdx2 = parseInt(itemEl.getAttribute('data-index'), 10);
     if (!isNaN(itemIdx2) && window.AIOS && window.AIOS.Checklist &&
         window.AIOS.Checklist.getDbId(itemIdx2)) {
-      window.AIOS.Checklist.transition(itemIdx2, newStatus).catch(function() {});
+      window.AIOS.Checklist.transition(itemIdx2, newStatus).catch(function(e) { console.error('[AAAI ERROR][checklist.transition] skip failed — idx:', itemIdx2, '| status:', newStatus, '|', e); });
     }
   };
 
@@ -4153,7 +4153,7 @@
             if (text) text.textContent = dbPct + '% Complete \u2014 ' + dbDone + ' of ' + dbTot + ' tasks';
             log('Phase3.3', 'progress from DB — ' + dbDone + '/' + dbTot + ' (' + dbPct + '%)');
           }
-        }).catch(function() {});
+        }).catch(function(e) { console.error('[AAAI ERROR][checklist.getProgress] failed |', e); });
     }
   };
 
