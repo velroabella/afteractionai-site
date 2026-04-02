@@ -6,7 +6,8 @@
     "test": "node --test tests/basic-safety-tests.js tests/phase5-regression-tests.js tests/hardening-regression-tests.js",
     "test:safety": "node --test tests/basic-safety-tests.js",
     "test:regression": "node --test tests/phase5-regression-tests.js",
-    "test:hardening": "node --test tests/hardening-regression-tests.js"
+    "test:hardening": "node --test tests/hardening-regression-tests.js",
+    "test:integration": "node --test tests/integration-smoke.js"
   },
   "engines": {
     "node": ">=18.0.0"
