@@ -1270,7 +1270,10 @@ function toggleMenu() {
       if (!contract) {
         try {
           var _crStored = JSON.parse(localStorage.getItem('aaai_contract_display') || 'null');
-          if (_crStored && (_crStored.recommended_actions || _crStored.resources || _crStored.risk_flags)) {
+          // Phase CR-TTL: discard stale contract data (>24 hours old)
+          var _crTTL = 86400000; // 24 hours in ms
+          var _crFresh = _crStored && _crStored._savedAt && (Date.now() - _crStored._savedAt < _crTTL);
+          if (_crFresh && (_crStored.recommended_actions || _crStored.resources || _crStored.risk_flags)) {
             contract = _crStored;
           }
         } catch (_crErr) { /* parse error — no contract fallback */ }
