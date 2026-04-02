@@ -2355,15 +2355,17 @@
     }
     if (userText === 'RESUME_MISSION') {
       // Phase 43/46: Smart resume — surface missionState + profile data + resource options
+      // Phase ID-GUARD: Never assert name or branch directly. Build a confirmation
+      // summary so the user can verify stale profile data before the system uses it.
       var _rProf = (window.AIOS && window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
-      var _rName = _rProf.name || null;
       var _rParts = [];
-      if (_rProf.branch)           _rParts.push(_rProf.branch);
+      if (_rProf.name)             _rParts.push('Name: ' + _rProf.name);
+      if (_rProf.branch)           _rParts.push('Branch: ' + _rProf.branch);
       if (_rProf.dischargeStatus)  _rParts.push(_rProf.dischargeStatus + ' discharge');
       if (_rProf.vaRating !== null && _rProf.vaRating !== undefined) _rParts.push(_rProf.vaRating + '% VA rating');
       if (_rProf.state)            _rParts.push('based in ' + _rProf.state);
       var _rSummary = _rParts.length > 0
-        ? ' I have your profile loaded — ' + _rParts.join(', ') + '.'
+        ? ' I have some info on file from before — ' + _rParts.join(', ') + '. Is that still correct?'
         : '';
 
       // Phase 46 Part 1: Enrich with missionState if available
@@ -2398,7 +2400,7 @@
         _histMsg = " I've loaded our previous conversation so we can pick up right where we left off.";
       }
 
-      return 'Welcome back' + (_rName ? ', ' + _rName : '') + '.' + _rSummary + _mStateMsg + _histMsg + ' What would you like to work on?\n\n[OPTIONS: ' + _rOpt1 + ' | Upload a document | Check my benefits | Update my info | Start over]';
+      return 'Welcome back.' + _rSummary + _mStateMsg + _histMsg + ' What would you like to work on?\n\n[OPTIONS: ' + _rOpt1 + ' | Upload a document | Check my benefits | Update my info | Start over]';
     }
     return null;
   }
