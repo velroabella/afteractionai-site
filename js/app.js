@@ -612,7 +612,7 @@
                 window.dispatchEvent(new CustomEvent('aaai:mission_state_synced'));
               }
             })
-            .catch(function() { /* non-critical */ });
+            .catch(function(e) { console.error('[AAAI ERROR][missions.list] restore failed — case:', _activeCaseId, '|', e); });
         }
       }
 
@@ -1226,7 +1226,7 @@
                         _m._dbId = r.data.id; // attach DB UUID for future sync()
                         log('Phase2', 'voice mission persisted — ' + _m.type + ' | dbId: ' + r.data.id);
                       }
-                    }).catch(function() {});
+                    }).catch(function(e) { console.error('[AAAI ERROR][missions.create] voice — type:', _m.type, '| case:', _activeCaseId, '|', e); });
                 })(_newMission);
               }
             }
@@ -2031,7 +2031,7 @@
                           _m._dbId = r.data.id; // attach DB UUID for future sync()
                           log('Phase2', 'text mission persisted — ' + _m.type + ' | dbId: ' + r.data.id);
                         }
-                      }).catch(function() {});
+                      }).catch(function(e) { console.error('[AAAI ERROR][missions.create] text — type:', _m.type, '| case:', _activeCaseId, '|', e); });
                   })(_newMission);
                 }
               }
@@ -2131,7 +2131,7 @@
                           if (window.AIOS.Mission) window.AIOS.Mission.current = _mObj;
                           log('Phase2', 'MissionExt create persisted — dbId: ' + r.data.id);
                         }
-                      }).catch(function() {});
+                      }).catch(function(e) { console.error('[AAAI ERROR][missions.create] MissionExt — type:', _mObj.type, '| case:', _activeCaseId, '|', e); });
                   } else if ((_ma.action === 'update' || _ma.action === 'complete') && _mObj._dbId) {
                     // MissionExtractor updated an existing persisted mission
                     window.AAAI.DataAccess.missions.sync(_mObj._dbId, _mObj)
@@ -2139,7 +2139,7 @@
                         if (!r.error) {
                           log('Phase2', 'MissionExt ' + _ma.action + ' synced — dbId: ' + _mObj._dbId);
                         }
-                      }).catch(function() {});
+                      }).catch(function(e) { console.error('[AAAI ERROR][missions.sync] MissionExt — action:', _ma.action, '| dbId:', _mObj._dbId, '|', e); });
                   }
                 })(_p47MissionAction);
               }
