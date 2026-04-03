@@ -509,8 +509,16 @@
         _missionId = missionId || null;
       }
 
+      // Phase 2: Resolve authenticated user_id for RLS policy (documents_insert_own)
+      var userId = null;
+      if (window.AAAI && window.AAAI.auth && typeof window.AAAI.auth.getUserId === 'function') {
+        userId = window.AAAI.auth.getUserId();
+      }
+      if (!userId) return Promise.resolve({ data: null, error: 'Not logged in — document not persisted' });
+
       var row = {
         case_id:         _caseId,
+        user_id:         userId,
         mission_id:      _missionId,
         file_name:       _docData.file_name       || 'unknown',
         document_type:   _docData.document_type   || null,
