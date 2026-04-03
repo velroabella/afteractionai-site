@@ -530,7 +530,7 @@
         analysis_result: _docData.analysis_result
                            ? JSON.stringify(_docData.analysis_result)
                            : '{}',
-        status:          _docData.status          || 'uploaded'
+        status:          (['pending','processing','complete','failed','uploaded','processed'].indexOf(_docData.status) !== -1 ? _docData.status : 'pending')
       };
       return wrap(
         db.from('documents').insert(row).select().single()

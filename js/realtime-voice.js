@@ -344,8 +344,16 @@
 
       // ── Error ──
       case 'error':
+        var errMsg = msg.error?.message || 'Server error';
         log('event', 'server error: ' + JSON.stringify(msg.error || msg));
-        emitError(msg.error?.message || 'Server error');
+        // Phase 2.3: "active response" is non-fatal — session continues normally.
+        // Also ignore session.update validation errors (e.g. missing fields).
+        if (/active response|already has an active/i.test(errMsg) ||
+            /session\.update|missing required/i.test(errMsg)) {
+          log('event', 'non-fatal error — session continues');
+          break;
+        }
+        emitError(errMsg);
         break;
 
       default:
@@ -368,6 +376,29 @@
 
   function sendText(text) {
     log('sendText', text.substring(0, 60));
+    // Phase 2.3: If a response is in progress, queue the text until it finishes.
+    // Sending response.create while another response is active causes
+    // "Conversation already has an active response in progress" error.
+    if (currentResponseId) {
+      log('sendText', 'response in progress — queuing (200ms retry)');
+      var _txt = text;
+      var _retries = 0;
+      var _retryInterval = setInterval(function() {
+        _retries++;
+        if (!currentResponseId) {
+          clearInterval(_retryInterval);
+          sendEvent({
+            type: 'conversation.item.create',
+            item: { type: 'message', role: 'user', content: [{ type: 'input_text', text: _txt }] }
+          }) && sendEvent({ type: 'response.create' });
+          log('sendText', 'queued text sent after ' + (_retries * 200) + 'ms');
+        } else if (_retries >= 25) {
+          clearInterval(_retryInterval);
+          log('sendText', 'gave up waiting for response to finish (5s)');
+        }
+      }, 200);
+      return true;
+    }
     return sendEvent({
       type: 'conversation.item.create',
       item: {
