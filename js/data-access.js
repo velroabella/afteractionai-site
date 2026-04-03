@@ -342,6 +342,38 @@
     },
 
     /**
+     * Add a single checklist item to a mission. No idempotency guard —
+     * always inserts. Used by AIOS Checklist.addItem() for incremental adds
+     * during conversation (as opposed to saveBatch which is for report parsing).
+     * @param {string} caseId
+     * @param {string} missionId
+     * @param {Object} item  { title, description?, category?, sort_order?, priority?, source? }
+     * @returns {Promise<{data, error}>}
+     */
+    addSingle: function(caseId, missionId, item) {
+      var db = getClient();
+      if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      var PRIORITY = { immediate: 1, short_term: 2, strategic: 3, optional: 4 };
+      var row = {
+        mission_id:    missionId,
+        case_id:       caseId,
+        title:         (item.title || '').substring(0, 200),
+        description:   item.description || null,
+        category:      item.category || 'immediate',
+        is_completed:  false,
+        status:        'not_started',
+        sort_order:    item.sort_order !== undefined ? item.sort_order : 0,
+        priority:      item.priority || PRIORITY[item.category] || 2,
+        source:        item.source || 'ai_conversation',
+        resource_link: item.resource_link || null,
+        due_context:   item.due_context || null
+      };
+      return wrap(
+        db.from('case_checklist_items').insert(row).select().single()
+      );
+    },
+
+    /**
      * List all checklist items for a mission (ordered by category, sort_order).
      * @param {string} missionId
      * @returns {Promise<{data, error}>}

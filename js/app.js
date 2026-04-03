@@ -1772,17 +1772,24 @@
     window.AIOS.Mission.current = newMission;
     log('Mission', 'CREATED: ' + missionType);
 
-    // Fire-and-forget DB persist
+    // Fire-and-forget DB persist + flush pending checklist items once _dbId is known
     if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
-      (function(m) {
+      (function(m, caseId) {
         withRetry(function() {
-          return window.AAAI.DataAccess.missions.create(_activeCaseId, m);
+          return window.AAAI.DataAccess.missions.create(caseId, m);
         }, 'missions.create:phase25r').then(function(r) {
-          if (!r.error && r.data && r.data.id) m._dbId = r.data.id;
+          if (!r.error && r.data && r.data.id) {
+            m._dbId = r.data.id;
+            // Flush any checklist items that were queued before _dbId existed
+            if (window.AIOS && window.AIOS.Checklist &&
+                typeof window.AIOS.Checklist.flushPending === 'function') {
+              window.AIOS.Checklist.flushPending(r.data.id, caseId);
+            }
+          }
         }).catch(function(e) {
           console.error('[Mission][create]', m.type, e);
         });
-      })(newMission);
+      })(newMission, _activeCaseId);
     }
 
     // Inject default checklist items
@@ -2649,6 +2656,22 @@
 
             // ── AGENTIC: Auto-save generated templates/reports to dashboard ──
             _processDocumentActions(_p41Structured, aiResponse);
+
+            // ── AGENTIC: Persist checklist items from structured output ──
+            if (_p41Structured.checklist_items && _p41Structured.checklist_items.length > 0 &&
+                window.AIOS && window.AIOS.Checklist &&
+                typeof window.AIOS.Checklist.addItem === 'function') {
+              _p41Structured.checklist_items.forEach(function(item) {
+                if (!item || !item.title) return;
+                window.AIOS.Checklist.addItem({
+                  title:       item.title,
+                  category:    item.category || 'immediate',
+                  description: item.description || '',
+                  source:      'ai_conversation'
+                });
+              });
+              console.log('[AIOS][STRUCTURED] persisted ' + _p41Structured.checklist_items.length + ' checklist items');
+            }
           } else {
             _p47Contract = window.AIOS.ResponseContract.parse(aiResponse, _p47Ctx);
             console.log('[AIOS][CONTRACT] mode=' + _p47Contract.mode +
@@ -4073,6 +4096,32 @@
     window.dispatchEvent(new CustomEvent('aaai:audit_completed', { detail: { tags: [] } }));
     log('Analytics', 'dispatched aaai:audit_completed');
 
+    // ── AGENTIC: Auto-save report to template_outputs so it appears on the Profile ──
+    if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn &&
+        AAAI.auth.isLoggedIn() && typeof AAAI.auth.saveTemplateOutput === 'function') {
+      var _reportTitle = 'Personalized Benefits Report';
+      // Extract a better title from the report if possible
+      var _titleMatch = reportText.match(/^#+\s*(.{5,80})/m);
+      if (_titleMatch) _reportTitle = _titleMatch[1].replace(/[*#]/g, '').trim();
+      AAAI.auth.saveTemplateOutput({
+        template_type: 'benefits_report',
+        title: _reportTitle,
+        content: reportText,
+        metadata: {
+          source: 'ai_generated',
+          action: 'save_report',
+          generated_at: new Date().toISOString(),
+          case_id: _activeCaseId || null
+        }
+      }).then(function(res) {
+        if (res && !res.error) {
+          log('Report', 'auto-saved to template_outputs → ' + _reportTitle);
+        } else {
+          log('Report', 'save error: ' + (res && res.error));
+        }
+      }).catch(function(e) { log('Report', 'save exception: ' + (e && e.message)); });
+    }
+
     var div = document.createElement('div');
     div.className = 'message message--system';
     div.innerHTML =
@@ -4086,8 +4135,14 @@
           '<button id="btnLaunchChecklist" class="report-actions__btn report-actions__btn--checklist">' +
             'View Mission Checklist \u2192' +
           '</button>' +
+          '<a href="/profile.html" id="btnGoToDashboard" class="report-actions__btn report-actions__btn--dashboard" style="' +
+            'display:inline-flex;align-items:center;gap:6px;background:#c6a135;color:#1a365d;' +
+            'text-decoration:none;padding:10px 18px;border-radius:6px;font-weight:700;font-size:0.95rem;' +
+            'border:none;cursor:pointer;">' +
+            '\uD83C\uDFAF Go to Dashboard' +
+          '</a>' +
         '</div>' +
-        '<p class="report-actions__note">Or keep chatting \u2014 I\'m here for as long as you need.</p>' +
+        '<p class="report-actions__note">Your report and checklist are saved to your dashboard. You can also keep chatting \u2014 I\'m here for as long as you need.</p>' +
         '<div class="report-actions__consent">' +
           '<label for="chkEmailConsent">' +
             '<input type="checkbox" id="chkEmailConsent"> ' +

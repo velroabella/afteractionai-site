@@ -140,11 +140,109 @@
     return Object.keys(_dbIdMap).length > 0;
   };
 
+  /* ──────────────────────────────────────────────────────
+     ADD ITEM — incrementally persist a single checklist item
+     to Supabase. Called by voice structured output handler
+     and _createMissionWithDefaults. Falls back to localStorage
+     queue when DB or mission context is unavailable.
+  ────────────────────────────────────────────────────── */
+  var _pendingItems = []; // queue for items added before mission._dbId is ready
+
+  ChecklistManager.addItem = function(item) {
+    if (!item || !item.title) return;
+    var PRIORITY = { immediate: 1, short_term: 2, strategic: 3, optional: 4 };
+
+    // Try to get mission and case IDs from the active AIOS mission
+    var missionDbId = _activeMissionId || null;
+    var caseId      = null;
+    if (!missionDbId && window.AIOS && window.AIOS.Mission && window.AIOS.Mission.current) {
+      missionDbId = window.AIOS.Mission.current._dbId || null;
+    }
+    if (window.AIOS && window.AIOS.Mission && window.AIOS.Mission.current) {
+      caseId = window.AIOS.Mission.current._caseId || null;
+    }
+    // Fallback to app.js _activeCaseId via global
+    if (!caseId && window.AAAI && window.AAAI._activeCaseId) {
+      caseId = window.AAAI._activeCaseId;
+    }
+
+    var row = {
+      title:       item.title.substring(0, 200),
+      description: item.description || null,
+      category:    item.category || 'immediate',
+      is_completed: false,
+      status:       'not_started',
+      sort_order:   Object.keys(_dbIdMap).length + _pendingItems.length,
+      priority:     item.priority || PRIORITY[item.category] || 2,
+      source:       item.source || 'ai_conversation'
+    };
+
+    // If we have both IDs and DataAccess, persist immediately via addSingle
+    if (missionDbId && caseId && window.AAAI && window.AAAI.DataAccess &&
+        window.AAAI.DataAccess.checklistItems &&
+        typeof window.AAAI.DataAccess.checklistItems.addSingle === 'function') {
+      window.AAAI.DataAccess.checklistItems.addSingle(caseId, missionDbId, row)
+        .then(function(result) {
+          if (result.data && result.data.id) {
+            var idx = row.sort_order;
+            _dbIdMap[idx]   = result.data.id;
+            _statusMap[idx] = 'not_started';
+            console.log('[AIOS][Checklist] addItem persisted: ' + item.title + ' → id=' + result.data.id);
+          } else if (result.error) {
+            console.warn('[AIOS][Checklist] addItem DB error:', result.error);
+            _pendingItems.push(row);
+          }
+        }).catch(function(e) {
+          console.warn('[AIOS][Checklist] addItem exception:', e.message);
+          _pendingItems.push(row);
+        });
+    } else {
+      // Queue for later when mission._dbId becomes available
+      _pendingItems.push(row);
+    }
+
+    // Also persist to localStorage for immediate visibility on Profile
+    try {
+      var lsKey = 'aaai_checklist';
+      var existing = JSON.parse(localStorage.getItem(lsKey) || '{}');
+      if (!existing.items) existing.items = [];
+      existing.items.push({ title: row.title, category: row.category, description: row.description });
+      if (!existing.completedIndices) existing.completedIndices = [];
+      localStorage.setItem(lsKey, JSON.stringify(existing));
+    } catch(e) { /* non-critical */ }
+  };
+
+  /* ──────────────────────────────────────────────────────
+     FLUSH PENDING — persist queued items once mission._dbId is known.
+     Called by app.js after mission creation completes.
+  ────────────────────────────────────────────────────── */
+  ChecklistManager.flushPending = function(missionId, caseId) {
+    if (!_pendingItems.length) return Promise.resolve({ flushed: 0 });
+    if (!missionId || !caseId) return Promise.resolve({ flushed: 0, error: 'no ids' });
+    if (!window.AAAI || !window.AAAI.DataAccess) return Promise.resolve({ flushed: 0, error: 'no DA' });
+
+    _activeMissionId = missionId;
+    var items = _pendingItems.splice(0); // drain queue
+    return window.AAAI.DataAccess.checklistItems.saveBatch(caseId, missionId, items)
+      .then(function(r) {
+        if (!r.error && r.data && r.data.length) {
+          ChecklistManager.buildDbIds(r.data, missionId);
+          console.log('[AIOS][Checklist] flushed ' + r.data.length + ' pending items');
+        }
+        return { flushed: r.data ? r.data.length : 0 };
+      });
+  };
+
+  ChecklistManager.getPendingCount = function() {
+    return _pendingItems.length;
+  };
+
   /* ── Reset on sign-out ── */
   ChecklistManager.reset = function() {
     _dbIdMap         = {};
     _statusMap       = {};
     _activeMissionId = null;
+    _pendingItems    = [];
   };
 
   window.AIOS.Checklist = ChecklistManager;
