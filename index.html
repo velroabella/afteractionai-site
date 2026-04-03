@@ -348,6 +348,65 @@
   </main>
 </div>
 
+<!-- ═══ DASHBOARD HANDOFF PANEL — personalized topic dashboard (Phase 2.4) ═══ -->
+<div class="screen screen--dashboard" id="dashboardScreen" style="display:none;">
+  <header class="chat-header">
+    <div class="chat-header__left">
+      <img src="images/logo-icon-180.png" alt="AfterAction AI" class="chat-header__logo-img">
+      <div class="chat-header__info">
+        <span class="chat-header__title" id="dashboardTitle">Your Dashboard</span>
+        <span class="chat-header__status" id="dashboardSubtitle">Personalized for you</span>
+      </div>
+    </div>
+    <div class="chat-header__right">
+      <button class="btn-icon" id="btnDashboardBack" aria-label="Back to chat">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      </button>
+    </div>
+  </header>
+  <main class="dashboard-body" id="dashboardBody">
+    <!-- Recommendations section -->
+    <section class="dashboard-section" id="dashboardRecommendations">
+      <h3 class="dashboard-section__title">
+        <span class="dashboard-section__icon">&#x1F3AF;</span>
+        Recommendations For You
+      </h3>
+      <div class="dashboard-section__items" id="dashboardRecItems"></div>
+    </section>
+    <!-- Templates section -->
+    <section class="dashboard-section" id="dashboardTemplates" style="display:none;">
+      <h3 class="dashboard-section__title">
+        <span class="dashboard-section__icon">&#x1F4C4;</span>
+        Ready Templates
+      </h3>
+      <div class="dashboard-section__items" id="dashboardTemplateItems"></div>
+    </section>
+    <!-- Resources section -->
+    <section class="dashboard-section" id="dashboardResources">
+      <h3 class="dashboard-section__title">
+        <span class="dashboard-section__icon">&#x1F517;</span>
+        Internal Resources
+      </h3>
+      <div class="dashboard-section__items" id="dashboardResourceItems"></div>
+    </section>
+    <!-- Active missions section -->
+    <section class="dashboard-section" id="dashboardMissions" style="display:none;">
+      <h3 class="dashboard-section__title">
+        <span class="dashboard-section__icon">&#x1F680;</span>
+        Active Missions
+      </h3>
+      <div class="dashboard-section__items" id="dashboardMissionItems"></div>
+    </section>
+    <!-- Back to chat CTA -->
+    <div class="dashboard-back-cta" id="dashboardBackCTA">
+      <button class="dashboard-back-btn" id="btnDashboardResume">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        Continue Conversation
+      </button>
+    </div>
+  </main>
+</div>
+
 <script>
 function toggleMenu() {
   var menu = document.getElementById('navMenu');

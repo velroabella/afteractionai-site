@@ -2225,6 +2225,61 @@ a:hover { color: #000; }
 }
 .checklist-item__btn--primary:hover { background: #000; }
 
+/* ── DASHBOARD HANDOFF PANEL (Phase 2.4) ──────────────── */
+.screen--dashboard {
+  position: fixed; inset: 0; background: var(--gray-50);
+  display: flex; flex-direction: column; z-index: 100;
+}
+.dashboard-body {
+  flex: 1; overflow-y: auto; padding: 24px 20px; max-width: 800px;
+  margin: 0 auto; width: 100%;
+}
+.dashboard-section { margin-bottom: 28px; }
+.dashboard-section__title {
+  font-size: 1.1rem; font-weight: 700; color: var(--gray-900);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.dashboard-section__icon { font-size: 1.2rem; }
+.dashboard-section__items { display: flex; flex-direction: column; gap: 8px; }
+
+.dashboard-card {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 14px 16px; background: var(--white); border-radius: var(--radius-sm);
+  box-shadow: var(--shadow); transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer; text-decoration: none; color: var(--gray-900);
+  border: 1px solid transparent;
+}
+.dashboard-card:hover {
+  transform: translateY(-1px); box-shadow: var(--shadow-lg);
+  border-color: var(--gold-light);
+}
+.dashboard-card__icon {
+  width: 40px; height: 40px; border-radius: var(--radius-sm);
+  background: var(--gray-50); display: flex; align-items: center;
+  justify-content: center; font-size: 1.3rem; flex-shrink: 0;
+}
+.dashboard-card__content { flex: 1; }
+.dashboard-card__title { font-weight: 600; font-size: 0.95rem; color: var(--gray-900); }
+.dashboard-card__desc { font-size: 0.85rem; color: var(--gray-500); margin-top: 3px; }
+.dashboard-card__arrow {
+  color: var(--gold); font-size: 1.1rem; align-self: center; flex-shrink: 0;
+}
+.dashboard-card--template .dashboard-card__icon { background: #E8F5E9; }
+.dashboard-card--mission .dashboard-card__icon { background: #FFF8E1; }
+
+.dashboard-back-cta {
+  text-align: center; padding: 20px 0 40px;
+}
+.dashboard-back-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 28px; background: var(--gray-900); color: var(--white);
+  border: none; border-radius: var(--radius); font-family: var(--font);
+  font-size: 0.95rem; font-weight: 600; cursor: pointer;
+  transition: background 0.2s;
+}
+.dashboard-back-btn:hover { background: #000; }
+.dashboard-back-btn svg { stroke: var(--white); }
+
 /* ── NEWSLETTER CTA ────────────────────────────────────── */
 .newsletter-cta {
   background: var(--gray-900); color: var(--white); border-radius: var(--radius);

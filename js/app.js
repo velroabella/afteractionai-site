@@ -1522,7 +1522,7 @@
       // Phase 2.2: When Claude detects a topic we host internally, inject
       // a clickable suggestion bubble so the veteran can jump directly.
       if (structured.navigation_hint && structured.navigation_hint.page) {
-        _injectNavigationSuggestion(structured.navigation_hint.page, structured.navigation_hint.filter || null);
+        _injectNavigationSuggestion(structured.navigation_hint.page, structured.navigation_hint.filter || null, structured);
       }
 
       // ── 5. Session context injection (GENERAL_QUESTION gap fill) ─────
@@ -1601,26 +1601,36 @@
     'checklist':          { url: null,                       label: 'Your Mission Checklist',        icon: '\u2705' }
   };
 
-  function _injectNavigationSuggestion(page, filter) {
+  // Stash the last structured output for dashboard population
+  var _lastStructuredForDashboard = null;
+
+  function _injectNavigationSuggestion(page, filter, structured) {
     try {
       if (!page || page === _lastNavPage) return;
       var target = _NAV_PAGE_MAP[page];
       if (!target) return;
       _lastNavPage = page;
+      if (structured) _lastStructuredForDashboard = structured;
 
       var filterParam = filter ? '?filter=' + encodeURIComponent(filter) : '';
       var container = document.getElementById('chatMessages');
       if (!container) return;
 
+      // ── Wrapper for both cards ──
+      var wrapper = document.createElement('div');
+      wrapper.className = 'message message--ai nav-suggestion-group';
+      wrapper.style.cssText = 'margin:8px 0;display:flex;flex-direction:column;gap:6px;';
+
+      // ── Card 1: Direct page link (existing behavior) ──
       var div = document.createElement('div');
-      div.className = 'message message--ai nav-suggestion';
-      div.style.cssText = 'background:#1a2a3a;border:1px solid #2a4a6a;border-radius:12px;padding:12px 16px;margin:8px 0;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s;';
+      div.className = 'nav-suggestion';
+      div.style.cssText = 'background:#1a2a3a;border:1px solid #2a4a6a;border-radius:12px;padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s;';
 
       if (target.url) {
         div.innerHTML =
           '<span style="font-size:20px;">' + target.icon + '</span>' +
           '<span style="flex:1;color:#e0e0e0;">I have a dedicated page for that — <strong style="color:#4CAF50;">' + target.label + '</strong></span>' +
-          '<span style="color:#4CAF50;font-size:14px;">Open →</span>';
+          '<span style="color:#4CAF50;font-size:14px;">Open \u2192</span>';
         div.onclick = function() {
           window.open(target.url + filterParam, '_blank');
         };
@@ -1629,7 +1639,7 @@
         div.innerHTML =
           '<span style="font-size:20px;">' + target.icon + '</span>' +
           '<span style="flex:1;color:#e0e0e0;">View your <strong style="color:#4CAF50;">' + target.label + '</strong></span>' +
-          '<span style="color:#4CAF50;font-size:14px;">Open →</span>';
+          '<span style="color:#4CAF50;font-size:14px;">Open \u2192</span>';
         div.onclick = function() {
           var chatScreen = document.getElementById('chatScreen');
           var checklistScreen = document.getElementById('checklistScreen');
@@ -1637,17 +1647,271 @@
           if (checklistScreen) checklistScreen.style.display = 'flex';
         };
       }
-
       div.onmouseenter = function() { div.style.background = '#1e3348'; };
       div.onmouseleave = function() { div.style.background = '#1a2a3a'; };
+      wrapper.appendChild(div);
 
-      container.appendChild(div);
+      // ── Card 2: "View in Dashboard" — personalized dashboard handoff ──
+      var dashDiv = document.createElement('div');
+      dashDiv.className = 'nav-suggestion nav-suggestion--dashboard';
+      dashDiv.style.cssText = 'background:#0d2137;border:1px solid #C5A55A;border-radius:12px;padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s;';
+      dashDiv.innerHTML =
+        '<span style="font-size:20px;">\uD83D\uDCCA</span>' +
+        '<span style="flex:1;color:#e0e0e0;">See your <strong style="color:#C5A55A;">personalized dashboard</strong> with recommendations, templates & resources</span>' +
+        '<span style="color:#C5A55A;font-size:14px;">Dashboard \u2192</span>';
+      dashDiv.onclick = function() {
+        _openDashboardPanel(page, filter, _lastStructuredForDashboard);
+      };
+      dashDiv.onmouseenter = function() { dashDiv.style.background = '#122d47'; };
+      dashDiv.onmouseleave = function() { dashDiv.style.background = '#0d2137'; };
+      wrapper.appendChild(dashDiv);
+
+      container.appendChild(wrapper);
       if (typeof scrollToBottom === 'function') scrollToBottom();
-      log('VoiceBridge', 'NAV SUGGESTION injected: page=' + page + ' filter=' + (filter || 'none'));
+      log('VoiceBridge', 'NAV SUGGESTION + DASHBOARD injected: page=' + page + ' filter=' + (filter || 'none'));
     } catch (e) {
       log('VoiceBridge', 'nav suggestion error: ' + (e.message || e));
     }
   }
+
+  // ══════════════════════════════════════════════════════
+  //  DASHBOARD HANDOFF (Phase 2.4)
+  //  Personalized topic dashboard — populated from bridge
+  //  structured output, missions, and navigation hints.
+  // ══════════════════════════════════════════════════════
+
+  // Resource data for each internal page — used to populate the dashboard
+  var _DASHBOARD_RESOURCES = {
+    'document-templates': [
+      { title: 'Power of Attorney',        desc: 'VA Form 21-22 — authorize a VSO to represent you',       url: '/document-templates.html?filter=power-of-attorney', icon: '\uD83D\uDCDD' },
+      { title: 'Advance Directive',         desc: 'Living will and healthcare power of attorney',           url: '/document-templates.html?filter=advance-directive',  icon: '\uD83C\uDFE5' },
+      { title: 'Personal Affidavit (Buddy Letter)', desc: 'Statement supporting a disability claim',       url: '/document-templates.html?filter=affidavit',          icon: '\u270D\uFE0F' },
+      { title: 'Resume Template',           desc: 'Military-to-civilian resume builder',                    url: '/document-templates.html?filter=resume',             icon: '\uD83D\uDCCB' }
+    ],
+    'state-benefits': [
+      { title: 'State Veterans Benefits',   desc: 'Tax exemptions, education, housing by state',            url: '/state-benefits.html',         icon: '\uD83C\uDFDB\uFE0F' },
+      { title: 'State VA Offices',          desc: 'Find your state VA office and local contacts',           url: '/state-benefits.html#offices', icon: '\uD83C\uDFE2' }
+    ],
+    'service-dogs': [
+      { title: 'Service Dog Programs',      desc: 'Organizations that provide trained service dogs',        url: '/service-dogs.html',           icon: '\uD83D\uDC15\u200D\uD83E\uDDBA' },
+      { title: 'Emotional Support Animals', desc: 'ESA letters and qualifying conditions',                  url: '/service-dogs.html#esa',       icon: '\uD83D\uDC3E' }
+    ],
+    'grants-scholarships': [
+      { title: 'Education Grants',          desc: 'Federal and private grants for veterans',                url: '/grants-scholarships.html',           icon: '\uD83C\uDF93' },
+      { title: 'Scholarship Database',      desc: 'Searchable list of veteran-specific scholarships',       url: '/grants-scholarships.html#search',    icon: '\uD83D\uDCB0' }
+    ],
+    'hotlines-escalation': [
+      { title: 'Veterans Crisis Line',      desc: 'Call 988 Press 1 — 24/7 confidential support',          url: '/hotlines-escalation.html',           icon: '\u260E\uFE0F' },
+      { title: 'Emergency Resources',       desc: 'Homeless hotline, domestic violence, substance abuse',   url: '/hotlines-escalation.html#emergency', icon: '\uD83D\uDEA8' }
+    ],
+    'families-support': [
+      { title: 'Survivor Benefits (DIC)',   desc: 'Dependency and Indemnity Compensation info',             url: '/families-support.html',              icon: '\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67' },
+      { title: 'Caregiver Support',         desc: 'VA Caregiver Program and respite care',                  url: '/families-support.html#caregiver',    icon: '\u2764\uFE0F' }
+    ],
+    'wellness': [
+      { title: 'Mental Health Resources',   desc: 'PTSD, anxiety, depression — VA and community programs',  url: '/wellness.html',                      icon: '\uD83E\uDDD1\u200D\u2695\uFE0F' },
+      { title: 'Fitness & Adaptive Sports', desc: 'Programs for physical wellness and recreation',          url: '/wellness.html#fitness',              icon: '\uD83C\uDFCB\uFE0F' }
+    ],
+    'licensure': [
+      { title: 'License Reciprocity',       desc: 'State-to-state professional license transfers',          url: '/licensure.html',                     icon: '\uD83D\uDCCB' },
+      { title: 'VA-Approved Programs',      desc: 'Training and certification programs',                    url: '/licensure.html#va-approved',         icon: '\u2705' }
+    ],
+    'resources': [
+      { title: 'VSO Directory',             desc: 'DAV, VFW, American Legion — free claims help',           url: '/resources.html',                     icon: '\u2B50' },
+      { title: 'Partner Organizations',     desc: 'Nonprofits and community organizations near you',        url: '/resources.html#partners',            icon: '\uD83E\uDD1D' }
+    ],
+    'education': [
+      { title: 'GI Bill Overview',          desc: 'Post-9/11, Montgomery, and Forever GI Bill',             url: '/education.html',                     icon: '\uD83D\uDCDA' },
+      { title: 'VR&E / Chapter 31',         desc: 'Vocational Rehabilitation & Employment',                 url: '/education.html#vre',                 icon: '\uD83D\uDCBC' }
+    ]
+  };
+
+  // Template suggestions — shown when the dashboard is opened for document-templates
+  var _DASHBOARD_TEMPLATES = {
+    'power-of-attorney': { title: 'Power of Attorney (VA 21-22)',     desc: 'Authorize a VSO to act on your behalf', icon: '\uD83D\uDCDD' },
+    'advance-directive': { title: 'Advance Healthcare Directive',     desc: 'Living will + healthcare proxy',        icon: '\uD83C\uDFE5' },
+    'affidavit':         { title: 'Personal Affidavit / Buddy Letter',desc: 'Sworn statement for VA claims',         icon: '\u270D\uFE0F' },
+    'resume':            { title: 'Military-to-Civilian Resume',      desc: 'Translate your MOS into civilian terms', icon: '\uD83D\uDCCB' },
+    'intent-to-file':    { title: 'Intent to File (VA 21-0966)',      desc: 'Lock in your effective date today',      icon: '\u23F0' }
+  };
+
+  // Current dashboard state — what page/filter is showing
+  var _dashboardState = { page: null, filter: null, structured: null };
+
+  function _openDashboardPanel(page, filter, structured) {
+    try {
+      _dashboardState = { page: page || null, filter: filter || null, structured: structured || null };
+
+      var dashScreen  = document.getElementById('dashboardScreen');
+      var chatScreen  = document.getElementById('chatScreen');
+      var checkScreen = document.getElementById('checklistScreen');
+      if (!dashScreen) return;
+
+      // Hide other screens, show dashboard
+      if (chatScreen)  chatScreen.style.display  = 'none';
+      if (checkScreen) checkScreen.style.display = 'none';
+      dashScreen.style.display = 'flex';
+
+      _populateDashboard(page, filter, structured);
+      log('Dashboard', 'OPENED | page=' + page + ' filter=' + (filter || 'none'));
+    } catch (e) {
+      log('Dashboard', 'open error: ' + (e.message || e));
+    }
+  }
+
+  function _closeDashboardPanel() {
+    var dashScreen = document.getElementById('dashboardScreen');
+    var chatScreen = document.getElementById('chatScreen');
+    if (dashScreen) dashScreen.style.display = 'none';
+    if (chatScreen) chatScreen.style.display = 'flex';
+  }
+
+  function _populateDashboard(page, filter, structured) {
+    var titleEl     = document.getElementById('dashboardTitle');
+    var subtitleEl  = document.getElementById('dashboardSubtitle');
+    var recItems    = document.getElementById('dashboardRecItems');
+    var tplSection  = document.getElementById('dashboardTemplates');
+    var tplItems    = document.getElementById('dashboardTemplateItems');
+    var resItems    = document.getElementById('dashboardResourceItems');
+    var msnSection  = document.getElementById('dashboardMissions');
+    var msnItems    = document.getElementById('dashboardMissionItems');
+
+    if (!recItems || !resItems) return;
+
+    // Clear previous content
+    recItems.innerHTML = '';
+    if (tplItems)  tplItems.innerHTML  = '';
+    if (resItems)  resItems.innerHTML  = '';
+    if (msnItems)  msnItems.innerHTML  = '';
+    if (tplSection) tplSection.style.display = 'none';
+    if (msnSection) msnSection.style.display = 'none';
+
+    // ── Title ──
+    var pageInfo = _NAV_PAGE_MAP[page];
+    if (titleEl)    titleEl.textContent    = pageInfo ? pageInfo.label : 'Your Dashboard';
+    if (subtitleEl) subtitleEl.textContent  = 'Personalized resources based on your conversation';
+
+    // ── 1. Recommendations from structured output ──
+    if (structured && structured.checklist_items && structured.checklist_items.length > 0) {
+      structured.checklist_items.forEach(function(item) {
+        recItems.appendChild(_createDashboardCard({
+          title: item.title,
+          desc:  item.description || ('Priority: ' + (item.category || 'immediate')),
+          icon:  item.category === 'immediate' ? '\u26A1' : '\uD83D\uDCCB',
+          onClick: function() { _closeDashboardPanel(); }
+        }));
+      });
+    } else {
+      // Default recommendation based on page
+      var defaultRec = {
+        'document-templates': 'Based on your conversation, you may need legal document templates. Browse the options below.',
+        'state-benefits':     'Check your state-specific veterans benefits — many go unclaimed each year.',
+        'education':          'Explore education benefits including GI Bill and Vocational Rehab.',
+        'wellness':           'Mental health and wellness resources tailored for veterans.',
+        'service-dogs':       'Learn about service dog programs and emotional support animals.',
+        'licensure':          'Transfer your military credentials to civilian professional licenses.'
+      };
+      recItems.appendChild(_createDashboardCard({
+        title: 'Get Started',
+        desc:  defaultRec[page] || 'Explore personalized resources for your situation.',
+        icon:  '\uD83D\uDCA1',
+        onClick: null
+      }));
+    }
+
+    // ── 2. Templates (only for document-templates page) ──
+    if (page === 'document-templates' && tplSection && tplItems) {
+      tplSection.style.display = 'block';
+      var templKeys = filter ? [filter] : Object.keys(_DASHBOARD_TEMPLATES);
+      templKeys.forEach(function(key) {
+        var tpl = _DASHBOARD_TEMPLATES[key];
+        if (!tpl) return;
+        tplItems.appendChild(_createDashboardCard({
+          title: tpl.title,
+          desc:  tpl.desc,
+          icon:  tpl.icon,
+          url:   '/document-templates.html?filter=' + encodeURIComponent(key),
+          cssClass: 'dashboard-card--template'
+        }));
+      });
+    }
+
+    // ── 3. Internal resources for this page ──
+    var resources = _DASHBOARD_RESOURCES[page];
+    if (resources && resources.length > 0) {
+      resources.forEach(function(res) {
+        resItems.appendChild(_createDashboardCard({
+          title: res.title,
+          desc:  res.desc,
+          icon:  res.icon,
+          url:   res.url
+        }));
+      });
+    }
+
+    // ── 4. Active missions ──
+    if (window.AIOS && window.AIOS.Mission) {
+      var missions = [];
+      if (typeof window.AIOS.Mission.getAll === 'function') {
+        missions = window.AIOS.Mission.getAll() || [];
+      } else if (window.AIOS.Mission.current) {
+        missions = [window.AIOS.Mission.current];
+      }
+      if (missions.length > 0 && msnSection && msnItems) {
+        msnSection.style.display = 'block';
+        missions.forEach(function(m) {
+          if (!m) return;
+          msnItems.appendChild(_createDashboardCard({
+            title: (m.type || 'Mission').replace(/_/g, ' '),
+            desc:  m.next_step || m.status || 'In progress',
+            icon:  '\uD83D\uDE80',
+            cssClass: 'dashboard-card--mission',
+            onClick: function() { _closeDashboardPanel(); }
+          }));
+        });
+      }
+    }
+  }
+
+  function _createDashboardCard(opts) {
+    var card = document.createElement('a');
+    card.className = 'dashboard-card' + (opts.cssClass ? ' ' + opts.cssClass : '');
+    if (opts.url) {
+      card.href = opts.url;
+      card.target = '_blank';
+      card.rel = 'noopener';
+    } else {
+      card.href = '#';
+      card.onclick = function(e) {
+        e.preventDefault();
+        if (typeof opts.onClick === 'function') opts.onClick();
+      };
+    }
+
+    card.innerHTML =
+      '<div class="dashboard-card__icon">' + (opts.icon || '\u2B50') + '</div>' +
+      '<div class="dashboard-card__content">' +
+        '<div class="dashboard-card__title">' + _escHtml(opts.title || '') + '</div>' +
+        '<div class="dashboard-card__desc">' + _escHtml(opts.desc || '') + '</div>' +
+      '</div>' +
+      '<span class="dashboard-card__arrow">\u203A</span>';
+
+    return card;
+  }
+
+  function _escHtml(str) {
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(str));
+    return d.innerHTML;
+  }
+
+  // ── Dashboard back button wiring ──
+  (function() {
+    var btnBack = document.getElementById('btnDashboardBack');
+    var btnResume = document.getElementById('btnDashboardResume');
+    if (btnBack)   btnBack.addEventListener('click',   _closeDashboardPanel);
+    if (btnResume) btnResume.addEventListener('click', _closeDashboardPanel);
+  })();
 
   // ══════════════════════════════════════════════════════
   //  VOICE INTELLIGENCE PIPELINE  (Phase 1 Fix)
