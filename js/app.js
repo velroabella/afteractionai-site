@@ -1581,124 +1581,83 @@
     'checklist':          { url: null,                       label: 'Your Mission Checklist',        icon: '\u2705' }
   };
 
-  // Stash the last structured output for checklist population
-  var _lastStructuredForChecklist = null;
-
-  function _injectNavigationSuggestion(page, filter, structured) {
-    try {
-      if (!page || page === _lastNavPage) return;
-      var target = _NAV_PAGE_MAP[page];
-      if (!target) return;
-      _lastNavPage = page;
-      if (structured) _lastStructuredForChecklist = structured;
-
-      var filterParam = filter ? '?filter=' + encodeURIComponent(filter) : '';
-      var container = document.getElementById('chatMessages');
-      if (!container) return;
-
-      // Single bubble — opens internal page OR checklist with personalized resources
-      var div = document.createElement('div');
-      div.className = 'message message--ai nav-suggestion';
-      div.style.cssText = 'background:#1a2a3a;border:1px solid #C5A55A;border-radius:12px;padding:12px 16px;margin:8px 0;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s;';
-
-      div.innerHTML =
-        '<span style="font-size:20px;">' + target.icon + '</span>' +
-        '<span style="flex:1;color:#e0e0e0;">View <strong style="color:#C5A55A;">' + target.label + '</strong> — personalized resources & next steps</span>' +
-        '<span style="color:#C5A55A;font-size:14px;">Open \u2192</span>';
-
-      div.onclick = function() {
-        // Open the existing checklist screen with personalized resources injected at top
-        _openChecklistWithResources(page, filter, _lastStructuredForChecklist);
-      };
-      div.onmouseenter = function() { div.style.background = '#1e3348'; };
-      div.onmouseleave = function() { div.style.background = '#1a2a3a'; };
-
-      container.appendChild(div);
-      if (typeof scrollToBottom === 'function') scrollToBottom();
-      log('VoiceBridge', 'NAV SUGGESTION injected (checklist): page=' + page + ' filter=' + (filter || 'none'));
-    } catch (e) {
-      log('VoiceBridge', 'nav suggestion error: ' + (e.message || e));
-    }
-  }
-
   // ══════════════════════════════════════════════════════
-  //  ENHANCED CHECKLIST + PERSONALIZED RESOURCES (Phase 2.5)
-  //  Populates the EXISTING checklist screen with topic-
-  //  specific resource cards, templates, and mission links
-  //  when a nav-hint fires — no separate dashboard screen.
+  //  INLINE RESOURCE CARDS (Phase 2.5r)
+  //  All personalized resources, missions, and templates
+  //  render DIRECTLY in the chat as card groups.
+  //  No screen switches. No popups. The chat IS the dashboard.
   // ══════════════════════════════════════════════════════
 
-  var _CHECKLIST_RESOURCES = {
+  var _INLINE_RESOURCES = {
     'document-templates': [
-      { title: 'Power of Attorney',               desc: 'VA Form 21-22 — authorize a VSO to represent you',  url: '/document-templates.html?filter=power-of-attorney', icon: '\uD83D\uDCDD' },
-      { title: 'Advance Directive',                desc: 'Living will and healthcare power of attorney',      url: '/document-templates.html?filter=advance-directive',  icon: '\uD83C\uDFE5' },
-      { title: 'Personal Affidavit (Buddy Letter)',desc: 'Statement supporting a disability claim',           url: '/document-templates.html?filter=affidavit',          icon: '\u270D\uFE0F' },
-      { title: 'Resume Template',                  desc: 'Military-to-civilian resume builder',               url: '/document-templates.html?filter=resume',             icon: '\uD83D\uDCCB' },
-      { title: 'Intent to File (VA 21-0966)',      desc: 'Lock in your effective date today',                 url: '/document-templates.html?filter=intent-to-file',     icon: '\u23F0' }
+      { title: 'Power of Attorney (VA 21-22)',     desc: 'Authorize a VSO to represent you',                url: '/document-templates.html?filter=power-of-attorney', icon: '\uD83D\uDCDD' },
+      { title: 'Advance Directive',                desc: 'Living will and healthcare proxy',                url: '/document-templates.html?filter=advance-directive',  icon: '\uD83C\uDFE5' },
+      { title: 'Buddy Letter / Affidavit',         desc: 'Sworn statement supporting a disability claim',   url: '/document-templates.html?filter=affidavit',          icon: '\u270D\uFE0F' },
+      { title: 'Resume Template',                  desc: 'Military-to-civilian resume builder',             url: '/document-templates.html?filter=resume',             icon: '\uD83D\uDCCB' },
+      { title: 'Intent to File (VA 21-0966)',      desc: 'Lock in your effective date today',               url: '/document-templates.html?filter=intent-to-file',     icon: '\u23F0' }
     ],
     'state-benefits': [
-      { title: 'State Veterans Benefits',  desc: 'Tax exemptions, education, housing by state',   url: '/state-benefits.html',         icon: '\uD83C\uDFDB\uFE0F' },
-      { title: 'State VA Offices',         desc: 'Find your state VA office and local contacts',  url: '/state-benefits.html#offices', icon: '\uD83C\uDFE2' }
+      { title: 'State Veterans Benefits',  desc: 'Tax exemptions, education, housing by state', url: '/state-benefits.html',         icon: '\uD83C\uDFDB\uFE0F' },
+      { title: 'State VA Offices',         desc: 'Find your state VA office and local contacts',url: '/state-benefits.html#offices', icon: '\uD83C\uDFE2' }
     ],
     'service-dogs': [
-      { title: 'Service Dog Programs',     desc: 'Organizations that provide trained service dogs', url: '/service-dogs.html',      icon: '\uD83D\uDC15\u200D\uD83E\uDDBA' },
-      { title: 'Emotional Support Animals',desc: 'ESA letters and qualifying conditions',           url: '/service-dogs.html#esa',  icon: '\uD83D\uDC3E' }
+      { title: 'Service Dog Programs',     desc: 'Trained service dog organizations',           url: '/service-dogs.html',     icon: '\uD83D\uDC15\u200D\uD83E\uDDBA' },
+      { title: 'Emotional Support Animals',desc: 'ESA letters and qualifying conditions',       url: '/service-dogs.html#esa', icon: '\uD83D\uDC3E' }
     ],
     'grants-scholarships': [
-      { title: 'Education Grants',         desc: 'Federal and private grants for veterans',           url: '/grants-scholarships.html',        icon: '\uD83C\uDF93' },
-      { title: 'Scholarship Database',     desc: 'Searchable list of veteran-specific scholarships',  url: '/grants-scholarships.html#search', icon: '\uD83D\uDCB0' }
+      { title: 'Education Grants',     desc: 'Federal and private grants for veterans',          url: '/grants-scholarships.html',        icon: '\uD83C\uDF93' },
+      { title: 'Scholarship Database', desc: 'Searchable veteran-specific scholarships',         url: '/grants-scholarships.html#search', icon: '\uD83D\uDCB0' }
     ],
     'hotlines-escalation': [
-      { title: 'Veterans Crisis Line',     desc: 'Call 988 Press 1 — 24/7 confidential support',         url: '/hotlines-escalation.html',           icon: '\u260E\uFE0F' },
-      { title: 'Emergency Resources',      desc: 'Homeless hotline, domestic violence, substance abuse',  url: '/hotlines-escalation.html#emergency', icon: '\uD83D\uDEA8' }
+      { title: 'Veterans Crisis Line',  desc: 'Call 988 Press 1 — 24/7 confidential support',   url: '/hotlines-escalation.html',           icon: '\u260E\uFE0F' },
+      { title: 'Emergency Resources',   desc: 'Homeless, DV, and substance abuse hotlines',      url: '/hotlines-escalation.html#emergency', icon: '\uD83D\uDEA8' }
     ],
     'families-support': [
-      { title: 'Survivor Benefits (DIC)',  desc: 'Dependency and Indemnity Compensation info',  url: '/families-support.html',           icon: '\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67' },
-      { title: 'Caregiver Support',        desc: 'VA Caregiver Program and respite care',       url: '/families-support.html#caregiver', icon: '\u2764\uFE0F' }
+      { title: 'Survivor Benefits (DIC)',desc: 'Dependency and Indemnity Compensation',          url: '/families-support.html',           icon: '\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67' },
+      { title: 'Caregiver Support',      desc: 'VA Caregiver Program and respite care',          url: '/families-support.html#caregiver', icon: '\u2764\uFE0F' }
     ],
     'wellness': [
-      { title: 'Mental Health Resources',  desc: 'PTSD, anxiety, depression — VA and community programs', url: '/wellness.html',          icon: '\uD83E\uDDD1\u200D\u2695\uFE0F' },
-      { title: 'Fitness & Adaptive Sports',desc: 'Programs for physical wellness and recreation',         url: '/wellness.html#fitness',  icon: '\uD83C\uDFCB\uFE0F' }
+      { title: 'Mental Health Resources', desc: 'PTSD, anxiety, depression programs',            url: '/wellness.html',         icon: '\uD83E\uDDD1\u200D\u2695\uFE0F' },
+      { title: 'Fitness & Adaptive Sports',desc: 'Physical wellness and recreation',             url: '/wellness.html#fitness', icon: '\uD83C\uDFCB\uFE0F' }
     ],
     'licensure': [
-      { title: 'License Reciprocity',      desc: 'State-to-state professional license transfers', url: '/licensure.html',             icon: '\uD83D\uDCCB' },
-      { title: 'VA-Approved Programs',     desc: 'Training and certification programs',           url: '/licensure.html#va-approved', icon: '\u2705' }
+      { title: 'License Reciprocity',     desc: 'State-to-state professional license transfers', url: '/licensure.html',             icon: '\uD83D\uDCCB' },
+      { title: 'VA-Approved Programs',    desc: 'Training and certification programs',           url: '/licensure.html#va-approved', icon: '\u2705' }
     ],
     'resources': [
-      { title: 'VSO Directory',            desc: 'DAV, VFW, American Legion — free claims help',      url: '/resources.html',          icon: '\u2B50' },
-      { title: 'Partner Organizations',    desc: 'Nonprofits and community organizations near you',   url: '/resources.html#partners', icon: '\uD83E\uDD1D' }
+      { title: 'VSO Directory',           desc: 'DAV, VFW, American Legion — free claims help',  url: '/resources.html',          icon: '\u2B50' },
+      { title: 'Partner Organizations',   desc: 'Nonprofits and community orgs near you',        url: '/resources.html#partners', icon: '\uD83E\uDD1D' }
     ],
     'education': [
-      { title: 'GI Bill Overview',         desc: 'Post-9/11, Montgomery, and Forever GI Bill',    url: '/education.html',     icon: '\uD83D\uDCDA' },
-      { title: 'VR&E / Chapter 31',        desc: 'Vocational Rehabilitation & Employment',        url: '/education.html#vre', icon: '\uD83D\uDCBC' }
+      { title: 'GI Bill Overview',        desc: 'Post-9/11, Montgomery, and Forever GI Bill',    url: '/education.html',     icon: '\uD83D\uDCDA' },
+      { title: 'VR&E / Chapter 31',       desc: 'Vocational Rehabilitation & Employment',        url: '/education.html#vre', icon: '\uD83D\uDCBC' }
     ]
   };
 
-  // Mission-type to default first checklist items — gives "Create Mission" teeth
   var _MISSION_DEFAULTS = {
     'disability_claim': [
-      { title: 'Gather service medical records',         category: 'immediate',  description: 'Request records from the National Personnel Records Center (NPRC)' },
-      { title: 'Write buddy letter / personal statement',category: 'immediate',  description: 'Document how your condition affects daily life' },
-      { title: 'File Intent to File (VA 21-0966)',       category: 'immediate',  description: 'Locks in your effective date while you prepare your claim' },
-      { title: 'Schedule C&P exam prep',                 category: 'short_term', description: 'Research what to expect at your Compensation & Pension exam' }
+      { title: 'Gather service medical records',          category: 'immediate',  description: 'Request from NPRC or VA.gov' },
+      { title: 'Write buddy letter / personal statement', category: 'immediate',  description: 'Document how your condition affects daily life' },
+      { title: 'File Intent to File (VA 21-0966)',        category: 'immediate',  description: 'Locks in your effective date' },
+      { title: 'Schedule C&P exam prep',                  category: 'short_term', description: 'Research what to expect at your C&P exam' }
     ],
     'education_path': [
-      { title: 'Check GI Bill eligibility',              category: 'immediate',  description: 'Log in to VA.gov and verify remaining entitlement' },
-      { title: 'Compare schools / programs',             category: 'immediate',  description: 'Use the GI Bill Comparison Tool at va.gov/gi-bill-comparison-tool' },
-      { title: 'Apply for Certificate of Eligibility',   category: 'short_term', description: 'Request your COE through VA.gov or call 1-888-442-4551' }
+      { title: 'Check GI Bill eligibility',               category: 'immediate',  description: 'Verify remaining entitlement on VA.gov' },
+      { title: 'Compare schools / programs',              category: 'immediate',  description: 'GI Bill Comparison Tool at va.gov/gi-bill-comparison-tool' },
+      { title: 'Apply for Certificate of Eligibility',    category: 'short_term', description: 'Request COE through VA.gov' }
     ],
     'state_benefits_search': [
-      { title: 'Look up your state benefits page',       category: 'immediate',  description: 'Each state has unique property tax, education, and hiring benefits' },
-      { title: 'Contact your State VA office',           category: 'immediate',  description: 'They can identify benefits you may not know about' }
+      { title: 'Look up your state benefits page',        category: 'immediate',  description: 'Unique property tax, education, and hiring benefits' },
+      { title: 'Contact your State VA office',            category: 'immediate',  description: 'They identify benefits you may not know about' }
     ],
     'housing_path': [
-      { title: 'Check VA home loan eligibility',         category: 'immediate',  description: 'Request your Certificate of Eligibility from VA.gov' },
-      { title: 'Research Specially Adapted Housing grants',category: 'short_term', description: 'SAH and SHA grants for service-connected disabilities' }
+      { title: 'Check VA home loan eligibility',          category: 'immediate',  description: 'Request your COE from VA.gov' },
+      { title: 'Research SAH / SHA grants',               category: 'short_term', description: 'Specially Adapted Housing for service-connected disabilities' }
     ],
     'employment_transition': [
-      { title: 'Translate your MOS to civilian resume',  category: 'immediate',  description: 'Use our resume template or O*NET to map your skills' },
-      { title: 'Explore VR&E Chapter 31',               category: 'immediate',  description: 'Vocational Rehab provides job training, resume help, and more' },
-      { title: 'Register on eBenefits & USAJOBS',       category: 'short_term', description: 'Veterans get preference for federal jobs' }
+      { title: 'Translate MOS to civilian resume',        category: 'immediate',  description: 'Use our template or O*NET to map skills' },
+      { title: 'Explore VR&E Chapter 31',                 category: 'immediate',  description: 'Job training, resume help, and more' },
+      { title: 'Register on eBenefits & USAJOBS',        category: 'short_term', description: 'Veterans get preference for federal jobs' }
     ]
   };
 
@@ -1708,114 +1667,75 @@
     return d.innerHTML;
   }
 
-  function _createResourceCard(opts) {
-    var card = document.createElement('a');
-    card.className = 'resource-card' + (opts.cssClass ? ' ' + opts.cssClass : '');
-    if (opts.url) {
-      card.href = opts.url;
-      card.target = '_blank';
-      card.rel = 'noopener';
-    } else {
-      card.href = '#';
-      card.onclick = function(e) { e.preventDefault(); };
-    }
-    card.innerHTML =
-      '<div class="resource-card__icon">' + (opts.icon || '\u2B50') + '</div>' +
-      '<div class="resource-card__body">' +
-        '<div class="resource-card__title">' + _escHtml(opts.title || '') + '</div>' +
-        '<div class="resource-card__desc">' + _escHtml(opts.desc || '') + '</div>' +
-      '</div>' +
-      '<span class="resource-card__arrow">\u203A</span>';
-    return card;
-  }
-
-  // Opens the EXISTING checklist screen and injects personalized resource cards
-  function _openChecklistWithResources(page, filter, structured) {
+  // ── Inject resource cards directly into the chat ──
+  function _injectNavigationSuggestion(page, filter, structured) {
     try {
-      var chatScreen  = document.getElementById('chatScreen');
-      var checkScreen = document.getElementById('checklistScreen');
-      if (!checkScreen) return;
+      if (!page || page === _lastNavPage) return;
+      var target = _NAV_PAGE_MAP[page];
+      if (!target) return;
+      _lastNavPage = page;
 
-      if (chatScreen) chatScreen.style.display = 'none';
-      checkScreen.style.display = 'flex';
+      var container = document.getElementById('chatMessages');
+      if (!container) return;
 
-      _populatePersonalizedSection(page, filter, structured);
-      log('Checklist', 'OPENED with resources | page=' + page + ' filter=' + (filter || 'none'));
-    } catch (e) {
-      log('Checklist', 'openWithResources error: ' + (e.message || e));
-    }
-  }
+      var resources = _INLINE_RESOURCES[page] || [];
+      if (resources.length === 0 && !target.url) return;
 
-  function _populatePersonalizedSection(page, filter, structured) {
-    var section     = document.getElementById('checklistPersonalized');
-    var headerEl    = document.getElementById('checklistPersonalizedHeader');
-    var resContainer= document.getElementById('checklistResourceCards');
-    var tplContainer= document.getElementById('checklistTemplateCards');
-    var msnContainer= document.getElementById('checklistMissionCards');
-    if (!section || !resContainer) return;
+      // ── Card group wrapper ──
+      var group = document.createElement('div');
+      group.className = 'message message--ai';
+      group.style.cssText = 'background:transparent;padding:0;margin:10px 0;';
 
-    // Clear previous
-    if (headerEl)     headerEl.innerHTML    = '';
-    if (resContainer) resContainer.innerHTML = '';
-    if (tplContainer) { tplContainer.innerHTML = ''; tplContainer.style.display = 'none'; }
-    if (msnContainer) { msnContainer.innerHTML = ''; msnContainer.style.display = 'none'; }
+      // ── Header label ──
+      var header = document.createElement('div');
+      header.style.cssText = 'display:flex;align-items:center;gap:8px;margin-bottom:8px;padding:0 4px;';
+      header.innerHTML = '<span style="font-size:18px;">' + target.icon + '</span>' +
+        '<span style="color:#C5A55A;font-weight:700;font-size:0.95rem;">' + _escHtml(target.label) + '</span>';
+      group.appendChild(header);
 
-    var pageInfo = _NAV_PAGE_MAP[page];
-    if (!pageInfo) { section.style.display = 'none'; return; }
-
-    // Header
-    if (headerEl) {
-      headerEl.innerHTML = '<span style="font-size:1.2rem;">' + pageInfo.icon + '</span> ' +
-        '<span>' + _escHtml(pageInfo.label) + '</span>';
-    }
-
-    // Resource cards — direct links to exact internal pages
-    var resources = _CHECKLIST_RESOURCES[page];
-    if (resources && resources.length > 0) {
+      // ── Resource cards ──
       resources.forEach(function(res) {
-        resContainer.appendChild(_createResourceCard(res));
+        var card = document.createElement('a');
+        card.href = res.url;
+        card.target = '_blank';
+        card.rel = 'noopener';
+        card.className = 'resource-card';
+        card.innerHTML =
+          '<div class="resource-card__icon">' + (res.icon || '\u2B50') + '</div>' +
+          '<div class="resource-card__body">' +
+            '<div class="resource-card__title">' + _escHtml(res.title) + '</div>' +
+            '<div class="resource-card__desc">' + _escHtml(res.desc) + '</div>' +
+          '</div>' +
+          '<span class="resource-card__arrow">\u203A</span>';
+        group.appendChild(card);
       });
-    }
 
-    // Templates subsection (document-templates only)
-    if (page === 'document-templates' && tplContainer) {
-      // Resources already include templates for this page, so skip duplicate
-      tplContainer.style.display = 'none';
-    }
-
-    // Active missions
-    if (window.AIOS && window.AIOS.Mission && msnContainer) {
-      var missions = [];
-      if (typeof window.AIOS.Mission.getAll === 'function') {
-        missions = window.AIOS.Mission.getAll() || [];
-      } else if (window.AIOS.Mission.current) {
-        missions = [window.AIOS.Mission.current];
+      // ── Fallback: single link if no resource cards ──
+      if (resources.length === 0 && target.url) {
+        var link = document.createElement('a');
+        link.href = target.url + (filter ? '?filter=' + encodeURIComponent(filter) : '');
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.className = 'resource-card';
+        link.innerHTML =
+          '<div class="resource-card__icon">' + target.icon + '</div>' +
+          '<div class="resource-card__body">' +
+            '<div class="resource-card__title">' + _escHtml(target.label) + '</div>' +
+            '<div class="resource-card__desc">View dedicated page</div>' +
+          '</div>' +
+          '<span class="resource-card__arrow">\u203A</span>';
+        group.appendChild(link);
       }
-      if (missions.length > 0) {
-        msnContainer.style.display = 'block';
-        var msnLabel = document.createElement('div');
-        msnLabel.style.cssText = 'font-weight:700;font-size:0.9rem;margin-bottom:8px;color:#212529;';
-        msnLabel.innerHTML = '\uD83D\uDE80 Active Missions';
-        msnContainer.appendChild(msnLabel);
-        missions.forEach(function(m) {
-          if (!m) return;
-          msnContainer.appendChild(_createResourceCard({
-            title: (m.name || m.type || 'Mission').replace(/_/g, ' '),
-            desc:  m.nextStep || m.next_step || m.status || 'In progress',
-            icon:  '\uD83D\uDE80',
-            cssClass: 'resource-card--mission'
-          }));
-        });
-      }
-    }
 
-    section.style.display = 'block';
-    // Scroll to top of checklist body
-    var body = section.parentElement;
-    if (body) body.scrollTop = 0;
+      container.appendChild(group);
+      if (typeof scrollToBottom === 'function') scrollToBottom();
+      log('VoiceBridge', 'INLINE RESOURCES injected: page=' + page + ' (' + resources.length + ' cards)');
+    } catch (e) {
+      log('VoiceBridge', 'nav suggestion error: ' + (e.message || e));
+    }
   }
 
-  // Make "Create Mission" actually do something useful
+  // ── Create a mission with defaults and show it inline in chat ──
   function _createMissionWithDefaults(missionType) {
     if (!window.AIOS || !window.AIOS.Mission) return null;
     if (typeof window.AIOS.Mission.createMission !== 'function') return null;
@@ -1829,14 +1749,14 @@
     var newMission = window.AIOS.Mission.createMission(missionType);
     if (!newMission) return null;
     window.AIOS.Mission.current = newMission;
-    log('Mission', 'CREATED with defaults: ' + missionType);
+    log('Mission', 'CREATED: ' + missionType);
 
     // Fire-and-forget DB persist
     if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
       (function(m) {
         withRetry(function() {
           return window.AAAI.DataAccess.missions.create(_activeCaseId, m);
-        }, 'missions.create:phase25').then(function(r) {
+        }, 'missions.create:phase25r').then(function(r) {
           if (!r.error && r.data && r.data.id) m._dbId = r.data.id;
         }).catch(function(e) {
           console.error('[Mission][create]', m.type, e);
@@ -1844,7 +1764,7 @@
       })(newMission);
     }
 
-    // Inject default checklist items for this mission type
+    // Inject default checklist items
     var defaults = _MISSION_DEFAULTS[missionType];
     if (defaults && window.AIOS && window.AIOS.Checklist &&
         typeof window.AIOS.Checklist.addItem === 'function') {
@@ -1855,10 +1775,43 @@
           description: item.description || ''
         });
       });
-      log('Mission', 'Added ' + defaults.length + ' default checklist items for ' + missionType);
     }
 
+    // Show mission card inline in chat
+    _injectMissionCard(newMission, defaults);
+
     return newMission;
+  }
+
+  // Renders a visible mission confirmation card directly in chat
+  function _injectMissionCard(mission, steps) {
+    var container = document.getElementById('chatMessages');
+    if (!container || !mission) return;
+
+    var mName = (mission.name || mission.type || 'Mission').replace(/_/g, ' ');
+
+    var card = document.createElement('div');
+    card.className = 'message message--ai';
+    card.style.cssText = 'background:#0d2137;border:1px solid #C5A55A;border-radius:12px;padding:14px 16px;margin:10px 0;';
+
+    var html = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">' +
+      '<span style="font-size:20px;">\uD83D\uDE80</span>' +
+      '<span style="color:#C5A55A;font-weight:700;font-size:1rem;">Mission Started: ' + _escHtml(mName) + '</span></div>';
+
+    if (steps && steps.length > 0) {
+      html += '<div style="color:#b0c4d8;font-size:0.85rem;margin-bottom:6px;">Your first steps:</div>';
+      steps.forEach(function(s, i) {
+        html += '<div style="display:flex;align-items:flex-start;gap:8px;padding:6px 0;border-top:1px solid rgba(255,255,255,0.08);">' +
+          '<span style="color:#C5A55A;font-weight:700;min-width:18px;">' + (i + 1) + '.</span>' +
+          '<div><div style="color:#e0e0e0;font-weight:600;font-size:0.9rem;">' + _escHtml(s.title) + '</div>' +
+          '<div style="color:#8899aa;font-size:0.8rem;">' + _escHtml(s.description || '') + '</div></div></div>';
+      });
+    }
+
+    card.innerHTML = html;
+    container.appendChild(card);
+    if (typeof scrollToBottom === 'function') scrollToBottom();
+    log('Mission', 'CARD injected in chat: ' + mName);
   }
 
   // ══════════════════════════════════════════════════════

@@ -2225,20 +2225,8 @@ a:hover { color: #000; }
 }
 .checklist-item__btn--primary:hover { background: #000; }
 
-/* ── CHECKLIST PERSONALIZED SECTION (Phase 2.5) ───────── */
-.checklist-personalized {
-  margin-bottom: 24px; padding-bottom: 20px;
-  border-bottom: 2px solid var(--gold-light);
-}
-.checklist-personalized__header {
-  font-size: 1.05rem; font-weight: 700; color: var(--gray-900);
-  margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
-}
-.checklist-personalized__resources,
-.checklist-personalized__templates,
-.checklist-personalized__missions {
-  display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px;
-}
+/* ── INLINE RESOURCE CARDS (Phase 2.5r) ───────────────── */
+/* Renders directly inside #chatMessages — no separate screen */
 .resource-card {
   display: flex; align-items: center; gap: 12px;
   padding: 12px 14px; background: var(--white); border-radius: var(--radius-sm);
