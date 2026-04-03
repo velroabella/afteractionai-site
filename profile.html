@@ -225,19 +225,21 @@
     </div>
   </div>
 
-  <!-- Template Outputs -->
+  <!-- Uploaded Documents — veteran's original files -->
   <div class="dashboard__card">
-    <h3>My Documents</h3>
-    <div id="dashOutputs">
-      <p style="font-size:0.9rem;color:var(--gray-500);">No templates completed yet. Start a task from your Mission Checklist to generate documents.</p>
+    <h3>My Uploaded Documents</h3>
+    <p class="section-desc">Your original files — DD-214s, VA letters, medical records, and other documents you uploaded.</p>
+    <div id="dashUploadedDocs">
+      <p class="section-empty">No documents uploaded yet. <a href="index.html" style="color:var(--gold);">Start a conversation</a> and upload your DD-214, VA letters, or other documents.</p>
     </div>
   </div>
 
-  <!-- Uploaded Documents — Phase 42 -->
+  <!-- Generated Documents — AI-produced outputs -->
   <div class="dashboard__card">
-    <h3>My Uploaded Documents</h3>
-    <div id="dashUploadedDocs">
-      <p style="font-size:0.9rem;color:var(--gray-500);">No documents uploaded yet. <a href="index.html" style="color:var(--gold);">Start a conversation</a> and upload your DD-214, VA letters, or other documents.</p>
+    <h3>Generated Documents</h3>
+    <p class="section-desc">AI-produced documents — pre-filled templates, buddy letters, personal statements, and reports.</p>
+    <div id="dashGenDocs">
+      <p class="section-empty">No generated documents yet. Complete a mission task to create AI-assisted documents.</p>
     </div>
   </div>
 
@@ -303,35 +305,46 @@
 <script src="js/aios/response-contract.js"></script><!-- Phase 47 -->
 <script src="js/aios/mission-extractor.js"></script><!-- Phase 47/48 -->
 
-<!-- Phase 42r: Uploaded documents — clickable cards with extracted fields, download, copy -->
+<!-- Document sections: Uploaded Documents + Generated Documents -->
 <style>
-  .upload-card{background:var(--dark-400,#1e1e1e);border:1px solid var(--gray-200,#333);border-radius:10px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,box-shadow .2s;}
-  .upload-card:hover{border-color:var(--gold,#c4a035);box-shadow:0 0 0 1px var(--gold,#c4a035);}
-  .upload-card__header{display:flex;align-items:center;gap:10px;}
-  .upload-card__icon{font-size:1.4rem;flex-shrink:0;}
-  .upload-card__info{flex:1;min-width:0;}
-  .upload-card__type{font-weight:600;color:var(--gold,#c4a035);font-size:0.95rem;}
-  .upload-card__title{font-size:0.85rem;color:var(--gray-400,#aaa);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;}
-  .upload-card__date{font-size:0.8rem;color:var(--gray-500,#888);flex-shrink:0;}
-  .upload-card__status{font-size:0.7rem;padding:2px 8px;border-radius:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;}
-  .upload-card__status--extracted{background:rgba(76,175,80,0.15);color:#4caf50;}
-  .upload-card__status--pending{background:rgba(255,193,7,0.15);color:#ffc107;}
-  .upload-card__status--not_started{background:rgba(158,158,158,0.15);color:#9e9e9e;}
-  .upload-card__body{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--gray-200,#333);}
-  .upload-card.expanded .upload-card__body{display:block;}
-  .upload-card__chevron{transition:transform .2s;font-size:0.8rem;color:var(--gray-500,#888);}
-  .upload-card.expanded .upload-card__chevron{transform:rotate(180deg);}
-  .upload-card__fields{margin-bottom:12px;}
-  .upload-card__field{display:flex;gap:8px;padding:4px 0;font-size:0.85rem;}
-  .upload-card__field-label{color:var(--gray-400,#aaa);min-width:120px;flex-shrink:0;}
-  .upload-card__field-value{color:var(--text-primary,#f0f0f0);word-break:break-word;}
-  .upload-card__actions{display:flex;gap:8px;margin-top:8px;}
-  .upload-card__btn{background:var(--dark-300,#2a2a2a);color:var(--gold,#c4a035);border:1px solid var(--gold,#c4a035);border-radius:6px;padding:6px 14px;font-size:0.8rem;cursor:pointer;transition:background .2s;}
-  .upload-card__btn:hover{background:var(--gold,#c4a035);color:#000;}
-  .upload-card__empty-fields{font-size:0.85rem;color:var(--gray-500,#888);font-style:italic;}
+  .section-desc{font-size:0.82rem;color:var(--gray-500,#888);margin:-6px 0 14px;line-height:1.4;}
+  .section-empty{font-size:0.9rem;color:var(--gray-500,#888);}
+
+  /* ── Shared doc-card base ─────────────────────────── */
+  .doc-card{background:var(--dark-400,#1e1e1e);border:1px solid var(--gray-200,#333);border-radius:10px;padding:14px 16px;margin-bottom:10px;transition:border-color .2s,box-shadow .2s;}
+  .doc-card:hover{border-color:var(--gold,#c4a035);box-shadow:0 0 0 1px var(--gold,#c4a035);}
+  .doc-card__header{display:flex;align-items:center;gap:10px;cursor:pointer;}
+  .doc-card__icon{font-size:1.4rem;flex-shrink:0;}
+  .doc-card__info{flex:1;min-width:0;}
+  .doc-card__type{font-weight:600;color:var(--gold,#c4a035);font-size:0.95rem;}
+  .doc-card__title{font-size:0.85rem;color:var(--gray-400,#aaa);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:260px;}
+  .doc-card__date{font-size:0.8rem;color:var(--gray-500,#888);flex-shrink:0;}
+  .doc-card__badge{font-size:0.7rem;padding:2px 8px;border-radius:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;}
+  .doc-card__badge--green{background:rgba(76,175,80,0.15);color:#4caf50;}
+  .doc-card__badge--yellow{background:rgba(255,193,7,0.15);color:#ffc107;}
+  .doc-card__badge--gray{background:rgba(158,158,158,0.15);color:#9e9e9e;}
+  .doc-card__chevron{transition:transform .2s;font-size:0.8rem;color:var(--gray-500,#888);}
+  .doc-card.expanded .doc-card__chevron{transform:rotate(180deg);}
+  .doc-card__body{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--gray-200,#333);}
+  .doc-card.expanded .doc-card__body{display:block;}
+  .doc-card__fields{margin-bottom:12px;}
+  .doc-card__field{display:flex;gap:8px;padding:4px 0;font-size:0.85rem;}
+  .doc-card__field-label{color:var(--gray-400,#aaa);min-width:120px;flex-shrink:0;}
+  .doc-card__field-value{color:var(--text-primary,#f0f0f0);word-break:break-word;}
+  .doc-card__empty-fields{font-size:0.85rem;color:var(--gray-500,#888);font-style:italic;}
+  .doc-card__actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .doc-card__btn{background:var(--dark-300,#2a2a2a);color:var(--gold,#c4a035);border:1px solid var(--gold,#c4a035);border-radius:6px;padding:6px 14px;font-size:0.8rem;cursor:pointer;transition:background .2s;}
+  .doc-card__btn:hover{background:var(--gold,#c4a035);color:#000;}
+  .doc-card__btn:disabled{opacity:0.5;cursor:not-allowed;}
+  .doc-card__btn--delete{color:#ef4444;border-color:#ef4444;}
+  .doc-card__btn--delete:hover{background:#ef4444;color:#fff;}
+  .doc-card__btn--primary{background:var(--gold,#c4a035);color:#000;font-weight:600;}
+  .doc-card__btn--primary:hover{background:#d4af37;}
+  .doc-card__preview{font-size:0.85rem;color:var(--gray-400,#aaa);margin-bottom:10px;line-height:1.45;max-height:80px;overflow:hidden;}
 </style>
 <script>
 (function() {
+  /* ── Shared helpers ──────────────────────────────────── */
   var DOC_ICONS = {
     'DD-214': '\u{1F396}', 'dd214': '\u{1F396}', 'dd-214': '\u{1F396}',
     'VA Decision Letter': '\u{1F4DC}', 'va_decision': '\u{1F4DC}',
@@ -342,61 +355,104 @@
     'Certificate': '\u{1F4C4}', 'certification': '\u{1F4C4}',
     'default': '\u{1F4C4}'
   };
+  var GEN_ICONS = {
+    'buddy_letter': '\u{1F4DD}', 'personal_statement': '\u{1F4DD}',
+    'report': '\u{1F4CA}', 'summary': '\u{1F4CB}',
+    'intent_to_file': '\u{1F4C3}', 'va_form': '\u{1F4C3}',
+    'default': '\u{2728}'
+  };
 
-  function getIcon(docType) {
-    if (!docType) return DOC_ICONS['default'];
-    var key = docType.toLowerCase().replace(/[^a-z0-9_-]/g, '');
-    for (var k in DOC_ICONS) {
-      if (key.indexOf(k.toLowerCase().replace(/[^a-z0-9_-]/g, '')) !== -1) return DOC_ICONS[k];
+  function _esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function _getIcon(map, key) {
+    if (!key) return map['default'];
+    var k = key.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    for (var m in map) {
+      if (m !== 'default' && k.indexOf(m.toLowerCase().replace(/[^a-z0-9_-]/g, '')) !== -1) return map[m];
     }
-    return DOC_ICONS['default'];
+    return map['default'];
   }
 
-  function escHtml(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-  function statusBadge(status) {
+  function _badge(status) {
     var s = (status || 'not_started').toLowerCase();
     var label = s.replace(/_/g, ' ');
-    if (s === 'extracted' || s === 'complete') return '<span class="upload-card__status upload-card__status--extracted">' + label + '</span>';
-    if (s === 'pending' || s === 'processing') return '<span class="upload-card__status upload-card__status--pending">' + label + '</span>';
-    return '<span class="upload-card__status upload-card__status--not_started">' + label + '</span>';
+    if (s === 'extracted' || s === 'complete' || s === 'completed' || s === 'processed')
+      return '<span class="doc-card__badge doc-card__badge--green">' + label + '</span>';
+    if (s === 'pending' || s === 'processing' || s === 'in_progress')
+      return '<span class="doc-card__badge doc-card__badge--yellow">' + label + '</span>';
+    return '<span class="doc-card__badge doc-card__badge--gray">' + label + '</span>';
   }
 
-  function renderExtractedFields(content) {
+  function _renderFields(content) {
     var fields = {};
     try {
-      var parsed = typeof content === 'string' ? JSON.parse(content) : content;
-      fields = parsed.extractedFields || parsed || {};
-    } catch(e) { return '<div class="upload-card__empty-fields">No extracted fields available</div>'; }
-
+      var p = typeof content === 'string' ? JSON.parse(content) : content;
+      fields = p.extractedFields || p || {};
+    } catch(e) { return '<div class="doc-card__empty-fields">No extracted fields available</div>'; }
     var keys = Object.keys(fields);
-    if (!keys.length) return '<div class="upload-card__empty-fields">No extracted fields available</div>';
-
-    var html = '<div class="upload-card__fields">';
+    if (!keys.length) return '<div class="doc-card__empty-fields">No extracted fields available</div>';
+    var html = '<div class="doc-card__fields">';
     keys.forEach(function(k) {
       var val = fields[k];
       if (val && typeof val === 'object') val = JSON.stringify(val);
       if (!val) return;
       var label = k.replace(/_/g, ' ').replace(/([A-Z])/g, ' $1').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
-      html += '<div class="upload-card__field">' +
-        '<span class="upload-card__field-label">' + escHtml(label) + '</span>' +
-        '<span class="upload-card__field-value">' + escHtml(String(val)) + '</span>' +
-        '</div>';
+      html += '<div class="doc-card__field"><span class="doc-card__field-label">' + _esc(label) + '</span><span class="doc-card__field-value">' + _esc(String(val)) + '</span></div>';
     });
-    html += '</div>';
-    return html;
+    return html + '</div>';
   }
 
-  function handleCopy(content, btn) {
+  /* ── Download original file (signed URL) ──────────── */
+  function _downloadOriginal(doc, btn) {
+    var meta = doc.metadata || {};
+    var storagePath = meta.storagePath || null;
+    var fileName = doc.title || 'document';
+    if (!storagePath) {
+      alert('Original file not available.\nThis document was uploaded before file storage was enabled.');
+      return;
+    }
+    if (!window.AAAI || !AAAI.auth || !AAAI.auth.getFileDownloadUrl) {
+      alert('Download service unavailable. Please refresh and try again.');
+      return;
+    }
+    var origText = btn ? btn.textContent : '';
+    if (btn) { btn.textContent = 'Preparing...'; btn.disabled = true; }
+    AAAI.auth.getFileDownloadUrl(storagePath, fileName).then(function(r) {
+      if (!r || !r.url) throw new Error(r && r.error || 'No download URL');
+      var a = document.createElement('a');
+      a.href = r.url; a.style.display = 'none';
+      document.body.appendChild(a); a.click();
+      setTimeout(function(){ document.body.removeChild(a); }, 1000);
+      if (btn) { btn.textContent = 'Downloaded!'; setTimeout(function(){ btn.textContent = origText; btn.disabled = false; }, 2000); }
+    }).catch(function(err) {
+      console.error('[Profile] Download failed:', err);
+      if (btn) { btn.textContent = origText; btn.disabled = false; }
+      alert('Could not download: ' + (err.message || err));
+    });
+  }
+
+  /* ── Download text content as .txt ────────────────── */
+  function _downloadText(title, content, type) {
+    var blob = new Blob([content || ''], { type: 'text/plain' });
+    var url = (window.URL || window.webkitURL).createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = (type || 'document').replace(/\s+/g, '_') + '_' + (title || 'output').replace(/\s+/g, '_') + '.txt';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ document.body.removeChild(a); (window.URL || window.webkitURL).revokeObjectURL(url); }, 1000);
+  }
+
+  /* ── Copy to clipboard ────────────────────────────── */
+  function _copy(content, btn) {
     var text = '';
     try {
-      var parsed = typeof content === 'string' ? JSON.parse(content) : content;
-      var ef = parsed.extractedFields || parsed || {};
+      var p = typeof content === 'string' ? JSON.parse(content) : content;
+      var ef = p.extractedFields || p || {};
       Object.keys(ef).forEach(function(k) {
         text += k.replace(/_/g, ' ') + ': ' + (typeof ef[k] === 'object' ? JSON.stringify(ef[k]) : ef[k]) + '\n';
       });
     } catch(e) { text = content || ''; }
-    if (!text.trim()) { text = content || 'No content'; }
+    if (!text.trim()) text = content || 'No content';
     navigator.clipboard.writeText(text).then(function() {
       var orig = btn.textContent;
       btn.textContent = 'Copied!';
@@ -404,85 +460,22 @@
     });
   }
 
-  /**
-   * Download the ORIGINAL file from Supabase Storage via signed URL.
-   * No blob fetch, no CORS — Supabase sets Content-Disposition: attachment
-   * so the browser downloads natively when we navigate to the URL.
-   */
-  function handleDownload(doc, btn) {
+  /* ── Delete uploaded document ──────────────────────── */
+  function _deleteDoc(doc, cardEl) {
+    if (!confirm('Delete "' + (doc.title || 'this document') + '"?\nThis cannot be undone.')) return;
     var meta = doc.metadata || {};
-    var storagePath = meta.storagePath || null;
-    var fileName = doc.title || 'document';
-
-    if (!storagePath) {
-      // Old upload (before storage was enabled) — no original file exists
-      console.warn('[Profile] No storagePath — this document was uploaded before file storage was enabled');
-      alert('Original file not available — this document was uploaded before file storage was enabled.\nUse "Copy Fields" to get the extracted data.');
-      return;
-    }
-
-    if (!window.AAAI || !AAAI.auth || !AAAI.auth.getFileDownloadUrl) {
-      console.error('[Profile] getFileDownloadUrl not available on AAAI.auth');
-      alert('Download service unavailable. Please refresh and try again.');
-      return;
-    }
-
-    var origText = btn ? btn.textContent : '';
-    if (btn) { btn.textContent = 'Preparing...'; btn.disabled = true; }
-
-    console.log('[Profile] Requesting signed URL for:', storagePath, '| fileName:', fileName);
-
-    AAAI.auth.getFileDownloadUrl(storagePath, fileName).then(function(result) {
-      console.log('[Profile] getFileDownloadUrl result:', result);
-
-      if (!result || !result.url) {
-        throw new Error(result && result.error || 'No download URL returned');
-      }
-
-      // Navigate to the signed URL — Supabase returns Content-Disposition: attachment
-      // because we passed { download: fileName } in createSignedUrl.
-      // No fetch/blob/CORS needed. The browser handles the download natively.
-      var a = document.createElement('a');
-      a.href = result.url;
-      a.style.display = 'none';
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(function() { document.body.removeChild(a); }, 1000);
-
-      if (btn) { btn.textContent = 'Downloaded!'; setTimeout(function() { btn.textContent = origText; btn.disabled = false; }, 2000); }
-    }).catch(function(err) {
-      console.error('[Profile] Download failed:', err);
-      if (btn) { btn.textContent = origText; btn.disabled = false; }
-      alert('Could not download the original file: ' + (err.message || err) + '\nUse "Copy Fields" to get the extracted data.');
-    });
+    AAAI.auth.deleteUploadedDocument(doc.id, meta.storagePath || null).then(function(r) {
+      if (r.error) { alert('Delete failed: ' + r.error); return; }
+      cardEl.style.transition = 'opacity .3s';
+      cardEl.style.opacity = '0';
+      setTimeout(function() { cardEl.remove(); }, 300);
+    }).catch(function(e) { alert('Delete failed: ' + (e.message || e)); });
   }
 
-  /**
-   * Download extracted fields as a plain-text .txt file.
-   * Separate action from original-file download — only used by the "Download Fields" button.
-   */
-  function _downloadExtractedText(doc) {
-    var text = '';
-    var docType = (doc.metadata || {}).docType || 'document';
-    try {
-      var parsed = typeof doc.content === 'string' ? JSON.parse(doc.content) : doc.content;
-      var ef = parsed.extractedFields || parsed || {};
-      text += docType.toUpperCase() + ' — Extracted Fields\n';
-      text += '='.repeat(40) + '\n\n';
-      Object.keys(ef).forEach(function(k) {
-        text += k.replace(/_/g, ' ') + ': ' + (typeof ef[k] === 'object' ? JSON.stringify(ef[k]) : ef[k]) + '\n';
-      });
-    } catch(e) { text = doc.content || ''; }
-    var blob = new Blob([text], { type: 'text/plain' });
-    var url = (window.URL || window.webkitURL).createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = docType.replace(/\s+/g, '_') + '_' + (doc.title || 'document').replace(/\s+/g, '_') + '.txt';
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function(){ document.body.removeChild(a); (window.URL || window.webkitURL).revokeObjectURL(url); }, 1000);
-  }
-
+  /* ════════════════════════════════════════════════════
+     SECTION 1: MY UPLOADED DOCUMENTS
+     Original files the veteran uploaded (PDFs, scans, etc.)
+     ════════════════════════════════════════════════════ */
   function renderUploadedDocs() {
     if (!window.AAAI || !AAAI.auth || !AAAI.auth.isLoggedIn || !AAAI.auth.isLoggedIn()) return;
     if (!AAAI.auth.loadUploadedDocuments) return;
@@ -491,70 +484,131 @@
       if (!el || !result || !result.data || result.data.length === 0) return;
       el.innerHTML = '';
 
-      result.data.forEach(function(doc, idx) {
+      result.data.forEach(function(doc) {
         var meta = doc.metadata || {};
         var docType = meta.docType || 'Document';
         var date = doc.created_at ? new Date(doc.created_at).toLocaleDateString() : '';
-        var icon = getIcon(docType);
+        var hasFile = !!meta.storagePath;
 
         var card = document.createElement('div');
-        card.className = 'upload-card';
+        card.className = 'doc-card';
         card.innerHTML =
-          '<div class="upload-card__header">' +
-            '<span class="upload-card__icon">' + icon + '</span>' +
-            '<div class="upload-card__info">' +
-              '<div class="upload-card__type">' + escHtml(docType) + '</div>' +
-              '<div class="upload-card__title">' + escHtml(doc.title || '') + '</div>' +
+          '<div class="doc-card__header">' +
+            '<span class="doc-card__icon">' + _getIcon(DOC_ICONS, docType) + '</span>' +
+            '<div class="doc-card__info">' +
+              '<div class="doc-card__type">' + _esc(docType) + '</div>' +
+              '<div class="doc-card__title">' + _esc(doc.title || '') + '</div>' +
             '</div>' +
-            statusBadge(meta.status) +
-            '<span class="upload-card__date">' + date + '</span>' +
-            '<span class="upload-card__chevron">\u25BC</span>' +
+            _badge(meta.status) +
+            '<span class="doc-card__date">' + date + '</span>' +
+            '<span class="doc-card__chevron">\u25BC</span>' +
           '</div>' +
-          '<div class="upload-card__body">' +
-            renderExtractedFields(doc.content) +
-            '<div class="upload-card__actions">' +
-              (meta.storagePath
-                ? '<button class="upload-card__btn upload-card__btn--download">Download Original</button>'
-                : '') +
-              '<button class="upload-card__btn upload-card__btn--copy">Copy Fields</button>' +
-              '<button class="upload-card__btn upload-card__btn--fields-dl">Download Fields</button>' +
+          '<div class="doc-card__body">' +
+            _renderFields(doc.content) +
+            '<div class="doc-card__actions">' +
+              (hasFile ? '<button class="doc-card__btn doc-card__btn--primary" data-act="dl-orig">Download Original</button>' : '') +
+              '<button class="doc-card__btn" data-act="view-fields">View Extracted Fields</button>' +
+              '<button class="doc-card__btn doc-card__btn--delete" data-act="delete">Delete</button>' +
             '</div>' +
           '</div>';
 
-        // Toggle expand/collapse on header click
-        card.querySelector('.upload-card__header').addEventListener('click', function() {
+        // Expand / collapse
+        card.querySelector('.doc-card__header').addEventListener('click', function() {
           card.classList.toggle('expanded');
         });
 
-        // Copy Fields button
-        card.querySelector('.upload-card__btn--copy').addEventListener('click', function(e) {
+        // Download Original
+        var dlBtn = card.querySelector('[data-act="dl-orig"]');
+        if (dlBtn) dlBtn.addEventListener('click', function(e) { e.stopPropagation(); _downloadOriginal(doc, this); });
+
+        // View Extracted Fields — just expands the card
+        card.querySelector('[data-act="view-fields"]').addEventListener('click', function(e) {
           e.stopPropagation();
-          handleCopy(doc.content, this);
+          if (!card.classList.contains('expanded')) card.classList.add('expanded');
         });
 
-        // Download Original button (only exists when storagePath is present)
-        var dlOrigBtn = card.querySelector('.upload-card__btn--download');
-        if (dlOrigBtn) {
-          dlOrigBtn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            handleDownload(doc, this);
-          });
-        }
-
-        // Download Fields button (always present)
-        card.querySelector('.upload-card__btn--fields-dl').addEventListener('click', function(e) {
+        // Delete
+        card.querySelector('[data-act="delete"]').addEventListener('click', function(e) {
           e.stopPropagation();
-          _downloadExtractedText(doc);
+          _deleteDoc(doc, card);
         });
 
         el.appendChild(card);
       });
-    }).catch(function(err) {
-      console.warn('[Phase42r] renderUploadedDocs error:', err);
-    });
+    }).catch(function(err) { console.warn('[Profile] renderUploadedDocs error:', err); });
   }
 
-  // Retry until auth is initialized
+  /* ════════════════════════════════════════════════════
+     SECTION 2: GENERATED DOCUMENTS
+     AI-produced outputs (buddy letters, statements, reports, templates)
+     ════════════════════════════════════════════════════ */
+  function renderGeneratedDocs() {
+    if (!window.AAAI || !AAAI.auth || !AAAI.auth.isLoggedIn || !AAAI.auth.isLoggedIn()) return;
+    var loadFn = AAAI.auth.loadGeneratedDocuments || AAAI.auth.loadTemplateOutputs;
+    if (!loadFn) return;
+    loadFn().then(function(result) {
+      if (!result || !result.data) return;
+      // If using loadTemplateOutputs (old API), filter out uploaded_document rows
+      var docs = result.data.filter(function(o) { return o.template_type !== 'uploaded_document'; });
+      var el = document.getElementById('dashGenDocs');
+      if (!el || docs.length === 0) return;
+      el.innerHTML = '';
+
+      docs.forEach(function(doc) {
+        var type = doc.template_type || 'document';
+        var typeLabel = type.replace(/_/g, ' ').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+        var date = doc.created_at ? new Date(doc.created_at).toLocaleDateString() : '';
+        var preview = doc.content ? doc.content.substring(0, 200).replace(/</g, '&lt;') : '';
+        if (doc.content && doc.content.length > 200) preview += '...';
+
+        var card = document.createElement('div');
+        card.className = 'doc-card';
+        card.innerHTML =
+          '<div class="doc-card__header">' +
+            '<span class="doc-card__icon">' + _getIcon(GEN_ICONS, type) + '</span>' +
+            '<div class="doc-card__info">' +
+              '<div class="doc-card__type">' + _esc(typeLabel) + '</div>' +
+              '<div class="doc-card__title">' + _esc(doc.title || '') + '</div>' +
+            '</div>' +
+            '<span class="doc-card__date">' + date + '</span>' +
+            '<span class="doc-card__chevron">\u25BC</span>' +
+          '</div>' +
+          '<div class="doc-card__body">' +
+            '<div class="doc-card__preview">' + preview + '</div>' +
+            '<div class="doc-card__actions">' +
+              '<button class="doc-card__btn doc-card__btn--primary" data-act="dl-gen">Download</button>' +
+              '<button class="doc-card__btn" data-act="copy-gen">Copy to Clipboard</button>' +
+            '</div>' +
+          '</div>';
+
+        // Stash content for copy/download
+        card._content = doc.content || '';
+
+        card.querySelector('.doc-card__header').addEventListener('click', function() {
+          card.classList.toggle('expanded');
+        });
+
+        // Download as .txt
+        card.querySelector('[data-act="dl-gen"]').addEventListener('click', function(e) {
+          e.stopPropagation();
+          _downloadText(doc.title, card._content, type);
+        });
+
+        // Copy
+        card.querySelector('[data-act="copy-gen"]').addEventListener('click', function(e) {
+          e.stopPropagation();
+          navigator.clipboard.writeText(card._content).then(function() {
+            var b = e.target; var orig = b.textContent;
+            b.textContent = 'Copied!'; setTimeout(function(){ b.textContent = orig; }, 1500);
+          });
+        });
+
+        el.appendChild(card);
+      });
+    }).catch(function(err) { console.warn('[Profile] renderGeneratedDocs error:', err); });
+  }
+
+  /* ── Init both sections once auth is ready ────────── */
   var _retries = 0;
   var _intv = setInterval(function() {
     _retries++;
@@ -562,6 +616,7 @@
     if (window.AAAI && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn()) {
       clearInterval(_intv);
       renderUploadedDocs();
+      renderGeneratedDocs();
     }
   }, 500);
 })();
@@ -1022,33 +1077,7 @@ function toggleMenu() {
       // Phase 46 Part 5: Render goals + issue_tags as action objects
       _renderActionFocusAreas(profile);
 
-      // Load template outputs
-      if (AAAI.auth.loadTemplateOutputs) {
-        AAAI.auth.loadTemplateOutputs().then(function(result) {
-          if (result.data && result.data.length > 0) {
-            var outputsEl = document.getElementById('dashOutputs');
-            outputsEl.innerHTML = result.data.map(function(o) {
-              var preview = o.content ? o.content.substring(0, 150).replace(/</g, '&lt;') + '...' : '';
-              var date = new Date(o.created_at).toLocaleDateString();
-              return '<div class="template-output-card">' +
-                '<div class="template-output-card__header">' +
-                  '<span class="template-output-card__title">' + escHtml(o.title || o.template_type) + '</span>' +
-                  '<span class="template-output-card__date">' + date + '</span>' +
-                '</div>' +
-                '<div class="template-output-card__preview">' + preview + '</div>' +
-                '<div class="template-output-card__actions">' +
-                  '<button class="template-output-card__btn" onclick="navigator.clipboard.writeText(this.closest(\'.template-output-card\').dataset.content).then(function(){alert(\'Copied!\')});" data-content="">Copy</button>' +
-                  '<button class="template-output-card__btn" onclick="var b=new Blob([this.closest(\'.template-output-card\').dataset.content],{type:\'text/plain\'});var u=(window.URL||window.webkitURL).createObjectURL(b);var a=document.createElement(\'a\');a.href=u;a.download=\'' + escAttr(o.template_type || 'output') + '.txt\';a.click();setTimeout(function(){(window.URL||window.webkitURL).revokeObjectURL(u);},1000);">Download</button>' +
-                '</div>' +
-              '</div>';
-            }).join('');
-            var cards = outputsEl.querySelectorAll('.template-output-card');
-            result.data.forEach(function(o, i) {
-              if (cards[i]) cards[i].dataset.content = o.content || '';
-            });
-          }
-        });
-      }
+      // Template outputs now rendered by renderGeneratedDocs() in the profile documents script below
 
       // Load reports + action recommendations
       if (AAAI.auth.loadReports) {

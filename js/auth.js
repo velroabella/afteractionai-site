@@ -557,6 +557,45 @@
     return { data, error };
   }
 
+  /**
+   * Load ONLY AI-generated documents (everything except uploaded_document).
+   */
+  async function loadGeneratedDocuments() {
+    if (!currentUser) return { data: null, error: 'Not logged in' };
+    const { data, error } = await supabase
+      .from('template_outputs')
+      .select('*')
+      .eq('user_id', currentUser.id)
+      .neq('template_type', 'uploaded_document')
+      .order('created_at', { ascending: false });
+    return { data, error };
+  }
+
+  /**
+   * Delete an uploaded document from template_outputs and optionally from Storage.
+   * @param {string} docId — template_outputs row id
+   * @param {string|null} storagePath — if set, also removes from Supabase Storage
+   * @returns {Promise<{error: string|null}>}
+   */
+  async function deleteUploadedDocument(docId, storagePath) {
+    if (!currentUser) return { error: 'Not logged in' };
+    // Delete from storage first (non-blocking — OK if it fails)
+    if (storagePath) {
+      try {
+        await supabase.storage.from(STORAGE_BUCKET).remove([storagePath]);
+      } catch (e) {
+        console.warn('[AAAI Auth] storage delete error (non-fatal):', e.message);
+      }
+    }
+    // Delete the DB row
+    const { error } = await supabase
+      .from('template_outputs')
+      .delete()
+      .eq('id', docId)
+      .eq('user_id', currentUser.id);  // RLS safety
+    return { error: error ? error.message : null };
+  }
+
   // ── DOCUMENT LIFECYCLE (Phase 46 Part 4) ─────────────
   // Update the lifecycle status of any document in template_outputs.
   // Works for both uploaded documents and AI-generated template outputs.
@@ -866,6 +905,8 @@
     loadAIOSMemory,
     saveUploadedDocument,
     loadUploadedDocuments,
+    loadGeneratedDocuments,
+    deleteUploadedDocument,
     updateDocumentStatus,
     loadDocumentsByStatus,
     uploadFileToStorage,
