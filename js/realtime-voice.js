@@ -24,7 +24,6 @@
 
   var TOKEN_ENDPOINT = '/api/realtime-token';
   var REALTIME_BASE  = 'https://api.openai.com/v1/realtime';
-  var REALTIME_MODEL = 'gpt-4o-realtime-preview';
   var DATA_CHANNEL   = 'oai-events';
 
   // ── State ──
@@ -178,7 +177,7 @@
       var sdpTimeout = setTimeout(function() { sdpController.abort(); }, 10000);
       var sdpResp;
       try {
-        sdpResp = await fetch(REALTIME_BASE + '?model=' + REALTIME_MODEL, {
+        sdpResp = await fetch(REALTIME_BASE, {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer ' + ephemeralKey,
