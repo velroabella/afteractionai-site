@@ -521,6 +521,7 @@
         user_id:         userId,
         mission_id:      _missionId,
         file_name:       _docData.file_name       || 'unknown',
+        doc_type:        _docData.document_type   || _docData.doc_type || 'unknown',
         document_type:   _docData.document_type   || null,
         storage_path:    _docData.storage_path    || null,
         mime_type:       _docData.mime_type        || null,
