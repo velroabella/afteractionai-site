@@ -23,7 +23,8 @@
   'use strict';
 
   var TOKEN_ENDPOINT = '/api/realtime-token';
-  var REALTIME_BASE  = 'https://api.openai.com/v1/realtime/calls';
+  var REALTIME_BASE  = 'https://api.openai.com/v1/realtime';
+  var REALTIME_MODEL = 'gpt-4o-realtime-preview';
   var DATA_CHANNEL   = 'oai-events';
 
   // ── State ──
@@ -67,6 +68,9 @@
       log('connect', 'already active, state=' + state);
       return;
     }
+
+    // Clean up any stale WebRTC state from previous error/disconnected sessions
+    cleanup();
 
     setState('connecting', 'requesting token...');
 
@@ -174,7 +178,7 @@
       var sdpTimeout = setTimeout(function() { sdpController.abort(); }, 10000);
       var sdpResp;
       try {
-        sdpResp = await fetch(REALTIME_BASE, {
+        sdpResp = await fetch(REALTIME_BASE + '?model=' + REALTIME_MODEL, {
           method: 'POST',
           headers: {
             'Authorization': 'Bearer ' + ephemeralKey,
