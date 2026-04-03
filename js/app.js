@@ -1472,34 +1472,14 @@
         }
       }
 
-      // ── 2. Mission processing ────────────────────────────────────────
+      // ── 2. Mission processing (Phase 2.5: uses _createMissionWithDefaults) ──
       if (structured.missions && Array.isArray(structured.missions) &&
           window.AIOS && window.AIOS.Mission) {
         structured.missions.forEach(function(mSpec) {
           if (!mSpec || mSpec.action !== 'create' || !mSpec.type) return;
-          var _ex = typeof window.AIOS.Mission.getByType === 'function'
-            ? window.AIOS.Mission.getByType(mSpec.type)
-            : window.AIOS.Mission.current;
-          if (_ex) return;
-          if (typeof window.AIOS.Mission.createMission !== 'function') return;
-          var _newM = window.AIOS.Mission.createMission(mSpec.type);
-          if (!_newM) return;
-          window.AIOS.Mission.current = _newM;
-          log('VoiceBridge', 'mission created: ' + mSpec.type);
-          // Fire-and-forget DB persist — same pattern as _aiosVoiceUpdate
-          if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
-            (function(_m) {
-              withRetry(function() {
-                return window.AAAI.DataAccess.missions.create(_activeCaseId, _m);
-              }, 'missions.create:bridge')
-              .then(function(r) {
-                if (!r.error && r.data && r.data.id) { _m._dbId = r.data.id; }
-              })
-              .catch(function(e) {
-                console.error('[VoiceBridge][missions.create]', _m.type, e);
-              });
-            })(_newM);
-          }
+          // _createMissionWithDefaults handles dedup, DB persist, AND injects
+          // default checklist items — so the mission is immediately useful.
+          _createMissionWithDefaults(mSpec.type);
         });
       }
 
@@ -1601,8 +1581,8 @@
     'checklist':          { url: null,                       label: 'Your Mission Checklist',        icon: '\u2705' }
   };
 
-  // Stash the last structured output for dashboard population
-  var _lastStructuredForDashboard = null;
+  // Stash the last structured output for checklist population
+  var _lastStructuredForChecklist = null;
 
   function _injectNavigationSuggestion(page, filter, structured) {
     try {
@@ -1610,294 +1590,117 @@
       var target = _NAV_PAGE_MAP[page];
       if (!target) return;
       _lastNavPage = page;
-      if (structured) _lastStructuredForDashboard = structured;
+      if (structured) _lastStructuredForChecklist = structured;
 
       var filterParam = filter ? '?filter=' + encodeURIComponent(filter) : '';
       var container = document.getElementById('chatMessages');
       if (!container) return;
 
-      // ── Wrapper for both cards ──
-      var wrapper = document.createElement('div');
-      wrapper.className = 'message message--ai nav-suggestion-group';
-      wrapper.style.cssText = 'margin:8px 0;display:flex;flex-direction:column;gap:6px;';
-
-      // ── Card 1: Direct page link (existing behavior) ──
+      // Single bubble — opens internal page OR checklist with personalized resources
       var div = document.createElement('div');
-      div.className = 'nav-suggestion';
-      div.style.cssText = 'background:#1a2a3a;border:1px solid #2a4a6a;border-radius:12px;padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s;';
+      div.className = 'message message--ai nav-suggestion';
+      div.style.cssText = 'background:#1a2a3a;border:1px solid #C5A55A;border-radius:12px;padding:12px 16px;margin:8px 0;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s;';
 
-      if (target.url) {
-        div.innerHTML =
-          '<span style="font-size:20px;">' + target.icon + '</span>' +
-          '<span style="flex:1;color:#e0e0e0;">I have a dedicated page for that — <strong style="color:#4CAF50;">' + target.label + '</strong></span>' +
-          '<span style="color:#4CAF50;font-size:14px;">Open \u2192</span>';
-        div.onclick = function() {
-          window.open(target.url + filterParam, '_blank');
-        };
-      } else {
-        // Checklist — toggle internal screen
-        div.innerHTML =
-          '<span style="font-size:20px;">' + target.icon + '</span>' +
-          '<span style="flex:1;color:#e0e0e0;">View your <strong style="color:#4CAF50;">' + target.label + '</strong></span>' +
-          '<span style="color:#4CAF50;font-size:14px;">Open \u2192</span>';
-        div.onclick = function() {
-          var chatScreen = document.getElementById('chatScreen');
-          var checklistScreen = document.getElementById('checklistScreen');
-          if (chatScreen) chatScreen.style.display = 'none';
-          if (checklistScreen) checklistScreen.style.display = 'flex';
-        };
-      }
+      div.innerHTML =
+        '<span style="font-size:20px;">' + target.icon + '</span>' +
+        '<span style="flex:1;color:#e0e0e0;">View <strong style="color:#C5A55A;">' + target.label + '</strong> — personalized resources & next steps</span>' +
+        '<span style="color:#C5A55A;font-size:14px;">Open \u2192</span>';
+
+      div.onclick = function() {
+        // Open the existing checklist screen with personalized resources injected at top
+        _openChecklistWithResources(page, filter, _lastStructuredForChecklist);
+      };
       div.onmouseenter = function() { div.style.background = '#1e3348'; };
       div.onmouseleave = function() { div.style.background = '#1a2a3a'; };
-      wrapper.appendChild(div);
 
-      // ── Card 2: "View in Dashboard" — personalized dashboard handoff ──
-      var dashDiv = document.createElement('div');
-      dashDiv.className = 'nav-suggestion nav-suggestion--dashboard';
-      dashDiv.style.cssText = 'background:#0d2137;border:1px solid #C5A55A;border-radius:12px;padding:12px 16px;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s;';
-      dashDiv.innerHTML =
-        '<span style="font-size:20px;">\uD83D\uDCCA</span>' +
-        '<span style="flex:1;color:#e0e0e0;">See your <strong style="color:#C5A55A;">personalized dashboard</strong> with recommendations, templates & resources</span>' +
-        '<span style="color:#C5A55A;font-size:14px;">Dashboard \u2192</span>';
-      dashDiv.onclick = function() {
-        _openDashboardPanel(page, filter, _lastStructuredForDashboard);
-      };
-      dashDiv.onmouseenter = function() { dashDiv.style.background = '#122d47'; };
-      dashDiv.onmouseleave = function() { dashDiv.style.background = '#0d2137'; };
-      wrapper.appendChild(dashDiv);
-
-      container.appendChild(wrapper);
+      container.appendChild(div);
       if (typeof scrollToBottom === 'function') scrollToBottom();
-      log('VoiceBridge', 'NAV SUGGESTION + DASHBOARD injected: page=' + page + ' filter=' + (filter || 'none'));
+      log('VoiceBridge', 'NAV SUGGESTION injected (checklist): page=' + page + ' filter=' + (filter || 'none'));
     } catch (e) {
       log('VoiceBridge', 'nav suggestion error: ' + (e.message || e));
     }
   }
 
   // ══════════════════════════════════════════════════════
-  //  DASHBOARD HANDOFF (Phase 2.4)
-  //  Personalized topic dashboard — populated from bridge
-  //  structured output, missions, and navigation hints.
+  //  ENHANCED CHECKLIST + PERSONALIZED RESOURCES (Phase 2.5)
+  //  Populates the EXISTING checklist screen with topic-
+  //  specific resource cards, templates, and mission links
+  //  when a nav-hint fires — no separate dashboard screen.
   // ══════════════════════════════════════════════════════
 
-  // Resource data for each internal page — used to populate the dashboard
-  var _DASHBOARD_RESOURCES = {
+  var _CHECKLIST_RESOURCES = {
     'document-templates': [
-      { title: 'Power of Attorney',        desc: 'VA Form 21-22 — authorize a VSO to represent you',       url: '/document-templates.html?filter=power-of-attorney', icon: '\uD83D\uDCDD' },
-      { title: 'Advance Directive',         desc: 'Living will and healthcare power of attorney',           url: '/document-templates.html?filter=advance-directive',  icon: '\uD83C\uDFE5' },
-      { title: 'Personal Affidavit (Buddy Letter)', desc: 'Statement supporting a disability claim',       url: '/document-templates.html?filter=affidavit',          icon: '\u270D\uFE0F' },
-      { title: 'Resume Template',           desc: 'Military-to-civilian resume builder',                    url: '/document-templates.html?filter=resume',             icon: '\uD83D\uDCCB' }
+      { title: 'Power of Attorney',               desc: 'VA Form 21-22 — authorize a VSO to represent you',  url: '/document-templates.html?filter=power-of-attorney', icon: '\uD83D\uDCDD' },
+      { title: 'Advance Directive',                desc: 'Living will and healthcare power of attorney',      url: '/document-templates.html?filter=advance-directive',  icon: '\uD83C\uDFE5' },
+      { title: 'Personal Affidavit (Buddy Letter)',desc: 'Statement supporting a disability claim',           url: '/document-templates.html?filter=affidavit',          icon: '\u270D\uFE0F' },
+      { title: 'Resume Template',                  desc: 'Military-to-civilian resume builder',               url: '/document-templates.html?filter=resume',             icon: '\uD83D\uDCCB' },
+      { title: 'Intent to File (VA 21-0966)',      desc: 'Lock in your effective date today',                 url: '/document-templates.html?filter=intent-to-file',     icon: '\u23F0' }
     ],
     'state-benefits': [
-      { title: 'State Veterans Benefits',   desc: 'Tax exemptions, education, housing by state',            url: '/state-benefits.html',         icon: '\uD83C\uDFDB\uFE0F' },
-      { title: 'State VA Offices',          desc: 'Find your state VA office and local contacts',           url: '/state-benefits.html#offices', icon: '\uD83C\uDFE2' }
+      { title: 'State Veterans Benefits',  desc: 'Tax exemptions, education, housing by state',   url: '/state-benefits.html',         icon: '\uD83C\uDFDB\uFE0F' },
+      { title: 'State VA Offices',         desc: 'Find your state VA office and local contacts',  url: '/state-benefits.html#offices', icon: '\uD83C\uDFE2' }
     ],
     'service-dogs': [
-      { title: 'Service Dog Programs',      desc: 'Organizations that provide trained service dogs',        url: '/service-dogs.html',           icon: '\uD83D\uDC15\u200D\uD83E\uDDBA' },
-      { title: 'Emotional Support Animals', desc: 'ESA letters and qualifying conditions',                  url: '/service-dogs.html#esa',       icon: '\uD83D\uDC3E' }
+      { title: 'Service Dog Programs',     desc: 'Organizations that provide trained service dogs', url: '/service-dogs.html',      icon: '\uD83D\uDC15\u200D\uD83E\uDDBA' },
+      { title: 'Emotional Support Animals',desc: 'ESA letters and qualifying conditions',           url: '/service-dogs.html#esa',  icon: '\uD83D\uDC3E' }
     ],
     'grants-scholarships': [
-      { title: 'Education Grants',          desc: 'Federal and private grants for veterans',                url: '/grants-scholarships.html',           icon: '\uD83C\uDF93' },
-      { title: 'Scholarship Database',      desc: 'Searchable list of veteran-specific scholarships',       url: '/grants-scholarships.html#search',    icon: '\uD83D\uDCB0' }
+      { title: 'Education Grants',         desc: 'Federal and private grants for veterans',           url: '/grants-scholarships.html',        icon: '\uD83C\uDF93' },
+      { title: 'Scholarship Database',     desc: 'Searchable list of veteran-specific scholarships',  url: '/grants-scholarships.html#search', icon: '\uD83D\uDCB0' }
     ],
     'hotlines-escalation': [
-      { title: 'Veterans Crisis Line',      desc: 'Call 988 Press 1 — 24/7 confidential support',          url: '/hotlines-escalation.html',           icon: '\u260E\uFE0F' },
-      { title: 'Emergency Resources',       desc: 'Homeless hotline, domestic violence, substance abuse',   url: '/hotlines-escalation.html#emergency', icon: '\uD83D\uDEA8' }
+      { title: 'Veterans Crisis Line',     desc: 'Call 988 Press 1 — 24/7 confidential support',         url: '/hotlines-escalation.html',           icon: '\u260E\uFE0F' },
+      { title: 'Emergency Resources',      desc: 'Homeless hotline, domestic violence, substance abuse',  url: '/hotlines-escalation.html#emergency', icon: '\uD83D\uDEA8' }
     ],
     'families-support': [
-      { title: 'Survivor Benefits (DIC)',   desc: 'Dependency and Indemnity Compensation info',             url: '/families-support.html',              icon: '\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67' },
-      { title: 'Caregiver Support',         desc: 'VA Caregiver Program and respite care',                  url: '/families-support.html#caregiver',    icon: '\u2764\uFE0F' }
+      { title: 'Survivor Benefits (DIC)',  desc: 'Dependency and Indemnity Compensation info',  url: '/families-support.html',           icon: '\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67' },
+      { title: 'Caregiver Support',        desc: 'VA Caregiver Program and respite care',       url: '/families-support.html#caregiver', icon: '\u2764\uFE0F' }
     ],
     'wellness': [
-      { title: 'Mental Health Resources',   desc: 'PTSD, anxiety, depression — VA and community programs',  url: '/wellness.html',                      icon: '\uD83E\uDDD1\u200D\u2695\uFE0F' },
-      { title: 'Fitness & Adaptive Sports', desc: 'Programs for physical wellness and recreation',          url: '/wellness.html#fitness',              icon: '\uD83C\uDFCB\uFE0F' }
+      { title: 'Mental Health Resources',  desc: 'PTSD, anxiety, depression — VA and community programs', url: '/wellness.html',          icon: '\uD83E\uDDD1\u200D\u2695\uFE0F' },
+      { title: 'Fitness & Adaptive Sports',desc: 'Programs for physical wellness and recreation',         url: '/wellness.html#fitness',  icon: '\uD83C\uDFCB\uFE0F' }
     ],
     'licensure': [
-      { title: 'License Reciprocity',       desc: 'State-to-state professional license transfers',          url: '/licensure.html',                     icon: '\uD83D\uDCCB' },
-      { title: 'VA-Approved Programs',      desc: 'Training and certification programs',                    url: '/licensure.html#va-approved',         icon: '\u2705' }
+      { title: 'License Reciprocity',      desc: 'State-to-state professional license transfers', url: '/licensure.html',             icon: '\uD83D\uDCCB' },
+      { title: 'VA-Approved Programs',     desc: 'Training and certification programs',           url: '/licensure.html#va-approved', icon: '\u2705' }
     ],
     'resources': [
-      { title: 'VSO Directory',             desc: 'DAV, VFW, American Legion — free claims help',           url: '/resources.html',                     icon: '\u2B50' },
-      { title: 'Partner Organizations',     desc: 'Nonprofits and community organizations near you',        url: '/resources.html#partners',            icon: '\uD83E\uDD1D' }
+      { title: 'VSO Directory',            desc: 'DAV, VFW, American Legion — free claims help',      url: '/resources.html',          icon: '\u2B50' },
+      { title: 'Partner Organizations',    desc: 'Nonprofits and community organizations near you',   url: '/resources.html#partners', icon: '\uD83E\uDD1D' }
     ],
     'education': [
-      { title: 'GI Bill Overview',          desc: 'Post-9/11, Montgomery, and Forever GI Bill',             url: '/education.html',                     icon: '\uD83D\uDCDA' },
-      { title: 'VR&E / Chapter 31',         desc: 'Vocational Rehabilitation & Employment',                 url: '/education.html#vre',                 icon: '\uD83D\uDCBC' }
+      { title: 'GI Bill Overview',         desc: 'Post-9/11, Montgomery, and Forever GI Bill',    url: '/education.html',     icon: '\uD83D\uDCDA' },
+      { title: 'VR&E / Chapter 31',        desc: 'Vocational Rehabilitation & Employment',        url: '/education.html#vre', icon: '\uD83D\uDCBC' }
     ]
   };
 
-  // Template suggestions — shown when the dashboard is opened for document-templates
-  var _DASHBOARD_TEMPLATES = {
-    'power-of-attorney': { title: 'Power of Attorney (VA 21-22)',     desc: 'Authorize a VSO to act on your behalf', icon: '\uD83D\uDCDD' },
-    'advance-directive': { title: 'Advance Healthcare Directive',     desc: 'Living will + healthcare proxy',        icon: '\uD83C\uDFE5' },
-    'affidavit':         { title: 'Personal Affidavit / Buddy Letter',desc: 'Sworn statement for VA claims',         icon: '\u270D\uFE0F' },
-    'resume':            { title: 'Military-to-Civilian Resume',      desc: 'Translate your MOS into civilian terms', icon: '\uD83D\uDCCB' },
-    'intent-to-file':    { title: 'Intent to File (VA 21-0966)',      desc: 'Lock in your effective date today',      icon: '\u23F0' }
+  // Mission-type to default first checklist items — gives "Create Mission" teeth
+  var _MISSION_DEFAULTS = {
+    'disability_claim': [
+      { title: 'Gather service medical records',         category: 'immediate',  description: 'Request records from the National Personnel Records Center (NPRC)' },
+      { title: 'Write buddy letter / personal statement',category: 'immediate',  description: 'Document how your condition affects daily life' },
+      { title: 'File Intent to File (VA 21-0966)',       category: 'immediate',  description: 'Locks in your effective date while you prepare your claim' },
+      { title: 'Schedule C&P exam prep',                 category: 'short_term', description: 'Research what to expect at your Compensation & Pension exam' }
+    ],
+    'education_path': [
+      { title: 'Check GI Bill eligibility',              category: 'immediate',  description: 'Log in to VA.gov and verify remaining entitlement' },
+      { title: 'Compare schools / programs',             category: 'immediate',  description: 'Use the GI Bill Comparison Tool at va.gov/gi-bill-comparison-tool' },
+      { title: 'Apply for Certificate of Eligibility',   category: 'short_term', description: 'Request your COE through VA.gov or call 1-888-442-4551' }
+    ],
+    'state_benefits_search': [
+      { title: 'Look up your state benefits page',       category: 'immediate',  description: 'Each state has unique property tax, education, and hiring benefits' },
+      { title: 'Contact your State VA office',           category: 'immediate',  description: 'They can identify benefits you may not know about' }
+    ],
+    'housing_path': [
+      { title: 'Check VA home loan eligibility',         category: 'immediate',  description: 'Request your Certificate of Eligibility from VA.gov' },
+      { title: 'Research Specially Adapted Housing grants',category: 'short_term', description: 'SAH and SHA grants for service-connected disabilities' }
+    ],
+    'employment_transition': [
+      { title: 'Translate your MOS to civilian resume',  category: 'immediate',  description: 'Use our resume template or O*NET to map your skills' },
+      { title: 'Explore VR&E Chapter 31',               category: 'immediate',  description: 'Vocational Rehab provides job training, resume help, and more' },
+      { title: 'Register on eBenefits & USAJOBS',       category: 'short_term', description: 'Veterans get preference for federal jobs' }
+    ]
   };
-
-  // Current dashboard state — what page/filter is showing
-  var _dashboardState = { page: null, filter: null, structured: null };
-
-  function _openDashboardPanel(page, filter, structured) {
-    try {
-      _dashboardState = { page: page || null, filter: filter || null, structured: structured || null };
-
-      var dashScreen  = document.getElementById('dashboardScreen');
-      var chatScreen  = document.getElementById('chatScreen');
-      var checkScreen = document.getElementById('checklistScreen');
-      if (!dashScreen) return;
-
-      // Hide other screens, show dashboard
-      if (chatScreen)  chatScreen.style.display  = 'none';
-      if (checkScreen) checkScreen.style.display = 'none';
-      dashScreen.style.display = 'flex';
-
-      _populateDashboard(page, filter, structured);
-      log('Dashboard', 'OPENED | page=' + page + ' filter=' + (filter || 'none'));
-    } catch (e) {
-      log('Dashboard', 'open error: ' + (e.message || e));
-    }
-  }
-
-  function _closeDashboardPanel() {
-    var dashScreen = document.getElementById('dashboardScreen');
-    var chatScreen = document.getElementById('chatScreen');
-    if (dashScreen) dashScreen.style.display = 'none';
-    if (chatScreen) chatScreen.style.display = 'flex';
-  }
-
-  function _populateDashboard(page, filter, structured) {
-    var titleEl     = document.getElementById('dashboardTitle');
-    var subtitleEl  = document.getElementById('dashboardSubtitle');
-    var recItems    = document.getElementById('dashboardRecItems');
-    var tplSection  = document.getElementById('dashboardTemplates');
-    var tplItems    = document.getElementById('dashboardTemplateItems');
-    var resItems    = document.getElementById('dashboardResourceItems');
-    var msnSection  = document.getElementById('dashboardMissions');
-    var msnItems    = document.getElementById('dashboardMissionItems');
-
-    if (!recItems || !resItems) return;
-
-    // Clear previous content
-    recItems.innerHTML = '';
-    if (tplItems)  tplItems.innerHTML  = '';
-    if (resItems)  resItems.innerHTML  = '';
-    if (msnItems)  msnItems.innerHTML  = '';
-    if (tplSection) tplSection.style.display = 'none';
-    if (msnSection) msnSection.style.display = 'none';
-
-    // ── Title ──
-    var pageInfo = _NAV_PAGE_MAP[page];
-    if (titleEl)    titleEl.textContent    = pageInfo ? pageInfo.label : 'Your Dashboard';
-    if (subtitleEl) subtitleEl.textContent  = 'Personalized resources based on your conversation';
-
-    // ── 1. Recommendations from structured output ──
-    if (structured && structured.checklist_items && structured.checklist_items.length > 0) {
-      structured.checklist_items.forEach(function(item) {
-        recItems.appendChild(_createDashboardCard({
-          title: item.title,
-          desc:  item.description || ('Priority: ' + (item.category || 'immediate')),
-          icon:  item.category === 'immediate' ? '\u26A1' : '\uD83D\uDCCB',
-          onClick: function() { _closeDashboardPanel(); }
-        }));
-      });
-    } else {
-      // Default recommendation based on page
-      var defaultRec = {
-        'document-templates': 'Based on your conversation, you may need legal document templates. Browse the options below.',
-        'state-benefits':     'Check your state-specific veterans benefits — many go unclaimed each year.',
-        'education':          'Explore education benefits including GI Bill and Vocational Rehab.',
-        'wellness':           'Mental health and wellness resources tailored for veterans.',
-        'service-dogs':       'Learn about service dog programs and emotional support animals.',
-        'licensure':          'Transfer your military credentials to civilian professional licenses.'
-      };
-      recItems.appendChild(_createDashboardCard({
-        title: 'Get Started',
-        desc:  defaultRec[page] || 'Explore personalized resources for your situation.',
-        icon:  '\uD83D\uDCA1',
-        onClick: null
-      }));
-    }
-
-    // ── 2. Templates (only for document-templates page) ──
-    if (page === 'document-templates' && tplSection && tplItems) {
-      tplSection.style.display = 'block';
-      var templKeys = filter ? [filter] : Object.keys(_DASHBOARD_TEMPLATES);
-      templKeys.forEach(function(key) {
-        var tpl = _DASHBOARD_TEMPLATES[key];
-        if (!tpl) return;
-        tplItems.appendChild(_createDashboardCard({
-          title: tpl.title,
-          desc:  tpl.desc,
-          icon:  tpl.icon,
-          url:   '/document-templates.html?filter=' + encodeURIComponent(key),
-          cssClass: 'dashboard-card--template'
-        }));
-      });
-    }
-
-    // ── 3. Internal resources for this page ──
-    var resources = _DASHBOARD_RESOURCES[page];
-    if (resources && resources.length > 0) {
-      resources.forEach(function(res) {
-        resItems.appendChild(_createDashboardCard({
-          title: res.title,
-          desc:  res.desc,
-          icon:  res.icon,
-          url:   res.url
-        }));
-      });
-    }
-
-    // ── 4. Active missions ──
-    if (window.AIOS && window.AIOS.Mission) {
-      var missions = [];
-      if (typeof window.AIOS.Mission.getAll === 'function') {
-        missions = window.AIOS.Mission.getAll() || [];
-      } else if (window.AIOS.Mission.current) {
-        missions = [window.AIOS.Mission.current];
-      }
-      if (missions.length > 0 && msnSection && msnItems) {
-        msnSection.style.display = 'block';
-        missions.forEach(function(m) {
-          if (!m) return;
-          msnItems.appendChild(_createDashboardCard({
-            title: (m.type || 'Mission').replace(/_/g, ' '),
-            desc:  m.next_step || m.status || 'In progress',
-            icon:  '\uD83D\uDE80',
-            cssClass: 'dashboard-card--mission',
-            onClick: function() { _closeDashboardPanel(); }
-          }));
-        });
-      }
-    }
-  }
-
-  function _createDashboardCard(opts) {
-    var card = document.createElement('a');
-    card.className = 'dashboard-card' + (opts.cssClass ? ' ' + opts.cssClass : '');
-    if (opts.url) {
-      card.href = opts.url;
-      card.target = '_blank';
-      card.rel = 'noopener';
-    } else {
-      card.href = '#';
-      card.onclick = function(e) {
-        e.preventDefault();
-        if (typeof opts.onClick === 'function') opts.onClick();
-      };
-    }
-
-    card.innerHTML =
-      '<div class="dashboard-card__icon">' + (opts.icon || '\u2B50') + '</div>' +
-      '<div class="dashboard-card__content">' +
-        '<div class="dashboard-card__title">' + _escHtml(opts.title || '') + '</div>' +
-        '<div class="dashboard-card__desc">' + _escHtml(opts.desc || '') + '</div>' +
-      '</div>' +
-      '<span class="dashboard-card__arrow">\u203A</span>';
-
-    return card;
-  }
 
   function _escHtml(str) {
     var d = document.createElement('div');
@@ -1905,13 +1708,158 @@
     return d.innerHTML;
   }
 
-  // ── Dashboard back button wiring ──
-  (function() {
-    var btnBack = document.getElementById('btnDashboardBack');
-    var btnResume = document.getElementById('btnDashboardResume');
-    if (btnBack)   btnBack.addEventListener('click',   _closeDashboardPanel);
-    if (btnResume) btnResume.addEventListener('click', _closeDashboardPanel);
-  })();
+  function _createResourceCard(opts) {
+    var card = document.createElement('a');
+    card.className = 'resource-card' + (opts.cssClass ? ' ' + opts.cssClass : '');
+    if (opts.url) {
+      card.href = opts.url;
+      card.target = '_blank';
+      card.rel = 'noopener';
+    } else {
+      card.href = '#';
+      card.onclick = function(e) { e.preventDefault(); };
+    }
+    card.innerHTML =
+      '<div class="resource-card__icon">' + (opts.icon || '\u2B50') + '</div>' +
+      '<div class="resource-card__body">' +
+        '<div class="resource-card__title">' + _escHtml(opts.title || '') + '</div>' +
+        '<div class="resource-card__desc">' + _escHtml(opts.desc || '') + '</div>' +
+      '</div>' +
+      '<span class="resource-card__arrow">\u203A</span>';
+    return card;
+  }
+
+  // Opens the EXISTING checklist screen and injects personalized resource cards
+  function _openChecklistWithResources(page, filter, structured) {
+    try {
+      var chatScreen  = document.getElementById('chatScreen');
+      var checkScreen = document.getElementById('checklistScreen');
+      if (!checkScreen) return;
+
+      if (chatScreen) chatScreen.style.display = 'none';
+      checkScreen.style.display = 'flex';
+
+      _populatePersonalizedSection(page, filter, structured);
+      log('Checklist', 'OPENED with resources | page=' + page + ' filter=' + (filter || 'none'));
+    } catch (e) {
+      log('Checklist', 'openWithResources error: ' + (e.message || e));
+    }
+  }
+
+  function _populatePersonalizedSection(page, filter, structured) {
+    var section     = document.getElementById('checklistPersonalized');
+    var headerEl    = document.getElementById('checklistPersonalizedHeader');
+    var resContainer= document.getElementById('checklistResourceCards');
+    var tplContainer= document.getElementById('checklistTemplateCards');
+    var msnContainer= document.getElementById('checklistMissionCards');
+    if (!section || !resContainer) return;
+
+    // Clear previous
+    if (headerEl)     headerEl.innerHTML    = '';
+    if (resContainer) resContainer.innerHTML = '';
+    if (tplContainer) { tplContainer.innerHTML = ''; tplContainer.style.display = 'none'; }
+    if (msnContainer) { msnContainer.innerHTML = ''; msnContainer.style.display = 'none'; }
+
+    var pageInfo = _NAV_PAGE_MAP[page];
+    if (!pageInfo) { section.style.display = 'none'; return; }
+
+    // Header
+    if (headerEl) {
+      headerEl.innerHTML = '<span style="font-size:1.2rem;">' + pageInfo.icon + '</span> ' +
+        '<span>' + _escHtml(pageInfo.label) + '</span>';
+    }
+
+    // Resource cards — direct links to exact internal pages
+    var resources = _CHECKLIST_RESOURCES[page];
+    if (resources && resources.length > 0) {
+      resources.forEach(function(res) {
+        resContainer.appendChild(_createResourceCard(res));
+      });
+    }
+
+    // Templates subsection (document-templates only)
+    if (page === 'document-templates' && tplContainer) {
+      // Resources already include templates for this page, so skip duplicate
+      tplContainer.style.display = 'none';
+    }
+
+    // Active missions
+    if (window.AIOS && window.AIOS.Mission && msnContainer) {
+      var missions = [];
+      if (typeof window.AIOS.Mission.getAll === 'function') {
+        missions = window.AIOS.Mission.getAll() || [];
+      } else if (window.AIOS.Mission.current) {
+        missions = [window.AIOS.Mission.current];
+      }
+      if (missions.length > 0) {
+        msnContainer.style.display = 'block';
+        var msnLabel = document.createElement('div');
+        msnLabel.style.cssText = 'font-weight:700;font-size:0.9rem;margin-bottom:8px;color:#212529;';
+        msnLabel.innerHTML = '\uD83D\uDE80 Active Missions';
+        msnContainer.appendChild(msnLabel);
+        missions.forEach(function(m) {
+          if (!m) return;
+          msnContainer.appendChild(_createResourceCard({
+            title: (m.name || m.type || 'Mission').replace(/_/g, ' '),
+            desc:  m.nextStep || m.next_step || m.status || 'In progress',
+            icon:  '\uD83D\uDE80',
+            cssClass: 'resource-card--mission'
+          }));
+        });
+      }
+    }
+
+    section.style.display = 'block';
+    // Scroll to top of checklist body
+    var body = section.parentElement;
+    if (body) body.scrollTop = 0;
+  }
+
+  // Make "Create Mission" actually do something useful
+  function _createMissionWithDefaults(missionType) {
+    if (!window.AIOS || !window.AIOS.Mission) return null;
+    if (typeof window.AIOS.Mission.createMission !== 'function') return null;
+
+    // Dedup
+    if (typeof window.AIOS.Mission.getByType === 'function') {
+      var existing = window.AIOS.Mission.getByType(missionType);
+      if (existing) return existing;
+    }
+
+    var newMission = window.AIOS.Mission.createMission(missionType);
+    if (!newMission) return null;
+    window.AIOS.Mission.current = newMission;
+    log('Mission', 'CREATED with defaults: ' + missionType);
+
+    // Fire-and-forget DB persist
+    if (_activeCaseId && window.AAAI && window.AAAI.DataAccess) {
+      (function(m) {
+        withRetry(function() {
+          return window.AAAI.DataAccess.missions.create(_activeCaseId, m);
+        }, 'missions.create:phase25').then(function(r) {
+          if (!r.error && r.data && r.data.id) m._dbId = r.data.id;
+        }).catch(function(e) {
+          console.error('[Mission][create]', m.type, e);
+        });
+      })(newMission);
+    }
+
+    // Inject default checklist items for this mission type
+    var defaults = _MISSION_DEFAULTS[missionType];
+    if (defaults && window.AIOS && window.AIOS.Checklist &&
+        typeof window.AIOS.Checklist.addItem === 'function') {
+      defaults.forEach(function(item) {
+        window.AIOS.Checklist.addItem({
+          title:       item.title,
+          category:    item.category || 'immediate',
+          description: item.description || ''
+        });
+      });
+      log('Mission', 'Added ' + defaults.length + ' default checklist items for ' + missionType);
+    }
+
+    return newMission;
+  }
 
   // ══════════════════════════════════════════════════════
   //  VOICE INTELLIGENCE PIPELINE  (Phase 1 Fix)
@@ -2183,11 +2131,17 @@
         // responses during intake (branch, yes/no, skip, etc.) and must NEVER be dropped.
         // Then apply noise/filler rejection only to non-whitelisted input.
         var trimmed = (text || '').trim();
-        var _isValidShort = /^(yes|no|yeah|yep|nah|nope|ok|okay|sure|right|correct|skip|done|next|go ahead|not sure|that'?s?\s*(it|all)|army|navy|air\s*force|marines?|marine\s*corps|coast\s*guard|space\s*force|national\s*guard|reserves?|active\s*duty|honorable|general|other\s*than\s*honorable|rather\s*not\s*say|i'?m?\s*a?\s*family\s*member|thanks?(\s*you)?|great|cool)\s*[\.\!\?]?\s*$/i.test(trimmed);
+        var _isValidShort = /^(yes|no|yeah|yep|nah|nope|ok|okay|sure|right|correct|skip|done|next|go ahead|not sure|that'?s?\s*(it|all)|army|navy|air\s*force|marines?|marine\s*corps|coast\s*guard|space\s*force|national\s*guard|reserves?|active\s*duty|honorable|general|other\s*than\s*honorable|rather\s*not\s*say|i'?m?\s*a?\s*family\s*member|thanks?(\s*you)?|great|cool|help|please|stop|wait|hold\s*on|go\s*back|repeat|what|disability|claim|benefits?|housing|education|career|job|va|medical|health|ptsd)\s*[\.\!\?]?\s*$/i.test(trimmed);
         if (!_isValidShort) {
-          if (trimmed.length < 2 ||
-              /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|mhm+|mm+|hm+|hey|hi+|bye+|ugh+|whoa|wow|oh\s+wow)\s*[\.\!\?]?\s*$/i.test(trimmed) ||
-              /^[\d\s\.\,\!\?\-\(\)]+$/.test(trimmed)) {
+          // Phase 2.5: Expanded noise rejection — catches background TV, music lyrics,
+          // single repeated characters, and common Whisper hallucinations from silence.
+          if (trimmed.length < 3 ||
+              /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|mhm+|mm+|hm+|hey|hi+|bye+|ugh+|whoa|wow|oh\s+wow|ha(ha)*|heh|tsk|psst|shh+|ahem|ooh+|eeh+|yawn|sigh)\s*[\.\!\?]?\s*$/i.test(trimmed) ||
+              /^[\d\s\.\,\!\?\-\(\)\[\]]+$/.test(trimmed) ||
+              /^(.)\1{3,}$/i.test(trimmed) ||
+              /^(you|the|and|is|it|a|i|to|in|that|this|for|on|are|was|with|as|at|be|or|an|so|but|if|my|do|we|he|she|they)\s*[\.\!\?]?\s*$/i.test(trimmed) ||
+              /^(music|laughter|applause|silence|background|noise|inaudible|♪|🎵)/i.test(trimmed) ||
+              /^thank(s|\s*you)\s*for\s*(watching|listening|subscribing)/i.test(trimmed)) {
             log('RT.onUserTranscript', 'REJECTED (filler/noise): "' + trimmed + '"');
             return;
           }
