@@ -995,7 +995,7 @@
           type: 'session.update',
           session: {
             type: 'realtime',
-            instructions: SYSTEM_PROMPT.join('\n') + topicDirective
+            instructions: SYSTEM_PROMPT + topicDirective
           }
         });
         log('TopicBubbles', 'VOICE session.update SENT — delaying sendText 500ms');
