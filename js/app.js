@@ -1776,6 +1776,7 @@
     log('startVoiceSession', 'wiring callbacks and connecting');
     voiceGreetingSent = false;
     var _lastVoiceText = ''; // Phase FBP: per-session dedup guard — prevents duplicate user bubbles
+    var _lastVoiceTime = 0; // Phase 2.1: timestamp for time-windowed dedup (2s window)
     var _lastAIMessageText = ''; // Phase 4.2: dedup guard — prevents double-processing same AI response
     setVoiceUI('connecting', 'Connecting to voice...');
 
@@ -1832,25 +1833,29 @@
         log('RT.onUserTranscript', 'FINAL: ' + text.substring(0, 80));
         showCaption('You', text);
         // Quality gate: reject single-char, pure filler, or background-noise transcripts.
-        // Phase 36: threshold lowered to 2 so valid short replies ("yes", "no", "ok",
-        // "yep", "nope") are never silently dropped.  Pure-numeric strings (tones/beeps
-        // transcribed as digits) and the tightest filler-only patterns are still blocked.
-        // Phase 5 noise fix: expanded filler list + stopword-only pattern.
+        // Phase 2.1: Whitelist meaningful short answers FIRST — these are real veteran
+        // responses during intake (branch, yes/no, skip, etc.) and must NEVER be dropped.
+        // Then apply noise/filler rejection only to non-whitelisted input.
         var trimmed = (text || '').trim();
-        if (trimmed.length < 2 ||
-            /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|mhm+|mm+|hm+|okay|ok|yeah|yep|nope|hey|hi+|bye+|ugh+|whoa|wow|oh\s+wow|well+|so+|right|sure|cool|great|thanks|thank\s+you)\s*[\.\!\?]?\s*$/i.test(trimmed) ||
-            /^[\d\s\.\,\!\?\-\(\)]+$/.test(trimmed) ||
-            /^(the|a|an|and|or|but|is|it|in|on|at|to|of|for|with|that|this|was|be|are|i|he|she|we|they|you|my|your|his|her|its|our|their|me|him|us|them|what|who|when|where|how|why|yes|no|not|do|did|have|has|had|will|would|could|should|can|may|might|like|just|so|then|there|these|those|some|any|all|no|if|as|by|up|out|about|into|than|more|also|very|too|much|many|now|just|here|from|get|got|go|going|been|being|said|say|know|think|want|need|really|actually|basically|literally|honestly)\s*$/i.test(trimmed)) {
-          log('RT.onUserTranscript', 'REJECTED (filler/short/noise): "' + trimmed + '"');
-          return;
+        var _isValidShort = /^(yes|no|yeah|yep|nah|nope|ok|okay|sure|right|correct|skip|done|next|go ahead|not sure|that'?s?\s*(it|all)|army|navy|air\s*force|marines?|marine\s*corps|coast\s*guard|space\s*force|national\s*guard|reserves?|active\s*duty|honorable|general|other\s*than\s*honorable|rather\s*not\s*say|i'?m?\s*a?\s*family\s*member|thanks?(\s*you)?|great|cool)\s*[\.\!\?]?\s*$/i.test(trimmed);
+        if (!_isValidShort) {
+          if (trimmed.length < 2 ||
+              /^\s*(uh+|um+|hmm+|ah+|oh+|huh|er+|mhm+|mm+|hm+|hey|hi+|bye+|ugh+|whoa|wow|oh\s+wow)\s*[\.\!\?]?\s*$/i.test(trimmed) ||
+              /^[\d\s\.\,\!\?\-\(\)]+$/.test(trimmed)) {
+            log('RT.onUserTranscript', 'REJECTED (filler/noise): "' + trimmed + '"');
+            return;
+          }
         }
-        // Phase FBP: dedup guard — OpenAI Realtime can fire isFinal=true more than once
-        // for the same utterance; skip if identical to the last accepted transcript
-        if (trimmed === _lastVoiceText) {
-          log('RT.onUserTranscript', 'DEDUP (duplicate final): "' + trimmed.substring(0, 40) + '"');
+        // Phase 2.1: Time-windowed dedup — reject same text only within 2s window.
+        // OpenAI Realtime can fire isFinal=true more than once for the same utterance,
+        // but the same answer repeated after 2s is intentional (e.g. "yes" twice).
+        var _now = Date.now();
+        if (trimmed === _lastVoiceText && (_now - _lastVoiceTime) < 2000) {
+          log('RT.onUserTranscript', 'DEDUP (duplicate <2s): "' + trimmed.substring(0, 40) + '"');
           return;
         }
         _lastVoiceText = trimmed;
+        _lastVoiceTime = _now;
         // Phase 33: render bubble + escalation check via shared path (voiceOnly — Realtime drives response)
         submitUserText(trimmed, { voiceOnly: true, path: 'voice' });
         // Phase 36: use trimmed (consistent with bubble + memory extraction)
