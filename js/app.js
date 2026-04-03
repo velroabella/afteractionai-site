@@ -994,6 +994,7 @@
         RealtimeVoice.sendEvent({
           type: 'session.update',
           session: {
+            type: 'realtime',
             instructions: SYSTEM_PROMPT.join('\n') + topicDirective
           }
         });
@@ -1359,7 +1360,7 @@
       if (_vReq && _vReq.system && _vReq.system.length > 0) {
         RealtimeVoice.sendEvent({
           type: 'session.update',
-          session: { instructions: _vReq.system }
+          session: { type: 'realtime', instructions: _vReq.system }
         });
         log('AIOS:VOICE', 'session.update SENT | systemLen=' + _vReq.system.length +
           ' | skill=' + _vReq.meta.skill +
@@ -1553,7 +1554,7 @@
       if (_avReq && _avReq.system && _avReq.system.length > 0) {
         RealtimeVoice.sendEvent({
           type:    'session.update',
-          session: { instructions: _avReq.system }
+          session: { type: 'realtime', instructions: _avReq.system }
         });
         log('VoiceBridge', 'session.update SENT (GENERAL_QUESTION enrichment)' +
           ' | len='        + _avReq.system.length +
