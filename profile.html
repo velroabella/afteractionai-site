@@ -303,29 +303,187 @@
 <script src="js/aios/response-contract.js"></script><!-- Phase 47 -->
 <script src="js/aios/mission-extractor.js"></script><!-- Phase 47/48 -->
 
-<!-- Phase 42: Dashboard render for uploaded documents -->
+<!-- Phase 42r: Uploaded documents — clickable cards with extracted fields, download, copy -->
+<style>
+  .upload-card{background:var(--dark-400,#1e1e1e);border:1px solid var(--gray-200,#333);border-radius:10px;padding:14px 16px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,box-shadow .2s;}
+  .upload-card:hover{border-color:var(--gold,#c4a035);box-shadow:0 0 0 1px var(--gold,#c4a035);}
+  .upload-card__header{display:flex;align-items:center;gap:10px;}
+  .upload-card__icon{font-size:1.4rem;flex-shrink:0;}
+  .upload-card__info{flex:1;min-width:0;}
+  .upload-card__type{font-weight:600;color:var(--gold,#c4a035);font-size:0.95rem;}
+  .upload-card__title{font-size:0.85rem;color:var(--gray-400,#aaa);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:220px;}
+  .upload-card__date{font-size:0.8rem;color:var(--gray-500,#888);flex-shrink:0;}
+  .upload-card__status{font-size:0.7rem;padding:2px 8px;border-radius:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;flex-shrink:0;}
+  .upload-card__status--extracted{background:rgba(76,175,80,0.15);color:#4caf50;}
+  .upload-card__status--pending{background:rgba(255,193,7,0.15);color:#ffc107;}
+  .upload-card__status--not_started{background:rgba(158,158,158,0.15);color:#9e9e9e;}
+  .upload-card__body{display:none;margin-top:12px;padding-top:12px;border-top:1px solid var(--gray-200,#333);}
+  .upload-card.expanded .upload-card__body{display:block;}
+  .upload-card__chevron{transition:transform .2s;font-size:0.8rem;color:var(--gray-500,#888);}
+  .upload-card.expanded .upload-card__chevron{transform:rotate(180deg);}
+  .upload-card__fields{margin-bottom:12px;}
+  .upload-card__field{display:flex;gap:8px;padding:4px 0;font-size:0.85rem;}
+  .upload-card__field-label{color:var(--gray-400,#aaa);min-width:120px;flex-shrink:0;}
+  .upload-card__field-value{color:var(--text-primary,#f0f0f0);word-break:break-word;}
+  .upload-card__actions{display:flex;gap:8px;margin-top:8px;}
+  .upload-card__btn{background:var(--dark-300,#2a2a2a);color:var(--gold,#c4a035);border:1px solid var(--gold,#c4a035);border-radius:6px;padding:6px 14px;font-size:0.8rem;cursor:pointer;transition:background .2s;}
+  .upload-card__btn:hover{background:var(--gold,#c4a035);color:#000;}
+  .upload-card__empty-fields{font-size:0.85rem;color:var(--gray-500,#888);font-style:italic;}
+</style>
 <script>
 (function() {
-  // Wait for auth to be ready
+  var DOC_ICONS = {
+    'DD-214': '\u{1F396}', 'dd214': '\u{1F396}', 'dd-214': '\u{1F396}',
+    'VA Decision Letter': '\u{1F4DC}', 'va_decision': '\u{1F4DC}',
+    'Medical Records': '\u{1F3E5}', 'medical': '\u{1F3E5}',
+    'Resume': '\u{1F4CB}', 'resume': '\u{1F4CB}',
+    'Performance Report': '\u{2B50}', 'epr': '\u{2B50}', 'opr': '\u{2B50}',
+    'Education': '\u{1F393}', 'education': '\u{1F393}', 'transcript': '\u{1F393}',
+    'Certificate': '\u{1F4C4}', 'certification': '\u{1F4C4}',
+    'default': '\u{1F4C4}'
+  };
+
+  function getIcon(docType) {
+    if (!docType) return DOC_ICONS['default'];
+    var key = docType.toLowerCase().replace(/[^a-z0-9_-]/g, '');
+    for (var k in DOC_ICONS) {
+      if (key.indexOf(k.toLowerCase().replace(/[^a-z0-9_-]/g, '')) !== -1) return DOC_ICONS[k];
+    }
+    return DOC_ICONS['default'];
+  }
+
+  function escHtml(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+  function statusBadge(status) {
+    var s = (status || 'not_started').toLowerCase();
+    var label = s.replace(/_/g, ' ');
+    if (s === 'extracted' || s === 'complete') return '<span class="upload-card__status upload-card__status--extracted">' + label + '</span>';
+    if (s === 'pending' || s === 'processing') return '<span class="upload-card__status upload-card__status--pending">' + label + '</span>';
+    return '<span class="upload-card__status upload-card__status--not_started">' + label + '</span>';
+  }
+
+  function renderExtractedFields(content) {
+    var fields = {};
+    try {
+      var parsed = typeof content === 'string' ? JSON.parse(content) : content;
+      fields = parsed.extractedFields || parsed || {};
+    } catch(e) { return '<div class="upload-card__empty-fields">No extracted fields available</div>'; }
+
+    var keys = Object.keys(fields);
+    if (!keys.length) return '<div class="upload-card__empty-fields">No extracted fields available</div>';
+
+    var html = '<div class="upload-card__fields">';
+    keys.forEach(function(k) {
+      var val = fields[k];
+      if (val && typeof val === 'object') val = JSON.stringify(val);
+      if (!val) return;
+      var label = k.replace(/_/g, ' ').replace(/([A-Z])/g, ' $1').replace(/\b\w/g, function(c){ return c.toUpperCase(); });
+      html += '<div class="upload-card__field">' +
+        '<span class="upload-card__field-label">' + escHtml(label) + '</span>' +
+        '<span class="upload-card__field-value">' + escHtml(String(val)) + '</span>' +
+        '</div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  function handleCopy(content, btn) {
+    var text = '';
+    try {
+      var parsed = typeof content === 'string' ? JSON.parse(content) : content;
+      var ef = parsed.extractedFields || parsed || {};
+      Object.keys(ef).forEach(function(k) {
+        text += k.replace(/_/g, ' ') + ': ' + (typeof ef[k] === 'object' ? JSON.stringify(ef[k]) : ef[k]) + '\n';
+      });
+    } catch(e) { text = content || ''; }
+    if (!text.trim()) { text = content || 'No content'; }
+    navigator.clipboard.writeText(text).then(function() {
+      var orig = btn.textContent;
+      btn.textContent = 'Copied!';
+      setTimeout(function(){ btn.textContent = orig; }, 1500);
+    });
+  }
+
+  function handleDownload(doc) {
+    var text = '';
+    var docType = (doc.metadata || {}).docType || 'document';
+    try {
+      var parsed = typeof doc.content === 'string' ? JSON.parse(doc.content) : doc.content;
+      var ef = parsed.extractedFields || parsed || {};
+      text += docType.toUpperCase() + ' — Extracted Fields\n';
+      text += '='.repeat(40) + '\n\n';
+      Object.keys(ef).forEach(function(k) {
+        text += k.replace(/_/g, ' ') + ': ' + (typeof ef[k] === 'object' ? JSON.stringify(ef[k]) : ef[k]) + '\n';
+      });
+    } catch(e) { text = doc.content || ''; }
+    var blob = new Blob([text], { type: 'text/plain' });
+    var url = (window.URL || window.webkitURL).createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = docType.replace(/\s+/g, '_') + '_' + (doc.title || 'document').replace(/\s+/g, '_') + '.txt';
+    a.click();
+    setTimeout(function(){ (window.URL || window.webkitURL).revokeObjectURL(url); }, 1000);
+  }
+
   function renderUploadedDocs() {
     if (!window.AAAI || !AAAI.auth || !AAAI.auth.isLoggedIn || !AAAI.auth.isLoggedIn()) return;
     if (!AAAI.auth.loadUploadedDocuments) return;
     AAAI.auth.loadUploadedDocuments().then(function(result) {
       var el = document.getElementById('dashUploadedDocs');
       if (!el || !result || !result.data || result.data.length === 0) return;
-      var html = '';
-      result.data.forEach(function(doc) {
+      el.innerHTML = '';
+
+      result.data.forEach(function(doc, idx) {
         var meta = doc.metadata || {};
+        var docType = meta.docType || 'Document';
         var date = doc.created_at ? new Date(doc.created_at).toLocaleDateString() : '';
-        html += '<div style="padding:10px 0;border-bottom:1px solid var(--gray-200,#eee);">' +
-          '<strong style="color:var(--gold,#c4a035);">' + (meta.docType || 'Document') + '</strong>' +
-          '<span style="margin-left:8px;font-size:0.85rem;color:var(--gray-500,#888);">' + (doc.title || '') + '</span>' +
-          '<span style="float:right;font-size:0.8rem;color:var(--gray-500,#888);">' + date + '</span>' +
+        var icon = getIcon(docType);
+
+        var card = document.createElement('div');
+        card.className = 'upload-card';
+        card.innerHTML =
+          '<div class="upload-card__header">' +
+            '<span class="upload-card__icon">' + icon + '</span>' +
+            '<div class="upload-card__info">' +
+              '<div class="upload-card__type">' + escHtml(docType) + '</div>' +
+              '<div class="upload-card__title">' + escHtml(doc.title || '') + '</div>' +
+            '</div>' +
+            statusBadge(meta.status) +
+            '<span class="upload-card__date">' + date + '</span>' +
+            '<span class="upload-card__chevron">\u25BC</span>' +
+          '</div>' +
+          '<div class="upload-card__body">' +
+            renderExtractedFields(doc.content) +
+            '<div class="upload-card__actions">' +
+              '<button class="upload-card__btn upload-card__btn--copy">Copy Fields</button>' +
+              '<button class="upload-card__btn upload-card__btn--download">Download</button>' +
+            '</div>' +
           '</div>';
+
+        // Toggle expand/collapse on header click
+        card.querySelector('.upload-card__header').addEventListener('click', function() {
+          card.classList.toggle('expanded');
+        });
+
+        // Copy button
+        card.querySelector('.upload-card__btn--copy').addEventListener('click', function(e) {
+          e.stopPropagation();
+          handleCopy(doc.content, this);
+        });
+
+        // Download button
+        card.querySelector('.upload-card__btn--download').addEventListener('click', function(e) {
+          e.stopPropagation();
+          handleDownload(doc);
+        });
+
+        el.appendChild(card);
       });
-      el.innerHTML = html;
-    }).catch(function() {});
+    }).catch(function(err) {
+      console.warn('[Phase42r] renderUploadedDocs error:', err);
+    });
   }
+
   // Retry until auth is initialized
   var _retries = 0;
   var _intv = setInterval(function() {
@@ -810,7 +968,7 @@ function toggleMenu() {
                 '<div class="template-output-card__preview">' + preview + '</div>' +
                 '<div class="template-output-card__actions">' +
                   '<button class="template-output-card__btn" onclick="navigator.clipboard.writeText(this.closest(\'.template-output-card\').dataset.content).then(function(){alert(\'Copied!\')});" data-content="">Copy</button>' +
-                  '<button class="template-output-card__btn" onclick="var b=new Blob([this.closest(\'.template-output-card\').dataset.content],{type:\'text/plain\'});var u=URL.createObjectURL(b);var a=document.createElement(\'a\');a.href=u;a.download=\'' + escAttr(o.template_type || 'output') + '.txt\';a.click();">Download</button>' +
+                  '<button class="template-output-card__btn" onclick="var b=new Blob([this.closest(\'.template-output-card\').dataset.content],{type:\'text/plain\'});var u=(window.URL||window.webkitURL).createObjectURL(b);var a=document.createElement(\'a\');a.href=u;a.download=\'' + escAttr(o.template_type || 'output') + '.txt\';a.click();setTimeout(function(){(window.URL||window.webkitURL).revokeObjectURL(u);},1000);">Download</button>' +
                 '</div>' +
               '</div>';
             }).join('');
@@ -1642,6 +1800,10 @@ function toggleMenu() {
       return;
     }
     var DA = window.AAAI.DataAccess;
+    if (!DA.cases || typeof DA.cases.getOrCreateActiveCase !== 'function') {
+      console.warn('[Phase3.1] DA.cases.getOrCreateActiveCase not available — skipping');
+      return;
+    }
     // getOrCreateActiveCase() primes Supabase v2 JWT before any RLS-guarded query
     DA.cases.getOrCreateActiveCase().then(function(caseResult) {
       if (caseResult.error || !caseResult.data) {
