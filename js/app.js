@@ -467,7 +467,13 @@
     'BAD: "Let me know how you\'d like to proceed."',
     'GOOD: "Do you want to start by identifying your top 3 target roles, or should we refine your resume first?"',
     'GOOD: "What\'s your current VA disability rating — do you have one on file, or is this your first time filing?"',
-    '[OPTIONS: I have a rating | Claim is pending | Never filed | Not sure]'
+    '[OPTIONS: I have a rating | Claim is pending | Never filed | Not sure]',
+    '',
+    '## INTERNAL RESOURCE PRIORITY — Phase 2.2',
+    'AfterAction AI has dedicated internal pages for: Legal Document Templates, State Benefits, Resources, Grants & Scholarships, Service Dogs, Wellness, Licensure, Family Support, Hotlines, Education.',
+    'ALWAYS direct veterans to these internal pages FIRST before mentioning any external website.',
+    'NEVER say "search online", "visit va.gov directly", or "google [topic]" for topics we cover internally.',
+    'Say: "I have that right here" or "We have a dedicated page for that" — the system will surface the link automatically.'
   ].join('\n');
 
   // ── STATE ───────────────────────────────────────────────
@@ -1512,7 +1518,14 @@
         });
       }
 
-      // ── 4. Session context injection (GENERAL_QUESTION gap fill) ─────
+      // ── 4. Navigation hint — surface internal page link in chat ────────
+      // Phase 2.2: When Claude detects a topic we host internally, inject
+      // a clickable suggestion bubble so the veteran can jump directly.
+      if (structured.navigation_hint && structured.navigation_hint.page) {
+        _injectNavigationSuggestion(structured.navigation_hint.page, structured.navigation_hint.filter || null);
+      }
+
+      // ── 5. Session context injection (GENERAL_QUESTION gap fill) ─────
       // Only fires when no skill session.update was sent this turn.
       // Uses RequestBuilder.buildAIOSRequest() — identical prompt-assembly
       // path to the existing skill session.update — budget trimming and
@@ -1564,6 +1577,75 @@
 
     } catch (_avsErr) {
       log('VoiceBridge', 'applyStructured FALLBACK — ' + (_avsErr.message || String(_avsErr)));
+    }
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  NAVIGATION SUGGESTION INJECTION  (Phase 2.2)
+  //  Injects a clickable link into the chat when the voice
+  //  bridge detects a topic covered by an internal page.
+  //  Follows the same DOM pattern as showAtRiskBanner().
+  // ══════════════════════════════════════════════════════
+  var _lastNavPage = null;  // dedup — don't show same page twice in a row
+  var _NAV_PAGE_MAP = {
+    'document-templates': { url: '/document-templates.html', label: 'Legal Document Templates',     icon: '\uD83D\uDCC4' },
+    'state-benefits':     { url: '/state-benefits.html',     label: 'State-Specific Benefits',      icon: '\uD83C\uDFDB\uFE0F' },
+    'service-dogs':       { url: '/service-dogs.html',       label: 'Service Dog Resources',        icon: '\uD83D\uDC15\u200D\uD83E\uDDBA' },
+    'grants-scholarships':{ url: '/grants-scholarships.html',label: 'Grants & Scholarships',        icon: '\uD83C\uDF93' },
+    'hotlines-escalation':{ url: '/hotlines-escalation.html',label: 'Hotlines & Emergency Contacts',icon: '\u260E\uFE0F' },
+    'families-support':   { url: '/families-support.html',   label: 'Family & Survivor Support',    icon: '\uD83D\uDC68\u200D\uD83D\uDC69\u200D\uD83D\uDC67' },
+    'wellness':           { url: '/wellness.html',           label: 'Wellness & Mental Health',      icon: '\uD83E\uDDD1\u200D\u2695\uFE0F' },
+    'licensure':          { url: '/licensure.html',          label: 'Professional Licensure',        icon: '\uD83D\uDCCB' },
+    'resources':          { url: '/resources.html',          label: 'Veteran Resources',             icon: '\u2B50' },
+    'education':          { url: '/education.html',          label: 'Education & Training',          icon: '\uD83D\uDCDA' },
+    'checklist':          { url: null,                       label: 'Your Mission Checklist',        icon: '\u2705' }
+  };
+
+  function _injectNavigationSuggestion(page, filter) {
+    try {
+      if (!page || page === _lastNavPage) return;
+      var target = _NAV_PAGE_MAP[page];
+      if (!target) return;
+      _lastNavPage = page;
+
+      var filterParam = filter ? '?filter=' + encodeURIComponent(filter) : '';
+      var container = document.getElementById('chatMessages');
+      if (!container) return;
+
+      var div = document.createElement('div');
+      div.className = 'message message--ai nav-suggestion';
+      div.style.cssText = 'background:#1a2a3a;border:1px solid #2a4a6a;border-radius:12px;padding:12px 16px;margin:8px 0;cursor:pointer;display:flex;align-items:center;gap:10px;transition:background 0.2s;';
+
+      if (target.url) {
+        div.innerHTML =
+          '<span style="font-size:20px;">' + target.icon + '</span>' +
+          '<span style="flex:1;color:#e0e0e0;">I have a dedicated page for that — <strong style="color:#4CAF50;">' + target.label + '</strong></span>' +
+          '<span style="color:#4CAF50;font-size:14px;">Open →</span>';
+        div.onclick = function() {
+          window.open(target.url + filterParam, '_blank');
+        };
+      } else {
+        // Checklist — toggle internal screen
+        div.innerHTML =
+          '<span style="font-size:20px;">' + target.icon + '</span>' +
+          '<span style="flex:1;color:#e0e0e0;">View your <strong style="color:#4CAF50;">' + target.label + '</strong></span>' +
+          '<span style="color:#4CAF50;font-size:14px;">Open →</span>';
+        div.onclick = function() {
+          var chatScreen = document.getElementById('chatScreen');
+          var checklistScreen = document.getElementById('checklistScreen');
+          if (chatScreen) chatScreen.style.display = 'none';
+          if (checklistScreen) checklistScreen.style.display = 'flex';
+        };
+      }
+
+      div.onmouseenter = function() { div.style.background = '#1e3348'; };
+      div.onmouseleave = function() { div.style.background = '#1a2a3a'; };
+
+      container.appendChild(div);
+      if (typeof scrollToBottom === 'function') scrollToBottom();
+      log('VoiceBridge', 'NAV SUGGESTION injected: page=' + page + ' filter=' + (filter || 'none'));
+    } catch (e) {
+      log('VoiceBridge', 'nav suggestion error: ' + (e.message || e));
     }
   }
 

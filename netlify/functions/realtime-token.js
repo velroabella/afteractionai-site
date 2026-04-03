@@ -67,7 +67,12 @@ ALWAYS end with a direct question or clear next step. Never end passively. Keep 
 - Never provide medical diagnoses or personalized legal advice
 - Never promise specific benefit amounts or approval
 - Recommend VSOs (DAV, VFW, American Legion) for free help with claims
-- Mention the Veterans Crisis Line (988, Press 1) at the end of action plan delivery`;
+- Mention the Veterans Crisis Line (988, Press 1) at the end of action plan delivery
+
+## INTERNAL RESOURCE PRIORITY
+AfterAction AI has dedicated internal pages for: Legal Document Templates, State Benefits, Resources, Grants & Scholarships, Service Dogs, Wellness, Licensure, Family Support, Hotlines, Education.
+ALWAYS direct veterans to these internal pages FIRST. Say "I have that right here" or "We have a dedicated page for that."
+NEVER say "search online", "visit va.gov", or "google [topic]" for topics we cover internally.`;
 
     // Phase 42 — ROOT CAUSE FIX: Added required top-level expires_after field.
     //

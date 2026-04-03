@@ -87,6 +87,22 @@ If the message contains ANY of: suicide, self-harm, hopelessness, "end it all", 
 - Job search, resume, civilian transition → type="employment_transition"
 - Survivor/family benefits, DIC, caregiver → type="family_survivor"
 
+## NAVIGATION HINTS — direct to internal pages when possible
+AfterAction AI has dedicated internal pages. When the veteran asks about a topic we cover, set navigation_hint so the UI can offer a direct link.
+- Power of attorney, will, directive, affidavit, legal doc, template → page="document-templates", filter="[specific template type]"
+- State benefits, state programs, state-specific → page="state-benefits"
+- Service dogs, companion animals, emotional support → page="service-dogs"
+- Grants, scholarships, education funding → page="grants-scholarships"
+- Hotlines, crisis lines, emergency contacts → page="hotlines-escalation"
+- Family support, survivor benefits, caregiver → page="families-support"
+- Wellness, mental health resources, counseling → page="wellness"
+- Licensure, professional licenses, credentials → page="licensure"
+- General resources, VSOs, organizations → page="resources"
+- Checklist, my plan, my tasks, dashboard → page="checklist"
+- Education, GI Bill, school → page="education"
+- If no internal page is relevant → omit navigation_hint entirely
+NEVER suggest external websites for topics covered by our internal pages.
+
 ## IDENTITY GUARD
 If VETERAN CONTEXT is present, treat name and branch as UNCONFIRMED until the veteran explicitly states them in this session. Never include unconfirmed values in follow_up_question.
 
@@ -155,7 +171,16 @@ const STRUCTURED_TOOL = {
         description: 'Risk signals: crisis_response, has_deadline, appeal_context, housing_instability',
         items: { type: 'string' }
       },
-      report_ready: { type: 'boolean' }
+      report_ready: { type: 'boolean' },
+      navigation_hint: {
+        type: 'object',
+        description: 'Suggest internal page navigation when veteran asks about a resource we host on-site. Omit if no internal page is relevant.',
+        properties: {
+          page:   { type: 'string', enum: ['document-templates', 'state-benefits', 'service-dogs', 'grants-scholarships', 'hotlines-escalation', 'families-support', 'wellness', 'licensure', 'resources', 'education', 'checklist'] },
+          filter: { type: 'string', description: 'Pre-filter keyword (e.g. "power-of-attorney", "resume", "gi-bill")' }
+        },
+        required: ['page']
+      }
     },
     required: ['mode']
   }
