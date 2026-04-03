@@ -190,8 +190,15 @@
     create: function(caseId, missionObj) {
       var db = getClient();
       if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      // Phase 2: Resolve authenticated user_id for RLS policy (missions_insert_own)
+      var userId = null;
+      if (window.AAAI && window.AAAI.auth && typeof window.AAAI.auth.getUserId === 'function') {
+        userId = window.AAAI.auth.getUserId();
+      }
+      if (!userId) return Promise.resolve({ data: null, error: 'Not logged in — mission not persisted' });
       var row = {
         case_id:      caseId,
+        user_id:      userId,
         mission_type: missionObj.type,
         name:         missionObj.name,
         status:       missionObj.status || 'active',

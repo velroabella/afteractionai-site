@@ -744,6 +744,7 @@
     openAuthModal,
     closeAuthModal,
     getUser: () => currentUser,
+    getUserId: () => currentUser ? currentUser.id : null,
     getProfile: () => currentProfile,
     isLoggedIn: () => !!currentUser,
     updateProfile,
