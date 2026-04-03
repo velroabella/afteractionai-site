@@ -3616,18 +3616,26 @@
         AAAI.auth.saveUploadedDocument) {
       pendingFiles.forEach(function(pf) {
         var extractedProfile = (window.AIOS && window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
-        // Upload the original binary to Supabase Storage (fire-and-forget; non-blocking)
+        // Upload the original binary to Supabase Storage
+        // Stash promise on pf so _runDocAnalysis can await it before saving to documents table
         var storagePromise = (AAAI.auth.uploadFileToStorage)
           ? AAAI.auth.uploadFileToStorage(pf.file)
           : Promise.resolve({ path: null, error: 'uploadFileToStorage not available' });
-        storagePromise.then(function(storageResult) {
+        pf._storagePromise = storagePromise.then(function(storageResult) {
           var storagePath = (storageResult && storageResult.path) ? storageResult.path : null;
           if (storagePath) {
-            pf.storagePath = storagePath;   // attach for _runDocAnalysis to read later
+            pf.storagePath = storagePath;
             log('Upload', 'stored ' + pf.name + ' → ' + storagePath);
           } else {
             log('Upload', 'storage skip for ' + pf.name + ': ' + (storageResult && storageResult.error));
           }
+          return storagePath;
+        }).catch(function(e) {
+          log('Upload', 'storage error for ' + pf.name + ': ' + (e && e.message));
+          return null;
+        });
+        // Save to template_outputs (dashboard) after storage upload completes
+        pf._storagePromise.then(function(storagePath) {
           return AAAI.auth.saveUploadedDocument(pf.name, pf.docType, extractedProfile, null, storagePath);
         }).then(function(res) {
           if (res && !res.error) log('Upload', 'saved ' + pf.name + ' to dashboard');
@@ -3695,29 +3703,30 @@
       window.AIOS.Memory.mergeDocumentMemory(_fields);
 
       // Fire-and-forget: persist to Phase 2 documents table
+      // Await the storage upload promise (if running) so storage_path is populated
       if (window.AAAI && window.AAAI.DataAccess && window.AAAI.DataAccess.documents) {
         var _missionId = (window.AIOS.Mission && window.AIOS.Mission.current)
           ? window.AIOS.Mission.current._dbId || null : null;
-        // Prefer _caseId from the restored/active mission object; fall back to
-        // _activeCaseId (module-level, always set on login) so documents are
-        // never orphaned even when no mission is active or _caseId is absent.
         var _caseId = (window.AIOS.Mission && window.AIOS.Mission.current &&
                        window.AIOS.Mission.current._caseId)
           ? window.AIOS.Mission.current._caseId
           : (_activeCaseId || null);
-        var _docPayload = {
-          file_name:       pf.file.name,
-          document_type:   _typeId,
-          mime_type:       pf.file.type,
-          file_size:       pf.file.size,
-          extracted_text:  text,
-          analysis_result: _fields || {},
-          mission_id:      _missionId,
-          case_id:         _caseId,
-          storage_path:    pf.storagePath || null,
-          status:          'uploaded'
-        };
-        withRetry(function() { return window.AAAI.DataAccess.documents.save(_docPayload); }, 'documents.save')
+        var _waitForStorage = (pf._storagePromise) ? pf._storagePromise : Promise.resolve(null);
+        _waitForStorage.then(function() {
+          var _docPayload = {
+            file_name:       pf.file.name,
+            document_type:   _typeId,
+            mime_type:       pf.file.type,
+            file_size:       pf.file.size,
+            extracted_text:  text,
+            analysis_result: _fields || {},
+            mission_id:      _missionId,
+            case_id:         _caseId,
+            storage_path:    pf.storagePath || null,
+            status:          'uploaded'
+          };
+          return withRetry(function() { return window.AAAI.DataAccess.documents.save(_docPayload); }, 'documents.save');
+        })
           .then(function(res) {
             if (res && res.error) {
               throw Object.assign(new Error('DB record failed'), { _dbErr: res.error });

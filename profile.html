@@ -411,21 +411,40 @@
     // If the original file is in Supabase Storage, download that
     if (storagePath && window.AAAI && AAAI.auth && AAAI.auth.getFileDownloadUrl) {
       var origText = btn ? btn.textContent : '';
-      if (btn) { btn.textContent = 'Loading...'; btn.disabled = true; }
+      if (btn) { btn.textContent = 'Downloading...'; btn.disabled = true; }
+
       AAAI.auth.getFileDownloadUrl(storagePath).then(function(result) {
-        if (result && result.url) {
-          var a = document.createElement('a');
-          a.href = result.url;
-          a.download = doc.title || 'document';
-          a.target = '_blank';       // fallback: open in new tab if download attr not honored
-          a.rel = 'noopener';
-          a.click();
-        } else {
-          console.warn('[Profile] signed URL failed, falling back to text:', result && result.error);
+        if (!result || !result.url) {
+          console.warn('[Profile] signed URL failed:', result && result.error);
           _downloadExtractedText(doc);
+          return;
         }
+        // Fetch the file as a blob — a.download is IGNORED on cross-origin hrefs,
+        // so we must pull the bytes and create a same-origin object URL.
+        return fetch(result.url).then(function(resp) {
+          if (!resp.ok) throw new Error('Storage fetch failed: ' + resp.status);
+          return resp.blob();
+        }).then(function(blob) {
+          var fileName = doc.title || 'document';
+          // If the storagePath has an extension the title is missing, append it
+          var pathExt = storagePath.split('.').pop().toLowerCase();
+          var titleExt = fileName.split('.').pop().toLowerCase();
+          if (pathExt !== titleExt && ['pdf','doc','docx','txt','jpg','jpeg','png','gif'].indexOf(pathExt) !== -1) {
+            fileName = fileName + '.' + pathExt;
+          }
+          var blobUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = blobUrl;
+          a.download = fileName;
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(function() {
+            document.body.removeChild(a);
+            (window.URL || window.webkitURL).revokeObjectURL(blobUrl);
+          }, 500);
+        });
       }).catch(function(err) {
-        console.warn('[Profile] download error:', err);
+        console.warn('[Profile] original file download failed, falling back to text:', err);
         _downloadExtractedText(doc);
       }).finally(function() {
         if (btn) { btn.textContent = origText; btn.disabled = false; }

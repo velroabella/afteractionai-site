@@ -489,11 +489,15 @@
         } catch (_) { /* fall through to direct method */ }
       }
       // Fallback: direct Supabase signed URL (client-side, 10 min expiry)
+      // Pass download option so Supabase sets Content-Disposition: attachment
       var { data, error } = await supabase.storage
         .from(STORAGE_BUCKET)
-        .createSignedUrl(storagePath, 600);
+        .createSignedUrl(storagePath, 600, { download: true });
       if (error) return { url: null, error: error.message };
-      return { url: data.signedUrl, error: null };
+      // Supabase v2 returns data.signedUrl (camelCase)
+      var url = (data && (data.signedUrl || data.signedURL)) || null;
+      if (!url) return { url: null, error: 'No signed URL returned' };
+      return { url: url, error: null };
     } catch (err) {
       return { url: null, error: err.message };
     }
