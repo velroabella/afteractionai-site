@@ -426,10 +426,90 @@
 
   var VALID_DOC_STATUSES = ['not_started', 'in_progress', 'review_ready', 'submitted', 'completed', 'archived'];
 
-  async function saveUploadedDocument(fileName, docType, extractedFields, initialStatus) {
+  // ── SUPABASE STORAGE: file upload + signed download ───
+  var STORAGE_BUCKET = 'user_uploads';
+
+  /**
+   * Upload a raw File object to Supabase Storage.
+   * Path: {user_id}/{timestamp}_{sanitized_filename}
+   * @param {File} file — the browser File object
+   * @returns {Promise<{path: string|null, error: string|null}>}
+   */
+  async function uploadFileToStorage(file) {
+    if (!currentUser) return { path: null, error: 'Not logged in' };
+    try {
+      var safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
+      var storagePath = currentUser.id + '/' + Date.now() + '_' + safeName;
+      var { data, error } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .upload(storagePath, file, {
+          cacheControl: '3600',
+          upsert: false,
+          contentType: file.type || 'application/octet-stream'
+        });
+      if (error) {
+        console.warn('[AAAI Auth] storage upload error:', error.message);
+        return { path: null, error: error.message };
+      }
+      return { path: storagePath, error: null };
+    } catch (err) {
+      console.warn('[AAAI Auth] storage upload exception:', err.message);
+      return { path: null, error: err.message };
+    }
+  }
+
+  /**
+   * Get a signed download URL for a file in Supabase Storage.
+   * Uses the signed-url Netlify function for secure, user-scoped access.
+   * Falls back to direct Supabase signed URL if the function isn't deployed.
+   * @param {string} storagePath — e.g. "{user_id}/1234_file.pdf"
+   * @returns {Promise<{url: string|null, error: string|null}>}
+   */
+  async function getFileDownloadUrl(storagePath) {
+    if (!currentUser) return { url: null, error: 'Not logged in' };
+    if (!storagePath) return { url: null, error: 'No storage path' };
+    try {
+      // Try Netlify function first (validates ownership server-side)
+      var session = await supabase.auth.getSession();
+      var jwt = session?.data?.session?.access_token;
+      if (jwt) {
+        try {
+          var fnRes = await fetch('/.netlify/functions/signed-url', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + jwt
+            },
+            body: JSON.stringify({ bucket: STORAGE_BUCKET, path: storagePath })
+          });
+          if (fnRes.ok) {
+            var fnData = await fnRes.json();
+            if (fnData.signedUrl) return { url: fnData.signedUrl, error: null };
+          }
+        } catch (_) { /* fall through to direct method */ }
+      }
+      // Fallback: direct Supabase signed URL (client-side, 10 min expiry)
+      var { data, error } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .createSignedUrl(storagePath, 600);
+      if (error) return { url: null, error: error.message };
+      return { url: data.signedUrl, error: null };
+    } catch (err) {
+      return { url: null, error: err.message };
+    }
+  }
+
+  async function saveUploadedDocument(fileName, docType, extractedFields, initialStatus, storagePath) {
     if (!currentUser) return { data: null, error: 'Not logged in' };
     var status = (initialStatus && VALID_DOC_STATUSES.indexOf(initialStatus) !== -1)
       ? initialStatus : 'not_started';
+    var meta = {
+      source:     'upload',
+      docType:    docType,
+      status:     status,
+      uploadedAt: new Date().toISOString()
+    };
+    if (storagePath) meta.storagePath = storagePath;
     const { data, error } = await supabase
       .from('template_outputs')
       .insert({
@@ -437,12 +517,7 @@
         template_type: 'uploaded_document',
         title: fileName,
         content: JSON.stringify({ docType: docType, extractedFields: extractedFields || {} }),
-        metadata: {
-          source:     'upload',
-          docType:    docType,
-          status:     status,
-          uploadedAt: new Date().toISOString()
-        }
+        metadata: meta
       })
       .select()
       .single();
@@ -770,7 +845,9 @@
     saveUploadedDocument,
     loadUploadedDocuments,
     updateDocumentStatus,
-    loadDocumentsByStatus
+    loadDocumentsByStatus,
+    uploadFileToStorage,
+    getFileDownloadUrl
     // C-02 FIX: supabase client intentionally NOT exposed on public API
     // Exposing it allowed any user to run authenticated queries via DevTools
     // All database operations must go through the methods above

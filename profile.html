@@ -404,7 +404,40 @@
     });
   }
 
-  function handleDownload(doc) {
+  function handleDownload(doc, btn) {
+    var meta = doc.metadata || {};
+    var storagePath = meta.storagePath || null;
+
+    // If the original file is in Supabase Storage, download that
+    if (storagePath && window.AAAI && AAAI.auth && AAAI.auth.getFileDownloadUrl) {
+      var origText = btn ? btn.textContent : '';
+      if (btn) { btn.textContent = 'Loading...'; btn.disabled = true; }
+      AAAI.auth.getFileDownloadUrl(storagePath).then(function(result) {
+        if (result && result.url) {
+          var a = document.createElement('a');
+          a.href = result.url;
+          a.download = doc.title || 'document';
+          a.target = '_blank';       // fallback: open in new tab if download attr not honored
+          a.rel = 'noopener';
+          a.click();
+        } else {
+          console.warn('[Profile] signed URL failed, falling back to text:', result && result.error);
+          _downloadExtractedText(doc);
+        }
+      }).catch(function(err) {
+        console.warn('[Profile] download error:', err);
+        _downloadExtractedText(doc);
+      }).finally(function() {
+        if (btn) { btn.textContent = origText; btn.disabled = false; }
+      });
+      return;
+    }
+
+    // Fallback: download extracted fields as .txt (for docs uploaded before storage was enabled)
+    _downloadExtractedText(doc);
+  }
+
+  function _downloadExtractedText(doc) {
     var text = '';
     var docType = (doc.metadata || {}).docType || 'document';
     try {
@@ -456,7 +489,7 @@
             renderExtractedFields(doc.content) +
             '<div class="upload-card__actions">' +
               '<button class="upload-card__btn upload-card__btn--copy">Copy Fields</button>' +
-              '<button class="upload-card__btn upload-card__btn--download">Download</button>' +
+              '<button class="upload-card__btn upload-card__btn--download">' + (meta.storagePath ? 'Download Original' : 'Download Fields') + '</button>' +
             '</div>' +
           '</div>';
 
@@ -471,10 +504,11 @@
           handleCopy(doc.content, this);
         });
 
-        // Download button
-        card.querySelector('.upload-card__btn--download').addEventListener('click', function(e) {
+        // Download button — downloads original file from storage, or extracted text as fallback
+        var dlBtn = card.querySelector('.upload-card__btn--download');
+        dlBtn.addEventListener('click', function(e) {
           e.stopPropagation();
-          handleDownload(doc);
+          handleDownload(doc, this);
         });
 
         el.appendChild(card);

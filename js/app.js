@@ -3611,12 +3611,25 @@
 
     addMessage('Uploaded: ' + fileNames, 'user');
 
-    // Phase 42: persist uploaded documents to dashboard if logged in
+    // Phase 42 + Storage: upload raw file to Supabase Storage, then persist metadata
     if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn && AAAI.auth.isLoggedIn() &&
         AAAI.auth.saveUploadedDocument) {
       pendingFiles.forEach(function(pf) {
         var extractedProfile = (window.AIOS && window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : {};
-        AAAI.auth.saveUploadedDocument(pf.name, pf.docType, extractedProfile).then(function(res) {
+        // Upload the original binary to Supabase Storage (fire-and-forget; non-blocking)
+        var storagePromise = (AAAI.auth.uploadFileToStorage)
+          ? AAAI.auth.uploadFileToStorage(pf.file)
+          : Promise.resolve({ path: null, error: 'uploadFileToStorage not available' });
+        storagePromise.then(function(storageResult) {
+          var storagePath = (storageResult && storageResult.path) ? storageResult.path : null;
+          if (storagePath) {
+            pf.storagePath = storagePath;   // attach for _runDocAnalysis to read later
+            log('Upload', 'stored ' + pf.name + ' → ' + storagePath);
+          } else {
+            log('Upload', 'storage skip for ' + pf.name + ': ' + (storageResult && storageResult.error));
+          }
+          return AAAI.auth.saveUploadedDocument(pf.name, pf.docType, extractedProfile, null, storagePath);
+        }).then(function(res) {
           if (res && !res.error) log('Upload', 'saved ' + pf.name + ' to dashboard');
         }).catch(function(e) { log('Upload', 'save error: ' + (e && e.message)); });
       });
@@ -3701,6 +3714,7 @@
           analysis_result: _fields || {},
           mission_id:      _missionId,
           case_id:         _caseId,
+          storage_path:    pf.storagePath || null,
           status:          'uploaded'
         };
         withRetry(function() { return window.AAAI.DataAccess.documents.save(_docPayload); }, 'documents.save')
