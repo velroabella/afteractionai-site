@@ -465,40 +465,58 @@
    * @param {string} storagePath — e.g. "{user_id}/1234_file.pdf"
    * @returns {Promise<{url: string|null, error: string|null}>}
    */
-  async function getFileDownloadUrl(storagePath) {
+  async function getFileDownloadUrl(storagePath, fileName) {
     if (!currentUser) return { url: null, error: 'Not logged in' };
     if (!storagePath) return { url: null, error: 'No storage path' };
+
+    // fileName tells Supabase to set Content-Disposition: attachment; filename="..."
+    // This makes the browser download the file natively — no CORS fetch needed.
+    var downloadAs = fileName || storagePath.split('/').pop().replace(/^\d+_/, '') || true;
+
     try {
-      // Try Netlify function first (validates ownership server-side)
+      // Primary: direct Supabase signed URL (client-side, 10 min expiry)
+      // This uses the user's JWT session — no server-side env vars needed.
+      var { data, error } = await supabase.storage
+        .from(STORAGE_BUCKET)
+        .createSignedUrl(storagePath, 600, { download: downloadAs });
+
+      if (!error) {
+        var url = (data && (data.signedUrl || data.signedURL)) || null;
+        if (url) {
+          console.log('[AAAI Auth] signed URL created for:', storagePath);
+          return { url: url, error: null };
+        }
+      }
+      console.warn('[AAAI Auth] createSignedUrl failed:', error?.message || 'no URL returned');
+
+      // Fallback: Netlify function (server-side, needs SUPABASE_SERVICE_ROLE_KEY env var)
       var session = await supabase.auth.getSession();
       var jwt = session?.data?.session?.access_token;
       if (jwt) {
-        try {
-          var fnRes = await fetch('/.netlify/functions/signed-url', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': 'Bearer ' + jwt
-            },
-            body: JSON.stringify({ bucket: STORAGE_BUCKET, path: storagePath })
-          });
-          if (fnRes.ok) {
-            var fnData = await fnRes.json();
-            if (fnData.signedUrl) return { url: fnData.signedUrl, error: null };
+        var fnRes = await fetch('/.netlify/functions/signed-url', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + jwt
+          },
+          body: JSON.stringify({ bucket: STORAGE_BUCKET, path: storagePath })
+        });
+        if (fnRes.ok) {
+          var fnData = await fnRes.json();
+          if (fnData.signedUrl) {
+            // Append download param so browser treats as attachment
+            var sep = fnData.signedUrl.indexOf('?') !== -1 ? '&' : '?';
+            var dlUrl = fnData.signedUrl + sep + 'download=' + encodeURIComponent(downloadAs);
+            console.log('[AAAI Auth] signed URL via Netlify fn for:', storagePath);
+            return { url: dlUrl, error: null };
           }
-        } catch (_) { /* fall through to direct method */ }
+        }
+        console.warn('[AAAI Auth] Netlify signed-url fn failed:', fnRes.status);
       }
-      // Fallback: direct Supabase signed URL (client-side, 10 min expiry)
-      // Pass download option so Supabase sets Content-Disposition: attachment
-      var { data, error } = await supabase.storage
-        .from(STORAGE_BUCKET)
-        .createSignedUrl(storagePath, 600, { download: true });
-      if (error) return { url: null, error: error.message };
-      // Supabase v2 returns data.signedUrl (camelCase)
-      var url = (data && (data.signedUrl || data.signedURL)) || null;
-      if (!url) return { url: null, error: 'No signed URL returned' };
-      return { url: url, error: null };
+
+      return { url: null, error: (error && error.message) || 'Could not generate download URL' };
     } catch (err) {
+      console.error('[AAAI Auth] getFileDownloadUrl exception:', err);
       return { url: null, error: err.message };
     }
   }

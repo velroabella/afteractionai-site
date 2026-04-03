@@ -404,58 +404,63 @@
     });
   }
 
+  /**
+   * Download the ORIGINAL file from Supabase Storage via signed URL.
+   * No blob fetch, no CORS — Supabase sets Content-Disposition: attachment
+   * so the browser downloads natively when we navigate to the URL.
+   */
   function handleDownload(doc, btn) {
     var meta = doc.metadata || {};
     var storagePath = meta.storagePath || null;
+    var fileName = doc.title || 'document';
 
-    // If the original file is in Supabase Storage, download that
-    if (storagePath && window.AAAI && AAAI.auth && AAAI.auth.getFileDownloadUrl) {
-      var origText = btn ? btn.textContent : '';
-      if (btn) { btn.textContent = 'Downloading...'; btn.disabled = true; }
-
-      AAAI.auth.getFileDownloadUrl(storagePath).then(function(result) {
-        if (!result || !result.url) {
-          console.warn('[Profile] signed URL failed:', result && result.error);
-          _downloadExtractedText(doc);
-          return;
-        }
-        // Fetch the file as a blob — a.download is IGNORED on cross-origin hrefs,
-        // so we must pull the bytes and create a same-origin object URL.
-        return fetch(result.url).then(function(resp) {
-          if (!resp.ok) throw new Error('Storage fetch failed: ' + resp.status);
-          return resp.blob();
-        }).then(function(blob) {
-          var fileName = doc.title || 'document';
-          // If the storagePath has an extension the title is missing, append it
-          var pathExt = storagePath.split('.').pop().toLowerCase();
-          var titleExt = fileName.split('.').pop().toLowerCase();
-          if (pathExt !== titleExt && ['pdf','doc','docx','txt','jpg','jpeg','png','gif'].indexOf(pathExt) !== -1) {
-            fileName = fileName + '.' + pathExt;
-          }
-          var blobUrl = (window.URL || window.webkitURL).createObjectURL(blob);
-          var a = document.createElement('a');
-          a.href = blobUrl;
-          a.download = fileName;
-          document.body.appendChild(a);
-          a.click();
-          setTimeout(function() {
-            document.body.removeChild(a);
-            (window.URL || window.webkitURL).revokeObjectURL(blobUrl);
-          }, 500);
-        });
-      }).catch(function(err) {
-        console.warn('[Profile] original file download failed, falling back to text:', err);
-        _downloadExtractedText(doc);
-      }).finally(function() {
-        if (btn) { btn.textContent = origText; btn.disabled = false; }
-      });
+    if (!storagePath) {
+      // Old upload (before storage was enabled) — no original file exists
+      console.warn('[Profile] No storagePath — this document was uploaded before file storage was enabled');
+      alert('Original file not available — this document was uploaded before file storage was enabled.\nUse "Copy Fields" to get the extracted data.');
       return;
     }
 
-    // Fallback: download extracted fields as .txt (for docs uploaded before storage was enabled)
-    _downloadExtractedText(doc);
+    if (!window.AAAI || !AAAI.auth || !AAAI.auth.getFileDownloadUrl) {
+      console.error('[Profile] getFileDownloadUrl not available on AAAI.auth');
+      alert('Download service unavailable. Please refresh and try again.');
+      return;
+    }
+
+    var origText = btn ? btn.textContent : '';
+    if (btn) { btn.textContent = 'Preparing...'; btn.disabled = true; }
+
+    console.log('[Profile] Requesting signed URL for:', storagePath, '| fileName:', fileName);
+
+    AAAI.auth.getFileDownloadUrl(storagePath, fileName).then(function(result) {
+      console.log('[Profile] getFileDownloadUrl result:', result);
+
+      if (!result || !result.url) {
+        throw new Error(result && result.error || 'No download URL returned');
+      }
+
+      // Navigate to the signed URL — Supabase returns Content-Disposition: attachment
+      // because we passed { download: fileName } in createSignedUrl.
+      // No fetch/blob/CORS needed. The browser handles the download natively.
+      var a = document.createElement('a');
+      a.href = result.url;
+      a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function() { document.body.removeChild(a); }, 1000);
+
+      if (btn) { btn.textContent = 'Downloaded!'; setTimeout(function() { btn.textContent = origText; btn.disabled = false; }, 2000); }
+    }).catch(function(err) {
+      console.error('[Profile] Download failed:', err);
+      if (btn) { btn.textContent = origText; btn.disabled = false; }
+      alert('Could not download the original file: ' + (err.message || err) + '\nUse "Copy Fields" to get the extracted data.');
+    });
   }
 
+  /**
+   * Download extracted fields as a plain-text .txt file.
+   * Separate action from original-file download — only used by the "Download Fields" button.
+   */
   function _downloadExtractedText(doc) {
     var text = '';
     var docType = (doc.metadata || {}).docType || 'document';
@@ -473,8 +478,9 @@
     var a = document.createElement('a');
     a.href = url;
     a.download = docType.replace(/\s+/g, '_') + '_' + (doc.title || 'document').replace(/\s+/g, '_') + '.txt';
+    document.body.appendChild(a);
     a.click();
-    setTimeout(function(){ (window.URL || window.webkitURL).revokeObjectURL(url); }, 1000);
+    setTimeout(function(){ document.body.removeChild(a); (window.URL || window.webkitURL).revokeObjectURL(url); }, 1000);
   }
 
   function renderUploadedDocs() {
@@ -507,8 +513,11 @@
           '<div class="upload-card__body">' +
             renderExtractedFields(doc.content) +
             '<div class="upload-card__actions">' +
+              (meta.storagePath
+                ? '<button class="upload-card__btn upload-card__btn--download">Download Original</button>'
+                : '') +
               '<button class="upload-card__btn upload-card__btn--copy">Copy Fields</button>' +
-              '<button class="upload-card__btn upload-card__btn--download">' + (meta.storagePath ? 'Download Original' : 'Download Fields') + '</button>' +
+              '<button class="upload-card__btn upload-card__btn--fields-dl">Download Fields</button>' +
             '</div>' +
           '</div>';
 
@@ -517,17 +526,25 @@
           card.classList.toggle('expanded');
         });
 
-        // Copy button
+        // Copy Fields button
         card.querySelector('.upload-card__btn--copy').addEventListener('click', function(e) {
           e.stopPropagation();
           handleCopy(doc.content, this);
         });
 
-        // Download button — downloads original file from storage, or extracted text as fallback
-        var dlBtn = card.querySelector('.upload-card__btn--download');
-        dlBtn.addEventListener('click', function(e) {
+        // Download Original button (only exists when storagePath is present)
+        var dlOrigBtn = card.querySelector('.upload-card__btn--download');
+        if (dlOrigBtn) {
+          dlOrigBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            handleDownload(doc, this);
+          });
+        }
+
+        // Download Fields button (always present)
+        card.querySelector('.upload-card__btn--fields-dl').addEventListener('click', function(e) {
           e.stopPropagation();
-          handleDownload(doc, this);
+          _downloadExtractedText(doc);
         });
 
         el.appendChild(card);
