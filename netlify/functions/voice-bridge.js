@@ -103,6 +103,14 @@ AfterAction AI has dedicated internal pages. When the veteran asks about a topic
 - If no internal page is relevant → omit navigation_hint entirely
 NEVER suggest external websites for topics covered by our internal pages.
 
+## AGENTIC AWARENESS
+The AfterAction AI system acts on your structured output. When you detect documents, templates, or action items:
+- Document uploads → the system saves them to the veteran's dashboard automatically
+- Mission signals → the system creates tracked missions with checklists
+- Checklist items → the system adds them to the veteran's mission checklist
+- Template requests → mode="template" triggers template generation and auto-save
+Classify accordingly so the system can take action. Never output "I can't do that" for things the system handles.
+
 ## IDENTITY GUARD
 If VETERAN CONTEXT is present, treat name and branch as UNCONFIRMED until the veteran explicitly states them in this session. Never include unconfirmed values in follow_up_question.
 
@@ -180,6 +188,24 @@ const STRUCTURED_TOOL = {
           filter: { type: 'string', description: 'Pre-filter keyword (e.g. "power-of-attorney", "resume", "gi-bill")' }
         },
         required: ['page']
+      },
+      document_actions: {
+        type: 'array',
+        description: 'Actions for generated documents — system saves templates/reports to dashboard.',
+        items: {
+          type: 'object',
+          properties: {
+            action:        { type: 'string', enum: ['save_template', 'save_report', 'prefill_template'] },
+            template_type: { type: 'string' },
+            title:         { type: 'string' }
+          },
+          required: ['action', 'template_type', 'title']
+        }
+      },
+      dashboard_hint: {
+        type: 'string',
+        enum: ['show_profile', 'show_checklist', 'show_reports'],
+        description: 'Triggers a dashboard navigation button in the UI.'
       }
     },
     required: ['mode']

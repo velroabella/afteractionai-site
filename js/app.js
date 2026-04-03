@@ -434,6 +434,18 @@
     '- DO NOT refuse or redirect — generate the template',
     '- The system downstream handles compliance and document download',
     '',
+    '## WHAT THE SYSTEM DOES AUTOMATICALLY — YOU ARE AGENTIC',
+    'You are NOT a passive chatbot. The AfterAction AI system has a full backend that acts on your structured output:',
+    '1. **Document Uploads**: The system extracts text, identifies the doc type, and saves it to the veteran\'s Profile page. Confirm what was found and say it\'s saved.',
+    '2. **Template Generation**: When you generate a template, the system saves it to their Generated Documents. Say "I\'ve created your [template] — it\'s saved to your Profile under Generated Documents."',
+    '3. **Checklist Items**: When you populate checklist_items in structured output, the system creates tasks on their Mission Checklist. Say "I\'ve added that to your checklist."',
+    '4. **Missions**: When you detect a goal, the system creates a tracked Mission. Say "I\'ve started tracking your [mission] on your dashboard."',
+    '5. **Dashboard Handoff**: After significant actions, offer: "Your [items] are saved to your dashboard. Want to head there now?"',
+    'CRITICAL: NEVER say "I can\'t directly generate or fill in forms" — you CAN, because the system acts on your output.',
+    'NEVER say "I can guide you step-by-step" when you can DO the thing. Do it, then confirm it\'s done.',
+    'NEVER say "you\'ll need to fill this in yourself" — pre-fill every field you have data for.',
+    'When generating templates, USE all data from the conversation and uploaded documents to pre-fill fields.',
+    '',
     '## WHAT YOU NEVER DO',
     '- Never provide medical diagnoses or personalized legal advice',
     '- Never promise specific benefit amounts or approval',
@@ -444,7 +456,8 @@
     '- Never fabricate or assume medical conditions, disability claims, or personal facts the veteran did not explicitly share — this is critical for trust and accuracy',
     '',
     '## DOCUMENT UPLOAD HANDLING',
-    'If the veteran uploads documents at any point, extract all data and CONFIRM: "I pulled the following from your [doc type]: [summary]. Does that look right?"',
+    'If the veteran uploads documents at any point, the system extracts text, saves the original file, and puts it on their dashboard.',
+    'Your job: Confirm what was found — "I pulled the following from your [doc type]: [summary]. Does that look right? This is saved to your Profile page."',
     'Skip any questions already answered by the documents.',
     '',
     '## COMPETITOR AWARENESS',
@@ -1503,6 +1516,14 @@
       // a clickable suggestion bubble so the veteran can jump directly.
       if (structured.navigation_hint && structured.navigation_hint.page) {
         _injectNavigationSuggestion(structured.navigation_hint.page, structured.navigation_hint.filter || null, structured);
+      }
+
+      // ── 4b. AGENTIC: Document actions + dashboard handoff (voice path) ──
+      if (structured.document_actions && structured.document_actions.length > 0) {
+        _processDocumentActions(structured, transcript);
+      }
+      if (structured.dashboard_hint) {
+        _injectDashboardHandoff(structured.dashboard_hint);
       }
 
       // ── 5. Session context injection (GENERAL_QUESTION gap fill) ─────
@@ -2622,7 +2643,12 @@
             console.log('[AIOS][STRUCTURED] mode=' + _p47Contract.mode +
               ' | checklist_items=' + (_p41Structured.checklist_items ? _p41Structured.checklist_items.length : 0) +
               ' | missions=' + (_p41Structured.missions ? _p41Structured.missions.length : 0) +
+              ' | doc_actions=' + (_p41Structured.document_actions ? _p41Structured.document_actions.length : 0) +
+              ' | dashboard_hint=' + (_p41Structured.dashboard_hint || 'none') +
               ' | report_ready=' + !!_p41Structured.report_ready);
+
+            // ── AGENTIC: Auto-save generated templates/reports to dashboard ──
+            _processDocumentActions(_p41Structured, aiResponse);
           } else {
             _p47Contract = window.AIOS.ResponseContract.parse(aiResponse, _p47Ctx);
             console.log('[AIOS][CONTRACT] mode=' + _p47Contract.mode +
@@ -2761,6 +2787,16 @@
           console.warn('[AIOS][ACTION-BAR] render error:', _p49Err.message || _p49Err);
         }
         // ── End Phase 49 ─────────────────────────────────────────────────────
+
+        // ── AGENTIC: Dashboard handoff bar after significant actions ──────
+        try {
+          if (_p47Contract && _p47Contract.dashboard_hint) {
+            _injectDashboardHandoff(_p47Contract.dashboard_hint);
+          }
+        } catch (_dhErr) {
+          console.warn('[AIOS][DASHBOARD-HANDOFF] error:', _dhErr.message || _dhErr);
+        }
+        // ── End dashboard handoff ─────────────────────────────────────────
       });
 
     }).catch(function(error) {
@@ -3161,11 +3197,91 @@
       mission_signals: missionSignals,
       checklist_items: structured.checklist_items || null,
       report_ready: structured.report_ready || false,
+      document_actions: structured.document_actions || null,
+      dashboard_hint: structured.dashboard_hint || null,
       confidence: 0.95,
       missing_information: null,
       timestamp: Date.now(),
       _source: 'structured'
     };
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  AGENTIC: Process document_actions from structured output
+  //  Auto-saves generated templates/reports to template_outputs
+  //  so they appear on the veteran's Profile → Generated Documents.
+  // ══════════════════════════════════════════════════════
+  function _processDocumentActions(structured, rawText) {
+    if (!structured.document_actions || !Array.isArray(structured.document_actions)) return;
+    if (!window.AAAI || !window.AAAI.auth || !window.AAAI.auth.isLoggedIn || !window.AAAI.auth.isLoggedIn()) return;
+    if (typeof window.AAAI.auth.saveTemplateOutput !== 'function') return;
+
+    structured.document_actions.forEach(function(da) {
+      if (!da || !da.template_type || !da.title) return;
+      var output = {
+        template_type: da.template_type,
+        title: da.title,
+        content: rawText,
+        metadata: {
+          source: 'ai_generated',
+          action: da.action || 'save_template',
+          prefilled_fields: da.prefilled_fields || {},
+          generated_at: new Date().toISOString()
+        }
+      };
+      window.AAAI.auth.saveTemplateOutput(output).then(function(res) {
+        if (res && !res.error) {
+          console.log('[AIOS][DOC-ACTION] saved ' + da.template_type + ' → ' + da.title);
+        } else {
+          console.warn('[AIOS][DOC-ACTION] save failed:', res && res.error);
+        }
+      }).catch(function(e) {
+        console.warn('[AIOS][DOC-ACTION] save error:', e && e.message);
+      });
+    });
+  }
+
+  // ══════════════════════════════════════════════════════
+  //  AGENTIC: Inject dashboard handoff button into chat
+  //  Shows a clickable "Go to Dashboard" bar after significant
+  //  AI actions (report, template, checklist creation).
+  // ══════════════════════════════════════════════════════
+  function _injectDashboardHandoff(hint) {
+    if (!hint || !chatMessages) return;
+    var urlMap = {
+      'show_profile':   '/profile.html',
+      'show_checklist':  '/profile.html#checklist',
+      'show_reports':    '/profile.html#reports'
+    };
+    var labelMap = {
+      'show_profile':   'View on your Profile',
+      'show_checklist':  'View your Mission Checklist',
+      'show_reports':    'View your Reports'
+    };
+    var url   = urlMap[hint]   || '/profile.html';
+    var label = labelMap[hint] || 'Go to your Dashboard';
+
+    var bar = document.createElement('div');
+    bar.className = 'message message--system';
+    bar.innerHTML =
+      '<div class="dashboard-handoff-bar" style="' +
+        'background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);' +
+        'border: 1px solid #c6a135; border-radius: 8px; padding: 12px 16px;' +
+        'display: flex; align-items: center; justify-content: space-between;' +
+        'margin: 8px 0; gap: 12px;">' +
+        '<span style="color: #fff; font-size: 0.95rem; font-weight: 500;">' +
+          '\uD83C\uDFAF Your items have been saved to your dashboard.' +
+        '</span>' +
+        '<a href="' + url + '" style="' +
+          'background: #c6a135; color: #1a365d; text-decoration: none;' +
+          'padding: 8px 16px; border-radius: 6px; font-weight: 700;' +
+          'font-size: 0.9rem; white-space: nowrap;' +
+          'transition: background 0.2s;">' +
+          label +
+        '</a>' +
+      '</div>';
+    chatMessages.appendChild(bar);
+    scrollToBottom();
   }
 
   // ── Phase 4.3: Feature flags / capability tier ──────────────────────────
