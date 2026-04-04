@@ -2178,6 +2178,16 @@
             ' | report_ready=' + !!data.structured.report_ready);
 
           // ── AGENTIC: Save document actions from voice-structured path ──
+          // Synthesize document_actions if report_ready but AI forgot
+          if (data.structured.report_ready &&
+              (!data.structured.document_actions || data.structured.document_actions.length === 0)) {
+            data.structured.document_actions = [{
+              action: 'save_report',
+              template_type: 'benefits_report',
+              title: 'Voice Session Benefits Report'
+            }];
+            console.log('[AIOS][VOICE-STRUCTURED] synthesized document_actions for report_ready');
+          }
           _processDocumentActions(data.structured, _aiText);
 
           // ── AGENTIC: Persist checklist items from voice-structured path ──
@@ -2210,8 +2220,15 @@
           }
 
           // ── AGENTIC: Dashboard handoff from voice-structured path ──
+          // Always inject handoff when significant actions happened
           if (data.structured.dashboard_hint) {
             _injectDashboardHandoff(data.structured.dashboard_hint);
+          } else if (data.structured.report_ready) {
+            _injectDashboardHandoff('show_reports');
+          } else if (data.structured.document_actions && data.structured.document_actions.length > 0) {
+            _injectDashboardHandoff('show_profile');
+          } else if (data.structured.checklist_items && data.structured.checklist_items.length > 0) {
+            _injectDashboardHandoff('show_checklist');
           }
 
           // Re-render ActionBar with upgraded structured contract
@@ -2857,6 +2874,16 @@
               ' | report_ready=' + !!_p41Structured.report_ready);
 
             // ── AGENTIC: Auto-save generated templates/reports to dashboard ──
+            // If report_ready=true but AI forgot document_actions, synthesize one
+            if (_p41Structured.report_ready &&
+                (!_p41Structured.document_actions || _p41Structured.document_actions.length === 0)) {
+              _p41Structured.document_actions = [{
+                action: 'save_report',
+                template_type: 'benefits_report',
+                title: 'Personalized Benefits Report'
+              }];
+              console.log('[AIOS][STRUCTURED] synthesized document_actions for report_ready');
+            }
             _processDocumentActions(_p41Structured, aiResponse);
 
             // ── AGENTIC: Persist checklist items from structured output ──
@@ -3019,14 +3046,18 @@
 
         // ── AGENTIC: Dashboard handoff bar after significant actions ──────
         try {
-          // Explicit dashboard_hint from structured output
-          if (_p47Contract && _p47Contract.dashboard_hint) {
-            _injectDashboardHandoff(_p47Contract.dashboard_hint);
+          var _contractHint = (_p47Contract && _p47Contract.dashboard_hint) ? _p47Contract.dashboard_hint : null;
+          var _structuredHint = (_p41Structured && _p41Structured.dashboard_hint) ? _p41Structured.dashboard_hint : null;
+          // Explicit dashboard_hint from structured output or contract
+          if (_contractHint) {
+            _injectDashboardHandoff(_contractHint);
+          } else if (_structuredHint) {
+            _injectDashboardHandoff(_structuredHint);
           }
           // Fallback: auto-inject dashboard link when report is ready,
           // checklist items were created, or document_actions fired —
           // even if the AI forgot to set dashboard_hint
-          else if (_p41Structured && !_p47Contract.dashboard_hint) {
+          else if (_p41Structured) {
             if (_p41Structured.report_ready) {
               _injectDashboardHandoff('show_reports');
             } else if (_p41Structured.document_actions && _p41Structured.document_actions.length > 0) {
@@ -3456,9 +3487,19 @@
   //  so they appear on the veteran's Profile → Generated Documents.
   // ══════════════════════════════════════════════════════
   function _processDocumentActions(structured, rawText) {
-    if (!structured.document_actions || !Array.isArray(structured.document_actions)) return;
-    if (!window.AAAI || !window.AAAI.auth || !window.AAAI.auth.isLoggedIn || !window.AAAI.auth.isLoggedIn()) return;
-    if (typeof window.AAAI.auth.saveTemplateOutput !== 'function') return;
+    if (!structured.document_actions || !Array.isArray(structured.document_actions)) {
+      console.log('[AIOS][DOC-ACTION] skipped — no document_actions array');
+      return;
+    }
+    if (!window.AAAI || !window.AAAI.auth || !window.AAAI.auth.isLoggedIn || !window.AAAI.auth.isLoggedIn()) {
+      console.warn('[AIOS][DOC-ACTION] skipped — user not logged in. ' + structured.document_actions.length + ' actions lost.');
+      return;
+    }
+    if (typeof window.AAAI.auth.saveTemplateOutput !== 'function') {
+      console.warn('[AIOS][DOC-ACTION] skipped — saveTemplateOutput not available');
+      return;
+    }
+    console.log('[AIOS][DOC-ACTION] processing ' + structured.document_actions.length + ' actions, rawText=' + rawText.length + ' chars');
 
     structured.document_actions.forEach(function(da) {
       if (!da || !da.template_type || !da.title) return;
@@ -3491,7 +3532,11 @@
   //  AI actions (report, template, checklist creation).
   // ══════════════════════════════════════════════════════
   function _injectDashboardHandoff(hint) {
-    if (!hint || !chatMessages) return;
+    if (!hint || !chatMessages) {
+      console.log('[AIOS][DASHBOARD-HANDOFF] skipped — hint=' + hint + ' chatMessages=' + !!chatMessages);
+      return;
+    }
+    console.log('[AIOS][DASHBOARD-HANDOFF] injecting: ' + hint);
     var urlMap = {
       'show_profile':   '/profile.html',
       'show_checklist':  '/profile.html#checklist',

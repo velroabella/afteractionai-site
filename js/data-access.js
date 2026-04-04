@@ -86,7 +86,14 @@
     create: function(fields) {
       var db = getClient();
       if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      // Resolve authenticated user_id — required by RLS and NOT NULL constraint
+      var userId = null;
+      if (window.AAAI && window.AAAI.auth && typeof window.AAAI.auth.getUserId === 'function') {
+        userId = window.AAAI.auth.getUserId();
+      }
+      if (!userId) return Promise.resolve({ data: null, error: 'Not logged in — case not created' });
       var row = {
+        user_id: userId,
         title:  fields.title  || 'My Case',
         status: fields.status || 'active',
         notes:  fields.notes  || null
