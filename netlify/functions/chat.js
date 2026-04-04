@@ -476,6 +476,15 @@ exports.handler = async (event) => {
       aiResponse = data.content[0].text;
     }
 
+    // Fix: When tool_choice:'any' produces only tool_use blocks (no text block),
+    // aiResponse is empty. Synthesize visible text from structured fields so the
+    // frontend always has something to display in the chat bubble.
+    if (!aiResponse && structuredOutput) {
+      if (structuredOutput.follow_up_question) {
+        aiResponse = structuredOutput.follow_up_question;
+      }
+    }
+
     return {
       statusCode: 200,
       headers: HEADERS,
