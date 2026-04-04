@@ -2447,100 +2447,48 @@
       // ResponseContract gets the same routing context as text mode.
       _voiceIntelligencePipeline(fullText, _lastVoiceText);
 
-      // ── VOICE PARITY: Synchronous save + dashboard handoff ─────────
-      // The async classification path (inside _voiceIntelligencePipeline)
-      // takes up to 45s and frequently returns no document_actions.
-      // This block fires immediately — same logic as the text path stream callback.
+      // ── Phase 44 — VOICE → DOCUMENT ROUTING ─────────────────────────
+      // Voice is intake only. When the user requests a document, route to
+      // the proven template engine or text pipeline. Never save raw voice
+      // transcript as document content.
       try {
-        var _vAiSavedPhrase = /\b(saved to your (dashboard|profile)|on your (dashboard|profile)|available on your (dashboard|profile)|head over to (your )?(dashboard|profile)|view (it |them )?on your (dashboard|profile)|download it from (your )?(dashboard|profile)|added (it |them )?to your (dashboard|profile)|it(?:'s| is) (saved|ready) on your (dashboard|profile))\b/i.test(fullText);
-        // Force save if voice AI produced long substantive content
-        // (voice AI doesn't use markdown headings — use word count instead of isReportResponse)
-        var _vWordCount = fullText.trim().split(/\s+/).length;
-        var _vHasReportKeywords = /\b(benefit|disability|rating|eligibility|va |gi bill|housing|education|career|health|service|connected|compensation|pension|appeal|claim)\b/i.test(fullText);
-        var _vIsSubstantiveResponse = _vWordCount >= 80 && _vHasReportKeywords;
+        var _vrUserText = _lastVoiceText || '';
+        var _vrIsGenRequest = /\b(generate|create|draft|write|prepare|make me|build me|give me|produce|start)\b.{0,80}\b(resume|cv|will|testament|power of attorney|poa|report|plan|letter|template|document|summary|audit|nexus|personal statement|action plan|claim|transition|financial|business|budget|linkedin|interview|checklist)\b/i.test(_vrUserText);
 
-        if (_vIsSubstantiveResponse && !reportGenerated) {
-          // Synthesize and fire save for long substantive voice responses
-          // Content type detection based on keywords in spoken response
-          var _vSlug = 'benefits_report';
-          var _vTitle = 'Voice Session Benefits Report';
-          if (/power of attorney/i.test(fullText))        { _vSlug = 'power_of_attorney';    _vTitle = 'Power of Attorney'; }
-          else if (/living will|advance directive/i.test(fullText)) { _vSlug = 'living_will'; _vTitle = 'Living Will'; }
-          else if (/resume/i.test(fullText))              { _vSlug = 'resume';               _vTitle = 'Resume'; }
-          else if (/nexus letter/i.test(fullText))        { _vSlug = 'nexus_letter';         _vTitle = 'Nexus Letter'; }
-          else if (/action plan|next steps/i.test(fullText)) { _vSlug = 'action_plan';       _vTitle = 'Action Plan'; }
-          var _vSynthAction = { document_actions: [{ action: 'save_template', template_type: _vSlug, title: _vTitle }] };
-          _processDocumentActions(_vSynthAction, fullText);
-          console.log('[VOICE-PARITY] synthesized save for substantive voice response → ' + _vSlug);
-        }
+        if (_vrIsGenRequest) {
+          // Try template engine first (resume, will, poa, va_claim, transition, etc.)
+          var _vrTemplateId = (window.AAAI && window.AAAI.templates && typeof window.AAAI.templates.detectForTask === 'function')
+            ? window.AAAI.templates.detectForTask(_vrUserText)
+            : null;
 
-        // Dashboard handoff button — fires when AI verbally confirms a save,
-        // or when a long substantive response was produced
-        if (!reportGenerated && (_vAiSavedPhrase || _vIsSubstantiveResponse)) {
-          var _vHint = _vIsSubstantiveResponse ? 'show_reports' : 'show_profile';
-          _injectDashboardHandoff(_vHint);
-          console.log('[VOICE-PARITY] dashboard handoff injected — hint=' + _vHint);
-        }
-      } catch (_vpErr) {
-        console.warn('[VOICE-PARITY] error:', _vpErr.message || _vpErr);
-      }
-      // ── End voice parity ──────────────────────────────────────────────
-
-      // ── Phase 43 — VOICE ACKNOWLEDGMENT DETECTION + AUTO PUSH-BACK ──────────────
-      // If the voice AI gave a prep/acknowledgment turn instead of generating content,
-      // automatically push a follow-up instruction into the voice session to force
-      // immediate generation in the next turn.
-      (function() {
-        // Gate 1: User's last voice message must contain a generation request
-        var _genRequestPatterns = /\b(generate|create|draft|write|prepare|make me|build me|give me|produce)\b.{0,60}\b(resume|cv|will|testament|report|plan|letter|template|document|summary|audit|checklist|nexus|buddy statement|personal statement|action plan)\b/i;
-        var _userWantedGeneration = _lastVoiceText && _genRequestPatterns.test(_lastVoiceText);
-        if (!_userWantedGeneration) return; // User didn't ask for generation — nothing to do
-
-        // Gate 2: AI response must match future-tense / acknowledgment-only patterns
-        var _prepTurnPatterns = /\b(i'?ll\s+(draft|generate|create|write|prepare|pull|put\s+that|get\s+that|start|work\s+on)|once\s+(both|all|it'?s|they'?re)\s+(are\s+)?(ready|done|complete)|give\s+me\s+a\s+moment|working\s+on\s+(that|it|those)|i'?ll\s+have\s+(that|those|it)|let\s+me\s+(pull|draft|prepare|gather|compile))\b/i;
-        var _isAckTurn = _prepTurnPatterns.test(fullText);
-        if (!_isAckTurn) return; // Not an acknowledgment turn — either real content or unrelated
-
-        // Gate 3: Response must be short (acknowledgment turns are brief; real generation is long)
-        var _ackWordCount = fullText.trim().split(/\s+/).length;
-        if (_ackWordCount > 120) return; // Long response = real generation, not an ack — leave it alone
-
-        // Gate 4: Don't push back if we already pushed back for this same user request
-        // (prevents infinite loop if model keeps ack-ing)
-        if (window._aaai_lastPushbackText && window._aaai_lastPushbackText === _lastVoiceText) {
-          console.warn('[AAAI voice-ack-guard] Already pushed back for this request — skipping to prevent loop');
+          if (_vrTemplateId && window.AAAI && window.AAAI.templates && typeof window.AAAI.templates.launch === 'function') {
+            console.log('[VOICE-ROUTING] generation request → template engine:', _vrTemplateId);
+            addMessage('Routing you to the ' + _vrTemplateId.replace(/_/g, ' ') + ' builder — I\'ll ask a few quick questions to personalize it for you.', 'ai');
+            setTimeout(function() {
+              window.AAAI.templates.launch(_vrTemplateId, null, null);
+            }, 600);
+          } else {
+            // No template match — route to text pipeline (benefits report, audit, etc.)
+            console.log('[VOICE-ROUTING] generation request → text pipeline (no template match)');
+            var _vrTextPrompt = 'The veteran just asked via voice: "' + _vrUserText + '". Generate the requested document now in full using all context from our conversation. Use proper headings and formatting.';
+            if (typeof endVoiceSession === 'function') endVoiceSession();
+            setTimeout(function() { sendToAI(_vrTextPrompt); }, 800);
+          }
+          // Do NOT save raw transcript — exit early
           return;
         }
-        window._aaai_lastPushbackText = _lastVoiceText;
 
-        // All gates passed — build push-back instruction
-        // Extract what was requested from user's transcript for a targeted push
-        var _requestedItems = [];
-        if (/\bresume\b|\bcv\b/i.test(_lastVoiceText)) _requestedItems.push('resume');
-        if (/\bwill\b|\btestament\b/i.test(_lastVoiceText)) _requestedItems.push('will');
-        if (/\breport\b|\baudit\b/i.test(_lastVoiceText)) _requestedItems.push('benefits report');
-        if (/\bnexus\b/i.test(_lastVoiceText)) _requestedItems.push('nexus letter');
-        if (/\baction plan\b|\bchecklist\b/i.test(_lastVoiceText)) _requestedItems.push('action plan');
-        if (/\bletter\b/i.test(_lastVoiceText) && !/nexus/i.test(_lastVoiceText)) _requestedItems.push('letter');
-        if (_requestedItems.length === 0) _requestedItems.push('the requested document');
-
-        var _itemList = _requestedItems.join(' and ');
-        var _pushText = 'Generate the ' + _itemList + ' now. Deliver the complete content in full — do not wait, do not summarize, do not say you will do it later. Start immediately with the first word of the actual document. The veteran is listening now.';
-
-        console.log('[AAAI voice-ack-guard] Acknowledgment turn detected. Pushing back to force generation. Items:', _itemList);
-        console.log('[AAAI voice-ack-guard] Push instruction:', _pushText);
-
-        // 3000ms delay — enough for brief ack audio to finish before pushing
-        setTimeout(function() {
-          if (RealtimeVoice && typeof RealtimeVoice.sendText === 'function') {
-            RealtimeVoice.sendText(_pushText);
-            console.log('[AAAI voice-ack-guard] sendText() fired successfully');
-          } else {
-            console.error('[AAAI voice-ack-guard] RealtimeVoice.sendText not available — cannot push back');
-          }
-        }, 3000);
-      })();
-      // ── END Phase 43 ─────────────────────────────────────────────────────────────
+        // Non-generation response: only inject dashboard handoff if AI verbally
+        // confirmed a save in past tense. Never save raw transcript as document.
+        var _vAiSavedPhrase = /\b(saved to your (dashboard|profile)|on your (dashboard|profile)|available on your (dashboard|profile)|head over to (your )?(dashboard|profile)|view (it |them )?on your (dashboard|profile)|download it from (your )?(dashboard|profile)|added (it |them )?to your (dashboard|profile)|it(?:'s| is) (saved|ready) on your (dashboard|profile))\b/i.test(fullText);
+        if (!reportGenerated && _vAiSavedPhrase) {
+          _injectDashboardHandoff('show_profile');
+          console.log('[VOICE-ROUTING] non-generation: dashboard handoff on save-phrase');
+        }
+      } catch (_vrErr) {
+        console.warn('[VOICE-ROUTING] error:', _vrErr.message || _vrErr);
+      }
+      // ── End Phase 44 ─────────────────────────────────────────────────
     };
 
     RealtimeVoice.onError = function(error) {
@@ -3784,6 +3732,10 @@
     chatMessages.appendChild(bar);
     scrollToBottom();
   }
+
+  // Expose _injectDashboardHandoff for cross-module use (template-engine.js)
+  if (!window.AAAI) window.AAAI = {};
+  window.AAAI.injectDashboardHandoff = _injectDashboardHandoff;
 
   // ── Phase 4.3: Feature flags / capability tier ──────────────────────────
   (function() {

@@ -1114,8 +1114,15 @@ STEP 3 — SIGNAL COMPLETION:
       }
     }
 
-    // Save output to Supabase
-    saveTemplateOutput();
+    // Save output to Supabase, then inject dashboard handoff in chat
+    saveTemplateOutput().then(function() {
+      if (window.AAAI && typeof window.AAAI.injectDashboardHandoff === 'function') {
+        window.AAAI.injectDashboardHandoff('show_profile');
+        console.log('[TEMPLATE-ENGINE] document saved — dashboard handoff injected');
+      }
+    }).catch(function(e) {
+      console.warn('[TEMPLATE-ENGINE] saveTemplateOutput failed:', e && e.message);
+    });
 
     // Mark checklist item as in-progress
     markChecklistItemProgress();
