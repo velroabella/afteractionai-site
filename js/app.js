@@ -2874,15 +2874,66 @@
               ' | report_ready=' + !!_p41Structured.report_ready);
 
             // ── AGENTIC: Auto-save generated templates/reports to dashboard ──
-            // If report_ready=true but AI forgot document_actions, synthesize one
-            if (_p41Structured.report_ready &&
-                (!_p41Structured.document_actions || _p41Structured.document_actions.length === 0)) {
-              _p41Structured.document_actions = [{
-                action: 'save_report',
-                template_type: 'benefits_report',
-                title: 'Personalized Benefits Report'
-              }];
-              console.log('[AIOS][STRUCTURED] synthesized document_actions for report_ready');
+            // Synthesize document_actions when AI omitted them.
+            // Covers: report_ready, mode=report, mode=template, and hard structural fallback.
+            if (!_p41Structured.document_actions || _p41Structured.document_actions.length === 0) {
+
+              // Case A: AI signalled report_ready or mode=report
+              if (_p41Structured.report_ready || _p41Structured.mode === 'report') {
+                _p41Structured.document_actions = [{
+                  action: 'save_report',
+                  template_type: 'benefits_report',
+                  title: 'Personalized Benefits Report'
+                }];
+                console.log('[AIOS][STRUCTURED] synthesized document_actions — report_ready/mode=report');
+
+              // Case B: AI signalled mode=template with real content
+              } else if (_p41Structured.mode === 'template' && aiResponse.length > 400) {
+                var _tSlug = 'document';
+                var _tTitle = 'Generated Document';
+                if (/power of attorney/i.test(aiResponse))        { _tSlug = 'power_of_attorney';    _tTitle = 'Power of Attorney'; }
+                else if (/living will|advance directive/i.test(aiResponse)) { _tSlug = 'living_will'; _tTitle = 'Living Will / Advance Directive'; }
+                else if (/federal resume|usajobs/i.test(aiResponse)) { _tSlug = 'federal_resume';    _tTitle = 'Federal Resume (USAJobs)'; }
+                else if (/resume builder|resume/i.test(aiResponse)) { _tSlug = 'resume';             _tTitle = 'Resume'; }
+                else if (/nexus letter/i.test(aiResponse))          { _tSlug = 'nexus_letter';       _tTitle = 'Nexus Letter'; }
+                else if (/appeal letter/i.test(aiResponse))         { _tSlug = 'va_appeal';          _tTitle = 'VA Appeal Letter'; }
+                else if (/personal statement/i.test(aiResponse))    { _tSlug = 'personal_statement'; _tTitle = 'VA Personal Statement'; }
+                else if (/hipaa/i.test(aiResponse))                 { _tSlug = 'hipaa_auth';         _tTitle = 'HIPAA Authorization'; }
+                else if (/hardship letter/i.test(aiResponse))       { _tSlug = 'debt_hardship';      _tTitle = 'Debt Hardship Letter'; }
+                else if (/credit dispute/i.test(aiResponse))        { _tSlug = 'credit_dispute';     _tTitle = 'Credit Dispute Letter'; }
+                else if (/budget|financial recovery/i.test(aiResponse)) { _tSlug = 'budget_plan';   _tTitle = 'Financial Recovery Plan'; }
+                else if (/linkedin/i.test(aiResponse))              { _tSlug = 'linkedin_profile';   _tTitle = 'LinkedIn Profile'; }
+                else if (/salary negotiation/i.test(aiResponse))    { _tSlug = 'salary_negotiation'; _tTitle = 'Salary Negotiation Script'; }
+                else if (/interview prep|star method/i.test(aiResponse)) { _tSlug = 'interview_prep'; _tTitle = 'Interview Prep Script'; }
+                else if (/skills translator/i.test(aiResponse))     { _tSlug = 'skills_translator';  _tTitle = 'Military Skills Translator'; }
+                _p41Structured.document_actions = [{
+                  action: 'save_template',
+                  template_type: _tSlug,
+                  title: _tTitle
+                }];
+                console.log('[AIOS][STRUCTURED] synthesized document_actions — mode=template → ' + _tSlug);
+
+              // Case C: Hard structural fallback — response has real content (headings + length)
+              // but AI forgot both mode and document_actions. The system decides to save.
+              } else if (aiResponse.length > 500 && (aiResponse.match(/^#{1,3}\s+\S/gm) || []).length >= 2) {
+                var _fbSlug = 'document';
+                var _fbTitle = 'Generated Document';
+                if (_p41Structured.mode === 'report' || /personalized (plan|report|benefits)/i.test(aiResponse)) {
+                  _fbSlug = 'benefits_report'; _fbTitle = 'Personalized Benefits Report';
+                } else if (/power of attorney/i.test(aiResponse))   { _fbSlug = 'power_of_attorney';    _fbTitle = 'Power of Attorney'; }
+                else if (/living will/i.test(aiResponse))            { _fbSlug = 'living_will';          _fbTitle = 'Living Will'; }
+                else if (/resume/i.test(aiResponse))                 { _fbSlug = 'resume';               _fbTitle = 'Resume'; }
+                else if (/nexus letter/i.test(aiResponse))           { _fbSlug = 'nexus_letter';         _fbTitle = 'Nexus Letter'; }
+                else if (/appeal letter/i.test(aiResponse))          { _fbSlug = 'va_appeal';            _fbTitle = 'VA Appeal Letter'; }
+                else if (/personal statement/i.test(aiResponse))     { _fbSlug = 'personal_statement';   _fbTitle = 'VA Personal Statement'; }
+                else if (/action plan|next steps/i.test(aiResponse)) { _fbSlug = 'action_plan';          _fbTitle = 'Action Plan'; }
+                _p41Structured.document_actions = [{
+                  action: 'save_template',
+                  template_type: _fbSlug,
+                  title: _fbTitle
+                }];
+                console.log('[AIOS][STRUCTURED] hard-fallback synthesized document_actions — ' + _fbSlug + ' (len=' + aiResponse.length + ', headings=' + (aiResponse.match(/^#{1,3}\s+\S/gm) || []).length + ')');
+              }
             }
             _processDocumentActions(_p41Structured, aiResponse);
 
@@ -3048,22 +3099,38 @@
         try {
           var _contractHint = (_p47Contract && _p47Contract.dashboard_hint) ? _p47Contract.dashboard_hint : null;
           var _structuredHint = (_p41Structured && _p41Structured.dashboard_hint) ? _p41Structured.dashboard_hint : null;
-          // Explicit dashboard_hint from structured output or contract
+          var _dashboardInjected = false;
+
+          // Priority 1: Explicit dashboard_hint from structured output or contract
           if (_contractHint) {
             _injectDashboardHandoff(_contractHint);
+            _dashboardInjected = true;
           } else if (_structuredHint) {
             _injectDashboardHandoff(_structuredHint);
+            _dashboardInjected = true;
           }
-          // Fallback: auto-inject dashboard link when report is ready,
-          // checklist items were created, or document_actions fired —
-          // even if the AI forgot to set dashboard_hint
+          // Priority 2: Structured signals without explicit hint
           else if (_p41Structured) {
             if (_p41Structured.report_ready) {
               _injectDashboardHandoff('show_reports');
+              _dashboardInjected = true;
             } else if (_p41Structured.document_actions && _p41Structured.document_actions.length > 0) {
               _injectDashboardHandoff('show_profile');
+              _dashboardInjected = true;
             } else if (_p41Structured.checklist_items && _p41Structured.checklist_items.length > 0) {
               _injectDashboardHandoff('show_checklist');
+              _dashboardInjected = true;
+            }
+          }
+
+          // Priority 3: Phrase-detection fallback — fires when Claude verbally said something
+          // is saved/ready but the structured output had no document_actions or dashboard_hint.
+          // This is the primary cause of the missing "Go to Dashboard" button.
+          if (!_dashboardInjected && !reportGenerated) {
+            var _aiSavedPhrase = /\b(saved to your (dashboard|profile)|on your (dashboard|profile)|available on your (dashboard|profile)|head over to (your )?(dashboard|profile)|view (it |them )?on your (dashboard|profile)|download it from (your )?(dashboard|profile)|added (it |them )?to your (dashboard|profile)|it(?:'s| is) (saved|ready) on your (dashboard|profile))\b/i.test(aiResponse);
+            if (_aiSavedPhrase) {
+              console.log('[AIOS][DASHBOARD-HANDOFF] phrase-detection fallback fired — AI verbally confirmed save');
+              _injectDashboardHandoff('show_profile');
             }
           }
         } catch (_dhErr) {
@@ -3495,6 +3562,29 @@
     }
     if (!window.AAAI || !window.AAAI.auth || !window.AAAI.auth.isLoggedIn || !window.AAAI.auth.isLoggedIn()) {
       console.warn('[AIOS][DOC-ACTION] skipped — user not logged in. ' + structured.document_actions.length + ' actions lost.');
+      // Inject a visible login bar so the user knows to sign in — do NOT silently drop
+      if (chatMessages) {
+        var _loginBar = document.createElement('div');
+        _loginBar.className = 'message message--system';
+        _loginBar.innerHTML =
+          '<div class="dashboard-handoff-bar" style="' +
+            'background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);' +
+            'border: 1px solid #c6a135; border-radius: 8px; padding: 12px 16px;' +
+            'display: flex; align-items: center; justify-content: space-between;' +
+            'margin: 8px 0; gap: 12px;">' +
+            '<span style="color: #fff; font-size: 0.95rem; font-weight: 500;">' +
+              '\uD83D\uDD12 Sign in to save your documents to your dashboard.' +
+            '</span>' +
+            '<button onclick="(function(){ if(window.AAAI && AAAI.auth && typeof AAAI.auth.showAuthModal===\'function\') AAAI.auth.showAuthModal(); })()" style="' +
+              'background: #c6a135; color: #1a365d; border: none;' +
+              'padding: 8px 16px; border-radius: 6px; font-weight: 700;' +
+              'font-size: 0.9rem; white-space: nowrap; cursor: pointer;">' +
+              'Sign In to Save' +
+            '</button>' +
+          '</div>';
+        chatMessages.appendChild(_loginBar);
+        scrollToBottom();
+      }
       return;
     }
     if (typeof window.AAAI.auth.saveTemplateOutput !== 'function') {
