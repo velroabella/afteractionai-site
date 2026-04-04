@@ -410,7 +410,7 @@ exports.handler = async (event) => {
       const errorText = await response.text();
       console.error('Anthropic API error:', response.status, errorText);
 
-      // If API error, fall back to mock
+      // Handle specific Anthropic API error codes with user-friendly messages
       if (response.status === 401 || response.status === 403) {
         return {
           statusCode: 200,
@@ -424,10 +424,34 @@ exports.handler = async (event) => {
         };
       }
 
+      // Detect billing/credit-balance errors (Anthropic returns 400 with specific message)
+      if (response.status === 400 && errorText.includes('credit balance')) {
+        return {
+          statusCode: 200,
+          headers: HEADERS,
+          body: JSON.stringify({
+            response: "AfterAction AI is temporarily offline while we refresh our service credits. This is a known issue and we're working on it. If you need immediate help, call the Veterans Crisis Line at 988 (Press 1), or visit VeteransCrisisLine.net.",
+            structured: null,
+            mock: true,
+            usage: { input_tokens: 0, output_tokens: 0 }
+          })
+        };
+      }
+
       return {
         statusCode: 502,
         headers: HEADERS,
-        body: JSON.stringify({ error: 'AI service temporarily unavailable. Please try again.' })
+        body: JSON.stringify({
+          error: 'AI service temporarily unavailable. Please try again.',
+          _debug: {
+            upstream_status: response.status,
+            upstream_error: errorText.substring(0, 500),
+            model: MODEL,
+            max_tokens: MAX_TOKENS,
+            system_len: systemPrompt.length,
+            msg_count: trimmedMessages.length
+          }
+        })
       };
     }
 
@@ -470,7 +494,10 @@ exports.handler = async (event) => {
     return {
       statusCode: 500,
       headers: HEADERS,
-      body: JSON.stringify({ error: 'Internal server error. If you need immediate help, call the Veterans Crisis Line at 988 (Press 1).' })
+      body: JSON.stringify({
+        error: 'Internal server error. If you need immediate help, call the Veterans Crisis Line at 988 (Press 1).',
+        _debug: { message: String(error.message || error).substring(0, 300) }
+      })
     };
   }
 };
