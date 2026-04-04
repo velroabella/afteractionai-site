@@ -2485,6 +2485,62 @@
         console.warn('[VOICE-PARITY] error:', _vpErr.message || _vpErr);
       }
       // ── End voice parity ──────────────────────────────────────────────
+
+      // ── Phase 43 — VOICE ACKNOWLEDGMENT DETECTION + AUTO PUSH-BACK ──────────────
+      // If the voice AI gave a prep/acknowledgment turn instead of generating content,
+      // automatically push a follow-up instruction into the voice session to force
+      // immediate generation in the next turn.
+      (function() {
+        // Gate 1: User's last voice message must contain a generation request
+        var _genRequestPatterns = /\b(generate|create|draft|write|prepare|make me|build me|give me|produce)\b.{0,60}\b(resume|cv|will|testament|report|plan|letter|template|document|summary|audit|checklist|nexus|buddy statement|personal statement|action plan)\b/i;
+        var _userWantedGeneration = _lastVoiceText && _genRequestPatterns.test(_lastVoiceText);
+        if (!_userWantedGeneration) return; // User didn't ask for generation — nothing to do
+
+        // Gate 2: AI response must match future-tense / acknowledgment-only patterns
+        var _prepTurnPatterns = /\b(i'?ll\s+(draft|generate|create|write|prepare|pull|put\s+that|get\s+that|start|work\s+on)|once\s+(both|all|it'?s|they'?re)\s+(are\s+)?(ready|done|complete)|give\s+me\s+a\s+moment|working\s+on\s+(that|it|those)|i'?ll\s+have\s+(that|those|it)|let\s+me\s+(pull|draft|prepare|gather|compile))\b/i;
+        var _isAckTurn = _prepTurnPatterns.test(fullText);
+        if (!_isAckTurn) return; // Not an acknowledgment turn — either real content or unrelated
+
+        // Gate 3: Response must be short (acknowledgment turns are brief; real generation is long)
+        var _ackWordCount = fullText.trim().split(/\s+/).length;
+        if (_ackWordCount > 120) return; // Long response = real generation, not an ack — leave it alone
+
+        // Gate 4: Don't push back if we already pushed back for this same user request
+        // (prevents infinite loop if model keeps ack-ing)
+        if (window._aaai_lastPushbackText && window._aaai_lastPushbackText === _lastVoiceText) {
+          console.warn('[AAAI voice-ack-guard] Already pushed back for this request — skipping to prevent loop');
+          return;
+        }
+        window._aaai_lastPushbackText = _lastVoiceText;
+
+        // All gates passed — build push-back instruction
+        // Extract what was requested from user's transcript for a targeted push
+        var _requestedItems = [];
+        if (/\bresume\b|\bcv\b/i.test(_lastVoiceText)) _requestedItems.push('resume');
+        if (/\bwill\b|\btestament\b/i.test(_lastVoiceText)) _requestedItems.push('will');
+        if (/\breport\b|\baudit\b/i.test(_lastVoiceText)) _requestedItems.push('benefits report');
+        if (/\bnexus\b/i.test(_lastVoiceText)) _requestedItems.push('nexus letter');
+        if (/\baction plan\b|\bchecklist\b/i.test(_lastVoiceText)) _requestedItems.push('action plan');
+        if (/\bletter\b/i.test(_lastVoiceText) && !/nexus/i.test(_lastVoiceText)) _requestedItems.push('letter');
+        if (_requestedItems.length === 0) _requestedItems.push('the requested document');
+
+        var _itemList = _requestedItems.join(' and ');
+        var _pushText = 'Generate the ' + _itemList + ' now. Deliver the complete content in full — do not wait, do not summarize, do not say you will do it later. Start immediately with the first word of the actual document. The veteran is listening now.';
+
+        console.log('[AAAI voice-ack-guard] Acknowledgment turn detected. Pushing back to force generation. Items:', _itemList);
+        console.log('[AAAI voice-ack-guard] Push instruction:', _pushText);
+
+        // 3000ms delay — enough for brief ack audio to finish before pushing
+        setTimeout(function() {
+          if (RealtimeVoice && typeof RealtimeVoice.sendText === 'function') {
+            RealtimeVoice.sendText(_pushText);
+            console.log('[AAAI voice-ack-guard] sendText() fired successfully');
+          } else {
+            console.error('[AAAI voice-ack-guard] RealtimeVoice.sendText not available — cannot push back');
+          }
+        }, 3000);
+      })();
+      // ── END Phase 43 ─────────────────────────────────────────────────────────────
     };
 
     RealtimeVoice.onError = function(error) {
