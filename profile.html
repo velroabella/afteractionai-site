@@ -608,6 +608,56 @@
     }).catch(function(err) { console.warn('[Profile] renderGeneratedDocs error:', err); });
   }
 
+  /* ── Render My Reports from template_outputs when ai_reports is empty ──
+     Bridges the split-table gap: saveTemplateOutput() writes to template_outputs,
+     but dashReportsList/dashReport read ai_reports (never written by chat).
+     This function reads template_outputs rows where template_type contains 'report'
+     and populates My Reports + Latest Report if they are still showing empty state.
+  ── */
+  function renderReportsFromTemplateOutputs() {
+    if (!window.AAAI || !AAAI.auth || !AAAI.auth.isLoggedIn || !AAAI.auth.isLoggedIn()) return;
+    var loadFn = AAAI.auth.loadGeneratedDocuments || AAAI.auth.loadTemplateOutputs;
+    if (typeof loadFn !== 'function') return;
+    loadFn().then(function(result) {
+      if (!result || !result.data || result.data.length === 0) return;
+      // Filter to benefit reports and action plans only
+      var reports = result.data.filter(function(o) {
+        return o.template_type && /benefit|report|action_plan/i.test(o.template_type) &&
+               o.template_type !== 'uploaded_document';
+      });
+      if (reports.length === 0) return;
+
+      // Only populate if dashReportsList is still showing the empty-state <p>
+      var listEl = document.getElementById('dashReportsList');
+      var reportEl = document.getElementById('dashReport');
+      if (listEl && listEl.querySelector('p')) {
+        listEl.innerHTML = reports.map(function(r) {
+          var date    = r.created_at ? new Date(r.created_at).toLocaleDateString() : '';
+          var typeLabel = (r.template_type || 'report').replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+          var snippet = r.content ? r.content.substring(0, 80).replace(/</g, '&lt;') : '';
+          return '<div class="dash-report-item">' +
+            '<span class="dash-report-date">' + date + '</span>' +
+            '<span class="dash-report-preview">' + typeLabel + (snippet ? ' — ' + snippet : '') + '</span>' +
+            '<a href="index.html" class="dash-report-link">Open →</a>' +
+          '</div>';
+        }).join('');
+      }
+      if (reportEl && reportEl.querySelector('p')) {
+        var latest  = reports[0];
+        var full    = latest.content || '';
+        var date    = latest.created_at ? new Date(latest.created_at).toLocaleDateString() : '';
+        reportEl.innerHTML =
+          '<p style="font-size:0.8rem;color:var(--gray-500);margin-bottom:8px;">Generated ' + date + '</p>' +
+          '<div style="font-size:0.85rem;color:var(--gray-700);line-height:1.6;max-height:200px;overflow-y:auto;">' +
+          full.substring(0, 300).replace(/</g, '&lt;') + (full.length > 300 ? '…' : '') +
+          '</div>' +
+          '<div style="margin-top:12px;">' +
+            '<a href="index.html" style="color:var(--gold);font-size:0.85rem;font-weight:600;">Continue Conversation →</a>' +
+          '</div>';
+      }
+    }).catch(function(err) { console.warn('[Profile] renderReportsFromTemplateOutputs error:', err); });
+  }
+
   /* ── Init both sections once auth is ready ────────── */
   var _retries = 0;
   var _intv = setInterval(function() {
@@ -617,6 +667,7 @@
       clearInterval(_intv);
       renderUploadedDocs();
       renderGeneratedDocs();
+      renderReportsFromTemplateOutputs();
     }
   }, 500);
 })();

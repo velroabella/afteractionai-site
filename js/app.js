@@ -2178,15 +2178,34 @@
             ' | report_ready=' + !!data.structured.report_ready);
 
           // ── AGENTIC: Save document actions from voice-structured path ──
-          // Synthesize document_actions if report_ready but AI forgot
-          if (data.structured.report_ready &&
-              (!data.structured.document_actions || data.structured.document_actions.length === 0)) {
-            data.structured.document_actions = [{
-              action: 'save_report',
-              template_type: 'benefits_report',
-              title: 'Voice Session Benefits Report'
-            }];
-            console.log('[AIOS][VOICE-STRUCTURED] synthesized document_actions for report_ready');
+          // Mirrors text-path Cases A, B, C synthesis — all three cases.
+          if (!data.structured.document_actions || data.structured.document_actions.length === 0) {
+            // Case A: report_ready or mode=report
+            if (data.structured.report_ready || data.structured.mode === 'report') {
+              data.structured.document_actions = [{
+                action: 'save_report',
+                template_type: 'benefits_report',
+                title: 'Voice Session Benefits Report'
+              }];
+              console.log('[AIOS][VOICE-STRUCTURED] synthesized document_actions — report_ready/mode=report');
+            // Case B: mode=template with real content
+            } else if (data.structured.mode === 'template' && _aiText.length > 200) {
+              var _vsSlug = 'document'; var _vsTitle = 'Generated Document';
+              if (/power of attorney/i.test(_aiText))    { _vsSlug = 'power_of_attorney';    _vsTitle = 'Power of Attorney'; }
+              else if (/living will/i.test(_aiText))      { _vsSlug = 'living_will';          _vsTitle = 'Living Will'; }
+              else if (/resume/i.test(_aiText))           { _vsSlug = 'resume';               _vsTitle = 'Resume'; }
+              else if (/nexus letter/i.test(_aiText))     { _vsSlug = 'nexus_letter';         _vsTitle = 'Nexus Letter'; }
+              else if (/appeal letter/i.test(_aiText))    { _vsSlug = 'va_appeal';            _vsTitle = 'VA Appeal Letter'; }
+              else if (/personal statement/i.test(_aiText)) { _vsSlug = 'personal_statement'; _vsTitle = 'VA Personal Statement'; }
+              else if (/action plan/i.test(_aiText))      { _vsSlug = 'action_plan';          _vsTitle = 'Action Plan'; }
+              data.structured.document_actions = [{ action: 'save_template', template_type: _vsSlug, title: _vsTitle }];
+              console.log('[AIOS][VOICE-STRUCTURED] synthesized document_actions — mode=template → ' + _vsSlug);
+            // Case C: long substantive response, no mode signal
+            } else if (_aiText.trim().split(/\s+/).length >= 80 &&
+                       /\b(benefit|disability|rating|eligibility|va |gi bill|housing|education|career|health|service|connected|compensation|pension|appeal|claim)\b/i.test(_aiText)) {
+              data.structured.document_actions = [{ action: 'save_template', template_type: 'benefits_report', title: 'Voice Session Benefits Report' }];
+              console.log('[AIOS][VOICE-STRUCTURED] hard-fallback synthesized document_actions for long voice response');
+            }
           }
           _processDocumentActions(data.structured, _aiText);
 
@@ -2341,7 +2360,13 @@
               /^(.)\1{3,}$/i.test(trimmed) ||
               /^(you|the|and|is|it|a|i|to|in|that|this|for|on|are|was|with|as|at|be|or|an|so|but|if|my|do|we|he|she|they)\s*[\.\!\?]?\s*$/i.test(trimmed) ||
               /^(music|laughter|applause|silence|background|noise|inaudible|♪|🎵)/i.test(trimmed) ||
-              /^thank(s|\s*you)\s*for\s*(watching|listening|subscribing)/i.test(trimmed)) {
+              /^thank(s|\s*you)\s*for\s*(watching|listening|subscribing)/i.test(trimmed) ||
+              // TV / ambient-audio rejection: common broadcast/media speech patterns
+              // that are never intentional veteran input
+              /^(and (now|today|tonight|here|next|we|coming|this|that)|coming up (next|after)|don'?t (miss|forget|go anywhere)|stay tuned|we'?ll be right back|after (the|this) break|brought to you by|this (program|show|episode|message)|next (on|up)|let'?s (take|go to|get back)|(right|back) after (this|these))\b/i.test(trimmed) ||
+              /^(in (tonight'?s?|today'?s?|this) (show|episode|report|news|program)|your (host|anchor|reporter)|joining us (now|tonight|today)|welcome (back|to the show)|thank(s| you) for (joining|tuning in|being here|watching)|we'?re (back|live|here) (with|on|at))\b/i.test(trimmed) ||
+              // Reject if speaker tag patterns appear (common in auto-captions / Whisper on TV)
+              /^\[?(speaker|host|anchor|reporter|narrator|announcer|man|woman|male|female|child|audience)\s*\d*\]?\s*:/i.test(trimmed)) {
             log('RT.onUserTranscript', 'REJECTED (filler/noise): "' + trimmed + '"');
             return;
           }
@@ -2421,6 +2446,45 @@
       // exists for ActionBar.render(). Passes _lastVoiceText so
       // ResponseContract gets the same routing context as text mode.
       _voiceIntelligencePipeline(fullText, _lastVoiceText);
+
+      // ── VOICE PARITY: Synchronous save + dashboard handoff ─────────
+      // The async classification path (inside _voiceIntelligencePipeline)
+      // takes up to 45s and frequently returns no document_actions.
+      // This block fires immediately — same logic as the text path stream callback.
+      try {
+        var _vAiSavedPhrase = /\b(saved to your (dashboard|profile)|on your (dashboard|profile)|available on your (dashboard|profile)|head over to (your )?(dashboard|profile)|view (it |them )?on your (dashboard|profile)|download it from (your )?(dashboard|profile)|added (it |them )?to your (dashboard|profile)|it(?:'s| is) (saved|ready) on your (dashboard|profile))\b/i.test(fullText);
+        // Force save if voice AI produced long substantive content
+        // (voice AI doesn't use markdown headings — use word count instead of isReportResponse)
+        var _vWordCount = fullText.trim().split(/\s+/).length;
+        var _vHasReportKeywords = /\b(benefit|disability|rating|eligibility|va |gi bill|housing|education|career|health|service|connected|compensation|pension|appeal|claim)\b/i.test(fullText);
+        var _vIsSubstantiveResponse = _vWordCount >= 80 && _vHasReportKeywords;
+
+        if (_vIsSubstantiveResponse && !reportGenerated) {
+          // Synthesize and fire save for long substantive voice responses
+          // Content type detection based on keywords in spoken response
+          var _vSlug = 'benefits_report';
+          var _vTitle = 'Voice Session Benefits Report';
+          if (/power of attorney/i.test(fullText))        { _vSlug = 'power_of_attorney';    _vTitle = 'Power of Attorney'; }
+          else if (/living will|advance directive/i.test(fullText)) { _vSlug = 'living_will'; _vTitle = 'Living Will'; }
+          else if (/resume/i.test(fullText))              { _vSlug = 'resume';               _vTitle = 'Resume'; }
+          else if (/nexus letter/i.test(fullText))        { _vSlug = 'nexus_letter';         _vTitle = 'Nexus Letter'; }
+          else if (/action plan|next steps/i.test(fullText)) { _vSlug = 'action_plan';       _vTitle = 'Action Plan'; }
+          var _vSynthAction = { document_actions: [{ action: 'save_template', template_type: _vSlug, title: _vTitle }] };
+          _processDocumentActions(_vSynthAction, fullText);
+          console.log('[VOICE-PARITY] synthesized save for substantive voice response → ' + _vSlug);
+        }
+
+        // Dashboard handoff button — fires when AI verbally confirms a save,
+        // or when a long substantive response was produced
+        if (!reportGenerated && (_vAiSavedPhrase || _vIsSubstantiveResponse)) {
+          var _vHint = _vIsSubstantiveResponse ? 'show_reports' : 'show_profile';
+          _injectDashboardHandoff(_vHint);
+          console.log('[VOICE-PARITY] dashboard handoff injected — hint=' + _vHint);
+        }
+      } catch (_vpErr) {
+        console.warn('[VOICE-PARITY] error:', _vpErr.message || _vpErr);
+      }
+      // ── End voice parity ──────────────────────────────────────────────
     };
 
     RealtimeVoice.onError = function(error) {

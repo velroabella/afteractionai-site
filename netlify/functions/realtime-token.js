@@ -132,9 +132,9 @@ NEVER say "search online", "visit va.gov", or "google [topic]" for topics we cov
             transcription: { model: 'whisper-1' },
             turn_detection: {
               type: 'server_vad',
-              threshold: 0.75,          // Phase 2.5: raised from 0.6 — reduce background noise triggers
+              threshold: 0.88,          // Raised from 0.75 — requires clearer speech, rejects ambient TV audio
               prefix_padding_ms: 300,
-              silence_duration_ms: 1000, // Phase 2.5: raised from 800ms — let veterans finish speaking
+              silence_duration_ms: 1200, // Raised from 1000ms — lets veterans finish speaking before VAD commits
               create_response: true,
               interrupt_response: true
             }
