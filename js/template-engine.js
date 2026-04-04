@@ -1085,7 +1085,8 @@ STEP 3 — SIGNAL COMPLETION:
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         messages: messages,
-        system: activeTemplate.systemPrompt
+        system: activeTemplate.systemPrompt,
+        skip_tools: true
       })
     });
     if (!resp.ok) throw new Error('Chat endpoint error: ' + resp.status);

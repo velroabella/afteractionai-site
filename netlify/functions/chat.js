@@ -377,8 +377,24 @@ exports.handler = async (event) => {
       };
     }
 
-    // Rate limit: keep last 20 messages
-    const trimmedMessages = messages.slice(-20);
+    // Fix 5: Smart message trim — preserve first message (contains profile/context)
+    // plus last 19 messages. Prevents dropping critical profile data on long conversations.
+    const trimmedMessages = messages.length > 20
+      ? [messages[0]].concat(messages.slice(-(20 - 1)))
+      : messages;
+
+    // FIX A: Template engine requests skip_tools to get plain text responses
+    const skipTools = body.skip_tools === true;
+    const apiBody = {
+      model: MODEL,
+      max_tokens: MAX_TOKENS,
+      system: systemPrompt,
+      messages: trimmedMessages
+    };
+    if (!skipTools) {
+      apiBody.tools = [STRUCTURED_TOOL];
+      apiBody.tool_choice = { type: 'any' };
+    }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -387,14 +403,7 @@ exports.handler = async (event) => {
         'x-api-key': ANTHROPIC_API_KEY,
         'anthropic-version': '2023-06-01'
       },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: MAX_TOKENS,
-        system: systemPrompt,
-        messages: trimmedMessages,
-        tools: [STRUCTURED_TOOL],
-        tool_choice: { type: 'any' }
-      })
+      body: JSON.stringify(apiBody)
     });
 
     if (!response.ok) {

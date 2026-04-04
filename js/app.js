@@ -514,6 +514,17 @@
   // All Phase 2 writes (missions, checklist, reports) gate on this being non-null.
   var _activeCaseId = null;
 
+  // Phase 44 gate: set to true when voice routing handles a generation request.
+  // Checked by the async voice-structured classification to prevent saving raw transcript.
+  var _voiceRouteHandled = false;
+
+  // Fix 4: Promise that resolves when dashboard context is loaded.
+  // sendToAI waits on this before the first call so Claude gets full context.
+  var _dashboardContextReady = null;
+
+  // Fix 8: Save deduplication — tracks recent save fingerprints to prevent double-saves.
+  var _recentSaveFingerprints = {};
+
   // PHASE 2 INTEGRATION - Step 4
   // Maps checklist item index (DOM data-index) → DB UUID from case_checklist_items.
   // Populated after DataAccess.checklistItems.saveBatch() succeeds in buildChecklist().
@@ -742,8 +753,14 @@
       }
 
       // Phase 7: Load full dashboard context for AI continuity
-      // Slight delay so prior doc fetch and mission restore can settle first
-      setTimeout(_loadDashboardContext, 500);
+      // Fix 4: Store promise so sendToAI can await it before first call
+      _dashboardContextReady = new Promise(function(resolve) {
+        setTimeout(function() {
+          _loadDashboardContext();
+          // _loadDashboardContext is fire-and-forget internally but we give it 2s to settle
+          setTimeout(resolve, 2000);
+        }, 500);
+      });
     }).catch(function(err) {
       // Non-fatal — old code paths continue as normal
       log('Phase2', 'getOrCreateActiveCase exception — localStorage fallback active: ' +
@@ -1657,33 +1674,31 @@
       }
 
       // ── 4b. AGENTIC: Document actions + dashboard handoff (voice path) ──
-      if (structured.document_actions && structured.document_actions.length > 0) {
-        _processDocumentActions(structured, transcript);
-      }
-
       // ── 4c. AGENTIC: report_ready triggers auto-save from voice-bridge ──
+      // FIX D: Synthesize document_actions for report_ready if AI forgot,
+      // then defer ALL dashboard handoff to _processDocumentActions.then().
       if (structured.report_ready || structured.mode === 'report') {
-        // The voice AI said the report is ready — save a snapshot via showReportActions
-        // which auto-saves to template_outputs AND shows the download/dashboard buttons.
-        // We also fire _processDocumentActions with a synthetic action if the AI forgot.
         if (!structured.document_actions || structured.document_actions.length === 0) {
-          _processDocumentActions({
-            document_actions: [{
-              action: 'save_report',
-              template_type: 'benefits_report',
-              title: 'Voice Session Benefits Report'
-            }]
-          }, transcript);
+          structured.document_actions = [{
+            action: 'save_report',
+            template_type: 'benefits_report',
+            title: 'Voice Session Benefits Report'
+          }];
         }
       }
 
-      // Dashboard handoff — explicit or auto-fallback
-      if (structured.dashboard_hint) {
+      if (structured.document_actions && structured.document_actions.length > 0) {
+        var _vbDocResult = _processDocumentActions(structured, transcript);
+        if (_vbDocResult && typeof _vbDocResult.then === 'function') {
+          _vbDocResult.then(function(anySaved) {
+            if (anySaved) {
+              var _vbHint = structured.dashboard_hint || (structured.report_ready ? 'show_reports' : 'show_profile');
+              _injectDashboardHandoff(_vbHint);
+            }
+          });
+        }
+      } else if (structured.dashboard_hint) {
         _injectDashboardHandoff(structured.dashboard_hint);
-      } else if (structured.report_ready || structured.mode === 'report') {
-        _injectDashboardHandoff('show_reports');
-      } else if (structured.document_actions && structured.document_actions.length > 0) {
-        _injectDashboardHandoff('show_profile');
       } else if (structured.checklist_items && structured.checklist_items.length > 0) {
         _injectDashboardHandoff('show_checklist');
       }
@@ -2178,6 +2193,12 @@
             ' | report_ready=' + !!data.structured.report_ready);
 
           // ── AGENTIC: Save document actions from voice-structured path ──
+          // Phase 44 gate: if voice routing already handled this as a generation
+          // request, do NOT save raw transcript via _processDocumentActions.
+          if (_voiceRouteHandled) {
+            console.log('[AIOS][VOICE-STRUCTURED] _voiceRouteHandled=true — skipping _processDocumentActions (Phase 44 already routed)');
+            _voiceRouteHandled = false; // reset for next voice response
+          } else {
           // Mirrors text-path Cases A, B, C synthesis — all three cases.
           if (!data.structured.document_actions || data.structured.document_actions.length === 0) {
             // Case A: report_ready or mode=report
@@ -2200,14 +2221,24 @@
               else if (/action plan/i.test(_aiText))      { _vsSlug = 'action_plan';          _vsTitle = 'Action Plan'; }
               data.structured.document_actions = [{ action: 'save_template', template_type: _vsSlug, title: _vsTitle }];
               console.log('[AIOS][VOICE-STRUCTURED] synthesized document_actions — mode=template → ' + _vsSlug);
-            // Case C: long substantive response, no mode signal
+            // Case C: long substantive response, no mode signal (Fix 6: broadened keywords)
             } else if (_aiText.trim().split(/\s+/).length >= 80 &&
-                       /\b(benefit|disability|rating|eligibility|va |gi bill|housing|education|career|health|service|connected|compensation|pension|appeal|claim)\b/i.test(_aiText)) {
+                       /\b(benefit|disability|rating|eligibility|va |gi bill|housing|education|career|health|service|connected|compensation|pension|appeal|claim|resume|letter|statement|plan|budget|transition|employment|interview|nexus)\b/i.test(_aiText)) {
               data.structured.document_actions = [{ action: 'save_template', template_type: 'benefits_report', title: 'Voice Session Benefits Report' }];
               console.log('[AIOS][VOICE-STRUCTURED] hard-fallback synthesized document_actions for long voice response');
             }
           }
-          _processDocumentActions(data.structured, _aiText);
+          // FIX D: Chain dashboard handoff on _processDocumentActions save success
+          var _vsDocResult = _processDocumentActions(data.structured, _aiText);
+          if (_vsDocResult && typeof _vsDocResult.then === 'function') {
+            _vsDocResult.then(function(anySaved) {
+              if (anySaved) {
+                var _vsHint = data.structured.dashboard_hint || (data.structured.report_ready ? 'show_reports' : 'show_profile');
+                _injectDashboardHandoff(_vsHint);
+              }
+            });
+          }
+          } // end Phase 44 gate else block
 
           // ── AGENTIC: Persist checklist items from voice-structured path ──
           if (data.structured.checklist_items && data.structured.checklist_items.length > 0 &&
@@ -2239,13 +2270,15 @@
           }
 
           // ── AGENTIC: Dashboard handoff from voice-structured path ──
-          // Always inject handoff when significant actions happened
+          // FIX D: report_ready defers to _processDocumentActions.then()
           if (data.structured.dashboard_hint) {
             _injectDashboardHandoff(data.structured.dashboard_hint);
           } else if (data.structured.report_ready) {
-            _injectDashboardHandoff('show_reports');
+            // Deferred — _processDocumentActions handles handoff via its .then() callback
+            console.log('[AIOS][VOICE-STRUCTURED] report_ready — dashboard handoff deferred to _processDocumentActions');
           } else if (data.structured.document_actions && data.structured.document_actions.length > 0) {
-            _injectDashboardHandoff('show_profile');
+            // Also deferred — handled by _processDocumentActions .then()
+            console.log('[AIOS][VOICE-STRUCTURED] document_actions — dashboard handoff deferred to _processDocumentActions');
           } else if (data.structured.checklist_items && data.structured.checklist_items.length > 0) {
             _injectDashboardHandoff('show_checklist');
           }
@@ -2433,13 +2466,6 @@
       // Show Generate Report button when conditions met
       maybeShowReportButton();
 
-      // Phase 2: Detect report from voice mode too
-      if (isReportResponse(fullText)) {
-        log('Report', 'detected (voice) — showing actions');
-        reportGenerated = true;
-        showReportActions(fullText);
-      }
-
       // VOICE INTELLIGENCE CONNECTED - Phase 1 Fix
       // Run Phase 47-50 pipeline on this completed voice AI response.
       // Called here (after addMessage) so the .message--ai DOM element
@@ -2451,11 +2477,15 @@
       // Voice is intake only. When the user requests a document, route to
       // the proven template engine or text pipeline. Never save raw voice
       // transcript as document content.
+      var _vrUserText = _lastVoiceText || '';
+      var _vrIsGenRequest = /\b(generate|create|draft|write|prepare|make me|build me|give me|produce|start|wrap up|finish|finalize|complete|assemble|compile|put together)\b.{0,80}\b(resume|cv|will|testament|power of attorney|poa|report|plan|letter|template|document|summary|audit|nexus|personal statement|action plan|claim|transition|financial|business|budget|linkedin|interview|checklist)\b/i.test(_vrUserText);
       try {
-        var _vrUserText = _lastVoiceText || '';
-        var _vrIsGenRequest = /\b(generate|create|draft|write|prepare|make me|build me|give me|produce|start)\b.{0,80}\b(resume|cv|will|testament|power of attorney|poa|report|plan|letter|template|document|summary|audit|nexus|personal statement|action plan|claim|transition|financial|business|budget|linkedin|interview|checklist)\b/i.test(_vrUserText);
 
         if (_vrIsGenRequest) {
+          // Gate the async voice-structured path — prevents raw transcript save
+          _voiceRouteHandled = true;
+          console.log('[VOICE-ROUTING] _voiceRouteHandled=true — async classification will skip _processDocumentActions');
+
           // Try template engine first (resume, will, poa, va_claim, transition, etc.)
           var _vrTemplateId = (window.AAAI && window.AAAI.templates && typeof window.AAAI.templates.detectForTask === 'function')
             ? window.AAAI.templates.detectForTask(_vrUserText)
@@ -2487,6 +2517,15 @@
         }
       } catch (_vrErr) {
         console.warn('[VOICE-ROUTING] error:', _vrErr.message || _vrErr);
+      }
+
+      // FIX B: Report detection runs AFTER Phase 44 routing.
+      // If _vrIsGenRequest is true the template engine / text pipeline owns
+      // this response — never show the transcript report UI.
+      if (!_vrIsGenRequest && isReportResponse(fullText)) {
+        log('Report', 'detected (voice) — showing actions');
+        reportGenerated = true;
+        showReportActions(fullText);
       }
       // ── End Phase 44 ─────────────────────────────────────────────────
     };
@@ -2826,6 +2865,22 @@
     }
     var _p44ReqSeq = ++_apiRequestSeq;
     log('sendToAI', 'request seq=' + _p44ReqSeq + ' input="' + (userText || '').substring(0, 60) + '"');
+
+    // Fix 4: Wait for dashboard context on first call so Claude gets full state.
+    // Only gates on START_CONVERSATION — subsequent calls proceed immediately.
+    if (_dashboardContextReady && _p44IsSystem) {
+      _dashboardContextReady.then(function() {
+        _dashboardContextReady = null; // only wait once
+        console.log('[Fix4] dashboard context ready — proceeding with first AI call');
+        _sendToAI_inner(userText, _p44ReqSeq);
+      });
+      return;
+    }
+    _sendToAI_inner(userText, _p44ReqSeq);
+  }
+
+  function _sendToAI_inner(userText, _p44ReqSeq) {
+    var _p44IsSystem = (userText === 'START_CONVERSATION' || userText === 'RESUME_MISSION');
     isProcessing = true;
     if (btnSend) btnSend.disabled = true;
 
@@ -2981,9 +3036,13 @@
                 }];
                 console.log('[AIOS][STRUCTURED] synthesized document_actions — mode=template → ' + _tSlug);
 
-              // Case C: Hard structural fallback — response has real content (headings + length)
-              // but AI forgot both mode and document_actions. The system decides to save.
-              } else if (aiResponse.length > 500 && (aiResponse.match(/^#{1,3}\s+\S/gm) || []).length >= 2) {
+              // Case C: Hard structural fallback — response has real content but AI forgot
+              // both mode and document_actions. Fix 6: Also catches prose docs (letters,
+              // statements) that lack markdown headings but have sufficient length.
+              } else if (aiResponse.length > 500 && (
+                (aiResponse.match(/^#{1,3}\s+\S/gm) || []).length >= 2 ||
+                aiResponse.trim().split(/\s+/).length >= 150
+              )) {
                 var _fbSlug = 'document';
                 var _fbTitle = 'Generated Document';
                 if (_p41Structured.mode === 'report' || /personalized (plan|report|benefits)/i.test(aiResponse)) {
@@ -3003,7 +3062,16 @@
                 console.log('[AIOS][STRUCTURED] hard-fallback synthesized document_actions — ' + _fbSlug + ' (len=' + aiResponse.length + ', headings=' + (aiResponse.match(/^#{1,3}\s+\S/gm) || []).length + ')');
               }
             }
-            _processDocumentActions(_p41Structured, aiResponse);
+            // Fix 2: Chain dashboard handoff on actual save success
+            var _docSaveResult = _processDocumentActions(_p41Structured, aiResponse);
+            if (_docSaveResult && typeof _docSaveResult.then === 'function') {
+              _docSaveResult.then(function(anySaved) {
+                if (anySaved) {
+                  console.log('[AIOS][DOC-ACTION] save confirmed — injecting dashboard handoff');
+                  _injectDashboardHandoff(_p41Structured.dashboard_hint || (_p41Structured.report_ready ? 'show_reports' : 'show_profile'));
+                }
+              });
+            }
 
             // ── AGENTIC: Persist checklist items from structured output ──
             if (_p41Structured.checklist_items && _p41Structured.checklist_items.length > 0 &&
@@ -3178,13 +3246,17 @@
             _dashboardInjected = true;
           }
           // Priority 2: Structured signals without explicit hint
+          // Fix 2: document_actions handoff now handled by save callback above — skip here
+          // FIX D: report_ready also deferred to _processDocumentActions.then()
           else if (_p41Structured) {
             if (_p41Structured.report_ready) {
-              _injectDashboardHandoff('show_reports');
+              // Deferred — _processDocumentActions .then() callback handles handoff
+              console.log('[AIOS][DASHBOARD-HANDOFF] report_ready — handoff deferred to _processDocumentActions');
               _dashboardInjected = true;
             } else if (_p41Structured.document_actions && _p41Structured.document_actions.length > 0) {
-              _injectDashboardHandoff('show_profile');
-              _dashboardInjected = true;
+              // Handoff deferred to _processDocumentActions .then() callback (Fix 2)
+              _dashboardInjected = true; // prevent phrase fallback from double-injecting
+              console.log('[AIOS][DASHBOARD-HANDOFF] document_actions present — handoff deferred to save callback');
             } else if (_p41Structured.checklist_items && _p41Structured.checklist_items.length > 0) {
               _injectDashboardHandoff('show_checklist');
               _dashboardInjected = true;
@@ -3626,7 +3698,7 @@
   function _processDocumentActions(structured, rawText) {
     if (!structured.document_actions || !Array.isArray(structured.document_actions)) {
       console.log('[AIOS][DOC-ACTION] skipped — no document_actions array');
-      return;
+      return Promise.resolve(false);
     }
     if (!window.AAAI || !window.AAAI.auth || !window.AAAI.auth.isLoggedIn || !window.AAAI.auth.isLoggedIn()) {
       console.warn('[AIOS][DOC-ACTION] skipped — user not logged in. ' + structured.document_actions.length + ' actions lost.');
@@ -3653,16 +3725,27 @@
         chatMessages.appendChild(_loginBar);
         scrollToBottom();
       }
-      return;
+      return Promise.resolve(false);
     }
     if (typeof window.AAAI.auth.saveTemplateOutput !== 'function') {
       console.warn('[AIOS][DOC-ACTION] skipped — saveTemplateOutput not available');
-      return;
+      return Promise.resolve(false);
     }
     console.log('[AIOS][DOC-ACTION] processing ' + structured.document_actions.length + ' actions, rawText=' + rawText.length + ' chars');
 
+    var _savePromises = [];
     structured.document_actions.forEach(function(da) {
       if (!da || !da.template_type || !da.title) return;
+
+      // Fix 8: Dedup — skip if same type+content was saved in last 60 seconds
+      var _dedupKey = da.template_type + '|' + rawText.length + '|' + rawText.substring(0, 100);
+      var _now = Date.now();
+      if (_recentSaveFingerprints[_dedupKey] && (_now - _recentSaveFingerprints[_dedupKey]) < 60000) {
+        console.log('[AIOS][DOC-ACTION] dedup — skipping duplicate save for ' + da.template_type + ' (' + da.title + ')');
+        return;
+      }
+      _recentSaveFingerprints[_dedupKey] = _now;
+
       var output = {
         template_type: da.template_type,
         title: da.title,
@@ -3674,15 +3757,23 @@
           generated_at: new Date().toISOString()
         }
       };
-      window.AAAI.auth.saveTemplateOutput(output).then(function(res) {
-        if (res && !res.error) {
-          console.log('[AIOS][DOC-ACTION] saved ' + da.template_type + ' → ' + da.title);
-        } else {
-          console.warn('[AIOS][DOC-ACTION] save failed:', res && res.error);
-        }
-      }).catch(function(e) {
-        console.warn('[AIOS][DOC-ACTION] save error:', e && e.message);
-      });
+      _savePromises.push(
+        window.AAAI.auth.saveTemplateOutput(output).then(function(res) {
+          if (res && !res.error) {
+            console.log('[AIOS][DOC-ACTION] saved ' + da.template_type + ' → ' + da.title);
+            return true;
+          } else {
+            console.warn('[AIOS][DOC-ACTION] save failed:', res && res.error);
+            return false;
+          }
+        }).catch(function(e) {
+          console.warn('[AIOS][DOC-ACTION] save error:', e && e.message);
+          return false;
+        })
+      );
+    });
+    return Promise.all(_savePromises).then(function(results) {
+      return results.some(function(r) { return r === true; });
     });
   }
 
@@ -4526,31 +4617,9 @@
     window.dispatchEvent(new CustomEvent('aaai:audit_completed', { detail: { tags: [] } }));
     log('Analytics', 'dispatched aaai:audit_completed');
 
-    // ── AGENTIC: Auto-save report to template_outputs so it appears on the Profile ──
-    if (typeof AAAI !== 'undefined' && AAAI.auth && AAAI.auth.isLoggedIn &&
-        AAAI.auth.isLoggedIn() && typeof AAAI.auth.saveTemplateOutput === 'function') {
-      var _reportTitle = 'Personalized Benefits Report';
-      // Extract a better title from the report if possible
-      var _titleMatch = reportText.match(/^#+\s*(.{5,80})/m);
-      if (_titleMatch) _reportTitle = _titleMatch[1].replace(/[*#]/g, '').trim();
-      AAAI.auth.saveTemplateOutput({
-        template_type: 'benefits_report',
-        title: _reportTitle,
-        content: reportText,
-        metadata: {
-          source: 'ai_generated',
-          action: 'save_report',
-          generated_at: new Date().toISOString(),
-          case_id: _activeCaseId || null
-        }
-      }).then(function(res) {
-        if (res && !res.error) {
-          log('Report', 'auto-saved to template_outputs → ' + _reportTitle);
-        } else {
-          log('Report', 'save error: ' + (res && res.error));
-        }
-      }).catch(function(e) { log('Report', 'save exception: ' + (e && e.message)); });
-    }
+    // Fix 3: Removed duplicate report save — _processDocumentActions already handles
+    // saving via Cases A/B/C synthesis in both text and voice paths. This block was
+    // saving the same report a second time to template_outputs.
 
     var div = document.createElement('div');
     div.className = 'message message--system';
