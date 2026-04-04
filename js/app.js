@@ -2130,14 +2130,14 @@
       // When structured arrives, upgrades contract from regex → Phase 4.1 quality
       // using the same _buildContractFromStructured() path as the text pipeline.
       // Seq guard ensures stale results from prior responses are discarded.
-      // Phase 5: AbortController + 15s timeout — mirrors callChatEndpoint() pattern.
+      // Phase 5: AbortController + 45s timeout — mirrors callChatEndpoint() pattern.
       (function(_seq, _aiText) {
-        // Phase 5: 15-second AbortController — prevents classification fetch from
-        // hanging indefinitely. Matches the timeout used in callChatEndpoint().
+        // Phase 5: 45-second AbortController — prevents classification fetch from
+        // hanging indefinitely. Raised from 15s to match callChatEndpoint().
         var _vtController = new AbortController();
         var _vtTimeout = setTimeout(function() {
           _vtController.abort();
-        }, 15000);
+        }, 45000);
 
         fetch(CONFIG.apiEndpoint, {
           method: 'POST',
@@ -3415,12 +3415,14 @@
 
     log('callChatEndpoint', 'AIOS=' + (aiosActive ? 'active' : 'fallback') + ', systemLen=' + systemPrompt.length);
 
-    // Phase R: Each retry attempt gets a fresh AbortController + 15s timeout so the
+    // Phase R: Each retry attempt gets a fresh AbortController + 45s timeout so the
     // clock resets cleanly. AI_TIMEOUT and 5xx trigger retry; 4xx propagates immediately.
+    // Timeout raised from 15s to 45s: Claude API with tool_choice:any + 30K system
+    // prompt needs 15-30s. 15s was causing constant AbortError → all 3 retries fail.
     var _payloadJSON = JSON.stringify(payload);
     return withRetry(function() {
       var _ctrl = new AbortController();
-      var _timer = setTimeout(function() { _ctrl.abort(); }, 15000);
+      var _timer = setTimeout(function() { _ctrl.abort(); }, 45000);
       return fetch(CONFIG.apiEndpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
