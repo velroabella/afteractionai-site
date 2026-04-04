@@ -120,68 +120,71 @@
 </div>
 
 <!-- TWO-COLUMN LAYOUT -->
-<div class="rp-page-wrapper">
+<div class="mh-page-wrapper">
 
   <!-- SIDEBAR -->
-  <aside class="rp-sidebar">
+  <aside class="mh-sidebar">
 
-    <!-- Search -->
-    <div style="margin-bottom:20px;">
-      <input type="text" id="searchInput" placeholder="Search grants..."
-        style="width:100%;padding:8px 12px;border-radius:6px;border:1px solid #dee2e6;font-size:0.9rem;background:#fff;color:#212529;"
-        oninput="filterAndRender()" />
+    <div class="mh-sidebar-header">
+      <h3>Filters</h3>
+      <button class="mh-clear-btn" onclick="gsClearAll()">Clear all</button>
     </div>
 
-    <!-- Category Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Category</div>
-      <button class="rp-pill active" data-filter-group="category" data-filter-value="all" onclick="setPill(this,'category')">All Categories</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="education" onclick="setPill(this,'category')">Education</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="entrepreneurship" onclick="setPill(this,'category')">Entrepreneurship</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="hardship" onclick="setPill(this,'category')">Hardship Aid</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="housing" onclick="setPill(this,'category')">Housing</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="disability" onclick="setPill(this,'category')">Disability Support</button>
-      <button class="rp-pill" data-filter-group="category" data-filter-value="employment" onclick="setPill(this,'category')">Employment</button>
+    <input type="text" class="mh-search-input" id="gsSearchInput"
+           placeholder="🔍 Search grants..."
+           oninput="gsApplyFilters()" />
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Category</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="category" data-value="education" onclick="gsTogglePill(this)">Education</button>
+        <button class="mh-pill" data-filter="category" data-value="entrepreneurship" onclick="gsTogglePill(this)">Entrepreneurship</button>
+        <button class="mh-pill" data-filter="category" data-value="hardship" onclick="gsTogglePill(this)">Hardship Aid</button>
+        <button class="mh-pill" data-filter="category" data-value="housing" onclick="gsTogglePill(this)">Housing</button>
+        <button class="mh-pill" data-filter="category" data-value="disability" onclick="gsTogglePill(this)">Disability Support</button>
+        <button class="mh-pill" data-filter="category" data-value="employment" onclick="gsTogglePill(this)">Employment</button>
+      </div>
     </div>
 
-    <!-- Audience Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Who It's For</div>
-      <button class="rp-pill active" data-filter-group="audience" data-filter-value="all" onclick="setPill(this,'audience')">All</button>
-      <button class="rp-pill" data-filter-group="audience" data-filter-value="veterans" onclick="setPill(this,'audience')">Veterans</button>
-      <button class="rp-pill" data-filter-group="audience" data-filter-value="dependents" onclick="setPill(this,'audience')">Dependents</button>
-      <button class="rp-pill" data-filter-group="audience" data-filter-value="spouses" onclick="setPill(this,'audience')">Spouses</button>
-      <button class="rp-pill" data-filter-group="audience" data-filter-value="guard_reserve" onclick="setPill(this,'audience')">Guard &amp; Reserve</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Who It's For</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="audience" data-value="veterans" onclick="gsTogglePill(this)">Veterans</button>
+        <button class="mh-pill" data-filter="audience" data-value="dependents" onclick="gsTogglePill(this)">Dependents</button>
+        <button class="mh-pill" data-filter="audience" data-value="spouses" onclick="gsTogglePill(this)">Spouses</button>
+        <button class="mh-pill" data-filter="audience" data-value="guard_reserve" onclick="gsTogglePill(this)">Guard &amp; Reserve</button>
+      </div>
     </div>
 
-    <!-- Geography Filter -->
-    <div class="rp-filter-group">
-      <div class="rp-filter-label">Availability</div>
-      <button class="rp-pill active" data-filter-group="geography" data-filter-value="all" onclick="setPill(this,'geography')">All</button>
-      <button class="rp-pill" data-filter-group="geography" data-filter-value="National" onclick="setPill(this,'geography')">National</button>
-      <button class="rp-pill" data-filter-group="geography" data-filter-value="State-specific" onclick="setPill(this,'geography')">State-Specific</button>
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Availability</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="geography" data-value="National" onclick="gsTogglePill(this)">🇺🇸 National</button>
+        <button class="mh-pill" data-filter="geography" data-value="State-specific" onclick="gsTogglePill(this)">📍 State-Specific</button>
+      </div>
+    </div>
+
+    <div class="mh-result-count">
+      Showing <strong id="gsResultCount">0</strong> of <strong id="gsTotalCount">0</strong> grants
     </div>
 
   </aside>
 
   <!-- MAIN CONTENT -->
-  <main>
-    <!-- Results count -->
-    <div id="resultsCount" style="margin-bottom:16px;color:#6c757d;font-size:0.9rem;"></div>
-
-    <!-- Cards grid -->
-    <div class="rp-grid" id="grantsGrid"></div>
-
-    <!-- Empty state -->
-    <div class="rp-empty" id="emptyState" style="display:none;">
-      <div class="rp-empty__icon">🔍</div>
-      <p>No grants match your current filters. Try adjusting the category or audience.</p>
-      <button class="rp-qa-btn" onclick="resetFilters()">Clear Filters</button>
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <div class="mh-toolbar-left"><strong id="gsResultLabel">0</strong> grants found</div>
+      <select class="mh-sort-select" id="gsSortSelect" onchange="gsApplyFilters()">
+        <option value="default">Sort: Default</option>
+        <option value="name">Sort: A–Z</option>
+        <option value="category">Sort: By Category</option>
+      </select>
     </div>
 
-    <!-- Load more -->
-    <div style="text-align:center;margin-top:24px;">
-      <button class="rp-load-more-btn" id="loadMoreBtn" onclick="loadMore()" style="display:none;">Load More</button>
+    <div class="mh-grid" id="grantsGrid"></div>
+
+    <div class="mh-load-more" id="gsLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="gsLoadMore()">Load More Grants</button>
     </div>
   </main>
 
@@ -239,91 +242,141 @@
 
 <script src="js/auth.js"></script>
 <script src="js/analytics.js"></script>
+<script src="js/feedback-widget.js" defer></script>
 <script src="js/newsletter.js"></script>
 <script>
-// ── State ──────────────────────────────────────────────────
+// ── State ──────────────────────────────────────────────────────────────────
 const PAGE_SIZE = 24;
-let allGrants = [];
-let filteredGrants = [];
-let visibleCount = 0;
+let ALL_GRANTS = [];
+let FILTERED = [];
+let DISPLAYED = 0;
 
-const activeFilters = { category: 'all', audience: 'all', geography: 'all' };
+const filters = {
+  search: '',
+  category: new Set(),
+  audience: new Set(),
+  geography: new Set()
+};
 
-// ── Nav ───────────────────────────────────────────────────
+// ── Nav ────────────────────────────────────────────────────────────────────
 function toggleMenu() {
   document.getElementById('navMenu').classList.toggle('active');
 }
 
-// ── Pills ─────────────────────────────────────────────────
-function setPill(btn, group) {
-  document.querySelectorAll(`.rp-pill[data-filter-group="${group}"]`).forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  activeFilters[group] = btn.dataset.filterValue;
-  filterAndRender();
-}
-
-// ── Quick Access ──────────────────────────────────────────
-function applyQA(val) {
-  if (val === 'all') {
-    resetFilters();
-    return;
-  }
-  // audience-based QA
-  if (['dependents','spouses','guard_reserve'].includes(val)) {
-    const pill = document.querySelector(`.rp-pill[data-filter-group="audience"][data-filter-value="${val}"]`);
-    if (pill) setPill(pill, 'audience');
+// ── Pill toggle (multi-select, Set-based) ──────────────────────────────────
+window.gsTogglePill = function(btn) {
+  const filterType = btn.dataset.filter;
+  const value = btn.dataset.value;
+  const wasActive = btn.classList.contains('active');
+  if (wasActive) {
+    btn.classList.remove('active');
+    filters[filterType].delete(value);
   } else {
-    const pill = document.querySelector(`.rp-pill[data-filter-group="category"][data-filter-value="${val}"]`);
-    if (pill) setPill(pill, 'category');
+    btn.classList.add('active');
+    filters[filterType].add(value);
   }
-}
+  gsApplyFilters();
+};
 
-// ── Reset ─────────────────────────────────────────────────
-function resetFilters() {
-  activeFilters.category = 'all';
-  activeFilters.audience = 'all';
-  activeFilters.geography = 'all';
-  document.querySelectorAll('.rp-pill').forEach(b => {
-    b.classList.toggle('active', b.dataset.filterValue === 'all');
+// ── Clear all ──────────────────────────────────────────────────────────────
+window.gsClearAll = function() {
+  Object.keys(filters).forEach(k => {
+    if (k === 'search') filters[k] = '';
+    else filters[k].clear();
   });
-  document.getElementById('searchInput').value = '';
-  filterAndRender();
+  document.querySelectorAll('.mh-page-wrapper .mh-pill').forEach(p => p.classList.remove('active'));
+  const el = document.getElementById('gsSearchInput');
+  if (el) el.value = '';
+  gsApplyFilters();
+};
+
+// ── Quick Access (clear then apply single category/audience) ───────────────
+function applyQA(val) {
+  if (val === 'all') { gsClearAll(); return; }
+  gsClearAll();
+  const audienceVals = ['dependents', 'spouses', 'guard_reserve'];
+  const filterType = audienceVals.includes(val) ? 'audience' : 'category';
+  const pill = document.querySelector(`.mh-pill[data-filter="${filterType}"][data-value="${val}"]`);
+  if (pill) { pill.classList.add('active'); filters[filterType].add(val); }
+  gsApplyFilters();
 }
 
-// ── Filter ────────────────────────────────────────────────
-function filterAndRender() {
-  const q = document.getElementById('searchInput').value.toLowerCase();
-  filteredGrants = allGrants.filter(g => {
-    if (activeFilters.category !== 'all' && g.category !== activeFilters.category) return false;
-    if (activeFilters.audience !== 'all' && g.audience !== activeFilters.audience) return false;
-    if (activeFilters.geography !== 'all' && g.geography !== activeFilters.geography) return false;
-    if (q && !((g.program_name||'').toLowerCase().includes(q) ||
-               (g.provider||'').toLowerCase().includes(q) ||
-               (g.eligibility||'').toLowerCase().includes(q))) return false;
+// ── Filter engine ──────────────────────────────────────────────────────────
+function gsApplyFilters() {
+  const searchEl = document.getElementById('gsSearchInput');
+  filters.search = searchEl ? searchEl.value.toLowerCase() : '';
+
+  FILTERED = ALL_GRANTS.filter(g => {
+    // Search across name, provider, eligibility
+    if (filters.search) {
+      const hay = [(g.program_name||''), (g.provider||''), (g.eligibility||'')].join(' ').toLowerCase();
+      if (!hay.includes(filters.search)) return false;
+    }
+    // Category — OR within dimension: grant must match ANY selected category
+    if (filters.category.size > 0 && !filters.category.has(g.category)) return false;
+    // Audience — OR within dimension
+    if (filters.audience.size > 0 && !filters.audience.has(g.audience)) return false;
+    // Geography — OR within dimension
+    if (filters.geography.size > 0 && !filters.geography.has(g.geography)) return false;
     return true;
   });
-  visibleCount = 0;
+
+  // Sort
+  const sort = document.getElementById('gsSortSelect')?.value || 'default';
+  if (sort === 'name') {
+    FILTERED.sort((a, b) => (a.program_name||'').localeCompare(b.program_name||''));
+  } else if (sort === 'category') {
+    FILTERED.sort((a, b) => (a.category||'').localeCompare(b.category||''));
+  }
+
+  // Reset grid and counts
+  DISPLAYED = 0;
   document.getElementById('grantsGrid').innerHTML = '';
-  loadMore();
-  updateCount();
+  const rc = document.getElementById('gsResultCount');
+  const rl = document.getElementById('gsResultLabel');
+  if (rc) rc.textContent = FILTERED.length;
+  if (rl) rl.textContent = FILTERED.length;
+
+  gsLoadMore();
 }
 
-// ── Render ────────────────────────────────────────────────
+// ── Load more ──────────────────────────────────────────────────────────────
+function gsLoadMore() {
+  const grid = document.getElementById('grantsGrid');
+  const batch = FILTERED.slice(DISPLAYED, DISPLAYED + PAGE_SIZE);
+
+  if (batch.length === 0 && DISPLAYED === 0) {
+    grid.innerHTML = '<div class="mh-empty"><div class="mh-empty-icon">🔍</div><h3>No grants found</h3><p>Try adjusting your filters or search terms.</p></div>';
+  } else {
+    batch.forEach(g => { grid.insertAdjacentHTML('beforeend', renderCard(g)); });
+  }
+
+  DISPLAYED += batch.length;
+  const lm = document.getElementById('gsLoadMore');
+  if (lm) lm.style.display = DISPLAYED < FILTERED.length ? 'block' : 'none';
+}
+
+window.gsLoadMore = gsLoadMore;
+window.gsApplyFilters = gsApplyFilters;
+
+// ── Card renderer (unchanged visual output) ────────────────────────────────
 function renderCard(g) {
-  const catLabel = { education:'Education', entrepreneurship:'Entrepreneurship', hardship:'Hardship Aid',
-    housing:'Housing', disability:'Disability', employment:'Employment' }[g.category] || g.category;
-  const audLabel = { veterans:'Veterans', dependents:'Dependents', spouses:'Spouses',
-    guard_reserve:'Guard/Reserve' }[g.audience] || g.audience;
+  const catLabel = {
+    education: 'Education', entrepreneurship: 'Entrepreneurship', hardship: 'Hardship Aid',
+    housing: 'Housing', disability: 'Disability Support', employment: 'Employment'
+  }[g.category] || g.category;
+  const audLabel = {
+    veterans: 'Veterans', dependents: 'Dependents', spouses: 'Spouses',
+    guard_reserve: 'Guard/Reserve'
+  }[g.audience] || g.audience;
   const geoLabel = g.geography === 'National' ? 'National' : 'State-Specific';
 
-  let applyBtn = '';
-  if (g.application_link) {
-    applyBtn = `<a href="${esc(g.application_link)}" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Apply Now</a>`;
-  }
-  let learnBtn = '';
-  if (g.website) {
-    learnBtn = `<a href="${esc(g.website)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Learn More →</a>`;
-  }
+  const applyBtn = g.application_link
+    ? `<a href="${esc(g.application_link)}" class="rp-card__phone" target="_blank" rel="noopener noreferrer" style="text-decoration:none;">Apply Now</a>`
+    : '';
+  const learnBtn = g.website
+    ? `<a href="${esc(g.website)}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem;color:var(--gold,#C5A55A);text-decoration:none;margin-left:10px;">Learn More →</a>`
+    : '';
 
   return `<div class="rp-card">
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
@@ -343,37 +396,22 @@ function renderCard(g) {
 }
 
 function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-// ── Load More ─────────────────────────────────────────────
-function loadMore() {
-  const grid = document.getElementById('grantsGrid');
-  const batch = filteredGrants.slice(visibleCount, visibleCount + PAGE_SIZE);
-  batch.forEach(g => { grid.insertAdjacentHTML('beforeend', renderCard(g)); });
-  visibleCount += batch.length;
-  document.getElementById('loadMoreBtn').style.display = visibleCount < filteredGrants.length ? 'inline-block' : 'none';
-  document.getElementById('emptyState').style.display = filteredGrants.length === 0 ? 'block' : 'none';
-}
-
-function updateCount() {
-  document.getElementById('resultsCount').textContent =
-    filteredGrants.length === allGrants.length
-      ? `Showing all ${allGrants.length} grants & scholarships`
-      : `Showing ${filteredGrants.length} of ${allGrants.length} grants & scholarships`;
-}
-
-// ── Init ──────────────────────────────────────────────────
+// ── Init ───────────────────────────────────────────────────────────────────
 fetch('data/grants-scholarships.json')
   .then(r => r.json())
   .then(data => {
-    allGrants = Array.isArray(data) ? data : (data.resources || []);
-    filterAndRender();
+    ALL_GRANTS = Array.isArray(data) ? data : (data.resources || []);
+    const tc = document.getElementById('gsTotalCount');
+    if (tc) tc.textContent = ALL_GRANTS.length;
+    gsApplyFilters();
   })
   .catch(err => {
     console.error('Error loading grants:', err);
     document.getElementById('grantsGrid').innerHTML =
-      '<div class="rp-empty"><p>Error loading grants. Please try again later.</p></div>';
+      '<div class="mh-empty"><div class="mh-empty-icon">⚠️</div><h3>Could not load grants</h3><p>Please refresh the page.</p></div>';
   });
 </script>
 

@@ -508,32 +508,126 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════════════════════════ -->
-  <!-- SECTION: VETERAN ORGS -->
-  <!-- ══════════════════════════════════════════════════════ -->
-  <section class="sd-section" id="orgs">
-    <div class="sd-section__header">
-      <span class="sd-section__icon">🎖️</span>
-      <h2 class="sd-section__title">Veteran Service Dog Organizations</h2>
-    </div>
-    <p style="font-size:0.85rem;color:var(--gray-400);line-height:1.6;margin-bottom:16px;">
-      The following organizations are verified, reputable providers of service dogs for veterans. Many are ADI-accredited. All are free or reduced-cost for qualifying veterans. Wait times are long — apply early and apply to multiple organizations simultaneously.
-    </p>
+</div><!-- /sd-page (pre-orgs) -->
 
-    <div class="sd-filters">
-      <button class="sd-filter-pill active" onclick="sdFilter('all',this)">All</button>
-      <button class="sd-filter-pill" onclick="sdFilter('ptsd',this)">PTSD / Mental Health</button>
-      <button class="sd-filter-pill" onclick="sdFilter('mobility',this)">Mobility</button>
-      <button class="sd-filter-pill" onclick="sdFilter('guide',this)">Guide / Vision</button>
-      <button class="sd-filter-pill" onclick="sdFilter('adi',this)">ADI Accredited</button>
-      <button class="sd-filter-pill" onclick="sdFilter('vetonly',this)">Veteran-Focused Only</button>
+<!-- ══════════════════════════════════════════════════════ -->
+<!-- SECTION: VETERAN ORGS — sidebar+filter layout -->
+<!-- ══════════════════════════════════════════════════════ -->
+
+<!-- Section intro header — sits above the sidebar layout -->
+<div style="max-width:1400px;margin:0 auto;padding:48px 20px 0;">
+  <div class="sd-section__header" id="orgs">
+    <span class="sd-section__icon">🎖️</span>
+    <h2 class="sd-section__title">Veteran Service Dog Organizations</h2>
+  </div>
+  <p style="font-size:0.85rem;color:var(--gray-400);line-height:1.6;margin:8px 0 0;">
+    The following organizations are verified, reputable providers of service dogs for veterans. Many are ADI-accredited. All are free or reduced-cost for qualifying veterans. Wait times are long — apply early and apply to multiple organizations simultaneously.
+  </p>
+</div>
+
+<div class="mh-page-wrapper" id="orgs-database">
+
+  <!-- SIDEBAR -->
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <h3>Filters</h3>
+      <button class="mh-clear-btn" onclick="sdClearAll()">Clear all</button>
     </div>
 
-    <div class="sd-orgs-grid" id="sdOrgsGrid">
-      <!-- Populated by JS -->
-      <div style="grid-column:1/-1;color:var(--gray-500);font-size:0.85rem;padding:20px 0;">Loading organizations...</div>
+    <input type="text" class="mh-search-input" id="sdSearchInput"
+           placeholder="🔍 Search organizations..."
+           oninput="sdApplyFilters()" />
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Program Type</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="service_type" data-value="PTSD" onclick="sdTogglePill(this)">PTSD</button>
+        <button class="mh-pill" data-filter="service_type" data-value="TBI" onclick="sdTogglePill(this)">TBI</button>
+        <button class="mh-pill" data-filter="service_type" data-value="MST" onclick="sdTogglePill(this)">MST</button>
+        <button class="mh-pill" data-filter="service_type" data-value="Mobility" onclick="sdTogglePill(this)">Mobility</button>
+        <button class="mh-pill" data-filter="service_type" data-value="Guide" onclick="sdTogglePill(this)">Guide / Vision</button>
+        <button class="mh-pill" data-filter="service_type" data-value="Hearing" onclick="sdTogglePill(this)">Hearing</button>
+        <button class="mh-pill" data-filter="service_type" data-value="Psychiatric" onclick="sdTogglePill(this)">Psychiatric</button>
+        <button class="mh-pill" data-filter="service_type" data-value="Seizure" onclick="sdTogglePill(this)">Seizure Response</button>
+      </div>
     </div>
-  </section>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Accreditation</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="accreditation" data-value="ADI" onclick="sdTogglePill(this)">✅ ADI</button>
+        <button class="mh-pill" data-filter="accreditation" data-value="IGDF" onclick="sdTogglePill(this)">✅ IGDF</button>
+        <button class="mh-pill" data-filter="accreditation" data-value="ADI + IGDF" onclick="sdTogglePill(this)">⭐ Dual ADI + IGDF</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Cost</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="cost" data-value="free" onclick="sdTogglePill(this)">💚 Free to Veterans</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Wait Time</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="wait_time" data-value="no_wait" onclick="sdTogglePill(this)">No Waitlist</button>
+        <button class="mh-pill" data-filter="wait_time" data-value="short" onclick="sdTogglePill(this)">Under 12 Months</button>
+        <button class="mh-pill" data-filter="wait_time" data-value="medium" onclick="sdTogglePill(this)">1–2 Years</button>
+        <button class="mh-pill" data-filter="wait_time" data-value="long" onclick="sdTogglePill(this)">2+ Years</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Eligibility</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="vet_focused" data-value="yes" onclick="sdTogglePill(this)">🎖️ Veteran-Focused Only</button>
+      </div>
+    </div>
+
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Region</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="region" data-value="National" onclick="sdTogglePill(this)">🇺🇸 National</button>
+        <button class="mh-pill" data-filter="region" data-value="Northeast" onclick="sdTogglePill(this)">Northeast</button>
+        <button class="mh-pill" data-filter="region" data-value="Mid-Atlantic" onclick="sdTogglePill(this)">Mid-Atlantic</button>
+        <button class="mh-pill" data-filter="region" data-value="Southeast" onclick="sdTogglePill(this)">Southeast</button>
+        <button class="mh-pill" data-filter="region" data-value="Midwest" onclick="sdTogglePill(this)">Midwest</button>
+        <button class="mh-pill" data-filter="region" data-value="South" onclick="sdTogglePill(this)">South / TX</button>
+        <button class="mh-pill" data-filter="region" data-value="Southwest" onclick="sdTogglePill(this)">Southwest</button>
+        <button class="mh-pill" data-filter="region" data-value="Mountain West" onclick="sdTogglePill(this)">Mountain West</button>
+        <button class="mh-pill" data-filter="region" data-value="Pacific Northwest" onclick="sdTogglePill(this)">Pacific NW</button>
+        <button class="mh-pill" data-filter="region" data-value="West" onclick="sdTogglePill(this)">West / CA</button>
+      </div>
+    </div>
+
+    <div class="mh-result-count">
+      Showing <strong id="sdResultCount">0</strong> of <strong id="sdTotalCount">0</strong> organizations
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <div class="mh-toolbar-left"><strong id="sdResultLabel">0</strong> organizations found</div>
+      <select class="mh-sort-select" id="sdSortSelect" onchange="sdApplyFilters()">
+        <option value="default">Sort: Default</option>
+        <option value="name">Sort: A–Z</option>
+        <option value="free">Sort: Free First</option>
+        <option value="adi">Sort: ADI Accredited First</option>
+      </select>
+    </div>
+
+    <div class="mh-grid" id="sdOrgsGrid"></div>
+
+    <div class="mh-load-more" id="sdLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="sdLoadMore()">Load More Organizations</button>
+    </div>
+  </main>
+
+</div><!-- /.mh-page-wrapper (orgs) -->
+
+<div class="sd-page">
 
   <!-- ══════════════════════════════════════════════════════ -->
   <!-- SECTION: VA BENEFITS -->
@@ -744,81 +838,199 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 </script>
 
 <!-- ============================================================
-     SERVICE DOG ORGS — Loaded from data/service_dogs.json
+     SERVICE DOG ORGS — Filter engine v2 (sidebar layout)
      ============================================================ -->
 <script>
 (function() {
   'use strict';
 
-  var _allOrgs = [];
-  var _activeFilter = 'all';
+  let ALL_ORGS = [];
+  let FILTERED = [];
+  let DISPLAYED = 0;
+  const PAGE_SIZE = 12;
+
+  const filters = {
+    search: '',
+    service_type: new Set(),
+    vet_focused: new Set(),
+    accreditation: new Set(),
+    cost: new Set(),
+    wait_time: new Set(),
+    region: new Set()
+  };
 
   function esc(s) {
     if (!s) return '';
     return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
   }
 
-  function renderOrgs(filter) {
-    var grid = document.getElementById('sdOrgsGrid');
-    if (!grid) return;
+  function sdApplyFilters() {
+    const searchEl = document.getElementById('sdSearchInput');
+    filters.search = searchEl ? searchEl.value.toLowerCase() : '';
 
-    var items = _allOrgs.filter(function(o) {
+    FILTERED = ALL_ORGS.filter(o => {
       if (o.category !== 'veteran_org') return false;
-      if (filter === 'all') return true;
-      if (filter === 'ptsd')    return o.service_types && o.service_types.some(function(t){ return /ptsd|tbi|mst|psych/i.test(t); });
-      if (filter === 'mobility') return o.service_types && o.service_types.some(function(t){ return /mobility/i.test(t); });
-      if (filter === 'guide')   return o.service_types && o.service_types.some(function(t){ return /guide|vision/i.test(t); });
-      if (filter === 'adi')     return o.accredited === true && o.accreditation && o.accreditation.indexOf('ADI') !== -1;
-      if (filter === 'vetonly') return o.veteran_focused === true;
+
+      // Search
+      if (filters.search) {
+        const hay = [o.name, o.description, (o.service_types||[]).join(' '), o.eligibility].join(' ').toLowerCase();
+        if (!hay.includes(filters.search)) return false;
+      }
+
+      // Program type — partial match against service_types array
+      if (filters.service_type.size > 0) {
+        const types = (o.service_types || []).map(t => t.toLowerCase());
+        const match = [...filters.service_type].some(f => types.some(t => t.includes(f.toLowerCase())));
+        if (!match) return false;
+      }
+
+      // Veteran-focused
+      if (filters.vet_focused.size > 0) {
+        if (!o.veteran_focused) return false;
+      }
+
+      // Accreditation
+      if (filters.accreditation.size > 0) {
+        const acc = o.accreditation || '';
+        let match = false;
+        for (const f of filters.accreditation) {
+          if (f === 'ADI + IGDF') { if (acc === 'ADI + IGDF') match = true; }
+          else { if (acc.includes(f)) match = true; }
+        }
+        if (!match) return false;
+      }
+
+      // Cost
+      if (filters.cost.size > 0) {
+        const cost = (o.cost || '').toLowerCase();
+        const match = [...filters.cost].some(f => f === 'free' && cost.includes('free'));
+        if (!match) return false;
+      }
+
+      // Wait time — uses wait_time_category field
+      if (filters.wait_time.size > 0) {
+        const wtc = o.wait_time_category || 'varies';
+        if (!filters.wait_time.has(wtc)) return false;
+      }
+
+      // Region — national orgs always match any regional filter
+      if (filters.region.size > 0) {
+        const orgRegions = o.region || ['National'];
+        const isNational = orgRegions.includes('National');
+        const match = isNational || [...filters.region].some(f => orgRegions.includes(f));
+        if (!match) return false;
+      }
+
       return true;
     });
 
-    if (items.length === 0) {
-      grid.innerHTML = '<div style="grid-column:1/-1;color:var(--gray-500);font-size:0.85rem;padding:20px 0;">No organizations match this filter.</div>';
-      return;
+    // Sort
+    const sort = document.getElementById('sdSortSelect')?.value || 'default';
+    if (sort === 'name') {
+      FILTERED.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sort === 'free') {
+      FILTERED.sort((a, b) => {
+        const isFree = o => (o.cost || '').toLowerCase().includes('free') ? 0 : 1;
+        return isFree(a) - isFree(b);
+      });
+    } else if (sort === 'adi') {
+      FILTERED.sort((a, b) => {
+        const getAdi = o => (o.accredited && (o.accreditation || '').includes('ADI')) ? 0 : 1;
+        return getAdi(a) - getAdi(b);
+      });
     }
 
-    var html = items.map(function(o) {
-      var tags = [];
-      if (o.accredited && o.accreditation && o.accreditation.indexOf('ADI') !== -1) tags.push('<span class="rp-tag--secondary">ADI Accredited</span>');
-      if (o.veteran_focused) tags.push('<span class="rp-tag--primary">Veteran-Focused</span>');
-      if (o.cost && /free/i.test(o.cost)) tags.push('<span class="rp-tag--neutral">Free to Veterans</span>');
-      if (o.service_types) o.service_types.forEach(function(t) {
-        tags.push('<span class="rp-tag--neutral">' + esc(t) + '</span>');
-      });
-
-      return '<div class="rp-card">' +
-        '<div class="rp-card__name">' + esc(o.name) + '</div>' +
-        (tags.length ? '<div class="rp-card__tags">' + tags.join('') + '</div>' : '') +
-        '<div class="rp-card__desc">' + esc(o.description) + '</div>' +
-        '<div class="rp-card__meta"><strong>Cost:</strong> ' + esc(o.cost) + '</div>' +
-        (o.wait_time ? '<div class="rp-card__meta"><strong>Wait time:</strong> ' + esc(o.wait_time) + '</div>' : '') +
-        (o.eligibility ? '<div class="rp-card__meta"><strong>Eligibility:</strong> ' + esc(o.eligibility) + '</div>' : '') +
-        (o.application_link
-          ? '<a href="' + esc(o.application_link) + '" target="_blank" rel="noopener noreferrer" class="rp-card__link">Apply / Learn More →</a>'
-          : (o.website ? '<a href="' + esc(o.website) + '" target="_blank" rel="noopener noreferrer" class="rp-card__link">Visit Website →</a>' : '')) +
-      '</div>';
-    }).join('');
-
-    grid.innerHTML = html;
+    DISPLAYED = 0;
+    document.getElementById('sdOrgsGrid').innerHTML = '';
+    const rc = document.getElementById('sdResultCount');
+    const rl = document.getElementById('sdResultLabel');
+    if (rc) rc.textContent = FILTERED.length;
+    if (rl) rl.textContent = FILTERED.length;
+    sdLoadMore();
   }
 
-  window.sdFilter = function(filter, btn) {
-    _activeFilter = filter;
-    document.querySelectorAll('.sd-filter-pill').forEach(function(b) { b.classList.remove('active'); });
-    if (btn) btn.classList.add('active');
-    renderOrgs(filter);
+  function sdLoadMore() {
+    const batch = FILTERED.slice(DISPLAYED, DISPLAYED + PAGE_SIZE);
+    if (batch.length === 0 && DISPLAYED === 0) {
+      document.getElementById('sdOrgsGrid').innerHTML =
+        '<div class="mh-empty"><div class="mh-empty-icon">🔍</div><h3>No organizations found</h3><p>Try adjusting your filters or search terms.</p></div>';
+    } else {
+      batch.forEach(o => {
+        document.getElementById('sdOrgsGrid').insertAdjacentHTML('beforeend', renderOrgCard(o));
+      });
+    }
+    DISPLAYED += batch.length;
+    const lm = document.getElementById('sdLoadMore');
+    if (lm) lm.style.display = DISPLAYED < FILTERED.length ? 'block' : 'none';
+  }
+
+  function renderOrgCard(o) {
+    const tags = [];
+    if (o.accredited) {
+      if ((o.accreditation || '').includes('ADI')) tags.push('<span class="rp-tag--secondary">ADI</span>');
+      if ((o.accreditation || '').includes('IGDF')) tags.push('<span class="rp-tag--secondary">IGDF</span>');
+    }
+    if (o.veteran_focused) tags.push('<span class="rp-tag--primary">Veteran-Focused</span>');
+    if (o.cost && /free/i.test(o.cost)) tags.push('<span class="rp-tag--neutral">Free</span>');
+    (o.service_types || []).slice(0, 4).forEach(t => {
+      tags.push('<span class="rp-tag--neutral">' + esc(t) + '</span>');
+    });
+
+    const link = o.application_link
+      ? '<a href="' + esc(o.application_link) + '" target="_blank" rel="noopener noreferrer" class="rp-card__link">Apply / Learn More →</a>'
+      : (o.website ? '<a href="' + esc(o.website) + '" target="_blank" rel="noopener noreferrer" class="rp-card__link">Visit Website →</a>' : '');
+
+    return '<div class="rp-card">' +
+      '<div class="rp-card__name">' + esc(o.name) + '</div>' +
+      (tags.length ? '<div class="rp-card__tags">' + tags.join('') + '</div>' : '') +
+      '<div class="rp-card__desc">' + esc(o.description) + '</div>' +
+      '<div class="rp-card__meta"><strong>Cost:</strong> ' + esc(o.cost) + '</div>' +
+      (o.wait_time ? '<div class="rp-card__meta"><strong>Wait time:</strong> ' + esc(o.wait_time) + '</div>' : '') +
+      (o.eligibility ? '<div class="rp-card__meta"><strong>Eligibility:</strong> ' + esc(o.eligibility) + '</div>' : '') +
+      link +
+      '</div>';
+  }
+
+  window.sdTogglePill = function(btn) {
+    const filterType = btn.dataset.filter;
+    const value = btn.dataset.value;
+    const wasActive = btn.classList.contains('active');
+    if (wasActive) {
+      btn.classList.remove('active');
+      filters[filterType].delete(value);
+    } else {
+      btn.classList.add('active');
+      filters[filterType].add(value);
+    }
+    sdApplyFilters();
   };
 
+  window.sdClearAll = function() {
+    Object.keys(filters).forEach(k => {
+      if (k === 'search') filters[k] = '';
+      else filters[k].clear();
+    });
+    document.querySelectorAll('#orgs-database .mh-pill').forEach(p => p.classList.remove('active'));
+    const searchEl = document.getElementById('sdSearchInput');
+    if (searchEl) searchEl.value = '';
+    sdApplyFilters();
+  };
+
+  window.sdLoadMore = sdLoadMore;
+  window.sdApplyFilters = sdApplyFilters;
+
   fetch('data/service_dogs.json')
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      _allOrgs = data;
-      renderOrgs(_activeFilter);
+    .then(r => r.json())
+    .then(data => {
+      ALL_ORGS = data;
+      const total = data.filter(o => o.category === 'veteran_org').length;
+      const tc = document.getElementById('sdTotalCount');
+      if (tc) tc.textContent = total;
+      sdApplyFilters();
     })
-    .catch(function() {
-      var grid = document.getElementById('sdOrgsGrid');
-      if (grid) grid.innerHTML = '<div style="grid-column:1/-1;color:var(--gray-500);font-size:0.85rem;padding:20px 0;">Could not load organizations. Please refresh the page.</div>';
+    .catch(() => {
+      const grid = document.getElementById('sdOrgsGrid');
+      if (grid) grid.innerHTML = '<div class="mh-empty"><div class="mh-empty-icon">⚠️</div><h3>Could not load organizations</h3><p>Please refresh the page.</p></div>';
     });
 
 })();
@@ -854,6 +1066,7 @@ document.querySelectorAll('.navbar__nav a').forEach(link => {
 </div>
 <script src="js/auth.js"></script>
 <script src="js/analytics.js"></script>
+<script src="js/feedback-widget.js" defer></script>
 <script src="js/newsletter.js"></script>
 </body>
 </html>
