@@ -1660,8 +1660,32 @@
       if (structured.document_actions && structured.document_actions.length > 0) {
         _processDocumentActions(structured, transcript);
       }
+
+      // ── 4c. AGENTIC: report_ready triggers auto-save from voice-bridge ──
+      if (structured.report_ready || structured.mode === 'report') {
+        // The voice AI said the report is ready — save a snapshot via showReportActions
+        // which auto-saves to template_outputs AND shows the download/dashboard buttons.
+        // We also fire _processDocumentActions with a synthetic action if the AI forgot.
+        if (!structured.document_actions || structured.document_actions.length === 0) {
+          _processDocumentActions({
+            document_actions: [{
+              action: 'save_report',
+              template_type: 'benefits_report',
+              title: 'Voice Session Benefits Report'
+            }]
+          }, transcript);
+        }
+      }
+
+      // Dashboard handoff — explicit or auto-fallback
       if (structured.dashboard_hint) {
         _injectDashboardHandoff(structured.dashboard_hint);
+      } else if (structured.report_ready || structured.mode === 'report') {
+        _injectDashboardHandoff('show_reports');
+      } else if (structured.document_actions && structured.document_actions.length > 0) {
+        _injectDashboardHandoff('show_profile');
+      } else if (structured.checklist_items && structured.checklist_items.length > 0) {
+        _injectDashboardHandoff('show_checklist');
       }
 
       // ── 5. Session context injection (GENERAL_QUESTION gap fill) ─────
@@ -2149,7 +2173,47 @@
           console.log('[AIOS][VOICE-STRUCTURED] mode=' + _upgraded.mode +
             ' | checklist_items=' + (data.structured.checklist_items ? data.structured.checklist_items.length : 0) +
             ' | missions=' + (data.structured.missions ? data.structured.missions.length : 0) +
+            ' | doc_actions=' + (data.structured.document_actions ? data.structured.document_actions.length : 0) +
+            ' | dashboard_hint=' + (data.structured.dashboard_hint || 'none') +
             ' | report_ready=' + !!data.structured.report_ready);
+
+          // ── AGENTIC: Save document actions from voice-structured path ──
+          _processDocumentActions(data.structured, _aiText);
+
+          // ── AGENTIC: Persist checklist items from voice-structured path ──
+          if (data.structured.checklist_items && data.structured.checklist_items.length > 0 &&
+              window.AIOS && window.AIOS.Checklist &&
+              typeof window.AIOS.Checklist.addItem === 'function') {
+            data.structured.checklist_items.forEach(function(item) {
+              if (!item || !item.title) return;
+              window.AIOS.Checklist.addItem({
+                title:       item.title,
+                category:    item.category || 'immediate',
+                description: item.description || '',
+                source:      'voice_ai'
+              });
+            });
+            console.log('[AIOS][VOICE-STRUCTURED] persisted ' + data.structured.checklist_items.length + ' checklist items');
+          }
+
+          // ── AGENTIC: Mission creation from voice-structured path ──
+          if (data.structured.missions && Array.isArray(data.structured.missions)) {
+            data.structured.missions.forEach(function(mSpec) {
+              if (!mSpec || mSpec.action !== 'create' || !mSpec.type) return;
+              _createMissionWithDefaults(mSpec.type);
+            });
+          }
+
+          // ── AGENTIC: report_ready triggers showReportActions + auto-save ──
+          if (data.structured.report_ready && _aiText.length >= 400) {
+            showReportActions(_aiText);
+          }
+
+          // ── AGENTIC: Dashboard handoff from voice-structured path ──
+          if (data.structured.dashboard_hint) {
+            _injectDashboardHandoff(data.structured.dashboard_hint);
+          }
+
           // Re-render ActionBar with upgraded structured contract
           if (window.AIOS.ActionBar && chatMessages) {
             var _vtMsgs2 = chatMessages.querySelectorAll('.message--ai');
@@ -2914,8 +2978,12 @@
         maybeShowReportButton();
 
         // Phase 2: Detect report and show PDF download + checklist
-        if (isReportResponse(aiResponse)) {
-          log('Report', 'detected — showing actions');
+        // Uses BOTH the regex heuristic AND the structured report_ready flag.
+        // Structured flag takes priority — it's the AI's explicit signal.
+        var _reportDetectedByRegex = isReportResponse(aiResponse);
+        var _reportDetectedByStructured = _p41Structured && _p41Structured.report_ready;
+        if (_reportDetectedByRegex || _reportDetectedByStructured) {
+          log('Report', 'detected — showing actions (regex=' + _reportDetectedByRegex + ' structured=' + !!_reportDetectedByStructured + ')');
           reportGenerated = true;
           showReportActions(aiResponse);
         }
@@ -2951,8 +3019,21 @@
 
         // ── AGENTIC: Dashboard handoff bar after significant actions ──────
         try {
+          // Explicit dashboard_hint from structured output
           if (_p47Contract && _p47Contract.dashboard_hint) {
             _injectDashboardHandoff(_p47Contract.dashboard_hint);
+          }
+          // Fallback: auto-inject dashboard link when report is ready,
+          // checklist items were created, or document_actions fired —
+          // even if the AI forgot to set dashboard_hint
+          else if (_p41Structured && !_p47Contract.dashboard_hint) {
+            if (_p41Structured.report_ready) {
+              _injectDashboardHandoff('show_reports');
+            } else if (_p41Structured.document_actions && _p41Structured.document_actions.length > 0) {
+              _injectDashboardHandoff('show_profile');
+            } else if (_p41Structured.checklist_items && _p41Structured.checklist_items.length > 0) {
+              _injectDashboardHandoff('show_checklist');
+            }
           }
         } catch (_dhErr) {
           console.warn('[AIOS][DASHBOARD-HANDOFF] error:', _dhErr.message || _dhErr);

@@ -109,6 +109,7 @@ The AfterAction AI system acts on your structured output. When you detect docume
 - Mission signals → the system creates tracked missions with checklists
 - Checklist items → the system adds them to the veteran's mission checklist
 - Template requests → mode="template" triggers template generation and auto-save
+- Report/plan delivery → when the AI voice response DELIVERS a report or plan (has specific benefit recommendations, numbered steps, and personalized content), set mode="report", report_ready=true, document_actions=[{action:"save_report", template_type:"benefits_report", title:"Voice Session Benefits Report"}], dashboard_hint="show_reports", and extract checklist_items from the action steps mentioned.
 Classify accordingly so the system can take action. Never output "I can't do that" for things the system handles.
 
 ## SESSION CONTINUITY

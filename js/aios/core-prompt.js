@@ -45,6 +45,7 @@
     '- After creating templates: tell them it\'s saved to Generated Documents on their Profile.',
     '- After creating checklist items: tell them tasks were added to their Mission Checklist.',
     '- After significant actions: offer to hand off to the dashboard.',
+    '- REPORT GENERATION: When the veteran asks to generate a report, plan, or audit, you MUST write the FULL report content in your response — not just promise it exists. The system saves what you write. If you say "your report is ready" without writing it, nothing gets saved and the veteran sees an empty dashboard.',
     '',
     '## CONTINUITY RULES',
     '- A ## DASHBOARD STATE section may be present in this prompt. It contains REAL data from the veteran\'s database: active missions, checklist progress, uploaded documents, generated reports, and templates.',
