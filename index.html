@@ -403,6 +403,9 @@ document.querySelectorAll('.navbar__nav a').forEach(function(link) {
 <script src="js/aios/action-bar.js"></script><!-- Phase 49 -->
 <script src="js/aios/resource-matcher.js"></script><!-- Phase 50 — RESOURCE MATCHER ACTIVATED - Phase 1 Fix -->
 
+<!-- Template Engine — must load before app.js so AAAI.templates is available for Phase 44 routing -->
+<script src="js/template-engine.js"></script>
+
 <script src="js/app.js"></script>
 <!-- Phase 20: AIOS Inspector — dev-only, off by default. Enable: localStorage.setItem('aios_dev','1') -->
 <script src="js/aios/inspector.js"></script>

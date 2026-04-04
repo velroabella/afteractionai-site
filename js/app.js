@@ -2682,6 +2682,22 @@
     }
     // ── END VOICE SESSION GUARD ───────────────────────────────────────────────────
 
+    // ── TEXT-PATH TEMPLATE ROUTING ───────────────────────────────────────────────
+    // Mirror of Phase 44 (voice) for text input. If template-engine.js is loaded
+    // and the user's text matches a known template, launch the builder instead of
+    // sending to the AI. The builder has its own intake flow and save pipeline.
+    if (window.AAAI && window.AAAI.templates && typeof window.AAAI.templates.detectForTask === 'function') {
+      var _txtTemplateId = window.AAAI.templates.detectForTask(trimmed);
+      if (_txtTemplateId && typeof window.AAAI.templates.launch === 'function') {
+        log('[INPUT]', 'TEXT path → template engine: ' + _txtTemplateId);
+        addMessage('Launching the ' + _txtTemplateId.replace(/_/g, ' ') + ' builder — I\'ll ask a few quick questions to personalize it for you.', 'ai');
+        conversationHistory.push({ role: 'assistant', content: 'Launching the ' + _txtTemplateId.replace(/_/g, ' ') + ' builder.' });
+        setTimeout(function() { window.AAAI.templates.launch(_txtTemplateId, null, null); }, 600);
+        return;
+      }
+    }
+    // ── END TEXT-PATH TEMPLATE ROUTING ────────────────────────────────────────────
+
     // Text mode: send immediately, or queue for when the current response finishes
     log('[INPUT]', 'TEXT path — src=' + (opts.path || 'text') + ' text="' + trimmed.substring(0, 40) + '"');
     if (!isProcessing) {
