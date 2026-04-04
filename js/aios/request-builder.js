@@ -407,6 +407,75 @@
         systemParts.push(missionLines.join('\n'));
       }
 
+      // Phase 7: Dashboard state — full continuity context from Supabase.
+      // Source: window.AIOS._dashboardContext — set by _loadDashboardContext() in app.js
+      // after _initCaseModel() resolves. Contains missions, checklist progress,
+      // reports, generated docs, and uploaded docs. Gives the AI full session
+      // continuity so it never asks "what are you working on?" when the dashboard
+      // already has the answer.
+      var _dashCtx = window.AIOS && window.AIOS._dashboardContext;
+      if (_dashCtx) {
+        var dsLines = ['## DASHBOARD STATE (loaded from database)'];
+
+        // Missions summary (supplements ## ACTIVE MISSION with broader view)
+        if (_dashCtx.missions && _dashCtx.missions.length > 0) {
+          dsLines.push('Active missions (' + _dashCtx.missions.length + '):');
+          for (var _mi = 0; _mi < _dashCtx.missions.length; _mi++) {
+            var _mm = _dashCtx.missions[_mi];
+            var _mLine = '- ' + (_mm.name || _mm.type) + ' (' + _mm.status + ')';
+            if (_mm.currentStep) _mLine += ' — current step: ' + _mm.currentStep;
+            if (_mm.blockers)    _mLine += ' — blockers: ' + _mm.blockers;
+            dsLines.push(_mLine);
+          }
+        }
+
+        // Checklist progress
+        if (_dashCtx.checklist && _dashCtx.checklist.total > 0) {
+          var _cl = _dashCtx.checklist;
+          dsLines.push('Checklist progress: ' + _cl.completed + '/' + _cl.total + ' completed' +
+            (_cl.in_progress > 0 ? ', ' + _cl.in_progress + ' in progress' : '') +
+            (_cl.blocked > 0 ? ', ' + _cl.blocked + ' blocked' : ''));
+          if (_cl.items && _cl.items.length > 0) {
+            dsLines.push('Recent items:');
+            for (var _ci = 0; _ci < _cl.items.length; _ci++) {
+              var _it = _cl.items[_ci];
+              dsLines.push('  - [' + _it.status + '] ' + _it.title);
+            }
+          }
+        }
+
+        // Uploaded documents
+        if (_dashCtx.uploadedDocs && _dashCtx.uploadedDocs.length > 0) {
+          dsLines.push('Uploaded documents (' + _dashCtx.uploadedDocs.length + '):');
+          for (var _di = 0; _di < _dashCtx.uploadedDocs.length; _di++) {
+            var _ud = _dashCtx.uploadedDocs[_di];
+            dsLines.push('- ' + _ud.type + ': ' + _ud.file + ' (' + _ud.status + ')');
+          }
+        }
+
+        // Generated reports
+        if (_dashCtx.reports && _dashCtx.reports.length > 0) {
+          dsLines.push('Generated reports (' + _dashCtx.reports.length + '):');
+          for (var _ri = 0; _ri < _dashCtx.reports.length; _ri++) {
+            var _rp = _dashCtx.reports[_ri];
+            dsLines.push('- ' + _rp.type + ': ' + _rp.title);
+          }
+        }
+
+        // Generated documents/templates
+        if (_dashCtx.generatedDocs && _dashCtx.generatedDocs.length > 0) {
+          dsLines.push('Generated documents (' + _dashCtx.generatedDocs.length + '):');
+          for (var _gi = 0; _gi < _dashCtx.generatedDocs.length; _gi++) {
+            var _gd = _dashCtx.generatedDocs[_gi];
+            dsLines.push('- ' + _gd.type + ': ' + _gd.title);
+          }
+        }
+
+        if (dsLines.length > 1) {
+          systemParts.push(dsLines.join('\n'));
+        }
+      }
+
       // Page context (current page, active topics, etc.)
       if (opts.pageContext) {
         var pageLines = ['## PAGE CONTEXT'];

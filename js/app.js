@@ -740,10 +740,146 @@
           })
           .catch(function() { /* non-critical — session continues without document context */ });
       }
+
+      // Phase 7: Load full dashboard context for AI continuity
+      // Slight delay so prior doc fetch and mission restore can settle first
+      setTimeout(_loadDashboardContext, 500);
     }).catch(function(err) {
       // Non-fatal — old code paths continue as normal
       log('Phase2', 'getOrCreateActiveCase exception — localStorage fallback active: ' +
           (err && err.message ? err.message : String(err)));
+    });
+  }
+
+  /* ──────────────────────────────────────────────────────────
+     _loadDashboardContext() — Phase 7: Memory/Context Loading
+     Pulls full dashboard state from Supabase and stores it in
+     window.AIOS._dashboardContext so RequestBuilder injects it
+     into every system prompt. Gives the AI full continuity:
+       - Active missions with current step & blockers
+       - Uploaded documents summary
+       - Generated reports/templates
+       - Checklist progress (counts by status)
+
+     Called once after _initCaseModel() resolves _activeCaseId,
+     and again on authStateChanged(SIGNED_IN).
+     Fire-and-forget — failure never blocks conversation flow.
+  ────────────────────────────────────────────────────────── */
+  function _loadDashboardContext() {
+    if (!_activeCaseId) return;
+    if (!window.AAAI || !window.AAAI.DataAccess) return;
+
+    var DA = window.AAAI.DataAccess;
+    var auth = window.AAAI.auth;
+
+    // Run all queries in parallel
+    var promises = [
+      // 1. Active missions with details
+      DA.missions.list(_activeCaseId, { status: 'active' }),
+      // 2. All checklist items for progress summary
+      DA.checklistItems.listByCase(_activeCaseId),
+      // 3. Reports
+      DA.reports.listByCase(_activeCaseId),
+      // 4. Generated documents (from auth.js — template_outputs)
+      (auth && typeof auth.loadGeneratedDocuments === 'function')
+        ? auth.loadGeneratedDocuments()
+        : Promise.resolve({ data: null, error: 'no auth' }),
+      // 5. Uploaded documents (already in _priorDocSummary but need count)
+      DA.documents.listByCase(_activeCaseId)
+    ];
+
+    Promise.all(promises).then(function(results) {
+      var ctx = {
+        missions: [],
+        checklist: { total: 0, completed: 0, in_progress: 0, not_started: 0, blocked: 0, items: [] },
+        reports: [],
+        generatedDocs: [],
+        uploadedDocs: [],
+        loadedAt: new Date().toISOString()
+      };
+
+      // ── Missions ──
+      var mData = results[0].data;
+      if (mData && mData.length) {
+        ctx.missions = mData.map(function(m) {
+          return {
+            type:        m.mission_type || m.type || 'unknown',
+            name:        m.name || m.mission_type || 'Unnamed Mission',
+            status:      m.status || 'active',
+            currentStep: m.current_step || null,
+            nextStep:    m.next_step || null,
+            blockers:    m.blockers || null,
+            startedAt:   m.started_at || m.created_at || null
+          };
+        });
+      }
+
+      // ── Checklist Progress ──
+      var clData = results[1].data;
+      if (clData && clData.length) {
+        ctx.checklist.total = clData.length;
+        clData.forEach(function(item) {
+          var st = item.status || 'not_started';
+          if (ctx.checklist[st] !== undefined) {
+            ctx.checklist[st]++;
+          }
+          // Keep last 10 items as summary (title + status + category)
+          if (ctx.checklist.items.length < 10) {
+            ctx.checklist.items.push({
+              title:    item.title || '',
+              status:   st,
+              category: item.category || 'immediate'
+            });
+          }
+        });
+      }
+
+      // ── Reports ──
+      var rData = results[2].data;
+      if (rData && rData.length) {
+        ctx.reports = rData.slice(0, 5).map(function(r) {
+          return {
+            type:      r.report_type || 'report',
+            title:     r.title || 'Untitled Report',
+            createdAt: r.created_at || null
+          };
+        });
+      }
+
+      // ── Generated Documents (template_outputs) ──
+      var gData = results[3].data;
+      if (gData && gData.length) {
+        ctx.generatedDocs = gData.slice(0, 10).map(function(g) {
+          return {
+            type:      g.template_type || 'document',
+            title:     g.title || 'Untitled',
+            createdAt: g.created_at || null
+          };
+        });
+      }
+
+      // ── Uploaded Documents ──
+      var dData = results[4].data;
+      if (dData && dData.length) {
+        ctx.uploadedDocs = dData.slice(0, 10).map(function(d) {
+          return {
+            type:   d.document_type || 'unknown',
+            file:   d.file_name || 'unnamed',
+            status: d.status || 'uploaded'
+          };
+        });
+      }
+
+      window.AIOS = window.AIOS || {};
+      window.AIOS._dashboardContext = ctx;
+      log('Phase7', 'dashboard context loaded — ' +
+        ctx.missions.length + ' missions, ' +
+        ctx.checklist.total + ' checklist items, ' +
+        ctx.reports.length + ' reports, ' +
+        ctx.generatedDocs.length + ' generated docs, ' +
+        ctx.uploadedDocs.length + ' uploaded docs');
+    }).catch(function(err) {
+      console.warn('[AAAI][Phase7] _loadDashboardContext failed (non-fatal):', err && err.message ? err.message : err);
     });
   }
 
@@ -863,6 +999,8 @@
         }
         // Phase 6: clear prior doc summary so next session fetches fresh on resume
         if (window.AIOS) { window.AIOS._priorDocSummary = null; }
+        // Phase 7: clear dashboard context on sign-out
+        if (window.AIOS) { window.AIOS._dashboardContext = null; }
         // PHASE 2 DEBUG HELPER — keep shared namespace in sync with private var
         if (window.AAAI) { window.AAAI._activeCaseId = null; }
         log('Phase2', 'user signed out — _activeCaseId cleared');
@@ -2938,6 +3076,8 @@
       return 'Welcome to AfterAction AI. I\'m here to help you find every benefit, resource, and organization you\'ve earned through your service \u2014 and build you a personalized plan. Free. No forms. No judgment.\n\nBefore we start talking, here\'s a tip: the more documents you upload up front, the more accurate and personalized your plan will be \u2014 and the fewer questions I\'ll need to ask.\n\nTap the upload button (arrow icon at the bottom) and drop in anything you have: DD-214, VA Disability Rating Letter, VA Benefits Summary, military transcripts, resume, certificates, or diplomas. I\'ll pull the details automatically.\n\nUpload as many as you want, or none at all. Your information is used only to help build your plan. Some data may be securely stored to improve your experience, but it is never sold or shared. Your privacy matters.\n\nWhen you\'re ready \u2014 uploaded or not \u2014 just tell me: what branch did you serve in?\n\n[OPTIONS: Army | Navy | Air Force | Marine Corps | Coast Guard | Space Force | National Guard | Reserve | I\'m a family member]';
     }
     if (userText === 'RESUME_MISSION') {
+      // Phase 7: Refresh dashboard context for the freshest state on resume
+      _loadDashboardContext();
       // Phase 43/46: Smart resume — surface missionState + profile data + resource options
       // Phase ID-GUARD: Never assert name or branch directly. Build a confirmation
       // summary so the user can verify stale profile data before the system uses it.
