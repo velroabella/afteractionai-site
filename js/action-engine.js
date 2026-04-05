@@ -84,7 +84,9 @@
     emergency:    { flow: ['emergency-contact-family-care-plan', 'personal-emergency-action-plan'], engine: ['emergency_contacts', 'emergency_action'] },
     burial:       { flow: ['benefits-eligibility-summary'], engine: ['burial_preferences'] },
     dependent:    { flow: ['emergency-contact-family-care-plan'], engine: ['dependent_care'] },
-    transition:   { flow: ['resume-builder', 'benefits-eligibility-summary', 'budget-financial-recovery-plan'], engine: ['transition_plan'] }
+    transition:   { flow: ['resume-builder', 'benefits-eligibility-summary', 'budget-financial-recovery-plan'], engine: ['transition_plan'] },
+    housing_crisis:       { flow: ['personal-emergency-action-plan'], engine: ['emergency_action'] },
+    mental_health_crisis: { flow: ['personal-emergency-action-plan', 'emergency-contact-family-care-plan'], engine: ['emergency_action'] }
   };
 
   // ── RESOURCE RECOMMENDATIONS ──────────────────────────

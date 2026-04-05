@@ -17,7 +17,7 @@
    Public API:
      window.AIOS.Resources.getCategories(profile) → string[]
      window.AIOS.Resources.getPriority(profile)
-       → { category, label, scope, destination, actionText, weight }[]
+       → { category, label, scope, actionText, weight }[]
    ══════════════════════════════════════════════════════════ */
 
 (function() {
@@ -157,71 +157,6 @@
     return null;
   }
 
-  /**
-   * Phase 46 Part 3: Build a query string from the veteran profile so that
-   * destination pages can auto-filter/pre-populate based on known data.
-   *
-   * Only includes params that are non-null and meaningful.
-   * Never includes PII (name, email, SSN).
-   *
-   * @param {Object} p  — AIOS.Memory.getProfile() output
-   * @param {string} categoryId
-   * @returns {string}  — e.g. "?state=FL&rating=70&branch=Army" or ""
-   */
-  function _buildDeepLinkParams(p, categoryId) {
-    if (!p) return '';
-    var parts = [];
-
-    // State is universally useful for benefit lookups
-    if (p.state) parts.push('state=' + encodeURIComponent(p.state));
-
-    // VA rating — numeric band relevant for compensation/TDIU/healthcare priority
-    if (p.vaRating !== null && p.vaRating !== undefined) {
-      parts.push('rating=' + encodeURIComponent(String(p.vaRating)));
-    }
-
-    // Branch — affects benefit eligibility on some pages
-    if (p.branch) parts.push('branch=' + encodeURIComponent(p.branch));
-
-    // Discharge status — relevant for education, housing, legal
-    if (p.dischargeStatus && categoryId !== 'crisis_support') {
-      parts.push('discharge=' + encodeURIComponent(p.dischargeStatus));
-    }
-
-    // Dependents flag — family/survivor pages
-    if (categoryId === 'family_survivor' && p.dependents && p.dependents !== 'no dependents') {
-      parts.push('dependents=1');
-    }
-
-    // Employment status — employment resources
-    if (categoryId === 'employment' && p.employmentStatus) {
-      parts.push('status=' + encodeURIComponent(p.employmentStatus));
-    }
-
-    // Mission type hint — helps destination pages surface the right content
-    if (p.missionType) parts.push('mission=' + encodeURIComponent(p.missionType));
-
-    return parts.length > 0 ? '?' + parts.join('&') : '';
-  }
-
-  /**
-   * Phase 55: Map a resource-mapper category ID to the matching
-   * resources.html filter category value. Returns null if no direct mapping.
-   */
-  function _mapToResourceCategory(catId) {
-    var map = {
-      'employment':              'employment',
-      'education':               'education',
-      'healthcare':              'medical',
-      'housing':                 'housing',
-      'legal':                   'legal',
-      'family_survivor':         'community',
-      'disability_compensation': 'benefits',
-      'state_benefits':          'benefits'
-    };
-    return map[catId] || null;
-  }
-
   /* ── Public API ───────────────────────────────────────── */
 
   var ResourceMapper = {
@@ -252,9 +187,11 @@
      *   category    {string}  — category id
      *   label       {string}  — display name
      *   scope       {string}  — 'federal' | 'state' | 'online'
-     *   destination {string}  — relative URL to best internal page
      *   actionText  {string}  — short CTA phrase
      *   weight      {number}  — priority score (higher = more urgent)
+     *
+     * Navigation/routing is handled by resource-matcher.js openResourcePage(),
+     * which reads canonical destinations from ISSUE_TO_RESOURCES in action-engine.js.
      *
      * @param {Object} profile — AIOS.Memory.getProfile() output
      * @returns {Array}
@@ -268,28 +205,10 @@
           if (rule.condition(p)) {
             var cat = _getCatById(rule.category);
             if (cat) {
-              // Phase 46 Part 3: Build deep-link destination with profile query params
-              var _baseDest = cat.destination || 'index.html?resume=1';
-              var _deepParams = '';
-              // Only append params to real internal pages (not AI-guided flows)
-              if (_baseDest.indexOf('?resume=1') === -1) {
-                _deepParams = _buildDeepLinkParams(p, cat.id);
-                // Phase 55: Add category filter param for resources.html routing
-                if (_baseDest === 'resources.html') {
-                  var _resCat = _mapToResourceCategory(cat.id);
-                  if (_resCat) {
-                    _deepParams = _deepParams
-                      ? _deepParams + '&category=' + encodeURIComponent(_resCat)
-                      : '?category=' + encodeURIComponent(_resCat);
-                  }
-                }
-              }
               results.push({
                 category:    cat.id,
                 label:       cat.label,
                 scope:       cat.scope,
-                destination: _baseDest,
-                deepLink:    _baseDest + _deepParams,
                 actionText:  cat.actionText  || 'Learn more',
                 weight:      rule.weight
               });

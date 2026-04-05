@@ -430,42 +430,91 @@
 
 
     /**
+     * Bridge map: resource-mapper category ID → action-engine issue key.
+     * Used by openResourcePage to resolve destinations from the canonical
+     * ISSUE_TO_RESOURCES in action-engine.js (single source of truth).
+     *
+     * Categories without an ISSUE_TO_RESOURCES match (disability_compensation,
+     * tdiu) fall back to the existing CATEGORIES.destination field.
+     */
+    _CATEGORY_TO_ISSUE: {
+      healthcare:     'va_healthcare',
+      education:      'education',
+      employment:     'career',
+      housing:        'va_loan',
+      state_benefits: 'property_tax',
+      crisis_support: 'mental_health_crisis',
+      family_survivor:'dependent',
+      legal:          'will'
+    },
+
+    /**
      * Open an internal resource page with optional filters.
      * Helper function for ActionBar and dashboard integration.
+     *
+     * Routing priority:
+     *   1. ISSUE_TO_RESOURCES (canonical, via _CATEGORY_TO_ISSUE bridge)
+     *   2. CATEGORIES.destination (legacy fallback for unmapped categories)
+     *   3. DATASETS page map (fallback for unknown categories)
+     *   4. resources.html (last resort)
      *
      * @param {string} category — resource-mapper category id (e.g. 'healthcare')
      * @param {Object} filters  — optional { state, rating, branch } for query params
      */
     openResourcePage: function(category, filters) {
-      var Resources = window.AIOS && window.AIOS.Resources;
-      if (!Resources) return;
+      var dest = null;
 
-      var cat = null;
-      var keys = Object.keys(Resources.CATEGORIES);
-      for (var i = 0; i < keys.length; i++) {
-        if (Resources.CATEGORIES[keys[i]].id === category) {
-          cat = Resources.CATEGORIES[keys[i]];
-          break;
+      // ── Priority 1: Canonical ISSUE_TO_RESOURCES lookup ──
+      var issueKey = this._CATEGORY_TO_ISSUE[category];
+      var actionEngine = window.AAAI && window.AAAI.actions;
+      if (issueKey && actionEngine && actionEngine.ISSUE_TO_RESOURCES) {
+        var entries = actionEngine.ISSUE_TO_RESOURCES[issueKey];
+        if (entries && entries.length > 0) {
+          var entry = entries[0];
+          dest = entry.page;
+          // Append canonical filter if present
+          if (entry.filter) {
+            dest += (dest.indexOf('?') !== -1 ? '&' : '?') + 'category=' + encodeURIComponent(entry.filter);
+          }
         }
       }
 
-      if (!cat) {
-        // Fallback: use dataset page map
+      // ── Priority 2: Legacy CATEGORIES.destination fallback ──
+      if (!dest) {
+        var Resources = window.AIOS && window.AIOS.Resources;
+        if (Resources) {
+          var cat = null;
+          var keys = Object.keys(Resources.CATEGORIES);
+          for (var i = 0; i < keys.length; i++) {
+            if (Resources.CATEGORIES[keys[i]].id === category) {
+              cat = Resources.CATEGORIES[keys[i]];
+              break;
+            }
+          }
+          if (cat) {
+            dest = cat.destination || 'resources.html';
+          }
+        }
+      }
+
+      // ── Priority 3: DATASETS page map fallback ──
+      if (!dest) {
         var dsKeys = Object.keys(DATASETS);
         for (var d = 0; d < dsKeys.length; d++) {
           var ds = DATASETS[dsKeys[d]];
           if (dsKeys[d] === category || ds.page.indexOf(category) !== -1) {
-            window.location.href = ds.page;
-            return;
+            dest = ds.page;
+            break;
           }
         }
-        window.location.href = 'resources.html';
-        return;
       }
 
-      var dest = cat.destination || 'resources.html';
+      // ── Priority 4: Last resort ──
+      if (!dest) {
+        dest = 'resources.html';
+      }
 
-      // Append filters as query params
+      // Append profile-based filters as query params
       if (filters) {
         var parts = [];
         if (filters.state) parts.push('state=' + encodeURIComponent(filters.state));

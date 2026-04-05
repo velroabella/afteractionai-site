@@ -1186,30 +1186,52 @@ function toggleMenu() {
      with type-aware destinations.
      ══════════════════════════════════════════════════════ */
 
+  // ── Build URL from ISSUE_TO_RESOURCES entry ──
+  // Reuses same param-building logic as getResourceRecommendations in action-engine.js
+  function _issueToUrl(issueKey, userState) {
+    var map = (window.AAAI && window.AAAI.actions) ? window.AAAI.actions.ISSUE_TO_RESOURCES : null;
+    if (!map) return null;
+    var entries = map[issueKey];
+    if (!entries || entries.length === 0) return null;
+    var r = entries[0]; // first entry = primary destination
+    var url = r.page;
+    var params = [];
+    if (r.page === 'state-benefits.html') {
+      if (userState) params.push('state=' + encodeURIComponent(userState));
+      if (r.filter)  params.push('category=' + encodeURIComponent(r.filter));
+    }
+    if (r.page === 'resources.html' && r.filter) {
+      params.push('category=' + encodeURIComponent(r.filter));
+    }
+    if (params.length > 0) url += '?' + params.join('&');
+    return url;
+  }
+
+  // ── Match goal text → issue key via ISSUE_PATTERNS ──
+  function _goalToIssueKey(goalText) {
+    var patterns = (window.AAAI && window.AAAI.actions) ? window.AAAI.actions.ISSUE_PATTERNS : null;
+    if (!patterns) return null;
+    for (var i = 0; i < patterns.length; i++) {
+      if (patterns[i].pattern.test(goalText)) return patterns[i].issue;
+    }
+    return null;
+  }
+
   function _renderActionFocusAreas(profile) {
     if (!profile) return;
+    var userState = profile.state || null;
 
-    // Goals → mission-type action chips
+    // Goals → action chips routed via ISSUE_PATTERNS → ISSUE_TO_RESOURCES
     if (profile.goals && profile.goals.length > 0) {
       var goalsEl = document.getElementById('dashGoals');
       if (goalsEl) {
         goalsEl.innerHTML = profile.goals.map(function(g) {
-          // Determine destination based on goal keyword
-          var dest = 'index.html?resume=1';
-          if (/school|degree|gi bill|education|training/i.test(g))  dest = 'education.html';
-          if (/hous|home|rent|mortgage/i.test(g))                    dest = 'grants-scholarships.html';
-          if (/job|career|work|employ/i.test(g))                     dest = 'resources.html?category=employment';
-          if (/legal|attorney|will|claim|appeal/i.test(g))           dest = 'document-templates.html';
-          if (/health|medical|mental|doctor/i.test(g))               dest = 'medical-help.html';
-          if (/business|entrepreneur|startup/i.test(g))              dest = 'resources.html?category=entrepreneurship';
-          if (/licens|certif/i.test(g))                              dest = 'licensure.html';
-          var _isMission = dest === 'index.html?resume=1';
-          return '<a href="' + dest + '" ' +
+          var issueKey = _goalToIssueKey(g);
+          var dest = issueKey ? _issueToUrl(issueKey, userState) : null;
+          if (!dest) return ''; // skip goals with no valid route
+          return '<a href="' + escHtml(dest) + '" ' +
             'style="display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:0.8rem;font-weight:600;' +
-            'background:' + (_isMission ? 'var(--gold-light,#fdf3d0)' : '#eff6ff') + ';' +
-            'color:' + (_isMission ? 'var(--gold,#c4a035)' : '#1a56db') + ';' +
-            'border:1px solid ' + (_isMission ? 'var(--gold,#c4a035)44' : '#1a56db33') + ';' +
-            'text-decoration:none;margin:3px 4px 3px 0;">' +
+            'background:#eff6ff;color:#1a56db;border:1px solid #1a56db33;text-decoration:none;margin:3px 4px 3px 0;">' +
             escHtml(g) +
             '<span style="font-size:0.65rem;opacity:0.7;">→</span>' +
           '</a>';
@@ -1217,27 +1239,15 @@ function toggleMenu() {
       }
     }
 
-    // Issue tags → resource action chips with deep links
+    // Issue tags → resource action chips via ISSUE_TO_RESOURCES (deterministic)
     if (profile.issue_tags && profile.issue_tags.length > 0) {
       var tagsEl = document.getElementById('dashIssueTags');
       if (tagsEl) {
-        // Build synthetic profile for deep linking
-        var _syn = _buildResSynth(profile);
         tagsEl.innerHTML = profile.issue_tags.map(function(t) {
-          var label = (t.issue || '').replace(/[-_]/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-          // Map issue to best resource destination
-          var dest = 'index.html?resume=1';
           var issue = (t.issue || '').toLowerCase();
-          var _stateParam = profile.state ? '?state=' + encodeURIComponent(profile.state) : '';
-          if (/employ|job|career|work/.test(issue))          dest = 'resources.html?category=employment';
-          else if (/hous|home|rent/.test(issue))             dest = 'grants-scholarships.html';
-          else if (/disab|rating|compensation|claim/.test(issue)) dest = 'index.html?resume=1';
-          else if (/health|medical|mental|ptsd|tbi/.test(issue))  dest = 'medical-help.html';
-          else if (/education|school|gi bill|degree/.test(issue))  dest = 'education.html';
-          else if (/legal|attorney|appeal|will/.test(issue)  )     dest = 'document-templates.html';
-          else if (/state|local/.test(issue))                      dest = 'state-benefits.html' + _stateParam;
-          else if (/family|surviv|depend/.test(issue))             dest = 'families-support.html';
-          else if (/crisis|mental|suicide|hotline/.test(issue))    dest = 'hotlines-escalation.html';
+          var label = issue.replace(/[-_]/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+          var dest = _issueToUrl(issue, userState);
+          if (!dest) return ''; // skip issues with no mapped resource
           var count = t.count || 1;
           return '<a href="' + escHtml(dest) + '" ' +
             'style="display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:0.77rem;font-weight:600;' +
@@ -1252,36 +1262,7 @@ function toggleMenu() {
 
   /* ── Phase 46 Mission Map Modal removed — mission UI stripped ── */
 
-  /* ── Shared helper: build synthetic AIOS profile from Supabase profile ── */
-  function _buildResSynth(profile) {
-    var synth = {
-      vaRating: null, dischargeStatus: null,
-      state: (profile && profile.state) ? profile.state : null,
-      employmentStatus: null, serviceEra: null,
-      currentGoals: null, dependents: null
-    };
-    if (profile && profile.disability_rating) {
-      var rb = String(profile.disability_rating);
-      if (/100/.test(rb)) synth.vaRating = 100;
-      else if (/90/.test(rb)) synth.vaRating = 90;
-      else if (/7[05]|80/.test(rb)) synth.vaRating = 70;
-      else if (/5[05]|60/.test(rb)) synth.vaRating = 50;
-      else if (/3[05]|40/.test(rb)) synth.vaRating = 30;
-      else if (/[12][05]/.test(rb)) synth.vaRating = 10;
-      else synth.vaRating = 0;
-    }
-    if (profile && profile.issue_tags && profile.issue_tags.length > 0) {
-      var tagStr = profile.issue_tags.map(function(t) { return t.issue || ''; }).join(' ');
-      if (/employ|job|career|work/i.test(tagStr)) synth.employmentStatus = 'job searching';
-      if (/hous|home|rent/i.test(tagStr))         synth.currentGoals = 'housing assistance';
-    }
-    return synth;
-  }
-
-  // Phase 48 (_p48Render) + Phase 48 listeners — REMOVED (Phase 55 cleanup)
-  // Mission panel and AI checklist UI no longer rendered.
-
-  // _p48Render function + authStateChanged/mission_state_synced listeners removed (Phase 55)
+  // _buildResSynth, _p48Render, _renderSecondarySteps — removed (orphaned after routing rewrite)
 
   /* ══════════════════════════════════════════════════════
      Phase 3.1 — Reports Supplement (Optimised)
