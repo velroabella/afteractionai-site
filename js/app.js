@@ -2682,10 +2682,13 @@
     }
     // ── END VOICE SESSION GUARD ───────────────────────────────────────────────────
 
-    // ── TEXT-PATH TEMPLATE ROUTING ───────────────────────────────────────────────
-    // Mirror of Phase 44 (voice) for text input. If template-engine.js is loaded
-    // and the user's text matches a known template, launch the builder instead of
-    // sending to the AI. The builder has its own intake flow and save pipeline.
+    // ── TEXT-PATH TEMPLATE ROUTING — DISABLED ──────────────────────────────────
+    // DISABLED: This block bypassed sendToAI(), RequestBuilder, memory injection,
+    // and document context — routing to a detached popup that started from scratch.
+    // All document generation now flows through the main chat pipeline so the AI
+    // sees full conversation history, uploaded documents, and AIOS.Memory profile.
+    // Original block preserved for reference during inline-generation migration.
+    /*
     if (window.AAAI && window.AAAI.templates && typeof window.AAAI.templates.detectForTask === 'function') {
       var _txtTemplateId = window.AAAI.templates.detectForTask(trimmed);
       if (_txtTemplateId && typeof window.AAAI.templates.launch === 'function') {
@@ -2696,6 +2699,7 @@
         return;
       }
     }
+    */
     // ── END TEXT-PATH TEMPLATE ROUTING ────────────────────────────────────────────
 
     // Text mode: send immediately, or queue for when the current response finishes
