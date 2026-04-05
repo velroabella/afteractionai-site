@@ -94,30 +94,30 @@
     va_appeal:    [{ page: 'hotlines-escalation.html', label: 'VA Hotlines' }],
     va_rating:    [{ page: 'hotlines-escalation.html', label: 'VA Hotlines' }],
     nexus:        [{ page: 'hotlines-escalation.html', label: 'VA Hotlines' }],
-    records:      [],
-    va_healthcare:[{ page: 'state-benefits.html', label: 'State Health Benefits', filter: 'healthcare' }],
-    education:    [{ page: 'state-benefits.html', label: 'State Education Benefits', filter: 'education' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
-    voc_rehab:    [{ page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
-    career:       [{ page: 'state-benefits.html', label: 'State Employment Benefits', filter: 'employment' }, { page: 'licensure.html', label: 'Licensure & Certifications' }],
-    linkedin:     [],
-    federal_career:[],
-    business:     [{ page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
-    salary:       [],
-    licensing:    [{ page: 'licensure.html', label: 'Licensure & Certifications' }],
+    records:      [{ page: 'document-templates.html', label: 'Document Templates' }],
+    va_healthcare:[{ page: 'medical-help.html', label: 'VA Healthcare' }, { page: 'state-benefits.html', label: 'State Health Benefits', filter: 'healthcare' }],
+    education:    [{ page: 'education.html', label: 'Education Benefits' }, { page: 'state-benefits.html', label: 'State Education Benefits', filter: 'education' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
+    voc_rehab:    [{ page: 'education.html', label: 'Education Benefits' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
+    career:       [{ page: 'resources.html', label: 'Employment Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Employment Benefits', filter: 'employment' }, { page: 'licensure.html', label: 'Licensure & Certifications' }],
+    linkedin:     [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }],
+    federal_career:[{ page: 'resources.html', label: 'Employment Resources', filter: 'employment' }],
+    business:     [{ page: 'resources.html', label: 'Entrepreneurship Resources', filter: 'entrepreneurship' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
+    salary:       [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }],
+    licensing:    [{ page: 'licensure.html', label: 'Licensure & Certifications' }, { page: 'state-benefits.html', label: 'State Licensing Benefits', filter: 'licensing' }],
     debt:         [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }],
-    credit:       [],
-    budget:       [],
-    va_loan:      [{ page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
-    rental:       [{ page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
+    credit:       [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }],
+    budget:       [{ page: 'resources.html', label: 'Financial Resources', filter: 'benefits' }],
+    va_loan:      [{ page: 'grants-scholarships.html', label: 'Housing Grants' }, { page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
+    rental:       [{ page: 'resources.html', label: 'Housing Resources', filter: 'housing' }, { page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
     property_tax: [{ page: 'state-benefits.html', label: 'Property Tax Benefits', filter: 'property_tax' }],
-    will:         [],
-    poa:          [],
-    living_will:  [],
-    hipaa:        [],
+    will:         [{ page: 'document-templates.html', label: 'Legal Templates' }],
+    poa:          [{ page: 'document-templates.html', label: 'Legal Templates' }],
+    living_will:  [{ page: 'document-templates.html', label: 'Legal Templates' }],
+    hipaa:        [{ page: 'document-templates.html', label: 'Legal Templates' }],
     emergency:    [{ page: 'hotlines-escalation.html', label: 'Emergency Hotlines' }],
     burial:       [{ page: 'state-benefits.html', label: 'State Burial Benefits', filter: 'burial' }],
-    dependent:    [{ page: 'state-benefits.html', label: 'Spouse/Dependent Benefits', filter: 'dependent' }],
-    transition:   [{ page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }],
+    dependent:    [{ page: 'families-support.html', label: 'Family Support' }, { page: 'state-benefits.html', label: 'Spouse/Dependent Benefits', filter: 'dependent' }],
+    transition:   [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }],
     housing_crisis:[{ page: 'hotlines-escalation.html', label: 'Emergency Housing' }],
     mental_health_crisis: [{ page: 'hotlines-escalation.html', label: 'Crisis Hotlines' }]
   };
@@ -274,11 +274,21 @@
         if (seen[key]) return;
         seen[key] = true;
 
+        // Build URL with proper query params for filtered pages
         var url = r.page;
-        // Add state filter for state-benefits if we know the user's state
-        if (r.page === 'state-benefits.html' && userState) {
-          url += '#' + userState;
+        var params = [];
+
+        // state-benefits.html: ?state=XX&category=YY
+        if (r.page === 'state-benefits.html') {
+          if (userState) params.push('state=' + encodeURIComponent(userState));
+          if (r.filter) params.push('category=' + encodeURIComponent(r.filter));
         }
+        // resources.html: ?category=YY
+        if (r.page === 'resources.html' && r.filter) {
+          params.push('category=' + encodeURIComponent(r.filter));
+        }
+
+        if (params.length > 0) url += '?' + params.join('&');
 
         recs.push({
           page: r.page,
@@ -392,10 +402,29 @@
       html += '<div class="action-panel__section">';
       html += '<h4 class="action-panel__heading">Recommended Templates</h4>';
       html += '<div class="action-panel__items">';
+      // Phase 55: Map engine template IDs to their closest flow template equivalent
+      var ENGINE_TO_FLOW = {
+        'resume':            'resume-builder',
+        'va_claim':          'va-claim-personal-statement',
+        'transition_plan':   'benefits-eligibility-summary',
+        'business_launch':   'budget-financial-recovery-plan',
+        'financial_plan':    'budget-financial-recovery-plan',
+        'daily_mission':     'personal-emergency-action-plan',
+        'will':              'last-will-and-testament',
+        'poa':               'general-power-of-attorney',
+        'medical_poa':       'medical-power-of-attorney',
+        'living_will':       'living-will',
+        'hipaa_auth':        'hipaa-authorization-form',
+        'emergency_contacts':'emergency-contact-family-care-plan',
+        'dependent_care':    'emergency-contact-family-care-plan',
+        'burial_preferences':'benefits-eligibility-summary',
+        'emergency_action':  'personal-emergency-action-plan'
+      };
       allTemplates.slice(0, maxT).forEach(function(id) {
         if (id.startsWith('_engine:')) {
           var engineId = id.replace('_engine:', '');
-          html += '<a href="index.html?template=' + engineId + '" class="action-panel__link action-panel__link--engine">' +
+          var flowId = ENGINE_TO_FLOW[engineId] || engineId;
+          html += '<a href="template-flow.html?id=' + flowId + '" class="action-panel__link action-panel__link--engine">' +
             formatTemplateLabel(engineId) + '</a>';
         } else {
           html += '<a href="template-flow.html?id=' + id + '" class="action-panel__link">' +
@@ -572,22 +601,9 @@
     var baseHtml = renderActionPanel(actionPlan, options);
     if (!baseHtml) return '';
 
-    // Add recurring issue badges
-    var recurringIssues = actionPlan.issues.filter(function(i) { return i.recurring; });
-    if (recurringIssues.length > 0) {
-      var badgeHtml = '<div class="action-panel__section">';
-      badgeHtml += '<h4 class="action-panel__heading">Your Focus Areas</h4>';
-      badgeHtml += '<div class="action-panel__items">';
-      recurringIssues.forEach(function(iss) {
-        var label = formatTemplateLabel(iss.issue);
-        var badge = iss.fromHistory ? ' (from previous sessions)' : '';
-        badgeHtml += '<span class="action-panel__tag">' + label + badge + '</span>';
-      });
-      badgeHtml += '</div></div>';
-
-      // Insert focus areas before the templates section
-      baseHtml = baseHtml.replace('<div class="action-panel__section">', badgeHtml + '<div class="action-panel__section">');
-    }
+    // Phase 55: Recurring issue "Focus Areas" badges removed —
+    // now rendered once in the static HTML block (#dashGoals / #dashIssueTags)
+    // inside the unified "Next Recommended Actions" card.
 
     return baseHtml;
   }

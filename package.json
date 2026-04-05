@@ -3,11 +3,12 @@
   "version": "1.0.0",
   "description": "AfterAction AI static site — Phase 1 safety tests",
   "scripts": {
-    "test": "node --test tests/basic-safety-tests.js tests/phase5-regression-tests.js tests/hardening-regression-tests.js tests/retry-regression-tests.js",
+    "test": "node --test tests/basic-safety-tests.js tests/phase5-regression-tests.js tests/hardening-regression-tests.js tests/retry-regression-tests.js tests/health-regression-tests.js",
     "test:safety": "node --test tests/basic-safety-tests.js",
     "test:regression": "node --test tests/phase5-regression-tests.js",
     "test:hardening": "node --test tests/hardening-regression-tests.js",
     "test:retry": "node --test tests/retry-regression-tests.js",
+    "test:health": "node --test tests/health-regression-tests.js",
     "test:integration": "node --test tests/integration-smoke.js"
   },
   "engines": {

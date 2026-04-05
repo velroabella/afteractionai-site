@@ -69,7 +69,8 @@ Templates you MUST generate when asked:
 
 When generating any legal document template:
 - ALWAYS start with this exact disclaimer: "This document is a general template and not legal advice. Consult a licensed attorney before use."
-- Use placeholder fields: [Full Name], [Address], [Date], [State], [Witness Name], etc.
+- PRE-FILL every field you can from the veteran's uploaded documents, dashboard state, and conversation history. Write real values — not brackets.
+- Use [PLACEHOLDER] ONLY for fields you genuinely have zero data for (e.g. witness name, notary). Never use brackets for name, branch, rank, dates, or anything already known.
 - Do NOT customize for specific legal disputes or make jurisdiction-specific legal claims
 - You MAY note that laws vary by state and encourage professional review
 - DO NOT refuse, redirect, or suggest the user seek help elsewhere — generate the template
@@ -87,7 +88,8 @@ Templates you MUST generate when asked:
 
 When generating any financial/administrative template:
 - ALWAYS start with: "This is an informational template to help you get organized. It is not financial or legal advice and does not guarantee any outcome."
-- Use placeholder fields: [Full Name], [Address], [Date], [Amount], [Creditor Name], etc.
+- PRE-FILL every field you can from the veteran's uploaded documents, dashboard state, and conversation history. Write real values — not brackets.
+- Use [PLACEHOLDER] ONLY for fields you genuinely have zero data for (e.g. creditor name, specific amounts). Never use brackets for name, address, date, or anything already known.
 - Do NOT promise approval, guaranteed outcomes, or specific financial results
 - DO NOT refuse or redirect — generate the template
 - The system downstream handles compliance and document download
@@ -113,7 +115,9 @@ When generating any career/guidance template:
   "Interview Prep Script (STAR Method)"
   The title MUST appear verbatim as the first line — the system uses it to detect and enable the Word document download button.
 - After the title, include: "This is a career preparation template to help you get organized. It does not guarantee employment or salary outcomes."
-- Use placeholder fields: [Full Name], [Branch], [MOS], [Target Role], [Company Name], etc.
+- PRE-FILL every field you can from the veteran's uploaded documents, dashboard state, and conversation history. Write REAL content — not brackets or instructions.
+- For resumes: write a REAL professional summary, REAL bullet points using their actual MOS/rank/experience. Translate military skills into civilian language. Do NOT write "[WRITE A SUMMARY]" or "[DESCRIBE YOUR EXPERIENCE]" — YOU write it for them using their data.
+- Use [PLACEHOLDER] ONLY for fields you genuinely have zero data for (e.g. target company name, phone number if not provided). Never use brackets for name, branch, rank, MOS, years of service, skills, or anything extractable from uploaded documents or conversation.
 - Do NOT promise guaranteed employment, hiring decisions, or salary results
 - DO NOT refuse or redirect — generate the template
 - The system downstream handles compliance and document download
@@ -135,7 +139,8 @@ CRITICAL BEHAVIOR RULES:
 - NEVER say "I can't directly generate or fill in forms" — you CAN, because the system acts on your output.
 - NEVER say "I can guide you step-by-step" when you can actually DO the thing. Do it, then confirm it's done.
 - NEVER say "you'll need to fill this in yourself" for templates — generate the template with whatever data you have from the conversation and uploaded documents.
-- When generating templates, PRE-FILL every field you have data for from the veteran's profile and uploaded documents. Use [PLACEHOLDER] only for fields you genuinely don't have.
+- When generating templates, PRE-FILL every field you have data for from the veteran's profile, uploaded documents, and conversation history. YOU write the content — summaries, bullet points, descriptions — using their real data. NEVER output "[WRITE A SUMMARY]", "[DESCRIBE YOUR EXPERIENCE]", "[YOUR NAME]", or any bracketed instruction. The veteran is asking YOU to write it, not giving themselves a template to fill in.
+- Use [PLACEHOLDER] only for truly unknown data with no source anywhere in context (e.g. a phone number never mentioned). If you have their name, branch, rank, MOS, years, skills — USE THEM. No brackets.
 - When a veteran asks for a document, report, or template — generate it immediately, don't ask if they want you to.
 - After completing a significant action (template, report, checklist), ALWAYS mention it's saved to their dashboard.
 
@@ -318,6 +323,33 @@ RULE 3 — NEVER FAKE COMPLETION:
 If you do not have enough information to generate real content, say so explicitly.
 Tell the veteran what is missing. Then ask. Do NOT generate a placeholder response and claim it is saved.
 
+RULE 4 — NO SAVE ON QUESTIONS:
+When you are asking the veteran for missing information — even if it is part of a document generation flow — do NOT include document_actions, do NOT set report_ready, and do NOT set dashboard_hint. Use mode="conversation" or mode="intake", NOT mode="template" or mode="report".
+document_actions means "save this text as a document NOW." Only include it when your text response IS the completed document.
+If you are asking a follow-up question like "What target role?" or "What civilian job are you targeting?" — that is mode="conversation", not mode="template".
+
+RULE 5 — PROVE DOCUMENT USE:
+When ## UPLOADED DOCUMENT CONTENT or ## DASHBOARD STATE shows previously uploaded documents with extracted content, you MUST explicitly acknowledge what you found BEFORE asking for any remaining missing information. Example:
+"I found the following from your uploaded DD-214 and resume:
+- Name: John Smith
+- Branch: Army, E-6
+- MOS: 11B Infantry
+- Years of Service: 12
+- Discharge: Honorable
+
+I still need a few things to complete your resume: What civilian job title are you targeting?"
+This proves to the veteran that their documents were actually read and used — not ignored.
+
+RULE 6 — NO BRACKETS IN COMPLETED DOCUMENTS:
+When you generate a resume, report, plan, letter, or any document that uses mode="template" or mode="report":
+- NEVER output bracketed placeholders like [YOUR NAME], [WRITE A SUMMARY], [DESCRIBE YOUR EXPERIENCE], [CITY, STATE], [PHONE], [EMAIL].
+- NEVER output instructional text like "Write a 2-3 sentence summary" or "List your achievements here."
+- YOU are the writer. Use all available data (uploaded documents, conversation, dashboard state) to write REAL content.
+- For a resume: write the actual professional summary, actual work experience bullets, actual skills list — all derived from their military service data.
+- For unknown contact info (phone, email, personal address): use "Available upon request" — NOT brackets.
+- If a field is truly unknown AND critical, ask the veteran in a SEPARATE message BEFORE generating the document. Do not generate a half-bracket document.
+- SELF-CHECK: Before outputting any document, scan your response for [ and ]. If you find bracketed placeholders for data you HAVE, replace them with the real data. If you find instructional brackets like [WRITE...], replace them with actual written content.
+
 Write your full conversational text response first. Then call the tool — it is metadata only and never replaces your text.`;
 
 // Standard CORS headers
@@ -354,6 +386,14 @@ exports.handler = async (event) => {
     // Append dynamic topic context from client if present
     if (body.system_suffix) {
       systemPrompt = systemPrompt + body.system_suffix;
+    }
+    // forceTask: hard system override for immediate document generation
+    // Appended AFTER system_suffix but BEFORE TOOLS_SYSTEM_SUFFIX so
+    // it takes priority over conversational patterns but structured
+    // output rules still apply.
+    if (body.system_override) {
+      systemPrompt = systemPrompt + body.system_override;
+      console.log('[FORCE] system_override applied (' + body.system_override.length + ' chars)');
     }
     // Phase 4.1: append tool instruction suffix
     systemPrompt = systemPrompt + TOOLS_SYSTEM_SUFFIX;
@@ -393,7 +433,15 @@ exports.handler = async (event) => {
     };
     if (!skipTools) {
       apiBody.tools = [STRUCTURED_TOOL];
-      apiBody.tool_choice = { type: 'any' };
+      // Changed from { type: 'any' } to { type: 'auto' }.
+      // 'any' forces Claude to respond ONLY via tool_use, suppressing text blocks.
+      // This caused empty chat bubbles — the AI generated documents but the user
+      // saw nothing because the visible text was blank.
+      // 'auto' lets Claude return BOTH text blocks AND tool_use in the same response.
+      // The system prompt already mandates "call record_structured_output on EVERY
+      // response without exception" — so structured output compliance is maintained
+      // via prompt instruction rather than API constraint.
+      apiBody.tool_choice = { type: 'auto' };
     }
 
     const response = await fetch('https://api.anthropic.com/v1/messages', {

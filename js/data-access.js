@@ -586,7 +586,7 @@
       if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
       return wrap(
         db.from('documents')
-          .select('id, file_name, document_type, status, created_at, mission_id')
+          .select('id, file_name, document_type, status, created_at, mission_id, extracted_text')
           .eq('case_id', caseId)
           .order('created_at', { ascending: false })
       );
@@ -750,6 +750,25 @@
         db.from('reports')
           .select('*')
           .eq('case_id', caseId)
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single()
+      );
+    },
+
+    /**
+     * Get the most recent report for the authenticated user (RLS-scoped).
+     * No caseId needed — Supabase RLS policy (reports_select_own) filters
+     * by auth.uid() = user_id automatically.
+     * Used by profile dashboard; avoids the getOrCreateActiveCase round-trip.
+     * @returns {Promise<{data, error}>}
+     */
+    getLatestByUser: function() {
+      var db = getClient();
+      if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
+      return wrap(
+        db.from('reports')
+          .select('*')
           .order('created_at', { ascending: false })
           .limit(1)
           .single()

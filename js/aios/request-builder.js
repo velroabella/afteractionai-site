@@ -16,7 +16,7 @@
      Sections NEVER trimmed: core prompt, escalation tier,
      active mission steps (currentStep/nextStep), crisis block.
      ──────────────────────────────────────────────────────── */
-  var MAX_PROMPT_LENGTH = 7000; // characters (~1,750 tokens est.)
+  var MAX_PROMPT_LENGTH = 15000; // characters (~3,750 tokens est.) — raised to accommodate uploaded document extracted text for inline generation
 
   /**
    * Enforce the prompt character budget by removing or shrinking
@@ -444,13 +444,23 @@
           }
         }
 
-        // Uploaded documents
+        // Uploaded documents — include extracted text when available so the AI
+        // can USE document content for inline generation (resume, will, etc.)
+        // without re-asking the veteran for information already on file.
         if (_dashCtx.uploadedDocs && _dashCtx.uploadedDocs.length > 0) {
           dsLines.push('Uploaded documents (' + _dashCtx.uploadedDocs.length + '):');
           for (var _di = 0; _di < _dashCtx.uploadedDocs.length; _di++) {
             var _ud = _dashCtx.uploadedDocs[_di];
             dsLines.push('- ' + _ud.type + ': ' + _ud.file + ' (' + _ud.status + ')');
+            if (_ud.extracted_text) {
+              // Cap each document to ~2000 chars to stay within prompt budget
+              var _docText = _ud.extracted_text.length > 2000
+                ? _ud.extracted_text.substring(0, 2000) + '\n[... truncated — ' + _ud.extracted_text.length + ' chars total]'
+                : _ud.extracted_text;
+              dsLines.push('  Extracted content:\n  ' + _docText.replace(/\n/g, '\n  '));
+            }
           }
+          dsLines.push('USE this document content to pre-fill templates and skip questions the veteran already answered via uploads.');
         }
 
         // Generated reports

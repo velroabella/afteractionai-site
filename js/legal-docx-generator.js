@@ -1775,6 +1775,159 @@
     return new D.Paragraph({ spacing: { after: 120 }, children: [] });
   }
 
+  /* ---------- AI TEXT → DOCX CONVERTER ----------
+     When the AI generates a completed document (not a placeholder template),
+     parse the markdown-formatted text into real DOCX paragraphs.
+     This replaces the hardcoded BUILDERS template when real content exists.
+     ------------------------------------------------------------ */
+
+  /**
+   * Detects whether userData is real AI-generated content (not just a form type string).
+   * Must distinguish between:
+   *   - A form-type slug like "resume-builder" (< 60 chars, no spaces) → false
+   *   - A short intro like "Here's your resume:" (< 100 chars) → false
+   *   - A real AI-generated document with paragraphs → true
+   * Intentionally permissive: if the AI wrote ANYTHING substantial, we want it.
+   */
+  function _isRealContent(userData) {
+    if (!userData || typeof userData !== 'string') {
+      console.log('[LegalDocx] _isRealContent: FAIL — not a string. type=' + typeof userData, 'value=', userData);
+      return false;
+    }
+    console.log('[LegalDocx] _isRealContent: checking string, length=' + userData.length +
+      ', hasNewline=' + /\n/.test(userData) +
+      ', hasSpace=' + /\s/.test(userData) +
+      ', first80="' + userData.substring(0, 80).replace(/\n/g, '\\n') + '"');
+
+    // A form-type slug is short with no spaces (e.g. "resume-builder")
+    if (userData.length < 60 && !/\s/.test(userData)) {
+      console.log('[LegalDocx] _isRealContent: FAIL — looks like a slug');
+      return false;
+    }
+
+    // Anything with multiple words and > 100 chars is real content.
+    // This catches cases where the AI response may not have \n but does have sentences.
+    if (userData.length > 100 && /\s/.test(userData)) {
+      console.log('[LegalDocx] _isRealContent: PASS — length=' + userData.length);
+      return true;
+    }
+
+    // Also pass if we see document keywords regardless of length
+    var hasDocKeywords = /professional\s+summary|core\s+competenc|experience|education|certification/i.test(userData);
+    if (hasDocKeywords) {
+      console.log('[LegalDocx] _isRealContent: PASS — found document keywords');
+      return true;
+    }
+
+    console.log('[LegalDocx] _isRealContent: FAIL — too short (' + userData.length + ' chars) and no doc keywords');
+    return false;
+  }
+
+  /**
+   * Parses markdown-formatted AI text into an array of docx Paragraph objects.
+   * Handles: ## headings, ### headings, **bold**, - bullets, blank lines, regular text.
+   */
+  function _parseMarkdownToDocx(D, text) {
+    var paragraphs = [];
+    var lines = text.split('\n');
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      var trimmed = line.trim();
+
+      // Skip empty lines — add spacer
+      if (trimmed === '') {
+        paragraphs.push(spacer(D));
+        continue;
+      }
+
+      // ### Heading 3
+      if (/^###\s+(.+)$/.test(trimmed)) {
+        var h3Text = trimmed.replace(/^###\s+/, '');
+        paragraphs.push(heading(D, 3, h3Text));
+        continue;
+      }
+
+      // ## Heading 2
+      if (/^##\s+(.+)$/.test(trimmed)) {
+        var h2Text = trimmed.replace(/^##\s+/, '');
+        paragraphs.push(heading(D, 2, h2Text));
+        continue;
+      }
+
+      // # Heading 1
+      if (/^#\s+(.+)$/.test(trimmed)) {
+        var h1Text = trimmed.replace(/^#\s+/, '');
+        paragraphs.push(heading(D, 1, h1Text));
+        continue;
+      }
+
+      // Bullet points (- or *)
+      if (/^[-*]\s+(.+)$/.test(trimmed)) {
+        var bulletText = trimmed.replace(/^[-*]\s+/, '');
+        paragraphs.push(new D.Paragraph({
+          spacing: { after: 40 },
+          indent: { left: 360 },
+          children: _parseInlineFormatting(D, '\u2022  ' + bulletText)
+        }));
+        continue;
+      }
+
+      // Numbered list items (1. 2. etc)
+      if (/^\d+\.\s+(.+)$/.test(trimmed)) {
+        paragraphs.push(new D.Paragraph({
+          spacing: { after: 40 },
+          indent: { left: 360 },
+          children: _parseInlineFormatting(D, trimmed)
+        }));
+        continue;
+      }
+
+      // Horizontal rule (--- or ***)
+      if (/^[-*_]{3,}$/.test(trimmed)) {
+        paragraphs.push(new D.Paragraph({
+          spacing: { before: 80, after: 80 },
+          border: { bottom: { style: D.BorderStyle.SINGLE, size: 4, color: 'CCCCCC', space: 4 } },
+          children: []
+        }));
+        continue;
+      }
+
+      // Regular paragraph — handle inline **bold** and text
+      paragraphs.push(new D.Paragraph({
+        spacing: { after: 60 },
+        children: _parseInlineFormatting(D, trimmed)
+      }));
+    }
+
+    return paragraphs;
+  }
+
+  /**
+   * Parses inline **bold** markers within a line into TextRun objects.
+   * Returns array of TextRun objects with appropriate bold flags.
+   */
+  function _parseInlineFormatting(D, text) {
+    var runs = [];
+    var parts = text.split(/(\*\*[^*]+\*\*)/g);
+    for (var j = 0; j < parts.length; j++) {
+      var part = parts[j];
+      if (!part) continue;
+      if (part.startsWith('**') && part.endsWith('**')) {
+        runs.push(new D.TextRun({
+          text: part.slice(2, -2),
+          bold: true, size: 22, font: 'Arial'
+        }));
+      } else {
+        runs.push(new D.TextRun({
+          text: part,
+          size: 22, font: 'Arial'
+        }));
+      }
+    }
+    return runs;
+  }
+
   /* ---------- BUILDER REGISTRY ---------- */
 
   const BUILDERS = {
@@ -1811,9 +1964,15 @@
   /**
    * Generates a .docx file and triggers download.
    * @param {string} formType — one of LEGAL_FORM_TYPES
-   * @param {object} [userData] — optional user data to fill placeholders (future phase)
+   * @param {string} [userData] — AI-generated text content (rawText from chat). When this
+   *   contains real completed content (not just a slug), it is parsed into the DOCX directly
+   *   instead of using the hardcoded placeholder template.
    */
   async function generateLegalDocx(formType, userData) {
+    console.log('[LegalDocx] generateLegalDocx called. formType=' + formType +
+      ', userData type=' + typeof userData +
+      ', userData length=' + (userData ? userData.length : 0) +
+      ', userData preview="' + (userData ? userData.substring(0, 120).replace(/\n/g, '\\n') : 'null') + '"');
     const D = getDocx();
 
     const normalized = formType.toLowerCase().replace(/[\s_]+/g, '-');
@@ -1822,8 +1981,16 @@
       throw new Error('[LegalDocx] Unknown form type: ' + formType);
     }
 
-    // Build form-specific content
-    const formContent = builder(D);
+    // When the AI generated real completed content (not a placeholder template),
+    // parse the AI text directly into DOCX instead of using the hardcoded builder.
+    var formContent;
+    if (_isRealContent(userData)) {
+      console.log('[LegalDocx] Using AI-generated content (' + userData.length + ' chars) instead of template builder');
+      formContent = _parseMarkdownToDocx(D, userData);
+    } else {
+      console.log('[LegalDocx] No AI content provided — falling back to template builder for:', normalized);
+      formContent = builder(D);
+    }
 
     // Select header/footer/notice based on form category
     const isFinancial = FINANCIAL_FORM_TYPES.indexOf(normalized) !== -1;

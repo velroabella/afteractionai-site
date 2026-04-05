@@ -203,11 +203,10 @@
 <div class="screen screen--chat" id="chatScreen" style="display:none;">
   <header class="chat-header">
     <div class="chat-header__left">
-      <img src="images/logo-icon-180.png" alt="AfterAction AI" class="chat-header__logo-img">
-      <div class="chat-header__info">
-        <span class="chat-header__title">AfterAction AI</span>
-        <span class="chat-header__status" id="chatStatus">Online</span>
-      </div>
+      <a href="index.html" class="chat-header__logo-link" aria-label="Go to home page">
+        <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="chat-header__logo-img">
+      </a>
+      <span class="chat-header__status" id="chatStatus" style="font-size:0.7rem;color:var(--green);font-weight:500;">Online</span>
     </div>
     <div class="chat-header__right">
       <!-- Captions toggle -->
@@ -223,15 +222,13 @@
     </div>
   </header>
 
-  <!-- AIOS Active Mission Card (Phase 13 / Phase 51) — hidden when no mission is active -->
-  <div class="aios-mission-card" id="aiosMissionCard" style="display:none;"
-       role="status" aria-live="polite" aria-label="Active mission status">
-    <!-- Phase 51: Multi-mission tabs — rendered by MissionCard.js, hidden when only 1 mission -->
-    <div class="aios-mission-tabs" id="aiosMissionTabs" style="display:none;"></div>
-    <span class="aios-mission-card__label">Mission</span>
+  <!-- AIOS Active Mission Card (Phase 13 / Phase 51) — DISABLED: UI removed, data layer intact -->
+  <!-- Kept in DOM (hidden) so getElementById refs in mission-card.js don't throw -->
+  <div class="aios-mission-card" id="aiosMissionCard" style="display:none !important;"
+       role="status" aria-hidden="true">
+    <div class="aios-mission-tabs" id="aiosMissionTabs" style="display:none !important;"></div>
     <span class="aios-mission-card__type" id="aiosMissionType"></span>
     <span class="aios-mission-card__badge" id="aiosMissionStatus"></span>
-    <span class="aios-mission-card__sep" aria-hidden="true">·</span>
     <span class="aios-mission-card__step" id="aiosMissionStep"></span>
     <span class="aios-mission-card__next" id="aiosMissionNext" style="display:none;"></span>
     <span class="aios-mission-card__blockers" id="aiosMissionBlockers" style="display:none;"></span>
@@ -288,6 +285,7 @@
       <button class="btn-send" id="btnSend" aria-label="Send message">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
       </button>
+      <button class="btn-tts-mute" id="btnTTSMute" aria-label="Mute AI voice">🔊 Mute AI</button>
       <button class="btn-mic" id="btnMicInline" aria-label="Switch to voice input">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
       </button>
@@ -327,7 +325,9 @@
 <div class="screen screen--checklist" id="checklistScreen" style="display:none;">
   <header class="chat-header">
     <div class="chat-header__left">
-      <img src="images/logo-icon-180.png" alt="AfterAction AI" class="chat-header__logo-img">
+      <a href="index.html" class="chat-header__logo-link" aria-label="Go to home page">
+        <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="chat-header__logo-img">
+      </a>
       <div class="chat-header__info">
         <span class="chat-header__title">Mission Checklist</span>
         <span class="chat-header__status" id="checklistProgressText">0% Complete</span>

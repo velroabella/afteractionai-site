@@ -300,11 +300,15 @@ a:hover { color: #000; }
 }
 
 .chat-header__logo { display: none; }
+.chat-header__logo-link {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
 .chat-header__logo-img {
-  width: 32px;
-  height: 32px;
+  height: 36px;
+  width: auto;
   object-fit: contain;
-  border-radius: 6px;
 }
 
 .chat-header__title {
@@ -418,6 +422,39 @@ a:hover { color: #000; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── AI WORKING BANNER ──────────────────────────────── */
+.ai-working-banner {
+  padding: 12px 16px;
+  margin: 8px 0;
+  animation: fadeIn 0.3s ease;
+}
+.ai-working-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 16px;
+  background: var(--blue-50, #eff6ff);
+  border: 1px solid var(--blue-200, #bfdbfe);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--blue-800, #1e40af);
+}
+.ai-working-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--blue-200, #bfdbfe);
+  border-top-color: var(--blue, #2563eb);
+  border-radius: 50%;
+  animation: aiWorkingSpin 0.8s linear infinite;
+  flex-shrink: 0;
+}
+.ai-working-text {
+  font-weight: 500;
+}
+@keyframes aiWorkingSpin {
+  to { transform: rotate(360deg); }
 }
 
 /* ── OPTION BUTTONS (Intake Flow) ──────────────────── */
@@ -665,6 +702,24 @@ a:hover { color: #000; }
   color: var(--gray-700);
 }
 .btn-mic:hover { background: var(--gray-200); }
+
+.btn-tts-mute {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid var(--gray-300, #d1d5db);
+  border-radius: 18px;
+  background: var(--gray-100, #f3f4f6);
+  color: var(--gray-700, #374151);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-tts-mute:hover {
+  background: var(--gray-200, #e5e7eb);
+}
 
 .btn-upload {
   width: 44px;

@@ -531,6 +531,211 @@
   // Used by toggleChecklistItem() to persist toggle state to the DB alongside localStorage.
   var _checklistDbIds = {};
 
+  // ══════════════════════════════════════════════════════════
+  //  TEXT-TO-SPEECH (read-aloud for text mode)
+  //
+  //  VOICE MATCH NOTE:
+  //  The voice chat page uses OpenAI's Realtime API with voice='ash'
+  //  (set in netlify/functions/realtime-token.js line 159).
+  //  That is a server-side neural voice — it CANNOT be loaded in the
+  //  browser's speechSynthesis engine. They are different technologies.
+  //  The best we can do is select the highest-quality English male
+  //  voice available in the browser, locked to en-US.
+  //
+  //  • English-only — utter.lang='en-US', rejects non-en voices
+  //  • Prefers natural male voice via ranked name list
+  //  • Persistent mute flag — mute=pause, unmute=resume
+  //  • Stops on page leave / navigation
+  // ══════════════════════════════════════════════════════════
+  window.AAAI_TEXT_READALOUD = true;  // persistent mute flag
+
+  // ── TTS position-tracking state (for mute/resume) ───────
+  var _ttsCurrentText  = '';    // full cleaned text of current utterance
+  var _ttsPausedText   = '';    // remaining text saved on mute (resume from here)
+  var _ttsCharIndex    = 0;    // last charIndex from onboundary event
+  var _ttsActiveUtter  = null; // reference to live SpeechSynthesisUtterance
+
+  // ── Voice selection ─────────────────────────────────────
+  var _ttsPreferredVoice = null;
+  var _ttsVoicesResolved = false;
+
+  // Ranked preference — closest match to OpenAI 'ash' (natural English male).
+  // First exact-name match on an English voice wins.
+  var _ttsMaleVoiceNames = [
+    'Google UK English Male',          // Chrome — best natural male
+    'Google US English',               // Chrome — male on most systems
+    'Daniel',                          // macOS / iOS — British male, high quality
+    'Aaron',                           // macOS Ventura+ — US male
+    'Tom',                             // macOS Sonoma — US male
+    'Alex',                            // macOS — US male
+    'Rishi',                           // macOS — Indian English male
+    'Microsoft Guy Online',            // Edge — natural US male
+    'Microsoft David',                 // Edge/Win — US male
+    'Microsoft Mark',                  // Edge/Win — US male
+    'Microsoft Ryan Online',           // Edge — UK male
+    'English (America)+Male',          // eSpeak
+    'english-us+male'                  // eSpeak fallback
+  ];
+
+  function _ttsPickVoice() {
+    if (_ttsVoicesResolved) return _ttsPreferredVoice;
+    try {
+      var voices = window.speechSynthesis ? window.speechSynthesis.getVoices() : [];
+      if (!voices || voices.length === 0) return null;
+
+      // HARD FILTER: only English voices allowed — reject all non-en
+      var enVoices = [];
+      for (var i = 0; i < voices.length; i++) {
+        if (/^en[-_]/i.test(voices[i].lang) || voices[i].lang === 'en') {
+          enVoices.push(voices[i]);
+        }
+      }
+      console.log('[TTS] voices total=' + voices.length + ' english=' + enVoices.length);
+
+      if (enVoices.length === 0) {
+        _ttsVoicesResolved = true;
+        console.warn('[TTS] NO English voices available — utter.lang=en-US only');
+        return null;
+      }
+
+      // Pass 1: exact name match from ranked list
+      for (var p = 0; p < _ttsMaleVoiceNames.length; p++) {
+        for (var v = 0; v < enVoices.length; v++) {
+          if (enVoices[v].name === _ttsMaleVoiceNames[p]) {
+            _ttsPreferredVoice = enVoices[v];
+            _ttsVoicesResolved = true;
+            console.log('[TTS] VOICE LOCKED: "' + enVoices[v].name + '" lang=' + enVoices[v].lang);
+            return _ttsPreferredVoice;
+          }
+        }
+      }
+
+      // Pass 2: any English voice with "male" in name (not female)
+      for (var m = 0; m < enVoices.length; m++) {
+        if (/male/i.test(enVoices[m].name) && !/female/i.test(enVoices[m].name)) {
+          _ttsPreferredVoice = enVoices[m];
+          _ttsVoicesResolved = true;
+          console.log('[TTS] VOICE LOCKED (male fallback): "' + enVoices[m].name + '" lang=' + enVoices[m].lang);
+          return _ttsPreferredVoice;
+        }
+      }
+
+      // Pass 3: prefer en-US locale
+      for (var u = 0; u < enVoices.length; u++) {
+        if (/^en.US/i.test(enVoices[u].lang)) {
+          _ttsPreferredVoice = enVoices[u];
+          _ttsVoicesResolved = true;
+          console.log('[TTS] VOICE LOCKED (en-US fallback): "' + enVoices[u].name + '" lang=' + enVoices[u].lang);
+          return _ttsPreferredVoice;
+        }
+      }
+
+      // Pass 4: first English voice
+      _ttsPreferredVoice = enVoices[0];
+      _ttsVoicesResolved = true;
+      console.log('[TTS] VOICE LOCKED (first-en fallback): "' + enVoices[0].name + '" lang=' + enVoices[0].lang);
+      return _ttsPreferredVoice;
+    } catch (err) {
+      console.warn('[TTS] voice selection error', err);
+      _ttsVoicesResolved = true;
+    }
+    return _ttsPreferredVoice;
+  }
+
+  // Voices load async in Chrome — re-resolve when ready
+  if (window.speechSynthesis && window.speechSynthesis.onvoiceschanged !== undefined) {
+    window.speechSynthesis.onvoiceschanged = function() {
+      _ttsVoicesResolved = false;
+      _ttsPickVoice();
+    };
+  }
+
+  /**
+   * Speak text aloud via browser speechSynthesis.
+   * Tracks character position via onboundary so mute can save
+   * the remaining text and unmute can resume from that point.
+   * @param {string} text — raw AI response (markdown cleaned internally)
+   */
+  function speakAIText(text) {
+    try {
+      if (!text || !window.speechSynthesis) return;
+      if (!window.AAAI_TEXT_READALOUD) return;
+      if (inputMode === 'voice') return;
+
+      var clean = text.replace(/#{1,3}\s*/g, '').replace(/\*\*/g, '').replace(/\[OPTIONS:.*?\]/g, '')
+        .replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
+      if (clean.length < 10) return;
+
+      // New speech replaces any prior speech — clear paused state
+      _ttsPausedText = '';
+      _ttsStartSpeaking(clean);
+    } catch (e) {
+      console.warn('[TTS] speak failed', e);
+    }
+  }
+
+  /**
+   * Internal: create an utterance for `text`, wire up position
+   * tracking via onboundary, and start speaking.
+   */
+  function _ttsStartSpeaking(clean) {
+    window.speechSynthesis.cancel();
+
+    _ttsCurrentText = clean;
+    _ttsCharIndex   = 0;
+
+    var utter = new SpeechSynthesisUtterance(clean);
+    utter.lang   = 'en-US';
+    utter.rate   = 1;
+    utter.pitch  = 1;
+    utter.volume = 1;
+
+    var voice = _ttsPickVoice();
+    if (voice) {
+      utter.voice = voice;
+      console.log('[TTS] SPEAK voice="' + voice.name + '" lang=' + voice.lang + ' chars=' + clean.length);
+    } else {
+      console.log('[TTS] SPEAK default (forced en-US) chars=' + clean.length);
+    }
+
+    // Track word-boundary position — gives us the charIndex of
+    // the word currently being spoken so mute can slice from here.
+    utter.onboundary = function(ev) {
+      if (typeof ev.charIndex === 'number') {
+        _ttsCharIndex = ev.charIndex;
+      }
+    };
+
+    // When utterance finishes naturally, clear tracking state
+    utter.onend = function() {
+      _ttsActiveUtter = null;
+      _ttsCurrentText = '';
+      _ttsCharIndex   = 0;
+    };
+
+    _ttsActiveUtter = utter;
+    window.speechSynthesis.speak(utter);
+  }
+
+  function stopAITextSpeech() {
+    try {
+      if (window.speechSynthesis) window.speechSynthesis.cancel();
+      _ttsActiveUtter = null;
+      _ttsCurrentText = '';
+      _ttsCharIndex   = 0;
+      _ttsPausedText  = '';
+    } catch (e) {
+      console.warn('[TTS] stop failed', e);
+    }
+  }
+
+  // ── Stop speech on page leave / navigation ──────────────
+  window.addEventListener('beforeunload', stopAITextSpeech);
+  window.addEventListener('pagehide', stopAITextSpeech);
+  document.addEventListener('visibilitychange', function() {
+    if (document.visibilityState === 'hidden') stopAITextSpeech();
+  });
+
   // ── DOM HELPERS ────────────────────────────────────────
   function $(id) { return document.getElementById(id); }
 
@@ -876,13 +1081,16 @@
       }
 
       // ── Uploaded Documents ──
+      // Include extracted_text so the AI can USE document content for inline
+      // generation (resume, will, reports) without re-asking the veteran.
       var dData = results[4].data;
       if (dData && dData.length) {
         ctx.uploadedDocs = dData.slice(0, 10).map(function(d) {
           return {
-            type:   d.document_type || 'unknown',
-            file:   d.file_name || 'unnamed',
-            status: d.status || 'uploaded'
+            type:           d.document_type || 'unknown',
+            file:           d.file_name || 'unnamed',
+            status:         d.status || 'uploaded',
+            extracted_text: d.extracted_text || null
           };
         });
       }
@@ -917,6 +1125,54 @@
     // Text input
     if (btnSend) btnSend.addEventListener('click', sendTextMessage);
     if (btnMicInline) btnMicInline.addEventListener('click', switchToVoice);
+
+    // TTS mute/unmute button — position-aware resume
+    // On MUTE:  save remaining text from last onboundary charIndex, cancel speech.
+    // On UNMUTE: create a NEW utterance with the saved remaining text.
+    // This avoids Chrome's buggy pause()/resume() while still resuming
+    // from the exact word where speech was interrupted.
+    var btnTTSMute = $('btnTTSMute');
+    if (btnTTSMute) {
+      btnTTSMute.addEventListener('click', function() {
+        window.AAAI_TEXT_READALOUD = !window.AAAI_TEXT_READALOUD;
+        if (!window.AAAI_TEXT_READALOUD) {
+          // ── MUTE: save position + cancel ──
+          if (window.speechSynthesis) {
+            // Snapshot remaining text from last tracked word boundary
+            if (_ttsCurrentText && _ttsCharIndex > 0) {
+              _ttsPausedText = _ttsCurrentText.substring(_ttsCharIndex);
+              console.log('[TTS] MUTED — saved remaining ' + _ttsPausedText.length +
+                ' chars from charIndex=' + _ttsCharIndex);
+            } else if (_ttsCurrentText) {
+              // onboundary may not have fired yet (very start) — save full text
+              _ttsPausedText = _ttsCurrentText;
+              console.log('[TTS] MUTED — saved full text (boundary not yet fired)');
+            }
+            window.speechSynthesis.cancel();
+            _ttsActiveUtter = null;
+          }
+          btnTTSMute.textContent = '\uD83D\uDD07 Unmute AI';
+          btnTTSMute.setAttribute('aria-label', 'Unmute AI voice');
+        } else {
+          // ── UNMUTE: resume from saved position ──
+          if (_ttsPausedText && _ttsPausedText.trim().length > 0) {
+            console.log('[TTS] UNMUTED — resuming ' + _ttsPausedText.length + ' chars');
+            _ttsStartSpeaking(_ttsPausedText);
+            _ttsPausedText = '';
+          } else {
+            console.log('[TTS] UNMUTED — no saved text, next AI response will read aloud');
+          }
+          btnTTSMute.textContent = '\uD83D\uDD0A Mute AI';
+          btnTTSMute.setAttribute('aria-label', 'Mute AI voice');
+        }
+      });
+    }
+
+    // Stop TTS when logo link is clicked (navigating home)
+    var logoLinks = document.querySelectorAll('.chat-header__logo-link');
+    logoLinks.forEach(function(link) {
+      link.addEventListener('click', stopAITextSpeech);
+    });
 
     // Voice controls — new Realtime layout
     var btnVoiceMute = $('btnVoiceMute');
@@ -973,6 +1229,28 @@
         // Remove all option button groups once one is clicked
         var allOptionGroups = chatMessages.querySelectorAll('.chat-options');
         allOptionGroups.forEach(function(group) { group.remove(); });
+
+        // ── FORCE PATH: Resume generation confirmation ──
+        // Detect clicks that confirm resume generation and bypass normal flow
+        // to prevent follow-up questions, pauses, or filler messages.
+        var _isResumeConfirm = /\b(build|generate|create|write|start|yes|go|do it|make)\b.*\b(resume|cv)\b/i.test(option) ||
+          /\b(resume|cv)\b.*\b(now|please|yes|go|build|generate)\b/i.test(option) ||
+          /^(yes|go|do it|build it|let'?s go|confirmed?)\s*$/i.test(option.trim());
+        // Only trigger force path if we're in a resume context (activeDocumentType or recent conversation)
+        var _inResumeContext = (activeDocumentType && /resume/i.test(activeDocumentType)) ||
+          conversationHistory.some(function(m) {
+            return m.role === 'assistant' && /resume/i.test(m.content || '') && conversationHistory.indexOf(m) > conversationHistory.length - 6;
+          });
+
+        if (_isResumeConfirm && _inResumeContext) {
+          console.log('[FORCE] Resume confirmation detected: "' + option + '" — using forceTask path');
+          addMessage(option, 'user');
+          conversationHistory.push({ role: 'user', content: option });
+          showAIWorkingState('resume');
+          sendToAI({ text: option, forceTask: 'resume_generation', skipFollowups: true });
+          return;
+        }
+
         // Send the selected option as a user message.
         // path:'option-btn' is picked up by the VOICE SESSION GUARD in submitUserText —
         // during a voice session this routes to RealtimeVoice.sendText, NOT sendToAI.
@@ -1078,8 +1356,20 @@
     { id: 'financial',      label: 'Financial / Housing',  icon: '\uD83C\uDFE0' }
   ];
 
+  // ── Topic Bubbles ──────────────────────────────────────────────
+  // PURPOSE: Session-start topic selector shown once after the AI greeting.
+  // Lets user click categories (Benefits, Disability, etc.) before typing.
+  // The selected topics are injected as ACTIVE USER TOPICS in the system prompt
+  // so the AI knows the user's areas of need without asking.
+  // Shown ONCE per session, removed after user clicks "Let's go".
   function renderTopicBubbles() {
     if (!chatMessages) return;
+
+    // ── DEDUP GUARD: never create a second bubble set ──
+    if (document.getElementById('topicBubbles')) {
+      console.log('[TopicBubbles] BLOCKED — #topicBubbles already exists in DOM');
+      return;
+    }
 
     var container = document.createElement('div');
     container.className = 'topic-bubbles';
@@ -2271,9 +2561,9 @@
 
           // ── AGENTIC: Dashboard handoff from voice-structured path ──
           // FIX D: report_ready defers to _processDocumentActions.then()
-          if (data.structured.dashboard_hint) {
-            _injectDashboardHandoff(data.structured.dashboard_hint);
-          } else if (data.structured.report_ready) {
+          // REMOVED: dashboard_hint alone — fires without save confirmation.
+          // Handoff for docs/reports now gated on _processDocumentActions success.
+          if (data.structured.report_ready) {
             // Deferred — _processDocumentActions handles handoff via its .then() callback
             console.log('[AIOS][VOICE-STRUCTURED] report_ready — dashboard handoff deferred to _processDocumentActions');
           } else if (data.structured.document_actions && data.structured.document_actions.length > 0) {
@@ -2702,6 +2992,20 @@
     */
     // ── END TEXT-PATH TEMPLATE ROUTING ────────────────────────────────────────────
 
+    // ── FORCE PATH: Typed resume generation confirmation ──
+    var _typedResumeConfirm = /\b(build|generate|create|write|start|yes|go ahead|do it|make)\b.*\b(resume|cv)\b/i.test(trimmed) ||
+      /\b(resume|cv)\b.*\b(now|please|yes|go|build|generate)\b/i.test(trimmed);
+    var _typedResumeCtx = (activeDocumentType && /resume/i.test(activeDocumentType)) ||
+      conversationHistory.some(function(m) {
+        return m.role === 'assistant' && /resume/i.test(m.content || '') && conversationHistory.indexOf(m) > conversationHistory.length - 6;
+      });
+    if (_typedResumeConfirm && _typedResumeCtx && !isProcessing) {
+      console.log('[FORCE] Typed resume confirmation: "' + trimmed + '" — forceTask path');
+      showAIWorkingState('resume');
+      sendToAI({ text: trimmed, forceTask: 'resume_generation', skipFollowups: true });
+      return;
+    }
+
     // Text mode: send immediately, or queue for when the current response finishes
     log('[INPUT]', 'TEXT path — src=' + (opts.path || 'text') + ' text="' + trimmed.substring(0, 40) + '"');
     if (!isProcessing) {
@@ -2873,7 +3177,24 @@
   // ══════════════════════════════════════════════════════
   //  AI COMMUNICATION (text mode only — voice uses Realtime)
   // ══════════════════════════════════════════════════════
+  // ── forceTask support ──────────────────────────────────────────────
+  // sendToAI accepts either a plain string OR an object:
+  //   { text: string, forceTask: string, skipFollowups: boolean }
+  // When forceTask is set, a hard system override is appended to the
+  // prompt so the AI generates immediately without follow-up questions.
+  var _activeForceTask = null;  // set per-request, cleared on response
+
   function sendToAI(userText) {
+    // Normalize: accept object or string
+    var _ftPayload = null;
+    if (userText && typeof userText === 'object') {
+      _ftPayload = userText;
+      userText = _ftPayload.text || '';
+      _activeForceTask = _ftPayload.forceTask || null;
+    } else {
+      _activeForceTask = null;
+    }
+
     // Phase 4.4: concurrent-request guard
     // sendToAI() can be called directly (bypassing submitUserText queue) while isProcessing is true.
     // Non-system calls queue via pendingUserSubmission so they fire after the active stream ends.
@@ -2884,7 +3205,8 @@
       return;
     }
     var _p44ReqSeq = ++_apiRequestSeq;
-    log('sendToAI', 'request seq=' + _p44ReqSeq + ' input="' + (userText || '').substring(0, 60) + '"');
+    log('sendToAI', 'request seq=' + _p44ReqSeq + ' input="' + (userText || '').substring(0, 60) + '"' +
+      (_activeForceTask ? ' forceTask=' + _activeForceTask : ''));
 
     // Fix 4: Wait for dashboard context on first call so Claude gets full state.
     // Only gates on START_CONVERSATION — subsequent calls proceed immediately.
@@ -2972,6 +3294,20 @@
 
     showTyping();
 
+    // ── AI Working Indicator: detect document generation requests ──
+    // Show a persistent banner for long-running generation tasks.
+    // The regex mirrors the voice-routing pattern at line 2484.
+    if (userText !== 'START_CONVERSATION' && userText !== 'RESUME_MISSION') {
+      var _genMatch = /\b(generate|create|draft|write|prepare|make me|build me|give me|produce|start|wrap up|finish|finalize|complete|assemble|compile|put together)\b.{0,80}\b(resume|cv|will|testament|power of attorney|poa|report|plan|letter|template|document|nexus|personal statement)\b/i;
+      if (_genMatch.test(userText)) {
+        var _taskType = 'template';
+        if (/resume|cv/i.test(userText)) _taskType = 'resume';
+        else if (/report|plan|audit/i.test(userText)) _taskType = 'report';
+        console.log('[FLOW] Resume/doc generation STARTED — task=' + _taskType);
+        showAIWorkingState(_taskType);
+      }
+    }
+
     var apiPromise = callChatEndpoint(conversationHistory);
 
     apiPromise.then(function(apiResult) {
@@ -3030,8 +3366,12 @@
                 }];
                 console.log('[AIOS][STRUCTURED] synthesized document_actions — report_ready/mode=report');
 
-              // Case B: AI signalled mode=template with real content
-              } else if (_p41Structured.mode === 'template' && aiResponse.length > 400) {
+              // Case B: AI signalled mode=template with real document content
+              // Gate: 800 chars + at least 1 heading or 100+ words.
+              // Prevents follow-up questions or short acknowledgments from
+              // triggering a synthesized save when mode=template is set.
+              } else if (_p41Structured.mode === 'template' && aiResponse.length > 800 &&
+                ((aiResponse.match(/^#{1,3}\s+\S/gm) || []).length >= 1 || aiResponse.trim().split(/\s+/).length >= 100)) {
                 var _tSlug = 'document';
                 var _tTitle = 'Generated Document';
                 if (/power of attorney/i.test(aiResponse))        { _tSlug = 'power_of_attorney';    _tTitle = 'Power of Attorney'; }
@@ -3189,11 +3529,15 @@
       }
       // ── End Phase 47 ──────────────────────────────────────────────
 
+      clearAIWorkingState(); // remove generation banner before streaming starts
+      _activeForceTask = null; // clear force state after response received
       streamMessage(aiResponse, function() {
         log('sendToAI', 'stream complete');
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
         if (userInput) userInput.focus();
+        // TTS: read AI response aloud in text mode
+        speakAIText(aiResponse);
         // Phase 33: flush any queued non-typed submission (chip/button clicked during AI response)
         if (pendingUserSubmission) {
           var _queued = pendingUserSubmission;
@@ -3252,47 +3596,32 @@
         // ── End Phase 49 ─────────────────────────────────────────────────────
 
         // ── AGENTIC: Dashboard handoff bar after significant actions ──────
+        // RULE: Handoff bar appears ONLY after a REAL save succeeds.
+        // Never from phrase-detection, never from dashboard_hint alone.
         try {
-          var _contractHint = (_p47Contract && _p47Contract.dashboard_hint) ? _p47Contract.dashboard_hint : null;
-          var _structuredHint = (_p41Structured && _p41Structured.dashboard_hint) ? _p41Structured.dashboard_hint : null;
           var _dashboardInjected = false;
 
-          // Priority 1: Explicit dashboard_hint from structured output or contract
-          if (_contractHint) {
-            _injectDashboardHandoff(_contractHint);
-            _dashboardInjected = true;
-          } else if (_structuredHint) {
-            _injectDashboardHandoff(_structuredHint);
-            _dashboardInjected = true;
-          }
-          // Priority 2: Structured signals without explicit hint
-          // Fix 2: document_actions handoff now handled by save callback above — skip here
-          // FIX D: report_ready also deferred to _processDocumentActions.then()
-          else if (_p41Structured) {
+          // document_actions / report_ready: handoff deferred to _processDocumentActions
+          // .then() callback (lines ~3086-3093) — only fires when anySaved === true.
+          if (_p41Structured) {
             if (_p41Structured.report_ready) {
-              // Deferred — _processDocumentActions .then() callback handles handoff
               console.log('[AIOS][DASHBOARD-HANDOFF] report_ready — handoff deferred to _processDocumentActions');
               _dashboardInjected = true;
             } else if (_p41Structured.document_actions && _p41Structured.document_actions.length > 0) {
-              // Handoff deferred to _processDocumentActions .then() callback (Fix 2)
-              _dashboardInjected = true; // prevent phrase fallback from double-injecting
               console.log('[AIOS][DASHBOARD-HANDOFF] document_actions present — handoff deferred to save callback');
+              _dashboardInjected = true;
             } else if (_p41Structured.checklist_items && _p41Structured.checklist_items.length > 0) {
               _injectDashboardHandoff('show_checklist');
               _dashboardInjected = true;
             }
           }
 
-          // Priority 3: Phrase-detection fallback — fires when Claude verbally said something
-          // is saved/ready but the structured output had no document_actions or dashboard_hint.
-          // This is the primary cause of the missing "Go to Dashboard" button.
-          if (!_dashboardInjected && !reportGenerated) {
-            var _aiSavedPhrase = /\b(saved to your (dashboard|profile)|on your (dashboard|profile)|available on your (dashboard|profile)|head over to (your )?(dashboard|profile)|view (it |them )?on your (dashboard|profile)|download it from (your )?(dashboard|profile)|added (it |them )?to your (dashboard|profile)|it(?:'s| is) (saved|ready) on your (dashboard|profile))\b/i.test(aiResponse);
-            if (_aiSavedPhrase) {
-              console.log('[AIOS][DASHBOARD-HANDOFF] phrase-detection fallback fired — AI verbally confirmed save');
-              _injectDashboardHandoff('show_profile');
-            }
-          }
+          // REMOVED: Priority 1 (dashboard_hint alone) — fired without save confirmation.
+          // REMOVED: Priority 3 (phrase-detection fallback) — fired when AI verbally said
+          // "saved to your dashboard" even when no save occurred. This was the primary
+          // cause of false handoff bars.
+          // The ONLY path to a handoff bar for documents/reports is now through
+          // _processDocumentActions().then(anySaved => { if (anySaved) ... }) above.
         } catch (_dhErr) {
           console.warn('[AIOS][DASHBOARD-HANDOFF] error:', _dhErr.message || _dhErr);
         }
@@ -3306,6 +3635,7 @@
         return;
       }
       // Phase 5: timeout recovery — guaranteed isProcessing reset + queue flush
+      clearAIWorkingState();
       if (error.message === 'AI_TIMEOUT') {
         removeTyping();
         log('sendToAI', 'P5 TIMEOUT — aborted after 15s, seq=' + _p44ReqSeq);
@@ -3321,6 +3651,7 @@
         return;
       }
       removeTyping();
+      clearAIWorkingState();
       console.error('[AAAI ERROR][sendToAI]', error.message, error);
 
       var mockResponse = getMockResponse(userText);
@@ -3622,6 +3953,23 @@
         : messages
     };
 
+    // ── forceTask: hard system override for immediate document generation ──
+    if (_activeForceTask === 'resume_generation') {
+      payload.system_override = '\n\n## HARD OVERRIDE — IMMEDIATE RESUME GENERATION\n' +
+        'You are generating a completed resume RIGHT NOW.\n' +
+        'RULES:\n' +
+        '- DO NOT ask questions.\n' +
+        '- DO NOT say "I still need..." or "Could you provide...".\n' +
+        '- DO NOT delay or explain what you are about to do.\n' +
+        '- DO NOT output filler text like "still working on it" or "let me get that for you".\n' +
+        '- OUTPUT the FULL, COMPLETED resume immediately using ALL uploaded documents, conversation history, and known context.\n' +
+        '- Use proper markdown headings (## PROFESSIONAL SUMMARY, ## EXPERIENCE, etc.).\n' +
+        '- Pre-fill every field with real data from the veteran\'s documents.\n' +
+        '- If a field is unknown, make a professional best-effort inference — do NOT leave blanks or brackets.\n' +
+        '- This is a SINGLE response. No follow-ups. No continuations.\n';
+      console.log('[FORCE] resume_generation override injected into payload');
+    }
+
     // Inject active topics as hard system state (preserved for backward compatibility;
     // AIOS also handles topics via pageContext, but the server-side system_suffix
     // ensures the existing chat.js topic injection continues to work)
@@ -3751,6 +4099,18 @@
       console.warn('[AIOS][DOC-ACTION] skipped — saveTemplateOutput not available');
       return Promise.resolve(false);
     }
+
+    // ── CONTENT GATE: Do not save if rawText is too short to be a real document ──
+    // Prevents saving follow-up questions, acknowledgments, or intake prompts
+    // as "generated documents." The system prompt instructs the AI to write at
+    // least 400 WORDS for documents — 400 CHARACTERS is a generous lower bound.
+    if (rawText.length < 400) {
+      console.log('[AIOS][DOC-ACTION] BLOCKED — rawText too short (' + rawText.length + ' chars). ' +
+        'This is likely a follow-up question, not a completed document. ' +
+        'document_actions: ' + JSON.stringify(structured.document_actions.map(function(da) { return da.template_type; })));
+      return Promise.resolve(false);
+    }
+
     console.log('[AIOS][DOC-ACTION] processing ' + structured.document_actions.length + ' actions, rawText=' + rawText.length + ' chars');
 
     var _savePromises = [];
@@ -4167,6 +4527,28 @@
     }
     // ────────────────────────────────────────────────────────
 
+    // ── CONTENT GATE: Only inject button when rawText IS the document ──
+    // The readiness gate checks that all INPUT data was collected.
+    // This gate checks that the current message IS the OUTPUT document,
+    // not a transitional message like "I've got your info, let me build this."
+    //
+    // STRICT RULE: The message must have markdown section headings (## lines).
+    // A completed resume/template has 3+ headings (## Contact, ## Summary, etc.).
+    // A transitional message ("I found your info...") has 0 headings.
+    // Single keywords like "education" are NOT enough — they appear in
+    // transitional messages when the AI acknowledges document content.
+    var _headingCount = (rawText.match(/^#{1,3}\s+\S/gm) || []).length;
+    var _isDocContent = rawText.length >= 500 && _headingCount >= 3;
+    console.log('[LegalBtn] CONTENT GATE: len=' + rawText.length +
+      ' headings=' + _headingCount +
+      ' pass=' + _isDocContent +
+      ' first100="' + rawText.substring(0, 100).replace(/\n/g, '\\n') + '"');
+    if (!_isDocContent) {
+      console.log('[LegalBtn] CONTENT GATE BLOCKED — rawText has ' + _headingCount + ' headings (need 3+). Not a completed document.');
+      return;
+    }
+    // ──────────────────────────────────────────────────────────────────
+
     var btn = document.createElement('button');
     btn.className = 'legal-doc-btn';
     btn.textContent = '⬇ Download Word Doc';
@@ -4178,7 +4560,39 @@
     btn.addEventListener('click', function () {
       AAAI.legal.requireAcknowledgment(formType, function (confirmedFormType) {
         if (typeof AAAI !== 'undefined' && AAAI.legalDocx && AAAI.legalDocx.generate) {
-          AAAI.legalDocx.generate(confirmedFormType, rawText).then(function () {
+          // ── DOCX CONTENT RESOLUTION ────────────────────────────
+          // rawText is captured at button-injection time, which may be a
+          // transitional message ("I've got your info...") instead of the
+          // actual completed document. At click time, scan conversationHistory
+          // backwards for the longest recent assistant message — that is the
+          // real document content the veteran expects to download.
+          var actualContent = rawText; // default: use what was captured
+          try {
+            var _best = null;
+            var _bestLen = 0;
+            // Scan last 6 assistant messages for the actual document
+            for (var _ci = conversationHistory.length - 1; _ci >= 0 && _ci >= conversationHistory.length - 12; _ci--) {
+              var _msg = conversationHistory[_ci];
+              if (_msg.role !== 'assistant' || !_msg.content) continue;
+              var _len = _msg.content.length;
+              // Must be substantial (>400 chars) and longer than what we already have
+              if (_len > 400 && _len > _bestLen) {
+                _best = _msg.content;
+                _bestLen = _len;
+              }
+            }
+            if (_best && _bestLen > rawText.length) {
+              actualContent = _best;
+              console.log('[DOCX INPUT] Upgraded from rawText (' + rawText.length + ' chars) to conversationHistory match (' + _bestLen + ' chars)');
+            } else {
+              console.log('[DOCX INPUT] Using rawText (' + rawText.length + ' chars) — no better match in history');
+            }
+          } catch (_scanErr) {
+            console.warn('[DOCX INPUT] History scan failed, using rawText:', _scanErr);
+          }
+          console.log('[DOCX INPUT] content preview:', actualContent.substring(0, 150).replace(/\n/g, '\\n'));
+          // ───────────────────────────────────────────────────────
+          AAAI.legalDocx.generate(confirmedFormType, actualContent).then(function () {
             activeDocumentType = null;
             console.log('[DOC RESET] activeDocumentType cleared after generation');
           }).catch(function (err) {
@@ -4235,6 +4649,41 @@
   function removeTyping() {
     var el = $('typingIndicator');
     if (el) el.remove();
+  }
+
+  // ── AI Working Indicator ──────────────────────────────────────────
+  // Persistent banner shown during long-running document generation.
+  // Unlike the typing dots (which vanish on first response chunk),
+  // this stays visible until clearAIWorkingState() is called.
+  var _aiWorkingLabels = {
+    resume:  'Building your resume — this may take a moment\u2026',
+    report:  'Generating your benefits report\u2026',
+    template: 'Creating your document\u2026',
+    default: 'AI is working\u2026'
+  };
+
+  function showAIWorkingState(task) {
+    // Prevent duplicates
+    if ($('aiWorkingBanner')) return;
+    var label = _aiWorkingLabels[task] || _aiWorkingLabels['default'];
+    var banner = document.createElement('div');
+    banner.id = 'aiWorkingBanner';
+    banner.className = 'ai-working-banner';
+    banner.innerHTML = '<div class="ai-working-inner">' +
+      '<div class="ai-working-spinner"></div>' +
+      '<span class="ai-working-text">' + label + '</span>' +
+      '</div>';
+    if (chatMessages) chatMessages.appendChild(banner);
+    scrollToBottom();
+    console.log('[FLOW] showAIWorkingState: ' + task);
+  }
+
+  function clearAIWorkingState() {
+    var banner = $('aiWorkingBanner');
+    if (banner) {
+      banner.remove();
+      console.log('[FLOW] clearAIWorkingState');
+    }
   }
 
   function scrollToBottom() {

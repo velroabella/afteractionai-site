@@ -28,8 +28,27 @@ const HEADERS = {
 // Critical env vars — presence required for ok === true
 const CRITICAL_VARS = [
   'OPENAI_API_KEY',
-  'ANTHROPIC_API_KEY'
+  'ANTHROPIC_API_KEY',
+  'SUPABASE_URL',
+  'SUPABASE_SERVICE_ROLE_KEY'
 ];
+
+// Known placeholder values that indicate an env var was never configured
+const PLACEHOLDER_VALUES = [
+  'PASTE_KEY_HERE',
+  'YOUR_KEY_HERE',
+  'REPLACE_ME',
+  'your-key-here',
+  'sk_test_placeholder'
+];
+
+// Returns true only if the var is set AND is not a known placeholder
+function isValidEnvVar(varName) {
+  const val = process.env[varName];
+  if (!val) return false;
+  if (PLACEHOLDER_VALUES.includes(val.trim())) return false;
+  return true;
+}
 
 exports.handler = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
@@ -47,15 +66,15 @@ exports.handler = async (event) => {
   // ── Build checks ────────────────────────────────────────────
   const checks = {
     function_booted:             true,
-    openai_api_key_present:      Boolean(process.env.OPENAI_API_KEY),
-    anthropic_api_key_present:   Boolean(process.env.ANTHROPIC_API_KEY),
-    supabase_url_present:        Boolean(process.env.SUPABASE_URL),
-    supabase_service_key_present: Boolean(process.env.SUPABASE_SERVICE_ROLE_KEY)
+    openai_api_key_present:      isValidEnvVar('OPENAI_API_KEY'),
+    anthropic_api_key_present:   isValidEnvVar('ANTHROPIC_API_KEY'),
+    supabase_url_present:        isValidEnvVar('SUPABASE_URL'),
+    supabase_service_key_present: isValidEnvVar('SUPABASE_SERVICE_ROLE_KEY')
   };
 
-  // ok === true only if every critical var is present
+  // ok === true only if every critical var is present AND valid (not a placeholder)
   const ok = CRITICAL_VARS.every(function(varName) {
-    return Boolean(process.env[varName]);
+    return isValidEnvVar(varName);
   });
 
   const body = JSON.stringify({

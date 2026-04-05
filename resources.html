@@ -489,7 +489,42 @@ document.getElementById('submissionForm').addEventListener('submit', function(e)
   rsToggleSubmissionForm();
 });
 
+// ── URL param pre-filter (linked from profile/dashboard) ─
+function rsParseUrlFilters() {
+  var params = new URLSearchParams(window.location.search);
+  var cat = params.get('category');
+  if (cat) {
+    cat.split(',').forEach(function(c) {
+      var v = c.trim().toLowerCase();
+      if (v && RS_CATEGORY_META[v]) {
+        rsFilters.category.add(v);
+        // Activate matching sidebar pill
+        var pill = document.querySelector('.mh-pill[data-filter="category"][data-value="' + v + '"]');
+        if (pill) pill.classList.add('active');
+      }
+    });
+  }
+  // Show context banner if URL filters were applied
+  if (rsFilters.category.size > 0) {
+    var labels = [];
+    rsFilters.category.forEach(function(c) {
+      if (RS_CATEGORY_META[c]) labels.push(RS_CATEGORY_META[c].label);
+    });
+    var banner = document.createElement('div');
+    banner.id = 'rsFilterBanner';
+    banner.className = 'rs-filter-banner';
+    banner.innerHTML = '<span>Showing resources for: <strong>' + labels.join(', ') + '</strong></span>' +
+      '<button onclick="rsClearAll();var b=document.getElementById(\'rsFilterBanner\');if(b)b.remove();history.replaceState(null,\'\',location.pathname);" ' +
+      'style="background:none;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem;margin-left:12px;">Clear Filter</button>';
+    var hero = document.querySelector('.page-hero-bar');
+    if (hero && hero.nextElementSibling) {
+      hero.parentNode.insertBefore(banner, hero.nextElementSibling);
+    }
+  }
+}
+
 // ── Init (external JSON) ─────────────────────────────────
+rsParseUrlFilters();
 fetch('data/resources.json')
   .then(function(r) { return r.json(); })
   .then(function(data) {

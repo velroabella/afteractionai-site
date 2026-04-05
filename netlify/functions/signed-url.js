@@ -4,7 +4,10 @@
 // NEVER exposes raw file paths — all access goes through this endpoint
 
 const SUPABASE_URL = process.env.SUPABASE_URL;
-const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY; // Service role key (server-side only)
+const _RAW_SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
+// Reject known placeholder values — treat them as missing
+const _PLACEHOLDER_VALUES = ['PASTE_KEY_HERE', 'YOUR_KEY_HERE', 'REPLACE_ME', 'your-key-here'];
+const SUPABASE_SERVICE_ROLE_KEY = _PLACEHOLDER_VALUES.includes(_RAW_SERVICE_KEY.trim()) ? '' : _RAW_SERVICE_KEY;
 
 const HEADERS = {
   'Access-Control-Allow-Origin': '*',

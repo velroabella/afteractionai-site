@@ -204,6 +204,24 @@
     return parts.length > 0 ? '?' + parts.join('&') : '';
   }
 
+  /**
+   * Phase 55: Map a resource-mapper category ID to the matching
+   * resources.html filter category value. Returns null if no direct mapping.
+   */
+  function _mapToResourceCategory(catId) {
+    var map = {
+      'employment':              'employment',
+      'education':               'education',
+      'healthcare':              'medical',
+      'housing':                 'housing',
+      'legal':                   'legal',
+      'family_survivor':         'community',
+      'disability_compensation': 'benefits',
+      'state_benefits':          'benefits'
+    };
+    return map[catId] || null;
+  }
+
   /* ── Public API ───────────────────────────────────────── */
 
   var ResourceMapper = {
@@ -256,6 +274,15 @@
               // Only append params to real internal pages (not AI-guided flows)
               if (_baseDest.indexOf('?resume=1') === -1) {
                 _deepParams = _buildDeepLinkParams(p, cat.id);
+                // Phase 55: Add category filter param for resources.html routing
+                if (_baseDest === 'resources.html') {
+                  var _resCat = _mapToResourceCategory(cat.id);
+                  if (_resCat) {
+                    _deepParams = _deepParams
+                      ? _deepParams + '&category=' + encodeURIComponent(_resCat)
+                      : '?category=' + encodeURIComponent(_resCat);
+                  }
+                }
               }
               results.push({
                 category:    cat.id,

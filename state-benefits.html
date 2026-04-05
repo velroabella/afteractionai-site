@@ -451,7 +451,31 @@ function sbUpdateCount() {
   el.textContent = 'Showing ' + sbFilteredBenefits.length + ' of ' + sbAllBenefits.length + ' benefits (' + stateName + ')';
 }
 
+// ── URL param pre-filter (linked from profile/action-engine) ──
+function sbParseUrlFilters() {
+  var params = new URLSearchParams(window.location.search);
+  // Pre-select state
+  var st = params.get('state');
+  if (st) {
+    var sel = document.getElementById('sbStateSelect');
+    if (sel) { sel.value = st; }
+  }
+  // Pre-select category filter
+  var cat = params.get('category');
+  if (cat) {
+    cat.split(',').forEach(function(c) {
+      var v = c.trim().toLowerCase();
+      if (v && SB_CAT_LABELS[v]) {
+        sbFilters.category.add(v);
+        var pill = document.querySelector('.mh-pill[data-filter="category"][data-value="' + v + '"]');
+        if (pill) pill.classList.add('active');
+      }
+    });
+  }
+}
+
 // ── Init (multi-file JSON loading preserved) ──────────────
+sbParseUrlFilters();
 Promise.all([
   fetch('data/state-benefits.json').then(function(r) { return r.json(); }),
   fetch('data/state-benefits-batch1.json').then(function(r) { return r.json(); }),

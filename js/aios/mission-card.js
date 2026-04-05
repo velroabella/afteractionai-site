@@ -46,6 +46,12 @@
   function update(mission) {
     if (!_initRefs()) return;
 
+    // ── DISABLED: Mission card + tabs UI removed from chat screen ──
+    // Data layer (AIOS.Mission) is unaffected — only the visible strip is suppressed.
+    _card.style.display = 'none';
+    if (_tabsEl) { _tabsEl.style.display = 'none'; _tabsEl.innerHTML = ''; }
+    return;
+
     // ── No active mission — hide card entirely ────────────
     if (!mission || typeof mission !== 'object') {
       _card.style.display = 'none';

@@ -10,6 +10,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/styles.css" />
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Fix 7: docx library + generator for .docx downloads from profile -->
+  <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
+  <script src="js/legal-docx-generator.js"></script>
 </head>
 <body>
 
@@ -122,14 +125,7 @@
     </div>
     <!-- Phase 45: mission stage label — derived from completion % -->
     <div id="missionStageLabel" style="font-size:0.8rem;color:var(--gray-500,#6b7280);margin-top:10px;min-height:1.2em;"></div>
-    <div style="margin-top:12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-      <a href="index.html?resume=1" style="color:var(--gold);font-weight:600;font-size:0.9rem;">Continue Mission →</a>
-      <!-- Phase 46 Part 6: Mission Map trigger -->
-      <button id="btnViewPath" onclick="openMissionMap()"
-        style="background:none;border:1px solid var(--gold,#c4a035);color:var(--gold,#c4a035);border-radius:6px;padding:4px 12px;font-size:0.8rem;font-weight:600;cursor:pointer;">
-        🗺 View My Path
-      </button>
-    </div>
+    <!-- Mission links removed — checklist-driven Next Step is the primary CTA -->
   </div>
 
   <!-- AIOS Next Step Banner — returning user primary CTA -->
@@ -140,45 +136,25 @@
     </div>
   </div>
 
-  <!-- Phase 46 Part 7: Secondary next steps — 2 supporting actions below primary -->
-  <div id="dashSecondarySteps" style="display:none;padding:0 0 4px;"></div>
+  <!-- Phase 48/46 UI removed — only checklist-driven Next Step remains -->
 
-  <!-- Phase 48: Active Mission Panel -->
-  <div class="dashboard__card" id="p48MissionPanel" style="display:none;">
-    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
-      <h3 style="margin:0;">Active Mission</h3>
-      <span id="p48MissionStatus" style="font-size:0.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:12px;"></span>
-    </div>
-    <div id="p48MissionName" style="font-weight:700;font-size:1rem;color:var(--gray-900,#111);"></div>
-    <div id="p48MissionSteps" style="margin-top:10px;font-size:0.88rem;color:var(--gray-700,#374151);"></div>
-    <!-- Blockers -->
-    <div id="p48Blockers" style="display:none;margin-top:14px;">
-      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:#dc2626;margin-bottom:6px;">Blockers</div>
-      <div id="p48BlockersList"></div>
-    </div>
-    <!-- Risk Flags -->
-    <div id="p48RiskFlags" style="display:none;margin-top:12px;" ></div>
-    <!-- Last Actions -->
-    <div id="p48LastActions" style="display:none;margin-top:14px;">
-      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-500,#6b7280);margin-bottom:6px;">Recent Guidance</div>
-      <div id="p48LastActionsList"></div>
-    </div>
-    <!-- Last Resources -->
-    <div id="p48LastResources" style="display:none;margin-top:12px;">
-      <div style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--gray-500,#6b7280);margin-bottom:6px;">Referenced Resources</div>
-      <div id="p48LastResourcesList"></div>
-    </div>
-  </div>
-
-  <!-- Phase 48: AI-Extracted Checklist (from ResponseContract + MissionExtractor) -->
-  <div class="dashboard__card" id="p48AiChecklist" style="display:none;">
-    <h3>AI Action Items</h3>
-    <div id="p48AiChecklistItems"></div>
-  </div>
-
-  <!-- Next Recommended Actions — moved up for visibility -->
+  <!-- Next Recommended Actions — unified card (Focus Areas + Templates + Resources) -->
   <div class="dashboard__card dashboard__actions-panel">
     <h3>Next Recommended Actions</h3>
+
+    <!-- Sub-section: Your Focus Areas (formerly standalone "Action Focus Areas") -->
+    <div style="margin-bottom:16px;">
+      <div style="font-size:0.75rem;font-weight:700;letter-spacing:.07em;color:var(--gray-500,#888);text-transform:uppercase;margin-bottom:8px;">Your Focus Areas</div>
+      <div class="dashboard__goals" id="dashGoals">
+        <span class="dashboard__goal-tag" style="opacity:0.5;">No goals set yet</span>
+      </div>
+      <div class="dashboard__goals" id="dashIssueTags" style="margin-top:8px;"></div>
+      <p style="font-size:0.8rem;color:var(--gray-500);margin-top:8px;margin-bottom:0;">
+        Click any area to take action. Focus areas update automatically based on your conversations.
+      </p>
+    </div>
+
+    <!-- Sub-section: Recommended Templates & Helpful Resources (JS-populated) -->
     <div id="dashActions">
       <p style="font-size:0.9rem;color:var(--gray-500);">Complete a conversation to get personalized action recommendations.</p>
     </div>
@@ -194,19 +170,6 @@
     </div>
     <!-- Phase 45: completed summary strip — populated by renderCompletedSummary() -->
     <div id="dashCompletedSummary"></div>
-  </div>
-
-  <!-- Goals / Focus Areas — Phase 46 Part 5: action objects -->
-  <div class="dashboard__card">
-    <h3>Action Focus Areas</h3>
-    <!-- Phase 46: goals rendered as clickable action chips -->
-    <div class="dashboard__goals" id="dashGoals">
-      <span class="dashboard__goal-tag" style="opacity:0.5;">No goals set yet</span>
-    </div>
-    <div class="dashboard__goals" id="dashIssueTags" style="margin-top:8px;"></div>
-    <p style="font-size:0.85rem;color:var(--gray-500);margin-top:12px;">
-      Click any area to take action. Focus areas update automatically based on your conversations.
-    </p>
   </div>
 
   <!-- Saved Reports -->
@@ -576,7 +539,8 @@
           '<div class="doc-card__body">' +
             '<div class="doc-card__preview">' + preview + '</div>' +
             '<div class="doc-card__actions">' +
-              '<button class="doc-card__btn doc-card__btn--primary" data-act="dl-gen">Download</button>' +
+              '<button class="doc-card__btn doc-card__btn--primary" data-act="dl-docx">Download .docx</button>' +
+              '<button class="doc-card__btn" data-act="dl-gen">Download .txt</button>' +
               '<button class="doc-card__btn" data-act="copy-gen">Copy to Clipboard</button>' +
             '</div>' +
           '</div>';
@@ -586,6 +550,22 @@
 
         card.querySelector('.doc-card__header').addEventListener('click', function() {
           card.classList.toggle('expanded');
+        });
+
+        // Fix 7: Download as .docx via legal-docx-generator
+        card.querySelector('[data-act="dl-docx"]').addEventListener('click', function(e) {
+          e.stopPropagation();
+          if (window.LegalDocxGenerator && typeof window.LegalDocxGenerator.generateDocument === 'function') {
+            try {
+              window.LegalDocxGenerator.generateDocument(type, card._content, doc.title);
+            } catch(err) {
+              console.warn('[Profile] .docx generation failed, falling back to .txt:', err);
+              _downloadText(doc.title, card._content, type);
+            }
+          } else {
+            console.warn('[Profile] LegalDocxGenerator not available, falling back to .txt');
+            _downloadText(doc.title, card._content, type);
+          }
         });
 
         // Download as .txt
@@ -1057,7 +1037,7 @@ function toggleMenu() {
     // Re-render affected sections
     updateStats(_allItems);
     renderNextStep(_allItems);
-    _renderSecondarySteps(_allItems, _dashProfile); // Phase 46 Part 7
+    // _renderSecondarySteps removed (Phase 55 cleanup)
     renderFilterTabs(_allItems);
     renderChecklist(_allItems, _activeFilter);
   };
@@ -1113,7 +1093,7 @@ function toggleMenu() {
 
           updateStats(_allItems);
           renderNextStep(_allItems);
-          _renderSecondarySteps(_allItems, _dashProfile); // Phase 46 Part 7
+          // _renderSecondarySteps removed (Phase 55 cleanup)
           renderFilterTabs(_allItems);
           renderChecklist(_allItems, _activeFilter);
 
@@ -1177,65 +1157,10 @@ function toggleMenu() {
               }
             }
 
-            // Phase 44: Resource Priority Panel — linked action cards
-            // Constructs a synthetic AIOS-compatible profile from the Supabase profile
-            // so AIOS.Resources can score and prioritize without a live session.
-            // Each resource card now routes to its real internal destination (not just resume).
-            if (window.AIOS && window.AIOS.Resources) {
-              try {
-                var _resActionsEl = document.getElementById('dashActions');
-                // Phase 46: use shared _buildResSynth helper (defined later in this script)
-                var _resSynth = _buildResSynth(profile);
-                // Get prioritized resource list — now includes destination + deepLink + actionText
-                var _resDashPriority = window.AIOS.Resources.getPriority(_resSynth);
-                if (_resDashPriority && _resDashPriority.length > 0 && _resActionsEl) {
-                  // Group by scope: federal → state → online
-                  var _resGroups = { federal: [], state: [], online: [] };
-                  _resDashPriority.forEach(function(r) {
-                    var grp = (r.scope === 'federal' || r.scope === 'state') ? r.scope : 'online';
-                    _resGroups[grp].push(r);
-                  });
-                  var _scopeConfig = [
-                    { key: 'federal', label: 'Federal Resources',           color: '#1a56db', bg: '#eff6ff' },
-                    { key: 'state',   label: 'State Resources',             color: '#0e9f6e', bg: '#f0fdf4' },
-                    { key: 'online',  label: 'Community & Online Resources', color: '#7e3af2', bg: '#faf5ff' }
-                  ];
-                  var _resHtml = '<div style="margin-top:18px;border-top:1px solid var(--gray-200,#eee);padding-top:14px;">' +
-                    '<div style="font-size:0.75rem;font-weight:700;letter-spacing:.07em;color:var(--gray-500,#888);text-transform:uppercase;margin-bottom:12px;">Recommended Resources</div>';
-
-                  _scopeConfig.forEach(function(sc) {
-                    if (_resGroups[sc.key].length === 0) return;
-                    _resHtml += '<div style="margin-bottom:14px;">' +
-                      '<div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;color:' + sc.color + ';letter-spacing:.06em;margin-bottom:7px;">' + sc.label + '</div>' +
-                      '<div style="display:flex;flex-direction:column;gap:6px;">';
-
-                    _resGroups[sc.key].forEach(function(r) {
-                      // Phase 46 Part 3: use deepLink (includes profile params) when available
-                      var _href     = r.deepLink || r.destination || 'index.html?resume=1';
-                      var _isAiRoute = r.destination && r.destination.indexOf('?resume=1') !== -1;
-                      var _destLabel = _isAiRoute ? 'Continue with AI →' : 'Go to page →';
-                      _resHtml +=
-                        '<a href="' + escHtml(_href) + '" ' +
-                        'style="display:flex;align-items:center;justify-content:space-between;padding:9px 12px;background:' + sc.bg + ';border:1px solid ' + sc.color + '22;border-radius:8px;text-decoration:none;gap:8px;">' +
-                          '<div>' +
-                            '<div style="font-size:0.85rem;font-weight:600;color:var(--gray-800,#1f2937);">' + escHtml(r.actionText) + '</div>' +
-                            '<div style="font-size:0.75rem;color:var(--gray-500,#6b7280);margin-top:2px;">' + escHtml(r.label) + '</div>' +
-                          '</div>' +
-                          '<span style="font-size:0.75rem;color:' + sc.color + ';font-weight:600;white-space:nowrap;">' + _destLabel + '</span>' +
-                        '</a>';
-                    });
-
-                    _resHtml += '</div></div>';
-                  });
-
-                  _resHtml += '</div>';
-                  _resActionsEl.innerHTML += _resHtml;
-                  console.log('[AIOS][RESOURCES] Dashboard: rendered ' + _resDashPriority.length + ' resource cards');
-                }
-              } catch(_resE) {
-                console.warn('[AIOS] Resource panel error:', _resE);
-              }
-            }
+            // Phase 44: Resource Priority Panel — REMOVED (Phase 55)
+            // Recommended Resources cards no longer rendered on profile.
+            // Resources are accessed via the dedicated resources.html page
+            // with category filtering from Focus Area chips.
           }
         });
       }
@@ -1253,83 +1178,7 @@ function toggleMenu() {
     window.aiosSetStatus(itemId, newState ? 'completed' : 'not_started', el);
   };
 
-  /* ══════════════════════════════════════════════════════
-     Phase 46 Part 7 — Enhanced Next Step Engine
-     Adds 2 secondary action suggestions below primary step.
-     ══════════════════════════════════════════════════════ */
-
-  function _renderSecondarySteps(items, profile) {
-    var container = document.getElementById('dashSecondarySteps');
-    if (!container) return;
-    var secondaries = [];
-
-    // S1: Top resource priority (if AIOS.Resources available)
-    if (window.AIOS && window.AIOS.Resources && profile) {
-      try {
-        var _resSynth = _buildResSynth(profile);
-        var _prio = window.AIOS.Resources.getPriority(_resSynth);
-        if (_prio && _prio.length > 0) {
-          var _r = _prio[0];
-          // Use deepLink if available (Phase 46 Part 3), else fall back to destination
-          var _dest = _r.deepLink || _r.destination || 'index.html?resume=1';
-          secondaries.push({
-            type:  'resource',
-            label: _r.actionText || _r.label,
-            sub:   _r.label,
-            href:  _dest,
-            color: '#1a56db'
-          });
-        }
-      } catch(e) { /* skip */ }
-    }
-
-    // S2: Missing profile field prompt — most valuable data not yet collected
-    var missingPrompts = {
-      state:           { label: 'Add your home state', sub: 'Unlock state-specific benefits', href: 'index.html?resume=1', color: '#0e9f6e' },
-      vaRating:        { label: 'Add your VA rating',  sub: 'Required for compensation & TDIU', href: 'index.html?resume=1', color: '#0e9f6e' },
-      dischargeStatus: { label: 'Confirm discharge status', sub: 'Needed for most benefit claims', href: 'index.html?resume=1', color: '#0e9f6e' }
-    };
-    var mState = (window.AIOS && window.AIOS.MissionState) ? window.AIOS.MissionState.get() : null;
-    if (mState && mState.missingFields && mState.missingFields.length > 0) {
-      var topMissing = mState.missingFields[0];
-      if (missingPrompts[topMissing]) {
-        secondaries.push(Object.assign({ type: 'profile' }, missingPrompts[topMissing]));
-      }
-    }
-
-    // S3 fallback: in_progress document lifecycle item
-    if (secondaries.length < 2) {
-      var inProgItem = items && items.filter(function(i) { return i.status === 'in_progress'; })[1];
-      if (inProgItem) {
-        secondaries.push({
-          type:  'checklist',
-          label: inProgItem.title,
-          sub:   'In progress',
-          href:  'index.html?resume=1',
-          color: '#c4a035'
-        });
-      }
-    }
-
-    if (secondaries.length === 0) { container.style.display = 'none'; return; }
-
-    var html = '<div style="display:flex;flex-direction:column;gap:6px;padding:0 0 8px;">' +
-      '<div style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gray-400,#9ca3af);padding:0 4px;">Also suggested</div>';
-    secondaries.slice(0, 2).forEach(function(s) {
-      html +=
-        '<a href="' + escHtml(s.href) + '" ' +
-        'style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--gray-50,#f9fafb);border:1px solid var(--gray-200,#e5e7eb);border-left:3px solid ' + s.color + ';border-radius:8px;text-decoration:none;">' +
-          '<div style="flex:1;min-width:0;">' +
-            '<div style="font-size:0.82rem;font-weight:600;color:var(--gray-800,#1f2937);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">' + escHtml(s.label) + '</div>' +
-            '<div style="font-size:0.72rem;color:var(--gray-500,#6b7280);">' + escHtml(s.sub) + '</div>' +
-          '</div>' +
-          '<span style="font-size:0.72rem;color:' + s.color + ';font-weight:600;white-space:nowrap;">→</span>' +
-        '</a>';
-    });
-    html += '</div>';
-    container.innerHTML = html;
-    container.style.display = 'block';
-  }
+  // Phase 46 Part 7 (_renderSecondarySteps) — REMOVED (Phase 55 cleanup)
 
   /* ══════════════════════════════════════════════════════
      Phase 46 Part 5 — Focus Areas as Action Objects
@@ -1349,9 +1198,11 @@ function toggleMenu() {
           var dest = 'index.html?resume=1';
           if (/school|degree|gi bill|education|training/i.test(g))  dest = 'education.html';
           if (/hous|home|rent|mortgage/i.test(g))                    dest = 'grants-scholarships.html';
-          if (/job|career|work|employ/i.test(g))                     dest = 'resources.html';
+          if (/job|career|work|employ/i.test(g))                     dest = 'resources.html?category=employment';
           if (/legal|attorney|will|claim|appeal/i.test(g))           dest = 'document-templates.html';
           if (/health|medical|mental|doctor/i.test(g))               dest = 'medical-help.html';
+          if (/business|entrepreneur|startup/i.test(g))              dest = 'resources.html?category=entrepreneurship';
+          if (/licens|certif/i.test(g))                              dest = 'licensure.html';
           var _isMission = dest === 'index.html?resume=1';
           return '<a href="' + dest + '" ' +
             'style="display:inline-flex;align-items:center;gap:5px;padding:5px 11px;border-radius:20px;font-size:0.8rem;font-weight:600;' +
@@ -1378,7 +1229,7 @@ function toggleMenu() {
           var dest = 'index.html?resume=1';
           var issue = (t.issue || '').toLowerCase();
           var _stateParam = profile.state ? '?state=' + encodeURIComponent(profile.state) : '';
-          if (/employ|job|career|work/.test(issue))          dest = 'resources.html';
+          if (/employ|job|career|work/.test(issue))          dest = 'resources.html?category=employment';
           else if (/hous|home|rent/.test(issue))             dest = 'grants-scholarships.html';
           else if (/disab|rating|compensation|claim/.test(issue)) dest = 'index.html?resume=1';
           else if (/health|medical|mental|ptsd|tbi/.test(issue))  dest = 'medical-help.html';
@@ -1399,119 +1250,7 @@ function toggleMenu() {
     }
   }
 
-  /* ══════════════════════════════════════════════════════
-     Phase 46 Part 6 — Mission Map Modal
-     Vertical node tree showing mission path and status.
-     ══════════════════════════════════════════════════════ */
-
-  // Branch node definitions — static mission tree
-  var MISSION_BRANCHES = [
-    { id: 'disability',  label: 'VA Disability Claim',      icon: '🏅', dest: 'index.html?resume=1',          keywords: /disab|compensation|rating/i },
-    { id: 'healthcare',  label: 'VA Healthcare Enrollment', icon: '🏥', dest: 'medical-help.html',             keywords: /health|medical|enroll/i },
-    { id: 'education',   label: 'GI Bill & Education',      icon: '🎓', dest: 'education.html',                keywords: /school|gi bill|degree|educat/i },
-    { id: 'employment',  label: 'Career Transition',        icon: '💼', dest: 'resources.html',                keywords: /job|career|work|employ/i },
-    { id: 'housing',     label: 'Housing & Home Loan',      icon: '🏠', dest: 'grants-scholarships.html',      keywords: /hous|home|rent|loan/i },
-    { id: 'legal',       label: 'Legal & Document Prep',    icon: '📋', dest: 'document-templates.html',       keywords: /legal|attorney|appeal|document/i },
-    { id: 'state',       label: 'State Benefits',           icon: '🗺', dest: 'state-benefits.html',           keywords: /state|local/i },
-    { id: 'family',      label: 'Family & Survivor Benefits', icon: '👨‍👩‍👦', dest: 'families-support.html',    keywords: /family|surviv|depend/i }
-  ];
-
-  window.openMissionMap = function() {
-    var modal = document.getElementById('missionMapModal');
-    if (!modal) return;
-    // Render latest content
-    _renderMissionMapContent();
-    modal.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-  };
-
-  window.closeMissionMap = function() {
-    var modal = document.getElementById('missionMapModal');
-    if (modal) modal.style.display = 'none';
-    document.body.style.overflow = '';
-  };
-
-  function _renderMissionMapContent() {
-    var treeEl = document.getElementById('missionMapTree');
-    if (!treeEl) return;
-
-    // Gather state
-    var mState    = (window.AIOS && window.AIOS.MissionState) ? window.AIOS.MissionState.get() : null;
-    var mItems    = _allItems || [];
-    var mProf     = null;
-    if (window.AIOS && window.AIOS.Memory) {
-      try { mProf = window.AIOS.Memory.getProfile(); } catch(e) {}
-    }
-
-    // Determine which branches are "active" from checklist + goals + issue_tags
-    var activeBranchIds = {};
-    var completedBranchIds = {};
-
-    // From missionState
-    if (mState && mState.missionType) {
-      var mt = mState.missionType.toLowerCase();
-      MISSION_BRANCHES.forEach(function(b) {
-        if (b.keywords.test(mt)) activeBranchIds[b.id] = true;
-      });
-    }
-
-    // From checklist items
-    mItems.forEach(function(item) {
-      MISSION_BRANCHES.forEach(function(b) {
-        if (b.keywords.test(item.title || '') || (item.category && b.keywords.test(item.category))) {
-          if (item.status === 'completed') completedBranchIds[b.id] = true;
-          else if (item.status === 'in_progress' || item.status === 'not_started') activeBranchIds[b.id] = true;
-        }
-      });
-    });
-
-    // Mission type label
-    var mTypeLabel = 'Your Veteran Journey';
-    if (mState && mState.missionType) mTypeLabel = mState.missionType.replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); });
-
-    // Root node
-    var html = '<div style="display:flex;flex-direction:column;gap:0;">';
-
-    // Root
-    html += '<div style="display:flex;align-items:center;gap:10px;padding:10px 0;">' +
-      '<div style="width:32px;height:32px;border-radius:50%;background:var(--gold,#c4a035);display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;">🎖</div>' +
-      '<div>' +
-        '<div style="font-weight:700;font-size:0.95rem;color:var(--gray-900,#111);">' + escHtml(mTypeLabel) + '</div>' +
-        '<div style="font-size:0.72rem;color:var(--gray-500,#6b7280);">Mission root · Always available</div>' +
-      '</div>' +
-    '</div>';
-
-    // Connector line from root
-    html += '<div style="margin-left:15px;border-left:2px dashed var(--gray-300,#d1d5db);padding-left:26px;padding-bottom:4px;">';
-
-    MISSION_BRANCHES.forEach(function(branch) {
-      var isCompleted = !!completedBranchIds[branch.id];
-      var isActive    = !isCompleted && !!activeBranchIds[branch.id];
-      var isLocked    = !isCompleted && !isActive;
-
-      var statusColor = isCompleted ? '#16a34a' : (isActive ? 'var(--gold,#c4a035)' : 'var(--gray-400,#9ca3af)');
-      var statusBg    = isCompleted ? '#f0fdf4' : (isActive ? 'var(--gold-light,#fdf3d0)' : 'var(--gray-100,#f3f4f6)');
-      var statusBadge = isCompleted ? '✓ Completed' : (isActive ? '● In Progress' : '○ Available');
-      var nodeOpacity = isLocked ? '0.55' : '1';
-
-      html +=
-        '<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;opacity:' + nodeOpacity + ';">' +
-          '<div style="width:26px;height:26px;border-radius:50%;background:' + statusBg + ';border:2px solid ' + statusColor + ';display:flex;align-items:center;justify-content:center;font-size:0.85rem;flex-shrink:0;margin-top:1px;">' + branch.icon + '</div>' +
-          '<div style="flex:1;">' +
-            '<div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">' +
-              '<span style="font-weight:600;font-size:0.85rem;color:var(--gray-800,#1f2937);">' + escHtml(branch.label) + '</span>' +
-              '<span style="font-size:0.68rem;font-weight:700;color:' + statusColor + ';white-space:nowrap;">' + statusBadge + '</span>' +
-            '</div>' +
-            (isLocked ? '' :
-              '<a href="' + escHtml(branch.dest) + '" onclick="closeMissionMap()" ' +
-              'style="font-size:0.75rem;color:var(--gold,#c4a035);font-weight:600;text-decoration:none;">Go to ' + escHtml(branch.label.split(' ')[0]) + ' →</a>') +
-          '</div>' +
-        '</div>';
-    });
-
-    html += '</div></div>'; // close connector + root wrapper
-    treeEl.innerHTML = html;
-  }
+  /* ── Phase 46 Mission Map Modal removed — mission UI stripped ── */
 
   /* ── Shared helper: build synthetic AIOS profile from Supabase profile ── */
   function _buildResSynth(profile) {
@@ -1539,445 +1278,70 @@ function toggleMenu() {
     return synth;
   }
 
-  /* ══════════════════════════════════════════════════════
-     Phase 48 — Active Mission Panel + AI Checklist
-     Reads MissionManager.current + MissionExtractor.buildDashboardSnapshot()
-     + window.AIOS._lastContract to populate the mission panel
-     and AI-extracted checklist on the profile dashboard.
-     ══════════════════════════════════════════════════════ */
+  // Phase 48 (_p48Render) + Phase 48 listeners — REMOVED (Phase 55 cleanup)
+  // Mission panel and AI checklist UI no longer rendered.
 
-  function _p48Render() {
-    try {
-      var panel        = document.getElementById('p48MissionPanel');
-      var aiChecklist  = document.getElementById('p48AiChecklist');
-      if (!panel) return;
-
-      // ── Gather data ────────────────────────────────────
-      var AIOS    = window.AIOS || {};
-      var Manager = AIOS.Mission || null;
-      var mission = (Manager && Manager.current) ? Manager.current : null;
-
-      // Also try MissionState for persisted mission if Manager has nothing
-      if (!mission && AIOS.MissionState) {
-        var mState = AIOS.MissionState.get();
-        if (mState && mState.missionType) {
-          mission = {
-            type:        mState.missionType,
-            name:        (mState.missionType || '').replace(/_/g, ' ').replace(/\b\w/g, function(c) { return c.toUpperCase(); }),
-            status:      'in_progress',
-            currentStep: mState.currentStep || null,
-            nextStep:    null,
-            blockers:    mState.missingFields ? mState.missingFields.map(function(f) { return 'Missing: ' + f; }) : [],
-            data:        {}
-          };
-        }
-      }
-
-      var contract = AIOS._lastContract || null;
-      // Phase CR: cross-navigation continuity — restore display subset from localStorage
-      // if no live contract is present (reload / cross-page navigation).
-      if (!contract) {
-        try {
-          var _crStored = JSON.parse(localStorage.getItem('aaai_contract_display') || 'null');
-          // Phase CR-TTL: discard stale contract data (>24 hours old)
-          var _crTTL = 86400000; // 24 hours in ms
-          var _crFresh = _crStored && _crStored._savedAt && (Date.now() - _crStored._savedAt < _crTTL);
-          if (_crFresh && (_crStored.recommended_actions || _crStored.resources || _crStored.risk_flags)) {
-            contract = _crStored;
-          }
-        } catch (_crErr) { /* parse error — no contract fallback */ }
-      }
-      var snapshot = null;
-
-      if (AIOS.MissionExtractor && mission) {
-        snapshot = AIOS.MissionExtractor.buildDashboardSnapshot(contract, mission);
-      }
-
-      // ── No mission — show empty state ──────────────────
-      if (!mission) {
-        panel.style.display = 'block';
-        document.getElementById('p48MissionName').textContent = 'No active mission yet';
-        document.getElementById('p48MissionName').style.color = 'var(--gray-500,#6b7280)';
-        document.getElementById('p48MissionSteps').innerHTML =
-          '<p style="font-size:0.88rem;color:var(--gray-500);">' +
-          '<a href="index.html" style="color:var(--gold,#c4a035);">Start a conversation</a> to begin your first mission.' +
-          '</p>';
-        document.getElementById('p48MissionStatus').style.display = 'none';
-        document.getElementById('p48Blockers').style.display = 'none';
-        document.getElementById('p48RiskFlags').style.display = 'none';
-        document.getElementById('p48LastActions').style.display = 'none';
-        document.getElementById('p48LastResources').style.display = 'none';
-        if (aiChecklist) aiChecklist.style.display = 'none';
-        return;
-      }
-
-      // ── Has mission — populate panel ───────────────────
-      panel.style.display = 'block';
-
-      // Name
-      var nameEl = document.getElementById('p48MissionName');
-      nameEl.textContent = mission.name || mission.type || 'Active Mission';
-      nameEl.style.color = 'var(--gray-900,#111)';
-
-      // Status badge
-      var statusEl = document.getElementById('p48MissionStatus');
-      var st = mission.status || 'in_progress';
-      var statusConfig = {
-        'in_progress': { label: 'In Progress',  bg: 'var(--gold-light,#fdf3d0)', color: 'var(--gold,#c4a035)' },
-        'paused':      { label: 'Paused',        bg: '#f3f4f6',                    color: '#6b7280' },
-        'complete':    { label: 'Complete',       bg: '#f0fdf4',                    color: '#16a34a' },
-        'blocked':     { label: 'Blocked',        bg: '#fef2f2',                    color: '#dc2626' }
-      };
-      var sc = statusConfig[st] || statusConfig['in_progress'];
-      statusEl.textContent = sc.label;
-      statusEl.style.background = sc.bg;
-      statusEl.style.color = sc.color;
-      statusEl.style.display = '';
-
-      // Steps
-      var stepsEl = document.getElementById('p48MissionSteps');
-      var stepsHtml = '';
-      if (mission.currentStep) {
-        stepsHtml += '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;">' +
-          '<span style="color:var(--gold,#c4a035);font-weight:700;flex-shrink:0;">●</span>' +
-          '<div><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-500);">Current Step</span>' +
-          '<div style="margin-top:2px;">' + escHtml(mission.currentStep) + '</div></div></div>';
-      }
-      if (mission.nextStep && mission.nextStep !== mission.currentStep) {
-        stepsHtml += '<div style="display:flex;align-items:flex-start;gap:8px;">' +
-          '<span style="color:var(--gray-400,#9ca3af);flex-shrink:0;">○</span>' +
-          '<div><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-400);">Next Step</span>' +
-          '<div style="margin-top:2px;color:var(--gray-600,#4b5563);">' + escHtml(mission.nextStep) + '</div></div></div>';
-      }
-      if (!stepsHtml) {
-        stepsHtml = '<p style="font-size:0.85rem;color:var(--gray-500);">Continue your conversation to unlock the next step.</p>';
-      }
-      stepsEl.innerHTML = stepsHtml;
-
-      // ── Blockers ───────────────────────────────────────
-      var blockers = (snapshot && snapshot.blockers && snapshot.blockers.length > 0) ? snapshot.blockers : (mission.blockers || []);
-      var blockersDiv = document.getElementById('p48Blockers');
-      var blockersListDiv = document.getElementById('p48BlockersList');
-      if (blockers.length > 0) {
-        blockersDiv.style.display = '';
-        blockersListDiv.innerHTML = blockers.map(function(b) {
-          return '<div style="display:flex;align-items:flex-start;gap:7px;padding:5px 0;font-size:0.85rem;color:#dc2626;">' +
-            '<span style="flex-shrink:0;font-weight:700;">⚠</span>' +
-            '<span>' + escHtml(b) + '</span></div>';
-        }).join('');
-      } else {
-        blockersDiv.style.display = 'none';
-      }
-
-      // ── Risk Flags ─────────────────────────────────────
-      var riskFlags = (snapshot && snapshot.riskFlags && snapshot.riskFlags.length > 0) ? snapshot.riskFlags : [];
-      var riskEl = document.getElementById('p48RiskFlags');
-      if (riskFlags.length > 0) {
-        var flagConfig = {
-          'crisis_response':      { label: 'Crisis',     bg: '#fef2f2', color: '#dc2626', border: '#dc262633' },
-          'has_deadline':          { label: 'Deadline',   bg: '#fffbeb', color: '#d97706', border: '#d9770633' },
-          'appeal_context':       { label: 'Appeal',     bg: '#eff6ff', color: '#1a56db', border: '#1a56db33' },
-          'housing_instability':  { label: 'Housing',    bg: '#fef2f2', color: '#dc2626', border: '#dc262633' }
-        };
-        riskEl.style.display = '';
-        riskEl.innerHTML = '<div style="display:flex;flex-wrap:wrap;gap:6px;">' +
-          riskFlags.map(function(f) {
-            var fc = flagConfig[f] || { label: f, bg: '#f3f4f6', color: '#6b7280', border: '#6b728033' };
-            return '<span style="font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;' +
-              'padding:3px 9px;border-radius:10px;background:' + fc.bg + ';color:' + fc.color + ';border:1px solid ' + fc.border + ';">' +
-              fc.label + '</span>';
-          }).join('') + '</div>';
-      } else {
-        riskEl.style.display = 'none';
-      }
-
-      // ── Last Actions (max 3) ───────────────────────────
-      var lastActions = (snapshot && snapshot.lastActions) ? snapshot.lastActions.slice(0, 3) : [];
-      var actDiv = document.getElementById('p48LastActions');
-      var actList = document.getElementById('p48LastActionsList');
-      if (lastActions.length > 0) {
-        actDiv.style.display = '';
-        actList.innerHTML = lastActions.map(function(a, idx) {
-          return '<div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:0.85rem;color:var(--gray-700,#374151);">' +
-            '<span style="color:var(--gold,#c4a035);font-weight:700;flex-shrink:0;">' + (idx + 1) + '.</span>' +
-            '<span>' + escHtml(a.text) + '</span></div>';
-        }).join('');
-      } else {
-        actDiv.style.display = 'none';
-      }
-
-      // ── Last Resources (max 3) ─────────────────────────
-      var lastRes = (snapshot && snapshot.lastResources) ? snapshot.lastResources.slice(0, 3) : [];
-      var resDiv = document.getElementById('p48LastResources');
-      var resList = document.getElementById('p48LastResourcesList');
-      if (lastRes.length > 0) {
-        resDiv.style.display = '';
-        resList.innerHTML = lastRes.map(function(r) {
-          if (r.type === 'url') {
-            return '<div style="padding:3px 0;font-size:0.83rem;">' +
-              '<a href="' + escHtml(r.value) + '" target="_blank" rel="noopener noreferrer" style="color:var(--gold,#c4a035);word-break:break-all;">' +
-              escHtml(r.value.length > 60 ? r.value.substring(0, 60) + '…' : r.value) + '</a></div>';
-          }
-          return '<div style="padding:3px 0;font-size:0.83rem;color:var(--gray-700,#374151);">' +
-            '<a href="tel:' + escHtml(r.value) + '" style="color:var(--gold,#c4a035);">' + escHtml(r.value) + '</a></div>';
-        }).join('');
-      } else {
-        resDiv.style.display = 'none';
-      }
-
-      // ── AI-Extracted Checklist (max 10) ────────────────
-      if (aiChecklist && snapshot && snapshot.checklist && snapshot.checklist.length > 0) {
-        aiChecklist.style.display = 'block';
-        var checkItems = snapshot.checklist.slice(0, 10);
-        var checkHtml = '';
-        checkItems.forEach(function(item, idx) {
-          var sourceLabel = item.source === 'mission_template' ? 'Mission' : 'AI';
-          var sourceBg    = item.source === 'mission_template' ? '#eff6ff' : 'var(--gold-light,#fdf3d0)';
-          var sourceColor = item.source === 'mission_template' ? '#1a56db' : 'var(--gold,#c4a035)';
-          checkHtml +=
-            '<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;' +
-              (idx < checkItems.length - 1 ? 'border-bottom:1px solid var(--gray-200,#e5e7eb);' : '') + '">' +
-              '<input type="checkbox" id="p48chk_' + idx + '" ' +
-                'style="margin-top:3px;accent-color:var(--gold,#c4a035);flex-shrink:0;width:16px;height:16px;cursor:pointer;" ' +
-                'onchange="this.parentElement.style.opacity=this.checked?\'0.5\':\'1\'">' +
-              '<div style="flex:1;min-width:0;">' +
-                '<label for="p48chk_' + idx + '" style="font-size:0.88rem;color:var(--gray-800,#1f2937);cursor:pointer;display:block;">' +
-                  escHtml(item.text) +
-                '</label>' +
-                '<span style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;' +
-                  'padding:1px 6px;border-radius:8px;background:' + sourceBg + ';color:' + sourceColor + ';margin-top:3px;display:inline-block;">' +
-                  sourceLabel + '</span>' +
-              '</div>' +
-            '</div>';
-        });
-        if (snapshot.checklist.length > 10) {
-          checkHtml += '<p style="font-size:0.8rem;color:var(--gray-500);margin-top:8px;">Showing 10 of ' + snapshot.checklist.length + ' items.</p>';
-        }
-        document.getElementById('p48AiChecklistItems').innerHTML = checkHtml;
-      } else if (aiChecklist) {
-        aiChecklist.style.display = 'none';
-      }
-
-    } catch (_p48Err) {
-      console.warn('[Phase 48] render error:', _p48Err.message || _p48Err);
-    }
-  }
-
-  // ── Phase 48: trigger render after auth + checklist load ──
-  // Hooks into the existing authStateChanged event (fires from auth.js).
-  // Runs after a short delay to allow MissionState.refreshFromSupabase()
-  // and other AIOS modules to initialize.
-  window.addEventListener('authStateChanged', function(e) {
-    if (!e.detail.user) return;
-    // Delay to let mission-state sync complete
-    setTimeout(_p48Render, 800);
-  });
-
-  // Also re-render when MissionState explicitly syncs (e.g., after returning from chat)
-  window.addEventListener('aaai:mission_state_synced', function() {
-    _p48Render();
-  });
+  // _p48Render function + authStateChanged/mission_state_synced listeners removed (Phase 55)
 
   /* ══════════════════════════════════════════════════════
-     Phase 3.1 — Wire Phase 2 Case Model to Dashboard
-     Loads active case + missions + checklist + latest report
-     from Supabase Phase 2 tables via AAAI.DataAccess.dashboard.
-     Supplements Phase 48 panels when AIOS session is empty.
-     Falls back gracefully; never overwrites existing data.
+     Phase 3.1 — Reports Supplement (Optimised)
+     Single RLS-scoped query: reports.getLatestByUser().
+     No case lookup needed — Supabase RLS filters by user.
      ══════════════════════════════════════════════════════ */
 
-  function _p31SupplementPanel(data, activeCase) {
+  function _p31RenderReport(latestReport) {
     try {
-      var missions       = data.missions       || [];
-      var checklistItems = data.checklistItems || [];
-      var latestReport   = data.latestReport   || null;
+      if (!latestReport || typeof latestReport !== 'object') return;
+      var listEl   = document.getElementById('dashReportsList');
+      var reportEl = document.getElementById('dashReport');
+      // Guard: if either DOM target is missing, bail
+      if (!listEl && !reportEl) return;
 
-      // ── 1. Supplement p48MissionPanel ──────────────────────────────
-      // Only populate when Phase 48 had no AIOS session data to render.
-      var panel  = document.getElementById('p48MissionPanel');
-      var nameEl = document.getElementById('p48MissionName');
-      var panelEmpty = !panel || panel.style.display === 'none' ||
-        (nameEl && (nameEl.textContent === 'No active mission yet' || nameEl.textContent === ''));
+      var rDate = latestReport.created_at
+        ? new Date(latestReport.created_at).toLocaleDateString()
+        : '';
+      var rContent = latestReport.content || latestReport.report_content || latestReport.summary || '';
+      var rSnippet = rContent.substring(0, 80).replace(/</g, '&lt;');
 
-      if (panelEmpty && (missions.length > 0 || activeCase)) {
-        panel.style.display = 'block';
-
-        // Name: prefer first mission title, fall back to case title
-        var activeMission = missions.length > 0 ? missions[0] : null;
-        var mName   = activeMission ? activeMission.title : activeCase.title;
-        var mStatus = activeMission ? (activeMission.status || 'in_progress') : (activeCase.status || 'active');
-        if (mStatus === 'active') mStatus = 'in_progress'; // map DB 'active' → status config key
-
-        nameEl.textContent = mName;
-        nameEl.style.color = 'var(--gray-900,#111)';
-
-        var statusEl = document.getElementById('p48MissionStatus');
-        var _scMap = {
-          in_progress: { label: 'In Progress', bg: 'var(--gold-light,#fdf3d0)', color: 'var(--gold,#c4a035)' },
-          paused:      { label: 'Paused',       bg: '#f3f4f6',                   color: '#6b7280' },
-          complete:    { label: 'Complete',      bg: '#f0fdf4',                   color: '#16a34a' },
-          blocked:     { label: 'Blocked',       bg: '#fef2f2',                   color: '#dc2626' }
-        };
-        var _scv = _scMap[mStatus] || _scMap.in_progress;
-        statusEl.textContent      = _scv.label;
-        statusEl.style.background = _scv.bg;
-        statusEl.style.color      = _scv.color;
-        statusEl.style.display    = '';
-
-        // Steps: from mission current_step / next_step, or first open checklist item
-        var stepsEl   = document.getElementById('p48MissionSteps');
-        var stepsHtml = '';
-        if (activeMission && activeMission.current_step) {
-          stepsHtml +=
-            '<div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:6px;">' +
-            '<span style="color:var(--gold,#c4a035);font-weight:700;flex-shrink:0;">●</span>' +
-            '<div><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-500);">Current Step</span>' +
-            '<div style="margin-top:2px;">' + escHtml(activeMission.current_step) + '</div></div></div>';
-        }
-        if (activeMission && activeMission.next_step && activeMission.next_step !== activeMission.current_step) {
-          stepsHtml +=
-            '<div style="display:flex;align-items:flex-start;gap:8px;">' +
-            '<span style="color:var(--gray-400,#9ca3af);flex-shrink:0;">○</span>' +
-            '<div><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-400);">Next Step</span>' +
-            '<div style="margin-top:2px;color:var(--gray-600,#4b5563);">' + escHtml(activeMission.next_step) + '</div></div></div>';
-        }
-        if (!stepsHtml) {
-          // Fall back: first open case checklist item as current step
-          var openItem = checklistItems.filter(function(i) {
-            return i.status !== 'completed' && i.status !== 'skipped';
-          })[0];
-          stepsHtml = openItem
-            ? ('<div style="display:flex;align-items:flex-start;gap:8px;">' +
-               '<span style="color:var(--gold,#c4a035);font-weight:700;flex-shrink:0;">●</span>' +
-               '<div><span style="font-size:0.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gray-500);">Current Step</span>' +
-               '<div style="margin-top:2px;">' + escHtml(openItem.title) + '</div></div></div>')
-            : '<p style="font-size:0.85rem;color:var(--gray-500);">Continue your conversation to unlock the next step.</p>';
-        }
-        stepsEl.innerHTML = stepsHtml;
-
-        // If multiple missions, list them in the "Recent Guidance" slot
-        if (missions.length > 1) {
-          var actDiv   = document.getElementById('p48LastActions');
-          var actList  = document.getElementById('p48LastActionsList');
-          var actLabel = actDiv && actDiv.querySelector('div');
-          if (actDiv && actList) {
-            if (actLabel) actLabel.textContent = 'All Missions (' + missions.length + ')';
-            actDiv.style.display = '';
-            actList.innerHTML = missions.map(function(m) {
-              var ms = (m.status || 'in_progress') === 'active' ? 'in_progress' : (m.status || 'in_progress');
-              var dot = ms === 'complete' ? '✓' : (ms === 'in_progress' ? '●' : '○');
-              var dc  = ms === 'complete' ? '#16a34a' : (ms === 'in_progress' ? 'var(--gold,#c4a035)' : 'var(--gray-400)');
-              return '<div style="display:flex;align-items:flex-start;gap:7px;padding:4px 0;font-size:0.85rem;color:var(--gray-700,#374151);">' +
-                '<span style="color:' + dc + ';font-weight:700;flex-shrink:0;">' + dot + '</span>' +
-                '<span>' + escHtml(m.title) + '</span></div>';
-            }).join('');
-          }
-        }
-
-        // Hide sections that have no Phase 2 data
-        document.getElementById('p48Blockers').style.display     = 'none';
-        document.getElementById('p48RiskFlags').style.display     = 'none';
-        document.getElementById('p48LastResources').style.display = 'none';
+      if (listEl && listEl.querySelector('p')) {
+        listEl.innerHTML =
+          '<div class="dash-report-item">' +
+          (rDate ? '<span class="dash-report-date">' + rDate + '</span>' : '') +
+          '<span class="dash-report-type">' + escHtml(latestReport.report_type || 'Case Report') + '</span>' +
+          (rSnippet ? '<span class="dash-report-snippet">' + rSnippet + '…</span>' : '') +
+          '</div>';
       }
-
-      // ── 2. Supplement p48AiChecklist ───────────────────────────────
-      // Show case_checklist_items when Phase 47 MissionExtractor had no snapshot.
-      var aiChecklist = document.getElementById('p48AiChecklist');
-      if (aiChecklist && aiChecklist.style.display === 'none' && checklistItems.length > 0) {
-        aiChecklist.style.display = 'block';
-        var h3El = aiChecklist.querySelector('h3');
-        if (h3El) h3El.textContent = 'Case Action Items';
-
-        var sliced = checklistItems.slice(0, 10);
-        var ckHtml = '';
-        sliced.forEach(function(item, idx) {
-          var done = item.status === 'completed' || item.status === 'skipped';
-          ckHtml +=
-            '<div style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;' +
-              (idx < sliced.length - 1 ? 'border-bottom:1px solid var(--gray-200,#e5e7eb);' : '') + '">' +
-            '<input type="checkbox" id="p31chk_' + idx + '"' + (done ? ' checked' : '') +
-              ' style="margin-top:3px;accent-color:var(--gold,#c4a035);flex-shrink:0;width:16px;height:16px;cursor:pointer;"' +
-              ' onchange="this.parentElement.style.opacity=this.checked?\'0.5\':\'1\'">' +
-            '<div style="flex:1;min-width:0;' + (done ? 'opacity:0.5;' : '') + '">' +
-              '<label for="p31chk_' + idx + '" style="font-size:0.88rem;color:var(--gray-800,#1f2937);cursor:pointer;display:block;">' +
-                escHtml(item.title) + '</label>' +
-              (item.description ? '<div style="font-size:0.75rem;color:var(--gray-500,#6b7280);margin-top:2px;">' + escHtml(item.description) + '</div>' : '') +
-              '<span style="font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;' +
-                'padding:1px 6px;border-radius:8px;background:var(--gold-light,#fdf3d0);color:var(--gold,#c4a035);margin-top:3px;display:inline-block;">Case</span>' +
-            '</div></div>';
-        });
-        if (checklistItems.length > 10) {
-          ckHtml += '<p style="font-size:0.8rem;color:var(--gray-500);margin-top:8px;">Showing 10 of ' + checklistItems.length + ' items.</p>';
-        }
-        document.getElementById('p48AiChecklistItems').innerHTML = ckHtml;
+      if (reportEl && reportEl.querySelector('p') && rContent) {
+        reportEl.innerHTML =
+          '<div style="font-size:0.9rem;color:var(--gray-700,#374151);line-height:1.6;white-space:pre-wrap;">' +
+          rContent.substring(0, 600).replace(/</g, '&lt;') +
+          (rContent.length > 600 ? '…' : '') + '</div>';
       }
-
-      // ── 3. Supplement dashReportsList + dashReport ─────────────────
-      // Populate from Phase 2 `reports` table when ai_reports table is empty.
-      if (latestReport) {
-        var listEl   = document.getElementById('dashReportsList');
-        var reportEl = document.getElementById('dashReport');
-        if (listEl && listEl.querySelector('p')) {
-          var rDate    = new Date(latestReport.created_at).toLocaleDateString();
-          var rSnippet = (latestReport.report_content || latestReport.summary || '').substring(0, 80).replace(/</g, '&lt;');
-          listEl.innerHTML =
-            '<div class="dash-report-item">' +
-            '<span class="dash-report-date">' + rDate + '</span>' +
-            '<span class="dash-report-type">' + escHtml(latestReport.report_type || 'Case Report') + '</span>' +
-            (rSnippet ? '<span class="dash-report-snippet">' + rSnippet + '…</span>' : '') +
-            '</div>';
-        }
-        if (reportEl && reportEl.querySelector('p')) {
-          var full = (latestReport.report_content || latestReport.summary || '');
-          if (full) {
-            reportEl.innerHTML =
-              '<div style="font-size:0.9rem;color:var(--gray-700,#374151);line-height:1.6;white-space:pre-wrap;">' +
-              full.substring(0, 600).replace(/</g, '&lt;') +
-              (full.length > 600 ? '…' : '') + '</div>';
-          }
-        }
-      }
-
-      console.log('[Phase3.1] supplement complete — missions:', missions.length, '| items:', checklistItems.length, '| report:', !!latestReport);
     } catch (err) {
-      console.warn('[Phase3.1] supplement error:', err.message || err);
+      console.warn('[Phase3.1] report render error:', err.message || err);
     }
   }
 
   window.addEventListener('authStateChanged', function(e) {
     if (!e.detail.user) return;
-    if (!window.AAAI || !window.AAAI.DataAccess) {
-      console.warn('[Phase3.1] DataAccess unavailable — data-access.js not loaded?');
-      return;
-    }
+    if (!window.AAAI || !window.AAAI.DataAccess) return;
     var DA = window.AAAI.DataAccess;
-    if (!DA.cases || typeof DA.cases.getOrCreateActiveCase !== 'function') {
-      console.warn('[Phase3.1] DA.cases.getOrCreateActiveCase not available — skipping');
-      return;
-    }
-    // getOrCreateActiveCase() primes Supabase v2 JWT before any RLS-guarded query
-    DA.cases.getOrCreateActiveCase().then(function(caseResult) {
-      if (caseResult.error || !caseResult.data) {
-        console.warn('[Phase3.1] getOrCreateActiveCase:', caseResult.error);
-        return;
-      }
-      var activeCase = caseResult.data;
-      window._p31ActiveCase = activeCase;
-      return DA.dashboard.load(activeCase.id).then(function(dashResult) {
-        if (dashResult.error || !dashResult.data) {
-          console.warn('[Phase3.1] dashboard.load:', dashResult.error);
+    if (!DA.reports || typeof DA.reports.getLatestByUser !== 'function') return;
+
+    // Single query — RLS scopes to authenticated user, no case lookup needed
+    DA.reports.getLatestByUser().then(function(reportResult) {
+      // .single() returns error PGRST116 when zero rows — expected for new users
+      if (reportResult.error) {
+        var code = (reportResult.error.code || reportResult.error.message || '');
+        if (/PGRST116|no rows/i.test(code)) {
+          // No reports yet — leave default "No reports yet" HTML in place
           return;
         }
-        window._p31DashData = dashResult.data;
-        console.log('[Phase3.1] loaded — case:', activeCase.title,
-          '| missions:', (dashResult.data.missions || []).length,
-          '| items:', (dashResult.data.checklistItems || []).length,
-          '| report:', !!dashResult.data.latestReport);
-        // Fire 200ms after _p48Render (T+800ms) so Phase 48 renders first
-        setTimeout(function() {
-          _p31SupplementPanel(dashResult.data, activeCase);
-        }, 1000);
-      });
+        console.warn('[Phase3.1] report query error:', code);
+        return;
+      }
+      if (!reportResult.data) return; // defensive — null data without error
+      _p31RenderReport(reportResult.data);
     }).catch(function(err) {
       console.warn('[Phase3.1] error:', err.message || err);
     });
@@ -1987,28 +1351,6 @@ function toggleMenu() {
 </script>
 
 <!-- Phase 46 Part 6: Mission Map Modal -->
-<div id="missionMapModal"
-  style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.55);align-items:center;justify-content:center;padding:16px;"
-  onclick="if(event.target===this)closeMissionMap()">
-  <div style="background:#fff;border-radius:14px;max-width:480px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.25);">
-    <!-- Modal header -->
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--gray-200,#e5e7eb);position:sticky;top:0;background:#fff;z-index:1;">
-      <div>
-        <div style="font-weight:700;font-size:1rem;color:var(--gray-900,#111);">🗺 My Mission Path</div>
-        <div style="font-size:0.75rem;color:var(--gray-500,#6b7280);margin-top:2px;">Your personalized veteran journey map</div>
-      </div>
-      <button onclick="closeMissionMap()"
-        style="background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--gray-500,#6b7280);padding:4px 8px;border-radius:6px;line-height:1;"
-        title="Close">×</button>
-    </div>
-    <!-- Mission tree -->
-    <div id="missionMapTree" style="padding:16px 20px;"></div>
-    <!-- Modal footer -->
-    <div style="padding:12px 20px;border-top:1px solid var(--gray-200,#e5e7eb);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;">
-      <a href="index.html?resume=1" onclick="closeMissionMap()" style="color:var(--gold,#c4a035);font-weight:700;font-size:0.85rem;text-decoration:none;">Continue Mission →</a>
-      <button onclick="closeMissionMap()" style="background:var(--gray-100,#f3f4f6);border:none;border-radius:8px;padding:6px 14px;font-size:0.82rem;cursor:pointer;color:var(--gray-700,#374151);font-weight:600;">Close</button>
-    </div>
-  </div>
-</div>
+<!-- Mission Map Modal removed -->
 </body>
 </html>

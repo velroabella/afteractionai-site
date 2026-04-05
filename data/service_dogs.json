@@ -18,7 +18,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-3",
@@ -39,7 +43,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "medium"
   },
   {
     "id": "sd-org-4",
@@ -59,7 +67,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-5",
@@ -80,7 +92,11 @@
     "accredited": true,
     "accreditation": "ADI + IGDF",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Southeast"
+    ],
+    "wait_time_category": "medium"
   },
   {
     "id": "sd-org-6",
@@ -101,7 +117,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Mountain West"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-7",
@@ -122,7 +142,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Northeast"
+    ],
+    "wait_time_category": "medium"
   },
   {
     "id": "sd-org-8",
@@ -143,7 +167,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Northeast"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-9",
@@ -162,7 +190,11 @@
     "accredited": true,
     "accreditation": "ADI (Accreditor)",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-org-10",
@@ -182,7 +214,11 @@
     "accredited": false,
     "accreditation": "Pending ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Southwest"
+    ],
+    "wait_time_category": "short"
   },
   {
     "id": "sd-org-11",
@@ -203,7 +239,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "South"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-12",
@@ -225,7 +265,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Southeast"
+    ],
+    "wait_time_category": "medium"
   },
   {
     "id": "sd-org-13",
@@ -247,7 +291,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Mid-Atlantic"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-14",
@@ -268,7 +316,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Pacific Northwest"
+    ],
+    "wait_time_category": "medium"
   },
   {
     "id": "sd-org-15",
@@ -290,7 +342,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "South"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-16",
@@ -311,7 +367,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Mid-Atlantic"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-org-17",
@@ -332,7 +392,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-org-18",
@@ -353,7 +417,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Pacific Northwest"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-19",
@@ -377,7 +445,13 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "West",
+      "South",
+      "Northeast"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-20",
@@ -398,7 +472,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-org-21",
@@ -420,7 +498,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "no_wait"
   },
   {
     "id": "sd-org-22",
@@ -440,7 +522,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Midwest"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-23",
@@ -462,7 +548,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Midwest"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-24",
@@ -483,7 +573,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Southwest"
+    ],
+    "wait_time_category": "medium"
   },
   {
     "id": "sd-org-25",
@@ -504,7 +598,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Midwest"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-26",
@@ -528,7 +626,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-org-27",
@@ -550,7 +652,12 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Mid-Atlantic",
+      "Northeast"
+    ],
+    "wait_time_category": "long"
   },
   {
     "id": "sd-org-28",
@@ -574,7 +681,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": true,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "National"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-org-29",
@@ -595,7 +706,11 @@
     "accredited": true,
     "accreditation": "ADI",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "West"
+    ],
+    "wait_time_category": "medium"
   },
   {
     "id": "sd-org-30",
@@ -614,7 +729,11 @@
     "accredited": true,
     "accreditation": "ADI + IGDF",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Midwest"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-org-31",
@@ -633,7 +752,11 @@
     "accredited": true,
     "accreditation": "ADI + IGDF",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "West"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-org-32",
@@ -652,7 +775,12 @@
     "accredited": true,
     "accreditation": "IGDF",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "West",
+      "Pacific Northwest"
+    ],
+    "wait_time_category": "short"
   },
   {
     "id": "sd-org-33",
@@ -671,7 +799,11 @@
     "accredited": true,
     "accreditation": "IGDF",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Northeast"
+    ],
+    "wait_time_category": "short"
   },
   {
     "id": "sd-org-34",
@@ -690,7 +822,11 @@
     "accredited": true,
     "accreditation": "IGDF",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Northeast"
+    ],
+    "wait_time_category": "medium"
   },
   {
     "id": "sd-org-35",
@@ -709,7 +845,11 @@
     "accredited": true,
     "accreditation": "IGDF",
     "veteran_focused": false,
-    "source_quality": "High"
+    "source_quality": "High",
+    "region": [
+      "Northeast"
+    ],
+    "wait_time_category": "varies"
   },
   {
     "id": "sd-law-1",
