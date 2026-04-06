@@ -518,6 +518,17 @@
   // Checked by the async voice-structured classification to prevent saving raw transcript.
   var _voiceRouteHandled = false;
 
+  // Phase 2.2: Pending resume build state.
+  // Set when _handleResumeGeneration asks a required question (e.g. branch).
+  // On the user's NEXT message, submitUserText checks this and auto-resumes
+  // generation — no additional "build my resume" command needed.
+  window._pendingResumeBuild = null;
+
+  // Phase 2.3: Execution lock — when true, sendToAI() is hard-blocked.
+  // Set at the top of _handleResumeGeneration, cleared on every exit path.
+  // Prevents AI from ever running during deterministic resume generation.
+  window._resumeExecutionLock = false;
+
   // Fix 4: Promise that resolves when dashboard context is loaded.
   // sendToAI waits on this before the first call so Claude gets full context.
   var _dashboardContextReady = null;
@@ -1243,11 +1254,14 @@
           });
 
         if (_isResumeConfirm && _inResumeContext) {
-          console.log('[FORCE] Resume confirmation detected: "' + option + '" — using forceTask path');
+          // Phase 2.3: Route to deterministic template pipeline — no AI
+          console.log('[PHASE2.3] Resume confirmation detected: "' + option + '" — template pipeline (no AI)');
           addMessage(option, 'user');
           conversationHistory.push({ role: 'user', content: option });
           showAIWorkingState('resume');
-          sendToAI({ text: option, forceTask: 'resume_generation', skipFollowups: true });
+          isProcessing = true;
+          if (btnSend) btnSend.disabled = true;
+          _handleResumeGeneration(option);
           return;
         }
 
@@ -2768,9 +2782,29 @@
           conversationHistory.push({ role: 'user', content: trimmed });
           // Stop voice NOW — prevents AI from speaking before we switch pipelines
           if (typeof endVoiceSession === 'function') endVoiceSession();
-          // Route to text pipeline (300ms — enough for disconnect to settle)
-          var _earlyGenPrompt = 'The veteran just asked via voice: "' + trimmed + '". Generate the requested document now in full using all context from our conversation. Use proper headings and formatting.';
-          setTimeout(function() { sendToAI(_earlyGenPrompt); }, 300);
+
+          // ── PHASE 2: Fork by document type ──────────────────────────────
+          // Resume/CV → deterministic template pipeline (no AI, no streaming).
+          // Everything else → text pipeline via sendToAI (unchanged for now).
+          var _isVoiceResumeReq = /\b(resume|cv)\b/i.test(trimmed);
+          var _capturedText = trimmed; // capture for closure
+          if (_isVoiceResumeReq) {
+            // Template pipeline: set processing state, call _handleResumeGeneration
+            // directly — no sendToAI, no AI round-trip, no streaming.
+            setTimeout(function() {
+              showAIWorkingState('resume');
+              isProcessing = true;
+              if (btnSend) btnSend.disabled = true;
+              // Phase 2.3: _handleResumeGeneration now always returns true
+              // (all exit paths handled internally — no AI fallback)
+              _handleResumeGeneration(_capturedText);
+            }, 300);
+          } else {
+            // Will, POA, action plan, etc. — text pipeline for now
+            var _earlyGenPrompt = 'The veteran just asked via voice: "' + _capturedText + '". Generate the requested document now in full using all context from our conversation. Use proper headings and formatting.';
+            setTimeout(function() { sendToAI(_earlyGenPrompt); }, 300);
+          }
+          // ── END PHASE 2 FORK ─────────────────────────────────────────────
           return; // skip submitUserText voiceOnly + _aiosVoiceUpdate — not needed
         }
         // ── END PHASE 1 VOICE STABILITY ──────────────────────────────────────────
@@ -3009,6 +3043,54 @@
       if (window.AIOS && window.AIOS.Telemetry) { window.AIOS.Telemetry.record('escalation_triggered', { tier: 'AT_RISK', path: opts.path || 'text' }); }
     }
 
+    // ── Phase 2.2: Auto-resume pending resume generation ──────────────
+    // If _handleResumeGeneration asked a question (e.g. branch), the user's
+    // next message auto-triggers generation — no re-command needed.
+    // Runs BEFORE voiceOnly return and BEFORE sendToAI.
+    if (window._pendingResumeBuild) {
+      // Expire stale pending builds (> 5 minutes)
+      if (Date.now() - window._pendingResumeBuild.timestamp > 300000) {
+        console.log('[RESUME] Pending build expired (>5min) — clearing');
+        window._pendingResumeBuild = null;
+      } else {
+        var _pending = window._pendingResumeBuild;
+        window._pendingResumeBuild = null;
+        console.log('[RESUME] Resuming pending build after user answered: "' + trimmed.substring(0, 40) + '"');
+        // Push the answer into history so memory extraction picks it up
+        conversationHistory.push({ role: 'user', content: trimmed });
+        // Run memory extraction NOW so branch is stored before _handleResumeGeneration checks
+        if (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.extractMemoryFromInput === 'function') {
+          try {
+            var _memEx = window.AIOS.Memory.extractMemoryFromInput(trimmed);
+            if (_memEx && Object.keys(_memEx).length > 0) {
+              window.AIOS.Memory.profile = window.AIOS.Memory.mergeMemory(window.AIOS.Memory.profile, _memEx);
+              console.log('[RESUME] Memory extracted from answer:', Object.keys(_memEx).join(', '));
+            }
+          } catch (_e) { console.warn('[RESUME] Memory extraction error:', _e); }
+        }
+        // If voice is active, end it — resume pipeline needs text mode
+        if (inputMode === 'voice' && typeof endVoiceSession === 'function') {
+          endVoiceSession();
+        }
+        setTimeout(function() {
+          showAIWorkingState('resume');
+          isProcessing = true;
+          if (btnSend) btnSend.disabled = true;
+          // Phase 2.3: _handleResumeGeneration always returns true — no AI fallback
+          _handleResumeGeneration(_pending.originalRequest);
+        }, 300);
+        return;
+      }
+    }
+    // ── END Phase 2.2 ─────────────────────────────────────────────────
+
+    // Phase 2.3: If resume execution lock is active, block ALL AI routing.
+    // This catches any stray message that slips past the pending-resume check.
+    if (window._resumeExecutionLock) {
+      console.log('[LOCK] submitUserText blocked — resume execution in progress. text="' + trimmed.substring(0, 40) + '"');
+      return;
+    }
+
     // Voice-only: bubble + escalation is sufficient; Realtime API drives the response
     if (opts.voiceOnly) { return; }
 
@@ -3067,9 +3149,12 @@
         return m.role === 'assistant' && /resume/i.test(m.content || '') && conversationHistory.indexOf(m) > conversationHistory.length - 6;
       });
     if ((_typedResumeColdStart || (_typedResumeConfirm && _typedResumeCtx)) && !isProcessing) {
-      console.log('[FORCE] Resume generation detected: "' + trimmed + '" — forceTask path (cold=' + _typedResumeColdStart + ' confirm=' + _typedResumeConfirm + ' ctx=' + _typedResumeCtx + ')');
+      // Phase 2.3: Route to deterministic template pipeline — no AI
+      console.log('[PHASE2.3] Typed resume detected: "' + trimmed + '" — template pipeline (cold=' + _typedResumeColdStart + ' confirm=' + _typedResumeConfirm + ' ctx=' + _typedResumeCtx + ')');
       showAIWorkingState('resume');
-      sendToAI({ text: trimmed, forceTask: 'resume_generation', skipFollowups: true });
+      isProcessing = true;
+      if (btnSend) btnSend.disabled = true;
+      _handleResumeGeneration(trimmed);
       return;
     }
 
@@ -3335,6 +3420,10 @@
    * @returns {boolean} true if handled, false if should fall through to AI
    */
   function _handleResumeGeneration(userText) {
+    // Phase 2.3: Lock immediately — blocks sendToAI for the entire lifecycle
+    window._resumeExecutionLock = true;
+    console.log('[LOCK] Resume execution lock ACQUIRED');
+
     var isLoggedIn = window.AAAI && window.AAAI.auth && window.AAAI.auth.isLoggedIn && window.AAAI.auth.isLoggedIn();
 
     // ── Non-auth guard ──
@@ -3369,17 +3458,70 @@
       }
       isProcessing = false;
       if (btnSend) btnSend.disabled = false;
+      window._resumeExecutionLock = false;
+      console.log('[LOCK] Resume execution lock RELEASED (non-auth)');
       return true;
     }
+
+    // ── PHASE 2: Critical data check — ONE question, then stop ──────────
+    // Branch is the minimum required field. Without it the resume is too
+    // generic to be useful. Ask exactly once, then return so the user
+    // can answer and re-trigger generation on the next message.
+    var _quickProfile = (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.getProfile === 'function')
+      ? window.AIOS.Memory.getProfile() : {};
+    if (!_quickProfile.branch) {
+      clearAIWorkingState();
+      // Phase 2.2: Store pending intent so submitUserText auto-resumes after answer
+      window._pendingResumeBuild = {
+        originalRequest: userText,
+        timestamp: Date.now()
+      };
+      console.log('[RESUME] Pending build stored — waiting for branch answer');
+      var _branchAskMsg = '📝 I\'m ready to build your resume — just need one quick detail first:\n\n' +
+        '**What branch of service were you in?**\n\n' +
+        'Army · Navy · Air Force · Marine Corps · Coast Guard · Space Force · National Guard';
+      addMessage(_branchAskMsg, 'ai');
+      conversationHistory.push({ role: 'assistant', content: _branchAskMsg });
+      isProcessing = false;
+      if (btnSend) btnSend.disabled = false;
+      if (userInput) userInput.focus();
+      window._resumeExecutionLock = false;
+      console.log('[LOCK] Resume execution lock RELEASED (pending branch)');
+      return true; // handled — waiting for branch answer before proceeding
+    }
+    // ── END PHASE 2 CRITICAL DATA CHECK ─────────────────────────────────
 
     // ── Build structured data ──
     var resumeData = _buildResumeData();
     console.log('[RESUME-GEN] Structured data built:', JSON.stringify(resumeData).substring(0, 200));
 
+    // ── Phase 2.2: Data sanity check — prevent garbage documents ──────
+    if (!resumeData || !resumeData.fullName || resumeData.fullName === '[NOT PROVIDED]') {
+      console.error('[RESUME] Invalid data — aborting generation. fullName=' + (resumeData && resumeData.fullName));
+      clearAIWorkingState();
+      var _sanityMsg = '⚠️ I need more information before I can generate your resume. ' +
+        'Please tell me your name, or upload an existing resume or DD-214 so I can pull the details automatically.';
+      addMessage(_sanityMsg, 'ai');
+      conversationHistory.push({ role: 'assistant', content: _sanityMsg });
+      isProcessing = false;
+      if (btnSend) btnSend.disabled = false;
+      if (userInput) userInput.focus();
+      window._resumeExecutionLock = false;
+      console.log('[LOCK] Resume execution lock RELEASED (data sanity)');
+      return true; // handled — do not fall through to AI
+    }
+    // ── END Phase 2.2 DATA SANITY ─────────────────────────────────────
+
     // ── Generate .docx via legal-docx-generator ──
     if (!window.AAAI || !window.AAAI.legalDocx || typeof window.AAAI.legalDocx.generateFromData !== 'function') {
-      console.warn('[RESUME-GEN] generateFromData not available — falling back to AI pipeline');
-      return false;  // fall through to AI
+      console.error('[RESUME-GEN] generateFromData not available — NO AI fallback (Phase 2.3)');
+      clearAIWorkingState();
+      addMessage('⚠️ The resume builder is temporarily unavailable. Please refresh the page and try again.', 'ai');
+      isProcessing = false;
+      if (btnSend) btnSend.disabled = false;
+      window._resumeExecutionLock = false;
+      console.log('[LOCK] Resume execution lock RELEASED (generator unavailable)');
+      return true;  // handled — no AI fallback
     }
 
     // Async: generate docx blob, save to dashboard, show confirmation
@@ -3418,6 +3560,8 @@
             isProcessing = false;
             if (btnSend) btnSend.disabled = false;
             if (userInput) userInput.focus();
+            window._resumeExecutionLock = false;
+            console.log('[LOCK] Resume execution lock RELEASED (success)');
             speakAIText(_confirmMsg);
           });
           conversationHistory.push({ role: 'assistant', content: _confirmMsg });
@@ -3426,13 +3570,14 @@
       .catch(function(err) {
         console.error('[RESUME-GEN] Generation failed:', err);
         clearAIWorkingState();
-        var _errMsg = 'I ran into an issue generating your resume. Let me try the AI-assisted approach instead.';
+        // Phase 2.3: NO AI fallback — show error and let user retry
+        var _errMsg = '⚠️ I ran into an issue generating your resume. Please try again — just say "build my resume."';
         addMessage(_errMsg, 'ai');
         conversationHistory.push({ role: 'assistant', content: _errMsg });
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
-        // Fall back to AI pipeline
-        sendToAI({ text: userText, forceTask: 'resume_generation', skipFollowups: true, _bypassTemplateGen: true });
+        window._resumeExecutionLock = false;
+        console.log('[LOCK] Resume execution lock RELEASED (error)');
       });
 
     return true;  // handled
@@ -3446,6 +3591,12 @@
   var _activeForceTask = null;  // set per-request, cleared on response
 
   function sendToAI(userText) {
+    // Phase 2.3: Hard lock — resume generation owns the pipeline
+    if (window._resumeExecutionLock) {
+      console.log('[LOCK] sendToAI BLOCKED — resume execution lock active. Input: "' + (typeof userText === 'string' ? userText.substring(0, 40) : JSON.stringify(userText).substring(0, 60)) + '"');
+      return;
+    }
+
     // Normalize: accept object or string
     var _ftPayload = null;
     if (userText && typeof userText === 'object') {
@@ -3457,23 +3608,15 @@
     }
 
     // ── Phase 2 INTERCEPT: Template-driven resume generation ──
-    // When forceTask is 'resume_generation', bypass the AI entirely and generate
-    // the resume client-side from structured profile data.
-    // _bypassTemplateGen is set by the error handler in _handleResumeGeneration
-    // to prevent infinite loops when falling back to the AI pipeline.
-    if (_activeForceTask === 'resume_generation' && !(_ftPayload && _ftPayload._bypassTemplateGen)) {
-      console.log('[RESUME-GEN] Intercepting forceTask=resume_generation → template-driven pipeline');
+    // Phase 2.3: All resume generation now routes through _handleResumeGeneration()
+    // directly from callers. The forceTask='resume_generation' path is no longer used.
+    // If somehow reached, route to template pipeline (belt + suspenders).
+    if (_activeForceTask === 'resume_generation') {
+      console.warn('[PHASE2.3] sendToAI reached with forceTask=resume_generation — redirecting to template pipeline');
       isProcessing = true;
       if (btnSend) btnSend.disabled = true;
-      if (_handleResumeGeneration(userText)) {
-        return;  // handled entirely client-side
-      }
-      // If _handleResumeGeneration returned false, fall through to AI.
-      // CRITICAL: reset isProcessing so the concurrent guard at line ~3451
-      // doesn't silently queue the request forever.
-      isProcessing = false;
-      if (btnSend) btnSend.disabled = false;
-      console.log('[RESUME-GEN] Template pipeline unavailable — falling through to AI');
+      _handleResumeGeneration(userText);
+      return;
     }
 
     // Phase 4.4: concurrent-request guard
