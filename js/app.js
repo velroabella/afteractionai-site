@@ -2750,6 +2750,44 @@
         }
         _lastVoiceText = trimmed;
         _lastVoiceTime = _now;
+
+        // ── EARLY VOICE INTERCEPT: Document generation requests ──
+        // The Realtime API will auto-generate an audio response within milliseconds.
+        // If the user asked for a document, we must disconnect the voice session
+        // IMMEDIATELY — before the AI speaks — then route to the text pipeline.
+        // This prevents the AI from interrupting/cutting off the generation flow.
+        var _earlyGenCheck = /\b(generate|create|draft|write|prepare|make me|build me|give me|produce|start|wrap up|finish|finalize|complete|assemble|compile|put together)\b.{0,80}\b(resume|cv|will|testament|power of attorney|poa|report|plan|letter|template|document|summary|audit|nexus|personal statement|action plan|claim|transition|financial|business|budget|linkedin|interview|checklist)\b/i.test(trimmed);
+        if (_earlyGenCheck) {
+          console.log('[VOICE-EARLY-INTERCEPT] Generation request detected in onUserTranscript — disconnecting voice BEFORE AI responds');
+          // Render the user bubble
+          addMessage(trimmed, 'user');
+          conversationHistory.push({ role: 'user', content: trimmed });
+          // Disconnect voice immediately to prevent AI audio
+          if (typeof RealtimeVoice !== 'undefined') {
+            try { RealtimeVoice.disconnect(); } catch(e) {}
+          }
+          setVoiceUI('idle');
+          hideCaption();
+          inputMode = 'text';
+          if (chatInputVoice) chatInputVoice.style.display = 'none';
+          if (chatInputText) chatInputText.style.display = 'block';
+          updateModeIcon();
+          // Show working state and route to text pipeline
+          var _taskType = 'template';
+          if (/resume|cv/i.test(trimmed)) _taskType = 'resume';
+          else if (/report|plan|audit/i.test(trimmed)) _taskType = 'report';
+          showAIWorkingState(_taskType);
+          // Check if this is a resume request — route through forceTask
+          var _isVoiceResume = /\b(build|generate|create|write|make|draft|prepare)\b.{0,30}\b(my\s+)?(resume|cv)\b/i.test(trimmed);
+          if (_isVoiceResume) {
+            sendToAI({ text: trimmed, forceTask: 'resume_generation', skipFollowups: true });
+          } else {
+            var _vrPrompt = 'The veteran just asked: "' + trimmed + '". Generate the requested document now in full using all context from our conversation. Use proper headings and formatting.';
+            sendToAI(_vrPrompt);
+          }
+          return;  // skip normal voice path entirely
+        }
+
         // Phase 33: render bubble + escalation check via shared path (voiceOnly — Realtime drives response)
         submitUserText(trimmed, { voiceOnly: true, path: 'voice' });
         // Phase 36: use trimmed (consistent with bubble + memory extraction)
@@ -3235,47 +3273,132 @@
    *     serviceEntryDate, separationDate, vaRating }
    * Missing values get '[NOT PROVIDED]' so the docx is never blank.
    */
-  function _buildResumeData() {
+  /**
+   * Gathers resume data from all available sources, in priority order:
+   *  1. Uploaded documents (DD-214, prior resumes) from dashboard
+   *  2. Prior generated resume content from dashboard
+   *  3. AIOS.Memory profile (extracted from conversation)
+   *  4. Conversation history mining
+   *  5. Placeholders only for truly missing data
+   *
+   * @param {Object} [dashboardData] — pre-loaded { uploads: [], generated: [] }
+   * @returns {Object} structured resume data
+   */
+  function _buildResumeData(dashboardData) {
     var profile = (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.getProfile === 'function')
       ? window.AIOS.Memory.getProfile()
       : {};
 
     var _ph = '[NOT PROVIDED]';
+    var uploads   = (dashboardData && dashboardData.uploads)   || [];
+    var generated = (dashboardData && dashboardData.generated) || [];
+
+    // ── SOURCE 1: Extract fields from uploaded documents ──
+    // DD-214 and other uploaded docs may have extractedFields in content JSON
+    var uploadedFields = {};
+    uploads.forEach(function(doc) {
+      try {
+        var parsed = typeof doc.content === 'string' ? JSON.parse(doc.content) : doc.content;
+        if (parsed && parsed.extractedFields) {
+          // Merge — later uploads overwrite earlier ones
+          Object.keys(parsed.extractedFields).forEach(function(k) {
+            if (parsed.extractedFields[k]) uploadedFields[k] = parsed.extractedFields[k];
+          });
+        }
+        // Also check metadata for docType-specific fields
+        if (doc.metadata && doc.metadata.extractedFields) {
+          Object.keys(doc.metadata.extractedFields).forEach(function(k) {
+            if (doc.metadata.extractedFields[k]) uploadedFields[k] = doc.metadata.extractedFields[k];
+          });
+        }
+      } catch(e) { /* content may not be JSON */ }
+    });
+
+    // ── SOURCE 2: Extract fields from prior generated resume ──
+    var priorResumeContent = '';
+    generated.forEach(function(doc) {
+      if (doc.template_type && /resume/i.test(doc.template_type) && doc.content) {
+        if (doc.content.length > priorResumeContent.length) {
+          priorResumeContent = doc.content;  // use the longest/richest
+        }
+        // Also check prefilled_fields from metadata
+        if (doc.metadata && doc.metadata.prefilled_fields) {
+          var pf = doc.metadata.prefilled_fields;
+          Object.keys(pf).forEach(function(k) {
+            if (pf[k] && pf[k] !== '[NOT PROVIDED]' && !uploadedFields[k]) {
+              uploadedFields[k] = pf[k];
+            }
+          });
+        }
+      }
+    });
+
+    // ── Helper: pick best value across sources ──
+    function pick(fieldName, profileKey) {
+      // Priority: uploaded doc fields > profile > placeholder
+      if (uploadedFields[fieldName]) return uploadedFields[fieldName];
+      if (profileKey && profile[profileKey]) return profile[profileKey];
+      return null;
+    }
+
+    var fullName  = pick('name', 'name') || pick('fullName', null) || _ph;
+    var branch    = pick('branch', 'branch') || _ph;
+    var mos       = pick('mos', 'mos') || pick('MOS', null) || _ph;
+    var rank      = pick('rank', 'rank') || _ph;
+    var state     = pick('state', 'state') || _ph;
+    var entryDate = pick('serviceEntryDate', 'serviceEntryDate') || _ph;
+    var sepDate   = pick('separationDate', 'separationDate') || _ph;
+    var vaRating  = pick('vaRating', 'vaRating') || null;
+    var empStatus = pick('employmentStatus', 'employmentStatus') || null;
 
     // Calculate years of service from dates if available
     var yearsService = _ph;
-    if (profile.serviceEntryDate && profile.separationDate) {
+    if (entryDate !== _ph && sepDate !== _ph) {
       try {
-        var _entry = new Date(profile.serviceEntryDate);
-        var _sep   = new Date(profile.separationDate);
+        var _entry = new Date(entryDate);
+        var _sep   = new Date(sepDate);
         if (!isNaN(_entry) && !isNaN(_sep)) {
           yearsService = String(Math.max(1, Math.round((_sep - _entry) / (365.25 * 24 * 60 * 60 * 1000))));
         }
       } catch (e) { /* fall through to placeholder */ }
     }
 
-    // Mine conversation history for target role / skills / education
+    // ── SOURCE 3+4: Mine conversation history for fields not yet found ──
     var targetRole = _ph;
     var keySkills  = '';
     var education  = '';
-    if (conversationHistory && conversationHistory.length) {
-      var _allText = conversationHistory.map(function(m) { return m.content || ''; }).join('\n');
 
+    // Also mine prior resume content for richer data
+    var _allText = '';
+    if (conversationHistory && conversationHistory.length) {
+      _allText = conversationHistory.map(function(m) { return m.content || ''; }).join('\n');
+    }
+    if (priorResumeContent) {
+      _allText += '\n' + priorResumeContent;
+    }
+
+    if (_allText) {
       // Target role: look for explicit mentions
       var _roleMatch = _allText.match(/(?:target(?:ing)?|seeking|interested in|want(?:s|ing)?\s+(?:a|to\s+be))\s+(?:a\s+)?([A-Za-z\s/&-]{3,40})\s+(?:role|position|job|career)/i);
       if (_roleMatch) targetRole = _roleMatch[1].trim();
 
-      // Key skills: extract from AI-generated skill mentions
+      // Key skills: extract from AI-generated skill mentions or prior resume
       var _skillMatch = _allText.match(/(?:skills?|competenc(?:ies|y)|strengths?)\s*[:—–-]\s*([^\n]{10,200})/i);
       if (_skillMatch) keySkills = _skillMatch[1].trim();
 
       // Education: extract mentions
       var _eduMatch = _allText.match(/(?:degree|bachelor|master|associate|diploma|certificate|B\.?S\.?|M\.?S\.?|B\.?A\.?|M\.?B\.?A\.?)\s*(?:in|of)?\s*([^\n]{3,100})/i);
       if (_eduMatch) education = _eduMatch[0].trim();
+
+      // Also try to fill missing profile fields from prior resume content
+      if (fullName === _ph) {
+        var _nameMatch = priorResumeContent.match(/^#\s+(.+)/m);
+        if (_nameMatch) fullName = _nameMatch[1].trim();
+      }
     }
 
     // Translate MOS to civilian-friendly skills if we don't have explicit ones
-    if (!keySkills && profile.mos) {
+    if (!keySkills && mos !== _ph) {
       keySkills = 'Leadership | Operations Management | Team Development | ' +
         'Mission Planning | Training & Mentoring | Process Improvement | ' +
         'Problem Solving | Communication';
@@ -3283,20 +3406,28 @@
     if (!keySkills) keySkills = _ph;
     if (!education) education = _ph;
 
+    // Check uploaded fields for education too
+    if (education === _ph && uploadedFields.education) education = uploadedFields.education;
+
+    console.log('[RESUME-DATA] Sources — uploads=' + uploads.length + ' generated=' + generated.length +
+      ' profile=' + Object.keys(profile).filter(function(k) { return profile[k]; }).length +
+      ' uploadedFields=' + Object.keys(uploadedFields).length +
+      ' priorResume=' + (priorResumeContent.length > 0 ? priorResumeContent.length + 'chars' : 'none'));
+
     return {
-      fullName:          profile.name || _ph,
-      branch:            profile.branch || _ph,
-      mos:               profile.mos || _ph,
-      rank:              profile.rank || _ph,
+      fullName:          fullName,
+      branch:            branch,
+      mos:               mos,
+      rank:              rank,
       yearsService:      yearsService,
       targetRole:        targetRole,
       keySkills:         keySkills,
       education:         education,
-      state:             profile.state || _ph,
-      serviceEntryDate:  profile.serviceEntryDate || _ph,
-      separationDate:    profile.separationDate || _ph,
-      vaRating:          profile.vaRating || null,
-      employmentStatus:  profile.employmentStatus || null
+      state:             state,
+      serviceEntryDate:  entryDate,
+      separationDate:    sepDate,
+      vaRating:          vaRating,
+      employmentStatus:  empStatus
     };
   }
 
@@ -3348,18 +3479,53 @@
       return true;
     }
 
-    // ── Build structured data ──
-    var resumeData = _buildResumeData();
-    console.log('[RESUME-GEN] Structured data built:', JSON.stringify(resumeData).substring(0, 200));
-
     // ── Generate .docx via legal-docx-generator ──
     if (!window.AAAI || !window.AAAI.legalDocx || typeof window.AAAI.legalDocx.generateFromData !== 'function') {
       console.warn('[RESUME-GEN] generateFromData not available — falling back to AI pipeline');
       return false;  // fall through to AI
     }
 
-    // Async: generate docx blob, save to dashboard, show confirmation
-    window.AAAI.legalDocx.generateFromData('resume-builder', resumeData)
+    // ── Load dashboard data for richest possible resume ──
+    var _loadUploads = (window.AAAI.auth && typeof window.AAAI.auth.loadUploadedDocuments === 'function')
+      ? window.AAAI.auth.loadUploadedDocuments().catch(function() { return { data: [] }; })
+      : Promise.resolve({ data: [] });
+    var _loadGenerated = (window.AAAI.auth && typeof window.AAAI.auth.loadGeneratedDocuments === 'function')
+      ? window.AAAI.auth.loadGeneratedDocuments().catch(function() { return { data: [] }; })
+      : Promise.resolve({ data: [] });
+
+    // Async: load data, build resume, generate docx, save, confirm
+    Promise.all([_loadUploads, _loadGenerated])
+      .then(function(results) {
+        var dashboardData = {
+          uploads:   (results[0] && results[0].data) || [],
+          generated: (results[1] && results[1].data) || []
+        };
+        var resumeData = _buildResumeData(dashboardData);
+        console.log('[RESUME-GEN] Structured data built:', JSON.stringify(resumeData).substring(0, 200));
+
+        // ── FIX: Completeness check — don't generate a mostly-empty resume ──
+        var _filledCount = 0;
+        var _criticalFields = ['fullName', 'branch', 'mos', 'rank', 'yearsService'];
+        _criticalFields.forEach(function(f) {
+          if (resumeData[f] && resumeData[f] !== '[NOT PROVIDED]') _filledCount++;
+        });
+        if (_filledCount < 2) {
+          // Too little data — ask the user for info instead of generating a skeleton
+          clearAIWorkingState();
+          var _askMsg = 'I\'d like to build your resume, but I need a bit more information first. Could you tell me:\n\n' +
+            (resumeData.fullName === '[NOT PROVIDED]' ? '- Your **full name**\n' : '') +
+            (resumeData.branch === '[NOT PROVIDED]' ? '- Your **branch of service** (Army, Navy, etc.)\n' : '') +
+            (resumeData.mos === '[NOT PROVIDED]' ? '- Your **MOS/job specialty**\n' : '') +
+            (resumeData.rank === '[NOT PROVIDED]' ? '- Your **rank at separation**\n' : '') +
+            '\nOr if you\'ve uploaded your DD-214, I can pull this information automatically.';
+          addMessage(_askMsg, 'ai');
+          conversationHistory.push({ role: 'assistant', content: _askMsg });
+          isProcessing = false;
+          if (btnSend) btnSend.disabled = false;
+          return;
+        }
+
+        return window.AAAI.legalDocx.generateFromData('resume-builder', resumeData)
       .then(function(result) {
         // result = { fileName, blob, contentText }
         console.log('[RESUME-GEN] .docx generated: ' + result.fileName + ' (' + result.contentText.length + ' chars)');
@@ -3388,13 +3554,14 @@
           var _name = resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'your';
           var _confirmMsg = '✅ **Resume — ' + _name + '** has been generated and saved to your dashboard.\n\n' +
             'The .docx file has also been downloaded to your device.\n\n' +
-            'You can view, edit, or re-download it from your **[Profile → Generated Documents](/profile.html)** page.\n\n' +
             '_Need changes? Just tell me what to update and I\'ll regenerate it._';
           streamMessage(_confirmMsg, function() {
             isProcessing = false;
             if (btnSend) btnSend.disabled = false;
             if (userInput) userInput.focus();
             speakAIText(_confirmMsg);
+            // Inject visible dashboard CTA button after confirmation
+            _injectDashboardHandoff('show_profile');
           });
           conversationHistory.push({ role: 'assistant', content: _confirmMsg });
         });
@@ -4375,14 +4542,28 @@
       return Promise.resolve(false);
     }
 
-    // ── CONTENT GATE: Do not save if rawText is too short to be a real document ──
-    // Prevents saving follow-up questions, acknowledgments, or intake prompts
-    // as "generated documents." The system prompt instructs the AI to write at
-    // least 400 WORDS for documents — 400 CHARACTERS is a generous lower bound.
+    // ── CONTENT GATE: Do not save low-quality content ──
+    // Gate 1: Minimum length (400 chars)
     if (rawText.length < 400) {
       console.log('[AIOS][DOC-ACTION] BLOCKED — rawText too short (' + rawText.length + ' chars). ' +
         'This is likely a follow-up question, not a completed document. ' +
         'document_actions: ' + JSON.stringify(structured.document_actions.map(function(da) { return da.template_type; })));
+      return Promise.resolve(false);
+    }
+    // Gate 2: Must have document structure (headings or substantial word count)
+    var _hasHeadings = (rawText.match(/^#{1,3}\s+\S/gm) || []).length >= 1;
+    var _wordCount = rawText.trim().split(/\s+/).length;
+    if (!_hasHeadings && _wordCount < 80) {
+      console.log('[AIOS][DOC-ACTION] BLOCKED — no headings and only ' + _wordCount + ' words. ' +
+        'Likely conversational text, not a document. ' +
+        'document_actions: ' + JSON.stringify(structured.document_actions.map(function(da) { return da.template_type; })));
+      return Promise.resolve(false);
+    }
+    // Gate 3: Reject if content looks like it's mostly the user's request echoed back
+    // Check first 200 chars for tell-tale patterns of request echo
+    var _first200 = rawText.substring(0, 200).toLowerCase();
+    if (/^(the veteran (just )?asked|user request|here'?s what (you|they) asked)/i.test(_first200)) {
+      console.log('[AIOS][DOC-ACTION] BLOCKED — content appears to be echoed user request');
       return Promise.resolve(false);
     }
 
