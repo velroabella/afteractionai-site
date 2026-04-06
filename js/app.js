@@ -3031,15 +3031,19 @@
     */
     // ── END TEXT-PATH TEMPLATE ROUTING ────────────────────────────────────────────
 
-    // ── FORCE PATH: Typed resume generation confirmation ──
+    // ── FORCE PATH: Typed resume generation — cold-start + confirmation ──
+    // Two triggers:
+    //  A) Cold-start: explicit "build/generate/create my resume" even without prior context
+    //  B) Confirmation: lighter keywords ("yes", "go") when already in a resume context
+    var _typedResumeColdStart = /\b(build|generate|create|write|make|draft|prepare)\b.{0,30}\b(my\s+)?(resume|cv)\b/i.test(trimmed);
     var _typedResumeConfirm = /\b(build|generate|create|write|start|yes|go ahead|do it|make)\b.*\b(resume|cv)\b/i.test(trimmed) ||
       /\b(resume|cv)\b.*\b(now|please|yes|go|build|generate)\b/i.test(trimmed);
     var _typedResumeCtx = (activeDocumentType && /resume/i.test(activeDocumentType)) ||
       conversationHistory.some(function(m) {
         return m.role === 'assistant' && /resume/i.test(m.content || '') && conversationHistory.indexOf(m) > conversationHistory.length - 6;
       });
-    if (_typedResumeConfirm && _typedResumeCtx && !isProcessing) {
-      console.log('[FORCE] Typed resume confirmation: "' + trimmed + '" — forceTask path');
+    if ((_typedResumeColdStart || (_typedResumeConfirm && _typedResumeCtx)) && !isProcessing) {
+      console.log('[FORCE] Resume generation detected: "' + trimmed + '" — forceTask path (cold=' + _typedResumeColdStart + ' confirm=' + _typedResumeConfirm + ' ctx=' + _typedResumeCtx + ')');
       showAIWorkingState('resume');
       sendToAI({ text: trimmed, forceTask: 'resume_generation', skipFollowups: true });
       return;
@@ -3440,7 +3444,11 @@
       if (_handleResumeGeneration(userText)) {
         return;  // handled entirely client-side
       }
-      // If _handleResumeGeneration returned false, fall through to AI
+      // If _handleResumeGeneration returned false, fall through to AI.
+      // CRITICAL: reset isProcessing so the concurrent guard at line ~3451
+      // doesn't silently queue the request forever.
+      isProcessing = false;
+      if (btnSend) btnSend.disabled = false;
       console.log('[RESUME-GEN] Template pipeline unavailable — falling through to AI');
     }
 
@@ -4380,12 +4388,25 @@
 
     console.log('[AIOS][DOC-ACTION] processing ' + structured.document_actions.length + ' actions, rawText=' + rawText.length + ' chars');
 
+    // ── FIX: Extract document content from AI response ──
+    // The AI may include a conversational preamble ("Here's your document:", etc.)
+    // before the actual document. Strip the preamble so only the document content
+    // is saved. Strategy: find the first markdown heading (# or ##) — everything
+    // from that point on is the document. If no heading found, use the full text.
+    var _docContent = rawText;
+    var _headingIdx = rawText.search(/^#{1,3}\s+\S/m);
+    if (_headingIdx > 0 && _headingIdx < 500) {
+      // Only strip if the preamble is reasonably short (< 500 chars)
+      _docContent = rawText.substring(_headingIdx);
+      console.log('[AIOS][DOC-ACTION] stripped ' + _headingIdx + ' chars of preamble, document content=' + _docContent.length + ' chars');
+    }
+
     var _savePromises = [];
     structured.document_actions.forEach(function(da) {
       if (!da || !da.template_type || !da.title) return;
 
       // Fix 8: Dedup — skip if same type+content was saved in last 60 seconds
-      var _dedupKey = da.template_type + '|' + rawText.length + '|' + rawText.substring(0, 100);
+      var _dedupKey = da.template_type + '|' + _docContent.length + '|' + _docContent.substring(0, 100);
       var _now = Date.now();
       if (_recentSaveFingerprints[_dedupKey] && (_now - _recentSaveFingerprints[_dedupKey]) < 60000) {
         console.log('[AIOS][DOC-ACTION] dedup — skipping duplicate save for ' + da.template_type + ' (' + da.title + ')');
@@ -4396,7 +4417,7 @@
       var output = {
         template_type: da.template_type,
         title: da.title,
-        content: rawText,
+        content: _docContent,
         metadata: {
           source: 'ai_generated',
           action: da.action || 'save_template',

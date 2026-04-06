@@ -656,7 +656,7 @@
           return '<div class="dash-report-item">' +
             '<span class="dash-report-date">' + date + '</span>' +
             '<span class="dash-report-preview">' + typeLabel + (snippet ? ' — ' + snippet : '') + '</span>' +
-            '<a href="index.html" class="dash-report-link">Open →</a>' +
+            '<a href="#dashGenDocs" class="dash-report-link" onclick="document.getElementById(\'dashGenDocs\').scrollIntoView({behavior:\'smooth\'});return false;">View in Documents ↓</a>' +
           '</div>';
         }).join('');
       }
@@ -670,7 +670,9 @@
           full.substring(0, 300).replace(/</g, '&lt;') + (full.length > 300 ? '…' : '') +
           '</div>' +
           '<div style="margin-top:12px;">' +
-            '<a href="index.html" style="color:var(--gold);font-size:0.85rem;font-weight:600;">Continue Conversation →</a>' +
+            '<a href="#dashGenDocs" onclick="document.getElementById(\'dashGenDocs\').scrollIntoView({behavior:\'smooth\'});return false;" style="color:var(--gold);font-size:0.85rem;font-weight:600;">View in Documents ↓</a>' +
+            ' &nbsp;|&nbsp; ' +
+            '<a href="index.html" style="color:var(--gray-500);font-size:0.85rem;">Continue Conversation →</a>' +
           '</div>';
       }
     }).catch(function(err) { console.warn('[Profile] renderReportsFromTemplateOutputs error:', err); });
