@@ -572,6 +572,23 @@
   }
 
   /**
+   * Delete an AI-generated document from template_outputs.
+   * Scoped to current user via RLS + explicit user_id check.
+   * @param {string} docId — template_outputs row id
+   * @returns {Promise<{error: string|null}>}
+   */
+  async function deleteGeneratedDocument(docId) {
+    if (!currentUser) return { error: 'Not logged in' };
+    if (!docId) return { error: 'No document ID provided' };
+    const { error } = await supabase
+      .from('template_outputs')
+      .delete()
+      .eq('id', docId)
+      .eq('user_id', currentUser.id);  // RLS safety
+    return { error: error ? error.message : null };
+  }
+
+  /**
    * Delete an uploaded document from template_outputs and optionally from Storage.
    * @param {string} docId — template_outputs row id
    * @param {string|null} storagePath — if set, also removes from Supabase Storage
@@ -906,6 +923,7 @@
     saveUploadedDocument,
     loadUploadedDocuments,
     loadGeneratedDocuments,
+    deleteGeneratedDocument,
     deleteUploadedDocument,
     updateDocumentStatus,
     loadDocumentsByStatus,

@@ -2159,6 +2159,14 @@
   function _injectNavigationSuggestion(page, filter, structured) {
     try {
       if (!page || page === _lastNavPage) return;
+      // ── Phase DOC-GEN: Suppress document-templates navigation cards ──
+      // The AI now generates documents inline via the chat pipeline and saves
+      // them to the dashboard.  Sending users to the template page is no longer
+      // the primary flow.  Template pages remain available via direct URL.
+      if (page === 'document-templates') {
+        log('VoiceBridge', 'SUPPRESSED nav suggestion for document-templates — AI handles doc generation inline');
+        return;
+      }
       var target = _NAV_PAGE_MAP[page];
       if (!target) return;
       _lastNavPage = page;
@@ -2185,9 +2193,9 @@
       resources.forEach(function(res) {
         var card = document.createElement('a');
         card.href = res.url;
-        card.target = '_blank';
         card.rel = 'noopener';
         card.className = 'resource-card';
+        card.setAttribute('data-title', res.title);
         card.innerHTML =
           '<div class="resource-card__icon">' + (res.icon || '\u2B50') + '</div>' +
           '<div class="resource-card__body">' +
@@ -2202,9 +2210,9 @@
       if (resources.length === 0 && target.url) {
         var link = document.createElement('a');
         link.href = target.url + (filter ? '?filter=' + encodeURIComponent(filter) : '');
-        link.target = '_blank';
         link.rel = 'noopener';
         link.className = 'resource-card';
+        link.setAttribute('data-title', target.label);
         link.innerHTML =
           '<div class="resource-card__icon">' + target.icon + '</div>' +
           '<div class="resource-card__body">' +
@@ -2222,6 +2230,44 @@
       log('VoiceBridge', 'nav suggestion error: ' + (e.message || e));
     }
   }
+
+  // ── RESOURCE CARD CLICK HANDLER (delegated) ────────────────────────────
+  // Intercepts clicks on in-chat .resource-card elements so the AI receives
+  // context about what the user selected.  Works in both text and voice modes.
+  // The card's href is opened in a new tab AFTER context is sent.
+  (function _initResourceCardHandler() {
+    var _container = document.getElementById('chatMessages');
+    if (!_container) return;
+
+    _container.addEventListener('click', function(e) {
+      var card = e.target.closest('.resource-card');
+      if (!card || !card.hasAttribute('data-title')) return;
+
+      e.preventDefault();
+      var title = card.getAttribute('data-title');
+      var msg   = 'I\u2019d like to explore: ' + title;
+
+      // Voice session → route through Realtime API
+      var voiceActive = typeof RealtimeVoice !== 'undefined' && RealtimeVoice.getState &&
+          RealtimeVoice.getState() !== 'idle' && RealtimeVoice.getState() !== 'error';
+
+      if (voiceActive && RealtimeVoice.sendText) {
+        submitUserText(msg, { voiceOnly: true, path: 'resource-card' });
+        RealtimeVoice.sendText(msg);
+        conversationHistory.push({ role: 'user', content: msg });
+      } else {
+        submitUserText(msg, { path: 'resource-card' });
+      }
+
+      // Open the resource page in a new tab so the user still gets the link
+      var href = card.getAttribute('href');
+      if (href) {
+        window.open(href, '_blank', 'noopener');
+      }
+
+      log('ResourceCard', 'CLICK → "' + title + '" | voice=' + voiceActive);
+    });
+  })();
 
   // ── Create a mission with defaults and show it inline in chat ──
   function _createMissionWithDefaults(missionType) {
@@ -2776,20 +2822,13 @@
           _voiceRouteHandled = true;
           console.log('[VOICE-ROUTING] _voiceRouteHandled=true — async classification will skip _processDocumentActions');
 
-          // Try template engine first (resume, will, poa, va_claim, transition, etc.)
-          var _vrTemplateId = (window.AAAI && window.AAAI.templates && typeof window.AAAI.templates.detectForTask === 'function')
-            ? window.AAAI.templates.detectForTask(_vrUserText)
-            : null;
-
-          if (_vrTemplateId && window.AAAI && window.AAAI.templates && typeof window.AAAI.templates.launch === 'function') {
-            console.log('[VOICE-ROUTING] generation request → template engine:', _vrTemplateId);
-            addMessage('Routing you to the ' + _vrTemplateId.replace(/_/g, ' ') + ' builder — I\'ll ask a few quick questions to personalize it for you.', 'ai');
-            setTimeout(function() {
-              window.AAAI.templates.launch(_vrTemplateId, null, null);
-            }, 600);
-          } else {
-            // No template match — route to text pipeline (benefits report, audit, etc.)
-            console.log('[VOICE-ROUTING] generation request → text pipeline (no template match)');
+          // ── Phase DOC-GEN: ALL voice generation requests route through text pipeline ──
+          // Template engine popup is bypassed.  The AI generates the document inline,
+          // _processDocumentActions saves it to dashboard, and streamMessage shows a
+          // confirmation instead of the full document.  Template pages remain available
+          // for manual use — this only changes the voice-initiated path.
+          {
+            console.log('[VOICE-ROUTING] generation request → text pipeline (AI-driven doc gen)');
             var _vrTextPrompt = 'The veteran just asked via voice: "' + _vrUserText + '". Generate the requested document now in full using all context from our conversation. Use proper headings and formatting.';
             if (typeof endVoiceSession === 'function') endVoiceSession();
             setTimeout(function() { sendToAI(_vrTextPrompt); }, 800);
@@ -3177,6 +3216,200 @@
   // ══════════════════════════════════════════════════════
   //  AI COMMUNICATION (text mode only — voice uses Realtime)
   // ══════════════════════════════════════════════════════
+  //  PHASE 2 — TEMPLATE-DRIVEN RESUME GENERATION
+  //  Builds structured data from AIOS.Memory profile + conversation,
+  //  generates .docx directly via legal-docx-generator, saves to
+  //  dashboard, and shows a confirmation in chat.  Bypasses the AI
+  //  entirely — no markdown round-trip.
+  // ══════════════════════════════════════════════════════
+
+  /**
+   * Gathers resume data from AIOS.Memory profile and conversation history.
+   * Returns a structured object matching the template-flow shape:
+   *   { fullName, branch, mos, rank, yearsService, targetRole,
+   *     keySkills, education, state, email, phone, location,
+   *     serviceEntryDate, separationDate, vaRating }
+   * Missing values get '[NOT PROVIDED]' so the docx is never blank.
+   */
+  function _buildResumeData() {
+    var profile = (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.getProfile === 'function')
+      ? window.AIOS.Memory.getProfile()
+      : {};
+
+    var _ph = '[NOT PROVIDED]';
+
+    // Calculate years of service from dates if available
+    var yearsService = _ph;
+    if (profile.serviceEntryDate && profile.separationDate) {
+      try {
+        var _entry = new Date(profile.serviceEntryDate);
+        var _sep   = new Date(profile.separationDate);
+        if (!isNaN(_entry) && !isNaN(_sep)) {
+          yearsService = String(Math.max(1, Math.round((_sep - _entry) / (365.25 * 24 * 60 * 60 * 1000))));
+        }
+      } catch (e) { /* fall through to placeholder */ }
+    }
+
+    // Mine conversation history for target role / skills / education
+    var targetRole = _ph;
+    var keySkills  = '';
+    var education  = '';
+    if (conversationHistory && conversationHistory.length) {
+      var _allText = conversationHistory.map(function(m) { return m.content || ''; }).join('\n');
+
+      // Target role: look for explicit mentions
+      var _roleMatch = _allText.match(/(?:target(?:ing)?|seeking|interested in|want(?:s|ing)?\s+(?:a|to\s+be))\s+(?:a\s+)?([A-Za-z\s/&-]{3,40})\s+(?:role|position|job|career)/i);
+      if (_roleMatch) targetRole = _roleMatch[1].trim();
+
+      // Key skills: extract from AI-generated skill mentions
+      var _skillMatch = _allText.match(/(?:skills?|competenc(?:ies|y)|strengths?)\s*[:—–-]\s*([^\n]{10,200})/i);
+      if (_skillMatch) keySkills = _skillMatch[1].trim();
+
+      // Education: extract mentions
+      var _eduMatch = _allText.match(/(?:degree|bachelor|master|associate|diploma|certificate|B\.?S\.?|M\.?S\.?|B\.?A\.?|M\.?B\.?A\.?)\s*(?:in|of)?\s*([^\n]{3,100})/i);
+      if (_eduMatch) education = _eduMatch[0].trim();
+    }
+
+    // Translate MOS to civilian-friendly skills if we don't have explicit ones
+    if (!keySkills && profile.mos) {
+      keySkills = 'Leadership | Operations Management | Team Development | ' +
+        'Mission Planning | Training & Mentoring | Process Improvement | ' +
+        'Problem Solving | Communication';
+    }
+    if (!keySkills) keySkills = _ph;
+    if (!education) education = _ph;
+
+    return {
+      fullName:          profile.name || _ph,
+      branch:            profile.branch || _ph,
+      mos:               profile.mos || _ph,
+      rank:              profile.rank || _ph,
+      yearsService:      yearsService,
+      targetRole:        targetRole,
+      keySkills:         keySkills,
+      education:         education,
+      state:             profile.state || _ph,
+      serviceEntryDate:  profile.serviceEntryDate || _ph,
+      separationDate:    profile.separationDate || _ph,
+      vaRating:          profile.vaRating || null,
+      employmentStatus:  profile.employmentStatus || null
+    };
+  }
+
+  /**
+   * Handles resume generation entirely client-side:
+   *  1. Build structured data from profile + conversation
+   *  2. Generate .docx via AAAI.legalDocx (buildResumeFromData path)
+   *  3. Save to dashboard via saveTemplateOutput
+   *  4. Show confirmation in chat
+   *
+   * @param {string} userText — the user's original message (for history)
+   * @returns {boolean} true if handled, false if should fall through to AI
+   */
+  function _handleResumeGeneration(userText) {
+    var isLoggedIn = window.AAAI && window.AAAI.auth && window.AAAI.auth.isLoggedIn && window.AAAI.auth.isLoggedIn();
+
+    // ── Non-auth guard ──
+    if (!isLoggedIn) {
+      clearAIWorkingState();
+      var _signInMsg = '📝 I can generate a personalized resume for you, but you\'ll need to sign in first so I can save it to your dashboard.\n\n' +
+        'Once signed in, just ask me again and I\'ll build it instantly from your profile.';
+      addMessage(_signInMsg, 'ai');
+      conversationHistory.push({ role: 'assistant', content: _signInMsg });
+      // Show login bar
+      if (chatMessages) {
+        var _loginBar = document.createElement('div');
+        _loginBar.className = 'message message--system';
+        _loginBar.innerHTML =
+          '<div class="dashboard-handoff-bar" style="' +
+            'background: linear-gradient(135deg, #1a365d 0%, #2a4a7f 100%);' +
+            'border: 1px solid #c6a135; border-radius: 8px; padding: 12px 16px;' +
+            'display: flex; align-items: center; justify-content: space-between;' +
+            'margin: 8px 0; gap: 12px;">' +
+            '<span style="color: #fff; font-size: 0.95rem; font-weight: 500;">' +
+              '🔒 Sign in to generate and save your resume.' +
+            '</span>' +
+            '<button onclick="(function(){ if(window.AAAI && AAAI.auth && typeof AAAI.auth.showAuthModal===\'function\') AAAI.auth.showAuthModal(); })()" style="' +
+              'background: #c6a135; color: #1a365d; border: none;' +
+              'padding: 8px 16px; border-radius: 6px; font-weight: 700;' +
+              'font-size: 0.9rem; white-space: nowrap; cursor: pointer;">' +
+              'Sign In' +
+            '</button>' +
+          '</div>';
+        chatMessages.appendChild(_loginBar);
+        scrollToBottom();
+      }
+      isProcessing = false;
+      if (btnSend) btnSend.disabled = false;
+      return true;
+    }
+
+    // ── Build structured data ──
+    var resumeData = _buildResumeData();
+    console.log('[RESUME-GEN] Structured data built:', JSON.stringify(resumeData).substring(0, 200));
+
+    // ── Generate .docx via legal-docx-generator ──
+    if (!window.AAAI || !window.AAAI.legalDocx || typeof window.AAAI.legalDocx.generateFromData !== 'function') {
+      console.warn('[RESUME-GEN] generateFromData not available — falling back to AI pipeline');
+      return false;  // fall through to AI
+    }
+
+    // Async: generate docx blob, save to dashboard, show confirmation
+    window.AAAI.legalDocx.generateFromData('resume-builder', resumeData)
+      .then(function(result) {
+        // result = { fileName, blob, contentText }
+        console.log('[RESUME-GEN] .docx generated: ' + result.fileName + ' (' + result.contentText.length + ' chars)');
+
+        // Save to dashboard
+        var output = {
+          template_type: 'resume-builder',
+          title: 'Resume — ' + (resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'Veteran'),
+          content: result.contentText,
+          metadata: {
+            source: 'template_driven',
+            action: 'save_template',
+            prefilled_fields: resumeData,
+            generated_at: new Date().toISOString()
+          }
+        };
+        return window.AAAI.auth.saveTemplateOutput(output).then(function(saveRes) {
+          if (saveRes && !saveRes.error) {
+            console.log('[RESUME-GEN] Saved to dashboard');
+          } else {
+            console.warn('[RESUME-GEN] Dashboard save failed:', saveRes && saveRes.error);
+          }
+
+          // Show confirmation in chat
+          clearAIWorkingState();
+          var _name = resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'your';
+          var _confirmMsg = '✅ **Resume — ' + _name + '** has been generated and saved to your dashboard.\n\n' +
+            'The .docx file has also been downloaded to your device.\n\n' +
+            'You can view, edit, or re-download it from your **[Profile → Generated Documents](/profile.html)** page.\n\n' +
+            '_Need changes? Just tell me what to update and I\'ll regenerate it._';
+          streamMessage(_confirmMsg, function() {
+            isProcessing = false;
+            if (btnSend) btnSend.disabled = false;
+            if (userInput) userInput.focus();
+            speakAIText(_confirmMsg);
+          });
+          conversationHistory.push({ role: 'assistant', content: _confirmMsg });
+        });
+      })
+      .catch(function(err) {
+        console.error('[RESUME-GEN] Generation failed:', err);
+        clearAIWorkingState();
+        var _errMsg = 'I ran into an issue generating your resume. Let me try the AI-assisted approach instead.';
+        addMessage(_errMsg, 'ai');
+        conversationHistory.push({ role: 'assistant', content: _errMsg });
+        isProcessing = false;
+        if (btnSend) btnSend.disabled = false;
+        // Fall back to AI pipeline
+        sendToAI({ text: userText, forceTask: 'resume_generation', skipFollowups: true, _bypassTemplateGen: true });
+      });
+
+    return true;  // handled
+  }
+
   // ── forceTask support ──────────────────────────────────────────────
   // sendToAI accepts either a plain string OR an object:
   //   { text: string, forceTask: string, skipFollowups: boolean }
@@ -3193,6 +3426,22 @@
       _activeForceTask = _ftPayload.forceTask || null;
     } else {
       _activeForceTask = null;
+    }
+
+    // ── Phase 2 INTERCEPT: Template-driven resume generation ──
+    // When forceTask is 'resume_generation', bypass the AI entirely and generate
+    // the resume client-side from structured profile data.
+    // _bypassTemplateGen is set by the error handler in _handleResumeGeneration
+    // to prevent infinite loops when falling back to the AI pipeline.
+    if (_activeForceTask === 'resume_generation' && !(_ftPayload && _ftPayload._bypassTemplateGen)) {
+      console.log('[RESUME-GEN] Intercepting forceTask=resume_generation → template-driven pipeline');
+      isProcessing = true;
+      if (btnSend) btnSend.disabled = true;
+      if (_handleResumeGeneration(userText)) {
+        return;  // handled entirely client-side
+      }
+      // If _handleResumeGeneration returned false, fall through to AI
+      console.log('[RESUME-GEN] Template pipeline unavailable — falling through to AI');
     }
 
     // Phase 4.4: concurrent-request guard
@@ -3531,13 +3780,31 @@
 
       clearAIWorkingState(); // remove generation banner before streaming starts
       _activeForceTask = null; // clear force state after response received
-      streamMessage(aiResponse, function() {
+
+      // ── Phase DOC-GEN: Replace full document with confirmation in chat ──
+      // When _processDocumentActions will save the document (document_actions present
+      // + content passes the 400-char gate), stream a short confirmation instead of
+      // the entire document.  The full content is preserved in conversationHistory
+      // and saved to the dashboard — only the chat bubble changes.
+      var _streamText = aiResponse;  // default: stream everything
+      if (_p41Structured && _p41Structured.document_actions &&
+          _p41Structured.document_actions.length > 0 && aiResponse.length >= 400 &&
+          window.AAAI && window.AAAI.auth && window.AAAI.auth.isLoggedIn &&
+          window.AAAI.auth.isLoggedIn()) {
+        var _docTitle = _p41Structured.document_actions[0].title || 'your document';
+        _streamText = '\u2705 **' + _docTitle + '** has been generated and saved to your dashboard.\n\n' +
+          'You can view, download, or delete it from your **[Profile \u2192 Generated Documents](/profile.html)** page.\n\n' +
+          '_If you need changes, just let me know and I\u2019ll regenerate it._';
+        console.log('[DOC-GEN] Replaced full document (' + aiResponse.length + ' chars) with confirmation in chat');
+      }
+
+      streamMessage(_streamText, function() {
         log('sendToAI', 'stream complete');
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
         if (userInput) userInput.focus();
         // TTS: read AI response aloud in text mode
-        speakAIText(aiResponse);
+        speakAIText(_streamText);
         // Phase 33: flush any queued non-typed submission (chip/button clicked during AI response)
         if (pendingUserSubmission) {
           var _queued = pendingUserSubmission;

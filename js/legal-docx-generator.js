@@ -1635,6 +1635,182 @@
     ];
   }
 
+  /* ---------- PHASE 2: TEMPLATE-DRIVEN RESUME FROM STRUCTURED DATA ----------
+     Produces a complete .docx resume using pre-gathered profile data.
+     No AI round-trip — every field is filled from the data object.
+     ---------------------------------------------------------------- */
+  function buildResumeFromData(D, data) {
+    var _ph = '[NOT PROVIDED]';
+    var fullName      = data.fullName      || _ph;
+    var branch        = data.branch        || _ph;
+    var mos           = data.mos           || _ph;
+    var rank          = data.rank          || _ph;
+    var yearsService  = data.yearsService  || _ph;
+    var targetRole    = data.targetRole    || _ph;
+    var keySkills     = data.keySkills     || _ph;
+    var education     = data.education     || _ph;
+    var state         = data.state         || '';
+    var entryDate     = data.serviceEntryDate || '';
+    var sepDate       = data.separationDate   || '';
+    var vaRating      = data.vaRating      || null;
+
+    // Build service date range string
+    var dateRange = '';
+    if (entryDate && entryDate !== _ph) dateRange += entryDate;
+    if (sepDate && sepDate !== _ph) dateRange += (dateRange ? ' – ' : '') + sepDate;
+    if (!dateRange) dateRange = yearsService + ' years';
+
+    // Professional summary
+    var summary = 'Results-driven professional with ' + yearsService + ' years of military service in the ' +
+      branch + ' (' + mos + '). Proven track record of leadership, mission execution, and team development.';
+    if (targetRole !== _ph) {
+      summary += ' Seeking to leverage military expertise in a civilian ' + targetRole + ' role.';
+    }
+
+    // Build skill items as bullet paragraphs
+    var skillLines = keySkills.split(/[|,;]/).map(function(s) { return s.trim(); }).filter(Boolean);
+    var skillParagraphs = [];
+    for (var i = 0; i < skillLines.length; i++) {
+      skillParagraphs.push(new D.Paragraph({
+        bullet: { level: 0 },
+        spacing: { after: 40 },
+        children: [new D.TextRun({ text: skillLines[i], size: 22, font: 'Arial' })]
+      }));
+    }
+
+    var children = [
+      heading(D, 1, fullName),
+      para(D, (state ? state + ' | ' : '') + 'Phone: [PHONE] | Email: [EMAIL]'),
+      spacer(D),
+
+      heading(D, 2, 'Professional Summary'),
+      para(D, summary),
+      spacer(D),
+
+      heading(D, 2, 'Core Competencies'),
+    ];
+    children = children.concat(skillParagraphs);
+    children.push(spacer(D));
+
+    children.push(heading(D, 2, 'Professional Experience'));
+    children.push(spacer(D));
+    children.push(boldPara(D, branch + ' — ' + (rank ? rank + ', ' : '') + mos));
+    children.push(para(D, dateRange));
+    children.push(para(D, 'Key accomplishments and responsibilities:'));
+    children.push(new D.Paragraph({
+      bullet: { level: 0 }, spacing: { after: 40 },
+      children: [new D.TextRun({ text: 'Led and managed teams in support of mission-critical operations', size: 22, font: 'Arial' })]
+    }));
+    children.push(new D.Paragraph({
+      bullet: { level: 0 }, spacing: { after: 40 },
+      children: [new D.TextRun({ text: 'Developed and executed training programs for personnel readiness', size: 22, font: 'Arial' })]
+    }));
+    children.push(new D.Paragraph({
+      bullet: { level: 0 }, spacing: { after: 40 },
+      children: [new D.TextRun({ text: 'Maintained accountability for equipment and resources valued at $[AMOUNT]', size: 22, font: 'Arial' })]
+    }));
+    children.push(new D.Paragraph({
+      bullet: { level: 0 }, spacing: { after: 40 },
+      children: [new D.TextRun({ text: '[ADD YOUR SPECIFIC ACCOMPLISHMENTS — quantify results where possible]', size: 22, font: 'Arial', italics: true })]
+    }));
+    children.push(spacer(D));
+
+    children.push(heading(D, 2, 'Education'));
+    children.push(para(D, education));
+    children.push(spacer(D));
+
+    children.push(heading(D, 2, 'Certifications & Training'));
+    children.push(para(D, '[LIST RELEVANT CERTIFICATIONS AND MILITARY TRAINING TRANSLATED TO CIVILIAN EQUIVALENTS]'));
+    children.push(spacer(D));
+
+    if (vaRating) {
+      children.push(heading(D, 2, 'Veteran Status'));
+      children.push(para(D, 'VA Disability Rating: ' + vaRating + '%'));
+      children.push(para(D, 'Eligible for veterans\' preference in federal hiring.'));
+      children.push(spacer(D));
+    }
+
+    children.push(heading(D, 2, 'Resume Tips'));
+    children.push(para(D, '• Translate all military jargon into civilian language'));
+    children.push(para(D, '• Quantify results: "Managed team of 30" not "Led platoon"'));
+    children.push(para(D, '• Keep to 1–2 pages for civilian roles (3–5 for federal)'));
+    children.push(para(D, '• Tailor for each job by matching keywords from the job posting'));
+    children.push(para(D, '• Use the AfterAction AI Military Skills Translator to help'));
+
+    return children;
+  }
+
+  /**
+   * Generates a .docx from structured data (no AI, no markdown parsing).
+   * Triggers browser download automatically, then returns metadata for
+   * dashboard storage.
+   *
+   * @param {string} formType — e.g. 'resume-builder'
+   * @param {Object} data — structured field data
+   * @returns {Promise<{fileName: string, blob: Blob, contentText: string}>}
+   */
+  async function generateFromData(formType, data) {
+    var D = getDocx();
+    var normalized = formType.toLowerCase().replace(/[\s_]+/g, '-');
+
+    // Currently only resume-builder is supported for template-driven generation
+    var formContent;
+    if (normalized === 'resume-builder') {
+      formContent = buildResumeFromData(D, data);
+    } else {
+      throw new Error('[LegalDocx] generateFromData: unsupported formType: ' + formType);
+    }
+
+    // Select career header/footer (resume is a career document)
+    var header = buildCareerHeader(D);
+    var footer = buildCareerFooter(D);
+    var notice = buildCareerNoticeSection(D);
+
+    var doc = new D.Document({
+      styles: buildStyles(),
+      sections: [{
+        properties: {
+          page: {
+            size:   { width: 12240, height: 15840 },
+            margin: { top: 1440, right: 1440, bottom: 1440, left: 1440 }
+          }
+        },
+        headers: { default: header },
+        footers: { default: footer },
+        children: [
+          ...notice,
+          spacer(D),
+          ...formContent
+        ]
+      }]
+    });
+
+    var blob = await D.Packer.toBlob(doc);
+    var fileName = normalized + '_' + new Date().toISOString().slice(0, 10) + '.docx';
+
+    // Trigger download
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
+
+    // Build a plain-text version for saving to template_outputs
+    var contentText = '# Resume — ' + (data.fullName || 'Veteran') + '\n\n' +
+      '## Professional Summary\n' + (data.fullName || '') + '\n' +
+      'Results-driven professional with ' + (data.yearsService || '') + ' years of military service in the ' +
+      (data.branch || '') + ' (' + (data.mos || '') + ').\n\n' +
+      '## Core Competencies\n' + (data.keySkills || '') + '\n\n' +
+      '## Professional Experience\n' + (data.branch || '') + ' — ' + (data.rank || '') + ', ' + (data.mos || '') + '\n' +
+      (data.serviceEntryDate || '') + ' – ' + (data.separationDate || '') + '\n\n' +
+      '## Education\n' + (data.education || '') + '\n';
+
+    return { fileName: fileName, blob: blob, contentText: contentText };
+  }
+
   function buildLinkedInProfileBuilder(D) {
     return [
       heading(D, 1, 'LinkedIn Profile Builder'),
@@ -1977,19 +2153,21 @@
 
     const normalized = formType.toLowerCase().replace(/[\s_]+/g, '-');
     const builder = BUILDERS[normalized];
-    if (!builder) {
-      throw new Error('[LegalDocx] Unknown form type: ' + formType);
-    }
 
     // When the AI generated real completed content (not a placeholder template),
     // parse the AI text directly into DOCX instead of using the hardcoded builder.
+    // Phase DOC-GEN: If builder is missing but real content exists, use markdown parser.
+    // This covers AI-generated types (benefits-report, action-plan, etc.) that don't
+    // have dedicated builder functions.
     var formContent;
     if (_isRealContent(userData)) {
       console.log('[LegalDocx] Using AI-generated content (' + userData.length + ' chars) instead of template builder');
       formContent = _parseMarkdownToDocx(D, userData);
-    } else {
+    } else if (builder) {
       console.log('[LegalDocx] No AI content provided — falling back to template builder for:', normalized);
       formContent = builder(D);
+    } else {
+      throw new Error('[LegalDocx] Unknown form type and no content provided: ' + formType);
     }
 
     // Select header/footer/notice based on form category
@@ -2054,6 +2232,7 @@
   window.AAAI = window.AAAI || {};
   window.AAAI.legalDocx = {
     generate:         generateLegalDocx,
+    generateFromData: generateFromData,
     BUILDERS:         BUILDERS,
     SUPPORTED_TYPES:  Object.keys(BUILDERS)
   };

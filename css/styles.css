@@ -1456,7 +1456,7 @@ a:hover { color: #000; }
 }
 
 /* .resource-card box/hover/border → inherited from .aa-card (dark card system) */
-.resource-card {
+.resource-card.aa-card {
   /* Layout only — visual styles come from .aa-card */
   padding: 20px;
   display: flex;
@@ -4085,9 +4085,15 @@ body.no-scroll .navbar__menu-toggle { color: #fff; }
   box-shadow: 0 2px 8px rgba(220,53,69,0.25);
 }
 
-.resource-card {
+.resource-card.aa-card {
   padding: 24px;
   border-radius: 16px;
+}
+
+/* ── Chat inline resource cards — compact sizing (Phase 2.5r fix) ── */
+#chatMessages .resource-card {
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
 }
 
 .resource-card__button {

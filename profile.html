@@ -542,6 +542,7 @@
               '<button class="doc-card__btn doc-card__btn--primary" data-act="dl-docx">Download .docx</button>' +
               '<button class="doc-card__btn" data-act="dl-gen">Download .txt</button>' +
               '<button class="doc-card__btn" data-act="copy-gen">Copy to Clipboard</button>' +
+              '<button class="doc-card__btn doc-card__btn--delete" data-act="del-gen" data-id="' + _esc(doc.id) + '">Delete</button>' +
             '</div>' +
           '</div>';
 
@@ -552,18 +553,20 @@
           card.classList.toggle('expanded');
         });
 
-        // Fix 7: Download as .docx via legal-docx-generator
+        // Fix 7 (corrected): Download as .docx via AAAI.legalDocx.generate
         card.querySelector('[data-act="dl-docx"]').addEventListener('click', function(e) {
           e.stopPropagation();
-          if (window.LegalDocxGenerator && typeof window.LegalDocxGenerator.generateDocument === 'function') {
-            try {
-              window.LegalDocxGenerator.generateDocument(type, card._content, doc.title);
-            } catch(err) {
+          if (window.AAAI && AAAI.legalDocx && typeof AAAI.legalDocx.generate === 'function') {
+            // Normalize type slug to match BUILDERS keys (e.g. benefits_report → benefits-report)
+            var normalized = type.toLowerCase().replace(/[\s_]+/g, '-');
+            AAAI.legalDocx.generate(normalized, card._content).then(function(fileName) {
+              console.log('[Profile] .docx downloaded:', fileName);
+            }).catch(function(err) {
               console.warn('[Profile] .docx generation failed, falling back to .txt:', err);
               _downloadText(doc.title, card._content, type);
-            }
+            });
           } else {
-            console.warn('[Profile] LegalDocxGenerator not available, falling back to .txt');
+            console.warn('[Profile] AAAI.legalDocx not available, falling back to .txt');
             _downloadText(doc.title, card._content, type);
           }
         });
@@ -581,6 +584,41 @@
             var b = e.target; var orig = b.textContent;
             b.textContent = 'Copied!'; setTimeout(function(){ b.textContent = orig; }, 1500);
           });
+        });
+
+        // Delete
+        card.querySelector('[data-act="del-gen"]').addEventListener('click', function(e) {
+          e.stopPropagation();
+          var docId = e.target.getAttribute('data-id');
+          if (!docId) return;
+          if (!confirm('Delete this document? This cannot be undone.')) return;
+          var btn = e.target;
+          btn.textContent = 'Deleting...';
+          btn.disabled = true;
+          if (AAAI.auth && typeof AAAI.auth.deleteGeneratedDocument === 'function') {
+            AAAI.auth.deleteGeneratedDocument(docId).then(function(result) {
+              if (result.error) {
+                console.warn('[Profile] delete error:', result.error);
+                btn.textContent = 'Error';
+                btn.disabled = false;
+                return;
+              }
+              card.style.transition = 'opacity 0.3s';
+              card.style.opacity = '0';
+              setTimeout(function() {
+                card.remove();
+                // If no cards remain, restore empty state
+                var remaining = el.querySelectorAll('.doc-card');
+                if (remaining.length === 0) {
+                  el.innerHTML = '<p class="section-empty">No generated documents yet. Complete a mission task to create AI-assisted documents.</p>';
+                }
+              }, 300);
+            }).catch(function(err) {
+              console.warn('[Profile] delete failed:', err);
+              btn.textContent = 'Error';
+              btn.disabled = false;
+            });
+          }
         });
 
         el.appendChild(card);
