@@ -2750,6 +2750,30 @@
         }
         _lastVoiceText = trimmed;
         _lastVoiceTime = _now;
+        // ── PHASE 1 VOICE STABILITY: Early generation intent detection ────────────
+        // Detect generation requests HERE — before the AI speaks — to prevent:
+        //   1. AI voice speaking a full response (5–10s of audio)
+        //   2. THEN voice disconnecting
+        //   3. THEN text pipeline firing (800ms later)
+        // This caused: interruption mid-speech + double response (voice heard + text shown).
+        //
+        // Fix: kill voice immediately, route to text pipeline, return early.
+        // onAIMessage's _vrIsGenRequest block is NOT reachable after disconnect,
+        // so there is no double-response risk.
+        var _earlyGenRegex = /\b(generate|create|draft|write|prepare|make me|build me|give me|produce|start|wrap up|finish|finalize|complete|assemble|compile|put together)\b.{0,80}\b(resume|cv|will|testament|power of attorney|poa|report|plan|letter|template|document|summary|audit|nexus|personal statement|action plan|claim|transition|financial|business|budget|linkedin|interview|checklist)\b/i;
+        if (_earlyGenRegex.test(trimmed)) {
+          log('RT.onUserTranscript', 'EARLY GEN INTENT — stopping voice, routing to text: "' + trimmed.substring(0, 60) + '"');
+          // Show user bubble immediately so the request is visible
+          addMessage(trimmed, 'user');
+          conversationHistory.push({ role: 'user', content: trimmed });
+          // Stop voice NOW — prevents AI from speaking before we switch pipelines
+          if (typeof endVoiceSession === 'function') endVoiceSession();
+          // Route to text pipeline (300ms — enough for disconnect to settle)
+          var _earlyGenPrompt = 'The veteran just asked via voice: "' + trimmed + '". Generate the requested document now in full using all context from our conversation. Use proper headings and formatting.';
+          setTimeout(function() { sendToAI(_earlyGenPrompt); }, 300);
+          return; // skip submitUserText voiceOnly + _aiosVoiceUpdate — not needed
+        }
+        // ── END PHASE 1 VOICE STABILITY ──────────────────────────────────────────
         // Phase 33: render bubble + escalation check via shared path (voiceOnly — Realtime drives response)
         submitUserText(trimmed, { voiceOnly: true, path: 'voice' });
         // Phase 36: use trimmed (consistent with bubble + memory extraction)
