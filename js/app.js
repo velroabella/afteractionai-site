@@ -529,6 +529,35 @@
   // Prevents AI from ever running during deterministic resume generation.
   window._resumeExecutionLock = false;
 
+  // Phase 2.4: Follow-on document intents preserved from combined requests.
+  // E.g. "generate my resume and will" → resume first, then surface will intent.
+  window._resumeFollowOnDocs = null;
+
+  /**
+   * Phase 2.4: Detect follow-on document intents in a generation request.
+   * Returns an array of doc types beyond "resume/cv", or null if none.
+   * E.g. "generate my resume and a will" → ['will']
+   */
+  function _detectFollowOnDocs(text) {
+    if (!text) return null;
+    var docTypes = [
+      { regex: /\b(will|testament|last\s+will)\b/i, type: 'will' },
+      { regex: /\b(power\s+of\s+attorney|poa)\b/i, type: 'power-of-attorney' },
+      { regex: /\b(action\s+plan)\b/i, type: 'action-plan' },
+      { regex: /\b(nexus\s+letter|nexus)\b/i, type: 'nexus-letter' },
+      { regex: /\b(personal\s+statement)\b/i, type: 'personal-statement' },
+      { regex: /\b(transition\s+plan)\b/i, type: 'transition-plan' },
+      { regex: /\b(buddy\s+letter|buddy\s+statement)\b/i, type: 'buddy-letter' }
+    ];
+    var found = [];
+    for (var i = 0; i < docTypes.length; i++) {
+      if (docTypes[i].regex.test(text)) {
+        found.push(docTypes[i].type);
+      }
+    }
+    return found.length > 0 ? found : null;
+  }
+
   // Fix 4: Promise that resolves when dashboard context is loaded.
   // sendToAI waits on this before the first call so Claude gets full context.
   var _dashboardContextReady = null;
@@ -2789,6 +2818,9 @@
           var _isVoiceResumeReq = /\b(resume|cv)\b/i.test(trimmed);
           var _capturedText = trimmed; // capture for closure
           if (_isVoiceResumeReq) {
+            // Phase 2.4: Capture follow-on doc intents before entering resume pipeline
+            var _voiceFollowOns = _detectFollowOnDocs(_capturedText);
+            if (_voiceFollowOns) window._resumeFollowOnDocs = _voiceFollowOns;
             // Template pipeline: set processing state, call _handleResumeGeneration
             // directly — no sendToAI, no AI round-trip, no streaming.
             setTimeout(function() {
@@ -3052,22 +3084,66 @@
       if (Date.now() - window._pendingResumeBuild.timestamp > 300000) {
         console.log('[RESUME] Pending build expired (>5min) — clearing');
         window._pendingResumeBuild = null;
+        window._resumeFollowOnDocs = null;
       } else {
         var _pending = window._pendingResumeBuild;
         window._pendingResumeBuild = null;
-        console.log('[RESUME] Resuming pending build after user answered: "' + trimmed.substring(0, 40) + '"');
-        // Push the answer into history so memory extraction picks it up
+        console.log('[RESUME] Resuming pending build (missingField=' + (_pending.missingField || 'none') + ') after user answered: "' + trimmed.substring(0, 40) + '"');
+
+        // Push the answer into history
         conversationHistory.push({ role: 'user', content: trimmed });
-        // Run memory extraction NOW so branch is stored before _handleResumeGeneration checks
-        if (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.extractMemoryFromInput === 'function') {
-          try {
-            var _memEx = window.AIOS.Memory.extractMemoryFromInput(trimmed);
-            if (_memEx && Object.keys(_memEx).length > 0) {
-              window.AIOS.Memory.profile = window.AIOS.Memory.mergeMemory(window.AIOS.Memory.profile, _memEx);
-              console.log('[RESUME] Memory extracted from answer:', Object.keys(_memEx).join(', '));
+
+        // ── Phase 2.4: Field-specific extraction ──────────────────────────
+        if (_pending.missingField === 'name') {
+          // Direct name assignment — strip common prefixes like "my name is", "I'm", "call me"
+          var _nameAnswer = trimmed
+            .replace(/^(?:my\s+(?:full\s+)?name\s+is|i'?m|i\s+am|call\s+me|it'?s|they\s+call\s+me)\s+/i, '')
+            .replace(/[.!?]+$/, '')
+            .trim();
+          if (_nameAnswer && window.AIOS && window.AIOS.Memory) {
+            window.AIOS.Memory.profile = window.AIOS.Memory.mergeMemory(
+              window.AIOS.Memory.profile, { name: _nameAnswer }
+            );
+            console.log('[RESUME] Name set directly from answer: "' + _nameAnswer + '"');
+          }
+        } else {
+          // Branch or general: run standard memory extraction
+          if (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.extractMemoryFromInput === 'function') {
+            try {
+              var _memEx = window.AIOS.Memory.extractMemoryFromInput(trimmed);
+              if (_memEx && Object.keys(_memEx).length > 0) {
+                window.AIOS.Memory.profile = window.AIOS.Memory.mergeMemory(window.AIOS.Memory.profile, _memEx);
+                console.log('[RESUME] Memory extracted from answer:', Object.keys(_memEx).join(', '));
+              }
+            } catch (_e) { console.warn('[RESUME] Memory extraction error:', _e); }
+          }
+          // Phase 2.4: Fallback branch detection for variations like "the army", "us navy", etc.
+          if (_pending.missingField === 'branch') {
+            var _profile = (window.AIOS && window.AIOS.Memory) ? window.AIOS.Memory.profile : {};
+            if (!_profile.branch) {
+              var _branchFallback = trimmed.replace(/^(?:the|us|u\.s\.?|united\s+states)\s+/i, '').trim();
+              var _validBranches = ['army', 'navy', 'air force', 'marine corps', 'marines', 'coast guard', 'space force', 'national guard'];
+              var _lowerFallback = _branchFallback.toLowerCase();
+              for (var _bi = 0; _bi < _validBranches.length; _bi++) {
+                if (_lowerFallback === _validBranches[_bi] || _lowerFallback.indexOf(_validBranches[_bi]) === 0) {
+                  var _matchedBranch = _validBranches[_bi].replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+                  window.AIOS.Memory.profile = window.AIOS.Memory.mergeMemory(
+                    window.AIOS.Memory.profile, { branch: _matchedBranch }
+                  );
+                  console.log('[RESUME] Branch set via fallback detection: "' + _matchedBranch + '"');
+                  break;
+                }
+              }
             }
-          } catch (_e) { console.warn('[RESUME] Memory extraction error:', _e); }
+          }
         }
+        // ── END Phase 2.4 field-specific extraction ───────────────────────
+
+        // Restore followOnDocs from pending state if not already set globally
+        if (_pending.followOnDocs && !window._resumeFollowOnDocs) {
+          window._resumeFollowOnDocs = _pending.followOnDocs;
+        }
+
         // If voice is active, end it — resume pipeline needs text mode
         if (inputMode === 'voice' && typeof endVoiceSession === 'function') {
           endVoiceSession();
@@ -3082,7 +3158,7 @@
         return;
       }
     }
-    // ── END Phase 2.2 ─────────────────────────────────────────────────
+    // ── END Phase 2.4 auto-resume ─────────────────────────────────────
 
     // Phase 2.3: If resume execution lock is active, block ALL AI routing.
     // This catches any stray message that slips past the pending-resume check.
@@ -3149,6 +3225,9 @@
         return m.role === 'assistant' && /resume/i.test(m.content || '') && conversationHistory.indexOf(m) > conversationHistory.length - 6;
       });
     if ((_typedResumeColdStart || (_typedResumeConfirm && _typedResumeCtx)) && !isProcessing) {
+      // Phase 2.4: Capture follow-on doc intents before entering resume pipeline
+      var _typedFollowOns = _detectFollowOnDocs(trimmed);
+      if (_typedFollowOns) window._resumeFollowOnDocs = _typedFollowOns;
       // Phase 2.3: Route to deterministic template pipeline — no AI
       console.log('[PHASE2.3] Typed resume detected: "' + trimmed + '" — template pipeline (cold=' + _typedResumeColdStart + ' confirm=' + _typedResumeConfirm + ' ctx=' + _typedResumeCtx + ')');
       showAIWorkingState('resume');
@@ -3471,12 +3550,18 @@
       ? window.AIOS.Memory.getProfile() : {};
     if (!_quickProfile.branch) {
       clearAIWorkingState();
-      // Phase 2.2: Store pending intent so submitUserText auto-resumes after answer
+      // Phase 2.4: Store pending intent with structured fields
+      var _followOns = _detectFollowOnDocs(userText);
       window._pendingResumeBuild = {
         originalRequest: userText,
-        timestamp: Date.now()
+        timestamp: Date.now(),
+        missingField: 'branch',
+        sourceMode: 'voice_or_text',
+        followOnDocs: _followOns
       };
-      console.log('[RESUME] Pending build stored — waiting for branch answer');
+      if (_followOns) window._resumeFollowOnDocs = _followOns;
+      console.log('[RESUME] Pending build stored — waiting for branch answer' +
+        (_followOns ? ' (followOnDocs: ' + _followOns.join(', ') + ')' : ''));
       var _branchAskMsg = '📝 I\'m ready to build your resume — just need one quick detail first:\n\n' +
         '**What branch of service were you in?**\n\n' +
         'Army · Navy · Air Force · Marine Corps · Coast Guard · Space Force · National Guard';
@@ -3495,22 +3580,34 @@
     var resumeData = _buildResumeData();
     console.log('[RESUME-GEN] Structured data built:', JSON.stringify(resumeData).substring(0, 200));
 
-    // ── Phase 2.2: Data sanity check — prevent garbage documents ──────
+    // ── Phase 2.4: Data sanity check — ask for name instead of aborting ──
     if (!resumeData || !resumeData.fullName || resumeData.fullName === '[NOT PROVIDED]') {
-      console.error('[RESUME] Invalid data — aborting generation. fullName=' + (resumeData && resumeData.fullName));
+      console.log('[RESUME] Name missing — setting pending build for name question. fullName=' + (resumeData && resumeData.fullName));
       clearAIWorkingState();
-      var _sanityMsg = '⚠️ I need more information before I can generate your resume. ' +
-        'Please tell me your name, or upload an existing resume or DD-214 so I can pull the details automatically.';
-      addMessage(_sanityMsg, 'ai');
-      conversationHistory.push({ role: 'assistant', content: _sanityMsg });
+      // Preserve follow-on docs from the original request if not already set
+      var _nameFollowOns = window._resumeFollowOnDocs || _detectFollowOnDocs(userText);
+      window._pendingResumeBuild = {
+        originalRequest: userText,
+        timestamp: Date.now(),
+        missingField: 'name',
+        sourceMode: 'voice_or_text',
+        followOnDocs: _nameFollowOns
+      };
+      if (_nameFollowOns) window._resumeFollowOnDocs = _nameFollowOns;
+      console.log('[RESUME] Pending build stored — waiting for name answer');
+      var _nameAskMsg = '📝 Almost ready to build your resume! I just need one more thing:\n\n' +
+        '**What is your full name?**\n\n' +
+        '_This is how it will appear at the top of your resume._';
+      addMessage(_nameAskMsg, 'ai');
+      conversationHistory.push({ role: 'assistant', content: _nameAskMsg });
       isProcessing = false;
       if (btnSend) btnSend.disabled = false;
       if (userInput) userInput.focus();
       window._resumeExecutionLock = false;
-      console.log('[LOCK] Resume execution lock RELEASED (data sanity)');
-      return true; // handled — do not fall through to AI
+      console.log('[LOCK] Resume execution lock RELEASED (pending name)');
+      return true; // handled — waiting for name answer before proceeding
     }
-    // ── END Phase 2.2 DATA SANITY ─────────────────────────────────────
+    // ── END Phase 2.4 DATA SANITY ─────────────────────────────────────
 
     // ── Generate .docx via legal-docx-generator ──
     if (!window.AAAI || !window.AAAI.legalDocx || typeof window.AAAI.legalDocx.generateFromData !== 'function') {
@@ -3556,6 +3653,26 @@
             'The .docx file has also been downloaded to your device.\n\n' +
             'You can view, edit, or re-download it from your **[Profile → Generated Documents](/profile.html)** page.\n\n' +
             '_Need changes? Just tell me what to update and I\'ll regenerate it._';
+
+          // Phase 2.4: Surface follow-on document intents from combined requests
+          var _followOns = window._resumeFollowOnDocs;
+          window._resumeFollowOnDocs = null; // clear after consuming
+          if (_followOns && _followOns.length > 0) {
+            var _docLabels = {
+              'will': 'Last Will & Testament',
+              'power-of-attorney': 'Power of Attorney',
+              'action-plan': 'Action Plan',
+              'nexus-letter': 'Nexus Letter',
+              'personal-statement': 'Personal Statement',
+              'transition-plan': 'Transition Plan',
+              'buddy-letter': 'Buddy Letter'
+            };
+            var _nextDocs = _followOns.map(function(d) { return _docLabels[d] || d; }).join(', ');
+            _confirmMsg += '\n\n---\n\n📋 You also asked about: **' + _nextDocs + '**.\n' +
+              'Just say "generate my ' + _followOns[0].replace(/-/g, ' ') + '" and I\'ll build that next.';
+            console.log('[RESUME] Follow-on docs surfaced: ' + _followOns.join(', '));
+          }
+
           streamMessage(_confirmMsg, function() {
             isProcessing = false;
             if (btnSend) btnSend.disabled = false;
@@ -3576,6 +3693,7 @@
         conversationHistory.push({ role: 'assistant', content: _errMsg });
         isProcessing = false;
         if (btnSend) btnSend.disabled = false;
+        window._resumeFollowOnDocs = null; // Phase 2.4: clear on error
         window._resumeExecutionLock = false;
         console.log('[LOCK] Resume execution lock RELEASED (error)');
       });
