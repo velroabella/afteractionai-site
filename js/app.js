@@ -558,6 +558,77 @@
     return found.length > 0 ? found : null;
   }
 
+  /**
+   * Phase 2.5: Mine uploaded documents for profile fields BEFORE asking questions.
+   * Scans _dashboardContext.uploadedDocs[].extracted_text for branch, name, rank,
+   * MOS, and service dates. Only sets fields that are NOT already in the profile.
+   * Called at the top of _handleResumeGeneration so DD-214/uploaded doc data is
+   * available before the branch/name checks fire.
+   */
+  function _mineUploadedDocsForProfile() {
+    var ctx = window.AIOS && window.AIOS._dashboardContext;
+    if (!ctx || !ctx.uploadedDocs || !ctx.uploadedDocs.length) return;
+    if (!window.AIOS || !window.AIOS.Memory) return;
+
+    var profile = (typeof window.AIOS.Memory.getProfile === 'function')
+      ? window.AIOS.Memory.getProfile() : {};
+    var updates = {};
+
+    for (var i = 0; i < ctx.uploadedDocs.length; i++) {
+      var text = ctx.uploadedDocs[i].extracted_text;
+      if (!text) continue;
+
+      // ── Branch ──
+      if (!profile.branch && !updates.branch) {
+        var _bm = text.match(/(?:branch\s+of\s+service|armed\s+force)[:\s\-]*\b(army|navy|air\s+force|marine\s+corps|coast\s+guard|space\s+force|national\s+guard)\b/i)
+          || text.match(/(?:department|united\s+states)\s+(?:of\s+the\s+)?\b(army|navy|air\s+force|marine\s+corps|coast\s+guard|space\s+force)\b/i)
+          || text.match(/\b(army|navy|air\s+force|marine\s+corps|coast\s+guard|space\s+force)\s+(?:reserve|national\s+guard|active\s+duty|component)/i);
+        if (_bm) {
+          updates.branch = _bm[1].trim().replace(/\b\w/g, function(c) { return c.toUpperCase(); });
+        }
+      }
+
+      // ── Name (DD-214 Item 1: "NAME (Last, First, Middle)") ──
+      if (!profile.name && !updates.name) {
+        var _nm = text.match(/name\s*\(?last[,\s]*first[,\s]*middle\)?\s*[:\-]?\s*([A-Za-z'-]+)[,\s]+([A-Za-z'-]+(?:\s+[A-Za-z]\.?)?)/i);
+        if (_nm) {
+          updates.name = _nm[2].trim() + ' ' + _nm[1].trim();
+        }
+      }
+
+      // ── Rank (DD-214 Item 4a) ──
+      if (!profile.rank && !updates.rank) {
+        var _rm = text.match(/(?:grade[,\s]*rate[,\s]*(?:or\s+)?rank|pay\s+grade)\s*[:\-]?\s*([A-Z][A-Za-z\/\s]{1,25})/i);
+        if (_rm) {
+          updates.rank = _rm[1].trim().replace(/\s+$/, '');
+        }
+      }
+
+      // ── MOS (DD-214 Item 11) ──
+      if (!profile.mos && !updates.mos) {
+        var _mm = text.match(/(?:primary\s+(?:specialty|mos)|military\s+occupational\s+specialty|mos)\s*[:\-]?\s*(\d{2,3}[A-Za-z]?\d*\s*[-–]?\s*[A-Za-z\s\/]{3,40})/i);
+        if (_mm) {
+          updates.mos = _mm[1].trim();
+        }
+      }
+
+      // ── Service dates (DD-214 Items 12a/12b) ──
+      if (!profile.serviceEntryDate && !updates.serviceEntryDate) {
+        var _sd = text.match(/(?:date\s+entered\s+(?:active\s+)?(?:duty|service)|service\s+entry\s+date)\s*[:\-]?\s*(\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}|\d{4}[-\/]\d{1,2}[-\/]\d{1,2}|\w+\s+\d{1,2},?\s+\d{4})/i);
+        if (_sd) updates.serviceEntryDate = _sd[1].trim();
+      }
+      if (!profile.separationDate && !updates.separationDate) {
+        var _ed = text.match(/(?:separation\s+date|date\s+of\s+separation|release\s+(?:from\s+)?active\s+duty)\s*[:\-]?\s*(\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}|\d{4}[-\/]\d{1,2}[-\/]\d{1,2}|\w+\s+\d{1,2},?\s+\d{4})/i);
+        if (_ed) updates.separationDate = _ed[1].trim();
+      }
+    }
+
+    if (Object.keys(updates).length > 0) {
+      window.AIOS.Memory.profile = window.AIOS.Memory.mergeMemory(profile, updates);
+      console.log('[RESUME] Mined uploaded docs for profile: ' + Object.keys(updates).join(', '));
+    }
+  }
+
   // Fix 4: Promise that resolves when dashboard context is loaded.
   // sendToAI waits on this before the first call so Claude gets full context.
   var _dashboardContextReady = null;
@@ -3541,6 +3612,11 @@
       console.log('[LOCK] Resume execution lock RELEASED (non-auth)');
       return true;
     }
+
+    // ── Phase 2.5: Mine uploaded documents BEFORE checking for missing fields ──
+    // DD-214s, service records, etc. may contain branch, name, rank, MOS.
+    // Extract these into the profile so we don't ask for data we already have.
+    _mineUploadedDocsForProfile();
 
     // ── PHASE 2: Critical data check — ONE question, then stop ──────────
     // Branch is the minimum required field. Without it the resume is too
