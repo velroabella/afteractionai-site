@@ -3613,168 +3613,193 @@
       return true;
     }
 
-    // ── Phase 2.5: Mine uploaded documents BEFORE checking for missing fields ──
+    // ── Phase 2.5: Wait for dashboard context, THEN mine uploaded docs ──────
     // DD-214s, service records, etc. may contain branch, name, rank, MOS.
-    // Extract these into the profile so we don't ask for data we already have.
-    _mineUploadedDocsForProfile();
+    // We MUST load and mine these BEFORE the branch/name checks fire,
+    // otherwise the system asks for data it already has.
+    //
+    // _dashboardContextReady is a promise set at login that resolves once
+    // _loadDashboardContext() has had time to populate AIOS._dashboardContext.
+    // If context is already loaded, we skip the wait and proceed immediately.
+    var _ctxAlreadyLoaded = window.AIOS && window.AIOS._dashboardContext;
+    var _ctxWait = (!_ctxAlreadyLoaded && _dashboardContextReady)
+      ? _dashboardContextReady
+      : Promise.resolve();
 
-    // ── PHASE 2: Critical data check — ONE question, then stop ──────────
-    // Branch is the minimum required field. Without it the resume is too
-    // generic to be useful. Ask exactly once, then return so the user
-    // can answer and re-trigger generation on the next message.
-    var _quickProfile = (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.getProfile === 'function')
-      ? window.AIOS.Memory.getProfile() : {};
-    if (!_quickProfile.branch) {
-      clearAIWorkingState();
-      // Phase 2.4: Store pending intent with structured fields
-      var _followOns = _detectFollowOnDocs(userText);
-      window._pendingResumeBuild = {
-        originalRequest: userText,
-        timestamp: Date.now(),
-        missingField: 'branch',
-        sourceMode: 'voice_or_text',
-        followOnDocs: _followOns
-      };
-      if (_followOns) window._resumeFollowOnDocs = _followOns;
-      console.log('[RESUME] Pending build stored — waiting for branch answer' +
-        (_followOns ? ' (followOnDocs: ' + _followOns.join(', ') + ')' : ''));
-      var _branchAskMsg = '📝 I\'m ready to build your resume — just need one quick detail first:\n\n' +
-        '**What branch of service were you in?**\n\n' +
-        'Army · Navy · Air Force · Marine Corps · Coast Guard · Space Force · National Guard';
-      addMessage(_branchAskMsg, 'ai');
-      conversationHistory.push({ role: 'assistant', content: _branchAskMsg });
-      isProcessing = false;
-      if (btnSend) btnSend.disabled = false;
-      if (userInput) userInput.focus();
-      window._resumeExecutionLock = false;
-      console.log('[LOCK] Resume execution lock RELEASED (pending branch)');
-      return true; // handled — waiting for branch answer before proceeding
-    }
-    // ── END PHASE 2 CRITICAL DATA CHECK ─────────────────────────────────
+    _ctxWait.then(function() {
+      // ── Mine uploaded docs into profile ──
+      _mineUploadedDocsForProfile();
 
-    // ── Build structured data ──
-    var resumeData = _buildResumeData();
-    console.log('[RESUME-GEN] Structured data built:', JSON.stringify(resumeData).substring(0, 200));
+      // ── Required diagnostic logs ──
+      var _docCount = (window.AIOS && window.AIOS._dashboardContext && window.AIOS._dashboardContext.uploadedDocs)
+        ? window.AIOS._dashboardContext.uploadedDocs.length : 0;
+      console.log('[DOC-MINING] Docs found:', _docCount);
 
-    // ── Phase 2.4: Data sanity check — ask for name instead of aborting ──
-    if (!resumeData || !resumeData.fullName || resumeData.fullName === '[NOT PROVIDED]') {
-      console.log('[RESUME] Name missing — setting pending build for name question. fullName=' + (resumeData && resumeData.fullName));
-      clearAIWorkingState();
-      // Preserve follow-on docs from the original request if not already set
-      var _nameFollowOns = window._resumeFollowOnDocs || _detectFollowOnDocs(userText);
-      window._pendingResumeBuild = {
-        originalRequest: userText,
-        timestamp: Date.now(),
-        missingField: 'name',
-        sourceMode: 'voice_or_text',
-        followOnDocs: _nameFollowOns
-      };
-      if (_nameFollowOns) window._resumeFollowOnDocs = _nameFollowOns;
-      console.log('[RESUME] Pending build stored — waiting for name answer');
-      var _nameAskMsg = '📝 Almost ready to build your resume! I just need one more thing:\n\n' +
-        '**What is your full name?**\n\n' +
-        '_This is how it will appear at the top of your resume._';
-      addMessage(_nameAskMsg, 'ai');
-      conversationHistory.push({ role: 'assistant', content: _nameAskMsg });
-      isProcessing = false;
-      if (btnSend) btnSend.disabled = false;
-      if (userInput) userInput.focus();
-      window._resumeExecutionLock = false;
-      console.log('[LOCK] Resume execution lock RELEASED (pending name)');
-      return true; // handled — waiting for name answer before proceeding
-    }
-    // ── END Phase 2.4 DATA SANITY ─────────────────────────────────────
+      // ── Re-read profile AFTER mining — critical: must reflect mined data ──
+      var _quickProfile = (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.getProfile === 'function')
+        ? window.AIOS.Memory.getProfile() : {};
 
-    // ── Generate .docx via legal-docx-generator ──
-    if (!window.AAAI || !window.AAAI.legalDocx || typeof window.AAAI.legalDocx.generateFromData !== 'function') {
-      console.error('[RESUME-GEN] generateFromData not available — NO AI fallback (Phase 2.3)');
-      clearAIWorkingState();
-      addMessage('⚠️ The resume builder is temporarily unavailable. Please refresh the page and try again.', 'ai');
-      isProcessing = false;
-      if (btnSend) btnSend.disabled = false;
-      window._resumeExecutionLock = false;
-      console.log('[LOCK] Resume execution lock RELEASED (generator unavailable)');
-      return true;  // handled — no AI fallback
-    }
-
-    // Async: generate docx blob, save to dashboard, show confirmation
-    window.AAAI.legalDocx.generateFromData('resume-builder', resumeData)
-      .then(function(result) {
-        // result = { fileName, blob, contentText }
-        console.log('[RESUME-GEN] .docx generated: ' + result.fileName + ' (' + result.contentText.length + ' chars)');
-
-        // Save to dashboard
-        var output = {
-          template_type: 'resume-builder',
-          title: 'Resume — ' + (resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'Veteran'),
-          content: result.contentText,
-          metadata: {
-            source: 'template_driven',
-            action: 'save_template',
-            prefilled_fields: resumeData,
-            generated_at: new Date().toISOString()
-          }
-        };
-        return window.AAAI.auth.saveTemplateOutput(output).then(function(saveRes) {
-          if (saveRes && !saveRes.error) {
-            console.log('[RESUME-GEN] Saved to dashboard');
-          } else {
-            console.warn('[RESUME-GEN] Dashboard save failed:', saveRes && saveRes.error);
-          }
-
-          // Show confirmation in chat
-          clearAIWorkingState();
-          var _name = resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'your';
-          var _confirmMsg = '✅ **Resume — ' + _name + '** has been generated and saved to your dashboard.\n\n' +
-            'The .docx file has also been downloaded to your device.\n\n' +
-            'You can view, edit, or re-download it from your **[Profile → Generated Documents](/profile.html)** page.\n\n' +
-            '_Need changes? Just tell me what to update and I\'ll regenerate it._';
-
-          // Phase 2.4: Surface follow-on document intents from combined requests
-          var _followOns = window._resumeFollowOnDocs;
-          window._resumeFollowOnDocs = null; // clear after consuming
-          if (_followOns && _followOns.length > 0) {
-            var _docLabels = {
-              'will': 'Last Will & Testament',
-              'power-of-attorney': 'Power of Attorney',
-              'action-plan': 'Action Plan',
-              'nexus-letter': 'Nexus Letter',
-              'personal-statement': 'Personal Statement',
-              'transition-plan': 'Transition Plan',
-              'buddy-letter': 'Buddy Letter'
-            };
-            var _nextDocs = _followOns.map(function(d) { return _docLabels[d] || d; }).join(', ');
-            _confirmMsg += '\n\n---\n\n📋 You also asked about: **' + _nextDocs + '**.\n' +
-              'Just say "generate my ' + _followOns[0].replace(/-/g, ' ') + '" and I\'ll build that next.';
-            console.log('[RESUME] Follow-on docs surfaced: ' + _followOns.join(', '));
-          }
-
-          streamMessage(_confirmMsg, function() {
-            isProcessing = false;
-            if (btnSend) btnSend.disabled = false;
-            if (userInput) userInput.focus();
-            window._resumeExecutionLock = false;
-            console.log('[LOCK] Resume execution lock RELEASED (success)');
-            speakAIText(_confirmMsg);
-          });
-          conversationHistory.push({ role: 'assistant', content: _confirmMsg });
-        });
-      })
-      .catch(function(err) {
-        console.error('[RESUME-GEN] Generation failed:', err);
-        clearAIWorkingState();
-        // Phase 2.3: NO AI fallback — show error and let user retry
-        var _errMsg = '⚠️ I ran into an issue generating your resume. Please try again — just say "build my resume."';
-        addMessage(_errMsg, 'ai');
-        conversationHistory.push({ role: 'assistant', content: _errMsg });
-        isProcessing = false;
-        if (btnSend) btnSend.disabled = false;
-        window._resumeFollowOnDocs = null; // Phase 2.4: clear on error
-        window._resumeExecutionLock = false;
-        console.log('[LOCK] Resume execution lock RELEASED (error)');
+      console.log('[DOC-MINING RESULT]', {
+        branch: _quickProfile.branch,
+        name: _quickProfile.name
       });
 
-    return true;  // handled
+      // ── PHASE 2: Critical data check — ONE question, then stop ──────────
+      // Branch is the minimum required field. Without it the resume is too
+      // generic to be useful. Ask exactly once, then return so the user
+      // can answer and re-trigger generation on the next message.
+      if (!_quickProfile.branch) {
+        clearAIWorkingState();
+        // Phase 2.4: Store pending intent with structured fields
+        var _followOns = _detectFollowOnDocs(userText);
+        window._pendingResumeBuild = {
+          originalRequest: userText,
+          timestamp: Date.now(),
+          missingField: 'branch',
+          sourceMode: 'voice_or_text',
+          followOnDocs: _followOns
+        };
+        if (_followOns) window._resumeFollowOnDocs = _followOns;
+        console.log('[RESUME] Pending build stored — waiting for branch answer' +
+          (_followOns ? ' (followOnDocs: ' + _followOns.join(', ') + ')' : ''));
+        var _branchAskMsg = '📝 I\'m ready to build your resume — just need one quick detail first:\n\n' +
+          '**What branch of service were you in?**\n\n' +
+          'Army · Navy · Air Force · Marine Corps · Coast Guard · Space Force · National Guard';
+        addMessage(_branchAskMsg, 'ai');
+        conversationHistory.push({ role: 'assistant', content: _branchAskMsg });
+        isProcessing = false;
+        if (btnSend) btnSend.disabled = false;
+        if (userInput) userInput.focus();
+        window._resumeExecutionLock = false;
+        console.log('[LOCK] Resume execution lock RELEASED (pending branch)');
+        return; // handled — waiting for branch answer before proceeding
+      }
+      // ── END PHASE 2 CRITICAL DATA CHECK ─────────────────────────────────
+
+      // ── Build structured data ──
+      var resumeData = _buildResumeData();
+      console.log('[RESUME-GEN] Structured data built:', JSON.stringify(resumeData).substring(0, 200));
+
+      // ── Phase 2.4: Data sanity check — ask for name instead of aborting ──
+      if (!resumeData || !resumeData.fullName || resumeData.fullName === '[NOT PROVIDED]') {
+        console.log('[RESUME] Name missing — setting pending build for name question. fullName=' + (resumeData && resumeData.fullName));
+        clearAIWorkingState();
+        // Preserve follow-on docs from the original request if not already set
+        var _nameFollowOns = window._resumeFollowOnDocs || _detectFollowOnDocs(userText);
+        window._pendingResumeBuild = {
+          originalRequest: userText,
+          timestamp: Date.now(),
+          missingField: 'name',
+          sourceMode: 'voice_or_text',
+          followOnDocs: _nameFollowOns
+        };
+        if (_nameFollowOns) window._resumeFollowOnDocs = _nameFollowOns;
+        console.log('[RESUME] Pending build stored — waiting for name answer');
+        var _nameAskMsg = '📝 Almost ready to build your resume! I just need one more thing:\n\n' +
+          '**What is your full name?**\n\n' +
+          '_This is how it will appear at the top of your resume._';
+        addMessage(_nameAskMsg, 'ai');
+        conversationHistory.push({ role: 'assistant', content: _nameAskMsg });
+        isProcessing = false;
+        if (btnSend) btnSend.disabled = false;
+        if (userInput) userInput.focus();
+        window._resumeExecutionLock = false;
+        console.log('[LOCK] Resume execution lock RELEASED (pending name)');
+        return; // handled — waiting for name answer before proceeding
+      }
+      // ── END Phase 2.4 DATA SANITY ─────────────────────────────────────
+
+      // ── Generate .docx via legal-docx-generator ──
+      if (!window.AAAI || !window.AAAI.legalDocx || typeof window.AAAI.legalDocx.generateFromData !== 'function') {
+        console.error('[RESUME-GEN] generateFromData not available — NO AI fallback (Phase 2.3)');
+        clearAIWorkingState();
+        addMessage('⚠️ The resume builder is temporarily unavailable. Please refresh the page and try again.', 'ai');
+        isProcessing = false;
+        if (btnSend) btnSend.disabled = false;
+        window._resumeExecutionLock = false;
+        console.log('[LOCK] Resume execution lock RELEASED (generator unavailable)');
+        return;  // handled — no AI fallback
+      }
+
+      // Async: generate docx blob, save to dashboard, show confirmation
+      window.AAAI.legalDocx.generateFromData('resume-builder', resumeData)
+        .then(function(result) {
+          // result = { fileName, blob, contentText }
+          console.log('[RESUME-GEN] .docx generated: ' + result.fileName + ' (' + result.contentText.length + ' chars)');
+
+          // Save to dashboard
+          var output = {
+            template_type: 'resume-builder',
+            title: 'Resume — ' + (resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'Veteran'),
+            content: result.contentText,
+            metadata: {
+              source: 'template_driven',
+              action: 'save_template',
+              prefilled_fields: resumeData,
+              generated_at: new Date().toISOString()
+            }
+          };
+          return window.AAAI.auth.saveTemplateOutput(output).then(function(saveRes) {
+            if (saveRes && !saveRes.error) {
+              console.log('[RESUME-GEN] Saved to dashboard');
+            } else {
+              console.warn('[RESUME-GEN] Dashboard save failed:', saveRes && saveRes.error);
+            }
+
+            // Show confirmation in chat
+            clearAIWorkingState();
+            var _name = resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'your';
+            var _confirmMsg = '✅ **Resume — ' + _name + '** has been generated and saved to your dashboard.\n\n' +
+              'The .docx file has also been downloaded to your device.\n\n' +
+              'You can view, edit, or re-download it from your **[Profile → Generated Documents](/profile.html)** page.\n\n' +
+              '_Need changes? Just tell me what to update and I\'ll regenerate it._';
+
+            // Phase 2.4: Surface follow-on document intents from combined requests
+            var _followOns = window._resumeFollowOnDocs;
+            window._resumeFollowOnDocs = null; // clear after consuming
+            if (_followOns && _followOns.length > 0) {
+              var _docLabels = {
+                'will': 'Last Will & Testament',
+                'power-of-attorney': 'Power of Attorney',
+                'action-plan': 'Action Plan',
+                'nexus-letter': 'Nexus Letter',
+                'personal-statement': 'Personal Statement',
+                'transition-plan': 'Transition Plan',
+                'buddy-letter': 'Buddy Letter'
+              };
+              var _nextDocs = _followOns.map(function(d) { return _docLabels[d] || d; }).join(', ');
+              _confirmMsg += '\n\n---\n\n📋 You also asked about: **' + _nextDocs + '**.\n' +
+                'Just say "generate my ' + _followOns[0].replace(/-/g, ' ') + '" and I\'ll build that next.';
+              console.log('[RESUME] Follow-on docs surfaced: ' + _followOns.join(', '));
+            }
+
+            streamMessage(_confirmMsg, function() {
+              isProcessing = false;
+              if (btnSend) btnSend.disabled = false;
+              if (userInput) userInput.focus();
+              window._resumeExecutionLock = false;
+              console.log('[LOCK] Resume execution lock RELEASED (success)');
+              speakAIText(_confirmMsg);
+            });
+            conversationHistory.push({ role: 'assistant', content: _confirmMsg });
+          });
+        })
+        .catch(function(err) {
+          console.error('[RESUME-GEN] Generation failed:', err);
+          clearAIWorkingState();
+          // Phase 2.3: NO AI fallback — show error and let user retry
+          var _errMsg = '⚠️ I ran into an issue generating your resume. Please try again — just say "build my resume."';
+          addMessage(_errMsg, 'ai');
+          conversationHistory.push({ role: 'assistant', content: _errMsg });
+          isProcessing = false;
+          if (btnSend) btnSend.disabled = false;
+          window._resumeFollowOnDocs = null; // Phase 2.4: clear on error
+          window._resumeExecutionLock = false;
+          console.log('[LOCK] Resume execution lock RELEASED (error)');
+        });
+    }); // end _ctxWait.then
+
+    return true;  // handled — all paths execute inside .then()
   }
 
   // ── forceTask support ──────────────────────────────────────────────
