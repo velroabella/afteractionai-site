@@ -101,6 +101,14 @@
       descField: 'description',
       catField:  'category',
       extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    military_discounts: {
+      path: 'data/military-discounts.json',
+      page: 'military-discounts.html',
+      nameField: 'name',
+      descField: 'discount',
+      catField:  'category',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
     }
   };
 
@@ -188,6 +196,12 @@
       keywords: ['license', 'certification', 'mos', 'credential', 'civilian pathway'],
       datasets: ['licensure'],
       categoryHint: 'employment',
+      weight: 2
+    },
+    {
+      keywords: ['discount', 'military discount', 'veteran discount', 'save money', 'savings', 'deals', 'offers', 'cheap', 'coupon', 'promo'],
+      datasets: ['military_discounts'],
+      categoryHint: null,
       weight: 2
     }
   ];
@@ -445,7 +459,8 @@
       state_benefits: 'property_tax',
       crisis_support: 'mental_health_crisis',
       family_survivor:'dependent',
-      legal:          'will'
+      legal:          'will',
+      discounts:      'budget'
     },
 
     /**

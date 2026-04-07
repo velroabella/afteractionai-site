@@ -45,6 +45,9 @@
     { pattern: /burial|funeral|cemetery|memorial/i, issue: 'burial', category: 'burial' },
     { pattern: /dependent|spouse|survivor|family\s*care/i, issue: 'dependent', category: 'dependent' },
 
+    // Discounts / Savings
+    { pattern: /discount|coupon|deal|promo|save\s*money|savings|military\s*(rate|price|offer)/i, issue: 'discount', category: 'financial' },
+
     // Transition
     { pattern: /transition|separati|ets|getting\s*out|leaving\s*(the\s*)?military/i, issue: 'transition', category: 'transition' },
 
@@ -100,15 +103,15 @@
     va_healthcare:[{ page: 'medical-help.html', label: 'VA Healthcare' }, { page: 'state-benefits.html', label: 'State Health Benefits', filter: 'healthcare' }],
     education:    [{ page: 'education.html', label: 'Education Benefits' }, { page: 'state-benefits.html', label: 'State Education Benefits', filter: 'education' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
     voc_rehab:    [{ page: 'education.html', label: 'Education Benefits' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
-    career:       [{ page: 'resources.html', label: 'Employment Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Employment Benefits', filter: 'employment' }, { page: 'licensure.html', label: 'Licensure & Certifications' }],
+    career:       [{ page: 'resources.html', label: 'Employment Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Employment Benefits', filter: 'employment' }, { page: 'licensure.html', label: 'Licensure & Certifications' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     linkedin:     [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }],
     federal_career:[{ page: 'resources.html', label: 'Employment Resources', filter: 'employment' }],
-    business:     [{ page: 'resources.html', label: 'Entrepreneurship Resources', filter: 'entrepreneurship' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
-    salary:       [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }],
+    business:     [{ page: 'resources.html', label: 'Entrepreneurship Resources', filter: 'entrepreneurship' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
+    salary:       [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     licensing:    [{ page: 'licensure.html', label: 'Licensure & Certifications' }, { page: 'state-benefits.html', label: 'State Licensing Benefits', filter: 'licensing' }],
-    debt:         [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }],
+    debt:         [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     credit:       [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }],
-    budget:       [{ page: 'resources.html', label: 'Financial Resources', filter: 'benefits' }],
+    budget:       [{ page: 'resources.html', label: 'Financial Resources', filter: 'benefits' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     va_loan:      [{ page: 'grants-scholarships.html', label: 'Housing Grants' }, { page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
     rental:       [{ page: 'resources.html', label: 'Housing Resources', filter: 'housing' }, { page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
     property_tax: [{ page: 'state-benefits.html', label: 'Property Tax Benefits', filter: 'property_tax' }],
@@ -119,7 +122,8 @@
     emergency:    [{ page: 'hotlines-escalation.html', label: 'Emergency Hotlines' }],
     burial:       [{ page: 'state-benefits.html', label: 'State Burial Benefits', filter: 'burial' }],
     dependent:    [{ page: 'families-support.html', label: 'Family Support' }, { page: 'state-benefits.html', label: 'Spouse/Dependent Benefits', filter: 'dependent' }],
-    transition:   [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }],
+    transition:   [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
+    discount:     [{ page: 'military-discounts.html', label: 'Military Discounts' }],
     housing_crisis:[{ page: 'hotlines-escalation.html', label: 'Emergency Housing' }],
     mental_health_crisis: [{ page: 'hotlines-escalation.html', label: 'Crisis Hotlines' }]
   };
