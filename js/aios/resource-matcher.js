@@ -125,6 +125,22 @@
       descField: 'description',
       catField:  'category_normalized',
       extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    hidden_benefits: {
+      path: 'data/hidden-benefits.json',
+      page: 'hidden-benefits.html',
+      nameField: 'name',
+      descField: 'description',
+      catField:  'category',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    emergency_assistance: {
+      path: 'data/emergency-assistance.json',
+      page: 'emergency-assistance.html',
+      nameField: 'name',
+      descField: 'description',
+      catField:  'category',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
     }
   };
 
@@ -138,7 +154,7 @@
   var KEYWORD_FAMILIES = [
     {
       keywords: ['disability', 'va claim', 'va rating', 'compensation', 'service-connected', 'service connected', 'nexus', 'c&p exam', 'dbq'],
-      datasets: ['resources', 'document_templates'],
+      datasets: ['resources', 'document_templates', 'hidden_benefits'],
       categoryHint: 'disability_compensation',
       weight: 3
     },
@@ -149,7 +165,7 @@
       weight: 3
     },
     {
-      keywords: ['education', 'gi bill', 'school', 'degree', 'college', 'training', 'voc rehab', 'vr&e', 'chapter 31', 'chapter 33', 'scholarship', 'grant'],
+      keywords: ['education', 'gi bill', 'school', 'degree', 'college', 'training', 'voc rehab', 'vr&e', 'chapter 31', 'chapter 33', 'scholarship', 'grant', 'grants and scholarships', 'tuition'],
       datasets: ['grants', 'resources', 'licensure'],
       categoryHint: 'education',
       weight: 3
@@ -162,13 +178,13 @@
     },
     {
       keywords: ['housing', 'home loan', 'va loan', 'mortgage', 'rent', 'homeless', 'hud-vash', 'ssvf', 'shelter'],
-      datasets: ['grants', 'resources', 'hotlines'],
+      datasets: ['grants', 'resources', 'hotlines', 'emergency_assistance', 'hidden_benefits'],
       categoryHint: 'housing',
       weight: 3
     },
     {
       keywords: ['crisis', 'suicide', 'emergency', 'hotline', '988', 'crisis line', 'distress'],
-      datasets: ['hotlines'],
+      datasets: ['hotlines', 'emergency_assistance'],
       categoryHint: 'crisis_support',
       weight: 5
     },
@@ -231,6 +247,18 @@
       datasets: ['medical_resources'],
       categoryHint: 'healthcare',
       weight: 2
+    },
+    {
+      keywords: ['hidden benefit', 'hidden veteran', 'overlooked benefit', 'unclaimed', 'missing benefit', 'benefits missing', 'benefits am i missing', 'benefit i', 'benefits i', 'other benefit', 'what else', 'am i getting everything', 'don\'t know about', 'clothing allowance', 'life insurance veteran', 'vmli', 'sdvi', 'vgli', 'tax exemption veteran', 'property tax exemption', 'national park pass', 'commissary access'],
+      datasets: ['hidden_benefits'],
+      categoryHint: null,
+      weight: 3
+    },
+    {
+      keywords: ['emergency assistance', 'emergency help', 'urgent help', 'financial emergency', 'financial crisis', 'financial distress', 'financial assist', 'need help now', 'can\'t pay rent', 'can\'t pay my', 'can\'t pay bills', 'can\'t afford', 'cant afford', 'lose my home', 'food bank', 'food pantry', 'food assistance', 'no food', 'hungry', 'groceries', 'utility shutoff', 'utility bill', 'shutoff notice', 'electric bill', 'gas bill', 'water bill', 'power shut', 'about to be evicted', 'homeless veteran', 'need help paying', 'need money for', 'nowhere to turn', 'desperate', 'behind on my', 'low on money', 'running out of money', 'help with utilities', 'help with bills', 'programs to help'],
+      datasets: ['emergency_assistance', 'hotlines'],
+      categoryHint: 'crisis_support',
+      weight: 5
     }
   ];
 

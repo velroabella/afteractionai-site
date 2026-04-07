@@ -8,64 +8,103 @@
   'use strict';
 
   // ── ISSUE TAXONOMY ────────────────────────────────────
-  // Maps keywords in user text to structured issue tags
+  // Maps keywords in user text to structured issue tags.
+  //
+  // PRIORITY TIERS — evaluated top-to-bottom, first match wins per tier.
+  // Tier 1 (CRITICAL): Crisis & emergency — must always route first
+  // Tier 2 (URGENT):   Financial distress & emergency assistance
+  // Tier 3 (DISCOVERY): Hidden/overlooked benefit detection
+  // Tier 4 (STANDARD):  All other specific issue patterns
+  //
+  // IMPORTANT: Order matters! Higher-priority patterns MUST come before
+  // lower-priority patterns that share overlapping keywords.
+  //
   var ISSUE_PATTERNS = [
-    // VA / Benefits
-    { pattern: /va\s*claim|disability\s*claim|file\s*(a\s*)?claim|service[\s-]connected/i, issue: 'va_claim', category: 'va_benefits' },
-    { pattern: /claim\s*denied|denied\s*claim|appeal|supplemental\s*claim|higher[\s-]level\s*review/i, issue: 'va_appeal', category: 'va_benefits' },
-    { pattern: /disability\s*rating|rating\s*(increase|decrease)|c\s*&?\s*p\s*exam|comp\s*and\s*pen/i, issue: 'va_rating', category: 'va_benefits' },
-    { pattern: /nexus\s*letter|medical\s*opinion|service[\s-]connection/i, issue: 'nexus', category: 'va_benefits' },
-    { pattern: /records?\s*request|dd[\s-]?214|service\s*records?|personnel\s*file/i, issue: 'records', category: 'va_benefits' },
-    { pattern: /va\s*health|va\s*hospital|va\s*clinic|enroll.*health/i, issue: 'va_healthcare', category: 'healthcare' },
-    { pattern: /gi\s*bill|education\s*benefit|tuition|school|college|training/i, issue: 'education', category: 'education' },
-    { pattern: /vr\s*&?\s*e|vocational\s*rehab|chapter\s*31/i, issue: 'voc_rehab', category: 'career' },
+
+    // ════ TIER 1: CRISIS — always evaluated first ═══════════
+    // NOTE: These use negation-aware matching. The detectIssues() function
+    // checks for negation words (not, no, don't, isn't, aren't, never)
+    // within 5 words before the trigger term and skips the match if found.
+    { pattern: /crisis|suicid|self[\s-]harm|not\s*safe/i, issue: 'mental_health_crisis', category: 'crisis', priority: 1, negationAware: true },
+    { pattern: /homeless|no\s*place\s*to\s*(stay|live)|on\s*the\s*street/i, issue: 'housing_crisis', category: 'crisis', priority: 1, negationAware: true },
+
+    // ════ TIER 2: EMERGENCY / FINANCIAL DISTRESS ════════════
+    // Context-specific compound patterns — must come BEFORE generic
+    // keywords like "pay", "rent", "money", "food"
+    { pattern: /can['\u2019]?t\s*(pay|afford)\s*(my\s*)?(rent|bills?|utilit|mortgage)|behind\s*on\s*(my\s*)?(rent|bills?|utilit|mortgage)/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /about\s*to\s*(be\s*)?(evict|lose\s*(my\s*)?home|foreclos)|might\s*lose\s*(my\s*)?home/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /utility\s*shutoff|shutoff\s*notice|power\s*(shut\s*off|disconnect|cut\s*off)|water\s*(shut\s*off|disconnect)|(electric|gas|water)\s*(bill|shutoff|disconnect|shut\s*off)|help\s*with\s*(my\s*)?(utilit|electric|gas|water)/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /food\s*(bank|pantry|assist|stamp|insecur)|no\s*food|hungry|can['\u2019]?t\s*(afford|buy)\s*(food|groceries)|groceries/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /emergency\s*(assist|help|fund|aid|financ|money|relief)/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /urgent\s*(help|need|assist)|need\s*help\s*(now|immediate|today|right\s*now)/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /need\s+.*help\s+.*paying|need\s*help\s*paying|need\s*money\s*for\s*(rent|food|bills?|utilit)/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /financial\s*(crisis|emergency|distress|trouble|desperate)/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /nowhere\s*to\s*(turn|go)|don['\u2019]?t\s*know\s*what\s*to\s*do|desperate/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /low\s*on\s*money|running\s*(low\s*on|out\s*of)\s*money|programs?\s*to\s*help\s*with\s*(utilit|bills?|rent|electric|gas|water)/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+    { pattern: /financial\s*assist/i, issue: 'emergency_aid', category: 'crisis', priority: 2 },
+
+    // ════ TIER 3: BENEFIT DISCOVERY ═════════════════════════
+    { pattern: /hidden\s*(veteran\s*)?benefit|overlooked\s*benefit|unclaimed\s*benefit|missing\s*benefit/i, issue: 'hidden_benefit', category: 'va_benefits', priority: 3 },
+    { pattern: /what\s*(benefits?|am\s*i)\s*(am\s*i\s*)?missing|benefits?\s*(i\s*)?don['\u2019]?t\s*(i\s*)?know|benefits?\s*(that\s*)?i\s*(don['\u2019]?t|should)\s*know/i, issue: 'hidden_benefit', category: 'va_benefits', priority: 3 },
+    { pattern: /am\s*i\s*getting\s*everything|other\s*benefits?|what\s*else\s*(is|can|am)\s*(available|i\s*(eligible|entitled))/i, issue: 'hidden_benefit', category: 'va_benefits', priority: 3 },
+    { pattern: /clothing\s*allowance|vmli|sdvi|vgli\s*conver|commissary\s*access|national\s*park\s*pass/i, issue: 'hidden_benefit', category: 'va_benefits', priority: 3 },
+
+    // ════ TIER 4: STANDARD PATTERNS ═════════════════════════
+
+    // VA / Benefits — va_appeal BEFORE va_claim so "claim denied" matches appeal first
+    { pattern: /claim\s*(was\s*|got\s*)?denied|denied\s*claim|appeal|supplemental\s*claim|higher[\s-]level\s*review/i, issue: 'va_appeal', category: 'va_benefits', priority: 4 },
+    { pattern: /va\s*claim|disability\s*claim|file\s*(a\s*)?claim|service[\s-]connected/i, issue: 'va_claim', category: 'va_benefits', priority: 4 },
+    { pattern: /disability\s*rating|rating\s*(increase|decrease)|c\s*&?\s*p\s*exam|comp\s*and\s*pen/i, issue: 'va_rating', category: 'va_benefits', priority: 4 },
+    { pattern: /nexus\s*letter|medical\s*opinion|service[\s-]connection/i, issue: 'nexus', category: 'va_benefits', priority: 4 },
+    { pattern: /records?\s*request|dd[\s-]?214|service\s*records?|personnel\s*file/i, issue: 'records', category: 'va_benefits', priority: 4 },
+    { pattern: /ptsd|mental\s*health|tbi|anxiety|depression|therapy|counseling/i, issue: 'mental_health', category: 'healthcare', priority: 4 },
+    { pattern: /va\s*health|va\s*hospital|va\s*clinic|enroll.*health/i, issue: 'va_healthcare', category: 'healthcare', priority: 4 },
+    { pattern: /gi\s*bill|education\s*benefit|tuition|school|college|training|grant|scholarship/i, issue: 'education', category: 'education', priority: 4 },
+    { pattern: /vr\s*&?\s*e|vocational\s*rehab|chapter\s*31/i, issue: 'voc_rehab', category: 'career', priority: 4 },
 
     // Career / Employment
-    { pattern: /resume|civilian\s*job|job\s*search|career|employment|hire|interview/i, issue: 'career', category: 'career' },
-    { pattern: /linkedin|networking|professional\s*profile/i, issue: 'linkedin', category: 'career' },
-    { pattern: /federal\s*(resume|job)|usajobs|government\s*job/i, issue: 'federal_career', category: 'career' },
-    { pattern: /business|startup|entrepreneur|self[\s-]employ/i, issue: 'business', category: 'business' },
-    { pattern: /salary|negotiat|compensation|pay/i, issue: 'salary', category: 'career' },
-    { pattern: /licens|certificat|credential/i, issue: 'licensing', category: 'licensing' },
+    { pattern: /resume|civilian\s*job|job\s*search|\bjob\b|career|employment|hire|interview/i, issue: 'career', category: 'career', priority: 4 },
+    { pattern: /linkedin|networking|professional\s*profile/i, issue: 'linkedin', category: 'career', priority: 4 },
+    { pattern: /federal\s*(resume|job)|usajobs|government\s*job/i, issue: 'federal_career', category: 'career', priority: 4 },
+    { pattern: /business|startup|entrepreneur|self[\s-]employ/i, issue: 'business', category: 'business', priority: 4 },
+    { pattern: /salary|negotiat|how\s*much\s*(do\s*i\s*)?(get\s*)?paid|pay\s*(raise|increase|grade|scale|band)/i, issue: 'salary', category: 'career', priority: 4 },
+    { pattern: /licens|certificat|credential/i, issue: 'licensing', category: 'licensing', priority: 4 },
 
-    // Financial
-    { pattern: /debt|creditor|collection|hardship|behind\s*on\s*payment/i, issue: 'debt', category: 'financial' },
-    { pattern: /credit\s*(report|score|dispute|bureau)/i, issue: 'credit', category: 'financial' },
-    { pattern: /budget|financ|money|saving|income/i, issue: 'budget', category: 'financial' },
-    { pattern: /va\s*loan|home\s*loan|mortgage|buy\s*(a\s*)?home/i, issue: 'va_loan', category: 'housing' },
-    { pattern: /rent|apartment|lease|landlord|housing/i, issue: 'rental', category: 'housing' },
-    { pattern: /property\s*tax/i, issue: 'property_tax', category: 'property_tax' },
+    // Financial (non-emergency)
+    { pattern: /debt|creditor|collection|hardship|behind\s*on\s*payment/i, issue: 'debt', category: 'financial', priority: 4 },
+    { pattern: /credit\s*(report|score|dispute|bureau)/i, issue: 'credit', category: 'financial', priority: 4 },
+    { pattern: /budget|financ|money\s*(manage|plan|save)|saving|income/i, issue: 'budget', category: 'financial', priority: 4 },
+    { pattern: /va\s*loan|home\s*loan|mortgage|buy\s*(a\s*)?home/i, issue: 'va_loan', category: 'housing', priority: 4 },
+    { pattern: /rent|apartment|lease|landlord|housing/i, issue: 'rental', category: 'housing', priority: 4 },
+    { pattern: /property\s*tax/i, issue: 'property_tax', category: 'property_tax', priority: 4 },
+    { pattern: /state\s*(veteran|vet)\s*benefit/i, issue: 'state_benefits', category: 'state_benefits', priority: 4 },
 
-    // Legal / Life Planning
-    { pattern: /will|testament|estate\s*plan/i, issue: 'will', category: 'legal' },
-    { pattern: /power\s*of\s*attorney|poa/i, issue: 'poa', category: 'legal' },
-    { pattern: /living\s*will|advance\s*directive|end[\s-]of[\s-]life/i, issue: 'living_will', category: 'legal' },
-    { pattern: /hipaa|medical\s*record\s*release|health\s*information/i, issue: 'hipaa', category: 'legal' },
-    { pattern: /emergency\s*(contact|plan|preparedness)/i, issue: 'emergency', category: 'legal' },
-    { pattern: /burial|funeral|cemetery|memorial/i, issue: 'burial', category: 'burial' },
-    { pattern: /dependent|spouse|survivor|family\s*care/i, issue: 'dependent', category: 'dependent' },
+    // Legal / Life Planning — living_will BEFORE will so "living will" matches specific first
+    { pattern: /living\s*will|advance\s*directive|end[\s-]of[\s-]life/i, issue: 'living_will', category: 'legal', priority: 4 },
+    { pattern: /\b(last\s*)?will\s*(and\s*testament)?(?=\s|$)|testament|estate\s*plan/i, issue: 'will', category: 'legal', priority: 4 },
+    { pattern: /power\s*of\s*attorney|poa/i, issue: 'poa', category: 'legal', priority: 4 },
+    { pattern: /hipaa|medical\s*record\s*release|health\s*information/i, issue: 'hipaa', category: 'legal', priority: 4 },
+    { pattern: /emergency\s*(contact|plan|preparedness)/i, issue: 'emergency', category: 'legal', priority: 4 },
+    { pattern: /burial|funeral|cemetery|memorial/i, issue: 'burial', category: 'burial', priority: 4 },
+    { pattern: /dependent|spouse|survivor|family\s*(care|support|resource|benefit)/i, issue: 'dependent', category: 'dependent', priority: 4 },
 
     // Discounts / Savings
-    { pattern: /discount|coupon|deal|promo|save\s*money|savings|military\s*(rate|price|offer)/i, issue: 'discount', category: 'financial' },
+    { pattern: /discount|coupon|deal|promo|save\s*money|savings|military\s*(rate|price|offer)/i, issue: 'discount', category: 'financial', priority: 4 },
 
     // Service Dogs
-    { pattern: /service\s*dog|therapy\s*dog|canine\s*(assist|compan)|emotional\s*support\s*animal/i, issue: 'service_dog', category: 'healthcare' },
+    { pattern: /service\s*dog|therapy\s*dog|canine\s*(assist|compan)|emotional\s*support\s*animal/i, issue: 'service_dog', category: 'healthcare', priority: 4 },
 
     // Wellness & Fitness
-    { pattern: /wellness|fitness\s*program|adaptive\s*sport|equine\s*therapy|yoga|meditation|surf\s*therapy|outdoor\s*therapy|veteran\s*(recreation|fitness)/i, issue: 'wellness', category: 'healthcare' },
+    { pattern: /wellness|fitness\s*program|adaptive\s*sport|equine\s*therapy|yoga|meditation|surf\s*therapy|outdoor\s*therapy|veteran\s*(recreation|fitness)/i, issue: 'wellness', category: 'healthcare', priority: 4 },
 
     // Advocacy / Elected Officials
-    { pattern: /congressman|senator|representat|elected\s*official|legislat|congress|veteran.*committee/i, issue: 'advocacy', category: 'legal' },
+    { pattern: /congressman|senator|representat|elected\s*official|legislat|congress|veteran.*committee/i, issue: 'advocacy', category: 'legal', priority: 4 },
 
     // Medical Treatment / Alternative Therapy
-    { pattern: /alternative\s*therap|psychedelic|ketamine|ibogaine|psilocybin|ayahuasca|holistic\s*treat|telehealth|brain\s*injury\s*treat/i, issue: 'medical_treatment', category: 'healthcare' },
+    { pattern: /alternative\s*therap|psychedelic|ketamine|ibogaine|psilocybin|ayahuasca|holistic\s*treat|telehealth|brain\s*injury\s*treat/i, issue: 'medical_treatment', category: 'healthcare', priority: 4 },
 
     // Transition
-    { pattern: /transition|separati|ets|getting\s*out|leaving\s*(the\s*)?military/i, issue: 'transition', category: 'transition' },
-
-    // Crisis (handled separately but tagged for routing)
-    { pattern: /homeless|no\s*place\s*to\s*(stay|live)|on\s*the\s*street/i, issue: 'housing_crisis', category: 'crisis' },
-    { pattern: /crisis|suicid|self[\s-]harm|not\s*safe/i, issue: 'mental_health_crisis', category: 'crisis' }
+    { pattern: /transition|separati|ets\b|getting\s*out|got\s*out\s*(of\s*)?(the\s*)?military|leaving\s*(the\s*)?military|left\s*(the\s*)?military/i, issue: 'transition', category: 'transition', priority: 4 }
   ];
 
   // ── TEMPLATE RECOMMENDATIONS ──────────────────────────
@@ -77,6 +116,7 @@
     va_rating:    { flow: ['va-claim-personal-statement', 'nexus-letter-prep'], engine: ['va_claim'] },
     nexus:        { flow: ['nexus-letter-prep', 'va-claim-personal-statement'], engine: ['va_claim'] },
     records:      { flow: ['records-request-letter'], engine: [] },
+    mental_health:{ flow: ['benefits-eligibility-summary'], engine: [] },
     va_healthcare:{ flow: ['benefits-eligibility-summary'], engine: [] },
     education:    { flow: ['benefits-eligibility-summary'], engine: [] },
     voc_rehab:    { flow: ['benefits-eligibility-summary', 'resume-builder'], engine: [] },
@@ -105,6 +145,9 @@
     wellness:             { flow: [], engine: [] },
     advocacy:             { flow: [], engine: [] },
     medical_treatment:    { flow: ['benefits-eligibility-summary'], engine: [] },
+    state_benefits:       { flow: ['benefits-eligibility-summary'], engine: [] },
+    hidden_benefit:       { flow: ['benefits-eligibility-summary'], engine: [] },
+    emergency_aid:        { flow: ['personal-emergency-action-plan', 'budget-financial-recovery-plan'], engine: ['emergency_action'] },
     housing_crisis:       { flow: ['personal-emergency-action-plan'], engine: ['emergency_action'] },
     mental_health_crisis: { flow: ['personal-emergency-action-plan', 'emergency-contact-family-care-plan'], engine: ['emergency_action'] }
   };
@@ -117,6 +160,7 @@
     va_rating:    [{ page: 'hotlines-escalation.html', label: 'VA Hotlines' }],
     nexus:        [{ page: 'hotlines-escalation.html', label: 'VA Hotlines' }],
     records:      [{ page: 'document-templates.html', label: 'Document Templates' }],
+    mental_health:[{ page: 'medical-help.html', label: 'Mental Health Resources' }, { page: 'wellness.html', label: 'Wellness & Fitness' }, { page: 'hotlines-escalation.html', label: 'VA Hotlines' }],
     va_healthcare:[{ page: 'medical-help.html', label: 'VA Healthcare' }, { page: 'state-benefits.html', label: 'State Health Benefits', filter: 'healthcare' }, { page: 'wellness.html', label: 'Wellness & Fitness' }],
     education:    [{ page: 'education.html', label: 'Education Benefits' }, { page: 'state-benefits.html', label: 'State Education Benefits', filter: 'education' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
     voc_rehab:    [{ page: 'education.html', label: 'Education Benefits' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
@@ -126,9 +170,9 @@
     business:     [{ page: 'resources.html', label: 'Entrepreneurship Resources', filter: 'entrepreneurship' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     salary:       [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     licensing:    [{ page: 'licensure.html', label: 'Licensure & Certifications' }, { page: 'state-benefits.html', label: 'State Licensing Benefits', filter: 'licensing' }],
-    debt:         [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
+    debt:         [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'emergency-assistance.html', label: 'Emergency Assistance' }],
     credit:       [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }],
-    budget:       [{ page: 'resources.html', label: 'Financial Resources', filter: 'benefits' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
+    budget:       [{ page: 'resources.html', label: 'Financial Resources', filter: 'benefits' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }],
     va_loan:      [{ page: 'grants-scholarships.html', label: 'Housing Grants' }, { page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
     rental:       [{ page: 'resources.html', label: 'Housing Resources', filter: 'housing' }, { page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
     property_tax: [{ page: 'state-benefits.html', label: 'Property Tax Benefits', filter: 'property_tax' }],
@@ -136,16 +180,19 @@
     poa:          [{ page: 'document-templates.html', label: 'Legal Templates' }],
     living_will:  [{ page: 'document-templates.html', label: 'Legal Templates' }],
     hipaa:        [{ page: 'document-templates.html', label: 'Legal Templates' }],
-    emergency:    [{ page: 'hotlines-escalation.html', label: 'Emergency Hotlines' }],
+    emergency:    [{ page: 'hotlines-escalation.html', label: 'Emergency Hotlines' }, { page: 'emergency-assistance.html', label: 'Emergency Assistance' }],
     burial:       [{ page: 'state-benefits.html', label: 'State Burial Benefits', filter: 'burial' }],
     dependent:    [{ page: 'families-support.html', label: 'Family Support' }, { page: 'state-benefits.html', label: 'Spouse/Dependent Benefits', filter: 'dependent' }],
-    transition:   [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
+    transition:   [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }],
     discount:     [{ page: 'military-discounts.html', label: 'Military Discounts' }],
     service_dog:  [{ page: 'service-dogs.html', label: 'Service Dog Resources' }],
     wellness:     [{ page: 'wellness.html', label: 'Wellness & Fitness' }],
     advocacy:     [{ page: 'elected-officials.html', label: 'Elected Officials' }],
     medical_treatment: [{ page: 'medical-help.html', label: 'Medical & Treatment Resources' }, { page: 'wellness.html', label: 'Wellness Programs' }],
-    housing_crisis:[{ page: 'hotlines-escalation.html', label: 'Emergency Housing' }],
+    state_benefits: [{ page: 'state-benefits.html', label: 'State Benefits' }],
+    hidden_benefit: [{ page: 'hidden-benefits.html', label: 'Hidden Benefits' }, { page: 'state-benefits.html', label: 'State Benefits' }],
+    emergency_aid: [{ page: 'emergency-assistance.html', label: 'Emergency Assistance' }, { page: 'hotlines-escalation.html', label: 'Crisis Hotlines' }],
+    housing_crisis:[{ page: 'hotlines-escalation.html', label: 'Emergency Housing' }, { page: 'emergency-assistance.html', label: 'Emergency Assistance' }],
     mental_health_crisis: [{ page: 'hotlines-escalation.html', label: 'Crisis Hotlines' }]
   };
 
@@ -239,24 +286,71 @@
   // ── CORE ENGINE ───────────────────────────────────────
 
   /**
-   * Detect issues from free text (conversation, report, or user input)
+   * Detect issues from free text (conversation, report, or user input).
+   *
+   * PRIORITY LOGIC (v2):
+   *   1. ALL patterns are tested and scored (no longer first-match-only).
+   *   2. Results are sorted by priority tier (lower number = higher priority).
+   *   3. Within a tier, results maintain pattern order.
+   *   4. The PRIMARY issue (result[0]) drives the main routing; secondary
+   *      issues still populate template/resource recommendations.
+   *
    * @param {string} text - Text to analyze
-   * @returns {Array} - Array of {issue, category, confidence} objects
+   * @returns {Array} - Array of {issue, category, priority} objects,
+   *                     sorted by priority tier (ascending)
    */
+  // Negation words for negation-aware patterns
+  var NEGATION_RE = /\b(not|no|don['\u2019]?t|isn['\u2019]?t|aren['\u2019]?t|never|wasn['\u2019]?t|weren['\u2019]?t|am\s*not)\b/i;
+
+  /**
+   * Check if a pattern match is negated by a preceding negation word.
+   * Looks for negation words within 5 words before the match position.
+   * @param {string} text - Full input text
+   * @param {RegExp} pattern - The regex pattern that matched
+   * @returns {boolean} - true if the match is negated (should be skipped)
+   */
+  function isNegated(text, pattern) {
+    var match = pattern.exec(text);
+    if (!match) return false;
+
+    var matchStart = match.index;
+    // Get up to 50 chars before the match (covers ~5 words)
+    var prefix = text.substring(Math.max(0, matchStart - 50), matchStart);
+    // Split into words, take last 5
+    var words = prefix.trim().split(/\s+/).slice(-5);
+    var prefixStr = words.join(' ');
+
+    return NEGATION_RE.test(prefixStr);
+  }
+
   function detectIssues(text) {
     if (!text) return [];
     var found = [];
     var seen = {};
 
     ISSUE_PATTERNS.forEach(function(p) {
-      if (p.pattern.test(text) && !seen[p.issue]) {
-        seen[p.issue] = true;
-        found.push({
-          issue: p.issue,
-          category: p.category
-        });
+      if (!p.pattern.test(text) || seen[p.issue]) return;
+
+      // Negation-aware patterns: skip if preceded by negation words
+      if (p.negationAware) {
+        // Reset lastIndex for regex reuse
+        p.pattern.lastIndex = 0;
+        if (isNegated(text, new RegExp(p.pattern.source, p.pattern.flags))) {
+          return; // Negated — skip this match
+        }
       }
+
+      seen[p.issue] = true;
+      found.push({
+        issue: p.issue,
+        category: p.category,
+        priority: p.priority || 4
+      });
     });
+
+    // Sort by priority tier — crisis (1) surfaces first, then emergency (2),
+    // discovery (3), then standard (4). Preserves pattern order within tiers.
+    found.sort(function(a, b) { return a.priority - b.priority; });
 
     return found;
   }
