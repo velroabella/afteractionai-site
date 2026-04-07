@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>Partner Organizations & Resources — AfterAction AI</title>
-  <meta name="description" content="Discover partner organizations and veteran resources. VA.gov, VSOs, mental health support, employment help, and more." />
-  <meta name="keywords" content="veteran resources, VA benefits, VSO, veteran organizations, employment, housing, education" />
-  <meta property="og:title" content="Partner Organizations & Resources — AfterAction AI" />
-  <meta property="og:description" content="A comprehensive directory of veteran-focused organizations and resources." />
+  <title>Hidden Benefits — AfterAction AI</title>
+  <meta name="description" content="Discover overlooked veteran benefits most service members never claim. Federal, state, and lesser-known programs you may be eligible for." />
+  <meta name="keywords" content="hidden veteran benefits, unclaimed VA benefits, veteran tax exemptions, veteran insurance, veteran financial aid, overlooked military benefits" />
+  <meta property="og:title" content="Hidden Benefits — AfterAction AI" />
+  <meta property="og:description" content="Discover overlooked veteran benefits most service members never claim. Federal, state, and lesser-known programs you may be eligible for." />
   <meta property="og:type" content="website" />
-  <link rel="canonical" href="https://afteractionai.org/resources" />
+  <link rel="canonical" href="https://afteractionai.org/hidden-benefits" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -78,7 +78,7 @@
             <ul class="navbar__submenu-menu">
               <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
               <li><a href="state-benefits.html">State Benefits</a></li>
-              <li><a href="hidden-benefits.html">Hidden Benefits</a></li>
+              <li><a href="hidden-benefits.html" class="active">Hidden Benefits</a></li>
               <li><a href="financial-optimization.html">Financial Optimization</a></li>
               <li><a href="document-templates.html">Document Templates</a></li>
             </ul>
@@ -86,7 +86,7 @@
           <li class="navbar__submenu">
             <a href="#" class="navbar__submenu-label">Advocacy &amp; Network</a>
             <ul class="navbar__submenu-menu">
-              <li><a href="resources.html" class="active">Partner Organizations</a></li>
+              <li><a href="resources.html">Partner Organizations</a></li>
               <li><a href="elected-officials.html">Elected Officials</a></li>
               <li><a href="military-discounts.html">Military Discounts</a></li>
             </ul>
@@ -103,23 +103,23 @@
   </div>
 </nav>
 
-<!-- RESOURCES HERO -->
+<!-- HERO -->
 <section class="page-hero-bar" style="background-image: url('images/hero-resources.jpg');">
-  <h1 class="page-hero-bar__title">Partner Organizations & Resources</h1>
+  <h1 class="page-hero-bar__title">Hidden Benefits</h1>
   <div class="page-hero-bar__divider"></div>
-  <p class="page-hero-bar__subtitle">Trusted veteran organizations, benefits navigators, and support services.</p>
+  <p class="page-hero-bar__subtitle">Overlooked and underused benefits most veterans never claim. Federal, state, and lesser-known programs you may be eligible for.</p>
 </section>
 
 <!-- QUICK ACCESS BAR -->
 <div class="rp-quickaccess">
   <div class="rp-quickaccess__inner">
-    <button class="rp-qa-btn" onclick="rsClearAll()">All Resources</button>
-    <button class="rp-qa-btn" onclick="rsApplyQA('category','employment')">Employment</button>
-    <button class="rp-qa-btn" onclick="rsApplyQA('category','education')">Education</button>
-    <button class="rp-qa-btn" onclick="rsApplyQA('category','benefits')">Benefits</button>
-    <button class="rp-qa-btn" onclick="rsApplyQA('category','medical')">Medical</button>
-    <button class="rp-qa-btn" onclick="rsApplyQA('category','community')">Community</button>
-    <button class="rp-qa-btn" onclick="rsApplyQA('cost','free')">Free Only</button>
+    <button class="rp-qa-btn" onclick="hbClearAll()">All Benefits</button>
+    <button class="rp-qa-btn" onclick="hbApplyQA('category','federal_healthcare')">Healthcare</button>
+    <button class="rp-qa-btn" onclick="hbApplyQA('category','federal_financial')">Financial</button>
+    <button class="rp-qa-btn" onclick="hbApplyQA('category','federal_insurance')">Insurance</button>
+    <button class="rp-qa-btn" onclick="hbApplyQA('category','federal_education')">Education</button>
+    <button class="rp-qa-btn" onclick="hbApplyQA('category','federal_tax')">Tax Benefits</button>
+    <button class="rp-qa-btn" onclick="hbApplyQA('category','recreation')">Recreation</button>
   </div>
 </div>
 
@@ -130,116 +130,119 @@
   <aside class="mh-sidebar">
     <div class="mh-sidebar-header">
       <span>Filters</span>
-      <button class="mh-clear-btn" onclick="rsClearAll()">Clear all</button>
+      <button class="mh-clear-btn" onclick="hbClearAll()">Clear all</button>
     </div>
 
-    <input type="text" class="mh-search-input" id="rsSearch"
-           placeholder="Search resources..." oninput="rsApplyFilters()" />
+    <input type="text" class="mh-search-input" id="hbSearch"
+           placeholder="Search benefits..." oninput="hbApplyFilters()" />
 
     <!-- Category -->
     <div class="mh-filter-group">
       <div class="mh-filter-group-label">Category</div>
       <div class="mh-filter-pills">
-        <button class="mh-pill" data-filter="category" data-value="employment" onclick="rsTogglePill(this)">Employment</button>
-        <button class="mh-pill" data-filter="category" data-value="education" onclick="rsTogglePill(this)">Education</button>
-        <button class="mh-pill" data-filter="category" data-value="benefits" onclick="rsTogglePill(this)">Benefits</button>
-        <button class="mh-pill" data-filter="category" data-value="medical" onclick="rsTogglePill(this)">Medical</button>
-        <button class="mh-pill" data-filter="category" data-value="equipment" onclick="rsTogglePill(this)">Equipment</button>
-        <button class="mh-pill" data-filter="category" data-value="entrepreneurship" onclick="rsTogglePill(this)">Entrepreneurship</button>
-        <button class="mh-pill" data-filter="category" data-value="housing" onclick="rsTogglePill(this)">Housing</button>
-        <button class="mh-pill" data-filter="category" data-value="discounts" onclick="rsTogglePill(this)">Discounts</button>
-        <button class="mh-pill" data-filter="category" data-value="community" onclick="rsTogglePill(this)">Community</button>
-        <button class="mh-pill" data-filter="category" data-value="legal" onclick="rsTogglePill(this)">Legal</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_compensation" onclick="hbTogglePill(this)">Compensation</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_insurance" onclick="hbTogglePill(this)">Insurance</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_healthcare" onclick="hbTogglePill(this)">Healthcare</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_tax" onclick="hbTogglePill(this)">Tax (Federal)</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_financial" onclick="hbTogglePill(this)">Financial</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_education" onclick="hbTogglePill(this)">Education</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_employment" onclick="hbTogglePill(this)">Employment</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_housing" onclick="hbTogglePill(this)">Housing</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_survivor" onclick="hbTogglePill(this)">Survivor</button>
+        <button class="mh-pill" data-filter="category" data-value="state_tax" onclick="hbTogglePill(this)">Tax (State)</button>
+        <button class="mh-pill" data-filter="category" data-value="state_bonus" onclick="hbTogglePill(this)">State Bonus</button>
+        <button class="mh-pill" data-filter="category" data-value="state_vehicle" onclick="hbTogglePill(this)">Vehicle</button>
+        <button class="mh-pill" data-filter="category" data-value="recreation" onclick="hbTogglePill(this)">Recreation</button>
       </div>
     </div>
 
     <!-- Source Type -->
     <div class="mh-filter-group">
-      <div class="mh-filter-group-label">Source Type</div>
+      <div class="mh-filter-group-label">Source Level</div>
       <div class="mh-filter-pills">
-        <button class="mh-pill" data-filter="sourceType" data-value="Government" onclick="rsTogglePill(this)">Government</button>
-        <button class="mh-pill" data-filter="sourceType" data-value="Nonprofit" onclick="rsTogglePill(this)">Nonprofit</button>
-        <button class="mh-pill" data-filter="sourceType" data-value="Civilian Company" onclick="rsTogglePill(this)">Civilian Company</button>
-        <button class="mh-pill" data-filter="sourceType" data-value="SOF Organization" onclick="rsTogglePill(this)">SOF Organization</button>
-        <button class="mh-pill" data-filter="sourceType" data-value="Professional Association" onclick="rsTogglePill(this)">Professional Assoc.</button>
+        <button class="mh-pill" data-filter="sourceType" data-value="federal" onclick="hbTogglePill(this)">Federal</button>
+        <button class="mh-pill" data-filter="sourceType" data-value="state" onclick="hbTogglePill(this)">State</button>
       </div>
     </div>
 
-    <!-- Cost -->
+    <!-- Verification -->
     <div class="mh-filter-group">
-      <div class="mh-filter-group-label">Cost</div>
+      <div class="mh-filter-group-label">Verification</div>
       <div class="mh-filter-pills">
-        <button class="mh-pill" data-filter="cost" data-value="free" onclick="rsTogglePill(this)">Free</button>
+        <button class="mh-pill" data-filter="confidence" data-value="verified" onclick="hbTogglePill(this)">Verified</button>
       </div>
     </div>
 
-    <div class="mh-result-count" id="rsResultCount"></div>
+    <div class="mh-result-count" id="hbResultCount"></div>
   </aside>
 
   <!-- MAIN CONTENT -->
   <main class="mh-main">
     <div class="mh-toolbar">
-      <select class="mh-sort-select" id="rsSort" onchange="rsApplyFilters()">
+      <select class="mh-sort-select" id="hbSort" onchange="hbApplyFilters()">
         <option value="default">Sort: A–Z by Name</option>
         <option value="category">Sort: By Category</option>
-        <option value="sourceType">Sort: By Source Type</option>
+        <option value="sourceType">Sort: By Source Level</option>
       </select>
     </div>
 
-    <div class="mh-grid" id="rsGrid"></div>
+    <div class="mh-grid" id="hbGrid"></div>
 
-    <div class="mh-empty" id="rsEmpty" style="display:none;">
-      <div class="rp-empty__icon">🔍</div>
-      <p>No resources match your current filters. Try adjusting the category or source type.</p>
-      <button class="mh-clear-btn" onclick="rsClearAll()">Clear Filters</button>
+    <div class="mh-empty" id="hbEmpty" style="display:none;">
+      <div class="rp-empty__icon">&#128269;</div>
+      <p>No benefits match your current filters. Try adjusting the category or source level.</p>
+      <button class="mh-clear-btn" onclick="hbClearAll()">Clear Filters</button>
     </div>
 
-    <div class="mh-load-more" id="rsLoadMore" style="display:none;">
-      <button class="mh-load-more-btn" onclick="rsLoadMore()">Load More Resources</button>
+    <div class="mh-load-more" id="hbLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="hbLoadMore()">Load More Benefits</button>
     </div>
 
-    <!-- ADD YOUR ORGANIZATION CTA -->
-    <div class="resources-cta" id="submit-org">
-      <h3 class="resources-cta__title">Know a Veteran Organization We Should Include?</h3>
-      <p class="resources-cta__text">We're building a comprehensive directory for the veteran community. If you know an organization making a difference, submit it below and we'll review it for inclusion.</p>
-      <button class="resources-cta__button" onclick="rsToggleSubmissionForm()">Add Your Organization</button>
+    <!-- SUBMIT A BENEFIT CTA -->
+    <div class="resources-cta" id="submit-benefit">
+      <h3 class="resources-cta__title">Know a Hidden Benefit We Should Include?</h3>
+      <p class="resources-cta__text">We verify every benefit before adding it. If you know of an overlooked veteran benefit, submit it below and we'll research it.</p>
+      <button class="resources-cta__button" onclick="hbToggleSubmissionForm()">Submit a Benefit</button>
     </div>
 
     <!-- SUBMISSION FORM -->
-    <form class="submission-form" id="submissionForm">
+    <form class="submission-form" id="hbSubmissionForm">
       <div class="form-group">
-        <label for="orgName">Organization Name</label>
-        <input type="text" id="orgName" name="orgName" required />
+        <label for="hbBenefitName">Benefit Name</label>
+        <input type="text" id="hbBenefitName" name="hbBenefitName" required />
       </div>
       <div class="form-group">
-        <label for="orgWebsite">Website</label>
-        <input type="url" id="orgWebsite" name="orgWebsite" placeholder="https://..." required />
+        <label for="hbBenefitWebsite">Source / Website URL</label>
+        <input type="url" id="hbBenefitWebsite" name="hbBenefitWebsite" placeholder="https://..." required />
       </div>
       <div class="form-group">
-        <label for="orgDescription">Description</label>
-        <textarea id="orgDescription" name="orgDescription" placeholder="What does this organization do?" required></textarea>
+        <label for="hbBenefitDetails">Benefit Details</label>
+        <textarea id="hbBenefitDetails" name="hbBenefitDetails" placeholder="What is the benefit? Who is eligible? Why is it overlooked?" required></textarea>
       </div>
       <div class="form-group">
-        <label for="orgEmail">Your Email</label>
-        <input type="email" id="orgEmail" name="orgEmail" required />
+        <label for="hbBenefitEmail">Your Email</label>
+        <input type="email" id="hbBenefitEmail" name="hbBenefitEmail" required />
       </div>
       <div class="form-group">
-        <label for="orgCategory">Category (select all that apply)</label>
-        <select id="orgCategory" name="orgCategory" required>
+        <label for="hbBenefitCategory">Category</label>
+        <select id="hbBenefitCategory" name="hbBenefitCategory" required>
           <option value="">-- Select Category --</option>
-          <option value="employment">Employment</option>
-          <option value="education">Education</option>
-          <option value="benefits">Benefits</option>
-          <option value="medical">Medical</option>
-          <option value="equipment">Equipment</option>
-          <option value="entrepreneurship">Entrepreneurship</option>
-          <option value="housing">Housing</option>
-          <option value="discounts">Discounts</option>
-          <option value="community">Community</option>
-          <option value="legal">Legal</option>
+          <option value="federal_compensation">Compensation</option>
+          <option value="federal_insurance">Insurance</option>
+          <option value="federal_healthcare">Healthcare</option>
+          <option value="federal_tax">Tax (Federal)</option>
+          <option value="federal_financial">Financial</option>
+          <option value="federal_education">Education</option>
+          <option value="federal_employment">Employment</option>
+          <option value="federal_housing">Housing</option>
+          <option value="federal_survivor">Survivor</option>
+          <option value="state_tax">Tax (State)</option>
+          <option value="state_bonus">State Bonus</option>
+          <option value="state_vehicle">Vehicle</option>
+          <option value="recreation">Recreation</option>
         </select>
       </div>
-      <button type="submit" class="form-group__submit">Submit Organization</button>
+      <button type="submit" class="form-group__submit">Submit Benefit</button>
     </form>
   </main>
 
@@ -270,6 +273,9 @@
         <div class="footer__section">
           <h3>Resource Hub</h3>
           <a href="elected-officials.html">Elected Officials</a>
+          <a href="military-discounts.html">Military Discounts</a>
+          <a href="hidden-benefits.html">Hidden Benefits</a>
+          <a href="emergency-assistance.html">Emergency Assistance</a>
           <a href="licensure.html">Licensure & Certifications</a>
           <a href="grants-scholarships.html">Grants & Scholarships</a>
           <a href="hotlines-escalation.html">Hotlines & Escalation</a>
@@ -286,7 +292,6 @@
         </div>
         <div class="footer__section">
           <h3>Connect</h3>
-          <!-- Social media links hidden until accounts are created -->
         </div>
       </div>
       <div class="footer__nonprofit">
@@ -301,12 +306,12 @@
 
 <script>
 // ── State ──────────────────────────────────────────────────
-var RS_PAGE_SIZE = 24;
-var rsAllResources = [];
-var rsFilteredResources = [];
-var rsVisibleCount = 0;
+var HB_PAGE_SIZE = 24;
+var hbAllBenefits = [];
+var hbFilteredBenefits = [];
+var hbVisibleCount = 0;
 
-var rsFilters = { search: '', category: new Set(), sourceType: new Set(), cost: new Set() };
+var hbFilters = { search: '', category: new Set(), sourceType: new Set(), confidence: new Set() };
 
 // ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
@@ -319,133 +324,144 @@ function esc(s) {
 }
 
 // ── Category display names & color mapping ────────────────
-var RS_CATEGORY_META = {
-  employment:       { label: 'Employment',       color: 'employment' },
-  education:        { label: 'Education',        color: 'education' },
-  benefits:         { label: 'Benefits',         color: 'benefits' },
-  medical:          { label: 'Medical',          color: 'medical' },
-  equipment:        { label: 'Equipment',        color: 'equipment' },
-  entrepreneurship: { label: 'Entrepreneurship', color: 'entrepreneurship' },
-  housing:          { label: 'Housing',          color: 'housing' },
-  discounts:        { label: 'Discounts',        color: 'discounts' },
-  community:        { label: 'Community',        color: 'community' },
-  legal:            { label: 'Legal',            color: 'legal' }
+var HB_CATEGORY_META = {
+  federal_compensation: { label: 'Compensation',  color: 'benefits' },
+  federal_insurance:    { label: 'Insurance',      color: 'legal' },
+  federal_healthcare:   { label: 'Healthcare',     color: 'medical' },
+  federal_tax:          { label: 'Tax (Federal)',   color: 'employment' },
+  federal_financial:    { label: 'Financial',       color: 'housing' },
+  federal_education:    { label: 'Education',       color: 'education' },
+  federal_employment:   { label: 'Employment',      color: 'entrepreneurship' },
+  federal_housing:      { label: 'Housing',         color: 'housing' },
+  federal_survivor:     { label: 'Survivor',        color: 'community' },
+  state_tax:            { label: 'Tax (State)',      color: 'equipment' },
+  state_bonus:          { label: 'State Bonus',      color: 'discounts' },
+  state_vehicle:        { label: 'Vehicle',          color: 'equipment' },
+  recreation:           { label: 'Recreation',       color: 'community' }
 };
 
-// ── Source type icons ─────────────────────────────────────
-var RS_SOURCE_ICONS = {
-  'Government': '&#9733;',
-  'Nonprofit': '&#9825;',
-  'Civilian Company': '&#9670;',
-  'SOF Organization': '&#9733;',
-  'Professional Association': '&#9733;'
+// ── Source level icons ───────────────────────────────────
+var HB_SOURCE_ICONS = {
+  'federal': '&#9733;',
+  'state':   '&#9670;'
 };
 
 // ── Pills (Set-based multi-select) ────────────────────────
-function rsTogglePill(btn) {
+function hbTogglePill(btn) {
   var dim = btn.getAttribute('data-filter');
   var val = btn.getAttribute('data-value');
   btn.classList.toggle('active');
-  if (rsFilters[dim].has(val)) {
-    rsFilters[dim].delete(val);
+  if (hbFilters[dim].has(val)) {
+    hbFilters[dim].delete(val);
   } else {
-    rsFilters[dim].add(val);
+    hbFilters[dim].add(val);
   }
-  rsApplyFilters();
+  hbApplyFilters();
 }
 
 // ── Quick Access ──────────────────────────────────────────
-function rsApplyQA(dim, val) {
-  rsFilters[dim].clear();
+function hbApplyQA(dim, val) {
+  hbFilters[dim].clear();
   document.querySelectorAll('.mh-pill[data-filter="' + dim + '"]').forEach(function(b) { b.classList.remove('active'); });
   var pill = document.querySelector('.mh-pill[data-filter="' + dim + '"][data-value="' + val + '"]');
   if (pill) {
     pill.classList.add('active');
-    rsFilters[dim].add(val);
+    hbFilters[dim].add(val);
   }
-  rsApplyFilters();
+  hbApplyFilters();
 }
 
 // ── Clear All ─────────────────────────────────────────────
-function rsClearAll() {
-  rsFilters.search = '';
-  rsFilters.category.clear();
-  rsFilters.sourceType.clear();
-  rsFilters.cost.clear();
-  document.getElementById('rsSearch').value = '';
-  document.getElementById('rsSort').value = 'default';
+function hbClearAll() {
+  hbFilters.search = '';
+  hbFilters.category.clear();
+  hbFilters.sourceType.clear();
+  hbFilters.confidence.clear();
+  document.getElementById('hbSearch').value = '';
+  document.getElementById('hbSort').value = 'default';
   document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
-  rsApplyFilters();
+  hbApplyFilters();
 }
 
 // ── Filter + Sort ─────────────────────────────────────────
-function rsApplyFilters() {
-  rsFilters.search = (document.getElementById('rsSearch').value || '').toLowerCase();
-  var q = rsFilters.search;
-  var hasCategory = rsFilters.category.size > 0;
-  var hasSourceType = rsFilters.sourceType.size > 0;
-  var hasCost = rsFilters.cost.size > 0;
+function hbApplyFilters() {
+  hbFilters.search = (document.getElementById('hbSearch').value || '').toLowerCase();
+  var q = hbFilters.search;
+  var hasCategory = hbFilters.category.size > 0;
+  var hasSourceType = hbFilters.sourceType.size > 0;
+  var hasConfidence = hbFilters.confidence.size > 0;
 
-  rsFilteredResources = rsAllResources.filter(function(r) {
-    if (hasCategory && !rsFilters.category.has(r.category)) return false;
-    if (hasSourceType && !rsFilters.sourceType.has(r.sourceType)) return false;
-    if (hasCost && rsFilters.cost.has('free')) {
-      if ((r.cost || '').toLowerCase().indexOf('free') === -1) return false;
+  hbFilteredBenefits = hbAllBenefits.filter(function(r) {
+    if (hasCategory && !hbFilters.category.has(r.category)) return false;
+    if (hasSourceType && !hbFilters.sourceType.has(r.source_type)) return false;
+    if (hasConfidence && hbFilters.confidence.has('verified')) {
+      if (r.verification !== 'verified') return false;
     }
     if (q) {
-      var hay = [r.name, r.description, r.eligibility, r.category, r.sourceType, r.cost].join(' ').toLowerCase();
+      var hay = [r.name, r.description, r.eligibility, r.category, r.source_type, r.why_missed, r.how_to_claim].join(' ').toLowerCase();
       if (hay.indexOf(q) === -1) return false;
     }
     return true;
   });
 
   // Sort
-  var sortVal = document.getElementById('rsSort').value;
+  var sortVal = document.getElementById('hbSort').value;
   if (sortVal === 'category') {
-    rsFilteredResources.sort(function(a, b) {
+    hbFilteredBenefits.sort(function(a, b) {
       var c = (a.category || '').localeCompare(b.category || '');
       return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
     });
   } else if (sortVal === 'sourceType') {
-    rsFilteredResources.sort(function(a, b) {
-      var c = (a.sourceType || '').localeCompare(b.sourceType || '');
+    hbFilteredBenefits.sort(function(a, b) {
+      var c = (a.source_type || '').localeCompare(b.source_type || '');
       return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
     });
   } else {
-    // Default: A-Z by name
-    rsFilteredResources.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
+    hbFilteredBenefits.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
   }
 
-  rsVisibleCount = 0;
-  document.getElementById('rsGrid').innerHTML = '';
-  rsLoadMore();
-  rsUpdateCount();
+  hbVisibleCount = 0;
+  document.getElementById('hbGrid').innerHTML = '';
+  hbLoadMore();
+  hbUpdateCount();
 }
 
 // ── Card renderer ─────────────────────────────────────────
-function rsRenderCard(r) {
-  var meta = RS_CATEGORY_META[r.category] || { label: r.category, color: '' };
-  var sourceIcon = RS_SOURCE_ICONS[r.sourceType] || '';
-  var sourceHTML = r.sourceType
-    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Source</span><span class="resource-card__meta-value">' + sourceIcon + ' ' + esc(r.sourceType) + '</span></div>'
+function hbRenderCard(r) {
+  var meta = HB_CATEGORY_META[r.category] || { label: r.category, color: '' };
+  var sourceIcon = HB_SOURCE_ICONS[r.source_type] || '';
+  var sourceLabel = r.source_type === 'federal' ? 'Federal' : r.source_type === 'state' ? 'State' : esc(r.source_type);
+  var sourceHTML = r.source_type
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Source</span><span class="resource-card__meta-value">' + sourceIcon + ' ' + sourceLabel + '</span></div>'
+    : '';
+  var valueHTML = r.annual_value
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Value</span><span class="resource-card__meta-value" style="color:#48bb78;font-weight:600;">' + esc(r.annual_value) + '</span></div>'
+    : '';
+  var whyHTML = r.why_missed
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Why Missed</span><span class="resource-card__meta-value" style="font-style:italic;">' + esc(r.why_missed) + '</span></div>'
+    : '';
+  var howHTML = r.how_to_claim
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">How to Claim</span><span class="resource-card__meta-value">' + esc(r.how_to_claim) + '</span></div>'
+    : '';
+  var verifiedBadge = r.verification === 'verified'
+    ? ' <span style="display:inline-block;font-size:0.65rem;padding:2px 6px;border-radius:4px;background:rgba(72,187,120,0.15);color:#48bb78;font-weight:600;vertical-align:middle;">VERIFIED</span>'
     : '';
   var linkHTML = r.website
-    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">Visit Website &#8599;</a>'
+    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">Learn More &#8599;</a>'
     : '';
 
   return '<div class="resource-card aa-card" data-category="' + esc(r.category) + '">' +
     '<span class="resource-card__category" data-color="' + esc(meta.color) + '">' + esc(meta.label) + '</span>' +
-    '<h3 class="resource-card__name">' + esc(r.name) + '</h3>' +
+    '<h3 class="resource-card__name">' + esc(r.name) + verifiedBadge + '</h3>' +
     '<p class="resource-card__description">' + esc(r.description) + '</p>' +
     '<div class="resource-card__meta">' +
       '<div class="resource-card__meta-row">' +
         '<span class="resource-card__meta-label">Eligibility</span>' +
-        '<span class="resource-card__meta-value">' + esc(r.eligibility || 'See website for details') + '</span>' +
+        '<span class="resource-card__meta-value">' + esc(r.eligibility || 'See details for eligibility requirements') + '</span>' +
       '</div>' +
-      '<div class="resource-card__meta-row">' +
-        '<span class="resource-card__meta-label">Cost</span>' +
-        '<span class="resource-card__meta-value">' + esc(r.cost || 'Unknown') + '</span>' +
-      '</div>' +
+      valueHTML +
+      whyHTML +
+      howHTML +
       sourceHTML +
     '</div>' +
     linkHTML +
@@ -453,75 +469,73 @@ function rsRenderCard(r) {
 }
 
 // ── Load More ─────────────────────────────────────────────
-function rsLoadMore() {
-  var grid = document.getElementById('rsGrid');
-  var batch = rsFilteredResources.slice(rsVisibleCount, rsVisibleCount + RS_PAGE_SIZE);
-  batch.forEach(function(r) { grid.insertAdjacentHTML('beforeend', rsRenderCard(r)); });
-  rsVisibleCount += batch.length;
-  document.getElementById('rsLoadMore').style.display = rsVisibleCount < rsFilteredResources.length ? '' : 'none';
-  document.getElementById('rsEmpty').style.display = rsFilteredResources.length === 0 ? 'block' : 'none';
+function hbLoadMore() {
+  var grid = document.getElementById('hbGrid');
+  var batch = hbFilteredBenefits.slice(hbVisibleCount, hbVisibleCount + HB_PAGE_SIZE);
+  batch.forEach(function(r) { grid.insertAdjacentHTML('beforeend', hbRenderCard(r)); });
+  hbVisibleCount += batch.length;
+  document.getElementById('hbLoadMore').style.display = hbVisibleCount < hbFilteredBenefits.length ? '' : 'none';
+  document.getElementById('hbEmpty').style.display = hbFilteredBenefits.length === 0 ? 'block' : 'none';
 }
 
-function rsUpdateCount() {
-  var el = document.getElementById('rsResultCount');
-  el.textContent = rsFilteredResources.length === rsAllResources.length
-    ? 'Showing all ' + rsAllResources.length + ' partner organizations'
-    : 'Showing ' + rsFilteredResources.length + ' of ' + rsAllResources.length + ' organizations';
+function hbUpdateCount() {
+  var el = document.getElementById('hbResultCount');
+  el.textContent = hbFilteredBenefits.length === hbAllBenefits.length
+    ? 'Showing all ' + hbAllBenefits.length + ' hidden benefits'
+    : 'Showing ' + hbFilteredBenefits.length + ' of ' + hbAllBenefits.length + ' benefits';
 }
 
 // ── Submission form ───────────────────────────────────────
-function rsToggleSubmissionForm() {
-  var form = document.getElementById('submissionForm');
+function hbToggleSubmissionForm() {
+  var form = document.getElementById('hbSubmissionForm');
   form.classList.toggle('visible');
   if (form.classList.contains('visible')) {
     form.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }
 }
 
-document.getElementById('submissionForm').addEventListener('submit', function(e) {
+document.getElementById('hbSubmissionForm').addEventListener('submit', function(e) {
   e.preventDefault();
   var submission = {
-    name: document.getElementById('orgName').value,
-    website: document.getElementById('orgWebsite').value,
-    description: document.getElementById('orgDescription').value,
-    email: document.getElementById('orgEmail').value,
-    category: document.getElementById('orgCategory').value,
+    name: document.getElementById('hbBenefitName').value,
+    website: document.getElementById('hbBenefitWebsite').value,
+    details: document.getElementById('hbBenefitDetails').value,
+    email: document.getElementById('hbBenefitEmail').value,
+    category: document.getElementById('hbBenefitCategory').value,
     timestamp: new Date().toISOString()
   };
-  var submissions = JSON.parse(localStorage.getItem('orgSubmissions') || '[]');
+  var submissions = JSON.parse(localStorage.getItem('hiddenBenefitSubmissions') || '[]');
   submissions.push(submission);
-  localStorage.setItem('orgSubmissions', JSON.stringify(submissions));
-  alert('Thank you! Your submission has been received. We will review it within 5 business days.');
+  localStorage.setItem('hiddenBenefitSubmissions', JSON.stringify(submissions));
+  alert('Thank you! Your submission has been received. We will verify and research this benefit.');
   this.reset();
-  rsToggleSubmissionForm();
+  hbToggleSubmissionForm();
 });
 
-// ── URL param pre-filter (linked from profile/dashboard) ─
-function rsParseUrlFilters() {
+// ── URL param pre-filter ─────────────────────────────────
+function hbParseUrlFilters() {
   var params = new URLSearchParams(window.location.search);
   var cat = params.get('category');
   if (cat) {
     cat.split(',').forEach(function(c) {
       var v = c.trim().toLowerCase();
-      if (v && RS_CATEGORY_META[v]) {
-        rsFilters.category.add(v);
-        // Activate matching sidebar pill
+      if (v && HB_CATEGORY_META[v]) {
+        hbFilters.category.add(v);
         var pill = document.querySelector('.mh-pill[data-filter="category"][data-value="' + v + '"]');
         if (pill) pill.classList.add('active');
       }
     });
   }
-  // Show context banner if URL filters were applied
-  if (rsFilters.category.size > 0) {
+  if (hbFilters.category.size > 0) {
     var labels = [];
-    rsFilters.category.forEach(function(c) {
-      if (RS_CATEGORY_META[c]) labels.push(RS_CATEGORY_META[c].label);
+    hbFilters.category.forEach(function(c) {
+      if (HB_CATEGORY_META[c]) labels.push(HB_CATEGORY_META[c].label);
     });
     var banner = document.createElement('div');
-    banner.id = 'rsFilterBanner';
+    banner.id = 'hbFilterBanner';
     banner.className = 'rs-filter-banner';
-    banner.innerHTML = '<span>Showing resources for: <strong>' + labels.join(', ') + '</strong></span>' +
-      '<button onclick="rsClearAll();var b=document.getElementById(\'rsFilterBanner\');if(b)b.remove();history.replaceState(null,\'\',location.pathname);" ' +
+    banner.innerHTML = '<span>Showing benefits for: <strong>' + labels.join(', ') + '</strong></span>' +
+      '<button onclick="hbClearAll();var b=document.getElementById(\'hbFilterBanner\');if(b)b.remove();history.replaceState(null,\'\',location.pathname);" ' +
       'style="background:none;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem;margin-left:12px;">Clear Filter</button>';
     var hero = document.querySelector('.page-hero-bar');
     if (hero && hero.nextElementSibling) {
@@ -531,17 +545,17 @@ function rsParseUrlFilters() {
 }
 
 // ── Init (external JSON) ─────────────────────────────────
-rsParseUrlFilters();
-fetch('data/resources.json')
+hbParseUrlFilters();
+fetch('data/hidden-benefits.json')
   .then(function(r) { return r.json(); })
   .then(function(data) {
-    rsAllResources = Array.isArray(data) ? data : [];
-    rsApplyFilters();
+    hbAllBenefits = Array.isArray(data) ? data : [];
+    hbApplyFilters();
   })
   .catch(function(err) {
-    console.error('Error loading resources:', err);
-    document.getElementById('rsGrid').innerHTML =
-      '<div class="mh-empty"><p>Error loading resources. Please try again later.</p></div>';
+    console.error('Error loading hidden benefits:', err);
+    document.getElementById('hbGrid').innerHTML =
+      '<div class="mh-empty"><p>Error loading hidden benefits. Please try again later.</p></div>';
   });
 </script>
 

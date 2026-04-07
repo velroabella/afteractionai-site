@@ -141,6 +141,22 @@
       descField: 'description',
       catField:  'category',
       extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    transition_resources: {
+      path: 'data/transition-resources.json',
+      page: 'transition-guide.html',
+      nameField: 'name',
+      descField: 'description',
+      catField:  'category',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    financial_resources: {
+      path: 'data/financial-resources.json',
+      page: 'financial-optimization.html',
+      nameField: 'name',
+      descField: 'description',
+      catField:  'category',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
     }
   };
 
@@ -251,6 +267,19 @@
     {
       keywords: ['hidden benefit', 'hidden veteran', 'overlooked benefit', 'unclaimed', 'missing benefit', 'benefits missing', 'benefits am i missing', 'benefit i', 'benefits i', 'other benefit', 'what else', 'am i getting everything', 'don\'t know about', 'clothing allowance', 'life insurance veteran', 'vmli', 'sdvi', 'vgli', 'tax exemption veteran', 'property tax exemption', 'national park pass', 'commissary access'],
       datasets: ['hidden_benefits'],
+      categoryHint: null,
+      weight: 3
+    },
+    {
+    {
+      keywords: ['transition', 'transitioning', 'getting out', 'got out', 'leaving military', 'left military', 'separating', 'separation', 'ets', 'civilian life', 'after the military', 'after military', 'next steps', 'post military', 'post-military', 'dd-214', 'dd214', 'skillbridge', 'tap program'],
+      datasets: ['transition_resources', 'resources', 'licensure', 'grants'],
+      categoryHint: 'employment',
+      weight: 3
+    },
+    {
+      keywords: ['financial optimization', 'save money', 'saving money', 'financial position', 'financial health', 'maximize benefits', 'money management', 'budgeting', 'budget plan', 'income strategy', 'tax savings', 'tax exemption', 'property tax', 'financial planning', 'debt management', 'win financially'],
+      datasets: ['financial_resources', 'military_discounts', 'hidden_benefits', 'state_benefits'],
       categoryHint: null,
       weight: 3
     },

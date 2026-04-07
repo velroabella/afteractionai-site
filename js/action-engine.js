@@ -70,6 +70,9 @@
     { pattern: /salary|negotiat|how\s*much\s*(do\s*i\s*)?(get\s*)?paid|pay\s*(raise|increase|grade|scale|band)/i, issue: 'salary', category: 'career', priority: 4 },
     { pattern: /licens|certificat|credential/i, issue: 'licensing', category: 'licensing', priority: 4 },
 
+    // Financial Optimization — BEFORE budget/discount so "save money veteran" matches here first
+    { pattern: /financial\s*(optimization|position|health)|maximize\s*(my\s*)?(va\s*)?benefits|save\s*money\s*(as\s*a\s*)?veteran|win\s*financially|money\s*after\s*(the\s*)?military|improve\s*(my\s*)?financial/i, issue: 'financial_optimization', category: 'financial', priority: 4 },
+
     // Financial (non-emergency)
     { pattern: /debt|creditor|collection|hardship|behind\s*on\s*payment/i, issue: 'debt', category: 'financial', priority: 4 },
     { pattern: /credit\s*(report|score|dispute|bureau)/i, issue: 'credit', category: 'financial', priority: 4 },
@@ -104,7 +107,7 @@
     { pattern: /alternative\s*therap|psychedelic|ketamine|ibogaine|psilocybin|ayahuasca|holistic\s*treat|telehealth|brain\s*injury\s*treat/i, issue: 'medical_treatment', category: 'healthcare', priority: 4 },
 
     // Transition
-    { pattern: /transition|separati|ets\b|getting\s*out|got\s*out\s*(of\s*)?(the\s*)?military|leaving\s*(the\s*)?military|left\s*(the\s*)?military/i, issue: 'transition', category: 'transition', priority: 4 }
+    { pattern: /transition|separati|ets\b|getting\s*out|got\s*out\s*(of\s*)?(the\s*)?military|leaving\s*(the\s*)?military|left\s*(the\s*)?military|after\s*(the\s*)?military|civilian\s*life|post[\s-]military|what\s*do\s*i\s*do\s*after|skillbridge/i, issue: 'transition', category: 'transition', priority: 4 }
   ];
 
   // ── TEMPLATE RECOMMENDATIONS ──────────────────────────
@@ -145,6 +148,7 @@
     wellness:             { flow: [], engine: [] },
     advocacy:             { flow: [], engine: [] },
     medical_treatment:    { flow: ['benefits-eligibility-summary'], engine: [] },
+    financial_optimization: { flow: ['budget-financial-recovery-plan', 'benefits-eligibility-summary'], engine: ['financial_plan'] },
     state_benefits:       { flow: ['benefits-eligibility-summary'], engine: [] },
     hidden_benefit:       { flow: ['benefits-eligibility-summary'], engine: [] },
     emergency_aid:        { flow: ['personal-emergency-action-plan', 'budget-financial-recovery-plan'], engine: ['emergency_action'] },
@@ -170,9 +174,9 @@
     business:     [{ page: 'resources.html', label: 'Entrepreneurship Resources', filter: 'entrepreneurship' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     salary:       [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     licensing:    [{ page: 'licensure.html', label: 'Licensure & Certifications' }, { page: 'state-benefits.html', label: 'State Licensing Benefits', filter: 'licensing' }],
-    debt:         [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'emergency-assistance.html', label: 'Emergency Assistance' }],
+    debt:         [{ page: 'financial-optimization.html', label: 'Financial Optimization' }, { page: 'hotlines-escalation.html', label: 'Financial Hotlines' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'emergency-assistance.html', label: 'Emergency Assistance' }],
     credit:       [{ page: 'hotlines-escalation.html', label: 'Financial Hotlines' }],
-    budget:       [{ page: 'resources.html', label: 'Financial Resources', filter: 'benefits' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }],
+    budget:       [{ page: 'financial-optimization.html', label: 'Financial Optimization' }, { page: 'resources.html', label: 'Financial Resources', filter: 'benefits' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }],
     va_loan:      [{ page: 'grants-scholarships.html', label: 'Housing Grants' }, { page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
     rental:       [{ page: 'resources.html', label: 'Housing Resources', filter: 'housing' }, { page: 'state-benefits.html', label: 'State Housing Benefits', filter: 'housing' }],
     property_tax: [{ page: 'state-benefits.html', label: 'Property Tax Benefits', filter: 'property_tax' }],
@@ -183,12 +187,13 @@
     emergency:    [{ page: 'hotlines-escalation.html', label: 'Emergency Hotlines' }, { page: 'emergency-assistance.html', label: 'Emergency Assistance' }],
     burial:       [{ page: 'state-benefits.html', label: 'State Burial Benefits', filter: 'burial' }],
     dependent:    [{ page: 'families-support.html', label: 'Family Support' }, { page: 'state-benefits.html', label: 'Spouse/Dependent Benefits', filter: 'dependent' }],
-    transition:   [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }],
+    transition:   [{ page: 'transition-guide.html', label: 'Transition Guide' }, { page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }],
     discount:     [{ page: 'military-discounts.html', label: 'Military Discounts' }],
     service_dog:  [{ page: 'service-dogs.html', label: 'Service Dog Resources' }],
     wellness:     [{ page: 'wellness.html', label: 'Wellness & Fitness' }],
     advocacy:     [{ page: 'elected-officials.html', label: 'Elected Officials' }],
     medical_treatment: [{ page: 'medical-help.html', label: 'Medical & Treatment Resources' }, { page: 'wellness.html', label: 'Wellness Programs' }],
+    financial_optimization: [{ page: 'financial-optimization.html', label: 'Financial Optimization' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'state-benefits.html', label: 'State Benefits' }],
     state_benefits: [{ page: 'state-benefits.html', label: 'State Benefits' }],
     hidden_benefit: [{ page: 'hidden-benefits.html', label: 'Hidden Benefits' }, { page: 'state-benefits.html', label: 'State Benefits' }],
     emergency_aid: [{ page: 'emergency-assistance.html', label: 'Emergency Assistance' }, { page: 'hotlines-escalation.html', label: 'Crisis Hotlines' }],
@@ -351,6 +356,27 @@
     // Sort by priority tier — crisis (1) surfaces first, then emergency (2),
     // discovery (3), then standard (4). Preserves pattern order within tiers.
     found.sort(function(a, b) { return a.priority - b.priority; });
+
+    // Same-tier promotion: when transition-context language is present,
+    // promote 'transition' above 'career' within T4. This ensures queries
+    // like "post-military career options" route to transition as primary.
+    if (found.length > 1) {
+      var TRANSITION_CONTEXT = /post[\s-]military|after\s*(the\s*)?military|civilian\s*life|getting\s*out|got\s*out|leaving\s*(the\s*)?military|left\s*(the\s*)?military/i;
+      if (TRANSITION_CONTEXT.test(text)) {
+        var transIdx = -1;
+        var careerIdx = -1;
+        for (var ti = 0; ti < found.length; ti++) {
+          if (found[ti].issue === 'transition') transIdx = ti;
+          if (found[ti].issue === 'career') careerIdx = ti;
+        }
+        // Only promote if both exist AND same tier AND transition is currently after career
+        if (transIdx > careerIdx && careerIdx >= 0 &&
+            found[transIdx].priority === found[careerIdx].priority) {
+          var transItem = found.splice(transIdx, 1)[0];
+          found.splice(careerIdx, 0, transItem);
+        }
+      }
+    }
 
     return found;
   }

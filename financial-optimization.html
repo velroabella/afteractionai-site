@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Financial Optimization — AfterAction AI</title>
+  <meta name="description" content="Maximize your financial position using every benefit, savings program, and tool available to veterans. Discover income benefits, tax optimization, major savings, and emergency resources." />
+  <meta name="keywords" content="veteran financial benefits, VA disability compensation, tax savings, home loan, financial planning, debt reduction" />
+  <meta property="og:title" content="Financial Optimization — AfterAction AI" />
+  <meta property="og:description" content="Maximize your financial position using every benefit, savings program, and tool available to veterans." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/financial-optimization" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/resources-upgrade.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html" class="active">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Health &amp; Crisis</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+              <li><a href="service-dogs.html">Service Dogs</a></li>
+              <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+              <li><a href="wellness.html">Wellness &amp; Fitness</a></li>
+              <li><a href="emergency-assistance.html">Emergency Assistance</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Family &amp; Survivors</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="families-support.html">Families &amp; Survivors</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Career &amp; Education</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="education.html">Education</a></li>
+              <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+              <li><a href="licensure.html#va-approved">VA Approved Programs</a></li>
+              <li><a href="transition-guide.html">Transition Guide</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Benefits &amp; Financial Aid</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
+              <li><a href="state-benefits.html">State Benefits</a></li>
+              <li><a href="hidden-benefits.html">Hidden Benefits</a></li>
+              <li><a href="financial-optimization.html" class="active">Financial Optimization</a></li>
+              <li><a href="document-templates.html">Document Templates</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Advocacy &amp; Network</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="resources.html">Partner Organizations</a></li>
+              <li><a href="elected-officials.html">Elected Officials</a></li>
+              <li><a href="military-discounts.html">Military Discounts</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero-bar" style="background-image: url('images/hero-resources.jpg');">
+  <h1 class="page-hero-bar__title">Financial Optimization</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">Maximize your financial position using every benefit, savings program, and tool available to veterans.</p>
+</section>
+
+<!-- QUICK ACCESS BAR -->
+<div class="rp-quickaccess">
+  <div class="rp-quickaccess__inner">
+    <button class="rp-qa-btn" onclick="foClearAll()">All Resources</button>
+    <button class="rp-qa-btn" onclick="foApplyQA('section','income_benefits')">Income</button>
+    <button class="rp-qa-btn" onclick="foApplyQA('section','tax_optimization')">Taxes</button>
+    <button class="rp-qa-btn" onclick="foApplyQA('section','major_savings')">Major Savings</button>
+    <button class="rp-qa-btn" onclick="foApplyQA('section','everyday_savings')">Everyday</button>
+    <button class="rp-qa-btn" onclick="foApplyQA('section','safety_net')">Safety Net</button>
+    <button class="rp-qa-btn" onclick="foApplyQA('section','tools_templates')">Tools</button>
+  </div>
+</div>
+
+<!-- TWO-COLUMN LAYOUT -->
+<div class="mh-page-wrapper">
+
+  <!-- FILTER SIDEBAR -->
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <span>Filters</span>
+      <button class="mh-clear-btn" onclick="foClearAll()">Clear all</button>
+    </div>
+
+    <input type="text" class="mh-search-input" id="foSearch"
+           placeholder="Search resources..." oninput="foApplyFilters()" />
+
+    <!-- Category -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Category</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="category" data-value="va_benefits" onclick="foTogglePill(this)">VA Benefits</button>
+        <button class="mh-pill" data-filter="category" data-value="tax_savings" onclick="foTogglePill(this)">Tax Savings</button>
+        <button class="mh-pill" data-filter="category" data-value="housing" onclick="foTogglePill(this)">Housing</button>
+        <button class="mh-pill" data-filter="category" data-value="debt_reduction" onclick="foTogglePill(this)">Debt Reduction</button>
+        <button class="mh-pill" data-filter="category" data-value="education" onclick="foTogglePill(this)">Education</button>
+        <button class="mh-pill" data-filter="category" data-value="discounts" onclick="foTogglePill(this)">Discounts</button>
+        <button class="mh-pill" data-filter="category" data-value="recreation" onclick="foTogglePill(this)">Recreation</button>
+        <button class="mh-pill" data-filter="category" data-value="emergency" onclick="foTogglePill(this)">Emergency</button>
+        <button class="mh-pill" data-filter="category" data-value="grants" onclick="foTogglePill(this)">Grants</button>
+        <button class="mh-pill" data-filter="category" data-value="state_benefits" onclick="foTogglePill(this)">State Benefits</button>
+        <button class="mh-pill" data-filter="category" data-value="budgeting" onclick="foTogglePill(this)">Budgeting</button>
+        <button class="mh-pill" data-filter="category" data-value="insurance" onclick="foTogglePill(this)">Insurance</button>
+      </div>
+    </div>
+
+    <!-- Impact -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Impact</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="impact" data-value="critical" onclick="foTogglePill(this)">Critical</button>
+        <button class="mh-pill" data-filter="impact" data-value="high" onclick="foTogglePill(this)">High</button>
+        <button class="mh-pill" data-filter="impact" data-value="medium" onclick="foTogglePill(this)">Medium</button>
+        <button class="mh-pill" data-filter="impact" data-value="low" onclick="foTogglePill(this)">Low</button>
+      </div>
+    </div>
+
+    <div class="mh-result-count" id="foResultCount"></div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <select class="mh-sort-select" id="foSort" onchange="foApplyFilters()">
+        <option value="default">Sort: By Section</option>
+        <option value="name">Sort: A–Z by Name</option>
+        <option value="impact">Sort: By Impact (High to Low)</option>
+      </select>
+    </div>
+
+    <div class="mh-grid" id="foGrid"></div>
+
+    <div class="mh-empty" id="foEmpty" style="display:none;">
+      <div class="rp-empty__icon">&#128269;</div>
+      <p>No resources match your current filters. Try adjusting the category or impact level.</p>
+      <button class="mh-clear-btn" onclick="foClearAll()">Clear Filters</button>
+    </div>
+
+    <div class="mh-load-more" id="foLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="foLoadMore()">Load More Resources</button>
+    </div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section footer__section--nav">
+          <h3>Navigate</h3>
+          <div class="footer__nav-columns">
+            <div class="footer__nav-col">
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="board.html">Board</a>
+            </div>
+            <div class="footer__nav-col">
+              <a href="resources.html">Resources</a>
+              <a href="blog.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__section">
+          <h3>Resource Hub</h3>
+          <a href="elected-officials.html">Elected Officials</a>
+          <a href="military-discounts.html">Military Discounts</a>
+          <a href="licensure.html">Licensure & Certifications</a>
+          <a href="grants-scholarships.html">Grants & Scholarships</a>
+          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
+          <a href="state-benefits.html">State Benefits</a>
+          <a href="transition-guide.html">Transition Guide</a>
+          <a href="financial-optimization.html">Financial Optimization</a>
+          <a href="document-templates.html">Document Templates</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+        </div>
+      </div>
+      <div class="footer__nonprofit">
+        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// ── State ──────────────────────────────────────────────────
+var FO_PAGE_SIZE = 12;
+var foAllResources = [];
+var foFilteredResources = [];
+var foVisibleCount = 0;
+
+var foFilters = { search: '', category: new Set(), impact: new Set() };
+
+// ── Section metadata ───────────────────────────────────────
+var FO_SECTION_LABELS = {
+  income_benefits:   'Income & Benefits',
+  tax_optimization:  'Tax Optimization',
+  major_savings:     'Major Savings',
+  everyday_savings:  'Everyday Savings',
+  safety_net:        'Safety Net',
+  tools_templates:   'Tools & Templates'
+};
+
+var FO_SECTION_ORDER = [
+  'income_benefits',
+  'tax_optimization',
+  'major_savings',
+  'everyday_savings',
+  'safety_net',
+  'tools_templates'
+];
+
+// ── Category display names & color mapping ────────────────
+var FO_CATEGORY_META = {
+  va_benefits:   { label: 'VA Benefits',   color: 'benefits' },
+  tax_savings:   { label: 'Tax Savings',   color: 'legal' },
+  housing:       { label: 'Housing',       color: 'housing' },
+  debt_reduction:{ label: 'Debt Reduction',color: 'equipment' },
+  education:     { label: 'Education',     color: 'education' },
+  discounts:     { label: 'Discounts',     color: 'discounts' },
+  recreation:    { label: 'Recreation',    color: 'community' },
+  emergency:     { label: 'Emergency',     color: 'medical' },
+  grants:        { label: 'Grants',        color: 'entrepreneurship' },
+  state_benefits:{ label: 'State Benefits',color: 'benefits' },
+  budgeting:     { label: 'Budgeting',     color: 'employment' },
+  insurance:     { label: 'Insurance',     color: 'legal' }
+};
+
+// ── Impact color mapping ───────────────────────────────────
+var FO_IMPACT_COLORS = {
+  critical: { label: 'Critical', color: '#e53e3e' },
+  high:     { label: 'High',     color: '#dd6b20' },
+  medium:   { label: 'Medium',   color: '#3182ce' },
+  low:      { label: 'Low',      color: '#718096' }
+};
+
+// ── Nav ───────────────────────────────────────────────────
+function toggleMenu() {
+  document.getElementById('navMenu').classList.toggle('active');
+}
+
+// ── Escape (null-safe) ────────────────────────────────────
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ── Pills (Set-based multi-select) ────────────────────────
+function foTogglePill(btn) {
+  var dim = btn.getAttribute('data-filter');
+  var val = btn.getAttribute('data-value');
+  btn.classList.toggle('active');
+  if (foFilters[dim].has(val)) {
+    foFilters[dim].delete(val);
+  } else {
+    foFilters[dim].add(val);
+  }
+  foApplyFilters();
+}
+
+// ── Quick Access ──────────────────────────────────────────
+function foApplyQA(dim, val) {
+  foFilters[dim].clear();
+  document.querySelectorAll('.mh-pill[data-filter="' + dim + '"]').forEach(function(b) { b.classList.remove('active'); });
+  var pill = document.querySelector('.mh-pill[data-filter="' + dim + '"][data-value="' + val + '"]');
+  if (pill) {
+    pill.classList.add('active');
+    foFilters[dim].add(val);
+  }
+  foApplyFilters();
+}
+
+// ── Clear All ─────────────────────────────────────────────
+function foClearAll() {
+  foFilters.search = '';
+  foFilters.category.clear();
+  foFilters.impact.clear();
+  document.getElementById('foSearch').value = '';
+  document.getElementById('foSort').value = 'default';
+  document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
+  foApplyFilters();
+}
+
+// ── Filter + Sort ─────────────────────────────────────────
+function foApplyFilters() {
+  foFilters.search = (document.getElementById('foSearch').value || '').toLowerCase();
+  var q = foFilters.search;
+  var hasCategory = foFilters.category.size > 0;
+  var hasImpact = foFilters.impact.size > 0;
+
+  foFilteredResources = foAllResources.filter(function(r) {
+    if (hasCategory && !foFilters.category.has(r.category)) return false;
+    if (hasImpact && !foFilters.impact.has(r.impact)) return false;
+    if (q) {
+      var hay = [r.name, r.description, r.category, r.section].join(' ').toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+
+  // Sort
+  var sortVal = document.getElementById('foSort').value;
+  if (sortVal === 'name') {
+    foFilteredResources.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
+  } else if (sortVal === 'impact') {
+    var impactOrder = { critical: 0, high: 1, medium: 2, low: 3 };
+    foFilteredResources.sort(function(a, b) {
+      var ai = impactOrder[a.impact] || 999;
+      var bi = impactOrder[b.impact] || 999;
+      if (ai !== bi) return ai - bi;
+      return (a.name || '').localeCompare(b.name || '');
+    });
+  } else {
+    // Default: by section order, then by name
+    var sectionIdx = {};
+    FO_SECTION_ORDER.forEach(function(s, i) { sectionIdx[s] = i; });
+    foFilteredResources.sort(function(a, b) {
+      var sa = sectionIdx[a.section] || 999;
+      var sb = sectionIdx[b.section] || 999;
+      if (sa !== sb) return sa - sb;
+      return (a.name || '').localeCompare(b.name || '');
+    });
+  }
+
+  foVisibleCount = 0;
+  document.getElementById('foGrid').innerHTML = '';
+  foLoadMore();
+  foUpdateCount();
+}
+
+// ── Card renderer ─────────────────────────────────────────
+function foRenderCard(r) {
+  var meta = FO_CATEGORY_META[r.category] || { label: r.category, color: '' };
+  var impactMeta = FO_IMPACT_COLORS[r.impact] || { label: 'Unknown', color: '#718096' };
+
+  var impactBadge = '<span style="display:inline-block;font-size:0.65rem;padding:2px 6px;border-radius:4px;background:rgba(' +
+    hexToRgb(impactMeta.color).join(',') + ',0.15);color:' + impactMeta.color + ';font-weight:600;vertical-align:middle;">' +
+    esc(impactMeta.label.toUpperCase()) + '</span>';
+
+  var valueHTML = r.monthly_value
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Value</span><span class="resource-card__meta-value" style="color:#48bb78;font-weight:600;">' + esc(r.monthly_value) + '</span></div>'
+    : '';
+
+  var impactHTML = '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Impact</span><span class="resource-card__meta-value" style="color:' + impactMeta.color + ';font-weight:600;">' + esc(impactMeta.label) + '</span></div>';
+
+  var crossRefHTML = '';
+  if (r.cross_ref && r.cross_ref.dataset) {
+    var linkText = 'See ' + (r.cross_ref.dataset === 'hidden_benefits' ? 'Hidden Benefits' :
+                             r.cross_ref.dataset === 'military_discounts' ? 'Military Discounts' :
+                             r.cross_ref.dataset === 'resources' ? 'All Resources' :
+                             r.cross_ref.dataset === 'grants' ? 'Grants & Scholarships' :
+                             r.cross_ref.dataset === 'state_benefits' ? 'State Benefits' :
+                             r.cross_ref.dataset === 'document_templates' ? 'Document Templates' :
+                             r.cross_ref.dataset === 'emergency_assistance' ? 'Emergency Assistance' :
+                             'More Info');
+    var linkHref = r.cross_ref.dataset === 'hidden_benefits' ? 'hidden-benefits.html' :
+                   r.cross_ref.dataset === 'military_discounts' ? 'military-discounts.html' :
+                   r.cross_ref.dataset === 'resources' ? 'resources.html' :
+                   r.cross_ref.dataset === 'grants' ? 'grants-scholarships.html' :
+                   r.cross_ref.dataset === 'state_benefits' ? 'state-benefits.html' :
+                   r.cross_ref.dataset === 'document_templates' ? 'document-templates.html' :
+                   r.cross_ref.dataset === 'emergency_assistance' ? 'emergency-assistance.html' :
+                   '#';
+    if (r.cross_ref.id) {
+      linkHref += '#' + esc(r.cross_ref.id);
+    }
+    crossRefHTML = '<div class="resource-card__meta-row"><a href="' + linkHref + '" style="color:var(--gold,#d4a843);text-decoration:none;font-weight:500;">' + linkText + ' →</a></div>';
+  }
+
+  var linkHTML = r.website
+    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">Official Website &#8599;</a>'
+    : '';
+
+  return '<div class="resource-card aa-card" data-category="' + esc(r.category) + '" data-section="' + esc(r.section) + '" data-impact="' + esc(r.impact) + '">' +
+    '<span class="resource-card__category" data-color="' + esc(meta.color) + '">' + esc(meta.label) + '</span>' +
+    '<h3 class="resource-card__name">' + esc(r.name) + ' ' + impactBadge + '</h3>' +
+    '<p class="resource-card__description">' + esc(r.description) + '</p>' +
+    '<div class="resource-card__meta">' +
+      valueHTML +
+      impactHTML +
+      crossRefHTML +
+    '</div>' +
+    linkHTML +
+  '</div>';
+}
+
+// ── Helper: convert hex to RGB ─────────────────────────────
+function hexToRgb(hex) {
+  var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return result ? [
+    parseInt(result[1], 16),
+    parseInt(result[2], 16),
+    parseInt(result[3], 16)
+  ] : [113, 128, 150];
+}
+
+// ── Section renderer ───────────────────────────────────────
+function foRenderSection(sectionId, resources) {
+  var label = FO_SECTION_LABELS[sectionId] || sectionId;
+  var html = '<div class="mh-section-header" style="grid-column:1/-1;padding:24px 0 8px;border-bottom:2px solid rgba(212,168,67,0.3);margin-bottom:16px;">' +
+    '<h2 style="font-size:1.3rem;color:var(--gold,#d4a843);margin:0;font-weight:700;">' + esc(label) + '</h2>' +
+    '</div>';
+  resources.forEach(function(r) {
+    html += foRenderCard(r);
+  });
+  return html;
+}
+
+// ── Load More ─────────────────────────────────────────────
+function foLoadMore() {
+  var grid = document.getElementById('foGrid');
+  var sortVal = document.getElementById('foSort').value;
+
+  if (sortVal === 'default') {
+    // Group by section
+    var grouped = {};
+    FO_SECTION_ORDER.forEach(function(s) { grouped[s] = []; });
+    foFilteredResources.forEach(function(r) {
+      if (grouped[r.section]) grouped[r.section].push(r);
+    });
+
+    var sectionIndex = 0;
+    var cardsAdded = 0;
+    var needsMore = false;
+
+    for (var i = 0; i < FO_SECTION_ORDER.length; i++) {
+      var sectionId = FO_SECTION_ORDER[i];
+      var sectionResources = grouped[sectionId] || [];
+
+      if (sectionResources.length === 0) continue;
+
+      // Check if we've already added this section
+      var sectionHeader = grid.querySelector('[data-section-id="' + sectionId + '"]');
+      if (!sectionHeader) {
+        grid.insertAdjacentHTML('beforeend', foRenderSection(sectionId, sectionResources));
+        cardsAdded += sectionResources.length;
+      } else {
+        cardsAdded += sectionResources.length;
+      }
+    }
+
+    foVisibleCount = foFilteredResources.length;
+  } else {
+    // Non-grouped sort: standard load more
+    var batch = foFilteredResources.slice(foVisibleCount, foVisibleCount + FO_PAGE_SIZE);
+    batch.forEach(function(r) { grid.insertAdjacentHTML('beforeend', foRenderCard(r)); });
+    foVisibleCount += batch.length;
+    document.getElementById('foLoadMore').style.display = foVisibleCount < foFilteredResources.length ? '' : 'none';
+  }
+
+  document.getElementById('foEmpty').style.display = foFilteredResources.length === 0 ? 'block' : 'none';
+}
+
+function foUpdateCount() {
+  var el = document.getElementById('foResultCount');
+  el.textContent = foFilteredResources.length === foAllResources.length
+    ? 'Showing all ' + foAllResources.length + ' resources'
+    : 'Showing ' + foFilteredResources.length + ' of ' + foAllResources.length + ' resources';
+}
+
+// ── URL param pre-filter ─────────────────────────────────
+function foParseUrlFilters() {
+  var params = new URLSearchParams(window.location.search);
+  var sec = params.get('section');
+  if (sec && FO_SECTION_LABELS[sec]) {
+    setTimeout(function() {
+      var header = document.querySelector('.mh-section-header');
+      if (header) {
+        header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }, 200);
+  }
+}
+
+// ── Init (external JSON) ─────────────────────────────────
+foParseUrlFilters();
+fetch('data/financial-resources.json')
+  .then(function(r) { return r.json(); })
+  .then(function(data) {
+    foAllResources = Array.isArray(data) ? data : [];
+    foApplyFilters();
+  })
+  .catch(function(err) {
+    console.error('Error loading financial resources:', err);
+    document.getElementById('foGrid').innerHTML =
+      '<div class="mh-empty"><p>Error loading resources. Please try again later.</p></div>';
+  });
+</script>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/feedback-widget.js" defer></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>
