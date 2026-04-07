@@ -109,6 +109,22 @@
       descField: 'discount',
       catField:  'category',
       extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    elected_officials: {
+      path: 'data/elected-officials.json',
+      page: 'elected-officials.html',
+      nameField: 'full_name',
+      descField: 'title',
+      catField:  'chamber',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    medical_resources: {
+      path: 'data/medical-resources.json',
+      page: 'medical-help.html',
+      nameField: 'name',
+      descField: 'description',
+      catField:  'category_normalized',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
     }
   };
 
@@ -128,7 +144,7 @@
     },
     {
       keywords: ['healthcare', 'health care', 'va hospital', 'medical', 'enrollment', 'mental health', 'ptsd', 'tbi', 'therapy', 'counseling'],
-      datasets: ['hotlines', 'resources', 'wellness'],
+      datasets: ['hotlines', 'resources', 'wellness', 'medical_resources'],
       categoryHint: 'healthcare',
       weight: 3
     },
@@ -202,6 +218,18 @@
       keywords: ['discount', 'military discount', 'veteran discount', 'save money', 'savings', 'deals', 'offers', 'cheap', 'coupon', 'promo'],
       datasets: ['military_discounts'],
       categoryHint: null,
+      weight: 2
+    },
+    {
+      keywords: ['congressman', 'senator', 'representative', 'elected official', 'legislator', 'congress', 'advocate', 'veteran affairs committee'],
+      datasets: ['elected_officials'],
+      categoryHint: null,
+      weight: 2
+    },
+    {
+      keywords: ['treatment', 'alternative therapy', 'psychedelic', 'ketamine', 'ibogaine', 'psilocybin', 'ayahuasca', 'holistic', 'telehealth', 'brain injury treatment'],
+      datasets: ['medical_resources'],
+      categoryHint: 'healthcare',
       weight: 2
     }
   ];

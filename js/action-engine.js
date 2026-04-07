@@ -48,6 +48,18 @@
     // Discounts / Savings
     { pattern: /discount|coupon|deal|promo|save\s*money|savings|military\s*(rate|price|offer)/i, issue: 'discount', category: 'financial' },
 
+    // Service Dogs
+    { pattern: /service\s*dog|therapy\s*dog|canine\s*(assist|compan)|emotional\s*support\s*animal/i, issue: 'service_dog', category: 'healthcare' },
+
+    // Wellness & Fitness
+    { pattern: /wellness|fitness\s*program|adaptive\s*sport|equine\s*therapy|yoga|meditation|surf\s*therapy|outdoor\s*therapy|veteran\s*(recreation|fitness)/i, issue: 'wellness', category: 'healthcare' },
+
+    // Advocacy / Elected Officials
+    { pattern: /congressman|senator|representat|elected\s*official|legislat|congress|veteran.*committee/i, issue: 'advocacy', category: 'legal' },
+
+    // Medical Treatment / Alternative Therapy
+    { pattern: /alternative\s*therap|psychedelic|ketamine|ibogaine|psilocybin|ayahuasca|holistic\s*treat|telehealth|brain\s*injury\s*treat/i, issue: 'medical_treatment', category: 'healthcare' },
+
     // Transition
     { pattern: /transition|separati|ets|getting\s*out|leaving\s*(the\s*)?military/i, issue: 'transition', category: 'transition' },
 
@@ -88,6 +100,11 @@
     burial:       { flow: ['benefits-eligibility-summary'], engine: ['burial_preferences'] },
     dependent:    { flow: ['emergency-contact-family-care-plan'], engine: ['dependent_care'] },
     transition:   { flow: ['resume-builder', 'benefits-eligibility-summary', 'budget-financial-recovery-plan'], engine: ['transition_plan'] },
+    discount:             { flow: [], engine: [] },
+    service_dog:          { flow: [], engine: [] },
+    wellness:             { flow: [], engine: [] },
+    advocacy:             { flow: [], engine: [] },
+    medical_treatment:    { flow: ['benefits-eligibility-summary'], engine: [] },
     housing_crisis:       { flow: ['personal-emergency-action-plan'], engine: ['emergency_action'] },
     mental_health_crisis: { flow: ['personal-emergency-action-plan', 'emergency-contact-family-care-plan'], engine: ['emergency_action'] }
   };
@@ -100,7 +117,7 @@
     va_rating:    [{ page: 'hotlines-escalation.html', label: 'VA Hotlines' }],
     nexus:        [{ page: 'hotlines-escalation.html', label: 'VA Hotlines' }],
     records:      [{ page: 'document-templates.html', label: 'Document Templates' }],
-    va_healthcare:[{ page: 'medical-help.html', label: 'VA Healthcare' }, { page: 'state-benefits.html', label: 'State Health Benefits', filter: 'healthcare' }],
+    va_healthcare:[{ page: 'medical-help.html', label: 'VA Healthcare' }, { page: 'state-benefits.html', label: 'State Health Benefits', filter: 'healthcare' }, { page: 'wellness.html', label: 'Wellness & Fitness' }],
     education:    [{ page: 'education.html', label: 'Education Benefits' }, { page: 'state-benefits.html', label: 'State Education Benefits', filter: 'education' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
     voc_rehab:    [{ page: 'education.html', label: 'Education Benefits' }, { page: 'grants-scholarships.html', label: 'Grants & Scholarships' }],
     career:       [{ page: 'resources.html', label: 'Employment Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Employment Benefits', filter: 'employment' }, { page: 'licensure.html', label: 'Licensure & Certifications' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
@@ -124,6 +141,10 @@
     dependent:    [{ page: 'families-support.html', label: 'Family Support' }, { page: 'state-benefits.html', label: 'Spouse/Dependent Benefits', filter: 'dependent' }],
     transition:   [{ page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }, { page: 'military-discounts.html', label: 'Military Discounts' }],
     discount:     [{ page: 'military-discounts.html', label: 'Military Discounts' }],
+    service_dog:  [{ page: 'service-dogs.html', label: 'Service Dog Resources' }],
+    wellness:     [{ page: 'wellness.html', label: 'Wellness & Fitness' }],
+    advocacy:     [{ page: 'elected-officials.html', label: 'Elected Officials' }],
+    medical_treatment: [{ page: 'medical-help.html', label: 'Medical & Treatment Resources' }, { page: 'wellness.html', label: 'Wellness Programs' }],
     housing_crisis:[{ page: 'hotlines-escalation.html', label: 'Emergency Housing' }],
     mental_health_crisis: [{ page: 'hotlines-escalation.html', label: 'Crisis Hotlines' }]
   };
@@ -621,7 +642,7 @@
     'healthcare':   ['healthcare'],
     'education':    ['education'],
     'career':       ['employment', 'licensing'],
-    'business':     ['business'],
+    'business':     ['employment', 'education'],
     'financial':    ['property_tax', 'income_tax', 'vehicle'],
     'housing':      ['housing', 'property_tax'],
     'property_tax': ['property_tax'],
