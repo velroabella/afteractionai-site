@@ -110,7 +110,10 @@
     { pattern: /transition|separati|ets\b|getting\s*out|got\s*out\s*(of\s*)?(the\s*)?military|leaving\s*(the\s*)?military|left\s*(the\s*)?military|after\s*(the\s*)?military|civilian\s*life|post[\s-]military|what\s*do\s*i\s*do\s*after|skillbridge/i, issue: 'transition', category: 'transition', priority: 4 },
 
     // Outdoor Recreation
-    { pattern: /outdoor\s*(recreation|discount|program|benefit)|park\s*pass|national\s*park|state\s*park\s*(pass|discount|free)|hunting\s*license|fishing\s*license|camping\s*discount|ski\s*(resort|discount|pass|military)|veteran\s*(outdoor|recreation|hiking|camping)/i, issue: 'outdoor_recreation', category: 'recreation', priority: 4 }
+    { pattern: /outdoor\s*(recreation|discount|program|benefit)|park\s*pass|national\s*park|state\s*park\s*(pass|discount|free)|hunting\s*license|fishing\s*license|camping\s*discount|ski\s*(resort|discount|pass|military)|veteran\s*(outdoor|recreation|hiking|camping)/i, issue: 'outdoor_recreation', category: 'recreation', priority: 4 },
+
+    // Contractor Careers
+    { pattern: /contractor|defense\s*contract|security\s*clearance|cleared\s*(job|position|professional)|dod\s*8(140|570)|lockheed|raytheon|northrop|booz\s*allen|intelligence\s*career|skillbridge\s*employer/i, issue: 'contractor_career', category: 'employment', priority: 4 }
   ];
 
   // ── TEMPLATE RECOMMENDATIONS ──────────────────────────
@@ -148,6 +151,7 @@
     transition:   { flow: ['resume-builder', 'benefits-eligibility-summary', 'budget-financial-recovery-plan'], engine: ['transition_plan'] },
     discount:             { flow: [], engine: [] },
     outdoor_recreation:   { flow: [], engine: [] },
+    contractor_career:    { flow: ['resume-builder'], engine: ['career'] },
     service_dog:          { flow: [], engine: [] },
     wellness:             { flow: [], engine: [] },
     advocacy:             { flow: [], engine: [] },
@@ -194,6 +198,7 @@
     transition:   [{ page: 'transition-guide.html', label: 'Transition Guide' }, { page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }],
     discount:     [{ page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'outdoor-recreation.html', label: 'Outdoor Discounts' }],
     outdoor_recreation: [{ page: 'outdoor-recreation.html', label: 'Outdoor Recreation & Discounts' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Recreation Benefits', filter: 'recreation' }, { page: 'wellness.html', label: 'Wellness & Fitness' }],
+    contractor_career: [{ page: 'contractor-careers.html', label: 'Defense Contractor Careers' }, { page: 'resources.html', label: 'Employment Resources', filter: 'employment' }, { page: 'licensure.html', label: 'Certifications & Licensing' }, { page: 'transition-guide.html', label: 'Transition Guide' }, { page: 'education.html', label: 'Education & Training' }],
     service_dog:  [{ page: 'service-dogs.html', label: 'Service Dog Resources' }],
     wellness:     [{ page: 'wellness.html', label: 'Wellness & Fitness' }],
     advocacy:     [{ page: 'elected-officials.html', label: 'Elected Officials' }],

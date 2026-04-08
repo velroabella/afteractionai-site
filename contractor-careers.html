@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Contractor Careers — AfterAction AI</title>
+  <meta name="description" content="Defense contractor careers, cleared job boards, SkillBridge employers, DoD certifications, and career fairs for military veterans transitioning to the defense industry." />
+  <meta name="keywords" content="defense contractor jobs, cleared jobs, security clearance careers, veteran employment, SkillBridge, military transition, DoD 8140, contractor hiring" />
+  <meta property="og:title" content="Contractor Careers — AfterAction AI" />
+  <meta property="og:description" content="Defense contractor careers, cleared job boards, SkillBridge employers, and certification roadmaps for military veterans." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/contractor-careers" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/resources-upgrade.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html" class="active">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Health &amp; Crisis</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+              <li><a href="service-dogs.html">Service Dogs</a></li>
+              <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+              <li><a href="emergency-assistance.html">Emergency Assistance</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Family &amp; Survivors</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="families-support.html">Families &amp; Survivors</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Career &amp; Education</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="education.html">Education</a></li>
+              <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+              <li><a href="licensure.html#va-approved">VA Approved Programs</a></li>
+              <li><a href="transition-guide.html">Transition Guide</a></li>
+              <li><a href="contractor-careers.html" class="active">Contractor Careers</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Benefits &amp; Financial Aid</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
+              <li><a href="state-benefits.html">State Benefits</a></li>
+              <li><a href="hidden-benefits.html">Hidden Benefits</a></li>
+              <li><a href="financial-optimization.html">Financial Optimization</a></li>
+              <li><a href="document-templates.html">Document Templates</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Lifestyle &amp; Recreation</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="outdoor-recreation.html">Outdoor Recreation</a></li>
+              <li><a href="military-discounts.html">Military Discounts</a></li>
+              <li><a href="wellness.html">Wellness &amp; Fitness</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Advocacy &amp; Network</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="resources.html">Partner Organizations</a></li>
+              <li><a href="elected-officials.html">Elected Officials</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero-bar" style="background-image: url('images/hero-resources.jpg');">
+  <h1 class="page-hero-bar__title">Contractor Careers</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">Leverage your clearance, military training, and mission experience for high-paying defense contractor careers. Browse 20+ employers, cleared job boards, certification roadmaps, and career fairs.</p>
+</section>
+
+<!-- SECTION 1: EXECUTION PANEL -->
+<div class="resources-cta" id="ccExecutionPanel" style="margin:0 auto;max-width:1200px;padding:32px 24px;">
+  <h3 class="resources-cta__title" style="margin-bottom:8px;">Find Your Contractor Career Path</h3>
+  <p class="resources-cta__text" style="margin-bottom:20px;">Answer a few quick questions and we'll match you with your top 5 opportunities — employers, certifications, and job boards.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px;">
+    <div>
+      <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;">Do you currently hold or recently hold a clearance?</label>
+      <select id="ccExClearance" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:var(--bg-card,#1a1a2e);color:var(--text-primary,#e0e0e0);font-size:0.95rem;">
+        <option value="">-- Select --</option>
+        <option value="none">None</option>
+        <option value="secret">Secret</option>
+        <option value="top_secret">Top Secret</option>
+        <option value="sci">TS/SCI</option>
+      </select>
+    </div>
+    <div>
+      <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;">Your background</label>
+      <select id="ccExBackground" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:var(--bg-card,#1a1a2e);color:var(--text-primary,#e0e0e0);font-size:0.95rem;">
+        <option value="">-- Select --</option>
+        <option value="aviation">Aviation</option>
+        <option value="logistics">Logistics</option>
+        <option value="intelligence">Intelligence</option>
+        <option value="cyber_it">Cyber / IT</option>
+        <option value="maintenance">Maintenance</option>
+        <option value="operations">Operations</option>
+        <option value="leadership">Leadership / Management</option>
+      </select>
+    </div>
+    <div>
+      <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;">Your goal</label>
+      <select id="ccExGoal" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:var(--bg-card,#1a1a2e);color:var(--text-primary,#e0e0e0);font-size:0.95rem;">
+        <option value="">-- Select --</option>
+        <option value="get_hired">Get Hired Fast</option>
+        <option value="skillbridge">Use SkillBridge</option>
+        <option value="cleared_jobs">Find Cleared Jobs</option>
+        <option value="certifications">Find Certifications</option>
+        <option value="explore_employers">Explore Top Employers</option>
+      </select>
+    </div>
+  </div>
+  <button class="resources-cta__button" onclick="ccExecutionEngine()" style="margin-bottom:0;">Show My Top Matches</button>
+  <div id="ccExResults" style="margin-top:20px;display:none;"></div>
+</div>
+
+<!-- QUICK ACCESS BAR -->
+<div class="rp-quickaccess">
+  <div class="rp-quickaccess__inner">
+    <button class="rp-qa-btn" onclick="ccClearAll()">All Resources</button>
+    <button class="rp-qa-btn" onclick="ccApplyQA('category','prime_contractor')">Prime Contractors</button>
+    <button class="rp-qa-btn" onclick="ccApplyQA('category','mid_tier_contractor')">Mid-Tier</button>
+    <button class="rp-qa-btn" onclick="ccApplyQA('category','cleared_job_board')">Job Boards</button>
+    <button class="rp-qa-btn" onclick="ccApplyQA('category','certification_program')">Certifications</button>
+    <button class="rp-qa-btn" onclick="ccApplyQA('category','intelligence_community')">Intel Community</button>
+  </div>
+</div>
+
+<!-- TWO-COLUMN LAYOUT -->
+<div class="mh-page-wrapper">
+
+  <!-- SECTION 2: FILTER SIDEBAR -->
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <span>Filters</span>
+      <button class="mh-clear-btn" onclick="ccClearAll()">Clear all</button>
+    </div>
+
+    <input type="text" class="mh-search-input" id="ccSearch"
+           placeholder="Search employers, certs, boards..." oninput="ccApplyFilters()" />
+
+    <!-- Category -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Category</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="category" data-value="prime_contractor" onclick="ccTogglePill(this)">Prime Contractors</button>
+        <button class="mh-pill" data-filter="category" data-value="mid_tier_contractor" onclick="ccTogglePill(this)">Mid-Tier Contractors</button>
+        <button class="mh-pill" data-filter="category" data-value="cleared_job_board" onclick="ccTogglePill(this)">Cleared Job Boards</button>
+        <button class="mh-pill" data-filter="category" data-value="skillbridge_partner" onclick="ccTogglePill(this)">SkillBridge</button>
+        <button class="mh-pill" data-filter="category" data-value="certification_program" onclick="ccTogglePill(this)">Certifications</button>
+        <button class="mh-pill" data-filter="category" data-value="career_fair" onclick="ccTogglePill(this)">Career Fairs</button>
+        <button class="mh-pill" data-filter="category" data-value="federal_resource" onclick="ccTogglePill(this)">Federal Resources</button>
+        <button class="mh-pill" data-filter="category" data-value="intelligence_community" onclick="ccTogglePill(this)">Intelligence Community</button>
+      </div>
+    </div>
+
+    <!-- Clearance -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Clearance Level</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="clearance" data-value="none" onclick="ccTogglePill(this)">None Required</button>
+        <button class="mh-pill" data-filter="clearance" data-value="secret" onclick="ccTogglePill(this)">Secret</button>
+        <button class="mh-pill" data-filter="clearance" data-value="top_secret" onclick="ccTogglePill(this)">Top Secret</button>
+        <button class="mh-pill" data-filter="clearance" data-value="sci" onclick="ccTogglePill(this)">TS/SCI</button>
+      </div>
+    </div>
+
+    <!-- SkillBridge -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">SkillBridge Partner</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="skillbridge" data-value="yes" onclick="ccTogglePill(this)">SkillBridge Partner</button>
+      </div>
+    </div>
+
+    <div class="mh-result-count" id="ccResultCount"></div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <select class="mh-sort-select" id="ccSort" onchange="ccApplyFilters()">
+        <option value="default">Sort: A–Z by Name</option>
+        <option value="category">Sort: By Category</option>
+        <option value="source_type">Sort: By Source Type</option>
+        <option value="clearance">Sort: By Clearance Level</option>
+      </select>
+    </div>
+
+    <!-- SECTION 3: CARD GRID -->
+    <div class="mh-grid" id="ccGrid"></div>
+
+    <div class="mh-empty" id="ccEmpty" style="display:none;">
+      <div class="rp-empty__icon">&#128188;</div>
+      <p>No results match your current filters. Try adjusting the category or clearance level.</p>
+      <button class="mh-clear-btn" onclick="ccClearAll()">Clear Filters</button>
+    </div>
+
+    <div class="mh-load-more" id="ccLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="ccLoadMore()">Load More Resources</button>
+    </div>
+
+    <!-- SECTION 4: CROSS-REFERENCES -->
+    <div class="resources-cta" id="ccCrossRef" style="margin-top:32px;">
+      <h3 class="resources-cta__title">Explore Related Career Resources</h3>
+      <p class="resources-cta__text" style="margin-bottom:16px;">Build your complete career transition strategy with these connected resources.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+        <a href="transition-guide.html" class="resources-cta__button" style="text-decoration:none;">Transition Guide</a>
+        <a href="resources.html?category=employment" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">Employment Resources</a>
+        <a href="licensure.html" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">Licensure &amp; Certifications</a>
+        <a href="education.html" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">Education &amp; GI Bill</a>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section footer__section--nav">
+          <h3>Navigate</h3>
+          <div class="footer__nav-columns">
+            <div class="footer__nav-col">
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="board.html">Board</a>
+            </div>
+            <div class="footer__nav-col">
+              <a href="resources.html">Resources</a>
+              <a href="blog.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__section">
+          <h3>Resource Hub</h3>
+          <a href="elected-officials.html">Elected Officials</a>
+          <a href="military-discounts.html">Military Discounts</a>
+          <a href="outdoor-recreation.html">Outdoor Recreation</a>
+          <a href="contractor-careers.html">Contractor Careers</a>
+          <a href="licensure.html">Licensure & Certifications</a>
+          <a href="grants-scholarships.html">Grants & Scholarships</a>
+          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
+          <a href="state-benefits.html">State Benefits</a>
+          <a href="transition-guide.html">Transition Guide</a>
+          <a href="financial-optimization.html">Financial Optimization</a>
+          <a href="document-templates.html">Document Templates</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+        </div>
+      </div>
+      <div class="footer__nonprofit">
+        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal-overlay" id="authModalOverlay" style="display:none;" onclick="if(event.target===this)AAAI.auth.closeAuthModal()">
+  <div class="auth-modal" role="dialog" aria-modal="true">
+    <button class="auth-modal__close" onclick="AAAI.auth.closeAuthModal()" aria-label="Close">&times;</button>
+    <div id="authModalContent"></div>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// Contractor Careers — Page Logic (prefix: cc*)
+// ══════════════════════════════════════════════════════════
+
+// ── State ──────────────────────────────────────────────────
+var CC_PAGE_SIZE = 24;
+var ccAllResources = [];
+var ccFilteredResources = [];
+var ccVisibleCount = 0;
+
+var ccFilters = { search: '', category: new Set(), clearance: new Set(), skillbridge: new Set() };
+
+// ── Nav ───────────────────────────────────────────────────
+function toggleMenu() {
+  document.getElementById('navMenu').classList.toggle('active');
+}
+
+// ── Escape (null-safe) ────────────────────────────────────
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ── Category display names & color mapping ────────────────
+var CC_CATEGORY_META = {
+  prime_contractor:       { label: 'Prime Contractor',       color: 'benefits' },
+  mid_tier_contractor:    { label: 'Mid-Tier Contractor',    color: 'community' },
+  cleared_job_board:      { label: 'Cleared Job Board',      color: 'employment' },
+  skillbridge_partner:    { label: 'SkillBridge',            color: 'education' },
+  certification_program:  { label: 'Certification',          color: 'medical' },
+  career_fair:            { label: 'Career Fair',            color: 'entrepreneurship' },
+  intelligence_community: { label: 'Intel Community',        color: 'housing' },
+  federal_resource:       { label: 'Federal Resource',       color: 'equipment' }
+};
+
+// ── Clearance display labels ─────────────────────────────
+var CC_CLEARANCE_LABELS = {
+  'none':       'UNCLEARED',
+  'secret':     'SECRET',
+  'top_secret': 'TOP SECRET',
+  'sci':        'TS/SCI'
+};
+
+var CC_CLEARANCE_COLORS = {
+  'none':       { bg: 'rgba(160,174,192,0.15)', text: '#a0aec0' },
+  'secret':     { bg: 'rgba(72,187,120,0.15)',  text: '#48bb78' },
+  'top_secret': { bg: 'rgba(237,187,52,0.15)',  text: '#edb734' },
+  'sci':        { bg: 'rgba(237,100,100,0.15)', text: '#ed6464' }
+};
+
+// ── CTA text by category ─────────────────────────────────
+var CC_CTA = {
+  prime_contractor:       'View Veteran Careers',
+  mid_tier_contractor:    'View Veteran Careers',
+  cleared_job_board:      'Search Cleared Jobs',
+  skillbridge_partner:    'Start SkillBridge',
+  certification_program:  'Start Certification',
+  career_fair:            'Find Next Event',
+  intelligence_community: 'Apply to Agency',
+  federal_resource:       'Access Resource'
+};
+
+// ── Source type icons ─────────────────────────────────────
+var CC_SOURCE_ICONS = {
+  'Corporate': '&#9733;',
+  'Federal':   '&#9670;',
+  'Nonprofit': '&#9825;',
+  'Job Board': '&#9670;'
+};
+
+// ── Pills (Set-based multi-select) ────────────────────────
+function ccTogglePill(btn) {
+  var dim = btn.getAttribute('data-filter');
+  var val = btn.getAttribute('data-value');
+  btn.classList.toggle('active');
+  if (ccFilters[dim].has(val)) {
+    ccFilters[dim].delete(val);
+  } else {
+    ccFilters[dim].add(val);
+  }
+  ccApplyFilters();
+}
+
+// ── Quick Access ──────────────────────────────────────────
+function ccApplyQA(dim, val) {
+  ccFilters[dim].clear();
+  document.querySelectorAll('.mh-pill[data-filter="' + dim + '"]').forEach(function(b) { b.classList.remove('active'); });
+  var pill = document.querySelector('.mh-pill[data-filter="' + dim + '"][data-value="' + val + '"]');
+  if (pill) {
+    pill.classList.add('active');
+    ccFilters[dim].add(val);
+  }
+  ccApplyFilters();
+}
+
+// ── Clear All ─────────────────────────────────────────────
+function ccClearAll() {
+  ccFilters.search = '';
+  ccFilters.category.clear();
+  ccFilters.clearance.clear();
+  ccFilters.skillbridge.clear();
+  document.getElementById('ccSearch').value = '';
+  document.getElementById('ccSort').value = 'default';
+  document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
+  ccApplyFilters();
+}
+
+// ── Filter + Sort ─────────────────────────────────────────
+function ccApplyFilters() {
+  ccFilters.search = (document.getElementById('ccSearch').value || '').toLowerCase();
+  var q = ccFilters.search;
+  var hasCategory = ccFilters.category.size > 0;
+  var hasClearance = ccFilters.clearance.size > 0;
+  var hasSkillbridge = ccFilters.skillbridge.size > 0;
+
+  ccFilteredResources = ccAllResources.filter(function(r) {
+    if (hasCategory && !ccFilters.category.has(r.category)) return false;
+    if (hasClearance) {
+      var match = false;
+      ccFilters.clearance.forEach(function(c) {
+        if (r.clearance_types && r.clearance_types.indexOf(c) !== -1) match = true;
+      });
+      if (!match) return false;
+    }
+    if (hasSkillbridge && !r.skillbridge_partner) return false;
+    if (q) {
+      var hay = [r.name, r.description, r.category, r.source_type, r.headquarters,
+        (r.sectors || []).join(' '), (r.certifications_valued || []).join(' '),
+        (r.major_locations || []).join(' ')].join(' ').toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+
+  // Sort
+  var sortVal = document.getElementById('ccSort').value;
+  if (sortVal === 'category') {
+    ccFilteredResources.sort(function(a, b) {
+      var c = (a.category || '').localeCompare(b.category || '');
+      return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
+    });
+  } else if (sortVal === 'source_type') {
+    ccFilteredResources.sort(function(a, b) {
+      var c = (a.source_type || '').localeCompare(b.source_type || '');
+      return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
+    });
+  } else if (sortVal === 'clearance') {
+    var clOrder = { sci: 0, top_secret: 1, secret: 2, none: 3 };
+    ccFilteredResources.sort(function(a, b) {
+      var aMax = 3; var bMax = 3;
+      (a.clearance_types || []).forEach(function(c) { if (clOrder[c] !== undefined && clOrder[c] < aMax) aMax = clOrder[c]; });
+      (b.clearance_types || []).forEach(function(c) { if (clOrder[c] !== undefined && clOrder[c] < bMax) bMax = clOrder[c]; });
+      var c = aMax - bMax;
+      return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
+    });
+  } else {
+    ccFilteredResources.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
+  }
+
+  ccVisibleCount = 0;
+  document.getElementById('ccGrid').innerHTML = '';
+  ccLoadMore();
+  ccUpdateCount();
+}
+
+// ── Card renderer ─────────────────────────────────────────
+function ccRenderCard(r) {
+  var meta = CC_CATEGORY_META[r.category] || { label: r.category, color: '' };
+  var sourceIcon = CC_SOURCE_ICONS[r.source_type] || '';
+  var ctaText = CC_CTA[r.category] || 'Learn More';
+  var ctaUrl = r.veteran_url || r.career_url || '#';
+
+  // Clearance badges
+  var clearBadges = '';
+  var maxCl = 'none';
+  var clRank = { none: 0, secret: 1, top_secret: 2, sci: 3 };
+  (r.clearance_types || []).forEach(function(c) {
+    if (clRank[c] !== undefined && clRank[c] > clRank[maxCl]) maxCl = c;
+  });
+  var clStyle = CC_CLEARANCE_COLORS[maxCl] || CC_CLEARANCE_COLORS['none'];
+  clearBadges = '<span style="display:inline-block;font-size:0.6rem;padding:2px 6px;border-radius:4px;background:' + clStyle.bg + ';color:' + clStyle.text + ';font-weight:600;vertical-align:middle;">' + (CC_CLEARANCE_LABELS[maxCl] || 'N/A') + '</span>';
+
+  // SkillBridge badge
+  var sbBadge = r.skillbridge_partner
+    ? ' <span style="display:inline-block;font-size:0.6rem;padding:2px 6px;border-radius:4px;background:rgba(72,187,120,0.15);color:#48bb78;font-weight:600;vertical-align:middle;">SKILLBRIDGE</span>'
+    : '';
+
+  // HOH badge
+  var hohBadge = r.hiring_our_heroes
+    ? ' <span style="display:inline-block;font-size:0.6rem;padding:2px 6px;border-radius:4px;background:rgba(99,179,237,0.15);color:#63b3ed;font-weight:600;vertical-align:middle;">HOH PARTNER</span>'
+    : '';
+
+  // Certs valued
+  var certsHTML = '';
+  if (r.certifications_valued && r.certifications_valued.length > 0) {
+    certsHTML = '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Certs Valued</span><span class="resource-card__meta-value">' + esc(r.certifications_valued.join(', ')) + '</span></div>';
+  }
+
+  // HQ
+  var hqHTML = r.headquarters
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Headquarters</span><span class="resource-card__meta-value">' + esc(r.headquarters) + '</span></div>'
+    : '';
+
+  // Source
+  var sourceHTML = '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Source</span><span class="resource-card__meta-value">' + sourceIcon + ' ' + esc(r.source_type) + '</span></div>';
+
+  // Vet workforce
+  var vetHTML = '';
+  if (r.veteran_workforce_pct) {
+    vetHTML = '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Veteran Workforce</span><span class="resource-card__meta-value" style="color:#48bb78;font-weight:600;">' + r.veteran_workforce_pct + '%</span></div>';
+  }
+
+  // Military Friendly
+  var mfHTML = '';
+  if (r.military_friendly_rank) {
+    mfHTML = '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Ranking</span><span class="resource-card__meta-value" style="color:#edb734;font-weight:600;">' + esc(r.military_friendly_rank) + '</span></div>';
+  }
+
+  var linkHTML = ctaUrl !== '#'
+    ? '<a href="' + esc(ctaUrl) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">' + esc(ctaText) + ' &#8599;</a>'
+    : '';
+
+  return '<div class="resource-card aa-card" data-category="' + esc(r.category) + '">' +
+    '<span class="resource-card__category" data-color="' + esc(meta.color) + '">' + esc(meta.label) + '</span>' +
+    '<h3 class="resource-card__name">' + esc(r.name) + ' ' + clearBadges + sbBadge + hohBadge + '</h3>' +
+    '<p class="resource-card__description">' + esc(r.description) + '</p>' +
+    '<div class="resource-card__meta">' +
+      certsHTML +
+      hqHTML +
+      vetHTML +
+      mfHTML +
+      sourceHTML +
+    '</div>' +
+    linkHTML +
+  '</div>';
+}
+
+// ── Load More ─────────────────────────────────────────────
+function ccLoadMore() {
+  var grid = document.getElementById('ccGrid');
+  var batch = ccFilteredResources.slice(ccVisibleCount, ccVisibleCount + CC_PAGE_SIZE);
+  batch.forEach(function(r) { grid.insertAdjacentHTML('beforeend', ccRenderCard(r)); });
+  ccVisibleCount += batch.length;
+  document.getElementById('ccLoadMore').style.display = ccVisibleCount < ccFilteredResources.length ? '' : 'none';
+  document.getElementById('ccEmpty').style.display = ccFilteredResources.length === 0 ? 'block' : 'none';
+}
+
+function ccUpdateCount() {
+  var el = document.getElementById('ccResultCount');
+  el.textContent = ccFilteredResources.length === ccAllResources.length
+    ? 'Showing all ' + ccAllResources.length + ' resources'
+    : 'Showing ' + ccFilteredResources.length + ' of ' + ccAllResources.length + ' resources';
+}
+
+// ── Execution Engine ──────────────────────────────────────
+function ccExecutionEngine() {
+  var clearanceVal = document.getElementById('ccExClearance').value;
+  var bgVal = document.getElementById('ccExBackground').value;
+  var goalVal = document.getElementById('ccExGoal').value;
+
+  if (!clearanceVal && !bgVal && !goalVal) {
+    alert('Please select at least one option to find your matches.');
+    return;
+  }
+
+  // Goal to category mapping
+  var goalCategories = {
+    'get_hired':         ['prime_contractor', 'mid_tier_contractor', 'cleared_job_board', 'career_fair'],
+    'skillbridge':       ['skillbridge_partner', 'prime_contractor', 'mid_tier_contractor'],
+    'cleared_jobs':      ['cleared_job_board', 'prime_contractor', 'mid_tier_contractor', 'intelligence_community'],
+    'certifications':    ['certification_program', 'federal_resource'],
+    'explore_employers': ['prime_contractor', 'mid_tier_contractor', 'intelligence_community']
+  };
+
+  // Background to sector mapping
+  var bgSectors = {
+    'aviation':     ['aerospace', 'defense', 'logistics'],
+    'logistics':    ['logistics', 'defense', 'engineering'],
+    'intelligence': ['intelligence', 'cyber', 'defense'],
+    'cyber_it':     ['cyber', 'IT', 'intelligence', 'defense'],
+    'maintenance':  ['logistics', 'defense', 'engineering', 'aerospace'],
+    'operations':   ['defense', 'consulting', 'logistics'],
+    'leadership':   ['consulting', 'defense', 'IT', 'aerospace']
+  };
+
+  // Clearance rank for scoring
+  var clRank = { none: 0, secret: 1, top_secret: 2, sci: 3 };
+  var userClRank = clRank[clearanceVal] || 0;
+
+  var goalCats = goalCategories[goalVal] || [];
+  var bgSecs = bgSectors[bgVal] || [];
+
+  var results = ccAllResources.filter(function(r) {
+    // If user has clearance, don't show "none only" resources; if user has no clearance, still show everything
+    if (clearanceVal && clearanceVal !== 'none') {
+      // User has clearance — include resources that accept that clearance level
+      var hasLevel = false;
+      (r.clearance_types || []).forEach(function(c) {
+        if (clRank[c] !== undefined && clRank[c] <= userClRank) hasLevel = true;
+      });
+      // Don't filter out uncleared resources (certs, fairs, etc.)
+    }
+    // For SkillBridge goal, prioritize but don't exclude non-SB
+    return true;
+  });
+
+  // Score each result
+  results.forEach(function(r) {
+    r._score = 0;
+
+    // Goal match (strongest signal)
+    if (goalVal && goalCats.indexOf(r.category) !== -1) r._score += 15;
+
+    // Clearance match
+    if (clearanceVal && clearanceVal !== 'none') {
+      var maxCl = 0;
+      (r.clearance_types || []).forEach(function(c) {
+        if (clRank[c] !== undefined && clRank[c] > maxCl) maxCl = clRank[c];
+      });
+      if (maxCl >= userClRank) r._score += 10;
+      if (maxCl === userClRank) r._score += 3;
+    }
+
+    // Background/sector match
+    if (bgVal && bgSecs.length > 0) {
+      var sectorMatch = 0;
+      (r.sectors || []).forEach(function(s) {
+        if (bgSecs.indexOf(s) !== -1) sectorMatch++;
+      });
+      r._score += sectorMatch * 4;
+    }
+
+    // SkillBridge bonus for SkillBridge goal
+    if (goalVal === 'skillbridge' && r.skillbridge_partner) r._score += 12;
+
+    // HOH bonus
+    if (r.hiring_our_heroes) r._score += 3;
+
+    // Veteran workforce percentage bonus
+    if (r.veteran_workforce_pct && r.veteran_workforce_pct >= 20) r._score += 4;
+
+    // Military Friendly ranking bonus
+    if (r.military_friendly_rank) r._score += 2;
+
+    // Federal source trust bonus
+    if (r.source_type === 'Federal') r._score += 3;
+
+    // Employers/boards over certs for "get hired" goal
+    if (goalVal === 'get_hired' && (r.category === 'prime_contractor' || r.category === 'mid_tier_contractor')) r._score += 5;
+  });
+
+  results.sort(function(a, b) { return b._score - a._score; });
+  var top5 = results.slice(0, 5);
+
+  var container = document.getElementById('ccExResults');
+
+  if (top5.length === 0) {
+    container.style.display = 'block';
+    container.innerHTML = '<div style="padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;text-align:center;">' +
+      '<p style="color:var(--text-secondary,#a0a0a0);margin:0;">No matching resources found. Try broadening your selections or <a href="#ccGrid" style="color:var(--gold,#d4a843);">browse all resources below</a>.</p></div>';
+    return;
+  }
+
+  var html = '<div style="display:grid;gap:12px;">';
+  top5.forEach(function(r, i) {
+    var meta = CC_CATEGORY_META[r.category] || { label: r.category };
+    var ctaUrl = r.veteran_url || r.career_url || '#';
+    var ctaText = CC_CTA[r.category] || 'Learn More';
+
+    // Why it matches
+    var whyParts = [];
+    if (clearanceVal && clearanceVal !== 'none') {
+      var hasUserCl = false;
+      (r.clearance_types || []).forEach(function(c) { if (c === clearanceVal) hasUserCl = true; });
+      if (hasUserCl) whyParts.push('Matches your ' + CC_CLEARANCE_LABELS[clearanceVal] + ' clearance');
+    }
+    if (goalVal === 'skillbridge' && r.skillbridge_partner) whyParts.push('Active SkillBridge partner');
+    if (r.veteran_workforce_pct) whyParts.push(r.veteran_workforce_pct + '% veteran workforce');
+    if (bgVal) {
+      var sMatch = 0;
+      (r.sectors || []).forEach(function(s) { if (bgSecs.indexOf(s) !== -1) sMatch++; });
+      if (sMatch > 0) whyParts.push('Aligns with your ' + bgVal.replace('_', '/') + ' background');
+    }
+    if (whyParts.length === 0) whyParts.push('Strong match for your profile');
+
+    // Clearance fit badge
+    var maxCl = 'none';
+    (r.clearance_types || []).forEach(function(c) { if (clRank[c] > clRank[maxCl]) maxCl = c; });
+    var clStyle = CC_CLEARANCE_COLORS[maxCl] || CC_CLEARANCE_COLORS['none'];
+
+    // Next action
+    var nextAction = 'Visit their careers page to explore open positions';
+    if (r.category === 'certification_program') nextAction = 'Research exam requirements and study resources';
+    if (r.category === 'cleared_job_board') nextAction = 'Create a free profile and upload your resume';
+    if (r.category === 'skillbridge_partner') nextAction = 'Talk to your command about SkillBridge eligibility';
+    if (r.category === 'career_fair') nextAction = 'Register for the next upcoming event near you';
+    if (r.category === 'federal_resource') nextAction = 'Access this resource and explore available programs';
+    if (r.category === 'intelligence_community') nextAction = 'Apply online — veteran preference applies';
+
+    var linkBtn = ctaUrl !== '#'
+      ? '<a href="' + esc(ctaUrl) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:6px 16px;background:var(--gold,#d4a843);color:#000;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;">' + esc(ctaText) + ' &#8599;</a>'
+      : '';
+
+    html += '<div style="display:flex;align-items:flex-start;gap:16px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border-left:3px solid ' + clStyle.text + ';">' +
+      '<div style="flex-shrink:0;width:28px;height:28px;background:' + clStyle.text + ';color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;">' + (i + 1) + '</div>' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:700;color:var(--text-primary,#e0e0e0);margin-bottom:4px;">' + esc(r.name) + ' <span style="font-size:0.65rem;color:' + clStyle.text + ';font-weight:600;">' + esc(meta.label) + '</span></div>' +
+        '<div style="font-size:0.8rem;color:#48bb78;margin-bottom:4px;">' + esc(whyParts.join(' · ')) + '</div>' +
+        '<div style="font-size:0.8rem;color:var(--text-secondary,#a0a0a0);margin-bottom:4px;"><strong>Clearance:</strong> ' + (CC_CLEARANCE_LABELS[maxCl] || 'N/A') + '</div>' +
+        '<div style="font-size:0.8rem;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;"><strong>Next step:</strong> ' + esc(nextAction) + '</div>' +
+        '<div>' + linkBtn + '</div>' +
+      '</div></div>';
+  });
+  html += '</div>';
+
+  if (results.length > 5) {
+    html += '<p style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--text-secondary,#a0a0a0);">Showing top 5 of ' + results.length + ' matching resources. <a href="#ccGrid" style="color:var(--gold,#d4a843);" onclick="ccScrollToGrid()">Browse all below</a>.</p>';
+  }
+
+  container.style.display = 'block';
+  container.innerHTML = html;
+}
+
+function ccScrollToGrid() {
+  document.getElementById('ccGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── URL param pre-filter ─────────────────────────────────
+function ccParseUrlFilters() {
+  var params = new URLSearchParams(window.location.search);
+  var cat = params.get('category');
+  if (cat) {
+    cat.split(',').forEach(function(c) {
+      var v = c.trim().toLowerCase();
+      if (v && CC_CATEGORY_META[v]) {
+        ccFilters.category.add(v);
+        var pill = document.querySelector('.mh-pill[data-filter="category"][data-value="' + v + '"]');
+        if (pill) pill.classList.add('active');
+      }
+    });
+  }
+  var cl = params.get('clearance');
+  if (cl) {
+    cl.split(',').forEach(function(c) {
+      var v = c.trim().toLowerCase();
+      if (v) {
+        ccFilters.clearance.add(v);
+        var pill = document.querySelector('.mh-pill[data-filter="clearance"][data-value="' + v + '"]');
+        if (pill) pill.classList.add('active');
+      }
+    });
+  }
+}
+
+// ── Data Load ─────────────────────────────────────────────
+function ccLoadData() {
+  fetch('/data/contractor-careers.json')
+    .then(function(r) {
+      if (!r.ok) throw new Error('[CC] Failed to load dataset: ' + r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      ccAllResources = Array.isArray(data) ? data : [];
+      console.log('[CC] Loaded ' + ccAllResources.length + ' contractor career resources');
+      ccParseUrlFilters();
+      ccApplyFilters();
+    })
+    .catch(function(err) {
+      console.error('[CC] Dataset load error:', err);
+      document.getElementById('ccGrid').innerHTML =
+        '<p style="text-align:center;padding:32px;color:var(--text-secondary,#a0a0a0);">Unable to load contractor careers data. Please refresh the page.</p>';
+    });
+}
+
+// ── Init ──────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', ccLoadData);
+</script>
+
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/feedback-widget.js"></script>
+<script src="js/newsletter.js"></script>
+
+</body>
+</html>

@@ -158,6 +158,11 @@
     "priority": "high",
     "routes": [
       {
+        "page": "contractor-careers.html",
+        "label": "SkillBridge Employers",
+        "filter": "skillbridge_partner"
+      },
+      {
         "page": "resources.html",
         "label": "Employment Resources",
         "filter": "employment"
@@ -271,6 +276,10 @@
     "timeline": "6 months before",
     "priority": "high",
     "routes": [
+      {
+        "page": "contractor-careers.html",
+        "label": "HOH Partner Employers"
+      },
       {
         "page": "resources.html",
         "label": "Employment Programs",
@@ -602,5 +611,32 @@
     ],
     "website": null,
     "verification": "N/A — internal routing only"
+  },
+  {
+    "id": "tr-026",
+    "name": "Defense Contractor Careers",
+    "description": "Leverage your security clearance, military training, and mission experience for high-paying defense contractor positions. Browse 20+ major contractors, cleared job boards, certification roadmaps, and career fairs.",
+    "section": "career_launch",
+    "category": "employment",
+    "timeline": "6-12 months before separation",
+    "priority": "standard",
+    "routes": [
+      {
+        "page": "contractor-careers.html",
+        "label": "Contractor Career Directory"
+      },
+      {
+        "page": "licensure.html",
+        "label": "Certifications (DoD 8140)",
+        "filter": "it_cyber"
+      },
+      {
+        "page": "resources.html",
+        "label": "Employment Resources",
+        "filter": "employment"
+      }
+    ],
+    "website": "https://skillbridge.osd.mil/",
+    "verification": "Confirmed — SkillBridge employer list is canonical source"
   }
 ]

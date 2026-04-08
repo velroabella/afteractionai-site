@@ -165,6 +165,14 @@
       descField: 'description',
       catField:  'category',
       extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    contractor_careers: {
+      path: 'data/contractor-careers.json',
+      page: 'contractor-careers.html',
+      nameField: 'name',
+      descField: 'description',
+      catField:  'category',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
     }
   };
 
@@ -247,6 +255,12 @@
       datasets: ['outdoor_recreation', 'wellness'],
       categoryHint: null,
       weight: 2
+    },
+    {
+      keywords: ['contractor', 'defense contractor', 'clearance', 'security clearance', 'cleared job', 'lockheed', 'raytheon', 'northrop', 'booz allen', 'saic', 'leidos', 'dod 8570', 'dod 8140', 'cissp', 'security plus', 'contractor career', 'intelligence career', 'cleared professional', 'skillbridge employer'],
+      datasets: ['contractor_careers'],
+      categoryHint: 'contractor_career',
+      weight: 3
     },
     {
       keywords: ['tdiu', 'individual unemployability', 'total disability'],
