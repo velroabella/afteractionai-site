@@ -308,7 +308,6 @@
       </div>
     </div>
   </footer>
-</div>
 
 <script>
 // ── State ──────────────────────────────────────────────────
@@ -352,6 +351,18 @@ var EA_SOURCE_ICONS = {
 
 // ── Response time sort order ──────────────────────────────
 var EA_RESPONSE_ORDER = { 'immediate': 0, '24-48 hours': 1, '1-2 weeks': 2 };
+
+// ── Response time normalization (map raw values to filter buckets) ──
+function eaNormalizeResponseTime(raw) {
+  if (!raw) return null;
+  var lower = raw.toLowerCase();
+  // Immediate: contains "immediate", "same day", "24/7"
+  if (/immediate|same\s*day|24\/7|walk[\s-]*in/.test(lower)) return 'immediate';
+  // 24-48 hours: 1-7 business days
+  if (/^[1-7][\s-]*(business\s*)?day|1-7|1-5|1-3|3-10|schedule/.test(lower)) return '24-48 hours';
+  // 1-2 weeks+: everything else (weeks, 10+ days)
+  return '1-2 weeks';
+}
 
 // ── Pills (Set-based multi-select) ────────────────────────
 function eaTogglePill(btn) {
@@ -403,7 +414,7 @@ function eaApplyFilters() {
   eaFilteredResources = eaAllResources.filter(function(r) {
     if (hasCategory && !eaFilters.category.has(r.category)) return false;
     if (hasSourceType && !eaFilters.sourceType.has(r.source_type)) return false;
-    if (hasResponseTime && !eaFilters.responseTime.has(r.response_time)) return false;
+    if (hasResponseTime && !eaFilters.responseTime.has(eaNormalizeResponseTime(r.response_time))) return false;
     if (hasConfidence && eaFilters.confidence.has('verified')) {
       if (r.verification !== 'verified') return false;
     }
@@ -429,8 +440,8 @@ function eaApplyFilters() {
     });
   } else if (sortVal === 'responseTime') {
     eaFilteredResources.sort(function(a, b) {
-      var oa = EA_RESPONSE_ORDER[a.response_time] !== undefined ? EA_RESPONSE_ORDER[a.response_time] : 99;
-      var ob = EA_RESPONSE_ORDER[b.response_time] !== undefined ? EA_RESPONSE_ORDER[b.response_time] : 99;
+      var oa = EA_RESPONSE_ORDER[eaNormalizeResponseTime(a.response_time)] !== undefined ? EA_RESPONSE_ORDER[eaNormalizeResponseTime(a.response_time)] : 99;
+      var ob = EA_RESPONSE_ORDER[eaNormalizeResponseTime(b.response_time)] !== undefined ? EA_RESPONSE_ORDER[eaNormalizeResponseTime(b.response_time)] : 99;
       return oa !== ob ? oa - ob : (a.name || '').localeCompare(b.name || '');
     });
   } else {
@@ -564,16 +575,20 @@ function eaParseUrlFilters() {
 
 // ── Init (external JSON) ─────────────────────────────────
 eaParseUrlFilters();
-fetch('data/emergency-assistance.json')
-  .then(function(r) { return r.json(); })
+fetch('/data/emergency-assistance.json')
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
+    return r.json();
+  })
   .then(function(data) {
+    console.log('[EA] Loaded emergency resources:', (Array.isArray(data) ? data.length : 0), 'entries');
     eaAllResources = Array.isArray(data) ? data : [];
     eaApplyFilters();
   })
   .catch(function(err) {
-    console.error('Error loading emergency assistance:', err);
+    console.error('[EA] Error loading emergency resources:', err);
     document.getElementById('eaGrid').innerHTML =
-      '<div class="mh-empty"><p>Error loading emergency resources. Please try again later.</p></div>';
+      '<div class="mh-empty"><p>Error loading emergency resources: ' + esc(err.message) + '</p></div>';
   });
 </script>
 

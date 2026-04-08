@@ -302,7 +302,6 @@
       </div>
     </div>
   </footer>
-</div>
 
 <script>
 // ── State ──────────────────────────────────────────────────
@@ -546,16 +545,20 @@ function hbParseUrlFilters() {
 
 // ── Init (external JSON) ─────────────────────────────────
 hbParseUrlFilters();
-fetch('data/hidden-benefits.json')
-  .then(function(r) { return r.json(); })
+fetch('/data/hidden-benefits.json')
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
+    return r.json();
+  })
   .then(function(data) {
+    console.log('[HB] Loaded hidden benefits:', (Array.isArray(data) ? data.length : 0), 'entries');
     hbAllBenefits = Array.isArray(data) ? data : [];
     hbApplyFilters();
   })
   .catch(function(err) {
-    console.error('Error loading hidden benefits:', err);
+    console.error('[HB] Error loading hidden benefits:', err);
     document.getElementById('hbGrid').innerHTML =
-      '<div class="mh-empty"><p>Error loading hidden benefits. Please try again later.</p></div>';
+      '<div class="mh-empty"><p>Error loading hidden benefits: ' + esc(err.message) + '</p></div>';
   });
 </script>
 

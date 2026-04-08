@@ -305,6 +305,12 @@ var TG_PRIORITY_COLORS = {
   'medium':   { label: 'Medium',   color: '#3182ce' }
 };
 
+// ── Build route URL (page + optional filter) ─────────────
+function tgRouteUrl(route) {
+  if (!route || !route.page) return '#';
+  return route.filter ? route.page + '?category=' + encodeURIComponent(route.filter) : route.page;
+}
+
 // ── Nav ───────────────────────────────────────────────────
 function toggleMenu() {
   document.getElementById('navMenu').classList.toggle('active');
@@ -434,7 +440,7 @@ function tgRenderSections() {
   document.getElementById('tgEmpty').style.display = tgFilteredResources.length === 0 ? 'block' : 'none';
 }
 
-// ── Card renderer ─────────────────────────────────────────
+// ── Card renderer (multi-route panel) ─────────────────────
 function tgRenderCard(r) {
   var meta = TG_CATEGORY_META[r.category] || { label: r.category, color: '' };
   var priorityMeta = TG_PRIORITY_COLORS[r.priority] || { label: r.priority, color: '#999' };
@@ -447,16 +453,22 @@ function tgRenderCard(r) {
     ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Timeline</span><span class="resource-card__meta-value" style="background:rgba(212,168,67,0.1);color:var(--gold,#d4a843);padding:4px 8px;border-radius:4px;display:inline-block;font-size:0.85rem;">' + esc(r.timeline) + '</span></div>'
     : '';
 
-  // Cross-reference link
-  var crossRefHTML = '';
-  if (r.cross_ref && r.cross_ref.dataset) {
-    var datasetLabel = r.cross_ref.dataset.charAt(0).toUpperCase() + r.cross_ref.dataset.slice(1).replace(/_/g, ' ');
-    crossRefHTML = '<div class="resource-card__meta-row"><span class="resource-card__meta-label">View in</span><span class="resource-card__meta-value"><a href="#" style="color:var(--gold,#d4a843);text-decoration:none;font-weight:500;">' + datasetLabel + ' &rarr;</a></span></div>';
+  // Multi-route panel: every route is an internal filtered view
+  var routesHTML = '';
+  if (r.routes && r.routes.length > 0) {
+    routesHTML = '<div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);">' +
+      '<div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.05em;color:rgba(255,255,255,0.4);margin-bottom:8px;font-weight:600;">Explore Resources</div>';
+    r.routes.forEach(function(route) {
+      var url = tgRouteUrl(route);
+      routesHTML += '<a href="' + esc(url) + '" class="resource-card__button" style="display:block;margin-bottom:6px;text-align:left;padding:8px 14px;font-size:0.82rem;">' +
+        esc(route.label) + ' &rarr;</a>';
+    });
+    routesHTML += '</div>';
   }
 
-  // Website button
-  var linkHTML = r.website
-    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">Visit Resource &#8599;</a>'
+  // External source — always secondary, always last
+  var externalHTML = r.website
+    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button" style="background:transparent;border:1px solid rgba(212,168,67,0.3);color:var(--gold,#d4a843);margin-top:6px;font-size:0.78rem;text-align:center;">Official Source &#8599;</a>'
     : '';
 
   return '<div class="resource-card aa-card" data-category="' + esc(r.category) + '" data-section="' + esc(r.section) + '">' +
@@ -466,9 +478,9 @@ function tgRenderCard(r) {
     '<div class="resource-card__meta">' +
       timelineHTML +
       '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Priority</span><span class="resource-card__meta-value" style="color:' + priorityMeta.color + ';font-weight:600;">' + priorityMeta.label + '</span></div>' +
-      crossRefHTML +
     '</div>' +
-    linkHTML +
+    routesHTML +
+    externalHTML +
   '</div>';
 }
 
@@ -500,16 +512,20 @@ function tgParseUrlFilters() {
 
 // ── Init (external JSON) ─────────────────────────────────
 tgParseUrlFilters();
-fetch('data/transition-resources.json')
-  .then(function(r) { return r.json(); })
+fetch('/data/transition-resources.json')
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
+    return r.json();
+  })
   .then(function(data) {
+    console.log('[TG] Loaded transition resources:', (Array.isArray(data) ? data.length : 0), 'entries');
     tgAllResources = Array.isArray(data) ? data : [];
     tgApplyFilters();
   })
   .catch(function(err) {
-    console.error('Error loading transition resources:', err);
+    console.error('[TG] Error loading transition resources:', err);
     document.getElementById('tgGrid').innerHTML =
-      '<div class="mh-empty"><p>Error loading transition resources. Please try again later.</p></div>';
+      '<div class="mh-empty"><p>Error loading transition resources: ' + esc(err.message) + '</p></div>';
   });
 </script>
 
