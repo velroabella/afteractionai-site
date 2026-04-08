@@ -4762,6 +4762,10 @@
                 }
                 aiosActive = true;
                 console.log('[AIOS][REQUEST] systemLen=' + systemPrompt.length + ' (base=' + SYSTEM_PROMPT.length + ' + aios=' + aiosRequest.system.length + ') | intent=' + aiosRequest.meta.intent + ' | skill=' + aiosRequest.meta.skill + ' | hasMemory=' + aiosRequest.meta.hasMemory + ' | hasPageContext=' + aiosRequest.meta.hasPageContext);
+                // Phase 15: Log partner path injection into system prompt.
+                if (aiosRequest.meta.hasPartnerPath) {
+                  console.log('[AIOS][PARTNER_PATH] system prompt augmented — partner path injected for intent=' + aiosRequest.meta.intent);
+                }
               }
             }
           } else {

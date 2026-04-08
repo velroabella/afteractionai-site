@@ -63,7 +63,12 @@
       }
     }
 
-    /* ── Pass 1: Remove eligibility block (lowest priority) ── */
+    /* ── Pass 0: Remove optional partner path (lowest priority) ─
+       Partner path is supplemental — trimmed before anything else
+       because core execution context is always more valuable.    */
+    _removeSection('## OPTIONAL PARTNER PATH', 'partner-path');
+
+    /* ── Pass 1: Remove eligibility block ─────────────────── */
     _removeSection('## ELIGIBILITY CONTEXT', 'eligibility');
 
     /* ── Pass 1.5: Remove resource context (Phase 43) ────────
@@ -355,6 +360,41 @@
         systemParts.push(_rfLines.join('\n'));
       }
 
+      // Phase 15: Optional partner path — inject when an active partner maps to this intent.
+      // Source: routeResult.partnerMeta (set by Router.attachPartnerMeta() for STANDARD intents
+      // only — structural guarantee from Phase 13 router). Crisis/AT_RISK flows can never carry
+      // partnerMeta; belt-and-suspenders _tier === 'STANDARD' guard prevents any edge-case leak.
+      // Endpoint is resolved via PartnerRegistry (same isolated-copy path as ActionPayload).
+      // Block is skipped entirely when no active partner matches — zero prompt noise.
+      var _hasPartnerPath = false;
+      if (_tier === 'STANDARD' && opts.routeResult && opts.routeResult.partnerMeta) {
+        var _pm     = opts.routeResult.partnerMeta;
+        var _pReg   = (window.AIOS && window.AIOS.PartnerRegistry)
+                      ? window.AIOS.PartnerRegistry.getPartnerFor(opts.routeResult.intent)
+                      : null;
+        var _pEp    = _pReg ? _pReg.endpoint : null;
+        if (_pEp) {
+          var _ppLines = [
+            '## OPTIONAL PARTNER PATH',
+            'An active partner organization supports this intent. Reference as a secondary follow-on path only.',
+            '- Partner: ' + _pm.partner_id,
+            '- Type: '    + _pm.partner_type,
+            '- Endpoint: ' + _pEp,
+            '',
+            'RULES — partner mention:',
+            '- Position AFTER the primary action list. Never before or instead of it.',
+            '- Include only if it meaningfully improves the execution outcome for this veteran.',
+            '- Frame as optional: e.g. "If you want additional support, [partner] can also help with [action]."',
+            '- Never replace a free VA or government resource with this partner.',
+            '- One sentence maximum. No promotional or sales-like language.'
+          ];
+          systemParts.push(_ppLines.join('\n'));
+          _hasPartnerPath = true;
+          console.log('[AIOS][PARTNER_PATH] injected — partner=' + _pm.partner_id +
+                      ' | intent=' + (opts.routeResult.intent || 'none'));
+        }
+      }
+
       // Memory context (veteran profile snapshot)
       // Phase 17: added employmentStatus, currentGoals
       // Phase 18: removed activeMissions (now owned by ## ACTIVE MISSION block below)
@@ -638,7 +678,8 @@
         trimmedSections: _trimmedSecs,                // Phase 28
         confidenceLevel:   _conf.level,               // Phase 29
         confidenceSignals: _conf.signals,             // Phase 29
-        hasExecutionUrl: !!(opts.routeResult && opts.routeResult.executionUrl)  // Phase 7
+        hasExecutionUrl: !!(opts.routeResult && opts.routeResult.executionUrl), // Phase 7
+        hasPartnerPath: _hasPartnerPath               // Phase 15
       };
 
       return {
