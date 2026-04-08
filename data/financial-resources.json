@@ -7,11 +7,20 @@
     "category": "va_benefits",
     "impact": "high",
     "monthly_value": "Varies: $171-$3,737+/mo",
-    "cross_ref": { "dataset": "resources", "filter": "benefits" },
+    "cross_ref": {
+      "dataset": "resources",
+      "filter": "benefits"
+    },
     "website": "https://www.va.gov/disability/compensation-rates/",
     "verification": "VA.gov official rates",
-    "audience": ["disabled_veteran", "transitioning"],
-    "goal_tags": ["lower_bills", "wealth_building"],
+    "audience": [
+      "disabled_veteran",
+      "transitioning"
+    ],
+    "goal_tags": [
+      "lower_bills",
+      "wealth_building"
+    ],
     "disability_relevant": true,
     "urgency_weight": 5,
     "savings_type": "monthly"
@@ -24,11 +33,18 @@
     "category": "va_benefits",
     "impact": "high",
     "monthly_value": "Up to $1,595/mo",
-    "cross_ref": { "dataset": "resources", "filter": "benefits" },
+    "cross_ref": {
+      "dataset": "resources",
+      "filter": "benefits"
+    },
     "website": "https://www.va.gov/pension/",
     "verification": "VA.gov official",
-    "audience": ["retiree"],
-    "goal_tags": ["lower_bills"],
+    "audience": [
+      "retiree"
+    ],
+    "goal_tags": [
+      "lower_bills"
+    ],
     "disability_relevant": false,
     "urgency_weight": 4,
     "savings_type": "monthly"
@@ -36,16 +52,25 @@
   {
     "id": "fr-003",
     "name": "Aid & Attendance / Housebound Benefits",
-    "description": "Additional monthly payment on top of pension or compensation for veterans who need help with daily activities. Often overlooked — adds $400-$2,000+/month.",
+    "description": "Additional monthly payment on top of pension or compensation for veterans who need help with daily activities. Often overlooked \u2014 adds $400-$2,000+/month.",
     "section": "income_benefits",
     "category": "va_benefits",
     "impact": "high",
     "monthly_value": "$400-$2,295/mo additional",
-    "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_compensation" },
+    "cross_ref": {
+      "dataset": "hidden_benefits",
+      "filter": "federal_compensation"
+    },
     "website": "https://www.va.gov/pension/aid-attendance-housebound/",
     "verification": "VA.gov official",
-    "audience": ["disabled_veteran", "retiree", "family_caregiver"],
-    "goal_tags": ["lower_bills"],
+    "audience": [
+      "disabled_veteran",
+      "retiree",
+      "family_caregiver"
+    ],
+    "goal_tags": [
+      "lower_bills"
+    ],
     "disability_relevant": true,
     "urgency_weight": 5,
     "savings_type": "monthly"
@@ -58,28 +83,43 @@
     "category": "tax_savings",
     "impact": "high",
     "monthly_value": "Varies: $500-$10,000+/year",
-    "cross_ref": { "dataset": "state_benefits", "filter": "property_tax" },
+    "cross_ref": {
+      "dataset": "state_benefits",
+      "filter": "property_tax"
+    },
     "website": null,
     "verification": "AAAI state benefits database",
-    "audience": ["disabled_veteran"],
-    "goal_tags": ["taxes", "housing"],
+    "audience": [
+      "disabled_veteran"
+    ],
+    "goal_tags": [
+      "taxes",
+      "housing"
+    ],
     "disability_relevant": true,
     "urgency_weight": 4,
     "savings_type": "annual"
   },
   {
     "id": "fr-005",
-    "name": "VA Disability Pay — Federal Tax Free",
+    "name": "VA Disability Pay \u2014 Federal Tax Free",
     "description": "All VA disability compensation is exempt from federal income tax. If rated 100%, you may also qualify for state income tax exemptions. This is one of the most valuable financial benefits.",
     "section": "tax_optimization",
     "category": "tax_savings",
     "impact": "high",
     "monthly_value": "Effective 15-37% boost",
-    "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_tax" },
+    "cross_ref": {
+      "dataset": "hidden_benefits",
+      "filter": "federal_tax"
+    },
     "website": "https://www.va.gov/disability/",
     "verification": "IRS / VA official",
-    "audience": ["disabled_veteran"],
-    "goal_tags": ["taxes"],
+    "audience": [
+      "disabled_veteran"
+    ],
+    "goal_tags": [
+      "taxes"
+    ],
     "disability_relevant": true,
     "urgency_weight": 5,
     "savings_type": "annual"
@@ -92,11 +132,18 @@
     "category": "tax_savings",
     "impact": "medium",
     "monthly_value": "Full pay exclusion",
-    "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_tax" },
+    "cross_ref": {
+      "dataset": "hidden_benefits",
+      "filter": "federal_tax"
+    },
     "website": "https://www.irs.gov/newsroom/combat-zone-tax-exclusions",
     "verification": "IRS official",
-    "audience": ["employed"],
-    "goal_tags": ["taxes"],
+    "audience": [
+      "employed"
+    ],
+    "goal_tags": [
+      "taxes"
+    ],
     "disability_relevant": false,
     "urgency_weight": 3,
     "savings_type": "annual"
@@ -109,31 +156,58 @@
     "category": "tax_savings",
     "impact": "medium",
     "monthly_value": "Save $100-300 in prep fees",
-    "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_financial" },
+    "cross_ref": {
+      "dataset": "hidden_benefits",
+      "filter": "federal_financial"
+    },
     "website": "https://www.militaryonesource.mil/financial-legal/tax-resource-center/miltax-military-tax-services/",
     "verification": "DoD official",
-    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "business_owner", "family_caregiver"],
-    "goal_tags": ["taxes"],
+    "audience": [
+      "employed",
+      "transitioning",
+      "disabled_veteran",
+      "retiree",
+      "student",
+      "business_owner",
+      "family_caregiver"
+    ],
+    "goal_tags": [
+      "taxes"
+    ],
     "disability_relevant": false,
     "urgency_weight": 3,
     "savings_type": "annual"
   },
   {
     "id": "fr-008",
-    "name": "VA Home Loan — Zero Down, No PMI",
+    "name": "VA Home Loan \u2014 Zero Down, No PMI",
     "description": "The VA home loan saves $50,000-$100,000+ over the life of a mortgage through zero down payment and no PMI. The single most powerful wealth-building tool for veterans.",
     "section": "major_savings",
     "category": "housing",
     "impact": "high",
     "monthly_value": "$200-500/mo PMI savings",
-    "cross_ref": { "dataset": "resources", "filter": "housing" },
+    "cross_ref": {
+      "dataset": "resources",
+      "filter": "housing"
+    },
     "website": "https://www.va.gov/housing-assistance/home-loans/",
     "verification": "VA.gov official",
-    "audience": ["employed", "transitioning", "disabled_veteran", "retiree"],
-    "goal_tags": ["housing", "wealth_building"],
+    "audience": [
+      "employed",
+      "transitioning",
+      "disabled_veteran",
+      "retiree"
+    ],
+    "goal_tags": [
+      "housing",
+      "wealth_building"
+    ],
     "disability_relevant": false,
     "urgency_weight": 5,
-    "savings_type": "monthly"
+    "savings_type": "monthly",
+    "affiliate_url": "https://www.veteransunited.com/valoans/",
+    "affiliate_label": "Veterans United Home Loans",
+    "affiliate_value": "#1 VA purchase lender \u2014 free pre-qualification, no obligation"
   },
   {
     "id": "fr-009",
@@ -143,11 +217,19 @@
     "category": "debt_reduction",
     "impact": "high",
     "monthly_value": "Varies by debt load",
-    "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_financial" },
+    "cross_ref": {
+      "dataset": "hidden_benefits",
+      "filter": "federal_financial"
+    },
     "website": "https://www.justice.gov/servicemembers",
     "verification": "DoJ official",
-    "audience": ["employed"],
-    "goal_tags": ["reduce_debt", "lower_bills"],
+    "audience": [
+      "employed"
+    ],
+    "goal_tags": [
+      "reduce_debt",
+      "lower_bills"
+    ],
     "disability_relevant": false,
     "urgency_weight": 4,
     "savings_type": "monthly"
@@ -155,33 +237,54 @@
   {
     "id": "fr-010",
     "name": "GI Bill Housing Allowance (BAH)",
-    "description": "Post-9/11 GI Bill pays E-5 with dependents BAH rate while attending school full-time. This is income, not just tuition — it covers living expenses while you earn a degree.",
+    "description": "Post-9/11 GI Bill pays E-5 with dependents BAH rate while attending school full-time. This is income, not just tuition \u2014 it covers living expenses while you earn a degree.",
     "section": "income_benefits",
     "category": "education",
     "impact": "high",
     "monthly_value": "$1,200-$4,000+/mo BAH",
-    "cross_ref": { "dataset": "grants", "filter": "education" },
+    "cross_ref": {
+      "dataset": "grants",
+      "filter": "education"
+    },
     "website": "https://www.va.gov/education/about-gi-bill-benefits/post-9-11/",
     "verification": "VA.gov official",
-    "audience": ["student", "transitioning"],
-    "goal_tags": ["education", "lower_bills"],
+    "audience": [
+      "student",
+      "transitioning"
+    ],
+    "goal_tags": [
+      "education",
+      "lower_bills"
+    ],
     "disability_relevant": false,
     "urgency_weight": 5,
     "savings_type": "monthly"
   },
   {
     "id": "fr-011",
-    "name": "Military Discounts — Everyday Savings",
+    "name": "Military Discounts \u2014 Everyday Savings",
     "description": "Save 10-25% at hundreds of retailers, restaurants, telecom providers, and service companies. Small savings add up to thousands per year.",
     "section": "everyday_savings",
     "category": "discounts",
     "impact": "medium",
     "monthly_value": "$50-200/mo in savings",
-    "cross_ref": { "dataset": "military_discounts", "filter": null },
+    "cross_ref": {
+      "dataset": "military_discounts",
+      "filter": null
+    },
     "website": null,
     "verification": "AAAI verified discounts",
-    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "family_caregiver"],
-    "goal_tags": ["lower_bills"],
+    "audience": [
+      "employed",
+      "transitioning",
+      "disabled_veteran",
+      "retiree",
+      "student",
+      "family_caregiver"
+    ],
+    "goal_tags": [
+      "lower_bills"
+    ],
     "disability_relevant": false,
     "urgency_weight": 2,
     "savings_type": "monthly"
@@ -194,28 +297,48 @@
     "category": "discounts",
     "impact": "medium",
     "monthly_value": "$100-300/mo grocery savings",
-    "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_financial" },
+    "cross_ref": {
+      "dataset": "hidden_benefits",
+      "filter": "federal_financial"
+    },
     "website": "https://www.commissaries.com/",
     "verification": "DeCA official",
-    "audience": ["disabled_veteran", "retiree"],
-    "goal_tags": ["lower_bills"],
+    "audience": [
+      "disabled_veteran",
+      "retiree"
+    ],
+    "goal_tags": [
+      "lower_bills"
+    ],
     "disability_relevant": true,
     "urgency_weight": 3,
     "savings_type": "monthly"
   },
   {
     "id": "fr-013",
-    "name": "National Park Lifetime Pass — Free",
+    "name": "National Park Lifetime Pass \u2014 Free",
     "description": "Free lifetime access to all national parks, forests, wildlife refuges, and federal recreation areas. Normally $80/year. Available to all veterans.",
     "section": "everyday_savings",
     "category": "recreation",
     "impact": "low",
     "monthly_value": "$80/year",
-    "cross_ref": { "dataset": "hidden_benefits", "filter": "recreation" },
+    "cross_ref": {
+      "dataset": "hidden_benefits",
+      "filter": "recreation"
+    },
     "website": "https://www.nps.gov/planyourvisit/veterans-and-gold-star-families-free-access.htm",
     "verification": "NPS official",
-    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "family_caregiver"],
-    "goal_tags": ["lower_bills"],
+    "audience": [
+      "employed",
+      "transitioning",
+      "disabled_veteran",
+      "retiree",
+      "student",
+      "family_caregiver"
+    ],
+    "goal_tags": [
+      "lower_bills"
+    ],
     "disability_relevant": false,
     "urgency_weight": 1,
     "savings_type": "annual"
@@ -223,16 +346,29 @@
   {
     "id": "fr-014",
     "name": "Emergency Financial Assistance",
-    "description": "When you're in crisis: emergency grants for rent, utilities, food, and essential needs. Multiple organizations provide immediate help — don't wait until you're homeless.",
+    "description": "When you're in crisis: emergency grants for rent, utilities, food, and essential needs. Multiple organizations provide immediate help \u2014 don't wait until you're homeless.",
     "section": "safety_net",
     "category": "emergency",
     "impact": "critical",
     "monthly_value": "Up to $5,000 emergency",
-    "cross_ref": { "dataset": "emergency_assistance", "filter": null },
+    "cross_ref": {
+      "dataset": "emergency_assistance",
+      "filter": null
+    },
     "website": null,
     "verification": "AAAI emergency database",
-    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "family_caregiver"],
-    "goal_tags": ["lower_bills", "reduce_debt"],
+    "audience": [
+      "employed",
+      "transitioning",
+      "disabled_veteran",
+      "retiree",
+      "student",
+      "family_caregiver"
+    ],
+    "goal_tags": [
+      "lower_bills",
+      "reduce_debt"
+    ],
     "disability_relevant": false,
     "urgency_weight": 5,
     "savings_type": "one_time"
@@ -245,11 +381,23 @@
     "category": "grants",
     "impact": "high",
     "monthly_value": "$500-$50,000 per grant",
-    "cross_ref": { "dataset": "grants", "filter": null },
+    "cross_ref": {
+      "dataset": "grants",
+      "filter": null
+    },
     "website": null,
     "verification": "AAAI grants database",
-    "audience": ["transitioning", "student", "disabled_veteran", "family_caregiver"],
-    "goal_tags": ["education", "housing", "business"],
+    "audience": [
+      "transitioning",
+      "student",
+      "disabled_veteran",
+      "family_caregiver"
+    ],
+    "goal_tags": [
+      "education",
+      "housing",
+      "business"
+    ],
     "disability_relevant": false,
     "urgency_weight": 4,
     "savings_type": "one_time"
@@ -262,11 +410,24 @@
     "category": "state_benefits",
     "impact": "high",
     "monthly_value": "Varies by state",
-    "cross_ref": { "dataset": "state_benefits", "filter": null },
+    "cross_ref": {
+      "dataset": "state_benefits",
+      "filter": null
+    },
     "website": null,
     "verification": "AAAI state benefits database",
-    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "family_caregiver"],
-    "goal_tags": ["taxes", "lower_bills"],
+    "audience": [
+      "employed",
+      "transitioning",
+      "disabled_veteran",
+      "retiree",
+      "student",
+      "family_caregiver"
+    ],
+    "goal_tags": [
+      "taxes",
+      "lower_bills"
+    ],
     "disability_relevant": false,
     "urgency_weight": 4,
     "savings_type": "annual"
@@ -279,14 +440,28 @@
     "category": "budgeting",
     "impact": "high",
     "monthly_value": "Planning tool",
-    "cross_ref": { "dataset": "document_templates", "id": "budget-financial-recovery-plan" },
+    "cross_ref": {
+      "dataset": "document_templates",
+      "id": "budget-financial-recovery-plan"
+    },
     "website": null,
     "verification": "AAAI template system",
-    "audience": ["transitioning", "employed"],
-    "goal_tags": ["lower_bills", "reduce_debt", "wealth_building"],
+    "audience": [
+      "transitioning",
+      "employed"
+    ],
+    "goal_tags": [
+      "lower_bills",
+      "reduce_debt",
+      "wealth_building"
+    ],
     "disability_relevant": false,
     "urgency_weight": 4,
-    "savings_type": "tool"
+    "savings_type": "tool",
+    "premium_flag": true,
+    "premium_url": "https://www.militaryfinancialadvisors.org/",
+    "premium_label": "Military Financial Advisors Association",
+    "premium_value": "Fee-only CFP advisors who specialize in veteran and military finances"
   },
   {
     "id": "fr-018",
@@ -296,14 +471,25 @@
     "category": "debt_reduction",
     "impact": "medium",
     "monthly_value": "Planning tool",
-    "cross_ref": { "dataset": "document_templates", "id": "debt-hardship-letter" },
+    "cross_ref": {
+      "dataset": "document_templates",
+      "id": "debt-hardship-letter"
+    },
     "website": null,
     "verification": "AAAI template system",
-    "audience": ["transitioning", "disabled_veteran"],
-    "goal_tags": ["reduce_debt"],
+    "audience": [
+      "transitioning",
+      "disabled_veteran"
+    ],
+    "goal_tags": [
+      "reduce_debt"
+    ],
     "disability_relevant": false,
     "urgency_weight": 4,
-    "savings_type": "tool"
+    "savings_type": "tool",
+    "faster_option_url": "https://www.nfcc.org/resources/agency-locator/",
+    "faster_option_label": "Find an NFCC Certified Counselor",
+    "faster_option_value": "Free or low-cost debt counseling \u2014 same-week appointments available"
   },
   {
     "id": "fr-019",
@@ -313,11 +499,21 @@
     "category": "debt_reduction",
     "impact": "medium",
     "monthly_value": "Planning tool",
-    "cross_ref": { "dataset": "document_templates", "id": "credit-dispute-letter" },
+    "cross_ref": {
+      "dataset": "document_templates",
+      "id": "credit-dispute-letter"
+    },
     "website": null,
     "verification": "AAAI template system",
-    "audience": ["employed", "transitioning", "disabled_veteran"],
-    "goal_tags": ["reduce_debt", "wealth_building"],
+    "audience": [
+      "employed",
+      "transitioning",
+      "disabled_veteran"
+    ],
+    "goal_tags": [
+      "reduce_debt",
+      "wealth_building"
+    ],
     "disability_relevant": false,
     "urgency_weight": 3,
     "savings_type": "tool"
@@ -330,11 +526,20 @@
     "category": "insurance",
     "impact": "medium",
     "monthly_value": "$50-200/mo savings long-term",
-    "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_insurance" },
+    "cross_ref": {
+      "dataset": "hidden_benefits",
+      "filter": "federal_insurance"
+    },
     "website": "https://www.va.gov/life-insurance/options-eligibility/vgli/",
     "verification": "VA.gov official",
-    "audience": ["transitioning", "employed"],
-    "goal_tags": ["lower_bills", "wealth_building"],
+    "audience": [
+      "transitioning",
+      "employed"
+    ],
+    "goal_tags": [
+      "lower_bills",
+      "wealth_building"
+    ],
     "disability_relevant": false,
     "urgency_weight": 3,
     "savings_type": "monthly"

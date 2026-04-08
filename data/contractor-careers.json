@@ -4,15 +4,35 @@
     "name": "Lockheed Martin",
     "category": "prime_contractor",
     "description": "World's largest defense contractor with approximately 25% veteran workforce. Offers SkillBridge internships, Leadership Development Program, and Heroes Program for transitioning officers and NCOs.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["Security+", "CISSP", "PMP", "CASP+"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "PMP",
+      "CASP+"
+    ],
     "career_url": "https://www.lockheedmartinjobs.com/",
     "veteran_url": "https://www.lockheedmartinjobs.com/veterans",
     "headquarters": "Bethesda, MD",
-    "major_locations": ["Bethesda MD", "Fort Worth TX", "Marietta GA", "Orlando FL", "Palmdale CA"],
-    "sectors": ["aerospace", "defense", "cyber", "space"],
+    "major_locations": [
+      "Bethesda MD",
+      "Fort Worth TX",
+      "Marietta GA",
+      "Orlando FL",
+      "Palmdale CA"
+    ],
+    "sectors": [
+      "aerospace",
+      "defense",
+      "cyber",
+      "space"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 25,
     "military_friendly_rank": "Top 10"
@@ -22,15 +42,35 @@
     "name": "RTX (Raytheon Technologies)",
     "category": "prime_contractor",
     "description": "Major defense and aerospace company formed from the merger of Raytheon and United Technologies. Strong veteran hiring with dedicated military transition programs and SkillBridge partnerships.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["Security+", "CISSP", "PMP", "CEH"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "PMP",
+      "CEH"
+    ],
     "career_url": "https://careers.rtx.com/",
     "veteran_url": "https://careers.rtx.com/militaryandveterans",
     "headquarters": "Arlington, VA",
-    "major_locations": ["Arlington VA", "Tucson AZ", "McKinney TX", "Andover MA", "El Segundo CA"],
-    "sectors": ["aerospace", "defense", "cyber", "intelligence"],
+    "major_locations": [
+      "Arlington VA",
+      "Tucson AZ",
+      "McKinney TX",
+      "Andover MA",
+      "El Segundo CA"
+    ],
+    "sectors": [
+      "aerospace",
+      "defense",
+      "cyber",
+      "intelligence"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
     "military_friendly_rank": "Top 25"
@@ -40,15 +80,35 @@
     "name": "Northrop Grumman",
     "category": "prime_contractor",
     "description": "Global aerospace and defense technology company. Recognized as a Top 10 Military Friendly employer with dedicated veteran recruitment team, SkillBridge fellowships, and employee resource groups.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["Security+", "CISSP", "CASP+", "PMP"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "CASP+",
+      "PMP"
+    ],
     "career_url": "https://www.northropgrumman.com/careers/",
     "veteran_url": "https://www.northropgrumman.com/careers/military-veterans/",
     "headquarters": "Falls Church, VA",
-    "major_locations": ["Falls Church VA", "San Diego CA", "Redondo Beach CA", "Baltimore MD", "Huntsville AL"],
-    "sectors": ["aerospace", "defense", "cyber", "space"],
+    "major_locations": [
+      "Falls Church VA",
+      "San Diego CA",
+      "Redondo Beach CA",
+      "Baltimore MD",
+      "Huntsville AL"
+    ],
+    "sectors": [
+      "aerospace",
+      "defense",
+      "cyber",
+      "space"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 22,
     "military_friendly_rank": "Top 10"
@@ -58,15 +118,36 @@
     "name": "General Dynamics / GDIT",
     "category": "prime_contractor",
     "description": "Major defense contractor with subsidiary GDIT focused on IT and professional services. Veteran-ready career paths across IT, engineering, and program management with active SkillBridge and HOH participation.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["Security+", "CISSP", "CCNA", "PMP", "CISM"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "CCNA",
+      "PMP",
+      "CISM"
+    ],
     "career_url": "https://www.gd.com/careers",
     "veteran_url": "https://www.gdit.com/careers/military-veterans/",
     "headquarters": "Reston, VA",
-    "major_locations": ["Reston VA", "Falls Church VA", "San Antonio TX", "Augusta GA", "Colorado Springs CO"],
-    "sectors": ["defense", "IT", "cyber", "intelligence"],
+    "major_locations": [
+      "Reston VA",
+      "Falls Church VA",
+      "San Antonio TX",
+      "Augusta GA",
+      "Colorado Springs CO"
+    ],
+    "sectors": [
+      "defense",
+      "IT",
+      "cyber",
+      "intelligence"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
     "military_friendly_rank": "Top 25"
@@ -76,15 +157,34 @@
     "name": "Boeing",
     "category": "prime_contractor",
     "description": "Global aerospace and defense leader. Employs over 30,000 veterans across all divisions. Offers SkillBridge programs, veteran mentorship networks, and dedicated military skills translator for job matching.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["PMP", "Security+", "A&P License", "Six Sigma"],
+    "certifications_valued": [
+      "PMP",
+      "Security+",
+      "A&P License",
+      "Six Sigma"
+    ],
     "career_url": "https://jobs.boeing.com/",
     "veteran_url": "https://jobs.boeing.com/veterans",
     "headquarters": "Arlington, VA",
-    "major_locations": ["Arlington VA", "Seattle WA", "St. Louis MO", "Charleston SC", "Mesa AZ"],
-    "sectors": ["aerospace", "defense", "space", "logistics"],
+    "major_locations": [
+      "Arlington VA",
+      "Seattle WA",
+      "St. Louis MO",
+      "Charleston SC",
+      "Mesa AZ"
+    ],
+    "sectors": [
+      "aerospace",
+      "defense",
+      "space",
+      "logistics"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 15,
     "military_friendly_rank": "Top 10"
@@ -94,15 +194,35 @@
     "name": "L3Harris Technologies",
     "category": "prime_contractor",
     "description": "Defense electronics and communications company with strong cleared workforce needs. Active veteran hiring across electronic warfare, space systems, and C4ISR. Offers SkillBridge and veteran ERGs.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["Security+", "CISSP", "CEH", "PMP"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "CEH",
+      "PMP"
+    ],
     "career_url": "https://careers.l3harris.com/",
     "veteran_url": "https://careers.l3harris.com/military-and-veterans",
     "headquarters": "Melbourne, FL",
-    "major_locations": ["Melbourne FL", "Rochester NY", "Salt Lake City UT", "Greenville TX", "Camden NJ"],
-    "sectors": ["defense", "cyber", "space", "intelligence"],
+    "major_locations": [
+      "Melbourne FL",
+      "Rochester NY",
+      "Salt Lake City UT",
+      "Greenville TX",
+      "Camden NJ"
+    ],
+    "sectors": [
+      "defense",
+      "cyber",
+      "space",
+      "intelligence"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 18,
     "military_friendly_rank": "Top 25"
@@ -112,15 +232,35 @@
     "name": "BAE Systems",
     "category": "prime_contractor",
     "description": "International defense and security company with major US operations. Veteran-focused hiring across ship repair, vehicle systems, electronic systems, and intelligence. Active SkillBridge partnerships.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "PMP", "CISSP", "Six Sigma"],
+    "certifications_valued": [
+      "Security+",
+      "PMP",
+      "CISSP",
+      "Six Sigma"
+    ],
     "career_url": "https://www.baesystems.com/en/careers",
     "veteran_url": "https://www.baesystems.com/en/careers/careers-in-the-us/veterans",
     "headquarters": "Falls Church, VA",
-    "major_locations": ["Falls Church VA", "Nashua NH", "San Diego CA", "York PA", "Austin TX"],
-    "sectors": ["defense", "intelligence", "cyber", "logistics"],
+    "major_locations": [
+      "Falls Church VA",
+      "Nashua NH",
+      "San Diego CA",
+      "York PA",
+      "Austin TX"
+    ],
+    "sectors": [
+      "defense",
+      "intelligence",
+      "cyber",
+      "logistics"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
     "military_friendly_rank": "Top 25"
@@ -130,15 +270,32 @@
     "name": "Huntington Ingalls Industries",
     "category": "prime_contractor",
     "description": "America's largest military shipbuilder. Builds aircraft carriers and submarines. Strong veteran hiring especially for those with naval and maintenance backgrounds. SkillBridge partner.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["PMP", "Six Sigma", "AWS Welding", "OSHA"],
+    "certifications_valued": [
+      "PMP",
+      "Six Sigma",
+      "AWS Welding",
+      "OSHA"
+    ],
     "career_url": "https://www.huntingtoningalls.com/careers/",
     "veteran_url": "https://www.huntingtoningalls.com/careers/military-veterans/",
     "headquarters": "Newport News, VA",
-    "major_locations": ["Newport News VA", "Pascagoula MS", "Fairfax VA", "San Diego CA"],
-    "sectors": ["defense", "logistics", "IT"],
+    "major_locations": [
+      "Newport News VA",
+      "Pascagoula MS",
+      "Fairfax VA",
+      "San Diego CA"
+    ],
+    "sectors": [
+      "defense",
+      "logistics",
+      "IT"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 25,
     "military_friendly_rank": "Top 25"
@@ -148,15 +305,36 @@
     "name": "Leidos",
     "category": "prime_contractor",
     "description": "Fortune 500 defense and IT company with Operation MVP veteran hiring initiative. Over 8,000 veteran employees. Focus on national security, health, and civil missions. Active SkillBridge partner.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["Security+", "CISSP", "PMP", "CCNA", "CEH"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "PMP",
+      "CCNA",
+      "CEH"
+    ],
     "career_url": "https://careers.leidos.com/",
     "veteran_url": "https://careers.leidos.com/military-veterans",
     "headquarters": "Reston, VA",
-    "major_locations": ["Reston VA", "Huntsville AL", "San Diego CA", "Augusta GA", "Bethesda MD"],
-    "sectors": ["defense", "IT", "cyber", "intelligence"],
+    "major_locations": [
+      "Reston VA",
+      "Huntsville AL",
+      "San Diego CA",
+      "Augusta GA",
+      "Bethesda MD"
+    ],
+    "sectors": [
+      "defense",
+      "IT",
+      "cyber",
+      "intelligence"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
     "military_friendly_rank": "Top 10"
@@ -166,15 +344,36 @@
     "name": "SAIC",
     "category": "prime_contractor",
     "description": "Science Applications International Corporation. Major government IT and mission support contractor. Dedicated veteran hiring portal and SkillBridge partnerships across IT, engineering, and logistics.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["Security+", "CISSP", "PMP", "ITIL", "AWS"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "PMP",
+      "ITIL",
+      "AWS"
+    ],
     "career_url": "https://www.saic.com/careers",
     "veteran_url": "https://www.saic.com/careers/military-veterans",
     "headquarters": "Reston, VA",
-    "major_locations": ["Reston VA", "Huntsville AL", "San Diego CA", "Augusta GA", "Orlando FL"],
-    "sectors": ["defense", "IT", "cyber", "logistics"],
+    "major_locations": [
+      "Reston VA",
+      "Huntsville AL",
+      "San Diego CA",
+      "Augusta GA",
+      "Orlando FL"
+    ],
+    "sectors": [
+      "defense",
+      "IT",
+      "cyber",
+      "logistics"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 22,
     "military_friendly_rank": "Top 25"
@@ -184,15 +383,36 @@
     "name": "Booz Allen Hamilton",
     "category": "mid_tier_contractor",
     "description": "Global management and IT consulting firm with deep DoD and intelligence community ties. Over 30% of workforce are veterans. Offers SkillBridge, veteran fellowship programs, and active ERGs.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["CISSP", "PMP", "Security+", "CEH", "CISM"],
+    "certifications_valued": [
+      "CISSP",
+      "PMP",
+      "Security+",
+      "CEH",
+      "CISM"
+    ],
     "career_url": "https://www.boozallen.com/careers.html",
     "veteran_url": "https://www.boozallen.com/careers/military.html",
     "headquarters": "McLean, VA",
-    "major_locations": ["McLean VA", "San Antonio TX", "Annapolis Junction MD", "Honolulu HI", "Fayetteville NC"],
-    "sectors": ["consulting", "IT", "cyber", "intelligence"],
+    "major_locations": [
+      "McLean VA",
+      "San Antonio TX",
+      "Annapolis Junction MD",
+      "Honolulu HI",
+      "Fayetteville NC"
+    ],
+    "sectors": [
+      "consulting",
+      "IT",
+      "cyber",
+      "intelligence"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 30,
     "military_friendly_rank": "Top 10"
@@ -202,15 +422,36 @@
     "name": "CACI International",
     "category": "mid_tier_contractor",
     "description": "National security and government IT solutions company. Heavy focus on cleared workforce with intelligence community and DoD contracts. Active veteran recruiting across cyber, intelligence, and IT.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "CISSP", "CEH", "CASP+", "CCNA"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "CEH",
+      "CASP+",
+      "CCNA"
+    ],
     "career_url": "https://careers.caci.com/",
     "veteran_url": "https://careers.caci.com/global/en/military-veterans",
     "headquarters": "Reston, VA",
-    "major_locations": ["Reston VA", "Annapolis Junction MD", "San Antonio TX", "Chantilly VA", "Augusta GA"],
-    "sectors": ["intelligence", "cyber", "IT", "defense"],
+    "major_locations": [
+      "Reston VA",
+      "Annapolis Junction MD",
+      "San Antonio TX",
+      "Chantilly VA",
+      "Augusta GA"
+    ],
+    "sectors": [
+      "intelligence",
+      "cyber",
+      "IT",
+      "defense"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 22,
     "military_friendly_rank": "Top 25"
@@ -220,15 +461,35 @@
     "name": "ManTech International",
     "category": "mid_tier_contractor",
     "description": "Defense and intelligence IT solutions provider. Strong cleared workforce presence with active veteran recruitment. Focus areas include cyber operations, IT modernization, and intelligence analytics.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "CISSP", "CEH", "CCNA"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "CEH",
+      "CCNA"
+    ],
     "career_url": "https://www.mantech.com/careers",
     "veteran_url": "https://www.mantech.com/careers/veterans",
     "headquarters": "Herndon, VA",
-    "major_locations": ["Herndon VA", "Fort Meade MD", "San Antonio TX", "Augusta GA", "Colorado Springs CO"],
-    "sectors": ["intelligence", "cyber", "IT", "defense"],
+    "major_locations": [
+      "Herndon VA",
+      "Fort Meade MD",
+      "San Antonio TX",
+      "Augusta GA",
+      "Colorado Springs CO"
+    ],
+    "sectors": [
+      "intelligence",
+      "cyber",
+      "IT",
+      "defense"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 25,
     "military_friendly_rank": "Top 25"
@@ -238,15 +499,34 @@
     "name": "Peraton",
     "category": "mid_tier_contractor",
     "description": "National security company with over 4,400 veterans representing 20% of its workforce. Delivers space, intelligence, cyber, defense, and civilian solutions with dedicated veteran transition support.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "CISSP", "PMP", "AWS"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "PMP",
+      "AWS"
+    ],
     "career_url": "https://www.peraton.com/careers/",
     "veteran_url": "https://www.peraton.com/careers/military-veterans/",
     "headquarters": "Reston, VA",
-    "major_locations": ["Reston VA", "Annapolis Junction MD", "Colorado Springs CO", "Chantilly VA"],
-    "sectors": ["intelligence", "cyber", "space", "defense"],
+    "major_locations": [
+      "Reston VA",
+      "Annapolis Junction MD",
+      "Colorado Springs CO",
+      "Chantilly VA"
+    ],
+    "sectors": [
+      "intelligence",
+      "cyber",
+      "space",
+      "defense"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
     "military_friendly_rank": null
@@ -256,15 +536,31 @@
     "name": "ASRC Federal",
     "category": "mid_tier_contractor",
     "description": "Alaska Native Corporation-owned federal IT services company. Features MilComm employee resource group and active SkillBridge partnerships. Focus on IT modernization, cybersecurity, and mission support.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "CISSP", "PMP", "ITIL"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "PMP",
+      "ITIL"
+    ],
     "career_url": "https://www.asrcfederal.com/careers/",
     "veteran_url": "https://www.asrcfederal.com/careers/military-veterans/",
     "headquarters": "Beltsville, MD",
-    "major_locations": ["Beltsville MD", "Huntsville AL", "San Antonio TX"],
-    "sectors": ["IT", "cyber", "defense"],
+    "major_locations": [
+      "Beltsville MD",
+      "Huntsville AL",
+      "San Antonio TX"
+    ],
+    "sectors": [
+      "IT",
+      "cyber",
+      "defense"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 18,
     "military_friendly_rank": null
@@ -274,15 +570,32 @@
     "name": "KBR",
     "category": "mid_tier_contractor",
     "description": "Global engineering, construction, and defense services company. Extensive veteran hiring for logistics, base operations, and engineering roles. Strong presence in overseas and contingency operations.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": false,
-    "certifications_valued": ["PMP", "Six Sigma", "OSHA", "Security+"],
+    "certifications_valued": [
+      "PMP",
+      "Six Sigma",
+      "OSHA",
+      "Security+"
+    ],
     "career_url": "https://www.kbr.com/en/careers",
     "veteran_url": "https://www.kbr.com/en/careers/veterans",
     "headquarters": "Houston, TX",
-    "major_locations": ["Houston TX", "Huntsville AL", "San Antonio TX", "Fort Bragg NC"],
-    "sectors": ["logistics", "defense", "engineering"],
+    "major_locations": [
+      "Houston TX",
+      "Huntsville AL",
+      "San Antonio TX",
+      "Fort Bragg NC"
+    ],
+    "sectors": [
+      "logistics",
+      "defense",
+      "engineering"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
     "military_friendly_rank": "Top 25"
@@ -292,15 +605,31 @@
     "name": "Textron Systems",
     "category": "mid_tier_contractor",
     "description": "Defense and aerospace division of Textron Inc. Recognized as a Top 25 Veteran Employer. Opportunities in unmanned systems, simulation, and training. Bell helicopter division also hires veteran aviators.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": false,
-    "certifications_valued": ["PMP", "A&P License", "Security+"],
+    "certifications_valued": [
+      "PMP",
+      "A&P License",
+      "Security+"
+    ],
     "career_url": "https://www.textronsystems.com/careers",
     "veteran_url": "https://www.textronsystems.com/careers/military-veterans",
     "headquarters": "Providence, RI",
-    "major_locations": ["Hunt Valley MD", "Fort Worth TX", "Wichita KS", "Wilmington MA"],
-    "sectors": ["aerospace", "defense", "logistics"],
+    "major_locations": [
+      "Hunt Valley MD",
+      "Fort Worth TX",
+      "Wichita KS",
+      "Wilmington MA"
+    ],
+    "sectors": [
+      "aerospace",
+      "defense",
+      "logistics"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 15,
     "military_friendly_rank": "Top 25"
@@ -310,15 +639,31 @@
     "name": "Maxar Technologies",
     "category": "mid_tier_contractor",
     "description": "Space technology and intelligence company specializing in Earth observation satellites and geospatial intelligence. Cleared positions available across engineering, imagery analysis, and software.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "CISSP", "PMP"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "PMP"
+    ],
     "career_url": "https://www.maxar.com/careers",
     "veteran_url": null,
     "headquarters": "Westminster, CO",
-    "major_locations": ["Westminster CO", "Herndon VA", "San Jose CA"],
-    "sectors": ["space", "intelligence", "IT"],
+    "major_locations": [
+      "Westminster CO",
+      "Herndon VA",
+      "San Jose CA"
+    ],
+    "sectors": [
+      "space",
+      "intelligence",
+      "IT"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -328,15 +673,33 @@
     "name": "Accenture Federal Services",
     "category": "mid_tier_contractor",
     "description": "Federal consulting arm of Accenture. Delivers technology, strategy, and operations consulting to federal agencies. Active SkillBridge partner with dedicated military transition support programs.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["PMP", "CISSP", "AWS", "Agile/Scrum"],
+    "certifications_valued": [
+      "PMP",
+      "CISSP",
+      "AWS",
+      "Agile/Scrum"
+    ],
     "career_url": "https://www.accenture.com/us-en/about/company/us-federal-government",
     "veteran_url": "https://www.accenture.com/us-en/careers/military-veterans",
     "headquarters": "Arlington, VA",
-    "major_locations": ["Arlington VA", "San Antonio TX", "Washington DC", "St. Louis MO"],
-    "sectors": ["consulting", "IT", "cyber", "defense"],
+    "major_locations": [
+      "Arlington VA",
+      "San Antonio TX",
+      "Washington DC",
+      "St. Louis MO"
+    ],
+    "sectors": [
+      "consulting",
+      "IT",
+      "cyber",
+      "defense"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 15,
     "military_friendly_rank": "Top 25"
@@ -346,15 +709,33 @@
     "name": "Deloitte",
     "category": "mid_tier_contractor",
     "description": "Global professional services firm with large federal consulting practice. Runs CORE (Career Opportunity Readiness & Employment) military transition program. Active SkillBridge and HOH partner.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
-    "certifications_valued": ["PMP", "CISSP", "CPA", "Agile/Scrum"],
+    "certifications_valued": [
+      "PMP",
+      "CISSP",
+      "CPA",
+      "Agile/Scrum"
+    ],
     "career_url": "https://www2.deloitte.com/us/en/careers.html",
     "veteran_url": "https://www2.deloitte.com/us/en/pages/about-deloitte/articles/military-veterans.html",
     "headquarters": "New York, NY",
-    "major_locations": ["Washington DC", "McLean VA", "New York NY", "Chicago IL", "Dallas TX"],
-    "sectors": ["consulting", "IT", "cyber"],
+    "major_locations": [
+      "Washington DC",
+      "McLean VA",
+      "New York NY",
+      "Chicago IL",
+      "Dallas TX"
+    ],
+    "sectors": [
+      "consulting",
+      "IT",
+      "cyber"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 12,
     "military_friendly_rank": "Top 25"
@@ -364,7 +745,11 @@
     "name": "ClearanceJobs",
     "category": "cleared_job_board",
     "description": "The largest career network exclusively for professionals with active federal security clearances. Over 63,000 job postings from 1,200+ cleared facilities. Free for job seekers.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -372,7 +757,12 @@
     "veteran_url": null,
     "headquarters": "Dulles, VA",
     "major_locations": [],
-    "sectors": ["defense", "intelligence", "cyber", "IT"],
+    "sectors": [
+      "defense",
+      "intelligence",
+      "cyber",
+      "IT"
+    ],
     "source_type": "Job Board",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -382,7 +772,11 @@
     "name": "ClearedJobs.Net",
     "category": "cleared_job_board",
     "description": "Veteran-owned cleared job board and career fair organizer. Hosts virtual and in-person career events connecting cleared professionals with defense and intelligence employers.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -390,25 +784,46 @@
     "veteran_url": null,
     "headquarters": "Bowie, MD",
     "major_locations": [],
-    "sectors": ["defense", "intelligence", "cyber"],
+    "sectors": [
+      "defense",
+      "intelligence",
+      "cyber"
+    ],
     "source_type": "Job Board",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "affiliate_url": "https://www.clearedjobs.net/jobs/",
+    "affiliate_label": "Search Cleared Jobs Now",
+    "affiliate_value": "Veteran-owned board \u2014 10,000+ active cleared postings"
   },
   {
     "id": "cc-023",
     "name": "Intelligence Careers (IC)",
     "category": "cleared_job_board",
     "description": "Official U.S. Intelligence Community careers portal. Lists positions across CIA, NSA, DIA, NGA, NRO, and 13 other intelligence agencies. Requires U.S. citizenship and ability to obtain clearance.",
-    "clearance_types": ["top_secret", "sci"],
+    "clearance_types": [
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["CISSP", "CEH", "Security+"],
+    "certifications_valued": [
+      "CISSP",
+      "CEH",
+      "Security+"
+    ],
     "career_url": "https://www.intelligencecareers.gov/",
     "veteran_url": null,
     "headquarters": "Washington, DC",
-    "major_locations": ["Washington DC", "Fort Meade MD", "Langley VA", "Springfield VA"],
-    "sectors": ["intelligence"],
+    "major_locations": [
+      "Washington DC",
+      "Fort Meade MD",
+      "Langley VA",
+      "Springfield VA"
+    ],
+    "sectors": [
+      "intelligence"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -418,7 +833,11 @@
     "name": "Silent Professionals",
     "category": "cleared_job_board",
     "description": "Niche job board exclusively for special operations, intelligence, and cleared defense professionals. Curated listings for SOF veterans and those with specialized military backgrounds.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -426,17 +845,26 @@
     "veteran_url": null,
     "headquarters": "Tampa, FL",
     "major_locations": [],
-    "sectors": ["intelligence", "defense", "consulting"],
+    "sectors": [
+      "intelligence",
+      "defense",
+      "consulting"
+    ],
     "source_type": "Job Board",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-025",
-    "name": "USAJobs — Security Clearance Filter",
+    "name": "USAJobs \u2014 Security Clearance Filter",
     "category": "cleared_job_board",
     "description": "The federal government's official job board includes clearance-level filters. Search for positions requiring Secret, Top Secret, or TS/SCI. Veterans receive hiring preference points.",
-    "clearance_types": ["none", "secret", "top_secret", "sci"],
+    "clearance_types": [
+      "none",
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -444,7 +872,12 @@
     "veteran_url": "https://www.usajobs.gov/Help/working-in-government/unique-hiring-paths/veterans/",
     "headquarters": "Washington, DC",
     "major_locations": [],
-    "sectors": ["defense", "intelligence", "IT", "logistics"],
+    "sectors": [
+      "defense",
+      "intelligence",
+      "IT",
+      "logistics"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -454,7 +887,12 @@
     "name": "DoD SkillBridge Program",
     "category": "skillbridge_partner",
     "description": "Department of Defense program allowing service members to intern at civilian companies during their last 180 days of service while receiving military pay and benefits. Over 3,500 participating employers.",
-    "clearance_types": ["none", "secret", "top_secret", "sci"],
+    "clearance_types": [
+      "none",
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -462,7 +900,13 @@
     "veteran_url": "https://skillbridge.osd.mil/locations.htm",
     "headquarters": "Washington, DC",
     "major_locations": [],
-    "sectors": ["defense", "IT", "consulting", "logistics", "aerospace"],
+    "sectors": [
+      "defense",
+      "IT",
+      "consulting",
+      "logistics",
+      "aerospace"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -472,7 +916,11 @@
     "name": "Hiring Our Heroes Corporate Fellowship",
     "category": "skillbridge_partner",
     "description": "12-week fellowship program matching transitioning service members with Fortune 500 companies. Fully paid while still on active duty. One of the highest-placement transition programs with 90%+ hire rate.",
-    "clearance_types": ["none", "secret", "top_secret"],
+    "clearance_types": [
+      "none",
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": true,
     "hiring_our_heroes": true,
     "certifications_valued": [],
@@ -480,7 +928,12 @@
     "veteran_url": "https://www.hiringourheroes.org/fellowships/",
     "headquarters": "Washington, DC",
     "major_locations": [],
-    "sectors": ["consulting", "IT", "defense", "logistics"],
+    "sectors": [
+      "consulting",
+      "IT",
+      "defense",
+      "logistics"
+    ],
     "source_type": "Nonprofit",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -490,7 +943,9 @@
     "name": "United Services Military Apprenticeship Program (USMAP)",
     "category": "skillbridge_partner",
     "description": "DoD program that allows active-duty service members to earn Department of Labor apprenticeship certifications while serving. Covers 200+ occupations across trades, IT, and healthcare.",
-    "clearance_types": ["none"],
+    "clearance_types": [
+      "none"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -498,7 +953,11 @@
     "veteran_url": null,
     "headquarters": "Washington, DC",
     "major_locations": [],
-    "sectors": ["logistics", "IT", "engineering"],
+    "sectors": [
+      "logistics",
+      "IT",
+      "engineering"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -508,51 +967,84 @@
     "name": "CompTIA Security+",
     "category": "certification_program",
     "description": "DoD 8140 IAT Level I baseline certification. Required for most entry-level cybersecurity positions at defense contractors. Often the first cert veterans should pursue for cleared IT work.",
-    "clearance_types": ["none", "secret", "top_secret", "sci"],
+    "clearance_types": [
+      "none",
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+"],
+    "certifications_valued": [
+      "Security+"
+    ],
     "career_url": "https://www.comptia.org/certifications/security",
     "veteran_url": null,
     "headquarters": "Downers Grove, IL",
     "major_locations": [],
-    "sectors": ["cyber", "IT", "defense"],
+    "sectors": [
+      "cyber",
+      "IT",
+      "defense"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "affiliate_url": "https://www.comptia.org/training/certmaster-learn/security",
+    "affiliate_label": "CompTIA CertMaster Learn",
+    "affiliate_value": "Official interactive course + practice exams for SY0-701"
   },
   {
     "id": "cc-030",
     "name": "CISSP (ISC2)",
     "category": "certification_program",
     "description": "Certified Information Systems Security Professional. DoD 8140 IAM Level III certification. Gold standard for senior cybersecurity roles at defense contractors. Requires 5 years experience.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["CISSP"],
+    "certifications_valued": [
+      "CISSP"
+    ],
     "career_url": "https://www.isc2.org/certifications/cissp",
     "veteran_url": null,
     "headquarters": "Clearwater, FL",
     "major_locations": [],
-    "sectors": ["cyber", "IT", "intelligence"],
+    "sectors": [
+      "cyber",
+      "IT",
+      "intelligence"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-031",
-    "name": "CEH — Certified Ethical Hacker",
+    "name": "CEH \u2014 Certified Ethical Hacker",
     "category": "certification_program",
     "description": "EC-Council certification for penetration testing and offensive security. DoD 8140 CSSP Analyst baseline. Valued by contractors for red team and vulnerability assessment positions.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["CEH"],
+    "certifications_valued": [
+      "CEH"
+    ],
     "career_url": "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/",
     "veteran_url": null,
     "headquarters": "Albuquerque, NM",
     "major_locations": [],
-    "sectors": ["cyber", "intelligence"],
+    "sectors": [
+      "cyber",
+      "intelligence"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -562,33 +1054,54 @@
     "name": "CompTIA CASP+",
     "category": "certification_program",
     "description": "CompTIA Advanced Security Practitioner. DoD 8140 IAT Level III certification for advanced cybersecurity practitioners. Validates technical security skills for enterprise environments.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["CASP+"],
+    "certifications_valued": [
+      "CASP+"
+    ],
     "career_url": "https://www.comptia.org/certifications/comptia-advanced-security-practitioner",
     "veteran_url": null,
     "headquarters": "Downers Grove, IL",
     "major_locations": [],
-    "sectors": ["cyber", "IT", "defense"],
+    "sectors": [
+      "cyber",
+      "IT",
+      "defense"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-033",
-    "name": "PMP — Project Management Professional",
+    "name": "PMP \u2014 Project Management Professional",
     "category": "certification_program",
     "description": "PMI's gold standard for project management. Not DoD 8140 but extremely high value at every defense contractor for program management and leadership positions. Military leadership translates well.",
-    "clearance_types": ["none", "secret", "top_secret"],
+    "clearance_types": [
+      "none",
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["PMP"],
+    "certifications_valued": [
+      "PMP"
+    ],
     "career_url": "https://www.pmi.org/certifications/project-management-pmp",
     "veteran_url": null,
     "headquarters": "Newtown Square, PA",
     "major_locations": [],
-    "sectors": ["consulting", "defense", "IT", "aerospace"],
+    "sectors": [
+      "consulting",
+      "defense",
+      "IT",
+      "aerospace"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -598,33 +1111,52 @@
     "name": "CCNA Security (Cisco)",
     "category": "certification_program",
     "description": "Cisco Certified Network Associate with Security specialization. DoD 8140 mapped certification for network security roles. Strong demand at contractors managing DoD network infrastructure.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["CCNA"],
+    "certifications_valued": [
+      "CCNA"
+    ],
     "career_url": "https://www.cisco.com/site/us/en/learn/training-certifications/certifications/security/index.html",
     "veteran_url": null,
     "headquarters": "San Jose, CA",
     "major_locations": [],
-    "sectors": ["IT", "cyber", "defense"],
+    "sectors": [
+      "IT",
+      "cyber",
+      "defense"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-035",
-    "name": "CISM — Certified Information Security Manager",
+    "name": "CISM \u2014 Certified Information Security Manager",
     "category": "certification_program",
     "description": "ISACA certification for IT security management. DoD 8140 IAM Level II/III. Ideal for veterans moving into cybersecurity management and governance roles at defense contractors.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["CISM"],
+    "certifications_valued": [
+      "CISM"
+    ],
     "career_url": "https://www.isaca.org/credentialing/cism",
     "veteran_url": null,
     "headquarters": "Schaumburg, IL",
     "major_locations": [],
-    "sectors": ["cyber", "IT", "consulting"],
+    "sectors": [
+      "cyber",
+      "IT",
+      "consulting"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -634,15 +1166,23 @@
     "name": "DAWIA Certification",
     "category": "certification_program",
     "description": "Defense Acquisition Workforce Improvement Act certifications. Required for DoD acquisition positions. Covers contracting, program management, and engineering. Transferable to contractor roles.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["DAWIA"],
+    "certifications_valued": [
+      "DAWIA"
+    ],
     "career_url": "https://www.dau.edu/",
     "veteran_url": null,
     "headquarters": "Fort Belvoir, VA",
     "major_locations": [],
-    "sectors": ["defense", "consulting"],
+    "sectors": [
+      "defense",
+      "consulting"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -652,7 +1192,11 @@
     "name": "RecruitMilitary Career Fairs",
     "category": "career_fair",
     "description": "Largest military-focused career fair series in the U.S. with monthly events nationwide. Connects veterans with defense contractors, federal agencies, and military-friendly employers. Free for job seekers.",
-    "clearance_types": ["none", "secret", "top_secret"],
+    "clearance_types": [
+      "none",
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -660,17 +1204,30 @@
     "veteran_url": "https://recruitmilitary.com/job-seekers",
     "headquarters": "Cincinnati, OH",
     "major_locations": [],
-    "sectors": ["defense", "IT", "logistics", "consulting"],
+    "sectors": [
+      "defense",
+      "IT",
+      "logistics",
+      "consulting"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "premium_flag": true,
+    "premium_url": "https://www.topresume.com/federal-resume-writing",
+    "premium_label": "Professional Federal Resume Writing",
+    "premium_value": "Certified writers optimized for USAJobs & defense contractors"
   },
   {
     "id": "cc-038",
     "name": "Hiring Our Heroes Hiring Events",
     "category": "career_fair",
     "description": "U.S. Chamber of Commerce Foundation career events held quarterly on military installations. Connects transitioning service members directly with hiring managers from 100+ employers per event.",
-    "clearance_types": ["none", "secret", "top_secret"],
+    "clearance_types": [
+      "none",
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": true,
     "certifications_valued": [],
@@ -678,7 +1235,12 @@
     "veteran_url": "https://www.hiringourheroes.org/hiring-events/",
     "headquarters": "Washington, DC",
     "major_locations": [],
-    "sectors": ["defense", "IT", "consulting", "logistics"],
+    "sectors": [
+      "defense",
+      "IT",
+      "consulting",
+      "logistics"
+    ],
     "source_type": "Nonprofit",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -688,7 +1250,11 @@
     "name": "ClearanceJobs Career Events",
     "category": "career_fair",
     "description": "Quarterly virtual and in-person career events focused exclusively on cleared professionals. Connects TS/SCI holders with defense and intelligence community employers.",
-    "clearance_types": ["secret", "top_secret", "sci"],
+    "clearance_types": [
+      "secret",
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -696,7 +1262,11 @@
     "veteran_url": null,
     "headquarters": "Dulles, VA",
     "major_locations": [],
-    "sectors": ["defense", "intelligence", "cyber"],
+    "sectors": [
+      "defense",
+      "intelligence",
+      "cyber"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -706,7 +1276,11 @@
     "name": "TalentAlly Defense Career Fairs",
     "category": "career_fair",
     "description": "Career fair series focused on defense industry employment. Hosts 3+ events annually connecting military talent with cleared and non-cleared contractor positions.",
-    "clearance_types": ["none", "secret", "top_secret"],
+    "clearance_types": [
+      "none",
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -714,107 +1288,176 @@
     "veteran_url": null,
     "headquarters": "Reston, VA",
     "major_locations": [],
-    "sectors": ["defense", "IT", "consulting"],
+    "sectors": [
+      "defense",
+      "IT",
+      "consulting"
+    ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-041",
-    "name": "NSA — National Security Agency",
+    "name": "NSA \u2014 National Security Agency",
     "category": "intelligence_community",
     "description": "Signals intelligence and cybersecurity agency. Major employer of veterans with SIGINT, cyber, and language backgrounds. Offers veteran hiring programs and competitive GS pay scales.",
-    "clearance_types": ["top_secret", "sci"],
+    "clearance_types": [
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["CISSP", "CEH", "Security+", "CASP+"],
+    "certifications_valued": [
+      "CISSP",
+      "CEH",
+      "Security+",
+      "CASP+"
+    ],
     "career_url": "https://www.nsa.gov/careers/",
     "veteran_url": "https://www.nsa.gov/careers/military-veterans/",
     "headquarters": "Fort Meade, MD",
-    "major_locations": ["Fort Meade MD", "Augusta GA", "San Antonio TX", "Denver CO", "Honolulu HI"],
-    "sectors": ["intelligence", "cyber"],
+    "major_locations": [
+      "Fort Meade MD",
+      "Augusta GA",
+      "San Antonio TX",
+      "Denver CO",
+      "Honolulu HI"
+    ],
+    "sectors": [
+      "intelligence",
+      "cyber"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-042",
-    "name": "CIA — Central Intelligence Agency",
+    "name": "CIA \u2014 Central Intelligence Agency",
     "category": "intelligence_community",
     "description": "Human intelligence and all-source analysis agency. Actively recruits veterans for operations, analysis, STEM, and support positions. Military experience highly valued for paramilitary and operations roles.",
-    "clearance_types": ["top_secret", "sci"],
+    "clearance_types": [
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
     "career_url": "https://www.cia.gov/careers/",
     "veteran_url": "https://www.cia.gov/careers/working-at-cia/military-transition/",
     "headquarters": "Langley, VA",
-    "major_locations": ["Langley VA", "Washington DC"],
-    "sectors": ["intelligence"],
+    "major_locations": [
+      "Langley VA",
+      "Washington DC"
+    ],
+    "sectors": [
+      "intelligence"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-043",
-    "name": "DIA — Defense Intelligence Agency",
+    "name": "DIA \u2014 Defense Intelligence Agency",
     "category": "intelligence_community",
     "description": "Military intelligence agency providing intelligence to warfighters and defense decision-makers. Natural transition for military intelligence professionals. Veteran preference applies.",
-    "clearance_types": ["top_secret", "sci"],
+    "clearance_types": [
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "CISSP"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP"
+    ],
     "career_url": "https://www.dia.mil/Careers/",
     "veteran_url": null,
     "headquarters": "Washington, DC",
-    "major_locations": ["Washington DC", "Reston VA", "Huntsville AL"],
-    "sectors": ["intelligence", "defense"],
+    "major_locations": [
+      "Washington DC",
+      "Reston VA",
+      "Huntsville AL"
+    ],
+    "sectors": [
+      "intelligence",
+      "defense"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-044",
-    "name": "NGA — National Geospatial-Intelligence Agency",
+    "name": "NGA \u2014 National Geospatial-Intelligence Agency",
     "category": "intelligence_community",
     "description": "Geospatial intelligence agency providing maps, imagery, and location intelligence. Strong fit for veterans with GEOINT, imagery analysis, and engineering backgrounds.",
-    "clearance_types": ["top_secret", "sci"],
+    "clearance_types": [
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "CISSP", "GIS certifications"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "GIS certifications"
+    ],
     "career_url": "https://www.nga.mil/careers/",
     "veteran_url": null,
     "headquarters": "Springfield, VA",
-    "major_locations": ["Springfield VA", "St. Louis MO", "Arnold MO"],
-    "sectors": ["intelligence", "IT"],
+    "major_locations": [
+      "Springfield VA",
+      "St. Louis MO",
+      "Arnold MO"
+    ],
+    "sectors": [
+      "intelligence",
+      "IT"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-045",
-    "name": "ODNI — Office of the Director of National Intelligence",
+    "name": "ODNI \u2014 Office of the Director of National Intelligence",
     "category": "intelligence_community",
     "description": "Oversees the 18-member U.S. Intelligence Community. Hires for policy, analysis, technology, and management roles. Veterans with IC experience have direct pathway through veteran preference.",
-    "clearance_types": ["top_secret", "sci"],
+    "clearance_types": [
+      "top_secret",
+      "sci"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["PMP", "CISSP"],
+    "certifications_valued": [
+      "PMP",
+      "CISSP"
+    ],
     "career_url": "https://www.dni.gov/careers",
     "veteran_url": null,
     "headquarters": "McLean, VA",
-    "major_locations": ["McLean VA", "Washington DC"],
-    "sectors": ["intelligence"],
+    "major_locations": [
+      "McLean VA",
+      "Washington DC"
+    ],
+    "sectors": [
+      "intelligence"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-046",
-    "name": "VETS — Veterans' Employment & Training Service",
+    "name": "VETS \u2014 Veterans' Employment & Training Service",
     "category": "federal_resource",
     "description": "Department of Labor service providing employment resources, training programs, and enforcement of veterans' employment rights under USERRA. Oversees JVSG counselors at American Job Centers.",
-    "clearance_types": ["none"],
+    "clearance_types": [
+      "none"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -832,7 +1475,9 @@
     "name": "VA Careers & Employment Services",
     "category": "federal_resource",
     "description": "VA programs for veteran employment including career counseling, education benefits, vocational rehabilitation (VR&E/Chapter 31), and employer partnerships. Central hub for VA career support.",
-    "clearance_types": ["none"],
+    "clearance_types": [
+      "none"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -847,10 +1492,12 @@
   },
   {
     "id": "cc-048",
-    "name": "Apprenticeship.gov — Veterans Pathway",
+    "name": "Apprenticeship.gov \u2014 Veterans Pathway",
     "category": "federal_resource",
     "description": "Federal apprenticeship portal with dedicated veteran pathway. Connects military skills to registered apprenticeships in IT, cybersecurity, advanced manufacturing, and healthcare.",
-    "clearance_types": ["none"],
+    "clearance_types": [
+      "none"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -858,7 +1505,11 @@
     "veteran_url": "https://www.apprenticeship.gov/career-seekers/service-members-and-veterans",
     "headquarters": "Washington, DC",
     "major_locations": [],
-    "sectors": ["IT", "engineering", "logistics"],
+    "sectors": [
+      "IT",
+      "engineering",
+      "logistics"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -868,15 +1519,27 @@
     "name": "DCMA Military-Veterans Careers",
     "category": "federal_resource",
     "description": "Defense Contract Management Agency provides quality assurance and contract administration for DoD acquisitions. Hires veterans for contract specialist, quality assurance, and engineering positions.",
-    "clearance_types": ["secret", "top_secret"],
+    "clearance_types": [
+      "secret",
+      "top_secret"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["DAWIA", "PMP"],
+    "certifications_valued": [
+      "DAWIA",
+      "PMP"
+    ],
     "career_url": "https://www.dcma.mil/Careers/",
     "veteran_url": "https://www.dcma.mil/Careers/Military-Veterans/",
     "headquarters": "Fort Lee, VA",
-    "major_locations": ["Fort Lee VA", "Nationwide field offices"],
-    "sectors": ["defense", "logistics"],
+    "major_locations": [
+      "Fort Lee VA",
+      "Nationwide field offices"
+    ],
+    "sectors": [
+      "defense",
+      "logistics"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
@@ -886,25 +1549,38 @@
     "name": "GI Bill for Certifications",
     "category": "federal_resource",
     "description": "Use GI Bill education benefits to pay for IT and professional certifications. Covers exam fees and approved prep courses for Security+, CISSP, PMP, and hundreds of other certifications.",
-    "clearance_types": ["none"],
+    "clearance_types": [
+      "none"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
-    "certifications_valued": ["Security+", "CISSP", "PMP", "CEH", "CCNA"],
+    "certifications_valued": [
+      "Security+",
+      "CISSP",
+      "PMP",
+      "CEH",
+      "CCNA"
+    ],
     "career_url": "https://www.va.gov/education/about-gi-bill-benefits/how-to-use-benefits/non-college-degree-programs/",
     "veteran_url": "https://www.va.gov/education/about-gi-bill-benefits/how-to-use-benefits/non-college-degree-programs/",
     "headquarters": "Washington, DC",
     "major_locations": [],
-    "sectors": ["IT", "cyber"],
+    "sectors": [
+      "IT",
+      "cyber"
+    ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
     "military_friendly_rank": null
   },
   {
     "id": "cc-051",
-    "name": "VR&E — Vocational Rehabilitation & Employment",
+    "name": "VR&E \u2014 Vocational Rehabilitation & Employment",
     "category": "federal_resource",
     "description": "VA Chapter 31 program providing career counseling, training, education, and job placement for service-connected disabled veterans. Covers certification costs, tools, and support services.",
-    "clearance_types": ["none"],
+    "clearance_types": [
+      "none"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -922,7 +1598,9 @@
     "name": "VA for Vets",
     "category": "federal_resource",
     "description": "VA's internal veteran hiring and career development program. Helps veterans find federal employment within the VA and other federal agencies. Includes resume builder and skills translator.",
-    "clearance_types": ["none"],
+    "clearance_types": [
+      "none"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
@@ -940,7 +1618,9 @@
     "name": "Transition Assistance Program (TAP)",
     "category": "federal_resource",
     "description": "DoD-mandated transition program for separating service members. Provides career readiness standards, financial planning, VA benefits briefings, and employer connections. Required attendance.",
-    "clearance_types": ["none"],
+    "clearance_types": [
+      "none"
+    ],
     "skillbridge_partner": false,
     "hiring_our_heroes": false,
     "certifications_valued": [],
