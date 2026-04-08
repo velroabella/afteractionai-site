@@ -10,7 +10,12 @@
     "how_to_claim": "Apply through VA Form 10-8678 or contact your local VA Prosthetics department",
     "annual_value": "$952.44 (2025 rate)",
     "website": "https://www.va.gov/disability/eligibility/special-claims/clothing-allowance/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["money_saving"],
+    "priority_weight": 3
   },
   {
     "id": "hb-002",
@@ -23,7 +28,12 @@
     "how_to_claim": "Apply through VA Form 10-1394 at your VA medical center",
     "annual_value": "Up to $22,563 (2025 rate, one-time)",
     "website": "https://www.va.gov/disability/eligibility/special-claims/automobile-allowance-adaptive-equipment/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["money_saving"],
+    "priority_weight": 4
   },
   {
     "id": "hb-003",
@@ -36,7 +46,12 @@
     "how_to_claim": "Contact VA Insurance Center at 1-800-669-8477",
     "annual_value": "Up to $200,000 mortgage coverage",
     "website": "https://www.va.gov/life-insurance/options-eligibility/vmli/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": true,
+    "goal_tags": ["insurance", "housing"],
+    "priority_weight": 3
   },
   {
     "id": "hb-004",
@@ -49,7 +64,12 @@
     "how_to_claim": "Apply via VA Form 29-4364 within 2 years of receiving service-connected disability notification",
     "annual_value": "$10,000 basic + up to $30,000 supplemental",
     "website": "https://www.va.gov/life-insurance/options-eligibility/s-dvi/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": true,
+    "goal_tags": ["insurance"],
+    "priority_weight": 4
   },
   {
     "id": "hb-005",
@@ -62,7 +82,12 @@
     "how_to_claim": "Apply through OSGLI at 1-800-419-1473 or online at benefits.va.gov/insurance",
     "annual_value": "Up to $500,000 coverage",
     "website": "https://www.va.gov/life-insurance/options-eligibility/vgli/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran", "active_duty"],
+    "disability_relevant": false,
+    "family_relevant": true,
+    "goal_tags": ["insurance"],
+    "priority_weight": 4
   },
   {
     "id": "hb-006",
@@ -75,7 +100,12 @@
     "how_to_claim": "Apply through VA enrollment or contact your VAMC dental clinic directly",
     "annual_value": "Full dental coverage (cleanings, restorations, prosthetics)",
     "website": "https://www.va.gov/health-care/about-va-health-benefits/dental-care/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["medical"],
+    "priority_weight": 5
   },
   {
     "id": "hb-007",
@@ -88,7 +118,12 @@
     "how_to_claim": "Register with VA FMP at 303-331-7590 or email FMP@va.gov, submit claims within 1 year of treatment",
     "annual_value": "Reimbursement for all SC-related treatment abroad",
     "website": "https://www.va.gov/communitycare/programs/veterans/fmp/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["medical"],
+    "priority_weight": 3
   },
   {
     "id": "hb-008",
@@ -101,7 +136,12 @@
     "how_to_claim": "Apply via VA Form 10-10d to VHA Office of Community Care, CHAMPVA",
     "annual_value": "Comprehensive health coverage (75% of allowable charges after $50 deductible)",
     "website": "https://www.va.gov/health-care/family-caregiver-benefits/champva/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["surviving_spouse", "caregiver"],
+    "disability_relevant": true,
+    "family_relevant": true,
+    "goal_tags": ["medical", "family"],
+    "priority_weight": 5
   },
   {
     "id": "hb-009",
@@ -114,7 +154,12 @@
     "how_to_claim": "Submit via Beneficiary Travel Self Service System (BTSSS) online or at VA medical center travel office within 30 days of appointment",
     "annual_value": "$0.415/mile (2025 rate) + tolls and parking",
     "website": "https://www.va.gov/health-care/get-reimbursed-for-travel-pay/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["money_saving", "medical"],
+    "priority_weight": 4
   },
   {
     "id": "hb-010",
@@ -127,7 +172,12 @@
     "how_to_claim": "File IRS Form 1040-X to amend prior returns; contact a VITA volunteer tax preparer at your VA or military installation",
     "annual_value": "Varies — can be thousands in refunds for missed exclusions",
     "website": "https://www.irs.gov/newsroom/tax-exclusion-for-combat-service",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["active_duty", "veteran"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["money_saving"],
+    "priority_weight": 3
   },
   {
     "id": "hb-011",
@@ -140,7 +190,12 @@
     "how_to_claim": "Ensure VA disability income is NOT reported as taxable income on federal/state returns; consult a tax professional if previously reported",
     "annual_value": "Tax savings of 10-37% of disability compensation depending on bracket",
     "website": "https://www.irs.gov/individuals/information-for-veterans",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["money_saving"],
+    "priority_weight": 5
   },
   {
     "id": "hb-012",
@@ -153,7 +208,12 @@
     "how_to_claim": "Contact your county tax assessor or use your state's veteran property tax exemption application",
     "annual_value": "Varies: $500/year (low rating, some states) to 100% exemption (100% rated, TX/FL/others)",
     "website": "https://news.va.gov/139592/unlocking-veteran-tax-exemptions-across-states-and-u-s-territories/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["money_saving", "state_specific", "housing"],
+    "priority_weight": 5
   },
   {
     "id": "hb-013",
@@ -166,7 +226,12 @@
     "how_to_claim": "Contact your State Department of Veterans Affairs; some states require residency at time of service",
     "annual_value": "One-time: $100-$5,000+ depending on state and deployment",
     "website": "https://www.benefits.va.gov/benefits/offices.asp",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["money_saving", "state_specific"],
+    "priority_weight": 3
   },
   {
     "id": "hb-014",
@@ -179,7 +244,13 @@
     "how_to_claim": "Present valid veteran ID at any national park entrance station or request online",
     "annual_value": "$80/year savings (cost of the standard annual pass)",
     "website": "https://www.nps.gov/planyourvisit/veterans-and-gold-star-families-free-access.htm",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran", "disabled_veteran", "active_duty", "guard_reserve"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["recreation"],
+    "priority_weight": 4,
+    "cross_ref": ["or-001"]
   },
   {
     "id": "hb-015",
@@ -192,7 +263,13 @@
     "how_to_claim": "Contact your state wildlife/fish & game department or apply at license vendor with veteran ID/DD-214",
     "annual_value": "$20-$150/year in license savings depending on state",
     "website": null,
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran", "disabled_veteran"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["recreation", "state_specific"],
+    "priority_weight": 3,
+    "cross_ref": ["or-013"]
   },
   {
     "id": "hb-016",
@@ -205,7 +282,12 @@
     "how_to_claim": "Claim on USAJobs application; attach DD-214 and SF-15 (for 10-point preference); VA disability letter if applicable",
     "annual_value": "Competitive advantage — can be the difference between getting hired or not",
     "website": "https://www.fedshirevets.gov/job-seekers/veterans-preference/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran", "disabled_veteran"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["employment"],
+    "priority_weight": 5
   },
   {
     "id": "hb-017",
@@ -218,7 +300,12 @@
     "how_to_claim": "Apply via VA.gov or VA Form 28-1900; attend orientation and counseling with VR&E counselor",
     "annual_value": "$735-$1,105/month subsistence (2025, varies by training type and dependents) plus tuition, books, supplies",
     "website": "https://www.va.gov/careers-employment/vocational-rehabilitation/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["education", "money_saving"],
+    "priority_weight": 5
   },
   {
     "id": "hb-018",
@@ -231,7 +318,12 @@
     "how_to_claim": "Dependent applies via VA Form 22-5490; must be between ages 18-26 for children (extensions available)",
     "annual_value": "$1,298/month (2025 full-time institutional rate) for up to 36 months",
     "website": "https://www.va.gov/education/survivor-dependent-benefits/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["surviving_spouse"],
+    "disability_relevant": true,
+    "family_relevant": true,
+    "goal_tags": ["education", "family"],
+    "priority_weight": 5
   },
   {
     "id": "hb-019",
@@ -244,7 +336,12 @@
     "how_to_claim": "Send written request with copy of military orders to each lender; request retroactive refund if overcharged",
     "annual_value": "Can save hundreds to thousands per year on mortgages, student loans, credit cards",
     "website": "https://www.justice.gov/servicemembers/servicemembers-civil-relief-act-scra",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["active_duty"],
+    "disability_relevant": false,
+    "family_relevant": true,
+    "goal_tags": ["money_saving"],
+    "priority_weight": 4
   },
   {
     "id": "hb-020",
@@ -257,7 +354,12 @@
     "how_to_claim": "Adjust TSP contributions via myPay before or during deployment; elect Roth contributions for combat zone pay",
     "annual_value": "Potentially tens of thousands in tax-free retirement savings over career",
     "website": "https://www.tsp.gov/making-contributions/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["active_duty"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["money_saving"],
+    "priority_weight": 4
   },
   {
     "id": "hb-021",
@@ -270,7 +372,12 @@
     "how_to_claim": "MilTax: militaryonesource.mil/financial-legal/tax-resource-center; VITA: IRS.gov/VITA or call 211",
     "annual_value": "$50-$400 savings on tax prep fees",
     "website": "https://www.militaryonesource.mil/financial-legal/tax-resource-center/miltax-military-tax-services/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran", "active_duty", "guard_reserve"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["money_saving"],
+    "priority_weight": 4
   },
   {
     "id": "hb-022",
@@ -283,7 +390,12 @@
     "how_to_claim": "Provide Certificate of Eligibility showing exempt status; if already paid, request refund through VA Regional Loan Center",
     "annual_value": "One-time savings of $4,000-$15,000+ depending on loan amount and down payment",
     "website": "https://www.va.gov/housing-assistance/home-loans/funding-fee-and-closing-costs/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran", "surviving_spouse"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["money_saving", "housing"],
+    "priority_weight": 5
   },
   {
     "id": "hb-023",
@@ -296,7 +408,12 @@
     "how_to_claim": "Enroll in at least one in-person class to qualify for full BAH rate at school's ZIP code",
     "annual_value": "$12,000-$48,000/year depending on location (in-person vs. online rate difference can be $6,000-$24,000/year)",
     "website": "https://www.va.gov/education/about-gi-bill-benefits/post-9-11/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["education", "money_saving"],
+    "priority_weight": 5
   },
   {
     "id": "hb-024",
@@ -309,7 +426,12 @@
     "how_to_claim": "Apply at your local DMV with DD-214 and VA rating letter; request veteran plates and fee waiver simultaneously",
     "annual_value": "$30-$200/year in registration savings; free plates save $15-$50",
     "website": null,
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["money_saving", "state_specific"],
+    "priority_weight": 3
   },
   {
     "id": "hb-025",
@@ -322,7 +444,13 @@
     "how_to_claim": "Contact your state parks department or apply at park entrance with veteran ID/DD-214",
     "annual_value": "$20-$100/year in day-use and camping fee savings",
     "website": null,
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran", "disabled_veteran"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["recreation", "state_specific"],
+    "priority_weight": 3,
+    "cross_ref": ["or-002"]
   },
   {
     "id": "hb-026",
@@ -335,7 +463,12 @@
     "how_to_claim": "Contact DFAS at 1-800-321-1080 to verify SBP payments are restored; contact VA at 1-800-827-1000 for DIC",
     "annual_value": "Up to $1,612/month in DIC + full SBP annuity (combined can exceed $3,000/month)",
     "website": "https://www.dfas.mil/RetiredMilitary/survivors/SBP-DIC-702/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["surviving_spouse"],
+    "disability_relevant": false,
+    "family_relevant": true,
+    "goal_tags": ["money_saving", "family"],
+    "priority_weight": 5
   },
   {
     "id": "hb-027",
@@ -348,7 +481,12 @@
     "how_to_claim": "Obtain a Veteran Health Identification Card (VHIC) or use VHIC/VA ID at commissary; shop online at shopmyexchange.com with veteran verification",
     "annual_value": "$1,000-$4,000/year in savings on groceries and retail (commissary prices average 23.7% below commercial)",
     "website": "https://www.commissaries.com/shopping/store-locations",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["veteran", "disabled_veteran"],
+    "disability_relevant": false,
+    "family_relevant": false,
+    "goal_tags": ["money_saving"],
+    "priority_weight": 4
   },
   {
     "id": "hb-028",
@@ -361,7 +499,12 @@
     "how_to_claim": "Register veteran plates with your state toll authority (e.g., TxDOT, FDOT, NY Thruway); process varies by state",
     "annual_value": "$200-$2,000+/year depending on commute and state",
     "website": null,
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["money_saving", "state_specific"],
+    "priority_weight": 3
   },
   {
     "id": "hb-029",
@@ -374,7 +517,12 @@
     "how_to_claim": "Apply through VA Form 26-4555 for subsequent SAH grant",
     "annual_value": "Up to $40,637 second grant / $109,986 lifetime total",
     "website": "https://www.va.gov/housing-assistance/disability-housing-grants/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["housing"],
+    "priority_weight": 4
   },
   {
     "id": "hb-030",
@@ -387,6 +535,11 @@
     "how_to_claim": "Discuss self-employment track with VR&E counselor; develop business plan as part of rehabilitation plan",
     "annual_value": "Equipment, supplies, and startup costs covered; subsistence allowance during plan development",
     "website": "https://www.va.gov/careers-employment/vocational-rehabilitation/programs/self-employment/",
-    "verification": "verified"
+    "verification": "verified",
+    "audience": ["disabled_veteran"],
+    "disability_relevant": true,
+    "family_relevant": false,
+    "goal_tags": ["employment"],
+    "priority_weight": 4
   }
 ]

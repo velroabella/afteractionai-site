@@ -117,6 +117,48 @@
   <p class="page-hero-bar__subtitle">Overlooked and underused benefits most veterans never claim. Federal, state, and lesser-known programs you may be eligible for.</p>
 </section>
 
+<!-- ═══════════ EXECUTION PANEL ═══════════ -->
+<section class="execution-panel" id="hbExecutionPanel" style="max-width:900px;margin:2rem auto;padding:2rem 2rem 1.5rem;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:16px;border:1px solid rgba(212,168,67,0.25);box-shadow:0 4px 24px rgba(0,0,0,0.3);">
+  <h2 style="margin:0 0 0.25rem;font-size:1.4rem;color:#f0f0f0;text-align:center;">Find Your Hidden Benefits</h2>
+  <p style="color:#aaa;font-size:0.9rem;text-align:center;margin:0 0 1.5rem;">Answer a few questions — we'll show the benefits most likely to apply to you.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+    <div>
+      <label for="hbExAudience" style="display:block;font-size:0.8rem;color:#ccc;margin-bottom:4px;font-weight:600;">I am a…</label>
+      <select id="hbExAudience" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:#0f0f23;color:#f0f0f0;font-size:0.95rem;">
+        <option value="">— Select —</option>
+        <option value="veteran">Veteran</option>
+        <option value="disabled_veteran">Disabled Veteran</option>
+        <option value="active_duty">Active Duty</option>
+        <option value="guard_reserve">Guard / Reserve</option>
+        <option value="retiree">Retiree</option>
+        <option value="surviving_spouse">Surviving Spouse</option>
+        <option value="caregiver">Caregiver / Family</option>
+      </select>
+    </div>
+    <div>
+      <label for="hbExGoal" style="display:block;font-size:0.8rem;color:#ccc;margin-bottom:4px;font-weight:600;">I'm looking for…</label>
+      <select id="hbExGoal" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:#0f0f23;color:#f0f0f0;font-size:0.95rem;">
+        <option value="">— Select —</option>
+        <option value="money_saving">Money-Saving Benefits</option>
+        <option value="medical">Healthcare / Medical</option>
+        <option value="education">Education Benefits</option>
+        <option value="housing">Housing Benefits</option>
+        <option value="insurance">Insurance Benefits</option>
+        <option value="employment">Employment Benefits</option>
+        <option value="recreation">Recreation / Lifestyle</option>
+        <option value="family">Family / Survivor Benefits</option>
+        <option value="state_specific">State-Specific Benefits</option>
+        <option value="see_everything">Show Everything</option>
+      </select>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:1.25rem;">
+    <button onclick="hbExecutionEngine()" style="padding:12px 36px;border-radius:10px;border:none;background:linear-gradient(135deg,#d4a843,#b8860b);color:#000;font-weight:700;font-size:1rem;cursor:pointer;letter-spacing:0.5px;transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 16px rgba(212,168,67,0.4)';" onmouseout="this.style.transform='none';this.style.boxShadow='none';">Show My Top Benefits</button>
+  </div>
+  <!-- Execution Results -->
+  <div id="hbExResults" style="display:none;margin-top:1.5rem;"></div>
+</section>
+
 <!-- QUICK ACCESS BAR -->
 <div class="rp-quickaccess">
   <div class="rp-quickaccess__inner">
@@ -254,6 +296,38 @@
   </main>
 
 </div>
+
+<!-- CROSS-REFERENCES -->
+<section class="resources-crossref" style="max-width:1200px;margin:2rem auto;padding:0 1rem;">
+  <h2 style="font-size:1.2rem;color:#f0f0f0;margin-bottom:1rem;text-align:center;">Related Resources</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+    <a href="state-benefits.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127961;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">State Benefits</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Full state-by-state benefits directory</div>
+    </a>
+    <a href="financial-optimization.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128176;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Financial Optimization</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Tax strategies, debt relief, and VA financial tools</div>
+    </a>
+    <a href="outdoor-recreation.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127956;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Outdoor Recreation</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Parks, hunting, fishing, adaptive sports</div>
+    </a>
+    <a href="families-support.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128106;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Families &amp; Survivors</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Spouse, dependent, and survivor support</div>
+    </a>
+    <a href="medical-help.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127973;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Medical &amp; Mental Health</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">VA healthcare, dental, travel reimbursement</div>
+    </a>
+  </div>
+</section>
 
 <!-- FOOTER -->
   <footer class="footer">
@@ -548,6 +622,172 @@ function hbParseUrlFilters() {
       hero.parentNode.insertBefore(banner, hero.nextElementSibling);
     }
   }
+}
+
+// ── Execution Engine ─────────────────────────────────────
+var HB_AUDIENCE_LABELS = {
+  veteran: 'Veteran',
+  disabled_veteran: 'Disabled Veteran',
+  active_duty: 'Active Duty',
+  guard_reserve: 'Guard / Reserve',
+  retiree: 'Retiree',
+  surviving_spouse: 'Surviving Spouse',
+  caregiver: 'Caregiver / Family'
+};
+
+var HB_GOAL_LABELS = {
+  money_saving: 'Money-Saving',
+  medical: 'Healthcare / Medical',
+  education: 'Education',
+  housing: 'Housing',
+  insurance: 'Insurance',
+  employment: 'Employment',
+  recreation: 'Recreation / Lifestyle',
+  family: 'Family / Survivor',
+  state_specific: 'State-Specific',
+  see_everything: 'All Benefits'
+};
+
+// Goal-to-category mapping for bonus scoring
+var HB_GOAL_CATEGORIES = {
+  money_saving: ['federal_compensation', 'federal_tax', 'federal_financial', 'state_tax', 'state_bonus', 'state_vehicle'],
+  medical: ['federal_healthcare'],
+  education: ['federal_education'],
+  housing: ['federal_housing'],
+  insurance: ['federal_insurance'],
+  employment: ['federal_employment'],
+  recreation: ['recreation'],
+  family: ['federal_survivor'],
+  state_specific: ['state_tax', 'state_bonus', 'state_vehicle']
+};
+
+// Audience-to-implied expansions (a disabled_veteran is also a veteran)
+var HB_AUDIENCE_INCLUDES = {
+  veteran: ['veteran'],
+  disabled_veteran: ['disabled_veteran', 'veteran'],
+  active_duty: ['active_duty'],
+  guard_reserve: ['guard_reserve'],
+  retiree: ['retiree', 'veteran'],
+  surviving_spouse: ['surviving_spouse'],
+  caregiver: ['caregiver']
+};
+
+function hbExecutionEngine() {
+  var audience = document.getElementById('hbExAudience').value;
+  var goal = document.getElementById('hbExGoal').value;
+  var resultsDiv = document.getElementById('hbExResults');
+
+  if (!audience) {
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p style="color:#e74c3c;text-align:center;font-size:0.9rem;">Please select who you are to get personalized results.</p>';
+    return;
+  }
+
+  var expandedAudience = HB_AUDIENCE_INCLUDES[audience] || [audience];
+  var goalCategories = (goal && goal !== 'see_everything') ? (HB_GOAL_CATEGORIES[goal] || []) : [];
+  var scored = [];
+
+  hbAllBenefits.forEach(function(b) {
+    var score = 0;
+    var reasons = [];
+
+    // Audience match (+20 for direct match, +8 for expanded match)
+    var audArr = b.audience || [];
+    var directMatch = audArr.indexOf(audience) !== -1;
+    var expandedMatch = !directMatch && expandedAudience.some(function(a) { return audArr.indexOf(a) !== -1; });
+    if (directMatch) {
+      score += 20;
+      reasons.push('Directly targets ' + (HB_AUDIENCE_LABELS[audience] || audience) + 's');
+    } else if (expandedMatch) {
+      score += 8;
+      reasons.push('Available to ' + (HB_AUDIENCE_LABELS[audience] || audience) + 's');
+    } else {
+      return; // Skip benefits that don't match audience at all
+    }
+
+    // Goal match (+15 for goal_tags match, +10 for category match)
+    var goalTags = b.goal_tags || [];
+    if (goal && goal !== 'see_everything') {
+      if (goalTags.indexOf(goal) !== -1) {
+        score += 15;
+        reasons.push('Matches your ' + (HB_GOAL_LABELS[goal] || goal) + ' goal');
+      }
+      if (goalCategories.length > 0 && goalCategories.indexOf(b.category) !== -1) {
+        score += 10;
+      }
+    }
+
+    // Priority weight bonus (+priority_weight * 3)
+    var pw = b.priority_weight || 1;
+    score += pw * 3;
+
+    // Disability relevance bonus for disabled_veteran audience
+    if (audience === 'disabled_veteran' && b.disability_relevant) {
+      score += 6;
+      if (reasons.length < 3) reasons.push('Disability-related benefit');
+    }
+
+    // Family relevance bonus for surviving_spouse/caregiver
+    if ((audience === 'surviving_spouse' || audience === 'caregiver') && b.family_relevant) {
+      score += 6;
+      if (reasons.length < 3) reasons.push('Family/survivor benefit');
+    }
+
+    // Verified bonus
+    if (b.verification === 'verified') {
+      score += 2;
+    }
+
+    scored.push({ benefit: b, score: score, reasons: reasons });
+  });
+
+  // Sort by score descending
+  scored.sort(function(a, b) { return b.score - a.score; });
+
+  // Take top 5
+  var top = scored.slice(0, 5);
+
+  if (top.length === 0) {
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p style="color:#ccc;text-align:center;font-size:0.9rem;">No benefits matched your profile. Try broadening your selection.</p>';
+    return;
+  }
+
+  var html = '<div style="border-top:1px solid rgba(212,168,67,0.3);padding-top:1.25rem;">' +
+    '<h3 style="color:#d4a843;font-size:1.1rem;margin:0 0 1rem;text-align:center;">Your Top ' + top.length + ' Hidden Benefits</h3>';
+
+  top.forEach(function(item, idx) {
+    var b = item.benefit;
+    var meta = HB_CATEGORY_META[b.category] || { label: b.category, color: '' };
+    var verifiedTag = b.verification === 'verified' ? ' <span style="font-size:0.65rem;padding:2px 6px;border-radius:4px;background:rgba(72,187,120,0.15);color:#48bb78;font-weight:600;">VERIFIED</span>' : '';
+    var valueTag = b.annual_value ? '<div style="margin-top:6px;font-size:0.8rem;color:#48bb78;font-weight:600;">' + esc(b.annual_value) + '</div>' : '';
+    var linkBtn = b.website ? '<a href="' + esc(b.website) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:6px;background:rgba(212,168,67,0.15);color:#d4a843;text-decoration:none;font-size:0.8rem;font-weight:600;border:1px solid rgba(212,168,67,0.3);transition:background 0.2s;" onmouseover="this.style.background=\'rgba(212,168,67,0.25)\'" onmouseout="this.style.background=\'rgba(212,168,67,0.15)\'">Learn More &amp; Claim &#8599;</a>' : '';
+    var howTag = b.how_to_claim ? '<div style="margin-top:6px;font-size:0.8rem;color:#aaa;"><strong style="color:#ccc;">Next step:</strong> ' + esc(b.how_to_claim) + '</div>' : '';
+
+    html += '<div style="display:flex;gap:1rem;align-items:flex-start;padding:1rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">' +
+      '<div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#d4a843,#b8860b);display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;font-size:0.9rem;">' + (idx + 1) + '</div>' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:700;color:#f0f0f0;font-size:0.95rem;">' + esc(b.name) + verifiedTag + '</div>' +
+        '<span style="display:inline-block;font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(212,168,67,0.1);color:#d4a843;margin-top:4px;">' + esc(meta.label) + '</span>' +
+        '<div style="margin-top:6px;font-size:0.85rem;color:#bbb;">' + esc(item.reasons.join(' · ')) + '</div>' +
+        valueTag +
+        howTag +
+        linkBtn +
+      '</div>' +
+    '</div>';
+  });
+
+  html += '<div style="text-align:center;margin-top:1rem;">' +
+    '<button onclick="hbScrollToGrid()" style="padding:8px 20px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:#ccc;font-size:0.85rem;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'rgba(212,168,67,0.4)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.15)\'">Browse All ' + hbAllBenefits.length + ' Benefits Below &#8595;</button>' +
+  '</div></div>';
+
+  resultsDiv.style.display = 'block';
+  resultsDiv.innerHTML = html;
+}
+
+function hbScrollToGrid() {
+  var grid = document.getElementById('hbGrid');
+  if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 // ── Init (external JSON) ─────────────────────────────────
