@@ -3,15 +3,88 @@
 <head>
   <meta charset="UTF-8" />
   <title>Career Events | After Action AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="stylesheet" href="css/styles.css" />
+  <style>
+    .container { max-width: 1200px; margin:auto; padding:20px; }
+    .panel { background:#111; padding:20px; border-radius:8px; margin-bottom:20px; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px; }
+    .card { background:#1a1a1a; padding:16px; border-radius:8px; }
+    .btn { display:inline-block; margin-top:10px; padding:8px 12px; background:#e63946; color:#fff; text-decoration:none; border-radius:4px; }
+  </style>
 </head>
 <body>
 
-<h1>Career Events Page Working</h1>
+<div class="container">
+  <h1>Find Your Next Career Event</h1>
+
+  <div class="panel">
+    <select id="state">
+      <option value="">All States</option>
+      <option value="FL">Florida</option>
+      <option value="TX">Texas</option>
+      <option value="CA">California</option>
+      <option value="VA">Virginia</option>
+      <option value="KY">Kentucky</option>
+    </select>
+
+    <select id="type">
+      <option value="">All Types</option>
+      <option value="virtual">Virtual</option>
+      <option value="in-person">In-Person</option>
+    </select>
+
+    <button onclick="runFilter()">Find Events</button>
+  </div>
+
+  <div id="results" class="grid"></div>
+</div>
 
 <script>
+let events = [];
+
 fetch('data/career-events.json')
   .then(r => r.json())
-  .then(data => console.log(data));
+  .then(data => {
+    events = data;
+    render(events);
+  });
+
+function runFilter(){
+  const state = document.getElementById('state').value;
+  const type = document.getElementById('type').value;
+
+  const filtered = events.filter(e => {
+    if(state && e.state !== state) return false;
+    if(type === 'virtual' && !e.virtual) return false;
+    if(type === 'in-person' && e.virtual) return false;
+    return true;
+  });
+
+  render(filtered);
+}
+
+function render(list){
+  const el = document.getElementById('results');
+  el.innerHTML = '';
+
+  if(list.length === 0){
+    el.innerHTML = '<p>No events found.</p>';
+    return;
+  }
+
+  list.forEach(e => {
+    el.innerHTML += `
+      <div class="card">
+        <h3>${e.title}</h3>
+        <p><strong>${e.organizer}</strong></p>
+        <p>${e.start_date}</p>
+        <p>${e.virtual ? 'Virtual Event' : e.city + ', ' + e.state}</p>
+        <a class="btn" href="${e.registration_url}" target="_blank">Register</a>
+      </div>
+    `;
+  });
+}
 </script>
 
 </body>
