@@ -1100,8 +1100,13 @@
       var _empty = { engaged: [], lastPage: null, lastParams: null, inProgress: [], hasHistory: false };
       if (!window.AIOS || !window.AIOS.ExecutionState) return _empty;
 
-      var _es   = window.AIOS.ExecutionState._state;
-      var _last = window.AIOS.ExecutionState.getLastExecution();
+      // D1 FIX: Guard against null or non-object _state (corruption / race condition).
+      // _state is always initialized to _ES_DEFAULT but could be externally nulled or
+      // overwritten with a non-object during a reset cycle.  Fall back to {} so the
+      // Array.isArray guards on the next two lines produce empty arrays cleanly.
+      var _esRaw = window.AIOS.ExecutionState._state;
+      var _es    = (_esRaw && typeof _esRaw === 'object' && !Array.isArray(_esRaw)) ? _esRaw : {};
+      var _last  = window.AIOS.ExecutionState.getLastExecution();
 
       var completed  = Array.isArray(_es.completed_actions)   ? _es.completed_actions.slice()   : [];
       var inProgress = Array.isArray(_es.in_progress_actions) ? _es.in_progress_actions.slice() : [];
@@ -1127,12 +1132,17 @@
       var _pagePath = _rawPage ? _rawPage.split('?')[0] : null;
       var lastPage  = (_pagePath && _P10_PAGE_LABELS[_pagePath]) ? _pagePath : null;
 
-      var hasHistory = engaged.length > 0 || inProgress.length > 0 || !!lastPage;
+      // D4 FIX: Extract lastParams before hasHistory so we can include valid params as a signal.
+      // Scenario: lastPage is null (stale/rejected URL) but lastParams has intent/skill — the
+      // pre-fill hint (section 3) should still fire. hasHistory was previously false in this case.
+      var lastParams   = _last ? (_last.params || null) : null;
+      var _hasParams   = !!(lastParams && (lastParams.intent || lastParams.skill));
+      var hasHistory   = engaged.length > 0 || inProgress.length > 0 || !!lastPage || _hasParams;
 
       return {
         engaged:    engaged,
         lastPage:   lastPage,
-        lastParams: _last ? (_last.params || null) : null,
+        lastParams: lastParams,
         inProgress: inProgress,
         hasHistory: hasHistory
       };
@@ -1176,13 +1186,17 @@
           ' or build on what was started. Only suggest — do NOT auto-navigate.';
       }
 
-      // 3. Pre-fill hint — inform the AI of prior session params
+      // 3. Pre-fill hint — inform the AI of prior session params.
+      // D3 FIX: Section 2 already emitted lastParams.intent when s.lastPage is set.
+      // Skip intent here to avoid duplication; only include skill (which section 2 never shows).
       if (s.lastParams && (s.lastParams.intent || s.lastParams.skill)) {
         var _pf = [];
-        if (s.lastParams.intent) _pf.push('intent: ' + s.lastParams.intent);
-        if (s.lastParams.skill)  _pf.push('skill: '  + s.lastParams.skill);
-        block += '\n\nPRE-FILL HINT: The veteran\'s previous session context was (' + _pf.join(', ') + ').' +
-          ' You may reference this when introducing or returning to the relevant execution page.';
+        if (s.lastParams.intent && !s.lastPage) _pf.push('intent: ' + s.lastParams.intent);
+        if (s.lastParams.skill)                 _pf.push('skill: '  + s.lastParams.skill);
+        if (_pf.length > 0) {
+          block += '\n\nPRE-FILL HINT: The veteran\'s previous session context was (' + _pf.join(', ') + ').' +
+            ' You may reference this when introducing or returning to the relevant execution page.';
+        }
       }
 
       // 4. In-progress resources — soft "continue" suggestion
