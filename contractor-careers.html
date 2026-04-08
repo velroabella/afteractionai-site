@@ -614,7 +614,7 @@ function ccRenderCard(r) {
   }
 
   var linkHTML = ctaUrl !== '#'
-    ? '<a href="' + esc(ctaUrl) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">' + esc(ctaText) + ' &#8599;</a>'
+    ? '<a href="' + esc(ctaUrl) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button" onclick="aaaiMarkCompleted(\'' + r.id + '\')">' + esc(ctaText) + ' &#8599;</a>'
     : '';
 
   return '<div class="resource-card aa-card" data-category="' + esc(r.category) + '">' +
@@ -796,7 +796,7 @@ function ccExecutionEngine() {
     if (r.category === 'intelligence_community') nextAction = 'Apply online — veteran preference applies';
 
     var linkBtn = ctaUrl !== '#'
-      ? '<a href="' + esc(ctaUrl) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:6px 16px;background:var(--gold,#d4a843);color:#000;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;">' + esc(ctaText) + ' &#8599;</a>'
+      ? '<a href="' + esc(ctaUrl) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:6px 16px;background:var(--gold,#d4a843);color:#000;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;" onclick="aaaiMarkCompleted(\'' + r.id + '\')">' + esc(ctaText) + ' &#8599;</a>'
       : '';
 
     html += '<div style="display:flex;align-items:flex-start;gap:16px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border-left:3px solid ' + clStyle.text + ';">' +
@@ -899,6 +899,16 @@ function ccLoadData() {
 
 // ── Init ──────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', ccLoadData);
+
+// ── Phase 9C: Completion hook ─────────────────────────────
+// Called by primary CTA onclick on both grid cards and execution results.
+// Safe no-op if AIOS.ExecutionState is unavailable (memory-manager.js not loaded).
+function aaaiMarkCompleted(id) {
+  if (window.AIOS && window.AIOS.ExecutionState &&
+      typeof window.AIOS.ExecutionState.markCompleted === 'function') {
+    window.AIOS.ExecutionState.markCompleted(id);
+  }
+}
 </script>
 
 <script src="js/auth.js"></script>
