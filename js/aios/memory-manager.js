@@ -1025,7 +1025,12 @@
      */
     setPayload: function(payload) {
       if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return;
-      ExecutionState._state.latest_payload = payload;
+      // D1 FIX: Deep copy to prevent caller mutation of stored state (e.g., Phase 12 resource_ids push)
+      try {
+        ExecutionState._state.latest_payload = JSON.parse(JSON.stringify(payload));
+      } catch(e) {
+        ExecutionState._state.latest_payload = payload; // fallback if JSON serialization fails
+      }
       console.log('[AIOS][EXEC_STATE] Payload stored — type: ' + payload.type + ' | page: ' + (payload.page || 'none'));
       ExecutionState._persist();
     },
