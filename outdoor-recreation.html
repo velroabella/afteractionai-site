@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Outdoor Recreation &amp; Discounts — AfterAction AI</title>
+  <meta name="description" content="Free national park passes, state park access, hunting and fishing license waivers, ski discounts, and outdoor adventure programs for military veterans." />
+  <meta name="keywords" content="veteran outdoor discounts, military national park pass, veteran hunting license, veteran fishing license, military ski discounts, veteran recreation" />
+  <meta property="og:title" content="Outdoor Recreation & Discounts — AfterAction AI" />
+  <meta property="og:description" content="Free national park passes, state park access, hunting and fishing license waivers, and outdoor adventure programs for military veterans." />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://afteractionai.org/outdoor-recreation" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/resources-upgrade.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta property="og:image" content="https://afteractionai.org/images/og-image.png" />
+  <meta property="og:image:width" content="1536" />
+  <meta property="og:image:height" content="1024" />
+  <meta property="og:site_name" content="AfterAction AI" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://afteractionai.org/images/og-image.png" />
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+  <div class="navbar__inner">
+    <a href="index.html" class="navbar__logo">
+      <img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="navbar__logo-img">
+    </a>
+    <button class="navbar__menu-toggle" aria-label="Toggle menu" onclick="toggleMenu()">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+    <ul class="navbar__nav" id="navMenu">
+      <li><a href="families-support.html" class="navbar__families-btn">Families &amp; Survivors</a></li>
+      <li class="navbar__dropdown">
+        <a href="about.html">About</a>
+        <ul class="navbar__dropdown-menu">
+          <li><a href="about.html">Our Mission</a></li>
+          <li><a href="board.html">Board</a></li>
+        </ul>
+      </li>
+      <li class="navbar__dropdown">
+        <a href="resources.html" class="active">Resources</a>
+        <ul class="navbar__dropdown-menu">
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Health &amp; Crisis</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="medical-help.html">Medical &amp; Mental Health</a></li>
+              <li><a href="service-dogs.html">Service Dogs</a></li>
+              <li><a href="hotlines-escalation.html">Hotlines &amp; Escalation</a></li>
+              <li><a href="emergency-assistance.html">Emergency Assistance</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Family &amp; Survivors</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="families-support.html">Families &amp; Survivors</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Career &amp; Education</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="education.html">Education</a></li>
+              <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
+              <li><a href="licensure.html#va-approved">VA Approved Programs</a></li>
+              <li><a href="transition-guide.html">Transition Guide</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Benefits &amp; Financial Aid</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="grants-scholarships.html">Grants &amp; Scholarships</a></li>
+              <li><a href="state-benefits.html">State Benefits</a></li>
+              <li><a href="hidden-benefits.html">Hidden Benefits</a></li>
+              <li><a href="financial-optimization.html">Financial Optimization</a></li>
+              <li><a href="document-templates.html">Document Templates</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Lifestyle &amp; Recreation</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="outdoor-recreation.html" class="active">Outdoor Recreation</a></li>
+              <li><a href="military-discounts.html">Military Discounts</a></li>
+              <li><a href="wellness.html">Wellness &amp; Fitness</a></li>
+            </ul>
+          </li>
+          <li class="navbar__submenu">
+            <a href="#" class="navbar__submenu-label">Advocacy &amp; Network</a>
+            <ul class="navbar__submenu-menu">
+              <li><a href="resources.html">Partner Organizations</a></li>
+              <li><a href="elected-officials.html">Elected Officials</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="auth-profile-btn" style="display:none;"><a href="profile.html">Profile</a></li>
+      <li class="auth-signin-btn"><a href="#" onclick="event.preventDefault();AAAI.auth.openAuthModal('login')">Sign In</a></li>
+      <li><a href="medical-help.html" class="navbar__get-help-btn">Get Help Now</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="page-hero-bar" style="background-image: url('images/hero-resources.jpg');">
+  <h1 class="page-hero-bar__title">Outdoor Recreation &amp; Discounts</h1>
+  <div class="page-hero-bar__divider"></div>
+  <p class="page-hero-bar__subtitle">Your military service unlocks free national park access, state park passes, hunting and fishing license waivers, ski discounts, and outdoor adventure programs.</p>
+</section>
+
+<!-- SECTION 1: EXECUTION PANEL -->
+<div class="resources-cta" id="orExecutionPanel" style="margin:0 auto;max-width:1200px;padding:32px 24px;">
+  <h3 class="resources-cta__title" style="margin-bottom:8px;">Find Your Outdoor Benefits</h3>
+  <p class="resources-cta__text" style="margin-bottom:20px;">Answer a few quick questions and we'll show you exactly which outdoor benefits you qualify for.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px;">
+    <div>
+      <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;">Do you have a VA disability rating?</label>
+      <select id="orExDisability" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:var(--bg-card,#1a1a2e);color:var(--text-primary,#e0e0e0);font-size:0.95rem;">
+        <option value="">-- Select --</option>
+        <option value="none">No disability rating</option>
+        <option value="any">Yes — any rating</option>
+        <option value="30">Yes — 30% or higher</option>
+        <option value="50">Yes — 50% or higher</option>
+        <option value="60">Yes — 60% or higher</option>
+      </select>
+    </div>
+    <div>
+      <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;">Your State</label>
+      <select id="orExState" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:var(--bg-card,#1a1a2e);color:var(--text-primary,#e0e0e0);font-size:0.95rem;">
+        <option value="">-- Any State --</option>
+        <option value="CA">California</option><option value="CO">Colorado</option><option value="FL">Florida</option>
+        <option value="GA">Georgia</option><option value="ID">Idaho</option><option value="IL">Illinois</option>
+        <option value="KS">Kansas</option><option value="LA">Louisiana</option><option value="ME">Maine</option>
+        <option value="MN">Minnesota</option><option value="MT">Montana</option><option value="NJ">New Jersey</option>
+        <option value="NY">New York</option><option value="OR">Oregon</option><option value="TX">Texas</option>
+        <option value="UT">Utah</option><option value="VT">Vermont</option><option value="WA">Washington</option>
+        <option value="WY">Wyoming</option>
+      </select>
+    </div>
+    <div>
+      <label style="display:block;font-size:0.85rem;font-weight:600;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;">What are you looking for?</label>
+      <select id="orExGoal" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:var(--bg-card,#1a1a2e);color:var(--text-primary,#e0e0e0);font-size:0.95rem;">
+        <option value="">-- Any Goal --</option>
+        <option value="save_money">Save Money on Outdoor Gear</option>
+        <option value="parks_access">National &amp; State Park Access</option>
+        <option value="hunting_fishing">Hunting &amp; Fishing Licenses</option>
+        <option value="outdoor_activities">Outdoor Adventure Programs</option>
+        <option value="ski_snow">Ski &amp; Snow Sports</option>
+        <option value="adaptive">Adaptive Outdoor Programs</option>
+      </select>
+    </div>
+  </div>
+  <button class="resources-cta__button" onclick="orExecutionEngine()" style="margin-bottom:0;">Show My Benefits</button>
+  <div id="orExResults" style="margin-top:20px;display:none;"></div>
+</div>
+
+<!-- QUICK ACCESS BAR -->
+<div class="rp-quickaccess">
+  <div class="rp-quickaccess__inner">
+    <button class="rp-qa-btn" onclick="orClearAll()">All Programs</button>
+    <button class="rp-qa-btn" onclick="orApplyQA('category','federal_access')">Federal Access</button>
+    <button class="rp-qa-btn" onclick="orApplyQA('category','state_parks')">State Parks</button>
+    <button class="rp-qa-btn" onclick="orApplyQA('category','hunting_fishing')">Hunting &amp; Fishing</button>
+    <button class="rp-qa-btn" onclick="orApplyQA('category','ski_snow')">Ski &amp; Snow</button>
+    <button class="rp-qa-btn" onclick="orApplyQA('category','nonprofit_programs')">Nonprofits</button>
+  </div>
+</div>
+
+<!-- TWO-COLUMN LAYOUT -->
+<div class="mh-page-wrapper">
+
+  <!-- SECTION 2: FILTER SIDEBAR -->
+  <aside class="mh-sidebar">
+    <div class="mh-sidebar-header">
+      <span>Filters</span>
+      <button class="mh-clear-btn" onclick="orClearAll()">Clear all</button>
+    </div>
+
+    <input type="text" class="mh-search-input" id="orSearch"
+           placeholder="Search programs..." oninput="orApplyFilters()" />
+
+    <!-- Category -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Category</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="category" data-value="federal_access" onclick="orTogglePill(this)">Federal Access</button>
+        <button class="mh-pill" data-filter="category" data-value="state_parks" onclick="orTogglePill(this)">State Parks</button>
+        <button class="mh-pill" data-filter="category" data-value="hunting_fishing" onclick="orTogglePill(this)">Hunting &amp; Fishing</button>
+        <button class="mh-pill" data-filter="category" data-value="equipment_retail" onclick="orTogglePill(this)">Outdoor Gear</button>
+        <button class="mh-pill" data-filter="category" data-value="ski_snow" onclick="orTogglePill(this)">Ski &amp; Snow</button>
+        <button class="mh-pill" data-filter="category" data-value="camping" onclick="orTogglePill(this)">Camping</button>
+        <button class="mh-pill" data-filter="category" data-value="nonprofit_programs" onclick="orTogglePill(this)">Nonprofit Programs</button>
+        <button class="mh-pill" data-filter="category" data-value="adaptive_outdoor" onclick="orTogglePill(this)">Adaptive Outdoor</button>
+      </div>
+    </div>
+
+    <!-- Source Type -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Source Type</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="source_type" data-value="Federal" onclick="orTogglePill(this)">Federal</button>
+        <button class="mh-pill" data-filter="source_type" data-value="State" onclick="orTogglePill(this)">State</button>
+        <button class="mh-pill" data-filter="source_type" data-value="Corporate" onclick="orTogglePill(this)">Corporate</button>
+        <button class="mh-pill" data-filter="source_type" data-value="Nonprofit" onclick="orTogglePill(this)">Nonprofit</button>
+      </div>
+    </div>
+
+    <!-- Disability Required -->
+    <div class="mh-filter-group">
+      <div class="mh-filter-group-label">Disability Requirement</div>
+      <div class="mh-filter-pills">
+        <button class="mh-pill" data-filter="disability" data-value="not_required" onclick="orTogglePill(this)">No Disability Needed</button>
+        <button class="mh-pill" data-filter="disability" data-value="required" onclick="orTogglePill(this)">Disability Required</button>
+      </div>
+    </div>
+
+    <div class="mh-result-count" id="orResultCount"></div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="mh-main">
+    <div class="mh-toolbar">
+      <select class="mh-sort-select" id="orSort" onchange="orApplyFilters()">
+        <option value="default">Sort: A–Z by Name</option>
+        <option value="category">Sort: By Category</option>
+        <option value="source_type">Sort: By Source Type</option>
+        <option value="state">Sort: By State</option>
+      </select>
+    </div>
+
+    <!-- SECTION 3: CARD GRID -->
+    <div class="mh-grid" id="orGrid"></div>
+
+    <div class="mh-empty" id="orEmpty" style="display:none;">
+      <div class="rp-empty__icon">&#127956;</div>
+      <p>No outdoor programs match your current filters. Try adjusting the category or source type.</p>
+      <button class="mh-clear-btn" onclick="orClearAll()">Clear Filters</button>
+    </div>
+
+    <div class="mh-load-more" id="orLoadMore" style="display:none;">
+      <button class="mh-load-more-btn" onclick="orLoadMore()">Load More Programs</button>
+    </div>
+
+    <!-- SECTION 4: CROSS-REFERENCES -->
+    <div class="resources-cta" id="orCrossRef" style="margin-top:32px;">
+      <h3 class="resources-cta__title">Explore Related Resources</h3>
+      <p class="resources-cta__text" style="margin-bottom:16px;">Your military service unlocks even more savings and hidden benefits beyond outdoor recreation.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
+        <a href="hidden-benefits.html?category=recreation" class="resources-cta__button" style="text-decoration:none;">Hidden Recreation Benefits</a>
+        <a href="military-discounts.html" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">All Military Discounts</a>
+        <a href="wellness.html" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">Wellness &amp; Fitness</a>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__crisis">
+        <strong>Veterans in Crisis:</strong> Call <a href="tel:988">988</a> (Press 1) for the Veterans Crisis Line. Text <a href="sms:838255">838255</a>. Available 24/7.
+      </div>
+      <div class="footer__grid">
+        <div class="footer__section footer__section--nav">
+          <h3>Navigate</h3>
+          <div class="footer__nav-columns">
+            <div class="footer__nav-col">
+              <a href="index.html">Home</a>
+              <a href="about.html">About</a>
+              <a href="board.html">Board</a>
+            </div>
+            <div class="footer__nav-col">
+              <a href="resources.html">Resources</a>
+              <a href="blog.html">Blog</a>
+              <a href="contact.html">Contact</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer__section">
+          <h3>Resource Hub</h3>
+          <a href="elected-officials.html">Elected Officials</a>
+          <a href="military-discounts.html">Military Discounts</a>
+          <a href="outdoor-recreation.html">Outdoor Recreation</a>
+          <a href="licensure.html">Licensure & Certifications</a>
+          <a href="grants-scholarships.html">Grants & Scholarships</a>
+          <a href="hotlines-escalation.html">Hotlines & Escalation</a>
+          <a href="state-benefits.html">State Benefits</a>
+          <a href="transition-guide.html">Transition Guide</a>
+          <a href="financial-optimization.html">Financial Optimization</a>
+          <a href="document-templates.html">Document Templates</a>
+        </div>
+        <div class="footer__section">
+          <h3>Legal</h3>
+          <a href="privacy.html">Privacy Policy</a>
+          <a href="terms.html">Terms of Service</a>
+          <a href="disclaimer.html">Disclaimer</a>
+        </div>
+        <div class="footer__section">
+          <h3>Connect</h3>
+        </div>
+      </div>
+      <div class="footer__nonprofit">
+        AfterActionAI is building toward a mission-driven resource hub dedicated to helping veterans, service members, Guard, Reserve, and their families find trusted support, benefits, and pathways forward.
+      </div>
+      <div class="footer__bottom">
+        <p>&copy; 2026 AfterAction AI. All rights reserved. Built by veterans, for veterans.</p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+// ══════════════════════════════════════════════════════════
+// Outdoor Recreation — Page Logic (prefix: or*)
+// ══════════════════════════════════════════════════════════
+
+// ── State ──────────────────────────────────────────────────
+var OR_PAGE_SIZE = 24;
+var orAllPrograms = [];
+var orFilteredPrograms = [];
+var orVisibleCount = 0;
+
+var orFilters = { search: '', category: new Set(), source_type: new Set(), disability: new Set() };
+
+// ── Nav ───────────────────────────────────────────────────
+function toggleMenu() {
+  document.getElementById('navMenu').classList.toggle('active');
+}
+
+// ── Escape (null-safe) ────────────────────────────────────
+function esc(s) {
+  return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ── Category display names & color mapping ────────────────
+var OR_CATEGORY_META = {
+  federal_access:     { label: 'Federal Access',      color: 'benefits' },
+  state_parks:        { label: 'State Parks',          color: 'community' },
+  hunting_fishing:    { label: 'Hunting & Fishing',    color: 'employment' },
+  equipment_retail:   { label: 'Outdoor Gear',         color: 'equipment' },
+  ski_snow:           { label: 'Ski & Snow',           color: 'education' },
+  camping:            { label: 'Camping',              color: 'housing' },
+  nonprofit_programs: { label: 'Nonprofit Programs',   color: 'medical' },
+  adaptive_outdoor:   { label: 'Adaptive Outdoor',     color: 'entrepreneurship' }
+};
+
+// ── Source type icons ─────────────────────────────────────
+var OR_SOURCE_ICONS = {
+  'Federal':   '&#9733;',
+  'State':     '&#9670;',
+  'Corporate': '&#9670;',
+  'Nonprofit': '&#9825;'
+};
+
+// ── Benefit type labels ──────────────────────────────────
+var OR_BENEFIT_LABELS = {
+  'free_access':          'FREE ACCESS',
+  'free_license':         'FREE LICENSE',
+  'free_program':         'FREE PROGRAM',
+  'discount_percentage':  'DISCOUNT',
+  'discount_flat':        'DISCOUNT',
+  'reduced_fee':          'REDUCED FEE'
+};
+
+var OR_BENEFIT_COLORS = {
+  'free_access':  'rgba(72,187,120,0.15)',
+  'free_license': 'rgba(72,187,120,0.15)',
+  'free_program': 'rgba(72,187,120,0.15)',
+  'discount_percentage': 'rgba(237,187,52,0.15)',
+  'discount_flat': 'rgba(237,187,52,0.15)',
+  'reduced_fee':  'rgba(99,179,237,0.15)'
+};
+var OR_BENEFIT_TEXT_COLORS = {
+  'free_access':  '#48bb78',
+  'free_license': '#48bb78',
+  'free_program': '#48bb78',
+  'discount_percentage': '#edb734',
+  'discount_flat': '#edb734',
+  'reduced_fee':  '#63b3ed'
+};
+
+// ── CTA text by category ─────────────────────────────────
+var OR_CTA = {
+  federal_access:     'Get Your Free Pass',
+  state_parks:        'Apply for State Pass',
+  hunting_fishing:    'Apply for Free License',
+  equipment_retail:   'Claim Discount',
+  ski_snow:           'Get Military Pass',
+  camping:            'Book Campground',
+  nonprofit_programs: 'Sign Up Free',
+  adaptive_outdoor:   'Register for Program'
+};
+
+// ── Pills (Set-based multi-select) ────────────────────────
+function orTogglePill(btn) {
+  var dim = btn.getAttribute('data-filter');
+  var val = btn.getAttribute('data-value');
+  btn.classList.toggle('active');
+  if (orFilters[dim].has(val)) {
+    orFilters[dim].delete(val);
+  } else {
+    orFilters[dim].add(val);
+  }
+  orApplyFilters();
+}
+
+// ── Quick Access ──────────────────────────────────────────
+function orApplyQA(dim, val) {
+  orFilters[dim].clear();
+  document.querySelectorAll('.mh-pill[data-filter="' + dim + '"]').forEach(function(b) { b.classList.remove('active'); });
+  var pill = document.querySelector('.mh-pill[data-filter="' + dim + '"][data-value="' + val + '"]');
+  if (pill) {
+    pill.classList.add('active');
+    orFilters[dim].add(val);
+  }
+  orApplyFilters();
+}
+
+// ── Clear All ─────────────────────────────────────────────
+function orClearAll() {
+  orFilters.search = '';
+  orFilters.category.clear();
+  orFilters.source_type.clear();
+  orFilters.disability.clear();
+  document.getElementById('orSearch').value = '';
+  document.getElementById('orSort').value = 'default';
+  document.querySelectorAll('.mh-pill').forEach(function(b) { b.classList.remove('active'); });
+  orApplyFilters();
+}
+
+// ── Filter + Sort ─────────────────────────────────────────
+function orApplyFilters() {
+  orFilters.search = (document.getElementById('orSearch').value || '').toLowerCase();
+  var q = orFilters.search;
+  var hasCategory = orFilters.category.size > 0;
+  var hasSourceType = orFilters.source_type.size > 0;
+  var hasDisability = orFilters.disability.size > 0;
+
+  orFilteredPrograms = orAllPrograms.filter(function(r) {
+    if (hasCategory && !orFilters.category.has(r.category)) return false;
+    if (hasSourceType && !orFilters.source_type.has(r.source_type)) return false;
+    if (hasDisability) {
+      if (orFilters.disability.has('required') && !r.disability_required) return false;
+      if (orFilters.disability.has('not_required') && r.disability_required) return false;
+    }
+    if (q) {
+      var hay = [r.name, r.description, r.eligibility, r.category, r.source_type, r.state, r.verification].join(' ').toLowerCase();
+      if (hay.indexOf(q) === -1) return false;
+    }
+    return true;
+  });
+
+  // Sort
+  var sortVal = document.getElementById('orSort').value;
+  if (sortVal === 'category') {
+    orFilteredPrograms.sort(function(a, b) {
+      var c = (a.category || '').localeCompare(b.category || '');
+      return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
+    });
+  } else if (sortVal === 'source_type') {
+    orFilteredPrograms.sort(function(a, b) {
+      var c = (a.source_type || '').localeCompare(b.source_type || '');
+      return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
+    });
+  } else if (sortVal === 'state') {
+    orFilteredPrograms.sort(function(a, b) {
+      var sa = a.state || 'ZZZ';
+      var sb = b.state || 'ZZZ';
+      var c = sa.localeCompare(sb);
+      return c !== 0 ? c : (a.name || '').localeCompare(b.name || '');
+    });
+  } else {
+    orFilteredPrograms.sort(function(a, b) { return (a.name || '').localeCompare(b.name || ''); });
+  }
+
+  orVisibleCount = 0;
+  document.getElementById('orGrid').innerHTML = '';
+  orLoadMore();
+  orUpdateCount();
+}
+
+// ── Card renderer ─────────────────────────────────────────
+function orRenderCard(r) {
+  var meta = OR_CATEGORY_META[r.category] || { label: r.category, color: '' };
+  var sourceIcon = OR_SOURCE_ICONS[r.source_type] || '';
+  var benefitLabel = OR_BENEFIT_LABELS[r.benefit_type] || 'BENEFIT';
+  var benefitBg = OR_BENEFIT_COLORS[r.benefit_type] || 'rgba(255,255,255,0.1)';
+  var benefitColor = OR_BENEFIT_TEXT_COLORS[r.benefit_type] || '#e0e0e0';
+  var ctaText = OR_CTA[r.category] || 'Learn More';
+
+  var stateHTML = r.state
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">State</span><span class="resource-card__meta-value">' + esc(r.state) + '</span></div>'
+    : '';
+  var sourceHTML = '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Source</span><span class="resource-card__meta-value">' + sourceIcon + ' ' + esc(r.source_type) + '</span></div>';
+  var verifyHTML = r.verification
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">How to Verify</span><span class="resource-card__meta-value">' + esc(r.verification) + '</span></div>'
+    : '';
+  var valueHTML = r.annual_value
+    ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">Est. Value</span><span class="resource-card__meta-value" style="color:#48bb78;font-weight:600;">' + esc(r.annual_value) + '</span></div>'
+    : '';
+  var disabilityBadge = r.disability_required
+    ? ' <span style="display:inline-block;font-size:0.6rem;padding:2px 6px;border-radius:4px;background:rgba(159,122,234,0.15);color:#9f7aea;font-weight:600;vertical-align:middle;">DISABILITY</span>'
+    : '';
+  var benefitBadge = '<span style="display:inline-block;font-size:0.6rem;padding:2px 6px;border-radius:4px;background:' + benefitBg + ';color:' + benefitColor + ';font-weight:600;vertical-align:middle;">' + benefitLabel + '</span>';
+
+  var linkHTML = r.website
+    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">' + esc(ctaText) + ' &#8599;</a>'
+    : '';
+
+  return '<div class="resource-card aa-card" data-category="' + esc(r.category) + '">' +
+    '<span class="resource-card__category" data-color="' + esc(meta.color) + '">' + esc(meta.label) + '</span>' +
+    '<h3 class="resource-card__name">' + esc(r.name) + ' ' + benefitBadge + disabilityBadge + '</h3>' +
+    '<p class="resource-card__description">' + esc(r.description) + '</p>' +
+    '<div class="resource-card__meta">' +
+      '<div class="resource-card__meta-row">' +
+        '<span class="resource-card__meta-label">Eligibility</span>' +
+        '<span class="resource-card__meta-value">' + esc(r.eligibility || 'See website for details') + '</span>' +
+      '</div>' +
+      stateHTML +
+      verifyHTML +
+      valueHTML +
+      sourceHTML +
+    '</div>' +
+    linkHTML +
+  '</div>';
+}
+
+// ── Load More ─────────────────────────────────────────────
+function orLoadMore() {
+  var grid = document.getElementById('orGrid');
+  var batch = orFilteredPrograms.slice(orVisibleCount, orVisibleCount + OR_PAGE_SIZE);
+  batch.forEach(function(r) { grid.insertAdjacentHTML('beforeend', orRenderCard(r)); });
+  orVisibleCount += batch.length;
+  document.getElementById('orLoadMore').style.display = orVisibleCount < orFilteredPrograms.length ? '' : 'none';
+  document.getElementById('orEmpty').style.display = orFilteredPrograms.length === 0 ? 'block' : 'none';
+}
+
+function orUpdateCount() {
+  var el = document.getElementById('orResultCount');
+  el.textContent = orFilteredPrograms.length === orAllPrograms.length
+    ? 'Showing all ' + orAllPrograms.length + ' outdoor programs'
+    : 'Showing ' + orFilteredPrograms.length + ' of ' + orAllPrograms.length + ' programs';
+}
+
+// ── Execution Engine ──────────────────────────────────────
+function orExecutionEngine() {
+  var disVal = document.getElementById('orExDisability').value;
+  var stateVal = document.getElementById('orExState').value;
+  var goalVal = document.getElementById('orExGoal').value;
+
+  if (!disVal && !stateVal && !goalVal) {
+    alert('Please select at least one option to find your benefits.');
+    return;
+  }
+
+  // Goal to category mapping
+  var goalCategories = {
+    'save_money':          ['equipment_retail', 'ski_snow', 'camping'],
+    'parks_access':        ['federal_access', 'state_parks'],
+    'hunting_fishing':     ['hunting_fishing'],
+    'outdoor_activities':  ['nonprofit_programs', 'adaptive_outdoor'],
+    'ski_snow':            ['ski_snow'],
+    'adaptive':            ['adaptive_outdoor', 'nonprofit_programs']
+  };
+
+  var results = orAllPrograms.filter(function(r) {
+    // State filter
+    if (stateVal && r.state && r.state !== stateVal) return false;
+    // Disability filter
+    if (disVal === 'none' && r.disability_required) return false;
+    if (disVal && disVal !== 'none') {
+      var minRating = parseInt(disVal, 10);
+      if (!isNaN(minRating) && r.disability_minimum && r.disability_minimum > minRating) return false;
+    }
+    // Goal filter
+    if (goalVal && goalCategories[goalVal]) {
+      if (goalCategories[goalVal].indexOf(r.category) === -1) {
+        // Also include federal_access for everything (always relevant)
+        if (r.category !== 'federal_access') return false;
+      }
+    }
+    return true;
+  });
+
+  // Score and sort
+  results.forEach(function(r) {
+    r._score = 0;
+    if (r.benefit_type === 'free_access' || r.benefit_type === 'free_license' || r.benefit_type === 'free_program') r._score += 10;
+    if (r.source_type === 'Federal') r._score += 5;
+    if (r.source_type === 'State') r._score += 3;
+    if (stateVal && r.state === stateVal) r._score += 8;
+    if (!r.state) r._score += 2; // National programs score medium
+    if (r.disability_required && disVal && disVal !== 'none') r._score += 4;
+  });
+  results.sort(function(a, b) { return b._score - a._score; });
+
+  var top5 = results.slice(0, 5);
+  var container = document.getElementById('orExResults');
+
+  if (top5.length === 0) {
+    container.style.display = 'block';
+    container.innerHTML = '<div style="padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;text-align:center;">' +
+      '<p style="color:var(--text-secondary,#a0a0a0);margin:0;">No matching programs found with those criteria. Try broadening your selections or <a href="#orGrid" style="color:var(--gold,#d4a843);">browse all programs below</a>.</p></div>';
+    return;
+  }
+
+  var html = '<div style="display:grid;gap:12px;">';
+  top5.forEach(function(r, i) {
+    var meta = OR_CATEGORY_META[r.category] || { label: r.category };
+    var benefitLabel = OR_BENEFIT_LABELS[r.benefit_type] || 'BENEFIT';
+    var benefitColor = OR_BENEFIT_TEXT_COLORS[r.benefit_type] || '#e0e0e0';
+    var ctaText = OR_CTA[r.category] || 'Learn More';
+    var whyHTML = '';
+    if (r.benefit_type === 'free_access' || r.benefit_type === 'free_license' || r.benefit_type === 'free_program') {
+      whyHTML = '<span style="color:#48bb78;font-size:0.8rem;font-weight:600;">This is completely free for qualifying veterans</span>';
+    } else {
+      whyHTML = '<span style="color:#edb734;font-size:0.8rem;font-weight:600;">Estimated savings: ' + esc(r.annual_value || 'varies') + '</span>';
+    }
+    var linkBtn = r.website
+      ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;padding:6px 16px;background:var(--gold,#d4a843);color:#000;border-radius:6px;text-decoration:none;font-size:0.8rem;font-weight:600;">' + esc(ctaText) + ' &#8599;</a>'
+      : '';
+
+    html += '<div style="display:flex;align-items:flex-start;gap:16px;padding:16px;background:rgba(255,255,255,0.05);border-radius:12px;border-left:3px solid ' + benefitColor + ';">' +
+      '<div style="flex-shrink:0;width:28px;height:28px;background:' + benefitColor + ';color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;">' + (i + 1) + '</div>' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:700;color:var(--text-primary,#e0e0e0);margin-bottom:4px;">' + esc(r.name) + ' <span style="font-size:0.65rem;color:' + benefitColor + ';font-weight:600;">' + benefitLabel + '</span></div>' +
+        '<div style="font-size:0.85rem;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;">' + esc(r.eligibility) + '</div>' +
+        whyHTML +
+        '<div style="margin-top:8px;">' + linkBtn + '</div>' +
+      '</div></div>';
+  });
+  html += '</div>';
+
+  if (results.length > 5) {
+    html += '<p style="text-align:center;margin-top:12px;font-size:0.85rem;color:var(--text-secondary,#a0a0a0);">Showing top 5 of ' + results.length + ' matching programs. <a href="#orGrid" style="color:var(--gold,#d4a843);" onclick="orScrollToGrid()">Browse all below</a>.</p>';
+  }
+
+  container.style.display = 'block';
+  container.innerHTML = html;
+}
+
+function orScrollToGrid() {
+  document.getElementById('orGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── URL param pre-filter ─────────────────────────────────
+function orParseUrlFilters() {
+  var params = new URLSearchParams(window.location.search);
+  var cat = params.get('category');
+  if (cat) {
+    cat.split(',').forEach(function(c) {
+      var v = c.trim().toLowerCase();
+      if (v && OR_CATEGORY_META[v]) {
+        orFilters.category.add(v);
+        var pill = document.querySelector('.mh-pill[data-filter="category"][data-value="' + v + '"]');
+        if (pill) pill.classList.add('active');
+      }
+    });
+  }
+  if (orFilters.category.size > 0) {
+    var labels = [];
+    orFilters.category.forEach(function(c) {
+      if (OR_CATEGORY_META[c]) labels.push(OR_CATEGORY_META[c].label);
+    });
+    var banner = document.createElement('div');
+    banner.id = 'orFilterBanner';
+    banner.className = 'rs-filter-banner';
+    banner.innerHTML = '<span>Showing programs for: <strong>' + labels.join(', ') + '</strong></span>' +
+      '<button onclick="orClearAll();var b=document.getElementById(\'orFilterBanner\');if(b)b.remove();history.replaceState(null,\'\',location.pathname);" ' +
+      'style="background:none;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);padding:4px 12px;border-radius:6px;cursor:pointer;font-size:0.8rem;margin-left:12px;">Clear Filter</button>';
+    var hero = document.querySelector('.page-hero-bar');
+    if (hero && hero.nextElementSibling) {
+      hero.parentNode.insertBefore(banner, hero.nextElementSibling);
+    }
+  }
+}
+
+// ── Data Load (orLoadData) ───────────────────────────────
+function orLoadData() {
+  orParseUrlFilters();
+  fetch('/data/outdoor-recreation.json')
+    .then(function(r) {
+      if (!r.ok) throw new Error('[OR] HTTP ' + r.status);
+      return r.json();
+    })
+    .then(function(data) {
+      console.log('[OR] Loaded ' + data.length + ' outdoor recreation entries');
+      orAllPrograms = Array.isArray(data) ? data : [];
+      orApplyFilters();
+    })
+    .catch(function(err) {
+      console.error('[OR] Error loading outdoor recreation data:', err);
+      document.getElementById('orGrid').innerHTML =
+        '<div class="mh-empty"><p>Error loading outdoor recreation data. Please try again later.</p></div>';
+    });
+}
+
+// ── Init ─────────────────────────────────────────────────
+orLoadData();
+</script>
+
+<!-- AUTH MODAL -->
+<div class="auth-modal" id="authModal" style="display:none;">
+  <div class="auth-modal__box">
+    <button class="auth-modal__close" aria-label="Close">&times;</button>
+    <div class="auth-modal__logo"><img src="images/afteractionai_logo_new.png" alt="AfterAction AI" class="auth-modal__logo-img"></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Sign In</button>
+      <button class="auth-tab" data-tab="signup">Create Account</button>
+    </div>
+    <form id="loginForm" class="auth-form" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="loginEmail">Email</label><input type="email" id="loginEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="loginPassword">Password</label><input type="password" id="loginPassword" name="password" required autocomplete="current-password" placeholder="Your password" /></div>
+      <button type="submit" class="auth-submit">Sign In</button>
+      <a href="#" class="auth-forgot">Forgot password?</a>
+    </form>
+    <form id="signupForm" class="auth-form" style="display:none;" autocomplete="on">
+      <div class="auth-error" style="display:none;"></div>
+      <div class="auth-success" style="display:none;"></div>
+      <div class="auth-field"><label for="signupName">What should we call you?</label><input type="text" id="signupName" name="displayName" required placeholder="Your name or callsign" /></div>
+      <div class="auth-field"><label for="signupEmail">Email</label><input type="email" id="signupEmail" name="email" required autocomplete="email" placeholder="you@example.com" /></div>
+      <div class="auth-field"><label for="signupPassword">Password</label><input type="password" id="signupPassword" name="password" required autocomplete="new-password" placeholder="At least 6 characters" minlength="6" /></div>
+      <button type="submit" class="auth-submit">Create Account</button>
+      <p class="auth-note">Free forever. No credit card. Your data stays private.</p>
+    </form>
+  </div>
+</div>
+<script src="js/auth.js"></script>
+<script src="js/analytics.js"></script>
+<script src="js/feedback-widget.js" defer></script>
+<script src="js/newsletter.js"></script>
+</body>
+</html>

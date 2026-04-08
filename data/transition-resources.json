@@ -8,8 +8,15 @@
     "timeline": "12 months before",
     "priority": "critical",
     "routes": [
-      { "page": "document-templates.html", "label": "Checklist Templates" },
-      { "page": "resources.html", "label": "All Partner Organizations", "filter": "benefits" }
+      {
+        "page": "document-templates.html",
+        "label": "Checklist Templates"
+      },
+      {
+        "page": "resources.html",
+        "label": "All Partner Organizations",
+        "filter": "benefits"
+      }
     ],
     "website": "https://www.va.gov/careers-employment/",
     "verification": "VA.gov official resource"
@@ -23,9 +30,19 @@
     "timeline": "12 months before",
     "priority": "critical",
     "routes": [
-      { "page": "education.html", "label": "Education Resources" },
-      { "page": "grants-scholarships.html", "label": "Grants & Scholarships" },
-      { "page": "resources.html", "label": "Employment Resources", "filter": "employment" }
+      {
+        "page": "education.html",
+        "label": "Education Resources"
+      },
+      {
+        "page": "grants-scholarships.html",
+        "label": "Grants & Scholarships"
+      },
+      {
+        "page": "resources.html",
+        "label": "Employment Resources",
+        "filter": "employment"
+      }
     ],
     "website": "https://www.dodtap.mil/dodtap/",
     "verification": "DoD official program"
@@ -39,8 +56,15 @@
     "timeline": "Before separation",
     "priority": "critical",
     "routes": [
-      { "page": "document-templates.html", "label": "Document Templates" },
-      { "page": "resources.html", "label": "VSOs & Records Help", "filter": "benefits" }
+      {
+        "page": "document-templates.html",
+        "label": "Document Templates"
+      },
+      {
+        "page": "resources.html",
+        "label": "VSOs & Records Help",
+        "filter": "benefits"
+      }
     ],
     "website": "https://www.archives.gov/veterans/military-service-records",
     "verification": "National Archives"
@@ -54,9 +78,19 @@
     "timeline": "Before separation",
     "priority": "critical",
     "routes": [
-      { "page": "medical-help.html", "label": "Medical & Mental Health" },
-      { "page": "hidden-benefits.html", "label": "Hidden Healthcare Benefits", "filter": "federal_healthcare" },
-      { "page": "hotlines-escalation.html", "label": "Health Crisis Lines" }
+      {
+        "page": "medical-help.html",
+        "label": "Medical & Mental Health"
+      },
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden Healthcare Benefits",
+        "filter": "federal_healthcare"
+      },
+      {
+        "page": "hotlines-escalation.html",
+        "label": "Health Crisis Lines"
+      }
     ],
     "website": "https://www.va.gov/health-care/apply-for-va-health-care/",
     "verification": "VA.gov official"
@@ -70,9 +104,20 @@
     "timeline": "180 days before",
     "priority": "critical",
     "routes": [
-      { "page": "hidden-benefits.html", "label": "Hidden Compensation Benefits", "filter": "federal_compensation" },
-      { "page": "resources.html", "label": "VSOs & Claims Help", "filter": "benefits" },
-      { "page": "document-templates.html", "label": "Claims Templates" }
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden Compensation Benefits",
+        "filter": "federal_compensation"
+      },
+      {
+        "page": "resources.html",
+        "label": "VSOs & Claims Help",
+        "filter": "benefits"
+      },
+      {
+        "page": "document-templates.html",
+        "label": "Claims Templates"
+      }
     ],
     "website": "https://www.va.gov/disability/how-to-file-claim/",
     "verification": "VA.gov official"
@@ -86,9 +131,19 @@
     "timeline": "6 months before",
     "priority": "high",
     "routes": [
-      { "page": "education.html", "label": "All Education Resources" },
-      { "page": "grants-scholarships.html", "label": "Education Funding" },
-      { "page": "hidden-benefits.html", "label": "Hidden Education Benefits", "filter": "federal_education" }
+      {
+        "page": "education.html",
+        "label": "All Education Resources"
+      },
+      {
+        "page": "grants-scholarships.html",
+        "label": "Education Funding"
+      },
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden Education Benefits",
+        "filter": "federal_education"
+      }
     ],
     "website": "https://www.va.gov/education/about-gi-bill-benefits/",
     "verification": "VA.gov official"
@@ -102,8 +157,15 @@
     "timeline": "6 months before",
     "priority": "high",
     "routes": [
-      { "page": "resources.html", "label": "Employment Resources", "filter": "employment" },
-      { "page": "licensure.html", "label": "Credential Programs" }
+      {
+        "page": "resources.html",
+        "label": "Employment Resources",
+        "filter": "employment"
+      },
+      {
+        "page": "licensure.html",
+        "label": "Credential Programs"
+      }
     ],
     "website": "https://skillbridge.osd.mil/",
     "verification": "DoD official program"
@@ -117,9 +179,19 @@
     "timeline": "Anytime post-separation",
     "priority": "high",
     "routes": [
-      { "page": "education.html", "label": "Education Resources" },
-      { "page": "resources.html", "label": "Employment Programs", "filter": "employment" },
-      { "page": "licensure.html", "label": "Certification Programs" }
+      {
+        "page": "education.html",
+        "label": "Education Resources"
+      },
+      {
+        "page": "resources.html",
+        "label": "Employment Programs",
+        "filter": "employment"
+      },
+      {
+        "page": "licensure.html",
+        "label": "Certification Programs"
+      }
     ],
     "website": "https://www.va.gov/careers-employment/vocational-rehabilitation/",
     "verification": "VA.gov official"
@@ -133,8 +205,15 @@
     "timeline": "3 months before",
     "priority": "high",
     "routes": [
-      { "page": "document-templates.html", "label": "Resume Builder Template" },
-      { "page": "resources.html", "label": "Career Programs", "filter": "employment" }
+      {
+        "page": "document-templates.html",
+        "label": "Resume Builder Template"
+      },
+      {
+        "page": "resources.html",
+        "label": "Career Programs",
+        "filter": "employment"
+      }
     ],
     "website": null,
     "verification": "AAAI template system"
@@ -148,8 +227,14 @@
     "timeline": "3 months before",
     "priority": "high",
     "routes": [
-      { "page": "licensure.html", "label": "All Licensure & Certifications" },
-      { "page": "state-benefits.html", "label": "State Licensing Benefits" }
+      {
+        "page": "licensure.html",
+        "label": "All Licensure & Certifications"
+      },
+      {
+        "page": "state-benefits.html",
+        "label": "State Licensing Benefits"
+      }
     ],
     "website": null,
     "verification": "AAAI licensure database"
@@ -163,8 +248,16 @@
     "timeline": "Post-separation",
     "priority": "medium",
     "routes": [
-      { "page": "hidden-benefits.html", "label": "Hidden Employment Benefits", "filter": "federal_employment" },
-      { "page": "resources.html", "label": "Employment Resources", "filter": "employment" }
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden Employment Benefits",
+        "filter": "federal_employment"
+      },
+      {
+        "page": "resources.html",
+        "label": "Employment Resources",
+        "filter": "employment"
+      }
     ],
     "website": "https://help.usajobs.gov/working-in-government/unique-hiring-paths/veterans",
     "verification": "OPM official"
@@ -178,8 +271,15 @@
     "timeline": "6 months before",
     "priority": "high",
     "routes": [
-      { "page": "resources.html", "label": "Employment Programs", "filter": "employment" },
-      { "page": "education.html", "label": "Training & Fellowships" }
+      {
+        "page": "resources.html",
+        "label": "Employment Programs",
+        "filter": "employment"
+      },
+      {
+        "page": "education.html",
+        "label": "Training & Fellowships"
+      }
     ],
     "website": "https://www.hiringourheroes.org/fellowships/",
     "verification": "U.S. Chamber of Commerce"
@@ -193,9 +293,20 @@
     "timeline": "3 months before",
     "priority": "high",
     "routes": [
-      { "page": "resources.html", "label": "Housing Resources", "filter": "housing" },
-      { "page": "hidden-benefits.html", "label": "Hidden Housing Benefits", "filter": "federal_housing" },
-      { "page": "financial-optimization.html", "label": "Financial Planning" }
+      {
+        "page": "resources.html",
+        "label": "Housing Resources",
+        "filter": "housing"
+      },
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden Housing Benefits",
+        "filter": "federal_housing"
+      },
+      {
+        "page": "financial-optimization.html",
+        "label": "Financial Planning"
+      }
     ],
     "website": "https://www.va.gov/housing-assistance/home-loans/",
     "verification": "VA.gov official"
@@ -209,9 +320,20 @@
     "timeline": "As needed",
     "priority": "medium",
     "routes": [
-      { "page": "emergency-assistance.html", "label": "Emergency Housing Aid", "filter": "housing_emergency" },
-      { "page": "resources.html", "label": "Housing Resources", "filter": "housing" },
-      { "page": "families-support.html", "label": "Family Support Programs" }
+      {
+        "page": "emergency-assistance.html",
+        "label": "Emergency Housing Aid",
+        "filter": "housing_emergency"
+      },
+      {
+        "page": "resources.html",
+        "label": "Housing Resources",
+        "filter": "housing"
+      },
+      {
+        "page": "families-support.html",
+        "label": "Family Support Programs"
+      }
     ],
     "website": "https://www.va.gov/homeless/ssvf/",
     "verification": "VA.gov official"
@@ -225,8 +347,14 @@
     "timeline": "6 months before",
     "priority": "high",
     "routes": [
-      { "page": "document-templates.html", "label": "Budget Templates" },
-      { "page": "financial-optimization.html", "label": "Financial Optimization" }
+      {
+        "page": "document-templates.html",
+        "label": "Budget Templates"
+      },
+      {
+        "page": "financial-optimization.html",
+        "label": "Financial Optimization"
+      }
     ],
     "website": null,
     "verification": "AAAI template system"
@@ -240,8 +368,15 @@
     "timeline": "Before separation",
     "priority": "critical",
     "routes": [
-      { "page": "hidden-benefits.html", "label": "Hidden Financial Benefits", "filter": "federal_financial" },
-      { "page": "financial-optimization.html", "label": "Financial Planning Tools" }
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden Financial Benefits",
+        "filter": "federal_financial"
+      },
+      {
+        "page": "financial-optimization.html",
+        "label": "Financial Planning Tools"
+      }
     ],
     "website": "https://www.tsp.gov/",
     "verification": "TSP official"
@@ -255,8 +390,15 @@
     "timeline": "Before separation",
     "priority": "high",
     "routes": [
-      { "page": "hidden-benefits.html", "label": "Hidden Financial Benefits", "filter": "federal_financial" },
-      { "page": "financial-optimization.html", "label": "Financial Optimization" }
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden Financial Benefits",
+        "filter": "federal_financial"
+      },
+      {
+        "page": "financial-optimization.html",
+        "label": "Financial Optimization"
+      }
     ],
     "website": "https://www.justice.gov/servicemembers/servicemembers-civil-relief-act-scra",
     "verification": "DoJ official"
@@ -270,8 +412,15 @@
     "timeline": "After settling",
     "priority": "high",
     "routes": [
-      { "page": "state-benefits.html", "label": "All State Benefits" },
-      { "page": "hidden-benefits.html", "label": "Hidden State Benefits", "filter": "state_tax" }
+      {
+        "page": "state-benefits.html",
+        "label": "All State Benefits"
+      },
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden State Benefits",
+        "filter": "state_tax"
+      }
     ],
     "website": null,
     "verification": "AAAI state benefits database"
@@ -285,8 +434,14 @@
     "timeline": "Post-separation",
     "priority": "medium",
     "routes": [
-      { "page": "military-discounts.html", "label": "Military Discounts" },
-      { "page": "document-templates.html", "label": "Document Resources" }
+      {
+        "page": "military-discounts.html",
+        "label": "Military Discounts"
+      },
+      {
+        "page": "document-templates.html",
+        "label": "Document Resources"
+      }
     ],
     "website": "https://www.va.gov/records/get-veteran-id-cards/",
     "verification": "VA.gov official"
@@ -300,8 +455,14 @@
     "timeline": "Immediately",
     "priority": "medium",
     "routes": [
-      { "page": "military-discounts.html", "label": "All Military Discounts" },
-      { "page": "financial-optimization.html", "label": "More Savings Strategies" }
+      {
+        "page": "military-discounts.html",
+        "label": "All Military Discounts"
+      },
+      {
+        "page": "financial-optimization.html",
+        "label": "More Savings Strategies"
+      }
     ],
     "website": null,
     "verification": "AAAI verified discounts"
@@ -315,9 +476,18 @@
     "timeline": "Ongoing",
     "priority": "critical",
     "routes": [
-      { "page": "medical-help.html", "label": "Mental Health Resources" },
-      { "page": "hotlines-escalation.html", "label": "Crisis & Support Lines" },
-      { "page": "wellness.html", "label": "Wellness & Fitness" }
+      {
+        "page": "medical-help.html",
+        "label": "Mental Health Resources"
+      },
+      {
+        "page": "hotlines-escalation.html",
+        "label": "Crisis & Support Lines"
+      },
+      {
+        "page": "wellness.html",
+        "label": "Wellness & Fitness"
+      }
     ],
     "website": "https://www.va.gov/health-care/health-needs-conditions/mental-health/",
     "verification": "VA.gov official"
@@ -331,8 +501,14 @@
     "timeline": "Anytime",
     "priority": "high",
     "routes": [
-      { "page": "medical-help.html", "label": "Medical & Mental Health" },
-      { "page": "hotlines-escalation.html", "label": "Crisis & Support Lines" }
+      {
+        "page": "medical-help.html",
+        "label": "Medical & Mental Health"
+      },
+      {
+        "page": "hotlines-escalation.html",
+        "label": "Crisis & Support Lines"
+      }
     ],
     "website": "https://www.vetcenter.va.gov/",
     "verification": "VA.gov official"
@@ -346,8 +522,15 @@
     "timeline": "Immediately",
     "priority": "high",
     "routes": [
-      { "page": "resources.html", "label": "All Partner Organizations" },
-      { "page": "resources.html", "label": "Community Organizations", "filter": "community" }
+      {
+        "page": "resources.html",
+        "label": "All Partner Organizations"
+      },
+      {
+        "page": "resources.html",
+        "label": "Community Organizations",
+        "filter": "community"
+      }
     ],
     "website": "https://www.va.gov/vso/",
     "verification": "VA.gov official"
@@ -361,8 +544,14 @@
     "timeline": "Ongoing",
     "priority": "high",
     "routes": [
-      { "page": "families-support.html", "label": "Family & Survivor Resources" },
-      { "page": "emergency-assistance.html", "label": "Emergency Family Aid" }
+      {
+        "page": "families-support.html",
+        "label": "Family & Survivor Resources"
+      },
+      {
+        "page": "emergency-assistance.html",
+        "label": "Emergency Family Aid"
+      }
     ],
     "website": "https://www.militaryonesource.mil/",
     "verification": "DoD official"
@@ -376,11 +565,42 @@
     "timeline": "Post-separation",
     "priority": "high",
     "routes": [
-      { "page": "hidden-benefits.html", "label": "All Hidden Benefits" },
-      { "page": "state-benefits.html", "label": "State-Specific Benefits" },
-      { "page": "financial-optimization.html", "label": "Financial Optimization" }
+      {
+        "page": "hidden-benefits.html",
+        "label": "All Hidden Benefits"
+      },
+      {
+        "page": "state-benefits.html",
+        "label": "State-Specific Benefits"
+      },
+      {
+        "page": "financial-optimization.html",
+        "label": "Financial Optimization"
+      }
     ],
     "website": null,
     "verification": "AAAI hidden benefits database"
+  },
+  {
+    "id": "tr-027",
+    "name": "Outdoor & Recreation Benefits",
+    "description": "Your military service unlocks free national park access, state park passes, hunting and fishing license waivers, and outdoor gear discounts. Many require only a DD-214 or veteran ID.",
+    "section": "benefits_financial",
+    "category": "lifestyle",
+    "timeline": "Any time after discharge",
+    "priority": "standard",
+    "routes": [
+      {
+        "page": "outdoor-recreation.html",
+        "label": "Outdoor Discounts & Programs"
+      },
+      {
+        "page": "hidden-benefits.html",
+        "label": "Hidden Recreation Benefits",
+        "filter": "recreation"
+      }
+    ],
+    "website": null,
+    "verification": "N/A — internal routing only"
   }
 ]

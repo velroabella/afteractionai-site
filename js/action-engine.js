@@ -107,7 +107,10 @@
     { pattern: /alternative\s*therap|psychedelic|ketamine|ibogaine|psilocybin|ayahuasca|holistic\s*treat|telehealth|brain\s*injury\s*treat/i, issue: 'medical_treatment', category: 'healthcare', priority: 4 },
 
     // Transition
-    { pattern: /transition|separati|ets\b|getting\s*out|got\s*out\s*(of\s*)?(the\s*)?military|leaving\s*(the\s*)?military|left\s*(the\s*)?military|after\s*(the\s*)?military|civilian\s*life|post[\s-]military|what\s*do\s*i\s*do\s*after|skillbridge/i, issue: 'transition', category: 'transition', priority: 4 }
+    { pattern: /transition|separati|ets\b|getting\s*out|got\s*out\s*(of\s*)?(the\s*)?military|leaving\s*(the\s*)?military|left\s*(the\s*)?military|after\s*(the\s*)?military|civilian\s*life|post[\s-]military|what\s*do\s*i\s*do\s*after|skillbridge/i, issue: 'transition', category: 'transition', priority: 4 },
+
+    // Outdoor Recreation
+    { pattern: /outdoor\s*(recreation|discount|program|benefit)|park\s*pass|national\s*park|state\s*park\s*(pass|discount|free)|hunting\s*license|fishing\s*license|camping\s*discount|ski\s*(resort|discount|pass|military)|veteran\s*(outdoor|recreation|hiking|camping)/i, issue: 'outdoor_recreation', category: 'recreation', priority: 4 }
   ];
 
   // ── TEMPLATE RECOMMENDATIONS ──────────────────────────
@@ -144,6 +147,7 @@
     dependent:    { flow: ['emergency-contact-family-care-plan'], engine: ['dependent_care'] },
     transition:   { flow: ['resume-builder', 'benefits-eligibility-summary', 'budget-financial-recovery-plan'], engine: ['transition_plan'] },
     discount:             { flow: [], engine: [] },
+    outdoor_recreation:   { flow: [], engine: [] },
     service_dog:          { flow: [], engine: [] },
     wellness:             { flow: [], engine: [] },
     advocacy:             { flow: [], engine: [] },
@@ -188,7 +192,8 @@
     burial:       [{ page: 'state-benefits.html', label: 'State Burial Benefits', filter: 'burial' }],
     dependent:    [{ page: 'families-support.html', label: 'Family Support' }, { page: 'state-benefits.html', label: 'Spouse/Dependent Benefits', filter: 'dependent' }],
     transition:   [{ page: 'transition-guide.html', label: 'Transition Guide' }, { page: 'resources.html', label: 'Career Resources', filter: 'employment' }, { page: 'state-benefits.html', label: 'State Benefits' }, { page: 'licensure.html', label: 'Licensure' }, { page: 'grants-scholarships.html', label: 'Grants' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Benefits' }],
-    discount:     [{ page: 'military-discounts.html', label: 'Military Discounts' }],
+    discount:     [{ page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'outdoor-recreation.html', label: 'Outdoor Discounts' }],
+    outdoor_recreation: [{ page: 'outdoor-recreation.html', label: 'Outdoor Recreation & Discounts' }, { page: 'military-discounts.html', label: 'Military Discounts' }, { page: 'hidden-benefits.html', label: 'Hidden Recreation Benefits', filter: 'recreation' }, { page: 'wellness.html', label: 'Wellness & Fitness' }],
     service_dog:  [{ page: 'service-dogs.html', label: 'Service Dog Resources' }],
     wellness:     [{ page: 'wellness.html', label: 'Wellness & Fitness' }],
     advocacy:     [{ page: 'elected-officials.html', label: 'Elected Officials' }],

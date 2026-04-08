@@ -157,6 +157,14 @@
       descField: 'description',
       catField:  'category',
       extract: function(raw) { return Array.isArray(raw) ? raw : []; }
+    },
+    outdoor_recreation: {
+      path: 'data/outdoor-recreation.json',
+      page: 'outdoor-recreation.html',
+      nameField: 'name',
+      descField: 'description',
+      catField:  'category',
+      extract: function(raw) { return Array.isArray(raw) ? raw : []; }
     }
   };
 
@@ -229,8 +237,14 @@
       weight: 2
     },
     {
-      keywords: ['wellness', 'fitness', 'yoga', 'meditation', 'recreation', 'outdoor', 'adaptive sport'],
+      keywords: ['wellness', 'fitness', 'yoga', 'meditation', 'adaptive sport'],
       datasets: ['wellness'],
+      categoryHint: null,
+      weight: 2
+    },
+    {
+      keywords: ['outdoor', 'recreation', 'park pass', 'national park', 'state park', 'hunting license', 'fishing license', 'camping', 'ski', 'hiking', 'bass pro', 'cabela', 'adventure program', 'adaptive outdoor', 'fly fishing veteran'],
+      datasets: ['outdoor_recreation', 'wellness'],
       categoryHint: null,
       weight: 2
     },
@@ -270,7 +284,6 @@
       categoryHint: null,
       weight: 3
     },
-    {
     {
       keywords: ['transition', 'transitioning', 'getting out', 'got out', 'leaving military', 'left military', 'separating', 'separation', 'ets', 'civilian life', 'after the military', 'after military', 'next steps', 'post military', 'post-military', 'dd-214', 'dd214', 'skillbridge', 'tap program'],
       datasets: ['transition_resources', 'resources', 'licensure', 'grants'],

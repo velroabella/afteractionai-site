@@ -129,6 +129,16 @@
         return p.vaRating !== null && p.vaRating >= 60 &&
                (p.employmentStatus === 'unemployed' || p.employmentStatus === 'disabled');
       }
+    },
+    OUTDOOR_RECREATION: {
+      id:          'outdoor_recreation',
+      label:       'Outdoor Recreation & Discounts',
+      scope:       'mixed',
+      destination: 'outdoor-recreation.html',
+      actionText:  'Explore free park passes, hunting licenses, and outdoor discounts',
+      triggers: function(p) {
+        return true;  // Available to all veterans
+      }
     }
   };
 
@@ -143,7 +153,8 @@
     { category: 'education',               weight: 50,  condition: function(p) { return !!(p.currentGoals && /school|degree|gi bill|education|training/i.test(p.currentGoals)); } },
     { category: 'state_benefits',          weight: 40,  condition: function(p) { return !!p.state; } },
     { category: 'family_survivor',         weight: 35,  condition: function(p) { return !!(p.dependents && p.dependents !== 'no dependents'); } },
-    { category: 'legal',                   weight: 30,  condition: function(p) { return p.dischargeStatus === 'Other Than Honorable' || p.dischargeStatus === 'Bad Conduct'; } }
+    { category: 'legal',                   weight: 30,  condition: function(p) { return p.dischargeStatus === 'Other Than Honorable' || p.dischargeStatus === 'Bad Conduct'; } },
+    { category: 'outdoor_recreation',       weight: 20,  condition: function(p) { return true; } }
   ];
 
   /* ── Internal helpers ─────────────────────────────────── */
