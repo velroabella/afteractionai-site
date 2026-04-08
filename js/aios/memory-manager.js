@@ -1123,7 +1123,7 @@
       partner_type: 'employment',
       endpoint:     'https://www.hireheroesusa.org/jobs/',
       supports:     ['EMPLOYMENT_TRANSITION'],
-      status:       'inactive'
+      status:       'active'   // Phase 14: activated
     },
     {
       partner_id:   'operationhomefront',
