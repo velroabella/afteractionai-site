@@ -1238,8 +1238,12 @@
     var last = window.AIOS.ExecutionState.getLastExecution();
     if (!last || !last.page) return;
 
-    // Don't show if already on that page
+    // D3 FIX: Whitelist pagePath before any use — rejects tampered/unexpected values.
+    // Only execution pages produced by the AIOS router are permitted.
     var pagePath = last.page.split('?')[0];
+    if (!_PAGE_LABELS[pagePath]) return;   // unknown path — refuse to render
+
+    // Don't show if already on that page
     if (window.location.pathname === pagePath) return;
 
     // Don't show if banner already rendered
@@ -1254,7 +1258,7 @@
       else timeStr = Math.floor(diffH / 24) + 'd ago';
     }
 
-    var pageLabel = _PAGE_LABELS[pagePath] || 'your last search';
+    var pageLabel = _PAGE_LABELS[pagePath]; // always set — whitelist guard above ensures this
 
     // Inject animation keyframes once
     if (!document.getElementById('aaaiResumeBannerStyle')) {
@@ -1276,6 +1280,8 @@
       'width:calc(100% - 32px);font-size:0.82rem;color:#ddd;' +
       'line-height:1.3;animation:aaai-slide-up 0.3s ease;';
 
+    // D3 FIX: Build inner content via innerHTML for static text, then set
+    // the CTA anchor href via setAttribute (never injected into innerHTML).
     _b.innerHTML =
       '<div style="flex:1;min-width:0;">' +
         '<span style="color:#63b3ed;font-weight:600;">\u21A9 Resume where you left off</span>' +
@@ -1283,7 +1289,7 @@
         '<div style="color:#999;margin-top:2px;font-size:0.77rem;overflow:hidden;' +
           'text-overflow:ellipsis;white-space:nowrap;">' + pageLabel + '</div>' +
       '</div>' +
-      '<a href="' + last.page + '" ' +
+      '<a id="aaaiResumeBannerLink" ' +
         'style="flex-shrink:0;padding:6px 14px;background:rgba(99,179,237,0.13);' +
         'border:1px solid rgba(99,179,237,0.28);border-radius:6px;color:#63b3ed;' +
         'text-decoration:none;font-size:0.77rem;font-weight:600;white-space:nowrap;">' +
@@ -1291,6 +1297,11 @@
       '<button onclick="(function(){var b=document.getElementById(\'aaaiResumeBanner\');if(b)b.remove();})()" ' +
         'style="flex-shrink:0;background:none;border:none;color:#555;cursor:pointer;' +
         'font-size:1rem;padding:4px 2px;line-height:1;" aria-label="Dismiss">\u00D7</button>';
+
+    // D3 FIX: Set href safely via setAttribute — never via string concatenation in innerHTML.
+    // pagePath is whitelist-validated above; last.page only extends it with static router params.
+    var _ctaLink = _b.querySelector('#aaaiResumeBannerLink');
+    if (_ctaLink) _ctaLink.setAttribute('href', last.page);
 
     document.body.appendChild(_b);
 
@@ -4596,6 +4607,20 @@
           // 1. Route — classify intent and select skill
           var routeResult = window.AIOS.Router.routeAIOSIntent(lastUserMsg);
           console.log('[AIOS][ROUTER] intent=' + routeResult.intent + ' | skill=' + (routeResult.skill || 'none') + ' | confidence=' + routeResult.confidence + (routeResult.matched ? ' | matched="' + routeResult.matched + '"' : ''));
+
+          // Phase 9 — D1 FIX: Record routing intent as execution state.
+          // save() is called at routing time (not at execution engine completion)
+          // because execution engines live in separate HTML pages that don't load
+          // memory-manager.js. This gives the resume banner an accurate last page
+          // with intent context. resultIds [] here — populated by the execution
+          // engine when HTML pages are updated in a future phase.
+          if (routeResult.executionUrl && window.AIOS && window.AIOS.ExecutionState) {
+            window.AIOS.ExecutionState.save(
+              routeResult.executionUrl,
+              { intent: routeResult.intent, skill: routeResult.skill || null },
+              []
+            );
+          }
 
           // Phase 32: Telemetry — escalation tier (text path)
           if (routeResult.tier !== 'STANDARD' && window.AIOS && window.AIOS.Telemetry) {
