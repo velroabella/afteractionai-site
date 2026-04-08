@@ -9,7 +9,12 @@
     "monthly_value": "Varies: $171-$3,737+/mo",
     "cross_ref": { "dataset": "resources", "filter": "benefits" },
     "website": "https://www.va.gov/disability/compensation-rates/",
-    "verification": "VA.gov official rates"
+    "verification": "VA.gov official rates",
+    "audience": ["disabled_veteran", "transitioning"],
+    "goal_tags": ["lower_bills", "wealth_building"],
+    "disability_relevant": true,
+    "urgency_weight": 5,
+    "savings_type": "monthly"
   },
   {
     "id": "fr-002",
@@ -21,7 +26,12 @@
     "monthly_value": "Up to $1,595/mo",
     "cross_ref": { "dataset": "resources", "filter": "benefits" },
     "website": "https://www.va.gov/pension/",
-    "verification": "VA.gov official"
+    "verification": "VA.gov official",
+    "audience": ["retiree"],
+    "goal_tags": ["lower_bills"],
+    "disability_relevant": false,
+    "urgency_weight": 4,
+    "savings_type": "monthly"
   },
   {
     "id": "fr-003",
@@ -33,7 +43,12 @@
     "monthly_value": "$400-$2,295/mo additional",
     "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_compensation" },
     "website": "https://www.va.gov/pension/aid-attendance-housebound/",
-    "verification": "VA.gov official"
+    "verification": "VA.gov official",
+    "audience": ["disabled_veteran", "retiree", "family_caregiver"],
+    "goal_tags": ["lower_bills"],
+    "disability_relevant": true,
+    "urgency_weight": 5,
+    "savings_type": "monthly"
   },
   {
     "id": "fr-004",
@@ -45,7 +60,12 @@
     "monthly_value": "Varies: $500-$10,000+/year",
     "cross_ref": { "dataset": "state_benefits", "filter": "property_tax" },
     "website": null,
-    "verification": "AAAI state benefits database"
+    "verification": "AAAI state benefits database",
+    "audience": ["disabled_veteran"],
+    "goal_tags": ["taxes", "housing"],
+    "disability_relevant": true,
+    "urgency_weight": 4,
+    "savings_type": "annual"
   },
   {
     "id": "fr-005",
@@ -57,7 +77,12 @@
     "monthly_value": "Effective 15-37% boost",
     "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_tax" },
     "website": "https://www.va.gov/disability/",
-    "verification": "IRS / VA official"
+    "verification": "IRS / VA official",
+    "audience": ["disabled_veteran"],
+    "goal_tags": ["taxes"],
+    "disability_relevant": true,
+    "urgency_weight": 5,
+    "savings_type": "annual"
   },
   {
     "id": "fr-006",
@@ -69,7 +94,12 @@
     "monthly_value": "Full pay exclusion",
     "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_tax" },
     "website": "https://www.irs.gov/newsroom/combat-zone-tax-exclusions",
-    "verification": "IRS official"
+    "verification": "IRS official",
+    "audience": ["employed"],
+    "goal_tags": ["taxes"],
+    "disability_relevant": false,
+    "urgency_weight": 3,
+    "savings_type": "annual"
   },
   {
     "id": "fr-007",
@@ -81,7 +111,12 @@
     "monthly_value": "Save $100-300 in prep fees",
     "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_financial" },
     "website": "https://www.militaryonesource.mil/financial-legal/tax-resource-center/miltax-military-tax-services/",
-    "verification": "DoD official"
+    "verification": "DoD official",
+    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "business_owner", "family_caregiver"],
+    "goal_tags": ["taxes"],
+    "disability_relevant": false,
+    "urgency_weight": 3,
+    "savings_type": "annual"
   },
   {
     "id": "fr-008",
@@ -93,7 +128,12 @@
     "monthly_value": "$200-500/mo PMI savings",
     "cross_ref": { "dataset": "resources", "filter": "housing" },
     "website": "https://www.va.gov/housing-assistance/home-loans/",
-    "verification": "VA.gov official"
+    "verification": "VA.gov official",
+    "audience": ["employed", "transitioning", "disabled_veteran", "retiree"],
+    "goal_tags": ["housing", "wealth_building"],
+    "disability_relevant": false,
+    "urgency_weight": 5,
+    "savings_type": "monthly"
   },
   {
     "id": "fr-009",
@@ -105,7 +145,12 @@
     "monthly_value": "Varies by debt load",
     "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_financial" },
     "website": "https://www.justice.gov/servicemembers",
-    "verification": "DoJ official"
+    "verification": "DoJ official",
+    "audience": ["employed"],
+    "goal_tags": ["reduce_debt", "lower_bills"],
+    "disability_relevant": false,
+    "urgency_weight": 4,
+    "savings_type": "monthly"
   },
   {
     "id": "fr-010",
@@ -117,7 +162,12 @@
     "monthly_value": "$1,200-$4,000+/mo BAH",
     "cross_ref": { "dataset": "grants", "filter": "education" },
     "website": "https://www.va.gov/education/about-gi-bill-benefits/post-9-11/",
-    "verification": "VA.gov official"
+    "verification": "VA.gov official",
+    "audience": ["student", "transitioning"],
+    "goal_tags": ["education", "lower_bills"],
+    "disability_relevant": false,
+    "urgency_weight": 5,
+    "savings_type": "monthly"
   },
   {
     "id": "fr-011",
@@ -129,7 +179,12 @@
     "monthly_value": "$50-200/mo in savings",
     "cross_ref": { "dataset": "military_discounts", "filter": null },
     "website": null,
-    "verification": "AAAI verified discounts"
+    "verification": "AAAI verified discounts",
+    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "family_caregiver"],
+    "goal_tags": ["lower_bills"],
+    "disability_relevant": false,
+    "urgency_weight": 2,
+    "savings_type": "monthly"
   },
   {
     "id": "fr-012",
@@ -141,7 +196,12 @@
     "monthly_value": "$100-300/mo grocery savings",
     "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_financial" },
     "website": "https://www.commissaries.com/",
-    "verification": "DeCA official"
+    "verification": "DeCA official",
+    "audience": ["disabled_veteran", "retiree"],
+    "goal_tags": ["lower_bills"],
+    "disability_relevant": true,
+    "urgency_weight": 3,
+    "savings_type": "monthly"
   },
   {
     "id": "fr-013",
@@ -153,7 +213,12 @@
     "monthly_value": "$80/year",
     "cross_ref": { "dataset": "hidden_benefits", "filter": "recreation" },
     "website": "https://www.nps.gov/planyourvisit/veterans-and-gold-star-families-free-access.htm",
-    "verification": "NPS official"
+    "verification": "NPS official",
+    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "family_caregiver"],
+    "goal_tags": ["lower_bills"],
+    "disability_relevant": false,
+    "urgency_weight": 1,
+    "savings_type": "annual"
   },
   {
     "id": "fr-014",
@@ -165,7 +230,12 @@
     "monthly_value": "Up to $5,000 emergency",
     "cross_ref": { "dataset": "emergency_assistance", "filter": null },
     "website": null,
-    "verification": "AAAI emergency database"
+    "verification": "AAAI emergency database",
+    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "family_caregiver"],
+    "goal_tags": ["lower_bills", "reduce_debt"],
+    "disability_relevant": false,
+    "urgency_weight": 5,
+    "savings_type": "one_time"
   },
   {
     "id": "fr-015",
@@ -177,7 +247,12 @@
     "monthly_value": "$500-$50,000 per grant",
     "cross_ref": { "dataset": "grants", "filter": null },
     "website": null,
-    "verification": "AAAI grants database"
+    "verification": "AAAI grants database",
+    "audience": ["transitioning", "student", "disabled_veteran", "family_caregiver"],
+    "goal_tags": ["education", "housing", "business"],
+    "disability_relevant": false,
+    "urgency_weight": 4,
+    "savings_type": "one_time"
   },
   {
     "id": "fr-016",
@@ -189,7 +264,12 @@
     "monthly_value": "Varies by state",
     "cross_ref": { "dataset": "state_benefits", "filter": null },
     "website": null,
-    "verification": "AAAI state benefits database"
+    "verification": "AAAI state benefits database",
+    "audience": ["employed", "transitioning", "disabled_veteran", "retiree", "student", "family_caregiver"],
+    "goal_tags": ["taxes", "lower_bills"],
+    "disability_relevant": false,
+    "urgency_weight": 4,
+    "savings_type": "annual"
   },
   {
     "id": "fr-017",
@@ -201,7 +281,12 @@
     "monthly_value": "Planning tool",
     "cross_ref": { "dataset": "document_templates", "id": "budget-financial-recovery-plan" },
     "website": null,
-    "verification": "AAAI template system"
+    "verification": "AAAI template system",
+    "audience": ["transitioning", "employed"],
+    "goal_tags": ["lower_bills", "reduce_debt", "wealth_building"],
+    "disability_relevant": false,
+    "urgency_weight": 4,
+    "savings_type": "tool"
   },
   {
     "id": "fr-018",
@@ -213,7 +298,12 @@
     "monthly_value": "Planning tool",
     "cross_ref": { "dataset": "document_templates", "id": "debt-hardship-letter" },
     "website": null,
-    "verification": "AAAI template system"
+    "verification": "AAAI template system",
+    "audience": ["transitioning", "disabled_veteran"],
+    "goal_tags": ["reduce_debt"],
+    "disability_relevant": false,
+    "urgency_weight": 4,
+    "savings_type": "tool"
   },
   {
     "id": "fr-019",
@@ -225,7 +315,12 @@
     "monthly_value": "Planning tool",
     "cross_ref": { "dataset": "document_templates", "id": "credit-dispute-letter" },
     "website": null,
-    "verification": "AAAI template system"
+    "verification": "AAAI template system",
+    "audience": ["employed", "transitioning", "disabled_veteran"],
+    "goal_tags": ["reduce_debt", "wealth_building"],
+    "disability_relevant": false,
+    "urgency_weight": 3,
+    "savings_type": "tool"
   },
   {
     "id": "fr-020",
@@ -237,6 +332,11 @@
     "monthly_value": "$50-200/mo savings long-term",
     "cross_ref": { "dataset": "hidden_benefits", "filter": "federal_insurance" },
     "website": "https://www.va.gov/life-insurance/options-eligibility/vgli/",
-    "verification": "VA.gov official"
+    "verification": "VA.gov official",
+    "audience": ["transitioning", "employed"],
+    "goal_tags": ["lower_bills", "wealth_building"],
+    "disability_relevant": false,
+    "urgency_weight": 3,
+    "savings_type": "monthly"
   }
 ]

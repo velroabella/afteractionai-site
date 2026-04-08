@@ -117,6 +117,53 @@
   <p class="page-hero-bar__subtitle">Maximize your financial position using every benefit, savings program, and tool available to veterans.</p>
 </section>
 
+<!-- ═══════════ EXECUTION PANEL ═══════════ -->
+<section class="execution-panel" id="foExecutionPanel" style="max-width:900px;margin:2rem auto;padding:2rem 2rem 1.5rem;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);border-radius:16px;border:1px solid rgba(212,168,67,0.25);box-shadow:0 4px 24px rgba(0,0,0,0.3);">
+  <h2 style="margin:0 0 0.25rem;font-size:1.4rem;color:#f0f0f0;text-align:center;">Find Your Best Financial Moves</h2>
+  <p style="color:#aaa;font-size:0.9rem;text-align:center;margin:0 0 1.5rem;">Answer a few questions and we'll prioritize the actions that save you the most money.</p>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;">
+    <div>
+      <label for="foExGoal" style="display:block;font-size:0.8rem;color:#ccc;margin-bottom:4px;font-weight:600;">What do you need most right now?</label>
+      <select id="foExGoal" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:#0f0f23;color:#f0f0f0;font-size:0.95rem;">
+        <option value="">— Select —</option>
+        <option value="lower_bills">Lower monthly bills</option>
+        <option value="reduce_debt">Reduce debt / improve cash flow</option>
+        <option value="housing">Housing / homeownership</option>
+        <option value="taxes">Taxes / exemptions</option>
+        <option value="education">Education / training money</option>
+        <option value="business">Business / entrepreneurship</option>
+        <option value="wealth_building">Long-term wealth building</option>
+        <option value="see_everything">I want to see everything</option>
+      </select>
+    </div>
+    <div>
+      <label for="foExSituation" style="display:block;font-size:0.8rem;color:#ccc;margin-bottom:4px;font-weight:600;">Your current situation?</label>
+      <select id="foExSituation" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:#0f0f23;color:#f0f0f0;font-size:0.95rem;">
+        <option value="">— Select —</option>
+        <option value="employed">Employed</option>
+        <option value="transitioning">Transitioning / job hunting</option>
+        <option value="disabled_veteran">Disabled Veteran</option>
+        <option value="retiree">Retiree</option>
+        <option value="student">Student</option>
+        <option value="business_owner">Business Owner</option>
+        <option value="family_caregiver">Family / caregiver</option>
+      </select>
+    </div>
+    <div>
+      <label for="foExState" style="display:block;font-size:0.8rem;color:#ccc;margin-bottom:4px;font-weight:600;">State-specific first?</label>
+      <select id="foExState" style="width:100%;padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:#0f0f23;color:#f0f0f0;font-size:0.95rem;">
+        <option value="no">No — show all</option>
+        <option value="yes">Yes — prioritize state benefits</option>
+      </select>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:1.25rem;">
+    <button onclick="foExecutionEngine()" style="padding:12px 36px;border-radius:10px;border:none;background:linear-gradient(135deg,#d4a843,#b8860b);color:#000;font-weight:700;font-size:1rem;cursor:pointer;letter-spacing:0.5px;transition:transform 0.15s,box-shadow 0.15s;" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 4px 16px rgba(212,168,67,0.4)';" onmouseout="this.style.transform='none';this.style.boxShadow='none';">Show My Top Actions</button>
+  </div>
+  <!-- Execution Results -->
+  <div id="foExResults" style="display:none;margin-top:1.5rem;"></div>
+</section>
+
 <!-- QUICK ACCESS BAR -->
 <div class="rp-quickaccess">
   <div class="rp-quickaccess__inner">
@@ -201,6 +248,43 @@
 
 </div>
 
+<!-- CROSS-REFERENCES -->
+<section class="resources-crossref" style="max-width:1200px;margin:2rem auto;padding:0 1rem;">
+  <h2 style="font-size:1.2rem;color:#f0f0f0;margin-bottom:1rem;text-align:center;">Related Resources</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;">
+    <a href="hidden-benefits.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128274;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Hidden Benefits</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Overlooked benefits you may be missing</div>
+    </a>
+    <a href="state-benefits.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127961;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">State Benefits</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">State-by-state benefits directory</div>
+    </a>
+    <a href="transition-guide.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128203;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Transition Guide</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Step-by-step separation planning</div>
+    </a>
+    <a href="education.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127891;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Education</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">GI Bill, VR&amp;E, scholarships</div>
+    </a>
+    <a href="resources.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128218;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">All Resources</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Complete partner organization directory</div>
+    </a>
+    <a href="document-templates.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128196;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Document Templates</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Letters, plans, and financial tools</div>
+    </a>
+  </div>
+</section>
+
 <!-- FOOTER -->
   <footer class="footer">
     <div class="footer__inner">
@@ -253,7 +337,6 @@
       </div>
     </div>
   </footer>
-</div>
 
 <script>
 // ── State ──────────────────────────────────────────────────
@@ -530,6 +613,200 @@ function foUpdateCount() {
     : 'Showing ' + foFilteredResources.length + ' of ' + foAllResources.length + ' resources';
 }
 
+// ── Execution Engine ─────────────────────────────────────
+var FO_SITUATION_LABELS = {
+  employed: 'Employed',
+  transitioning: 'Transitioning',
+  disabled_veteran: 'Disabled Veteran',
+  retiree: 'Retiree',
+  student: 'Student',
+  business_owner: 'Business Owner',
+  family_caregiver: 'Family / Caregiver'
+};
+
+var FO_GOAL_LABELS = {
+  lower_bills: 'Lower Monthly Bills',
+  reduce_debt: 'Reduce Debt',
+  housing: 'Housing / Homeownership',
+  taxes: 'Taxes / Exemptions',
+  education: 'Education / Training',
+  business: 'Business / Entrepreneurship',
+  wealth_building: 'Long-Term Wealth Building',
+  see_everything: 'All Resources'
+};
+
+// Goal-to-section mapping for bonus scoring
+var FO_GOAL_SECTIONS = {
+  lower_bills: ['income_benefits', 'everyday_savings'],
+  reduce_debt: ['major_savings', 'tools_templates', 'safety_net'],
+  housing: ['major_savings'],
+  taxes: ['tax_optimization'],
+  education: ['income_benefits'],
+  business: ['safety_net', 'tools_templates'],
+  wealth_building: ['major_savings', 'income_benefits']
+};
+
+// Goal-to-category mapping for direct category match
+var FO_GOAL_CATEGORIES = {
+  lower_bills: ['va_benefits', 'discounts', 'state_benefits'],
+  reduce_debt: ['debt_reduction', 'emergency'],
+  housing: ['housing'],
+  taxes: ['tax_savings', 'state_benefits'],
+  education: ['education', 'grants'],
+  business: ['grants'],
+  wealth_building: ['housing', 'insurance', 'budgeting']
+};
+
+function foExecutionEngine() {
+  var goal = document.getElementById('foExGoal').value;
+  var situation = document.getElementById('foExSituation').value;
+  var stateFirst = document.getElementById('foExState').value;
+  var resultsDiv = document.getElementById('foExResults');
+
+  if (!goal) {
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p style="color:#e74c3c;text-align:center;font-size:0.9rem;">Please select what you need help with to get personalized results.</p>';
+    return;
+  }
+
+  var goalSections = (goal && goal !== 'see_everything') ? (FO_GOAL_SECTIONS[goal] || []) : [];
+  var goalCategories = (goal && goal !== 'see_everything') ? (FO_GOAL_CATEGORIES[goal] || []) : [];
+  var scored = [];
+
+  foAllResources.forEach(function(r) {
+    var score = 0;
+    var reasons = [];
+
+    // Situation / audience match (+18 direct, +6 broad)
+    var audArr = r.audience || [];
+    if (situation) {
+      if (audArr.indexOf(situation) !== -1) {
+        score += 18;
+        reasons.push('Fits ' + (FO_SITUATION_LABELS[situation] || situation) + ' situation');
+      } else if (audArr.length >= 5) {
+        // Broadly available resource
+        score += 6;
+      } else {
+        return; // Skip resources that don't match situation
+      }
+    } else {
+      score += 6; // No situation selected — include all
+    }
+
+    // Goal match: goal_tags direct (+15)
+    var goalTags = r.goal_tags || [];
+    if (goal && goal !== 'see_everything') {
+      if (goalTags.indexOf(goal) !== -1) {
+        score += 15;
+        reasons.push('Directly addresses ' + (FO_GOAL_LABELS[goal] || goal));
+      }
+      // Section match bonus (+8)
+      if (goalSections.indexOf(r.section) !== -1) {
+        score += 8;
+      }
+      // Category match bonus (+6)
+      if (goalCategories.indexOf(r.category) !== -1) {
+        score += 6;
+      }
+    }
+
+    // Urgency weight (+urgency_weight * 3)
+    var uw = r.urgency_weight || 1;
+    score += uw * 3;
+
+    // Impact bonus
+    var impactBonus = { critical: 10, high: 6, medium: 3, low: 1 };
+    score += impactBonus[r.impact] || 0;
+
+    // Disability relevance bonus for disabled_veteran situation
+    if (situation === 'disabled_veteran' && r.disability_relevant) {
+      score += 8;
+      if (reasons.length < 3) reasons.push('Disability-specific benefit');
+    }
+
+    // State-specific priority boost
+    if (stateFirst === 'yes' && r.category === 'state_benefits') {
+      score += 12;
+      if (reasons.length < 3) reasons.push('State-specific benefit');
+    }
+
+    // Monthly savings bonus (higher recurring value)
+    if (r.savings_type === 'monthly') {
+      score += 3;
+    }
+
+    scored.push({ resource: r, score: score, reasons: reasons });
+  });
+
+  // Sort by score descending
+  scored.sort(function(a, b) { return b.score - a.score; });
+
+  // Take top 5
+  var top = scored.slice(0, 5);
+
+  if (top.length === 0) {
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p style="color:#ccc;text-align:center;font-size:0.9rem;">No resources matched your profile. Try broadening your selection.</p>';
+    return;
+  }
+
+  var html = '<div style="border-top:1px solid rgba(212,168,67,0.3);padding-top:1.25rem;">' +
+    '<h3 style="color:#d4a843;font-size:1.1rem;margin:0 0 1rem;text-align:center;">Your Top ' + top.length + ' Financial Actions</h3>';
+
+  top.forEach(function(item, idx) {
+    var r = item.resource;
+    var meta = FO_CATEGORY_META[r.category] || { label: r.category, color: '' };
+    var impactMeta = FO_IMPACT_COLORS[r.impact] || { label: 'Unknown', color: '#718096' };
+    var impactTag = '<span style="font-size:0.6rem;padding:2px 5px;border-radius:3px;background:rgba(' + hexToRgb(impactMeta.color).join(',') + ',0.15);color:' + impactMeta.color + ';font-weight:600;margin-left:6px;">' + esc(impactMeta.label.toUpperCase()) + '</span>';
+    var valueTag = r.monthly_value ? '<div style="margin-top:6px;font-size:0.8rem;color:#48bb78;font-weight:600;">' + esc(r.monthly_value) + '</div>' : '';
+
+    // Build CTA based on resource type
+    var ctaLabel = r.website ? 'Get Started' : '';
+    if (r.category === 'budgeting' || r.category === 'debt_reduction') ctaLabel = r.website ? 'Official Info' : '';
+    if (r.savings_type === 'tool') ctaLabel = 'Use Template';
+    if (r.category === 'emergency') ctaLabel = 'Get Help Now';
+    if (!ctaLabel && r.cross_ref && r.cross_ref.dataset) ctaLabel = 'Explore';
+
+    var linkBtn = '';
+    if (r.website) {
+      linkBtn = '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:6px;background:rgba(212,168,67,0.15);color:#d4a843;text-decoration:none;font-size:0.8rem;font-weight:600;border:1px solid rgba(212,168,67,0.3);transition:background 0.2s;" onmouseover="this.style.background=\'rgba(212,168,67,0.25)\'" onmouseout="this.style.background=\'rgba(212,168,67,0.15)\'">' + esc(ctaLabel || 'Learn More') + ' &#8599;</a>';
+    } else if (r.cross_ref && r.cross_ref.dataset) {
+      var href = r.cross_ref.dataset === 'hidden_benefits' ? 'hidden-benefits.html' :
+                 r.cross_ref.dataset === 'military_discounts' ? 'military-discounts.html' :
+                 r.cross_ref.dataset === 'resources' ? 'resources.html' :
+                 r.cross_ref.dataset === 'grants' ? 'grants-scholarships.html' :
+                 r.cross_ref.dataset === 'state_benefits' ? 'state-benefits.html' :
+                 r.cross_ref.dataset === 'document_templates' ? 'document-templates.html' :
+                 r.cross_ref.dataset === 'emergency_assistance' ? 'emergency-assistance.html' : '#';
+      linkBtn = '<a href="' + href + '" style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:6px;background:rgba(212,168,67,0.15);color:#d4a843;text-decoration:none;font-size:0.8rem;font-weight:600;border:1px solid rgba(212,168,67,0.3);transition:background 0.2s;" onmouseover="this.style.background=\'rgba(212,168,67,0.25)\'" onmouseout="this.style.background=\'rgba(212,168,67,0.15)\'">' + esc(ctaLabel || 'Explore') + ' &rarr;</a>';
+    }
+
+    html += '<div style="display:flex;gap:1rem;align-items:flex-start;padding:1rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">' +
+      '<div style="flex-shrink:0;width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#d4a843,#b8860b);display:flex;align-items:center;justify-content:center;font-weight:700;color:#000;font-size:0.9rem;">' + (idx + 1) + '</div>' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:700;color:#f0f0f0;font-size:0.95rem;">' + esc(r.name) + impactTag + '</div>' +
+        '<span style="display:inline-block;font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(212,168,67,0.1);color:#d4a843;margin-top:4px;">' + esc(meta.label) + '</span>' +
+        '<div style="margin-top:6px;font-size:0.85rem;color:#bbb;">' + esc(item.reasons.join(' · ')) + '</div>' +
+        valueTag +
+        '<div style="margin-top:6px;font-size:0.8rem;color:#aaa;">' + esc(r.description) + '</div>' +
+        linkBtn +
+      '</div>' +
+    '</div>';
+  });
+
+  html += '<div style="text-align:center;margin-top:1rem;">' +
+    '<button onclick="foScrollToGrid()" style="padding:8px 20px;border-radius:8px;border:1px solid rgba(255,255,255,0.15);background:transparent;color:#ccc;font-size:0.85rem;cursor:pointer;transition:border-color 0.2s;" onmouseover="this.style.borderColor=\'rgba(212,168,67,0.4)\'" onmouseout="this.style.borderColor=\'rgba(255,255,255,0.15)\'">Browse All ' + foAllResources.length + ' Resources Below &#8595;</button>' +
+  '</div></div>';
+
+  resultsDiv.style.display = 'block';
+  resultsDiv.innerHTML = html;
+}
+
+function foScrollToGrid() {
+  var grid = document.getElementById('foGrid');
+  if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 // ── URL param pre-filter ─────────────────────────────────
 function foParseUrlFilters() {
   var params = new URLSearchParams(window.location.search);
@@ -546,16 +823,20 @@ function foParseUrlFilters() {
 
 // ── Init (external JSON) ─────────────────────────────────
 foParseUrlFilters();
-fetch('data/financial-resources.json')
-  .then(function(r) { return r.json(); })
+fetch('/data/financial-resources.json')
+  .then(function(r) {
+    if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
+    return r.json();
+  })
   .then(function(data) {
+    console.log('[FO] Loaded financial resources:', (Array.isArray(data) ? data.length : 0), 'entries');
     foAllResources = Array.isArray(data) ? data : [];
     foApplyFilters();
   })
   .catch(function(err) {
-    console.error('Error loading financial resources:', err);
+    console.error('[FO] Error loading financial resources:', err);
     document.getElementById('foGrid').innerHTML =
-      '<div class="mh-empty"><p>Error loading resources. Please try again later.</p></div>';
+      '<div class="mh-empty"><p>Error loading resources: ' + esc(err.message) + '</p></div>';
   });
 </script>
 
