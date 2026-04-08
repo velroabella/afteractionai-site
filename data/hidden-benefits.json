@@ -152,7 +152,7 @@
     "why_missed": "Veterans must proactively apply at their county assessor's office; exemptions don't auto-apply even after establishing VA rating",
     "how_to_claim": "Contact your county tax assessor or use your state's veteran property tax exemption application",
     "annual_value": "Varies: $500/year (low rating, some states) to 100% exemption (100% rated, TX/FL/others)",
-    "website": "https://www.military.com/benefits/veteran-benefits/veteran-property-tax-exemptions-by-state.html",
+    "website": "https://news.va.gov/139592/unlocking-veteran-tax-exemptions-across-states-and-u-s-territories/",
     "verification": "verified"
   },
   {
@@ -165,7 +165,7 @@
     "why_missed": "Each state has different eligibility windows and application processes; many veterans don't know their state offers this",
     "how_to_claim": "Contact your State Department of Veterans Affairs; some states require residency at time of service",
     "annual_value": "One-time: $100-$5,000+ depending on state and deployment",
-    "website": "https://www.military.com/benefits/veteran-benefits/state-veterans-benefits-directory.html",
+    "website": "https://www.benefits.va.gov/benefits/offices.asp",
     "verification": "verified"
   },
   {
@@ -178,7 +178,7 @@
     "why_missed": "Many veterans don't know the free pass was expanded from disabled-only to ALL veterans in 2020",
     "how_to_claim": "Present valid veteran ID at any national park entrance station or request online",
     "annual_value": "$80/year savings (cost of the standard annual pass)",
-    "website": "https://www.nps.gov/subjects/military/veterans-and-gold-star-background.htm",
+    "website": "https://www.nps.gov/planyourvisit/veterans-and-gold-star-families-free-access.htm",
     "verification": "verified"
   },
   {
@@ -191,7 +191,7 @@
     "why_missed": "Must be requested separately from standard license purchase; not automatically applied",
     "how_to_claim": "Contact your state wildlife/fish & game department or apply at license vendor with veteran ID/DD-214",
     "annual_value": "$20-$150/year in license savings depending on state",
-    "website": "https://www.military.com/benefits/veteran-benefits",
+    "website": null,
     "verification": "verified"
   },
   {
@@ -308,7 +308,7 @@
     "why_missed": "Must be requested at DMV; not automatically applied even with veteran designation on license",
     "how_to_claim": "Apply at your local DMV with DD-214 and VA rating letter; request veteran plates and fee waiver simultaneously",
     "annual_value": "$30-$200/year in registration savings; free plates save $15-$50",
-    "website": "https://www.military.com/benefits/veteran-benefits",
+    "website": null,
     "verification": "verified"
   },
   {
@@ -321,7 +321,7 @@
     "why_missed": "Separate from federal national park pass; must be requested from state parks department",
     "how_to_claim": "Contact your state parks department or apply at park entrance with veteran ID/DD-214",
     "annual_value": "$20-$100/year in day-use and camping fee savings",
-    "website": "https://www.military.com/benefits/veteran-benefits",
+    "website": null,
     "verification": "verified"
   },
   {
@@ -360,7 +360,7 @@
     "why_missed": "Requires specific veteran plates AND registration with the toll authority; not automatic even with plates",
     "how_to_claim": "Register veteran plates with your state toll authority (e.g., TxDOT, FDOT, NY Thruway); process varies by state",
     "annual_value": "$200-$2,000+/year depending on commute and state",
-    "website": "https://www.military.com/benefits/veteran-benefits",
+    "website": null,
     "verification": "verified"
   },
   {

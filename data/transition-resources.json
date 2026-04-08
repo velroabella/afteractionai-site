@@ -27,7 +27,7 @@
       { "page": "grants-scholarships.html", "label": "Grants & Scholarships" },
       { "page": "resources.html", "label": "Employment Resources", "filter": "employment" }
     ],
-    "website": "https://www.dodtap.mil/",
+    "website": "https://www.dodtap.mil/dodtap/",
     "verification": "DoD official program"
   },
   {
@@ -39,7 +39,8 @@
     "timeline": "Before separation",
     "priority": "critical",
     "routes": [
-      { "page": "document-templates.html", "label": "Document Templates" }
+      { "page": "document-templates.html", "label": "Document Templates" },
+      { "page": "resources.html", "label": "VSOs & Records Help", "filter": "benefits" }
     ],
     "website": "https://www.archives.gov/veterans/military-service-records",
     "verification": "National Archives"
@@ -165,7 +166,7 @@
       { "page": "hidden-benefits.html", "label": "Hidden Employment Benefits", "filter": "federal_employment" },
       { "page": "resources.html", "label": "Employment Resources", "filter": "employment" }
     ],
-    "website": "https://www.usajobs.gov/Help/working-in-government/unique-hiring-paths/veterans/",
+    "website": "https://help.usajobs.gov/working-in-government/unique-hiring-paths/veterans",
     "verification": "OPM official"
   },
   {
