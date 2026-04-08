@@ -283,6 +283,36 @@
 
 
   /* ────────────────────────────────────────────────────────
+     Phase 13: Partner metadata hook
+     Attaches partnerMeta to a routing result when an active
+     partner supports the detected intent.  Metadata only —
+     no network calls, no side effects.  Safe no-op when
+     PartnerRegistry is absent or returns null.
+
+     SAFETY: Never called on CRISIS or AT_RISK results —
+     partner referrals must never interrupt safety flows.
+     ──────────────────────────────────────────────────────── */
+
+  /**
+   * @param  {Object} r — result object produced by result()
+   * @returns {Object} r — same reference, optionally extended
+   */
+  function attachPartnerMeta(r) {
+    if (!r) return r;
+    if (!window.AIOS || !window.AIOS.PartnerRegistry ||
+        typeof window.AIOS.PartnerRegistry.getPartnerFor !== 'function') return r;
+    var _p = window.AIOS.PartnerRegistry.getPartnerFor(r.intent);
+    if (_p) {
+      r.partnerMeta = {
+        partner_id:   _p.partner_id,
+        partner_type: _p.partner_type,
+        status:       _p.status
+      };
+    }
+    return r;
+  }
+
+  /* ────────────────────────────────────────────────────────
      Router
      ──────────────────────────────────────────────────────── */
   var Router = {
@@ -302,7 +332,7 @@
      */
     routeAIOSIntent: function(userMessage, context) {
       if (!userMessage || typeof userMessage !== 'string') {
-        return result('GENERAL_QUESTION', 0, null);
+        return attachPartnerMeta(result('GENERAL_QUESTION', 0, null));
       }
 
       var text = userMessage.toLowerCase().trim();
@@ -324,7 +354,7 @@
         var rule = KEYWORD_RULES[i];
         var match = matchPhrase(text, rule.keywords);
         if (match) {
-          return result(rule.intent, 0.8, match);
+          return attachPartnerMeta(result(rule.intent, 0.8, match));
         }
       }
 
@@ -365,12 +395,12 @@
           var r = result('GENERAL_QUESTION', 0.2, null);
           r.needsClarification = true;
           r.clarificationQuestion = 'Can you tell me a bit more about what you need help with?';
-          return r;
+          return attachPartnerMeta(r);
         }
       }
 
       // ── 4. Default — general question ──────────────────
-      return result('GENERAL_QUESTION', 0.4, null);
+      return attachPartnerMeta(result('GENERAL_QUESTION', 0.4, null));
     },
 
     /**

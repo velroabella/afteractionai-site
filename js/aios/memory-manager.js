@@ -1098,6 +1098,86 @@
   window.AIOS.ExecutionState = ExecutionState;
 
   /* ══════════════════════════════════════════════════════════
+     AIOS.PartnerRegistry  (Phase 13)
+     Partner integration model — structure-only foundation.
+     No partners are active in Phase 13; this establishes
+     the registry, lookup contract, and payload extension
+     point used by ActionPayload.generate() and the Router.
+
+     Partner schema:
+       partner_id:   string   — unique slug identifier
+       partner_type: string   — 'employment' | 'financial'
+                                | 'benefits' | 'legal' | 'recreation'
+       endpoint:     string   — base URL for future API / referral
+       supports:     string[] — AIOS intent keys this partner handles
+       status:       string   — 'active' | 'inactive'
+                                (all 'inactive' in Phase 13)
+
+     Activation: change status → 'active' in Phase 14 to enable
+     partner_action injection into payloads and router metadata.
+     ══════════════════════════════════════════════════════════ */
+
+  var _P13_PARTNERS = [
+    {
+      partner_id:   'hireheroesusa',
+      partner_type: 'employment',
+      endpoint:     'https://www.hireheroesusa.org/jobs/',
+      supports:     ['EMPLOYMENT_TRANSITION'],
+      status:       'inactive'
+    },
+    {
+      partner_id:   'operationhomefront',
+      partner_type: 'financial',
+      endpoint:     'https://operationhomefront.org/get-help/',
+      supports:     ['BENEFITS_DISCOVERY', 'DISABILITY_CLAIM', 'STATE_BENEFITS'],
+      status:       'inactive'
+    },
+    {
+      partner_id:   'pointman_ministries',
+      partner_type: 'benefits',
+      endpoint:     'https://pointman.org/find-your-post/',
+      supports:     ['NEXT_STEP', 'FAMILY_SURVIVOR'],
+      status:       'inactive'
+    }
+  ];
+
+  var PartnerRegistry = {
+
+    /**
+     * Return the first ACTIVE partner that supports the given intent.
+     * Returns null if no active partner maps to the intent.
+     * Called by ActionPayload.generate() and the Router hook.
+     *
+     * @param  {string} intent — AIOS intent key (e.g. 'EMPLOYMENT_TRANSITION')
+     * @returns {Object|null}
+     */
+    getPartnerFor: function(intent) {
+      if (!intent || typeof intent !== 'string') return null;
+      for (var i = 0; i < _P13_PARTNERS.length; i++) {
+        var p = _P13_PARTNERS[i];
+        if (p.status === 'active' &&
+            Array.isArray(p.supports) &&
+            p.supports.indexOf(intent) !== -1) {
+          return p;
+        }
+      }
+      return null; // no active partner (all inactive in Phase 13)
+    },
+
+    /**
+     * Return a shallow copy of all partner definitions.
+     * For inspection / admin use only — never mutate the returned array.
+     * @returns {Object[]}
+     */
+    getAll: function() {
+      return _P13_PARTNERS.slice();
+    }
+
+  };
+
+  window.AIOS.PartnerRegistry = PartnerRegistry;
+
+  /* ══════════════════════════════════════════════════════════
      AIOS.ActionPayload  (Phase 11)
      Generates, stores, and retrieves structured action payload
      objects from routing results.  Payloads give the response
@@ -1157,7 +1237,14 @@
       var _qp     = ActionPayload._parseQueryParams(_url);
       var _label  = (_path && _P11_NEXT_STEPS[_path]) ? _P11_NEXT_STEPS[_path] : null;
 
-      return {
+      // Phase 13: Attach partner_action only when an active partner supports
+      // this intent. No-op in Phase 13 (all partners inactive). Activates
+      // automatically in Phase 14 by flipping partner status → 'active'.
+      var _partner = (window.AIOS && window.AIOS.PartnerRegistry)
+        ? window.AIOS.PartnerRegistry.getPartnerFor(routeResult.intent)
+        : null;
+
+      var _payload = {
         type:         _type,
         page:         _url,
         params: {
@@ -1173,6 +1260,18 @@
         priority:     ActionPayload._derivePriority(routeResult),
         timestamp:    new Date().toISOString()
       };
+
+      // Only add partner_action field when a partner is actually matched.
+      // Keeps payload clean (no null keys) for all current inactive flows.
+      if (_partner) {
+        _payload.partner_action = {
+          partner_id:  _partner.partner_id,
+          action_type: 'referral',
+          endpoint:    _partner.endpoint
+        };
+      }
+
+      return _payload;
     },
 
     /**

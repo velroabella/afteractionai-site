@@ -4633,7 +4633,19 @@
               routeResult.actionPayload = _p11Payload;
               window.AIOS.ActionPayload.store(_p11Payload);
               console.log('[AIOS][PAYLOAD] type=' + _p11Payload.type + ' | page=' + (_p11Payload.page || 'none') + ' | priority=' + _p11Payload.priority + ' | next_step=' + (_p11Payload.next_step || 'none'));
+              // Phase 13: Log partner_action when an active partner was matched.
+              // No-op in Phase 13 (all partners inactive). Integration point for Phase 14.
+              if (_p11Payload.partner_action) {
+                console.log('[AIOS][PARTNER] partner=' + _p11Payload.partner_action.partner_id + ' | action=' + _p11Payload.partner_action.action_type + ' | endpoint=' + _p11Payload.partner_action.endpoint);
+              }
             }
+          }
+
+          // Phase 13: Log router partner metadata when present.
+          // partnerMeta is attached by Router.attachPartnerMeta() for non-crisis intents.
+          // All partners inactive in Phase 13 — log fires only when status → 'active'.
+          if (routeResult.partnerMeta) {
+            console.log('[AIOS][PARTNER_META] partner=' + routeResult.partnerMeta.partner_id + ' | type=' + routeResult.partnerMeta.partner_type + ' | status=' + routeResult.partnerMeta.status);
           }
 
           // Phase 32: Telemetry — escalation tier (text path)
