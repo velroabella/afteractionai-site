@@ -4708,6 +4708,11 @@
                       'taken action on these resources. Do NOT suggest them again: ' + _p9Done.join(', ') + '.';
                   }
                 }
+                // Phase 10: Personalization — inject engagement history context (advisory only)
+                if (window.AIOS && window.AIOS.Personalization) {
+                  var _p10Block = window.AIOS.Personalization.buildPromptBlock();
+                  if (_p10Block) systemPrompt += _p10Block;
+                }
                 aiosActive = true;
                 console.log('[AIOS][REQUEST] systemLen=' + systemPrompt.length + ' (base=' + SYSTEM_PROMPT.length + ' + aios=' + aiosRequest.system.length + ') | intent=' + aiosRequest.meta.intent + ' | skill=' + aiosRequest.meta.skill + ' | hasMemory=' + aiosRequest.meta.hasMemory + ' | hasPageContext=' + aiosRequest.meta.hasPageContext);
               }
@@ -4738,6 +4743,11 @@
                     systemPrompt += '\n\n## ALREADY COMPLETED\nThe veteran has already viewed or ' +
                       'taken action on these resources. Do NOT suggest them again: ' + _gqDone.join(', ') + '.';
                   }
+                }
+                // Phase 10: Personalization — inject engagement history context (advisory only)
+                if (window.AIOS && window.AIOS.Personalization) {
+                  var _gqP10Block = window.AIOS.Personalization.buildPromptBlock();
+                  if (_gqP10Block) systemPrompt += _gqP10Block;
                 }
                 aiosActive = true;
                 console.log('[AIOS][GENERAL] systemLen=' + systemPrompt.length + ' | hasMemory=' + _gqRequest.meta.hasMemory + ' | hasMission=' + _gqRequest.meta.hasMission + ' | confidence=' + _gqRequest.meta.confidenceLevel);

@@ -1047,4 +1047,156 @@
 
   window.AIOS.ExecutionState = ExecutionState;
 
+  /* ══════════════════════════════════════════════════════════
+     AIOS.Personalization  (Phase 10)
+     Derives category affinity and pre-fill hints from
+     ExecutionState.  Provides a prompt injection block that
+     personalizes AI suggestions without modifying execution
+     engine scoring or removing any options.
+
+     Safety rules enforced here:
+       - All language is advisory ("prioritize", "consider", "may")
+       - Pre-fill is a HINT only — never auto-runs or overrides input
+       - No mutation of execution engine data structures
+       - Guard: only active when at least 1 signal is present
+     ══════════════════════════════════════════════════════════ */
+
+  /** Resource ID prefix → human-readable category label */
+  var _P10_CATEGORY_MAP = {
+    'cc': 'Contractor & Defense Careers',
+    'fr': 'Financial Optimization',
+    'hb': 'Hidden Benefits',
+    'ea': 'Emergency Assistance',
+    'or': 'Outdoor Recreation'
+  };
+
+  /**
+   * Whitelist of valid execution page paths.
+   * Mirrors _PAGE_LABELS in app.js — any page not in this object is rejected.
+   */
+  var _P10_PAGE_LABELS = {
+    '/contractor-careers.html':     'Contractor & Defense Careers',
+    '/financial-optimization.html': 'Financial Optimization',
+    '/hidden-benefits.html':        'Hidden Benefits',
+    '/emergency-assistance.html':   'Emergency Assistance',
+    '/outdoor-recreation.html':     'Outdoor Recreation'
+  };
+
+  var Personalization = {
+
+    /**
+     * Derive engagement signals from ExecutionState.
+     * Returns an object safe to consume even if ExecutionState is not loaded.
+     *
+     * @returns {{
+     *   engaged:    string[],      — category labels sorted by engagement count desc
+     *   lastPage:   string|null,   — whitelisted page path (query string stripped), or null
+     *   lastParams: Object|null,   — last_execution_params snapshot
+     *   inProgress: string[],      — in_progress_actions IDs
+     *   hasHistory: boolean        — true if any personalization signal is present
+     * }}
+     */
+    getSignals: function() {
+      var _empty = { engaged: [], lastPage: null, lastParams: null, inProgress: [], hasHistory: false };
+      if (!window.AIOS || !window.AIOS.ExecutionState) return _empty;
+
+      var _es   = window.AIOS.ExecutionState._state;
+      var _last = window.AIOS.ExecutionState.getLastExecution();
+
+      var completed  = Array.isArray(_es.completed_actions)   ? _es.completed_actions.slice()   : [];
+      var inProgress = Array.isArray(_es.in_progress_actions) ? _es.in_progress_actions.slice() : [];
+
+      // Count completions by ID prefix to build category affinity scores.
+      // e.g. ["cc-022","cc-029","fr-008"] → { cc: 2, fr: 1 }
+      var _counts = {};
+      completed.forEach(function(id) {
+        var prefix = (typeof id === 'string' && id.indexOf('-') !== -1) ? id.split('-')[0] : '';
+        if (prefix && _P10_CATEGORY_MAP[prefix]) {
+          _counts[prefix] = (_counts[prefix] || 0) + 1;
+        }
+      });
+
+      // Sort prefixes by count descending → ordered list of engaged category labels
+      var engaged = Object.keys(_counts)
+        .sort(function(a, b) { return _counts[b] - _counts[a]; })
+        .map(function(p) { return _P10_CATEGORY_MAP[p]; });
+
+      // Whitelist-validate last page — strip query string, then check against _P10_PAGE_LABELS.
+      // Rejects null, unknown pages, and any tampered values not in the whitelist.
+      var _rawPage  = _last ? (_last.page || null) : null;
+      var _pagePath = _rawPage ? _rawPage.split('?')[0] : null;
+      var lastPage  = (_pagePath && _P10_PAGE_LABELS[_pagePath]) ? _pagePath : null;
+
+      var hasHistory = engaged.length > 0 || inProgress.length > 0 || !!lastPage;
+
+      return {
+        engaged:    engaged,
+        lastPage:   lastPage,
+        lastParams: _last ? (_last.params || null) : null,
+        inProgress: inProgress,
+        hasHistory: hasHistory
+      };
+    },
+
+    /**
+     * Build a personalization context block for systemPrompt injection.
+     * Returns an empty string when no history exists — complete no-op for new users.
+     *
+     * Injects up to four advisory sections:
+     *   1. PREFERRED CATEGORIES  — AI should prioritize these in suggestions
+     *   2. LAST ACTIVE PAGE      — AI can offer to continue prior work
+     *   3. PRE-FILL HINT         — AI may reference prior session params in its intro
+     *   4. IN-PROGRESS           — AI may suggest revisiting viewed but unactioned resources
+     *
+     * @returns {string}  Formatted prompt block, or '' if no history
+     */
+    buildPromptBlock: function() {
+      var s = Personalization.getSignals();
+      if (!s.hasHistory) return '';
+
+      var block = '\n\n## VETERAN ENGAGEMENT HISTORY (PERSONALIZATION)\n' +
+        'Use the context below to personalize suggestions. ' +
+        'RULES: Do NOT override user input. Do NOT remove any options from results. ' +
+        'All guidance is advisory — prefer, suggest, and offer; never force or auto-navigate.';
+
+      // 1. Category affinity — steer AI toward previously engaged skill areas
+      if (s.engaged.length > 0) {
+        block += '\n\nPREFERRED CATEGORIES (sorted by engagement): ' + s.engaged.join(', ') + '.' +
+          ' When proposing next steps, suggest these areas first where contextually relevant.';
+      }
+
+      // 2. Last session page — offer natural continuation
+      if (s.lastPage) {
+        var _pl = _P10_PAGE_LABELS[s.lastPage];
+        block += '\n\nLAST ACTIVE PAGE: ' + _pl + '.';
+        if (s.lastParams && s.lastParams.intent) {
+          block += ' Previous intent: "' + s.lastParams.intent + '".';
+        }
+        block += ' If the conversation leads naturally, offer to return to ' + _pl +
+          ' or build on what was started. Only suggest — do NOT auto-navigate.';
+      }
+
+      // 3. Pre-fill hint — inform the AI of prior session params
+      if (s.lastParams && (s.lastParams.intent || s.lastParams.skill)) {
+        var _pf = [];
+        if (s.lastParams.intent) _pf.push('intent: ' + s.lastParams.intent);
+        if (s.lastParams.skill)  _pf.push('skill: '  + s.lastParams.skill);
+        block += '\n\nPRE-FILL HINT: The veteran\'s previous session context was (' + _pf.join(', ') + ').' +
+          ' You may reference this when introducing or returning to the relevant execution page.';
+      }
+
+      // 4. In-progress resources — soft "continue" suggestion
+      if (s.inProgress.length > 0) {
+        block += '\n\nIN-PROGRESS (viewed but not yet actioned): ' + s.inProgress.join(', ') + '.' +
+          ' Where contextually appropriate, you may say: "You may also want to continue with [resource]."' +
+          ' Only surface this when relevant to the current conversation — do not insert into every response.';
+      }
+
+      return block;
+    }
+
+  };
+
+  window.AIOS.Personalization = Personalization;
+
 })();
