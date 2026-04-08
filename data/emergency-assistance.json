@@ -10,7 +10,12 @@
     "assistance_type": ["rent", "utilities", "food", "transportation"],
     "website": "https://www.salvationarmyusa.org/usn/provide-emergency-assistance/",
     "phone": "1-800-725-2769",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "housing", "food"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 2
   },
   {
     "id": "ea-002",
@@ -23,7 +28,12 @@
     "assistance_type": ["rent", "utilities", "food", "clothing"],
     "website": "https://www.catholiccharitiesusa.org/find-help/",
     "phone": "703-549-1390",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "housing", "food"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 2
   },
   {
     "id": "ea-003",
@@ -36,7 +46,12 @@
     "assistance_type": ["referral", "food", "rent", "utilities", "crisis"],
     "website": "https://www.211.org/",
     "phone": "211",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "housing", "food", "mental_health"],
+    "urgency_level": "immediate",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 5
   },
   {
     "id": "ea-004",
@@ -49,7 +64,12 @@
     "assistance_type": ["rent", "utilities", "vehicle_repair", "medical"],
     "website": "https://www.dav.org/veterans/emergency-financial-assistance/",
     "phone": "1-877-426-2838",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial"],
+    "urgency_level": "any",
+    "disability_relevant": true,
+    "family_relevant": false,
+    "response_score": 1
   },
   {
     "id": "ea-005",
@@ -62,7 +82,12 @@
     "assistance_type": ["rent", "utilities", "medical", "transportation"],
     "website": "https://pva.org/programs-services/",
     "phone": "1-800-424-8200",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "medical"],
+    "urgency_level": "any",
+    "disability_relevant": true,
+    "family_relevant": false,
+    "response_score": 1
   },
   {
     "id": "ea-006",
@@ -75,7 +100,12 @@
     "assistance_type": ["rent", "utilities", "vehicle_repair", "medical", "childcare"],
     "website": "https://www.vfw.org/assistance/financial-grants",
     "phone": "1-866-789-6333",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "family"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 1
   },
   {
     "id": "ea-007",
@@ -88,7 +118,12 @@
     "assistance_type": ["food", "rent", "utilities", "clothing"],
     "website": "https://www.legion.org/financialassistance",
     "phone": "317-630-1212",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "food", "family"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 1
   },
   {
     "id": "ea-008",
@@ -101,7 +136,12 @@
     "assistance_type": ["rent", "utilities", "food"],
     "website": "https://www.teamrwb.org/",
     "phone": "904-395-1510",
-    "verification": "aggregator"
+    "verification": "aggregator",
+    "need_type": ["financial"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": false,
+    "response_score": 2
   },
   {
     "id": "ea-009",
@@ -114,7 +154,12 @@
     "assistance_type": ["utilities"],
     "website": "https://www.acf.hhs.gov/ocs/programs/liheap",
     "phone": "Contact state LIHEAP office",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": false,
+    "response_score": 1
   },
   {
     "id": "ea-010",
@@ -127,7 +172,12 @@
     "assistance_type": ["food"],
     "website": "https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program",
     "phone": "1-800-221-5689",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["food"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 2
   },
   {
     "id": "ea-011",
@@ -140,7 +190,12 @@
     "assistance_type": ["food"],
     "website": "https://www.feedingamerica.org/find-your-local-foodbank",
     "phone": "1-800-771-2303",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["food"],
+    "urgency_level": "immediate",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 5
   },
   {
     "id": "ea-012",
@@ -153,7 +208,12 @@
     "assistance_type": ["rent", "housing_deposit", "moving_costs", "utilities"],
     "website": "https://www.va.gov/homeless/ssvf/",
     "phone": "1-877-4AID-VET (1-877-424-3838)",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["housing"],
+    "urgency_level": "immediate",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 3
   },
   {
     "id": "ea-013",
@@ -166,7 +226,12 @@
     "assistance_type": ["housing_voucher", "case_management"],
     "website": "https://www.va.gov/homeless/hud-vash.asp",
     "phone": "1-877-4AID-VET (1-877-424-3838)",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["housing"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": false,
+    "response_score": 1
   },
   {
     "id": "ea-014",
@@ -179,7 +244,12 @@
     "assistance_type": ["referral", "crisis", "housing"],
     "website": "https://www.va.gov/homeless/",
     "phone": "1-877-4AID-VET (1-877-424-3838)",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["housing", "mental_health"],
+    "urgency_level": "immediate",
+    "disability_relevant": false,
+    "family_relevant": false,
+    "response_score": 5
   },
   {
     "id": "ea-015",
@@ -192,7 +262,12 @@
     "assistance_type": ["food", "transportation", "prescriptions", "shelter"],
     "website": "https://www.va.gov/health/socialwork.asp",
     "phone": "Contact your local VAMC social work service",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "medical", "food"],
+    "urgency_level": "immediate",
+    "disability_relevant": true,
+    "family_relevant": false,
+    "response_score": 4
   },
   {
     "id": "ea-016",
@@ -205,7 +280,12 @@
     "assistance_type": ["rent", "utilities", "medical", "vehicle_repair"],
     "website": "https://www.modestneeds.org/",
     "phone": "212-463-7042",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": false,
+    "response_score": 1
   },
   {
     "id": "ea-017",
@@ -218,7 +298,12 @@
     "assistance_type": ["food"],
     "website": "https://www.fns.usda.gov/tefap/emergency-food-assistance-program",
     "phone": "Contact local food bank",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["food"],
+    "urgency_level": "immediate",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 5
   },
   {
     "id": "ea-018",
@@ -231,7 +316,12 @@
     "assistance_type": ["rent", "utilities", "food", "medicine"],
     "website": "https://www.svdpusa.org/assistance-services/",
     "phone": "314-576-3993",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "food"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": false,
+    "response_score": 2
   },
   {
     "id": "ea-019",
@@ -244,7 +334,12 @@
     "assistance_type": ["rent", "utilities", "vehicle_repair", "food"],
     "website": "https://operationhomefront.org/critical-financial-assistance/",
     "phone": "1-800-722-6098",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "family"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 2
   },
   {
     "id": "ea-020",
@@ -257,7 +352,12 @@
     "assistance_type": ["shelter", "rent", "housing_deposit"],
     "website": "https://www.hud.gov/program_offices/comm_planning/esg",
     "phone": "Contact local CoC or dial 211",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["housing"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 2
   },
   {
     "id": "ea-021",
@@ -270,7 +370,12 @@
     "assistance_type": ["rent", "utilities", "emergency_travel", "funeral", "medical"],
     "website": "https://www.nmcrs.org/",
     "phone": "1-800-654-8364",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "medical"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 3
   },
   {
     "id": "ea-022",
@@ -283,7 +388,12 @@
     "assistance_type": ["rent", "utilities", "vehicle_repair", "emergency_travel", "food"],
     "website": "https://www.afas.org/",
     "phone": "1-800-769-8951",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 4
   },
   {
     "id": "ea-023",
@@ -296,7 +406,12 @@
     "assistance_type": ["rent", "utilities", "medical", "funeral", "emergency_travel"],
     "website": "https://www.cgmahq.org/",
     "phone": "1-800-881-2462",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial", "medical"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 3
   },
   {
     "id": "ea-024",
@@ -309,7 +424,12 @@
     "assistance_type": ["rent", "utilities", "medical", "transportation"],
     "website": "https://www.purpleheartfoundation.org/",
     "phone": "703-354-2140",
-    "verification": "aggregator"
+    "verification": "aggregator",
+    "need_type": ["financial", "medical"],
+    "urgency_level": "any",
+    "disability_relevant": true,
+    "family_relevant": false,
+    "response_score": 1
   },
   {
     "id": "ea-025",
@@ -322,7 +442,12 @@
     "assistance_type": ["rent", "utilities", "transitional_support"],
     "website": "https://www.hopeforthewarriors.org/",
     "phone": "1-877-246-7349",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial"],
+    "urgency_level": "any",
+    "disability_relevant": true,
+    "family_relevant": true,
+    "response_score": 2
   },
   {
     "id": "ea-026",
@@ -335,7 +460,12 @@
     "assistance_type": ["vehicle_repair", "vehicle_donation"],
     "website": "https://www.operationhomefront.org/",
     "phone": "Contact local veteran service organization",
-    "verification": "aggregator"
+    "verification": "aggregator",
+    "need_type": ["financial"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": false,
+    "response_score": 1
   },
   {
     "id": "ea-027",
@@ -348,7 +478,12 @@
     "assistance_type": ["prescriptions", "medical"],
     "website": "https://www.va.gov/health-care/about-va-health-benefits/",
     "phone": "Contact your local VAMC pharmacy",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["medical"],
+    "urgency_level": "immediate",
+    "disability_relevant": true,
+    "family_relevant": false,
+    "response_score": 5
   },
   {
     "id": "ea-028",
@@ -361,7 +496,12 @@
     "assistance_type": ["childcare"],
     "website": "https://www.va.gov/health-care/about-va-health-benefits/",
     "phone": "Contact your local VAMC",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["family"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 3
   },
   {
     "id": "ea-029",
@@ -374,7 +514,12 @@
     "assistance_type": ["dental", "medical"],
     "website": "https://dentallifeline.org/",
     "phone": "1-888-471-6334",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["medical"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": false,
+    "response_score": 1
   },
   {
     "id": "ea-030",
@@ -387,6 +532,30 @@
     "assistance_type": ["utilities"],
     "website": "https://liheapch.acf.hhs.gov/",
     "phone": "Contact state utility commission or dial 211",
-    "verification": "verified"
+    "verification": "verified",
+    "need_type": ["financial"],
+    "urgency_level": "any",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 2
+  },
+  {
+    "id": "ea-031",
+    "name": "Veterans Crisis Line (988)",
+    "description": "24/7 confidential crisis support for veterans, service members, and their families. Call or text 988 and press 1 for the Veterans Crisis Line. Chat available at veteranscrisisline.net.",
+    "category": "veteran_emergency",
+    "eligibility": "All veterans, service members, National Guard, Reserve, and their families",
+    "source_type": "federal",
+    "response_time": "Immediate (24/7 hotline, chat, and text)",
+    "assistance_type": ["crisis", "mental_health", "referral"],
+    "website": "https://www.veteranscrisisline.net",
+    "phone": "988",
+    "verification": "verified",
+    "need_type": ["mental_health", "crisis"],
+    "urgency_level": "immediate",
+    "disability_relevant": false,
+    "family_relevant": true,
+    "response_score": 5,
+    "next_step": "Call or text 988, then press 1 for veterans"
   }
 ]

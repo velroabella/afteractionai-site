@@ -117,6 +117,92 @@
   <p class="page-hero-bar__subtitle">Immediate financial, housing, food, and crisis assistance for veterans and military families in need.</p>
 </section>
 
+<!-- ═══════════ SECTION 1: EMERGENCY EXECUTION PANEL ═══════════ -->
+<section id="eaExecutionPanel" style="max-width:900px;margin:1.5rem auto;padding:0 1rem;">
+  <div style="background:linear-gradient(135deg,#1a0808 0%,#2d1010 100%);border-radius:16px;border:1px solid rgba(229,62,62,0.4);box-shadow:0 4px 32px rgba(229,62,62,0.15);overflow:hidden;">
+
+    <!-- Crisis Hotline Bar — always visible, zero data dependency -->
+    <div style="background:rgba(229,62,62,0.18);border-bottom:1px solid rgba(229,62,62,0.3);padding:10px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:center;">
+      <span style="color:#fc8181;font-size:0.8rem;font-weight:700;letter-spacing:0.5px;">&#9888; IMMEDIATE CRISIS LINES:</span>
+      <a href="tel:988" style="color:#fff;font-weight:700;text-decoration:none;font-size:0.85rem;background:rgba(229,62,62,0.3);padding:4px 12px;border-radius:6px;border:1px solid rgba(229,62,62,0.5);">&#128222; 988 (Press 1) &mdash; Veterans Crisis</a>
+      <a href="tel:18774243838" style="color:#fff;font-weight:700;text-decoration:none;font-size:0.85rem;background:rgba(229,62,62,0.3);padding:4px 12px;border-radius:6px;border:1px solid rgba(229,62,62,0.5);">&#128222; 1-877-4AID-VET &mdash; VA Homeless</a>
+      <a href="tel:211" style="color:#fff;font-weight:700;text-decoration:none;font-size:0.85rem;background:rgba(229,62,62,0.3);padding:4px 12px;border-radius:6px;border:1px solid rgba(229,62,62,0.5);">&#128222; 211 &mdash; Local Emergency Services</a>
+    </div>
+
+    <!-- Execution Panel Body -->
+    <div style="padding:1.5rem 1.5rem 1rem;">
+      <h2 style="margin:0 0 0.25rem;font-size:1.35rem;color:#fff;text-align:center;font-weight:800;">What do you need help with RIGHT NOW?</h2>
+      <p style="color:#fc8181;font-size:0.8rem;text-align:center;margin:0 0 1.25rem;font-weight:600;">Select your situation &mdash; we'll show the fastest help options available.</p>
+
+      <!-- Need Type Buttons — large tap targets for high-stress use -->
+      <div id="eaNeedButtons" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:0.6rem;margin-bottom:1.25rem;">
+        <button class="ea-need-btn" data-need="financial" onclick="eaSelectNeed(this)" style="padding:14px 10px;border-radius:10px;border:1px solid rgba(229,62,62,0.3);background:rgba(255,255,255,0.05);color:#f0f0f0;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.15s;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:4px;">&#128176;</div>Money / Financial Help
+        </button>
+        <button class="ea-need-btn" data-need="housing" onclick="eaSelectNeed(this)" style="padding:14px 10px;border-radius:10px;border:1px solid rgba(229,62,62,0.3);background:rgba(255,255,255,0.05);color:#f0f0f0;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.15s;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:4px;">&#127968;</div>Housing / Shelter
+        </button>
+        <button class="ea-need-btn" data-need="food" onclick="eaSelectNeed(this)" style="padding:14px 10px;border-radius:10px;border:1px solid rgba(229,62,62,0.3);background:rgba(255,255,255,0.05);color:#f0f0f0;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.15s;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:4px;">&#127860;</div>Food Assistance
+        </button>
+        <button class="ea-need-btn" data-need="medical" onclick="eaSelectNeed(this)" style="padding:14px 10px;border-radius:10px;border:1px solid rgba(229,62,62,0.3);background:rgba(255,255,255,0.05);color:#f0f0f0;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.15s;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:4px;">&#127973;</div>Medical Help
+        </button>
+        <button class="ea-need-btn" data-need="mental_health" onclick="eaSelectNeed(this)" style="padding:14px 10px;border-radius:10px;border:1px solid rgba(229,62,62,0.3);background:rgba(255,255,255,0.05);color:#f0f0f0;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.15s;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:4px;">&#129309;</div>Mental Health / Crisis
+        </button>
+        <button class="ea-need-btn" data-need="family" onclick="eaSelectNeed(this)" style="padding:14px 10px;border-radius:10px;border:1px solid rgba(229,62,62,0.3);background:rgba(255,255,255,0.05);color:#f0f0f0;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.15s;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:4px;">&#128106;</div>Help for My Family
+        </button>
+        <button class="ea-need-btn" data-need="all" onclick="eaSelectNeed(this)" style="padding:14px 10px;border-radius:10px;border:1px solid rgba(229,62,62,0.3);background:rgba(255,255,255,0.05);color:#f0f0f0;font-weight:600;font-size:0.9rem;cursor:pointer;transition:all 0.15s;text-align:center;">
+          <div style="font-size:1.4rem;margin-bottom:4px;">&#128269;</div>Not Sure &mdash; Show All
+        </button>
+      </div>
+
+      <!-- Urgency Row -->
+      <div style="margin-bottom:1rem;">
+        <div style="font-size:0.8rem;color:#fc8181;font-weight:700;margin-bottom:0.5rem;text-align:center;letter-spacing:0.5px;">HOW URGENT IS YOUR SITUATION?</div>
+        <div style="display:flex;gap:0.5rem;justify-content:center;flex-wrap:wrap;">
+          <button class="ea-urgency-btn" data-urgency="immediate" onclick="eaSelectUrgency(this)" style="padding:8px 20px;border-radius:8px;border:1px solid rgba(229,62,62,0.4);background:rgba(255,255,255,0.05);color:#f0f0f0;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.15s;">&#128308; Immediate &mdash; Today</button>
+          <button class="ea-urgency-btn" data-urgency="soon" onclick="eaSelectUrgency(this)" style="padding:8px 20px;border-radius:8px;border:1px solid rgba(229,62,62,0.4);background:rgba(255,255,255,0.05);color:#f0f0f0;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.15s;">&#128993; Soon &mdash; This Week</button>
+          <button class="ea-urgency-btn" data-urgency="planning" onclick="eaSelectUrgency(this)" style="padding:8px 20px;border-radius:8px;border:1px solid rgba(229,62,62,0.4);background:rgba(255,255,255,0.05);color:#f0f0f0;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all 0.15s;">&#9989; Planning Ahead</button>
+        </div>
+      </div>
+
+      <!-- Disabled Veteran Toggle -->
+      <div style="text-align:center;margin-bottom:1.25rem;">
+        <label style="color:#ccc;font-size:0.8rem;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:8px;">
+          <input type="checkbox" id="eaDisabledVet" style="width:16px;height:16px;accent-color:#e53e3e;cursor:pointer;" onchange="eaSetDisabled(this.checked)" />
+          I am a disabled veteran (prioritizes VA and disability-specific resources)
+        </label>
+      </div>
+
+      <!-- Find Help Button -->
+      <div style="text-align:center;">
+        <button onclick="eaExecutionEngine()" style="padding:14px 48px;border-radius:10px;border:none;background:linear-gradient(135deg,#e53e3e,#c53030);color:#fff;font-weight:800;font-size:1.05rem;cursor:pointer;letter-spacing:0.5px;transition:transform 0.15s,box-shadow 0.15s;box-shadow:0 2px 12px rgba(229,62,62,0.4);" onmouseover="this.style.transform='translateY(-1px)';this.style.boxShadow='0 6px 20px rgba(229,62,62,0.5)';" onmouseout="this.style.transform='none';this.style.boxShadow='0 2px 12px rgba(229,62,62,0.4)';">Find Help Now &rarr;</button>
+      </div>
+    </div>
+
+    <!-- Section 2: Immediate Results Output -->
+    <div id="eaExResults" style="display:none;border-top:1px solid rgba(229,62,62,0.25);padding:1.25rem 1.5rem;"></div>
+  </div>
+</section>
+
+<!-- ═══════════ SECTION 3: QUICK ACTION SHORTCUTS ═══════════ -->
+<div style="max-width:900px;margin:1rem auto 0;padding:0 1rem;">
+  <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);border-radius:12px;padding:1rem 1.25rem;">
+    <div style="font-size:0.7rem;color:#999;font-weight:700;letter-spacing:1px;margin-bottom:0.75rem;text-align:center;">KEY CONTACTS &mdash; AVAILABLE NOW</div>
+    <div style="display:flex;flex-wrap:wrap;gap:0.6rem;justify-content:center;">
+      <a href="tel:988" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(229,62,62,0.12);border:1px solid rgba(229,62,62,0.3);color:#fc8181;text-decoration:none;font-size:0.82rem;font-weight:700;">&#128222; 988 Crisis Line</a>
+      <a href="tel:18774243838" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(212,168,67,0.1);border:1px solid rgba(212,168,67,0.3);color:#d4a843;text-decoration:none;font-size:0.82rem;font-weight:700;">&#128222; VA Homeless 1-877-4AID-VET</a>
+      <a href="tel:211" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(99,179,237,0.1);border:1px solid rgba(99,179,237,0.25);color:#63b3ed;text-decoration:none;font-size:0.82rem;font-weight:700;">&#128222; 211 Local Help</a>
+      <a href="tel:18007256769" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#ccc;text-decoration:none;font-size:0.82rem;font-weight:700;">&#128222; Salvation Army 1-800-725-2769</a>
+      <a href="tel:18007696951" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#ccc;text-decoration:none;font-size:0.82rem;font-weight:700;">&#128222; AFAS 1-800-769-8951</a>
+      <a href="tel:18006548364" style="display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.1);color:#ccc;text-decoration:none;font-size:0.82rem;font-weight:700;">&#128222; NMCRS 1-800-654-8364</a>
+    </div>
+  </div>
+</div>
+
 <!-- QUICK ACCESS BAR -->
 <div class="rp-quickaccess">
   <div class="rp-quickaccess__inner">
@@ -260,6 +346,38 @@
   </main>
 
 </div>
+
+<!-- ═══════════ SECTION 5: CROSS-REFERENCES ═══════════ -->
+<section class="resources-crossref" style="max-width:1200px;margin:2rem auto;padding:0 1rem;">
+  <h2 style="font-size:1.1rem;color:#f0f0f0;margin-bottom:1rem;text-align:center;">Once the Emergency Is Stabilized</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;">
+    <a href="financial-optimization.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128176;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Financial Optimization</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Maximize every veteran financial benefit</div>
+    </a>
+    <a href="hidden-benefits.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128274;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Hidden Benefits</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Overlooked benefits you may be missing</div>
+    </a>
+    <a href="medical-help.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127973;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Medical &amp; Mental Health</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">VA healthcare, counseling, crisis resources</div>
+    </a>
+    <a href="families-support.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128106;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Families &amp; Survivors</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Spouse, dependent, and survivor support</div>
+    </a>
+    <a href="resources.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128218;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">All Resources</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Full partner organization directory</div>
+    </a>
+  </div>
+</section>
 
 <!-- FOOTER -->
   <footer class="footer">
@@ -548,6 +666,223 @@ document.getElementById('eaSubmissionForm').addEventListener('submit', function(
   eaToggleSubmissionForm();
 });
 
+// ── Execution Engine State ────────────────────────────────
+var eaExSelectedNeed = null;
+var eaExSelectedUrgency = null;
+var eaExIsDisabled = false;
+
+// ── Need type labels ──────────────────────────────────────
+var EA_NEED_LABELS = {
+  financial:    'Money / Financial Help',
+  housing:      'Housing / Shelter',
+  food:         'Food Assistance',
+  medical:      'Medical Help',
+  mental_health:'Mental Health / Crisis',
+  family:       'Help for My Family',
+  all:          'All Fast Options'
+};
+
+// ── Select need (button group) ────────────────────────────
+function eaSelectNeed(btn) {
+  document.querySelectorAll('.ea-need-btn').forEach(function(b) {
+    b.style.background = 'rgba(255,255,255,0.05)';
+    b.style.borderColor = 'rgba(229,62,62,0.3)';
+    b.style.color = '#f0f0f0';
+  });
+  btn.style.background = 'rgba(229,62,62,0.25)';
+  btn.style.borderColor = 'rgba(229,62,62,0.8)';
+  btn.style.color = '#fff';
+  eaExSelectedNeed = btn.getAttribute('data-need');
+}
+
+// ── Select urgency (button group) ────────────────────────
+function eaSelectUrgency(btn) {
+  document.querySelectorAll('.ea-urgency-btn').forEach(function(b) {
+    b.style.background = 'rgba(255,255,255,0.05)';
+    b.style.borderColor = 'rgba(229,62,62,0.4)';
+    b.style.color = '#f0f0f0';
+  });
+  btn.style.background = 'rgba(229,62,62,0.22)';
+  btn.style.borderColor = 'rgba(229,62,62,0.8)';
+  btn.style.color = '#fff';
+  eaExSelectedUrgency = btn.getAttribute('data-urgency');
+}
+
+// ── Set disabled flag ─────────────────────────────────────
+function eaSetDisabled(val) {
+  eaExIsDisabled = !!val;
+}
+
+// ── eaLoadData — public alias for fetch init ──────────────
+function eaLoadData() {
+  return fetch('/data/emergency-assistance.json')
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
+      return r.json();
+    })
+    .then(function(data) {
+      console.log('[EA] Loaded emergency resources:', (Array.isArray(data) ? data.length : 0), 'entries');
+      eaAllResources = Array.isArray(data) ? data : [];
+      eaApplyFilters();
+    })
+    .catch(function(err) {
+      console.error('[EA] Error loading emergency resources:', err);
+      document.getElementById('eaGrid').innerHTML =
+        '<div class="mh-empty"><p>Error loading emergency resources: ' + esc(err.message) + '</p></div>';
+    });
+}
+
+// ── eaRenderCards — renders all filtered resources to grid ──
+function eaRenderCards() {
+  eaVisibleCount = 0;
+  document.getElementById('eaGrid').innerHTML = '';
+  eaLoadMore();
+  eaUpdateCount();
+}
+
+// ── eaScrollToGrid ────────────────────────────────────────
+function eaScrollToGrid() {
+  var grid = document.getElementById('eaGrid');
+  if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ── Execution Engine ─────────────────────────────────────
+function eaExecutionEngine() {
+  var need = eaExSelectedNeed;
+  var urgency = eaExSelectedUrgency;
+  var disabled = eaExIsDisabled;
+  var resultsDiv = document.getElementById('eaExResults');
+
+  if (!need) {
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p style="color:#fc8181;text-align:center;font-size:0.9rem;padding:0.5rem;">Please select what you need help with above.</p>';
+    return;
+  }
+
+  if (eaAllResources.length === 0) {
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p style="color:#fc8181;text-align:center;font-size:0.9rem;padding:0.5rem;">Resources loading — please try again in a moment.</p>';
+    return;
+  }
+
+  var scored = [];
+  var isImmediate = (urgency === 'immediate');
+
+  eaAllResources.forEach(function(r) {
+    var score = 0;
+    var reasons = [];
+
+    // Need type match — primary signal (+25)
+    var needArr = r.need_type || [];
+    var needMatch = (need === 'all') || (needArr.indexOf(need) !== -1);
+    if (need !== 'all' && needMatch) {
+      score += 25;
+      reasons.push('Directly covers ' + (EA_NEED_LABELS[need] || need).toLowerCase());
+    } else if (need === 'all') {
+      score += 5;
+    } else {
+      return; // Skip resources that don't match the need at all
+    }
+
+    // Response speed — critical for emergency scoring
+    // Base: response_score × 6
+    var rs = r.response_score || 1;
+    score += rs * 6;
+
+    // Urgency override: if immediate, response_score gets massive additional weight
+    if (isImmediate) {
+      score += rs * 12; // additional 12-60 points for fast resources when urgent
+      if (rs >= 4) {
+        reasons.push('Available ' + (rs === 5 ? 'same day / 24\u20137' : '24\u201348 hours'));
+      }
+    }
+
+    // Disability bonus: disabled veteran + disability_relevant resource
+    if (disabled && r.disability_relevant) {
+      score += 14;
+      if (reasons.length < 3) reasons.push('Disability-specific program');
+    }
+
+    // Family relevance bonus for family need
+    if (need === 'family' && r.family_relevant) {
+      score += 10;
+    }
+
+    // Category bonuses
+    if (r.category === 'veteran_emergency') score += 8;
+    if (r.category === 'referral' && need !== 'all') score += 5; // referrals are always useful
+    if (r.category === 'branch_specific') score += 3;
+
+    // Verification bonus
+    if (r.verification === 'verified') score += 4;
+
+    // Phone available = faster access
+    if (r.phone && !/contact/i.test(r.phone)) score += 3;
+
+    scored.push({ resource: r, score: score, reasons: reasons });
+  });
+
+  // Sort by score descending; for immediate urgency, break ties by response_score
+  scored.sort(function(a, b) {
+    if (b.score !== a.score) return b.score - a.score;
+    return (b.resource.response_score || 0) - (a.resource.response_score || 0);
+  });
+
+  // Top 5 (immediate urgency) or top 4 (other)
+  var topCount = isImmediate ? 5 : 4;
+  var top = scored.slice(0, topCount);
+
+  if (top.length === 0) {
+    resultsDiv.style.display = 'block';
+    resultsDiv.innerHTML = '<p style="color:#fc8181;text-align:center;font-size:0.9rem;padding:0.5rem;">No specific matches found. Try selecting "Not Sure &mdash; Show All" or dial <strong>211</strong> for immediate referral.</p>';
+    return;
+  }
+
+  var urgencyLabel = isImmediate ? 'FASTEST HELP — TODAY' : (urgency === 'soon' ? 'TOP OPTIONS — THIS WEEK' : 'TOP RESOURCES FOR YOU');
+  var html = '<h3 style="color:#fc8181;font-size:1rem;margin:0 0 1rem;text-align:center;font-weight:800;letter-spacing:0.5px;">' + urgencyLabel + '</h3>';
+
+  top.forEach(function(item, idx) {
+    var r = item.resource;
+    var meta = EA_CATEGORY_META[r.category] || { label: r.category, color: '' };
+    var rs = r.response_score || 1;
+    var speedLabel = rs === 5 ? 'Same Day / 24\u20137' : rs === 4 ? '24\u201348 Hours' : rs === 3 ? '3\u20135 Days' : rs === 2 ? '5\u201310 Days' : '2+ Weeks';
+    var speedColor = rs >= 4 ? '#48bb78' : rs === 3 ? '#edb734' : '#a0aec0';
+    var verifiedBadge = r.verification === 'verified' ? ' <span style="font-size:0.6rem;padding:1px 5px;border-radius:3px;background:rgba(72,187,120,0.15);color:#48bb78;font-weight:700;">VERIFIED</span>' : '';
+
+    // CTA button logic
+    var ctaHTML = '';
+    if (r.phone && !/contact/i.test(r.phone)) {
+      var dialNum = r.phone.replace(/[^0-9+]/g, '');
+      ctaHTML = '<a href="tel:' + esc(dialNum) + '" style="display:inline-block;margin-top:8px;margin-right:6px;padding:7px 16px;border-radius:7px;background:rgba(229,62,62,0.25);color:#fc8181;text-decoration:none;font-size:0.82rem;font-weight:700;border:1px solid rgba(229,62,62,0.5);">&#128222; Call Now &mdash; ' + esc(r.phone) + '</a>';
+    }
+    if (r.website) {
+      ctaHTML += '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;padding:7px 16px;border-radius:7px;background:rgba(212,168,67,0.12);color:#d4a843;text-decoration:none;font-size:0.82rem;font-weight:700;border:1px solid rgba(212,168,67,0.3);">Apply Now &#8599;</a>';
+    }
+
+    html += '<div style="display:flex;gap:0.85rem;align-items:flex-start;padding:0.9rem;margin-bottom:0.6rem;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(229,62,62,0.12);">' +
+      '<div style="flex-shrink:0;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#e53e3e,#c53030);display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;font-size:0.85rem;">' + (idx + 1) + '</div>' +
+      '<div style="flex:1;min-width:0;">' +
+        '<div style="font-weight:700;color:#fff;font-size:0.93rem;">' + esc(r.name) + verifiedBadge + '</div>' +
+        '<div style="margin-top:4px;display:flex;flex-wrap:wrap;gap:6px;">' +
+          '<span style="font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(229,62,62,0.1);color:#fc8181;">' + esc(meta.label) + '</span>' +
+          '<span style="font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(' + (rs >= 4 ? '72,187,120' : rs === 3 ? '237,183,52' : '160,174,192') + ',0.12);color:' + speedColor + ';font-weight:700;">&#9201; ' + speedLabel + '</span>' +
+        '</div>' +
+        (item.reasons.length ? '<div style="margin-top:5px;font-size:0.82rem;color:#bbb;">' + esc(item.reasons.join(' &middot; ')) + '</div>' : '') +
+        '<div style="margin-top:4px;font-size:0.8rem;color:#999;">' + esc(r.description.length > 120 ? r.description.slice(0, 120) + '\u2026' : r.description) + '</div>' +
+        ctaHTML +
+      '</div>' +
+    '</div>';
+  });
+
+  html += '<div style="text-align:center;margin-top:0.75rem;">' +
+    '<button onclick="eaScrollToGrid()" style="padding:7px 18px;border-radius:7px;border:1px solid rgba(255,255,255,0.1);background:transparent;color:#999;font-size:0.8rem;cursor:pointer;">Browse All ' + eaAllResources.length + ' Resources Below &#8595;</button>' +
+  '</div>';
+
+  resultsDiv.style.display = 'block';
+  resultsDiv.innerHTML = html;
+  resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
 // ── URL param pre-filter ─────────────────────────────────
 function eaParseUrlFilters() {
   var params = new URLSearchParams(window.location.search);
@@ -580,23 +915,9 @@ function eaParseUrlFilters() {
   }
 }
 
-// ── Init (external JSON) ─────────────────────────────────
+// ── Init ─────────────────────────────────────────────────
 eaParseUrlFilters();
-fetch('/data/emergency-assistance.json')
-  .then(function(r) {
-    if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
-    return r.json();
-  })
-  .then(function(data) {
-    console.log('[EA] Loaded emergency resources:', (Array.isArray(data) ? data.length : 0), 'entries');
-    eaAllResources = Array.isArray(data) ? data : [];
-    eaApplyFilters();
-  })
-  .catch(function(err) {
-    console.error('[EA] Error loading emergency resources:', err);
-    document.getElementById('eaGrid').innerHTML =
-      '<div class="mh-empty"><p>Error loading emergency resources: ' + esc(err.message) + '</p></div>';
-  });
+eaLoadData();
 </script>
 
 <!-- AUTH MODAL -->
