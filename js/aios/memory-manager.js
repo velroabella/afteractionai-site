@@ -871,7 +871,8 @@
     last_execution_page:      null,
     last_execution_params:    null,
     last_execution_results:   [],
-    last_execution_timestamp: null
+    last_execution_timestamp: null,
+    latest_payload:           null   // Phase 11: latest generated action payload
   };
 
   var ExecutionState = {
@@ -997,7 +998,10 @@
             last_execution_page:      s.last_execution_page                   || null,
             last_execution_params:    s.last_execution_params                 || null,
             last_execution_results:   Array.isArray(s.last_execution_results) ? s.last_execution_results : [],
-            last_execution_timestamp: s.last_execution_timestamp              || null
+            last_execution_timestamp: s.last_execution_timestamp              || null,
+            // Phase 11: restore latest payload — validate it's a non-array object before trusting
+            latest_payload: (s.latest_payload && typeof s.latest_payload === 'object' && !Array.isArray(s.latest_payload))
+              ? s.latest_payload : null
           };
           ExecutionState._loaded = true;
           console.log('[AIOS][EXEC_STATE] Loaded — last page: ' +
@@ -1010,6 +1014,28 @@
         console.warn('[AIOS][EXEC_STATE] load error:', err && err.message ? err.message : err);
         return null;
       });
+    },
+
+    /**
+     * Phase 11: Store the latest generated action payload.
+     * Persists to Supabase so the payload survives page reloads for authenticated users.
+     * Silent no-op for non-object payloads or unauthenticated sessions.
+     *
+     * @param {Object} payload — Output of ActionPayload.generate()
+     */
+    setPayload: function(payload) {
+      if (!payload || typeof payload !== 'object' || Array.isArray(payload)) return;
+      ExecutionState._state.latest_payload = payload;
+      console.log('[AIOS][EXEC_STATE] Payload stored — type: ' + payload.type + ' | page: ' + (payload.page || 'none'));
+      ExecutionState._persist();
+    },
+
+    /**
+     * Phase 11: Retrieve the latest stored action payload.
+     * @returns {Object|null}
+     */
+    getLatestPayload: function() {
+      return ExecutionState._state.latest_payload || null;
     },
 
     /**
@@ -1046,6 +1072,164 @@
   };
 
   window.AIOS.ExecutionState = ExecutionState;
+
+  /* ══════════════════════════════════════════════════════════
+     AIOS.ActionPayload  (Phase 11)
+     Generates, stores, and retrieves structured action payload
+     objects from routing results.  Payloads give the response
+     layer a machine-readable summary of what the routing engine
+     decided — type, target page, parsed params, next_step label,
+     and priority — so the AI references structured data rather
+     than assembling raw URLs from scratch.
+
+     Safety rules:
+       - Payload generated ONLY for execution_route type
+       - Crisis / AT_RISK routes always return null (no payload)
+       - Params parsed from URL query string (not from user input)
+       - No external submission — storage only (Phase 11 scope)
+     ══════════════════════════════════════════════════════════ */
+
+  /**
+   * Maps whitelisted execution page paths to human-readable next-step labels.
+   * Mirrors _PAGE_LABELS / _P10_PAGE_LABELS — single source of truth for labels.
+   */
+  var _P11_NEXT_STEPS = {
+    '/contractor-careers.html':     'Explore defense contractor and federal career opportunities',
+    '/hidden-benefits.html':        'Discover VA and federal benefits you may qualify for',
+    '/financial-optimization.html': 'Find money-saving programs and financial assistance',
+    '/emergency-assistance.html':   'Connect with emergency assistance resources',
+    '/outdoor-recreation.html':     'Access veteran outdoor and recreation programs'
+  };
+
+  var ActionPayload = {
+
+    /**
+     * Generate a structured action payload from a routing result.
+     * Only generates for execution_route type.
+     * Returns null for crisis paths, at-risk paths, and general questions.
+     *
+     * @param {Object} routeResult — Output of Router.routeAIOSIntent()
+     * @returns {Object|null} — The payload object, or null if not applicable
+     *
+     * Payload schema:
+     *   type:         string   — 'execution_route' | 'general_query' | 'crisis_escalation'
+     *   page:         string   — full execution URL with query string, or null
+     *   params:       Object   — { intent, skill, goal, need, urgency, situation }
+     *   resource_ids: string[] — initially [] (populated by execution engines later)
+     *   next_step:    string   — human-readable label for the next action
+     *   priority:     string   — 'high' | 'medium' | 'low'
+     *   timestamp:    string   — ISO 8601 generation time
+     */
+    generate: function(routeResult) {
+      if (!routeResult) return null;
+
+      var _type = ActionPayload._deriveType(routeResult);
+      // Only generate payloads for deterministic execution routes.
+      // Crisis and general query flows must stay unstructured and clean.
+      if (_type !== 'execution_route') return null;
+
+      var _url    = routeResult.executionUrl || null;
+      var _path   = _url ? _url.split('?')[0] : null;
+      var _qp     = ActionPayload._parseQueryParams(_url);
+      var _label  = (_path && _P11_NEXT_STEPS[_path]) ? _P11_NEXT_STEPS[_path] : null;
+
+      return {
+        type:         _type,
+        page:         _url,
+        params: {
+          intent:    routeResult.intent    || null,
+          skill:     routeResult.skill     || null,
+          goal:      _qp.goal             || null,
+          need:      _qp.need             || null,
+          urgency:   _qp.urgency          || null,
+          situation: _qp.situation        || null
+        },
+        resource_ids: [],
+        next_step:    _label,
+        priority:     ActionPayload._derivePriority(routeResult),
+        timestamp:    new Date().toISOString()
+      };
+    },
+
+    /**
+     * Store a generated payload via ExecutionState.setPayload().
+     * Silent no-op if ExecutionState is unavailable.
+     *
+     * @param {Object} payload — Output of ActionPayload.generate()
+     */
+    store: function(payload) {
+      if (!payload || !window.AIOS || !window.AIOS.ExecutionState) return;
+      if (typeof window.AIOS.ExecutionState.setPayload === 'function') {
+        window.AIOS.ExecutionState.setPayload(payload);
+      }
+    },
+
+    /**
+     * Retrieve the latest stored payload from ExecutionState.
+     * @returns {Object|null}
+     */
+    getLatest: function() {
+      if (!window.AIOS || !window.AIOS.ExecutionState) return null;
+      if (typeof window.AIOS.ExecutionState.getLatestPayload === 'function') {
+        return window.AIOS.ExecutionState.getLatestPayload();
+      }
+      return null;
+    },
+
+    /* ── Private helpers ─────────────────────────────────── */
+
+    /** Derive payload type from a route result. */
+    _deriveType: function(routeResult) {
+      if (!routeResult) return 'general_query';
+      if (routeResult.tier === 'CRISIS' || routeResult.tier === 'AT_RISK') return 'crisis_escalation';
+      if (routeResult.executionUrl) return 'execution_route';
+      return 'general_query';
+    },
+
+    /**
+     * Derive payload priority from tier and confidence.
+     * - CRISIS / AT_RISK → always 'high'
+     * - confidence ≥ 0.7 → 'high'
+     * - confidence ≥ 0.4 → 'medium'
+     * - confidence < 0.4 → 'low'
+     */
+    _derivePriority: function(routeResult) {
+      if (!routeResult) return 'low';
+      if (routeResult.tier === 'CRISIS' || routeResult.tier === 'AT_RISK') return 'high';
+      var conf = (typeof routeResult.confidence === 'number') ? routeResult.confidence : 0;
+      if (conf >= 0.7) return 'high';
+      if (conf >= 0.4) return 'medium';
+      return 'low';
+    },
+
+    /**
+     * Parse query-string params from an execution URL into a flat object.
+     * Skips `auto` param (always 1 — no informational value).
+     * Handles malformed input gracefully.
+     *
+     * @param  {string|null} url — e.g. "/contractor-careers.html?auto=1&goal=get_hired"
+     * @returns {Object}         — e.g. { goal: 'get_hired' }
+     */
+    _parseQueryParams: function(url) {
+      if (!url || url.indexOf('?') === -1) return {};
+      var qs = url.split('?')[1];
+      var params = {};
+      qs.split('&').forEach(function(pair) {
+        var eq = pair.indexOf('=');
+        if (eq === -1) return;
+        var key = pair.slice(0, eq);
+        var val = pair.slice(eq + 1);
+        if (key && key !== 'auto') {
+          try { params[key] = decodeURIComponent(val.replace(/\+/g, ' ')); }
+          catch (e) { params[key] = val; }
+        }
+      });
+      return params;
+    }
+
+  };
+
+  window.AIOS.ActionPayload = ActionPayload;
 
   /* ══════════════════════════════════════════════════════════
      AIOS.Personalization  (Phase 10)
