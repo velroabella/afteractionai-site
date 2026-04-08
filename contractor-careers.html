@@ -118,7 +118,7 @@
 </section>
 
 <!-- SECTION 1: EXECUTION PANEL -->
-<div class="resources-cta" id="ccExecutionPanel" style="margin:0 auto;max-width:1200px;padding:32px 24px;">
+<div class="resources-cta execution-panel" id="ccExecutionPanel" style="margin:0 auto;max-width:1200px;padding:32px 24px;">
   <h3 class="resources-cta__title" style="margin-bottom:8px;">Find Your Contractor Career Path</h3>
   <p class="resources-cta__text" style="margin-bottom:20px;">Answer a few quick questions and we'll match you with your top 5 opportunities — employers, certifications, and job boards.</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px;">
@@ -247,20 +247,36 @@
       <button class="mh-load-more-btn" onclick="ccLoadMore()">Load More Resources</button>
     </div>
 
-    <!-- SECTION 4: CROSS-REFERENCES -->
-    <div class="resources-cta" id="ccCrossRef" style="margin-top:32px;">
-      <h3 class="resources-cta__title">Explore Related Career Resources</h3>
-      <p class="resources-cta__text" style="margin-bottom:16px;">Build your complete career transition strategy with these connected resources.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
-        <a href="transition-guide.html" class="resources-cta__button" style="text-decoration:none;">Transition Guide</a>
-        <a href="resources.html?category=employment" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">Employment Resources</a>
-        <a href="licensure.html" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">Licensure &amp; Certifications</a>
-        <a href="education.html" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">Education &amp; GI Bill</a>
-      </div>
-    </div>
   </main>
 
 </div>
+
+<!-- CROSS-REFERENCES -->
+<section class="resources-crossref" style="max-width:1200px;margin:2rem auto;padding:0 1rem;">
+  <h2 style="font-size:1.2rem;color:#f0f0f0;margin-bottom:1rem;text-align:center;">Related Resources</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+    <a href="transition-guide.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128203;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Transition Guide</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Step-by-step separation planning</div>
+    </a>
+    <a href="resources.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127970;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Employment Resources</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Partner organizations for career support</div>
+    </a>
+    <a href="licensure.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127891;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Licensure &amp; Certifications</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">VA-approved certifications and license programs</div>
+    </a>
+    <a href="education.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127979;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Education &amp; GI Bill</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">GI Bill benefits, scholarships, and programs</div>
+    </a>
+  </div>
+</section>
 
 <!-- FOOTER -->
   <footer class="footer">
@@ -494,7 +510,7 @@ function ccApplyFilters() {
 function ccRenderCard(r) {
   var meta = CC_CATEGORY_META[r.category] || { label: r.category, color: '' };
   var sourceIcon = CC_SOURCE_ICONS[r.source_type] || '';
-  var ctaText = CC_CTA[r.category] || 'Learn More';
+  var ctaText = CC_CTA[r.category] || 'View Opportunity';
   var ctaUrl = r.veteran_url || r.career_url || '#';
 
   // Clearance badges
@@ -688,11 +704,11 @@ function ccExecutionEngine() {
     return;
   }
 
-  var html = '<div style="display:grid;gap:12px;">';
+  var html = '<h3 style="color:var(--gold,#d4a843);font-size:1.1rem;margin:0 0 1rem;text-align:center;">Your Top ' + top5.length + ' Career Matches</h3><div style="display:grid;gap:12px;">';
   top5.forEach(function(r, i) {
     var meta = CC_CATEGORY_META[r.category] || { label: r.category };
     var ctaUrl = r.veteran_url || r.career_url || '#';
-    var ctaText = CC_CTA[r.category] || 'Learn More';
+    var ctaText = CC_CTA[r.category] || 'View Opportunity';
 
     // Why it matches
     var whyParts = [];
@@ -732,7 +748,7 @@ function ccExecutionEngine() {
       '<div style="flex-shrink:0;width:28px;height:28px;background:' + clStyle.text + ';color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;">' + (i + 1) + '</div>' +
       '<div style="flex:1;min-width:0;">' +
         '<div style="font-weight:700;color:var(--text-primary,#e0e0e0);margin-bottom:4px;">' + esc(r.name) + ' <span style="font-size:0.65rem;color:' + clStyle.text + ';font-weight:600;">' + esc(meta.label) + '</span></div>' +
-        '<div style="font-size:0.8rem;color:#48bb78;margin-bottom:4px;">' + esc(whyParts.join(' · ')) + '</div>' +
+        '<div style="font-size:0.8rem;margin-bottom:4px;"><strong style="color:#ccc;font-size:0.75rem;">Why it fits: </strong><span style="color:#48bb78;">' + esc(whyParts.join(' · ')) + '</span></div>' +
         '<div style="font-size:0.8rem;color:var(--text-secondary,#a0a0a0);margin-bottom:4px;"><strong>Clearance:</strong> ' + (CC_CLEARANCE_LABELS[maxCl] || 'N/A') + '</div>' +
         '<div style="font-size:0.8rem;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;"><strong>Next step:</strong> ' + esc(nextAction) + '</div>' +
         '<div>' + linkBtn + '</div>' +

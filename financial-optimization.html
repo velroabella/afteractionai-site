@@ -746,7 +746,7 @@ function foExecutionEngine() {
 
   if (top.length === 0) {
     resultsDiv.style.display = 'block';
-    resultsDiv.innerHTML = '<p style="color:#ccc;text-align:center;font-size:0.9rem;">No resources matched your profile. Try broadening your selection.</p>';
+    resultsDiv.innerHTML = '<p style="color:#ccc;text-align:center;font-size:0.9rem;">No resources matched your profile. Try broadening your selection or <a href="#foGrid" style="color:#d4a843;">browse all resources below</a>.</p>';
     return;
   }
 
@@ -769,7 +769,7 @@ function foExecutionEngine() {
 
     var linkBtn = '';
     if (r.website) {
-      linkBtn = '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:6px;background:rgba(212,168,67,0.15);color:#d4a843;text-decoration:none;font-size:0.8rem;font-weight:600;border:1px solid rgba(212,168,67,0.3);transition:background 0.2s;" onmouseover="this.style.background=\'rgba(212,168,67,0.25)\'" onmouseout="this.style.background=\'rgba(212,168,67,0.15)\'">' + esc(ctaLabel || 'Learn More') + ' &#8599;</a>';
+      linkBtn = '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:6px;background:rgba(212,168,67,0.15);color:#d4a843;text-decoration:none;font-size:0.8rem;font-weight:600;border:1px solid rgba(212,168,67,0.3);transition:background 0.2s;" onmouseover="this.style.background=\'rgba(212,168,67,0.25)\'" onmouseout="this.style.background=\'rgba(212,168,67,0.15)\'">' + esc(ctaLabel || 'Get Started') + ' &#8599;</a>';
     } else if (r.cross_ref && r.cross_ref.dataset) {
       var href = r.cross_ref.dataset === 'hidden_benefits' ? 'hidden-benefits.html' :
                  r.cross_ref.dataset === 'military_discounts' ? 'military-discounts.html' :
@@ -786,8 +786,9 @@ function foExecutionEngine() {
       '<div style="flex:1;min-width:0;">' +
         '<div style="font-weight:700;color:#f0f0f0;font-size:0.95rem;">' + esc(r.name) + impactTag + '</div>' +
         '<span style="display:inline-block;font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(212,168,67,0.1);color:#d4a843;margin-top:4px;">' + esc(meta.label) + '</span>' +
-        '<div style="margin-top:6px;font-size:0.85rem;color:#bbb;">' + esc(item.reasons.join(' · ')) + '</div>' +
+        '<div style="margin-top:6px;font-size:0.85rem;color:#bbb;"><strong style="color:#ccc;font-size:0.75rem;">Why it fits: </strong>' + esc(item.reasons.join(' · ')) + '</div>' +
         valueTag +
+        (r.next_step ? '<div style="margin-top:6px;font-size:0.8rem;color:#aaa;"><strong style="color:#ccc;">Next step: </strong>' + esc(r.next_step) + '</div>' : '') +
         '<div style="margin-top:6px;font-size:0.8rem;color:#aaa;">' + esc(r.description) + '</div>' +
         linkBtn +
       '</div>' +
@@ -807,6 +808,25 @@ function foScrollToGrid() {
   if (grid) grid.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// ── Data Load ────────────────────────────────────────────
+function foLoadData() {
+  return fetch('/data/financial-resources.json')
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
+      return r.json();
+    })
+    .then(function(data) {
+      console.log('[FO] Loaded financial resources:', (Array.isArray(data) ? data.length : 0), 'entries');
+      foAllResources = Array.isArray(data) ? data : [];
+      foApplyFilters();
+    })
+    .catch(function(err) {
+      console.error('[FO] Error loading resources:', err);
+      document.getElementById('foGrid').innerHTML =
+        '<div class="mh-empty"><p>Error loading resources: ' + esc(err.message) + '</p></div>';
+    });
+}
+
 // ── URL param pre-filter ─────────────────────────────────
 function foParseUrlFilters() {
   var params = new URLSearchParams(window.location.search);
@@ -821,23 +841,9 @@ function foParseUrlFilters() {
   }
 }
 
-// ── Init (external JSON) ─────────────────────────────────
+// ── Init ─────────────────────────────────────────────────
 foParseUrlFilters();
-fetch('/data/financial-resources.json')
-  .then(function(r) {
-    if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
-    return r.json();
-  })
-  .then(function(data) {
-    console.log('[FO] Loaded financial resources:', (Array.isArray(data) ? data.length : 0), 'entries');
-    foAllResources = Array.isArray(data) ? data : [];
-    foApplyFilters();
-  })
-  .catch(function(err) {
-    console.error('[FO] Error loading financial resources:', err);
-    document.getElementById('foGrid').innerHTML =
-      '<div class="mh-empty"><p>Error loading resources: ' + esc(err.message) + '</p></div>';
-  });
+foLoadData();
 </script>
 
 <!-- AUTH MODAL -->

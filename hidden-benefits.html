@@ -527,7 +527,7 @@ function hbRenderCard(r) {
     ? ' <span style="display:inline-block;font-size:0.65rem;padding:2px 6px;border-radius:4px;background:rgba(72,187,120,0.15);color:#48bb78;font-weight:600;vertical-align:middle;">VERIFIED</span>'
     : '';
   var linkHTML = r.website
-    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">Learn More &#8599;</a>'
+    ? '<a href="' + esc(r.website) + '" target="_blank" rel="noopener noreferrer" class="resource-card__button">View Benefit &#8599;</a>'
     : '';
 
   return '<div class="resource-card aa-card" data-category="' + esc(r.category) + '">' +
@@ -749,7 +749,7 @@ function hbExecutionEngine() {
 
   if (top.length === 0) {
     resultsDiv.style.display = 'block';
-    resultsDiv.innerHTML = '<p style="color:#ccc;text-align:center;font-size:0.9rem;">No benefits matched your profile. Try broadening your selection.</p>';
+    resultsDiv.innerHTML = '<p style="color:#ccc;text-align:center;font-size:0.9rem;">No benefits matched your profile. Try broadening your selection or <a href="#hbGrid" style="color:#d4a843;">browse all benefits below</a>.</p>';
     return;
   }
 
@@ -761,7 +761,7 @@ function hbExecutionEngine() {
     var meta = HB_CATEGORY_META[b.category] || { label: b.category, color: '' };
     var verifiedTag = b.verification === 'verified' ? ' <span style="font-size:0.65rem;padding:2px 6px;border-radius:4px;background:rgba(72,187,120,0.15);color:#48bb78;font-weight:600;">VERIFIED</span>' : '';
     var valueTag = b.annual_value ? '<div style="margin-top:6px;font-size:0.8rem;color:#48bb78;font-weight:600;">' + esc(b.annual_value) + '</div>' : '';
-    var linkBtn = b.website ? '<a href="' + esc(b.website) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:6px;background:rgba(212,168,67,0.15);color:#d4a843;text-decoration:none;font-size:0.8rem;font-weight:600;border:1px solid rgba(212,168,67,0.3);transition:background 0.2s;" onmouseover="this.style.background=\'rgba(212,168,67,0.25)\'" onmouseout="this.style.background=\'rgba(212,168,67,0.15)\'">Learn More &amp; Claim &#8599;</a>' : '';
+    var linkBtn = b.website ? '<a href="' + esc(b.website) + '" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:8px;padding:6px 16px;border-radius:6px;background:rgba(212,168,67,0.15);color:#d4a843;text-decoration:none;font-size:0.8rem;font-weight:600;border:1px solid rgba(212,168,67,0.3);transition:background 0.2s;" onmouseover="this.style.background=\'rgba(212,168,67,0.25)\'" onmouseout="this.style.background=\'rgba(212,168,67,0.15)\'">Claim Benefit &#8599;</a>' : '';
     var howTag = b.how_to_claim ? '<div style="margin-top:6px;font-size:0.8rem;color:#aaa;"><strong style="color:#ccc;">Next step:</strong> ' + esc(b.how_to_claim) + '</div>' : '';
 
     html += '<div style="display:flex;gap:1rem;align-items:flex-start;padding:1rem;margin-bottom:0.75rem;background:rgba(255,255,255,0.03);border-radius:10px;border:1px solid rgba(255,255,255,0.06);">' +
@@ -769,7 +769,7 @@ function hbExecutionEngine() {
       '<div style="flex:1;min-width:0;">' +
         '<div style="font-weight:700;color:#f0f0f0;font-size:0.95rem;">' + esc(b.name) + verifiedTag + '</div>' +
         '<span style="display:inline-block;font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(212,168,67,0.1);color:#d4a843;margin-top:4px;">' + esc(meta.label) + '</span>' +
-        '<div style="margin-top:6px;font-size:0.85rem;color:#bbb;">' + esc(item.reasons.join(' · ')) + '</div>' +
+        '<div style="margin-top:6px;font-size:0.85rem;color:#bbb;"><strong style="color:#ccc;font-size:0.75rem;">Why it fits: </strong>' + esc(item.reasons.join(' · ')) + '</div>' +
         valueTag +
         howTag +
         linkBtn +
@@ -791,22 +791,25 @@ function hbScrollToGrid() {
 }
 
 // ── Init (external JSON) ─────────────────────────────────
+function hbLoadData() {
+  return fetch('/data/hidden-benefits.json')
+    .then(function(r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
+      return r.json();
+    })
+    .then(function(data) {
+      console.log('[HB] Loaded hidden benefits:', (Array.isArray(data) ? data.length : 0), 'entries');
+      hbAllBenefits = Array.isArray(data) ? data : [];
+      hbApplyFilters();
+    })
+    .catch(function(err) {
+      console.error('[HB] Error loading hidden benefits:', err);
+      document.getElementById('hbGrid').innerHTML =
+        '<div class="mh-empty"><p>Error loading hidden benefits: ' + esc(err.message) + '</p></div>';
+    });
+}
 hbParseUrlFilters();
-fetch('/data/hidden-benefits.json')
-  .then(function(r) {
-    if (!r.ok) throw new Error('HTTP ' + r.status + ' — ' + r.statusText);
-    return r.json();
-  })
-  .then(function(data) {
-    console.log('[HB] Loaded hidden benefits:', (Array.isArray(data) ? data.length : 0), 'entries');
-    hbAllBenefits = Array.isArray(data) ? data : [];
-    hbApplyFilters();
-  })
-  .catch(function(err) {
-    console.error('[HB] Error loading hidden benefits:', err);
-    document.getElementById('hbGrid').innerHTML =
-      '<div class="mh-empty"><p>Error loading hidden benefits: ' + esc(err.message) + '</p></div>';
-  });
+hbLoadData();
 </script>
 
 <!-- AUTH MODAL -->

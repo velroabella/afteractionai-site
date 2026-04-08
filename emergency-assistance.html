@@ -118,7 +118,7 @@
 </section>
 
 <!-- ═══════════ SECTION 1: EMERGENCY EXECUTION PANEL ═══════════ -->
-<section id="eaExecutionPanel" style="max-width:900px;margin:1.5rem auto;padding:0 1rem;">
+<section class="execution-panel" id="eaExecutionPanel" style="max-width:900px;margin:1.5rem auto;padding:0 1rem;">
   <div style="background:linear-gradient(135deg,#1a0808 0%,#2d1010 100%);border-radius:16px;border:1px solid rgba(229,62,62,0.4);box-shadow:0 4px 32px rgba(229,62,62,0.15);overflow:hidden;">
 
     <!-- Crisis Hotline Bar — always visible, zero data dependency -->
@@ -867,8 +867,9 @@ function eaExecutionEngine() {
           '<span style="font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(229,62,62,0.1);color:#fc8181;">' + esc(meta.label) + '</span>' +
           '<span style="font-size:0.65rem;padding:2px 8px;border-radius:4px;background:rgba(' + (rs >= 4 ? '72,187,120' : rs === 3 ? '237,183,52' : '160,174,192') + ',0.12);color:' + speedColor + ';font-weight:700;">&#9201; ' + speedLabel + '</span>' +
         '</div>' +
-        (item.reasons.length ? '<div style="margin-top:5px;font-size:0.82rem;color:#bbb;">' + esc(item.reasons.join(' &middot; ')) + '</div>' : '') +
+        (item.reasons.length ? '<div style="margin-top:5px;font-size:0.82rem;color:#bbb;"><strong style="color:#fc8181;font-size:0.75rem;">Why it fits: </strong>' + esc(item.reasons.join(' &middot; ')) + '</div>' : '') +
         '<div style="margin-top:4px;font-size:0.8rem;color:#999;">' + esc(r.description.length > 120 ? r.description.slice(0, 120) + '\u2026' : r.description) + '</div>' +
+        (r.next_step ? '<div style="margin-top:4px;font-size:0.8rem;color:#aaa;"><strong style="color:#fc8181;">Next step: </strong>' + esc(r.next_step) + '</div>' : '') +
         ctaHTML +
       '</div>' +
     '</div>';

@@ -118,7 +118,7 @@
 </section>
 
 <!-- SECTION 1: EXECUTION PANEL -->
-<div class="resources-cta" id="orExecutionPanel" style="margin:0 auto;max-width:1200px;padding:32px 24px;">
+<div class="resources-cta execution-panel" id="orExecutionPanel" style="margin:0 auto;max-width:1200px;padding:32px 24px;">
   <h3 class="resources-cta__title" style="margin-bottom:8px;">Find Your Outdoor Benefits</h3>
   <p class="resources-cta__text" style="margin-bottom:20px;">Answer a few quick questions and we'll show you exactly which outdoor benefits you qualify for.</p>
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:20px;">
@@ -250,19 +250,36 @@
       <button class="mh-load-more-btn" onclick="orLoadMore()">Load More Programs</button>
     </div>
 
-    <!-- SECTION 4: CROSS-REFERENCES -->
-    <div class="resources-cta" id="orCrossRef" style="margin-top:32px;">
-      <h3 class="resources-cta__title">Explore Related Resources</h3>
-      <p class="resources-cta__text" style="margin-bottom:16px;">Your military service unlocks even more savings and hidden benefits beyond outdoor recreation.</p>
-      <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;">
-        <a href="hidden-benefits.html?category=recreation" class="resources-cta__button" style="text-decoration:none;">Hidden Recreation Benefits</a>
-        <a href="military-discounts.html" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">All Military Discounts</a>
-        <a href="wellness.html" class="resources-cta__button" style="text-decoration:none;background:transparent;border:1px solid var(--gold,#d4a843);color:var(--gold,#d4a843);">Wellness &amp; Fitness</a>
-      </div>
-    </div>
   </main>
 
 </div>
+
+<!-- CROSS-REFERENCES -->
+<section class="resources-crossref" style="max-width:1200px;margin:2rem auto;padding:0 1rem;">
+  <h2 style="font-size:1.2rem;color:#f0f0f0;margin-bottom:1rem;text-align:center;">Related Resources</h2>
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;">
+    <a href="hidden-benefits.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128274;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Hidden Benefits</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Overlooked benefits and recreation discounts</div>
+    </a>
+    <a href="military-discounts.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#127991;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Military Discounts</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">National retail and vendor discounts for veterans</div>
+    </a>
+    <a href="wellness.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128170;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Wellness &amp; Fitness</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">VA fitness resources and wellness programs</div>
+    </a>
+    <a href="financial-optimization.html" class="aa-card" style="display:block;padding:1.25rem;border-radius:12px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);text-decoration:none;transition:border-color 0.2s;" onmouseover="this.style.borderColor='rgba(212,168,67,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.08)'">
+      <div style="font-size:1.4rem;margin-bottom:0.5rem;">&#128176;</div>
+      <div style="color:#f0f0f0;font-weight:600;font-size:0.95rem;">Financial Optimization</div>
+      <div style="color:#999;font-size:0.8rem;margin-top:4px;">Maximize every veteran financial benefit</div>
+    </a>
+  </div>
+</section>
 
 <!-- FOOTER -->
   <footer class="footer">
@@ -495,7 +512,7 @@ function orRenderCard(r) {
   var benefitLabel = OR_BENEFIT_LABELS[r.benefit_type] || 'BENEFIT';
   var benefitBg = OR_BENEFIT_COLORS[r.benefit_type] || 'rgba(255,255,255,0.1)';
   var benefitColor = OR_BENEFIT_TEXT_COLORS[r.benefit_type] || '#e0e0e0';
-  var ctaText = OR_CTA[r.category] || 'Learn More';
+  var ctaText = OR_CTA[r.category] || 'Explore Program';
 
   var stateHTML = r.state
     ? '<div class="resource-card__meta-row"><span class="resource-card__meta-label">State</span><span class="resource-card__meta-value">' + esc(r.state) + '</span></div>'
@@ -613,12 +630,12 @@ function orExecutionEngine() {
     return;
   }
 
-  var html = '<div style="display:grid;gap:12px;">';
+  var html = '<h3 style="color:var(--gold,#d4a843);font-size:1.1rem;margin:0 0 1rem;text-align:center;">Your Top ' + top5.length + ' Programs</h3><div style="display:grid;gap:12px;">';
   top5.forEach(function(r, i) {
     var meta = OR_CATEGORY_META[r.category] || { label: r.category };
     var benefitLabel = OR_BENEFIT_LABELS[r.benefit_type] || 'BENEFIT';
     var benefitColor = OR_BENEFIT_TEXT_COLORS[r.benefit_type] || '#e0e0e0';
-    var ctaText = OR_CTA[r.category] || 'Learn More';
+    var ctaText = OR_CTA[r.category] || 'Explore Program';
     var whyHTML = '';
     if (r.benefit_type === 'free_access' || r.benefit_type === 'free_license' || r.benefit_type === 'free_program') {
       whyHTML = '<span style="color:#48bb78;font-size:0.8rem;font-weight:600;">This is completely free for qualifying veterans</span>';
@@ -633,9 +650,9 @@ function orExecutionEngine() {
       '<div style="flex-shrink:0;width:28px;height:28px;background:' + benefitColor + ';color:#000;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:0.85rem;">' + (i + 1) + '</div>' +
       '<div style="flex:1;min-width:0;">' +
         '<div style="font-weight:700;color:var(--text-primary,#e0e0e0);margin-bottom:4px;">' + esc(r.name) + ' <span style="font-size:0.65rem;color:' + benefitColor + ';font-weight:600;">' + benefitLabel + '</span></div>' +
-        '<div style="font-size:0.85rem;color:var(--text-secondary,#a0a0a0);margin-bottom:6px;">' + esc(r.eligibility) + '</div>' +
-        whyHTML +
-        '<div style="margin-top:8px;">' + linkBtn + '</div>' +
+        '<div style="font-size:0.85rem;color:var(--text-secondary,#a0a0a0);margin-bottom:4px;">' + esc(r.eligibility) + '</div>' +
+        '<div style="margin-bottom:6px;"><strong style="color:#ccc;font-size:0.75rem;">Why it fits: </strong>' + whyHTML + '</div>' +
+        '<div style="margin-top:4px;">' + linkBtn + '</div>' +
       '</div></div>';
   });
   html += '</div>';
