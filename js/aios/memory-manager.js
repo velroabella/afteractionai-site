@@ -841,4 +841,210 @@
   window.AIOS = window.AIOS || {};
   window.AIOS.Memory = MemoryManager;
 
+
+  /* ══════════════════════════════════════════════════════════
+     AIOS — Execution State  (Phase 9)
+
+     Tracks execution events across sessions for:
+       - Resume banner ("pick up where you left off")
+       - Progress tracking (in_progress vs completed)
+       - Dedup filtering (suppress already-actioned resources)
+
+     State model fields:
+       active_goals             []      — goal strings currently being pursued
+       completed_actions        []      — resource IDs the user has actioned
+       in_progress_actions      []      — resource IDs shown but not yet actioned
+       last_execution_page      string  — e.g. "/contractor-careers.html?auto=1&goal=get_hired"
+       last_execution_params    object  — clearance/background/goal values at run time
+       last_execution_results   []      — top-5 resource IDs from the last run
+       last_execution_timestamp string  — ISO 8601 timestamp
+
+     Persistence: stored as profiles.aios_memory.execution_state (JSONB subkey).
+     Read/write via window.AAAI.auth.loadAIOSMemory / saveAIOSMemory.
+     All writes are no-ops for unauthenticated users — no errors are thrown.
+     ══════════════════════════════════════════════════════════ */
+
+  var _ES_DEFAULT = {
+    active_goals:             [],
+    completed_actions:        [],
+    in_progress_actions:      [],
+    last_execution_page:      null,
+    last_execution_params:    null,
+    last_execution_results:   [],
+    last_execution_timestamp: null
+  };
+
+  var ExecutionState = {
+
+    _state:  JSON.parse(JSON.stringify(_ES_DEFAULT)),
+    _loaded: false,
+
+    /**
+     * Record a completed execution engine run.
+     * Call this immediately after an execution engine resolves its top-N list.
+     *
+     * @param {string}   page      Full URL (path+params): "/contractor-careers.html?auto=1&goal=get_hired"
+     * @param {Object}   params    Snapshot of user inputs (clearance, goal, background, etc.)
+     * @param {string[]} resultIds IDs of the top-N resources returned (max 5 stored)
+     * @returns {Promise}
+     */
+    save: function(page, params, resultIds) {
+      if (!page) return Promise.resolve({ skipped: 'no page' });
+
+      var ids = Array.isArray(resultIds) ? resultIds.slice(0, 5) : [];
+
+      ExecutionState._state.last_execution_page      = page;
+      ExecutionState._state.last_execution_params    = params || null;
+      ExecutionState._state.last_execution_results   = ids;
+      ExecutionState._state.last_execution_timestamp = new Date().toISOString();
+
+      // Add IDs to in_progress if not already completed or tracked
+      ids.forEach(function(id) {
+        var comp = ExecutionState._state.completed_actions;
+        var prog = ExecutionState._state.in_progress_actions;
+        if (comp.indexOf(id) === -1 && prog.indexOf(id) === -1) {
+          prog.push(id);
+        }
+      });
+
+      console.log('[AIOS][EXEC_STATE] Saved — page: ' + page + ' | in_progress: ' + ids.length);
+      return ExecutionState._persist();
+    },
+
+    /**
+     * Mark a resource ID as actioned (clicked CTA, completed a step, etc.).
+     * Moves the ID from in_progress → completed and persists.
+     *
+     * @param {string} id Resource ID, e.g. "cc-022" or "fr-008"
+     */
+    markCompleted: function(id) {
+      if (!id) return;
+      var prog = ExecutionState._state.in_progress_actions;
+      var idx  = prog.indexOf(id);
+      if (idx !== -1) prog.splice(idx, 1);
+      if (ExecutionState._state.completed_actions.indexOf(id) === -1) {
+        ExecutionState._state.completed_actions.push(id);
+      }
+      console.log('[AIOS][EXEC_STATE] Marked completed: ' + id);
+      ExecutionState._persist();
+    },
+
+    /** @returns {boolean} true if the resource has been marked completed */
+    isCompleted: function(id) {
+      return ExecutionState._state.completed_actions.indexOf(id) !== -1;
+    },
+
+    /** @returns {string[]} shallow copy of the completed action ID array */
+    getCompletedIds: function() {
+      return ExecutionState._state.completed_actions.slice();
+    },
+
+    /**
+     * Returns the last recorded execution context for the resume banner.
+     * @returns {{ page, params, results, timestamp } | null}
+     */
+    getLastExecution: function() {
+      if (!ExecutionState._state.last_execution_page) return null;
+      return {
+        page:      ExecutionState._state.last_execution_page,
+        params:    ExecutionState._state.last_execution_params,
+        results:   ExecutionState._state.last_execution_results.slice(),
+        timestamp: ExecutionState._state.last_execution_timestamp
+      };
+    },
+
+    /**
+     * Filter a results array by removing already-completed items.
+     * Execution engines call this on their sorted top-N before rendering.
+     *
+     * @param {Object[]} arr Array of resource objects with an `id` field
+     * @returns {Object[]} filtered array (completed items excluded)
+     */
+    filterCompleted: function(arr) {
+      if (!Array.isArray(arr)) return arr;
+      var completed = ExecutionState._state.completed_actions;
+      if (!completed.length) return arr;
+      return arr.filter(function(r) {
+        return r && completed.indexOf(r.id) === -1;
+      });
+    },
+
+    /**
+     * Load execution state from Supabase (aios_memory.execution_state subkey).
+     * Merges retrieved data into _state and sets _loaded = true on success.
+     * Silent no-op for anonymous users.
+     *
+     * @returns {Promise<Object|null>} resolved _state, or null on auth gate / error
+     */
+    load: function() {
+      if (!window.AAAI || !window.AAAI.auth ||
+          typeof window.AAAI.auth.isLoggedIn  !== 'function' || !window.AAAI.auth.isLoggedIn() ||
+          typeof window.AAAI.auth.loadAIOSMemory !== 'function') {
+        return Promise.resolve(null);
+      }
+
+      return window.AAAI.auth.loadAIOSMemory().then(function(result) {
+        if (result && result.data &&
+            typeof result.data === 'object' &&
+            result.data.execution_state &&
+            typeof result.data.execution_state === 'object') {
+
+          var s = result.data.execution_state;
+          ExecutionState._state = {
+            active_goals:             Array.isArray(s.active_goals)           ? s.active_goals           : [],
+            completed_actions:        Array.isArray(s.completed_actions)      ? s.completed_actions      : [],
+            in_progress_actions:      Array.isArray(s.in_progress_actions)    ? s.in_progress_actions    : [],
+            last_execution_page:      s.last_execution_page                   || null,
+            last_execution_params:    s.last_execution_params                 || null,
+            last_execution_results:   Array.isArray(s.last_execution_results) ? s.last_execution_results : [],
+            last_execution_timestamp: s.last_execution_timestamp              || null
+          };
+          ExecutionState._loaded = true;
+          console.log('[AIOS][EXEC_STATE] Loaded — last page: ' +
+            (ExecutionState._state.last_execution_page || 'none') +
+            ' | completed: ' + ExecutionState._state.completed_actions.length +
+            ' | in_progress: ' + ExecutionState._state.in_progress_actions.length);
+        }
+        return ExecutionState._state;
+      }).catch(function(err) {
+        console.warn('[AIOS][EXEC_STATE] load error:', err && err.message ? err.message : err);
+        return null;
+      });
+    },
+
+    /**
+     * Internal: merge execution_state into aios_memory JSONB and save.
+     * Uses load-merge-save to avoid clobbering the veteran profile fields.
+     * @returns {Promise}
+     */
+    _persist: function() {
+      if (!window.AAAI || !window.AAAI.auth ||
+          typeof window.AAAI.auth.isLoggedIn     !== 'function' || !window.AAAI.auth.isLoggedIn() ||
+          typeof window.AAAI.auth.loadAIOSMemory !== 'function' ||
+          typeof window.AAAI.auth.saveAIOSMemory !== 'function') {
+        return Promise.resolve({ skipped: 'not authenticated or auth unavailable' });
+      }
+
+      return window.AAAI.auth.loadAIOSMemory().then(function(result) {
+        var current = (result && result.data && typeof result.data === 'object')
+          ? Object.assign({}, result.data)
+          : {};
+        current.execution_state = ExecutionState._state;
+        return window.AAAI.auth.saveAIOSMemory(current);
+      }).catch(function(err) {
+        console.warn('[AIOS][EXEC_STATE] _persist error:', err && err.message ? err.message : err);
+        return { error: err };
+      });
+    },
+
+    /** Reset in-memory state on sign-out. Does NOT wipe persisted Supabase data. */
+    _reset: function() {
+      ExecutionState._state  = JSON.parse(JSON.stringify(_ES_DEFAULT));
+      ExecutionState._loaded = false;
+    }
+
+  };
+
+  window.AIOS.ExecutionState = ExecutionState;
+
 })();

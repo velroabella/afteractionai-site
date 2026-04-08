@@ -1219,6 +1219,98 @@
     });
   }
 
+  /* ── Phase 9: Resume Banner ──────────────────────────────
+     Shows a subtle fixed banner at page bottom when the user has a
+     saved execution state (last visited execution page).
+     Auto-dismisses after 12 seconds. Dismissed on sign-out.
+     ─────────────────────────────────────────────────────── */
+
+  var _PAGE_LABELS = {
+    '/contractor-careers.html':   'Defense & Contractor Careers',
+    '/financial-optimization.html': 'Financial Optimization',
+    '/hidden-benefits.html':      'Hidden Benefits',
+    '/emergency-assistance.html': 'Emergency Assistance',
+    '/outdoor-recreation.html':   'Outdoor Recreation'
+  };
+
+  function _showResumeBanner() {
+    if (!window.AIOS || !window.AIOS.ExecutionState) return;
+    var last = window.AIOS.ExecutionState.getLastExecution();
+    if (!last || !last.page) return;
+
+    // Don't show if already on that page
+    var pagePath = last.page.split('?')[0];
+    if (window.location.pathname === pagePath) return;
+
+    // Don't show if banner already rendered
+    if (document.getElementById('aaaiResumeBanner')) return;
+
+    // Relative time string
+    var timeStr = '';
+    if (last.timestamp) {
+      var diffH = Math.floor((Date.now() - new Date(last.timestamp).getTime()) / 3600000);
+      if (diffH < 1)  timeStr = 'just now';
+      else if (diffH < 24) timeStr = diffH + 'h ago';
+      else timeStr = Math.floor(diffH / 24) + 'd ago';
+    }
+
+    var pageLabel = _PAGE_LABELS[pagePath] || 'your last search';
+
+    // Inject animation keyframes once
+    if (!document.getElementById('aaaiResumeBannerStyle')) {
+      var _sty = document.createElement('style');
+      _sty.id = 'aaaiResumeBannerStyle';
+      _sty.textContent = '@keyframes aaai-slide-up{from{opacity:0;transform:translateX(-50%) translateY(12px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}';
+      document.head.appendChild(_sty);
+    }
+
+    var _b = document.createElement('div');
+    _b.id = 'aaaiResumeBanner';
+    _b.setAttribute('role', 'complementary');
+    _b.setAttribute('aria-label', 'Resume your last session');
+    _b.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%);' +
+      'z-index:9000;background:rgba(20,30,45,0.97);' +
+      'border:1px solid rgba(99,179,237,0.3);border-radius:10px;' +
+      'padding:10px 14px;display:flex;align-items:center;gap:12px;' +
+      'box-shadow:0 4px 20px rgba(0,0,0,0.45);max-width:420px;' +
+      'width:calc(100% - 32px);font-size:0.82rem;color:#ddd;' +
+      'line-height:1.3;animation:aaai-slide-up 0.3s ease;';
+
+    _b.innerHTML =
+      '<div style="flex:1;min-width:0;">' +
+        '<span style="color:#63b3ed;font-weight:600;">\u21A9 Resume where you left off</span>' +
+        (timeStr ? '<span style="color:#666;margin-left:7px;font-size:0.74rem;">' + timeStr + '</span>' : '') +
+        '<div style="color:#999;margin-top:2px;font-size:0.77rem;overflow:hidden;' +
+          'text-overflow:ellipsis;white-space:nowrap;">' + pageLabel + '</div>' +
+      '</div>' +
+      '<a href="' + last.page + '" ' +
+        'style="flex-shrink:0;padding:6px 14px;background:rgba(99,179,237,0.13);' +
+        'border:1px solid rgba(99,179,237,0.28);border-radius:6px;color:#63b3ed;' +
+        'text-decoration:none;font-size:0.77rem;font-weight:600;white-space:nowrap;">' +
+        'Continue \u203A</a>' +
+      '<button onclick="(function(){var b=document.getElementById(\'aaaiResumeBanner\');if(b)b.remove();})()" ' +
+        'style="flex-shrink:0;background:none;border:none;color:#555;cursor:pointer;' +
+        'font-size:1rem;padding:4px 2px;line-height:1;" aria-label="Dismiss">\u00D7</button>';
+
+    document.body.appendChild(_b);
+
+    // Auto-dismiss after 12 s
+    setTimeout(function() {
+      var _bRef = document.getElementById('aaaiResumeBanner');
+      if (!_bRef) return;
+      _bRef.style.transition = 'opacity 0.4s';
+      _bRef.style.opacity = '0';
+      setTimeout(function() { var b = document.getElementById('aaaiResumeBanner'); if (b) b.remove(); }, 420);
+    }, 12000);
+
+    log('Phase9', 'resume banner shown — ' + pageLabel);
+  }
+
+  function _hideResumeBanner() {
+    var _b = document.getElementById('aaaiResumeBanner');
+    if (_b) _b.remove();
+  }
+
   function init() {
     cacheDom();
     log('init', 'DOM cached');
@@ -1386,6 +1478,17 @@
     // via authStateChanged listener below.
     setTimeout(_initCaseModel, 0);
 
+    // Phase 9: Load execution state for users already signed in at page load.
+    // Slightly longer delay (150ms) than _initCaseModel to ensure auth.js has
+    // completed its own session check before ExecutionState.load() tests isLoggedIn().
+    setTimeout(function() {
+      if (window.AIOS && window.AIOS.ExecutionState) {
+        window.AIOS.ExecutionState.load().then(function(state) {
+          if (state) _showResumeBanner();
+        });
+      }
+    }, 150);
+
     // PHASE 2 INTEGRATION - Step 4
     // Retry _initCaseModel() when the user signs in mid-session.
     // auth.js dispatches 'authStateChanged' from updateAuthUI() on every
@@ -1398,6 +1501,12 @@
       if (user) {
         // User just signed in — resolve the active case if not yet set
         _initCaseModel();
+        // Phase 9: Load execution state and show resume banner
+        if (window.AIOS && window.AIOS.ExecutionState) {
+          window.AIOS.ExecutionState.load().then(function() {
+            _showResumeBanner();
+          });
+        }
       } else {
         // User signed out — clear case context so next session starts fresh
         _activeCaseId   = null;
@@ -1410,6 +1519,11 @@
         if (window.AIOS) { window.AIOS._priorDocSummary = null; }
         // Phase 7: clear dashboard context on sign-out
         if (window.AIOS) { window.AIOS._dashboardContext = null; }
+        // Phase 9: Reset execution state on sign-out
+        if (window.AIOS && window.AIOS.ExecutionState) {
+          window.AIOS.ExecutionState._reset();
+        }
+        _hideResumeBanner();
         // PHASE 2 DEBUG HELPER — keep shared namespace in sync with private var
         if (window.AAAI) { window.AAAI._activeCaseId = null; }
         log('Phase2', 'user signed out — _activeCaseId cleared');
@@ -4561,6 +4675,14 @@
                 // stays first. AIOS content (skill prompt, memory, eligibility, mission) is
                 // appended after so the full operational ruleset is always present.
                 systemPrompt = SYSTEM_PROMPT + '\n\n' + aiosRequest.system;
+                // Phase 9: Dedup — append completed action IDs so AI avoids re-suggesting them
+                if (window.AIOS && window.AIOS.ExecutionState) {
+                  var _p9Done = window.AIOS.ExecutionState.getCompletedIds();
+                  if (_p9Done.length > 0) {
+                    systemPrompt += '\n\n## ALREADY COMPLETED\nThe veteran has already viewed or ' +
+                      'taken action on these resources. Do NOT suggest them again: ' + _p9Done.join(', ') + '.';
+                  }
+                }
                 aiosActive = true;
                 console.log('[AIOS][REQUEST] systemLen=' + systemPrompt.length + ' (base=' + SYSTEM_PROMPT.length + ' + aios=' + aiosRequest.system.length + ') | intent=' + aiosRequest.meta.intent + ' | skill=' + aiosRequest.meta.skill + ' | hasMemory=' + aiosRequest.meta.hasMemory + ' | hasPageContext=' + aiosRequest.meta.hasPageContext);
               }
@@ -4584,6 +4706,14 @@
               });
               if (_gqRequest && _gqRequest.system && _gqRequest.system.length > 0) {
                 systemPrompt = SYSTEM_PROMPT + '\n\n' + _gqRequest.system;
+                // Phase 9: Dedup — same suppression for GENERAL_QUESTION path
+                if (window.AIOS && window.AIOS.ExecutionState) {
+                  var _gqDone = window.AIOS.ExecutionState.getCompletedIds();
+                  if (_gqDone.length > 0) {
+                    systemPrompt += '\n\n## ALREADY COMPLETED\nThe veteran has already viewed or ' +
+                      'taken action on these resources. Do NOT suggest them again: ' + _gqDone.join(', ') + '.';
+                  }
+                }
                 aiosActive = true;
                 console.log('[AIOS][GENERAL] systemLen=' + systemPrompt.length + ' | hasMemory=' + _gqRequest.meta.hasMemory + ' | hasMission=' + _gqRequest.meta.hasMission + ' | confidence=' + _gqRequest.meta.confidenceLevel);
               }
