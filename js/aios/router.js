@@ -149,7 +149,12 @@
         'veterans preference', 'usajobs', 'federal job',
         'unemployment compensation', 'career change', 'job fair',
         'civilian transition', 'employment assistance', 'vocational counseling',
-        'job skills'
+        'job skills',
+        // Phase 7B: contractor / clearance phrases missed in sample validation
+        'contractor job', 'contracting job', 'defense contractor', 'cleared job',
+        'security clearance', 'have a clearance', 'clearance holder',
+        'dod contractor', 'government contractor', 'need a contractor',
+        'get a contractor', 'find a contractor job'
       ]
     },
     // ── Legal Documents / Forms (Phase 39) ────────────────
@@ -192,7 +197,11 @@
         'help with rent', 'rental assistance', 'hud-vash', 'hud vash', 'ssvf',
         'va home loan', 'adapted housing', 'housing grant',
         'transitional housing', 'mortgage assistance',
-        'homeless veteran program'
+        'homeless veteran program',
+        // Phase 7B: financial distress phrases missed in sample validation
+        'help paying', 'paying bills', 'pay my bills', 'struggling financially',
+        'financial assistance', 'money help', 'need money', 'help with bills',
+        'utility assistance', 'can not afford'
       ]
     }
   ];

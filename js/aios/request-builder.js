@@ -347,7 +347,7 @@
         _rfLines.push('- Mental health crisis support → /emergency-assistance.html?auto=1&need=mental_health&urgency=immediate');
         _rfLines.push('- Food assistance → /emergency-assistance.html?auto=1&need=food&urgency=soon');
         _rfLines.push('- Outdoor recreation programs → /outdoor-recreation.html?auto=1&goal=parks_access');
-        _rfLines.push('- Adaptive sports and fitness → /outdoor-recreation.html?auto=1&goal=adaptive_sports');
+        _rfLines.push('- Adaptive sports and fitness → /outdoor-recreation.html?auto=1&goal=adaptive');
         _rfLines.push('- Get a contractor or federal job → /contractor-careers.html?auto=1&goal=get_hired');
         _rfLines.push('- SkillBridge program → /contractor-careers.html?auto=1&goal=skillbridge');
         _rfLines.push('');
