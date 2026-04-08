@@ -1031,7 +1031,6 @@
       } catch(e) {
         ExecutionState._state.latest_payload = payload; // fallback if JSON serialization fails
       }
-      console.log('[AIOS][EXEC_STATE] Payload stored — type: ' + payload.type + ' | page: ' + (payload.page || 'none'));
       ExecutionState._persist();
     },
 

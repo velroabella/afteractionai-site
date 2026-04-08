@@ -4592,6 +4592,27 @@
     // ── AIOS Integration (text path only) ─────────────────
     // If the AIOS layer is loaded, route through it to get a richer system prompt.
     // Falls back to the original SYSTEM_PROMPT if AIOS is unavailable or errors.
+
+    // Phase 16: Shared ACTION PAYLOAD block builder — used by both skill path and GQ path.
+    // Returns a '\n\n## ACTION PAYLOAD\n...' string, or '' when ap is null/missing.
+    function _buildApBlock(ap) {
+      if (!ap || typeof ap !== 'object') return '';
+      var _b = '\n\n## ACTION PAYLOAD\n' +
+        'Structured action prepared by the routing engine for this turn:\n' +
+        '- Type: '   + ap.type + '\n' +
+        '- Target: ' + (ap.page || 'none') + '\n' +
+        '- Intent: ' + (ap.params.intent || 'unknown') + '\n';
+      if (ap.params.skill)     _b += '- Skill: '     + ap.params.skill     + '\n';
+      if (ap.params.goal)      _b += '- Goal: '      + ap.params.goal      + '\n';
+      if (ap.params.need)      _b += '- Need: '      + ap.params.need      + '\n';
+      if (ap.params.urgency)   _b += '- Urgency: '   + ap.params.urgency   + '\n';
+      if (ap.params.situation) _b += '- Situation: ' + ap.params.situation + '\n';
+      if (ap.next_step)        _b += '- Next step: ' + ap.next_step        + '\n';
+      _b += '- Priority: ' + ap.priority + '\n';
+      _b += 'Use the target URL above for action links. Do NOT invent or modify execution page URLs.';
+      return _b;
+    }
+
     var systemPrompt = SYSTEM_PROMPT;  // already a string (joined at definition)
     var aiosActive = false;
 
@@ -4632,39 +4653,13 @@
             if (_p11Payload) {
               routeResult.actionPayload = _p11Payload;
               window.AIOS.ActionPayload.store(_p11Payload);
-              console.log('[AIOS][PAYLOAD] type=' + _p11Payload.type + ' | page=' + (_p11Payload.page || 'none') + ' | priority=' + _p11Payload.priority + ' | next_step=' + (_p11Payload.next_step || 'none'));
-              // Phase 13: Log partner_action when an active partner was matched.
-              // No-op in Phase 13 (all partners inactive). Integration point for Phase 14.
-              if (_p11Payload.partner_action) {
-                console.log('[AIOS][PARTNER] partner=' + _p11Payload.partner_action.partner_id + ' | action=' + _p11Payload.partner_action.action_type + ' | endpoint=' + _p11Payload.partner_action.endpoint);
-              }
+              console.log('[AIOS][PAYLOAD] type=' + _p11Payload.type + ' | page=' + (_p11Payload.page || 'none') + ' | priority=' + _p11Payload.priority + (_p11Payload.partner_action ? ' | partner=' + _p11Payload.partner_action.partner_id : ''));
             }
-          }
-
-          // Phase 13: Log router partner metadata when present.
-          // partnerMeta is attached by Router.attachPartnerMeta() for non-crisis intents.
-          // All partners inactive in Phase 13 — log fires only when status → 'active'.
-          if (routeResult.partnerMeta) {
-            console.log('[AIOS][PARTNER_META] partner=' + routeResult.partnerMeta.partner_id + ' | type=' + routeResult.partnerMeta.partner_type + ' | status=' + routeResult.partnerMeta.status);
           }
 
           // Phase 32: Telemetry — escalation tier (text path)
           if (routeResult.tier !== 'STANDARD' && window.AIOS && window.AIOS.Telemetry) {
             window.AIOS.Telemetry.record('escalation_triggered', { tier: routeResult.tier, path: 'text' });
-          }
-
-          // [AIOS][MEMORY] — log veteran profile summary (if any data collected)
-          if (window.AIOS.Memory && typeof window.AIOS.Memory.buildMemorySummary === 'function') {
-            var _memSum = window.AIOS.Memory.buildMemorySummary(window.AIOS.Memory.getProfile());
-            console.log('[AIOS][MEMORY] ' + (_memSum || 'no profile data yet'));
-          }
-
-          // [AIOS][MISSION] — log active mission summary (if one is running)
-          if (window.AIOS.Mission && typeof window.AIOS.Mission.buildMissionSummary === 'function') {
-            var _misSum = window.AIOS.Mission.current
-              ? window.AIOS.Mission.buildMissionSummary(window.AIOS.Mission.current)
-              : null;
-            console.log('[AIOS][MISSION] ' + (_misSum || 'no active mission'));
           }
 
           // 2. Only activate AIOS when a specific skill is routed.
@@ -4739,33 +4734,13 @@
                   var _p10Block = window.AIOS.Personalization.buildPromptBlock();
                   if (_p10Block) systemPrompt += _p10Block;
                 }
-                // Phase 11: Action payload — inject structured routing decision for response engine.
+                // Phase 11/16: Action payload — inject via shared helper (single source of truth).
                 // Only fires when an execution_route payload was generated this turn.
-                // Gives the AI machine-readable next-action context (page, params, next_step,
-                // priority) so it references structured data rather than assembling raw URLs.
                 if (routeResult.actionPayload) {
-                  var _ap = routeResult.actionPayload;
-                  var _apBlock = '\n\n## ACTION PAYLOAD\n' +
-                    'Structured action prepared by the routing engine for this turn:\n' +
-                    '- Type: '     + _ap.type + '\n' +
-                    '- Target: '   + (_ap.page || 'none') + '\n' +
-                    '- Intent: '   + (_ap.params.intent || 'unknown') + '\n';
-                  if (_ap.params.skill)     _apBlock += '- Skill: '     + _ap.params.skill     + '\n';
-                  if (_ap.params.goal)      _apBlock += '- Goal: '      + _ap.params.goal      + '\n';
-                  if (_ap.params.need)      _apBlock += '- Need: '      + _ap.params.need      + '\n';
-                  if (_ap.params.urgency)   _apBlock += '- Urgency: '   + _ap.params.urgency   + '\n';
-                  if (_ap.params.situation) _apBlock += '- Situation: ' + _ap.params.situation + '\n';
-                  if (_ap.next_step)        _apBlock += '- Next step: ' + _ap.next_step        + '\n';
-                  _apBlock += '- Priority: ' + _ap.priority + '\n';
-                  _apBlock += 'Use the target URL above for action links. Do NOT invent or modify execution page URLs.';
-                  systemPrompt += _apBlock;
+                  systemPrompt += _buildApBlock(routeResult.actionPayload);
                 }
                 aiosActive = true;
-                console.log('[AIOS][REQUEST] systemLen=' + systemPrompt.length + ' (base=' + SYSTEM_PROMPT.length + ' + aios=' + aiosRequest.system.length + ') | intent=' + aiosRequest.meta.intent + ' | skill=' + aiosRequest.meta.skill + ' | hasMemory=' + aiosRequest.meta.hasMemory + ' | hasPageContext=' + aiosRequest.meta.hasPageContext);
-                // Phase 15: Log partner path injection into system prompt.
-                if (aiosRequest.meta.hasPartnerPath) {
-                  console.log('[AIOS][PARTNER_PATH] system prompt augmented — partner path injected for intent=' + aiosRequest.meta.intent);
-                }
+                console.log('[AIOS][REQUEST] systemLen=' + systemPrompt.length + ' | intent=' + aiosRequest.meta.intent + ' | skill=' + aiosRequest.meta.skill + ' | tier=' + aiosRequest.meta.escalationTier + ' | hasMemory=' + aiosRequest.meta.hasMemory + ' | partnerPath=' + aiosRequest.meta.hasPartnerPath);
               }
             }
           } else {
@@ -4800,27 +4775,10 @@
                   var _gqP10Block = window.AIOS.Personalization.buildPromptBlock();
                   if (_gqP10Block) systemPrompt += _gqP10Block;
                 }
-                // Phase 11: Action payload — same injection as skill path.
-                // GENERAL_QUESTION routes produce no actionPayload (executionUrl is null),
-                // so this is a no-op in the normal GQ flow. Included for symmetry and to
-                // handle edge cases where a GQ intent has an associated payload from a
-                // same-turn route resolution.
+                // Phase 11/16: Action payload — same shared helper as skill path.
+                // No-op for GENERAL_QUESTION (executionUrl is null → no actionPayload).
                 if (routeResult.actionPayload) {
-                  var _gqAp = routeResult.actionPayload;
-                  var _gqApBlock = '\n\n## ACTION PAYLOAD\n' +
-                    'Structured action prepared by the routing engine for this turn:\n' +
-                    '- Type: '     + _gqAp.type + '\n' +
-                    '- Target: '   + (_gqAp.page || 'none') + '\n' +
-                    '- Intent: '   + (_gqAp.params.intent || 'unknown') + '\n';
-                  if (_gqAp.params.skill)     _gqApBlock += '- Skill: '     + _gqAp.params.skill     + '\n';
-                  if (_gqAp.params.goal)      _gqApBlock += '- Goal: '      + _gqAp.params.goal      + '\n';
-                  if (_gqAp.params.need)      _gqApBlock += '- Need: '      + _gqAp.params.need      + '\n';
-                  if (_gqAp.params.urgency)   _gqApBlock += '- Urgency: '   + _gqAp.params.urgency   + '\n';
-                  if (_gqAp.params.situation) _gqApBlock += '- Situation: ' + _gqAp.params.situation + '\n';
-                  if (_gqAp.next_step)        _gqApBlock += '- Next step: ' + _gqAp.next_step        + '\n';
-                  _gqApBlock += '- Priority: ' + _gqAp.priority + '\n';
-                  _gqApBlock += 'Use the target URL above for action links. Do NOT invent or modify execution page URLs.';
-                  systemPrompt += _gqApBlock;
+                  systemPrompt += _buildApBlock(routeResult.actionPayload);
                 }
                 aiosActive = true;
                 console.log('[AIOS][GENERAL] systemLen=' + systemPrompt.length + ' | hasMemory=' + _gqRequest.meta.hasMemory + ' | hasMission=' + _gqRequest.meta.hasMission + ' | confidence=' + _gqRequest.meta.confidenceLevel);

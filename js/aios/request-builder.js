@@ -368,11 +368,17 @@
       // Block is skipped entirely when no active partner matches — zero prompt noise.
       var _hasPartnerPath = false;
       if (_tier === 'STANDARD' && opts.routeResult && opts.routeResult.partnerMeta) {
-        var _pm     = opts.routeResult.partnerMeta;
-        var _pReg   = (window.AIOS && window.AIOS.PartnerRegistry)
-                      ? window.AIOS.PartnerRegistry.getPartnerFor(opts.routeResult.intent)
-                      : null;
-        var _pEp    = _pReg ? _pReg.endpoint : null;
+        var _pm  = opts.routeResult.partnerMeta;
+        // Prefer endpoint already resolved in actionPayload (avoids duplicate PartnerRegistry call).
+        // Fall back to a fresh registry lookup only when actionPayload is absent (GQ edge case).
+        var _pEp = null;
+        if (opts.routeResult.actionPayload &&
+            opts.routeResult.actionPayload.partner_action) {
+          _pEp = opts.routeResult.actionPayload.partner_action.endpoint || null;
+        } else if (window.AIOS && window.AIOS.PartnerRegistry) {
+          var _pReg = window.AIOS.PartnerRegistry.getPartnerFor(opts.routeResult.intent);
+          _pEp = _pReg ? _pReg.endpoint : null;
+        }
         if (_pEp) {
           var _ppLines = [
             '## OPTIONAL PARTNER PATH',
@@ -390,8 +396,6 @@
           ];
           systemParts.push(_ppLines.join('\n'));
           _hasPartnerPath = true;
-          console.log('[AIOS][PARTNER_PATH] injected — partner=' + _pm.partner_id +
-                      ' | intent=' + (opts.routeResult.intent || 'none'));
         }
       }
 
@@ -496,8 +500,6 @@
         if (_mc.nextStep)    missionLines.push('- Next step: '    + _mc.nextStep);
         if (Array.isArray(_mc.blockers) && _mc.blockers.length > 0) {
           missionLines.push('- Blockers: ' + _mc.blockers.join('; '));
-        } else {
-          missionLines.push('- Blockers: none');
         }
         systemParts.push(missionLines.join('\n'));
       }
