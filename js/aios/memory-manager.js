@@ -1158,19 +1158,26 @@
         if (p.status === 'active' &&
             Array.isArray(p.supports) &&
             p.supports.indexOf(intent) !== -1) {
-          return p;
+          // D2 FIX: Return an isolated copy — callers must not mutate the live registry.
+          return { partner_id: p.partner_id, partner_type: p.partner_type,
+                   endpoint: p.endpoint, supports: p.supports.slice(), status: p.status };
         }
       }
       return null; // no active partner (all inactive in Phase 13)
     },
 
     /**
-     * Return a shallow copy of all partner definitions.
-     * For inspection / admin use only — never mutate the returned array.
+     * Return isolated copies of all partner definitions.
+     * Safe for inspection — mutations to returned objects do not affect the registry.
      * @returns {Object[]}
      */
     getAll: function() {
-      return _P13_PARTNERS.slice();
+      // D1 FIX: Map to isolated copies — element property mutations must not
+      // propagate back into _P13_PARTNERS (e.g. caller setting status='active').
+      return _P13_PARTNERS.map(function(p) {
+        return { partner_id: p.partner_id, partner_type: p.partner_type,
+                 endpoint: p.endpoint, supports: p.supports.slice(), status: p.status };
+      });
     }
 
   };
