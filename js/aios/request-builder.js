@@ -300,6 +300,61 @@
         systemParts.push('## ESCALATION TIER\n- Tier: ' + _tier);
       }
 
+      // Phase 7: Response Format — action-first execution-linked output.
+      // Injected for STANDARD tier only. CRISIS / AT_RISK flows use direct
+      // safety responses and must not be constrained by this format.
+      // Not subject to budget trimming (_removeSection only targets named headers).
+      // Primary execution URL from the router result is surfaced as a hint when
+      // the intent maps to a specific execution page.
+      if (_tier === 'STANDARD') {
+        var _executionUrl = opts.routeResult && opts.routeResult.executionUrl;
+        var _rfLines = [
+          '## RESPONSE FORMAT',
+          'When your response contains actionable recommendations, structure it exactly as:',
+          '',
+          '**Top Actions for You**',
+          '',
+          '**[Action Title]**',
+          'Why it fits: [one-line reason tied to what the veteran said]',
+          'Next step: [specific immediate action — a call, a form, a page to visit]',
+          '→ [label](URL)',
+          '',
+          '**[Next Action Title]**',
+          'Why it fits: [one-line reason]',
+          'Next step: [specific immediate action]',
+          '→ [label](URL)',
+          '',
+          '(3–5 actions max. Never more.)',
+          '',
+          'FORMAT RULES:',
+          '- Lead with the highest-impact action. Order by impact descending.',
+          '- One-line reason only. No paragraphs, no preamble before the action list.',
+          '- Every action with a matching execution page MUST include a → link.',
+          '- No generic advice ("consider your options", "it depends on your situation").',
+          '- After the action list, one short follow-up paragraph is allowed (3 sentences max).',
+          '',
+          'EXECUTION PAGES — use these links exactly (never invent or modify URLs):'
+        ];
+        if (_executionUrl) {
+          _rfLines.push('Primary page for this conversation: ' + _executionUrl);
+        }
+        _rfLines.push('- See all benefits → /hidden-benefits.html?auto=1&goal=see_everything');
+        _rfLines.push('- Find money-saving programs → /financial-optimization.html?auto=1&goal=lower_bills');
+        _rfLines.push('- Help with debt → /financial-optimization.html?auto=1&goal=reduce_debt&situation=employed');
+        _rfLines.push('- All financial options → /financial-optimization.html?auto=1&goal=see_everything');
+        _rfLines.push('- Emergency financial aid → /emergency-assistance.html?auto=1&need=financial&urgency=immediate');
+        _rfLines.push('- Emergency housing help → /emergency-assistance.html?auto=1&need=housing&urgency=immediate');
+        _rfLines.push('- Mental health crisis support → /emergency-assistance.html?auto=1&need=mental_health&urgency=immediate');
+        _rfLines.push('- Food assistance → /emergency-assistance.html?auto=1&need=food&urgency=soon');
+        _rfLines.push('- Outdoor recreation programs → /outdoor-recreation.html?auto=1&goal=parks_access');
+        _rfLines.push('- Adaptive sports and fitness → /outdoor-recreation.html?auto=1&goal=adaptive_sports');
+        _rfLines.push('- Get a contractor or federal job → /contractor-careers.html?auto=1&goal=get_hired');
+        _rfLines.push('- SkillBridge program → /contractor-careers.html?auto=1&goal=skillbridge');
+        _rfLines.push('');
+        _rfLines.push('SKIP this format for: crisis responses, single clarifying questions, or intake-only turns where you are asking for profile information.');
+        systemParts.push(_rfLines.join('\n'));
+      }
+
       // Memory context (veteran profile snapshot)
       // Phase 17: added employmentStatus, currentGoals
       // Phase 18: removed activeMissions (now owned by ## ACTIVE MISSION block below)
@@ -582,7 +637,8 @@
         wasTrimmed: _wasTrimmed,                      // Phase 28
         trimmedSections: _trimmedSecs,                // Phase 28
         confidenceLevel:   _conf.level,               // Phase 29
-        confidenceSignals: _conf.signals              // Phase 29
+        confidenceSignals: _conf.signals,             // Phase 29
+        hasExecutionUrl: !!(opts.routeResult && opts.routeResult.executionUrl)  // Phase 7
       };
 
       return {

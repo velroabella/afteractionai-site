@@ -26,6 +26,29 @@
   };
 
   /* ────────────────────────────────────────────────────────
+     Phase 7: Intent → Execution Page URL mapping
+     Used by request-builder to inject the primary recommended
+     execution page into the response format block.
+     Rules:
+     - CRISIS/AT_RISK: null — safety responses never include exec links
+     - GENERAL_QUESTION: null — no strong signal to pre-select a page
+     - All others: most relevant execution page for the detected intent
+     ──────────────────────────────────────────────────────── */
+  var EXECUTION_URLS = {
+    BENEFITS_DISCOVERY:    '/hidden-benefits.html?auto=1&goal=see_everything',
+    DISABILITY_CLAIM:      '/hidden-benefits.html?auto=1&goal=see_everything',
+    STATE_BENEFITS:        '/hidden-benefits.html?auto=1&goal=see_everything',
+    NEXT_STEP:             '/hidden-benefits.html?auto=1&goal=see_everything',
+    EMPLOYMENT_TRANSITION: '/contractor-careers.html?auto=1&goal=get_hired',
+    FAMILY_SURVIVOR:       '/hidden-benefits.html?auto=1&goal=see_everything',
+    LEGAL_DOCUMENTS:       null,
+    DOCUMENT_ANALYSIS:     null,
+    CRISIS_SUPPORT:        null,   // safety flow — never include execution links
+    AT_RISK_SUPPORT:       null,   // safety flow — never include execution links
+    GENERAL_QUESTION:      null
+  };
+
+  /* ────────────────────────────────────────────────────────
      Keyword tables — order matters (checked top-to-bottom)
      Crisis is checked separately via override, not here.
      ──────────────────────────────────────────────────────── */
@@ -242,7 +265,8 @@
       skill: INTENTS[intent] || null,
       confidence: confidence,
       matched: matched || null,
-      tier: tier || 'STANDARD',   // Phase 22: escalation tier
+      tier: tier || 'STANDARD',            // Phase 22: escalation tier
+      executionUrl: EXECUTION_URLS[intent] || null,  // Phase 7: primary execution page
       needsClarification: false,
       clarificationQuestion: null
     };
@@ -256,6 +280,9 @@
 
     /** Exposed for testing / extension */
     INTENTS: INTENTS,
+
+    /** Phase 7: Execution page URL map — exposed for testing / extension */
+    EXECUTION_URLS: EXECUTION_URLS,
 
     /**
      * Classify user input and select the appropriate skill.
