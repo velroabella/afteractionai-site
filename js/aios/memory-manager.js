@@ -1044,6 +1044,25 @@
     },
 
     /**
+     * Phase 12: Append a resource ID to the latest stored payload's resource_ids array.
+     * Deduplicates before inserting. Persists immediately on change.
+     * Silent no-op when no payload exists (GQ flows, pre-routing clicks).
+     * @param {string} resourceId
+     */
+    appendToPayload: function(resourceId) {
+      if (!resourceId || typeof resourceId !== 'string') return;
+      var _lp = ExecutionState._state.latest_payload;
+      if (!_lp || typeof _lp !== 'object' || Array.isArray(_lp)) return;
+      if (!Array.isArray(_lp.resource_ids)) {
+        _lp.resource_ids = [];
+      }
+      if (_lp.resource_ids.indexOf(resourceId) !== -1) return; // deduplicate
+      _lp.resource_ids.push(resourceId);
+      console.log('[AIOS][EXEC_STATE] Payload resource appended — id: ' + resourceId + ' | total: ' + _lp.resource_ids.length);
+      ExecutionState._persist();
+    },
+
+    /**
      * Internal: merge execution_state into aios_memory JSONB and save.
      * Uses load-merge-save to avoid clobbering the veteran profile fields.
      * @returns {Promise}

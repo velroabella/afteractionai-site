@@ -756,6 +756,11 @@ function aaaiMarkCompleted(id) {
       typeof window.AIOS.ExecutionState.markCompleted === 'function') {
     window.AIOS.ExecutionState.markCompleted(id);
   }
+  // Phase 12: Wire resource ID into latest action payload
+  if (window.AIOS && window.AIOS.ExecutionState &&
+      typeof window.AIOS.ExecutionState.appendToPayload === 'function') {
+    window.AIOS.ExecutionState.appendToPayload(id);
+  }
 }
 </script>
 
