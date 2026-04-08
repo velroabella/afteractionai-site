@@ -724,6 +724,7 @@ function eaLoadData() {
       console.log('[EA] Loaded emergency resources:', (Array.isArray(data) ? data.length : 0), 'entries');
       eaAllResources = Array.isArray(data) ? data : [];
       eaApplyFilters();
+      eaHandleAutoExecute();
     })
     .catch(function(err) {
       console.error('[EA] Error loading emergency resources:', err);
@@ -882,6 +883,42 @@ function eaExecutionEngine() {
   resultsDiv.style.display = 'block';
   resultsDiv.innerHTML = html;
   resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── Auto-execute (AIOS Bridge — Phase 6) ────────────────
+// Triggered when URL contains auto=1. Pre-fills button-tile inputs
+// from URL params and runs the engine automatically.
+// EA uses button tiles (not selects) — programmatically activates
+// the correct need/urgency buttons before running the engine.
+// Called after eaLoadData() resolves successfully.
+function eaHandleAutoExecute() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('auto') !== '1') return;
+  var need = params.get('need');
+  var urgency = params.get('urgency');
+  var disabled = params.get('disabled');
+  // Activate need button
+  if (need) {
+    var needBtn = document.querySelector('.ea-need-btn[data-need="' + need + '"]');
+    if (needBtn) eaSelectNeed(needBtn);
+  }
+  // Activate urgency button
+  if (urgency) {
+    var urgBtn = document.querySelector('.ea-urgency-btn[data-urgency="' + urgency + '"]');
+    if (urgBtn) eaSelectUrgency(urgBtn);
+  }
+  // Check disabled veteran checkbox
+  if (disabled === '1' || disabled === 'true') {
+    var cb = document.getElementById('eaDisabledVet');
+    if (cb) { cb.checked = true; eaSetDisabled(true); }
+  }
+  // Guard: eaExecutionEngine() requires a selected need — do not trigger error state for incomplete params
+  if (!eaExSelectedNeed) return;
+  eaExecutionEngine();
+  setTimeout(function() {
+    var r = document.getElementById('eaExResults');
+    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 // ── URL param pre-filter ─────────────────────────────────

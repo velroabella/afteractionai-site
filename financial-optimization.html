@@ -819,12 +819,38 @@ function foLoadData() {
       console.log('[FO] Loaded financial resources:', (Array.isArray(data) ? data.length : 0), 'entries');
       foAllResources = Array.isArray(data) ? data : [];
       foApplyFilters();
+      foHandleAutoExecute();
     })
     .catch(function(err) {
       console.error('[FO] Error loading resources:', err);
       document.getElementById('foGrid').innerHTML =
         '<div class="mh-empty"><p>Error loading resources: ' + esc(err.message) + '</p></div>';
     });
+}
+
+// ── Auto-execute (AIOS Bridge — Phase 6) ────────────────
+// Triggered when URL contains auto=1. Pre-fills execution inputs
+// from URL params and runs the engine automatically.
+// Called after foLoadData() resolves successfully.
+function foHandleAutoExecute() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('auto') !== '1') return;
+  var goal = params.get('goal');
+  var sit = params.get('situation');
+  var state = params.get('state');
+  var selG = document.getElementById('foExGoal');
+  var selS = document.getElementById('foExSituation');
+  var selSt = document.getElementById('foExState');
+  if (goal && selG) selG.value = goal;
+  if (sit && selS) selS.value = sit;
+  if (state && selSt) selSt.value = state;
+  // Guard: foExecutionEngine() requires goal — do not trigger error state for incomplete params
+  if (!document.getElementById('foExGoal').value) return;
+  foExecutionEngine();
+  setTimeout(function() {
+    var r = document.getElementById('foExResults');
+    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
 }
 
 // ── URL param pre-filter ─────────────────────────────────

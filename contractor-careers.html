@@ -768,6 +768,31 @@ function ccScrollToGrid() {
   document.getElementById('ccGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// ── Auto-execute (AIOS Bridge — Phase 6) ────────────────
+// Triggered when URL contains auto=1. Pre-fills execution inputs
+// from URL params and runs the engine automatically.
+// Guard: requires at least one execution param to avoid empty alert.
+// Called after ccLoadData() fetch resolves successfully.
+function ccHandleAutoExecute() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('auto') !== '1') return;
+  var cl = params.get('clearance');
+  var bg = params.get('background');
+  var goal = params.get('goal');
+  if (!cl && !bg && !goal) return;
+  var selCl = document.getElementById('ccExClearance');
+  var selBg = document.getElementById('ccExBackground');
+  var selG = document.getElementById('ccExGoal');
+  if (cl && selCl) selCl.value = cl;
+  if (bg && selBg) selBg.value = bg;
+  if (goal && selG) selG.value = goal;
+  ccExecutionEngine();
+  setTimeout(function() {
+    var r = document.getElementById('ccExResults');
+    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
 // ── URL param pre-filter ─────────────────────────────────
 function ccParseUrlFilters() {
   var params = new URLSearchParams(window.location.search);
@@ -807,6 +832,7 @@ function ccLoadData() {
       console.log('[CC] Loaded ' + ccAllResources.length + ' contractor career resources');
       ccParseUrlFilters();
       ccApplyFilters();
+      ccHandleAutoExecute();
     })
     .catch(function(err) {
       console.error('[CC] Dataset load error:', err);

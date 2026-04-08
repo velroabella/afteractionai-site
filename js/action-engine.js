@@ -298,6 +298,59 @@
     ]
   };
 
+  // ── EXECUTION PAGE PARAM ROUTING (Phase 6) ───────────
+  // Maps {issue}:{page} pairs to URL param strings appended when routing
+  // to execution-enabled pages (hidden-benefits, financial-optimization,
+  // emergency-assistance, outdoor-recreation, contractor-careers).
+  // Format: 'auto=1&param1=value1&param2=value2' (no leading ?)
+  // Consumed by getResourceRecommendations() to build parameterized URLs.
+  var ISSUE_TO_EXEC_PARAMS = {
+    // Hidden Benefits
+    'hidden_benefit:hidden-benefits.html':       'auto=1&goal=see_everything',
+    'mental_health:hidden-benefits.html':        'auto=1&goal=medical',
+    'va_healthcare:hidden-benefits.html':        'auto=1&goal=medical',
+    'education:hidden-benefits.html':            'auto=1&goal=education',
+    'voc_rehab:hidden-benefits.html':            'auto=1&goal=employment',
+    'career:hidden-benefits.html':               'auto=1&goal=employment',
+    'budget:hidden-benefits.html':               'auto=1&goal=money_saving',
+    'discount:hidden-benefits.html':             'auto=1&goal=money_saving',
+    'outdoor_recreation:hidden-benefits.html':   'auto=1&goal=recreation',
+    'dependent:hidden-benefits.html':            'auto=1&goal=family',
+    'rental:hidden-benefits.html':               'auto=1&goal=housing',
+    'va_loan:hidden-benefits.html':              'auto=1&goal=housing',
+    'state_benefits:hidden-benefits.html':       'auto=1&goal=state_specific',
+    'transition:hidden-benefits.html':           'auto=1&goal=see_everything',
+    'financial_optimization:hidden-benefits.html': 'auto=1&goal=money_saving',
+
+    // Financial Optimization
+    'financial_optimization:financial-optimization.html': 'auto=1&goal=see_everything',
+    'debt:financial-optimization.html':          'auto=1&goal=reduce_debt&situation=employed',
+    'budget:financial-optimization.html':        'auto=1&goal=lower_bills',
+    'va_loan:financial-optimization.html':       'auto=1&goal=housing',
+    'education:financial-optimization.html':     'auto=1&goal=education',
+    'business:financial-optimization.html':      'auto=1&goal=business',
+    'transition:financial-optimization.html':    'auto=1&goal=lower_bills&situation=transitioning',
+    'property_tax:financial-optimization.html':  'auto=1&goal=taxes',
+
+    // Emergency Assistance
+    'debt:emergency-assistance.html':                   'auto=1&need=financial&urgency=soon',
+    'emergency_aid:emergency-assistance.html':          'auto=1&need=financial&urgency=immediate',
+    'housing_crisis:emergency-assistance.html':         'auto=1&need=housing&urgency=immediate',
+    'mental_health_crisis:emergency-assistance.html':   'auto=1&need=mental_health&urgency=immediate',
+    'emergency:emergency-assistance.html':              'auto=1&need=all&urgency=immediate',
+
+    // Outdoor Recreation
+    'outdoor_recreation:outdoor-recreation.html': 'auto=1&goal=parks_access',
+    'discount:outdoor-recreation.html':           'auto=1&goal=save_money',
+    'wellness:outdoor-recreation.html':           'auto=1&goal=outdoor_activities',
+
+    // Contractor Careers
+    'contractor_career:contractor-careers.html':  'auto=1&goal=get_hired',
+    'transition:contractor-careers.html':         'auto=1&goal=skillbridge',
+    'career:contractor-careers.html':             'auto=1&goal=get_hired',
+    'licensing:contractor-careers.html':          'auto=1&goal=certifications'
+  };
+
   // ── CORE ENGINE ───────────────────────────────────────
 
   /**
@@ -446,6 +499,15 @@
         }
 
         if (params.length > 0) url += '?' + params.join('&');
+
+        // Phase 6: Execution page param routing — append auto=1 + pre-fill params
+        // Only applies when no other params have already been set for this URL.
+        if (params.length === 0) {
+          var execKey = iss.issue + ':' + r.page;
+          if (ISSUE_TO_EXEC_PARAMS[execKey]) {
+            url = r.page + '?' + ISSUE_TO_EXEC_PARAMS[execKey];
+          }
+        }
 
         recs.push({
           page: r.page,
@@ -1091,7 +1153,8 @@
     ISSUE_TO_RESOURCES: ISSUE_TO_RESOURCES,
     ISSUE_TO_CHECKLIST: ISSUE_TO_CHECKLIST,
     ISSUE_CAT_TO_BENEFIT_CAT: ISSUE_CAT_TO_BENEFIT_CAT,
-    TEMPLATE_TO_BENEFIT_CATS: TEMPLATE_TO_BENEFIT_CATS
+    TEMPLATE_TO_BENEFIT_CATS: TEMPLATE_TO_BENEFIT_CATS,
+    ISSUE_TO_EXEC_PARAMS: ISSUE_TO_EXEC_PARAMS
   };
 
 })();

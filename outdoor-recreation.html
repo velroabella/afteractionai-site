@@ -669,6 +669,31 @@ function orScrollToGrid() {
   document.getElementById('orGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
+// ── Auto-execute (AIOS Bridge — Phase 6) ────────────────
+// Triggered when URL contains auto=1. Pre-fills execution inputs
+// from URL params and runs the engine automatically.
+// Guard: requires at least one execution param to avoid empty alert.
+// Called after orLoadData() fetch resolves successfully.
+function orHandleAutoExecute() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('auto') !== '1') return;
+  var dis = params.get('disability');
+  var state = params.get('state');
+  var goal = params.get('goal');
+  if (!dis && !state && !goal) return;
+  var selD = document.getElementById('orExDisability');
+  var selS = document.getElementById('orExState');
+  var selG = document.getElementById('orExGoal');
+  if (dis && selD) selD.value = dis;
+  if (state && selS) selS.value = state;
+  if (goal && selG) selG.value = goal;
+  orExecutionEngine();
+  setTimeout(function() {
+    var r = document.getElementById('orExResults');
+    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
 // ── URL param pre-filter ─────────────────────────────────
 function orParseUrlFilters() {
   var params = new URLSearchParams(window.location.search);
@@ -713,6 +738,7 @@ function orLoadData() {
       console.log('[OR] Loaded ' + data.length + ' outdoor recreation entries');
       orAllPrograms = Array.isArray(data) ? data : [];
       orApplyFilters();
+      orHandleAutoExecute();
     })
     .catch(function(err) {
       console.error('[OR] Error loading outdoor recreation data:', err);

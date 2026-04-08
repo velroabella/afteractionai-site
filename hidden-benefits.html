@@ -592,6 +592,28 @@ document.getElementById('hbSubmissionForm').addEventListener('submit', function(
   hbToggleSubmissionForm();
 });
 
+// ── Auto-execute (AIOS Bridge — Phase 6) ────────────────
+// Triggered when URL contains auto=1. Pre-fills execution inputs
+// from URL params and runs the engine automatically.
+// Called after hbLoadData() resolves successfully.
+function hbHandleAutoExecute() {
+  var params = new URLSearchParams(window.location.search);
+  if (params.get('auto') !== '1') return;
+  var aud = params.get('audience');
+  var goal = params.get('goal');
+  var selA = document.getElementById('hbExAudience');
+  var selG = document.getElementById('hbExGoal');
+  // Default audience to 'veteran' when not provided — hbExecutionEngine()
+  // requires a non-empty audience and AIOS routes may omit this param.
+  if (selA) selA.value = aud || 'veteran';
+  if (goal && selG) selG.value = goal;
+  hbExecutionEngine();
+  setTimeout(function() {
+    var r = document.getElementById('hbExResults');
+    if (r) r.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 100);
+}
+
 // ── URL param pre-filter ─────────────────────────────────
 function hbParseUrlFilters() {
   var params = new URLSearchParams(window.location.search);
@@ -801,6 +823,7 @@ function hbLoadData() {
       console.log('[HB] Loaded hidden benefits:', (Array.isArray(data) ? data.length : 0), 'entries');
       hbAllBenefits = Array.isArray(data) ? data : [];
       hbApplyFilters();
+      hbHandleAutoExecute();
     })
     .catch(function(err) {
       console.error('[HB] Error loading hidden benefits:', err);
