@@ -483,6 +483,60 @@ function foApplyFilters() {
   foUpdateCount();
 }
 
+// ── Phase 8: Monetization nudge renderer ─────────────────
+// Renders optional secondary upgrade blocks AFTER primary CTA.
+// Only fires when optional data fields are present on a resource.
+// Three types: Recommended Tool (affiliate), Faster Option (paid),
+// Get Help Done For You (premium). Never replaces free action.
+function foRenderMonetizationNudge(r) {
+  if (!r) return '';
+  var html = '';
+
+  // 1. Recommended Tool — affiliate link to a useful partner tool
+  if (r.affiliate_url && r.affiliate_label) {
+    html +=
+      '<div style="margin-top:6px;padding:6px 10px;background:rgba(99,179,237,0.07);' +
+      'border-radius:6px;border:1px solid rgba(99,179,237,0.18);">' +
+      '<div style="font-size:0.6rem;color:#63b3ed;font-weight:700;text-transform:uppercase;' +
+      'letter-spacing:0.5px;">Recommended Tool</div>' +
+      '<div style="font-size:0.75rem;color:#aaa;margin-top:2px;">' +
+      (r.affiliate_value ? esc(r.affiliate_value) + ' \u2014 ' : '') +
+      '<a href="' + esc(r.affiliate_url) + '" target="_blank" rel="noopener noreferrer sponsored" ' +
+      'style="color:#63b3ed;text-decoration:none;">' + esc(r.affiliate_label) + ' &#8599;</a>' +
+      '</div></div>';
+  }
+
+  // 2. Faster Option — paid path that accelerates the primary action
+  if (r.faster_option_url && r.faster_option_label) {
+    html +=
+      '<div style="margin-top:6px;padding:6px 10px;background:rgba(212,168,67,0.07);' +
+      'border-radius:6px;border:1px solid rgba(212,168,67,0.18);">' +
+      '<div style="font-size:0.6rem;color:#d4a843;font-weight:700;text-transform:uppercase;' +
+      'letter-spacing:0.5px;">Faster Option</div>' +
+      '<div style="font-size:0.75rem;color:#aaa;margin-top:2px;">' +
+      (r.faster_option_value ? esc(r.faster_option_value) + ' \u2014 ' : '') +
+      '<a href="' + esc(r.faster_option_url) + '" target="_blank" rel="noopener noreferrer sponsored" ' +
+      'style="color:#d4a843;text-decoration:none;">' + esc(r.faster_option_label) + ' &#8599;</a>' +
+      '</div></div>';
+  }
+
+  // 3. Get Help Done For You — premium/concierge pathway
+  if (r.premium_flag && r.premium_url && r.premium_label) {
+    html +=
+      '<div style="margin-top:6px;padding:6px 10px;background:rgba(104,211,145,0.07);' +
+      'border-radius:6px;border:1px solid rgba(104,211,145,0.18);">' +
+      '<div style="font-size:0.6rem;color:#68d391;font-weight:700;text-transform:uppercase;' +
+      'letter-spacing:0.5px;">Get Help Done For You</div>' +
+      '<div style="font-size:0.75rem;color:#aaa;margin-top:2px;">' +
+      (r.premium_value ? esc(r.premium_value) + ' \u2014 ' : '') +
+      '<a href="' + esc(r.premium_url) + '" target="_blank" rel="noopener noreferrer sponsored" ' +
+      'style="color:#68d391;text-decoration:none;">' + esc(r.premium_label) + ' &#8599;</a>' +
+      '</div></div>';
+  }
+
+  return html ? '<div class="aa-monetize" style="margin-top:10px;">' + html + '</div>' : '';
+}
+
 // ── Card renderer ─────────────────────────────────────────
 function foRenderCard(r) {
   var meta = FO_CATEGORY_META[r.category] || { label: r.category, color: '' };
@@ -536,6 +590,7 @@ function foRenderCard(r) {
       crossRefHTML +
     '</div>' +
     linkHTML +
+    foRenderMonetizationNudge(r) +
   '</div>';
 }
 
@@ -791,6 +846,7 @@ function foExecutionEngine() {
         (r.next_step ? '<div style="margin-top:6px;font-size:0.8rem;color:#aaa;"><strong style="color:#ccc;">Next step: </strong>' + esc(r.next_step) + '</div>' : '') +
         '<div style="margin-top:6px;font-size:0.8rem;color:#aaa;">' + esc(r.description) + '</div>' +
         linkBtn +
+        foRenderMonetizationNudge(r) +
       '</div>' +
     '</div>';
   });
