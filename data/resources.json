@@ -180,7 +180,7 @@
     "sourceType": "Nonprofit"
   },
   {
-    "name": "Syracuse University IVMF — Onward to Opportunity",
+    "name": "Syracuse University IVMF \u2014 Onward to Opportunity",
     "category": "education",
     "description": "Free career skills training in IT, business management, customer service, and cybersecurity. Includes industry certifications.",
     "eligibility": "Transitioning service members, veterans (within 5 years), and military spouses.",
@@ -497,7 +497,7 @@
   {
     "name": "VetFran (IFA)",
     "category": "entrepreneurship",
-    "description": "Franchise discounts — reduced fees, special financing, and mentoring for veteran franchise owners. 1,200+ brands.",
+    "description": "Franchise discounts \u2014 reduced fees, special financing, and mentoring for veteran franchise owners. 1,200+ brands.",
     "eligibility": "Honorably discharged veterans and military spouses.",
     "website": "https://www.vetfran.org/",
     "cost": "Discounted fees",
@@ -515,7 +515,7 @@
   {
     "name": "VA Home Loan (Chapter 37)",
     "category": "housing",
-    "description": "Mortgage loan guaranteed by VA — no down payment, no PMI, competitive rates. Available for purchase, refinance, and adapted housing.",
+    "description": "Mortgage loan guaranteed by VA \u2014 no down payment, no PMI, competitive rates. Available for purchase, refinance, and adapted housing.",
     "eligibility": "Veterans with qualifying service, active duty, Guard/Reserve with 6+ years, and surviving spouses.",
     "website": "https://www.va.gov/housing-assistance/home-loans/",
     "cost": "No down payment",
@@ -558,7 +558,7 @@
     "sourceType": "Nonprofit"
   },
   {
-    "name": "Operation Homefront — Transitional Housing",
+    "name": "Operation Homefront \u2014 Transitional Housing",
     "category": "housing",
     "description": "Transitional housing for wounded veterans and critical financial assistance for rent and mortgage.",
     "eligibility": "Wounded/injured service members and military families facing financial hardship.",
@@ -612,7 +612,7 @@
     "sourceType": "Civilian Company"
   },
   {
-    "name": "National Park Service — America the Beautiful Pass",
+    "name": "National Park Service \u2014 America the Beautiful Pass",
     "category": "discounts",
     "description": "Free lifetime access to all national parks, forests, wildlife refuges, and federal recreation lands.",
     "eligibility": "All US veterans with DD-214 and Gold Star family members.",
@@ -668,8 +668,8 @@
   {
     "name": "Team Red White & Blue (RWB)",
     "category": "community",
-    "description": "Community connecting through physical and social activities — runs, yoga, social events, and service.",
-    "eligibility": "Open to all — veterans, active duty, and community members.",
+    "description": "Community connecting through physical and social activities \u2014 runs, yoga, social events, and service.",
+    "eligibility": "Open to all \u2014 veterans, active duty, and community members.",
     "website": "https://www.teamrwb.org/",
     "cost": "Free",
     "sourceType": "Nonprofit"
@@ -731,7 +731,7 @@
   {
     "name": "Vet Tix (Veteran Ticket Foundation)",
     "category": "community",
-    "description": "Free event tickets — sporting events, concerts, performing arts, and family events.",
+    "description": "Free event tickets \u2014 sporting events, concerts, performing arts, and family events.",
     "eligibility": "All veterans, active duty, Guard, Reserve, and families.",
     "website": "https://www.vettix.org/",
     "cost": "Free",
@@ -758,7 +758,7 @@
   {
     "name": "Stateside Legal",
     "category": "legal",
-    "description": "Online resource connecting military members with free legal help — legal aid orgs, JAG offices, pro bono attorneys.",
+    "description": "Online resource connecting military members with free legal help \u2014 legal aid orgs, JAG offices, pro bono attorneys.",
     "eligibility": "All service members, veterans, and military families.",
     "website": "https://statesidelegal.org/",
     "cost": "Free",
@@ -830,7 +830,7 @@
   {
     "name": "Nike Military Discount",
     "category": "discounts",
-    "description": "10% off most items online and in-store — footwear, apparel, and equipment.",
+    "description": "10% off most items online and in-store \u2014 footwear, apparel, and equipment.",
     "eligibility": "Active duty, veterans, retirees, Guard, Reserve, and spouses. SheerID verification.",
     "website": "https://www.nike.com/help/a/military-discount",
     "cost": "10% off",
@@ -1397,7 +1397,7 @@
   {
     "name": "Combatant Craft Crewman Association",
     "category": "community",
-    "description": "Veteran and family support, history preservation, brotherhood advocacy, and fraternal events for SWCC operators — the only dedicated SWCC organization (1964-present).",
+    "description": "Veteran and family support, history preservation, brotherhood advocacy, and fraternal events for SWCC operators \u2014 the only dedicated SWCC organization (1964-present).",
     "eligibility": "SWCC operators and supporters.",
     "website": "https://combatantcraftcrewman.org/",
     "cost": "Membership dues",
@@ -1632,7 +1632,7 @@
     "name": "EOD Warrior Foundation",
     "category": "benefits",
     "description": "Only organization dedicated to ALL EOD across all branches. Provides prosthetics and adaptive technology funding, children scholarships for fallen EOD, and quality of life improvements. Founded 2013.",
-    "eligibility": "EOD personnel and families (wounded, disabled, fallen) — all services.",
+    "eligibility": "EOD personnel and families (wounded, disabled, fallen) \u2014 all services.",
     "website": "https://eod-wf.org/",
     "cost": "Free",
     "sourceType": "SOF Organization"
@@ -1866,7 +1866,7 @@
     "name": "Non Commissioned Officers Association",
     "category": "benefits",
     "description": "Scholarships ($1.3M since 1970), Capitol Hill advocacy, and quality of life improvements for enlisted and NCO community across all branches. Founded 1960.",
-    "eligibility": "Current, separated, retired enlisted (honorable discharge) — all branches.",
+    "eligibility": "Current, separated, retired enlisted (honorable discharge) \u2014 all branches.",
     "website": "https://www.ncoausa.org/",
     "cost": "Membership dues",
     "sourceType": "Professional Association"
@@ -1879,5 +1879,59 @@
     "website": "https://eangus.org/",
     "cost": "$30/yr (free 12-mo digital for new members)",
     "sourceType": "Professional Association"
+  },
+  {
+    "name": "Amputee Coalition \u2014 National Peer Network",
+    "category": "equipment",
+    "description": "Largest peer support network for amputees and limb difference veterans. Provides peer visitor programs, national helpline, resource guides, and clinical care referrals. Also hosts National Conference with veteran-specific programming.",
+    "eligibility": "Veterans and civilians with limb loss or limb difference. No cost to access peer support or resources.",
+    "website": "https://www.amputee-coalition.org/",
+    "cost": "Free",
+    "sourceType": "Nonprofit"
+  },
+  {
+    "name": "Challenged Athletes Foundation (CAF) \u2014 Equipment Grants",
+    "category": "equipment",
+    "description": "Provides equipment grants to veterans and athletes with physical disabilities for high-performance prosthetics, racing wheelchairs, handcycles, adaptive sports gear, and recreational equipment beyond what VA covers.",
+    "eligibility": "Veterans and athletes with physical disabilities. Grant amounts vary; typically $1,000\u2013$10,000 for adaptive sports equipment.",
+    "website": "https://www.challengedathletes.org/apply-for-funding/",
+    "cost": "Free (grant funding)",
+    "sourceType": "Nonprofit"
+  },
+  {
+    "name": "Orthotic & Prosthetic Activities Foundation (OPAF)",
+    "category": "equipment",
+    "description": "Provides direct financial assistance and prosthetic care access to veterans and civilians with limb loss. Partners with O&P clinicians nationally to offset patient costs and facilitate access to advanced prosthetic technology.",
+    "eligibility": "Veterans with limb loss or limb difference facing financial barriers to prosthetic care or advanced devices.",
+    "website": "https://www.opafonline.org/",
+    "cost": "Free",
+    "sourceType": "Nonprofit"
+  },
+  {
+    "name": "Space-A Travel \u2014 Military Airlift Flights",
+    "category": "benefits",
+    "description": "Department of Defense program (Space Available/Space-A) allowing retired veterans, their families, and certain reservists to fly free or low-cost on military aircraft when seats are available. Over 40 CONUS and OCONUS terminals. International flights including Europe, Pacific, and Hawaii regularly available.",
+    "eligibility": "Retired veterans (20+ years), 100% P&T disabled veterans, Medal of Honor recipients, and active duty on leave. Dependents may travel unaccompanied for retired category.",
+    "website": "https://www.amc.af.mil/Home/AMC-Travel-Site/",
+    "cost": "Free (pay only taxes/fees, typically $5\u2013$50 per flight)",
+    "sourceType": "Government"
+  },
+  {
+    "name": "Armed Forces Recreation Centers (AFRC)",
+    "category": "benefits",
+    "description": "DOD-operated resort hotels at premium locations worldwide: Shades of Green (Walt Disney World, FL), Hale Koa Hotel (Waikiki, HI), Dragon Hill Lodge (Seoul, Korea), and Edelweiss Lodge & Resort (Bavaria, Germany). Rates 60\u201380% below comparable civilian hotels.",
+    "eligibility": "Active duty, retired military, DoD civilians, and veterans in some categories. Priority by military status category.",
+    "website": "https://www.afrc.com/",
+    "cost": "Paid (60\u201380% below civilian rates)",
+    "sourceType": "Government"
+  },
+  {
+    "name": "Veterans Airlift Command \u2014 Free Medical Flights",
+    "category": "medical",
+    "description": "Nonprofit coordinating free long-distance air transportation for post-9/11 combat wounded, ill, and injured veterans and their families traveling to medical appointments, treatment facilities, or rehabilitation centers.",
+    "eligibility": "Post-9/11 combat-related wounded, ill, or injured veterans rated 50%+ or on active medical status. Travel must be for medical purposes.",
+    "website": "https://www.veteransairlift.org/",
+    "cost": "Free",
+    "sourceType": "Nonprofit"
   }
 ]

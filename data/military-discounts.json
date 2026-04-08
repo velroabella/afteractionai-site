@@ -790,5 +790,159 @@
     "sourceType": "Retail Chain",
     "verificationConfidence": "aggregator",
     "id": "md-072"
+  },
+  {
+    "name": "NFL Salute to Service",
+    "category": "sports_league",
+    "discount": "Up to 50% off select game tickets; exclusive military appreciation games with discounted group ticket packages and field access experiences",
+    "eligibility": "Active duty, veterans, retirees, and military families. Discount availability varies by team and game.",
+    "verification": "Military ID or Veterans Advantage/WeSalute membership. Book through team's official military ticket page or GovX.",
+    "website": "https://www.nfl.com/causes/salute-to-service/",
+    "sourceType": "Sports League",
+    "verificationConfidence": "verified",
+    "id": "md-073"
+  },
+  {
+    "name": "NBA Military Appreciation",
+    "category": "sports_league",
+    "discount": "Up to 50% off select games; military appreciation nights include courtside experiences, pre-game ceremonies, and on-court access for select veterans",
+    "eligibility": "Active duty, veterans, National Guard, Reservists, and immediate family members. Varies by team.",
+    "verification": "Military ID at box office or via team's military ticket portal. Some teams use ID.me verification.",
+    "website": "https://www.nba.com/warriors/community/military",
+    "sourceType": "Sports League",
+    "verificationConfidence": "verified",
+    "id": "md-074"
+  },
+  {
+    "name": "MLB Salute to Service",
+    "category": "sports_league",
+    "discount": "Discounted game tickets (typically 20\u201350% off) and premium experiences including dugout tours, batting practice access, and military appreciation weekend packages",
+    "eligibility": "Active duty, veterans, retirees, National Guard, Reservists. Varies by team and promotion.",
+    "verification": "Military ID or verify via GovX/ID.me on team websites. Available through team's community/military page.",
+    "website": "https://www.mlb.com/mlb-salutes-military",
+    "sourceType": "Sports League",
+    "verificationConfidence": "verified",
+    "id": "md-075"
+  },
+  {
+    "name": "NASCAR Military Appreciation",
+    "category": "sports_league",
+    "discount": "Free or heavily discounted race tickets at select events; military appreciation races include pit road access passes, garage tours, meet-and-greets with drivers, and fan zone experiences",
+    "eligibility": "Active duty, veterans, and military families. Many tracks offer free admission for active duty on appreciation weekends.",
+    "verification": "Military ID at track gates on designated events. Some tickets require advance registration at govx.com or nascar.com.",
+    "website": "https://www.nascar.com/stories/military/",
+    "sourceType": "Sports League",
+    "verificationConfidence": "verified",
+    "id": "md-076"
+  },
+  {
+    "name": "UFC Fight Pass \u2014 Military Discount",
+    "category": "sports_league",
+    "discount": "50% off UFC Fight Pass annual streaming subscription (includes all live UFC events, Fight Pass Prelims, and entire fight library)",
+    "eligibility": "Active duty, veterans, first responders, and military families with valid ID.",
+    "verification": "Verify through ID.me at ufc.tv during checkout. Discount applied at point of subscription.",
+    "website": "https://www.ufc.tv/page/fightpass",
+    "sourceType": "Sports League",
+    "verificationConfidence": "verified",
+    "id": "md-077"
+  },
+  {
+    "name": "MLS Military Appreciation",
+    "category": "sports_league",
+    "discount": "Discounted ticket packages (typically 25\u201350% off) at select MLS clubs; military appreciation matches include field access, pre-game ceremonies, and meet-and-greets",
+    "eligibility": "Active duty, veterans, National Guard, Reservists, and dependents. Availability varies by MLS club.",
+    "verification": "Military ID or GovX verification on club websites. Contact individual MLS club ticket office.",
+    "website": "https://www.mlssoccer.com/",
+    "sourceType": "Sports League",
+    "verificationConfidence": "verified",
+    "id": "md-078"
+  },
+  {
+    "name": "NHL Salute to Service",
+    "category": "sports_league",
+    "discount": "Discounted game tickets (varies 20\u201340%) and military appreciation nights with on-ice recognition, dressing room tours, and exclusive merchandise at select games",
+    "eligibility": "Active duty, veterans, retirees, National Guard, and Reservists. Varies by team and arena.",
+    "verification": "Military ID at box office or team military ticket portal. Some franchises use GovX/ID.me.",
+    "website": "https://www.nhl.com/community/military",
+    "sourceType": "Sports League",
+    "verificationConfidence": "verified",
+    "id": "md-079"
+  },
+  {
+    "name": "PGA Tour \u2014 Birdies for the Brave",
+    "category": "sports_league",
+    "discount": "Free tournament tickets at select PGA Tour events for active duty and veterans; premium hospitality access and meet-and-greet with PGA Tour professionals at special military appreciation days",
+    "eligibility": "Active duty, veterans, National Guard, Reservists, and military families. Participating tournaments vary by year.",
+    "verification": "Register at birdiesforthebrave.com with military ID. Free tickets distributed by participating tournament offices.",
+    "website": "https://www.birdiesforthebrave.org/",
+    "sourceType": "Sports League",
+    "verificationConfidence": "verified",
+    "id": "md-080"
+  },
+  {
+    "name": "Alaska Airlines",
+    "category": "travel",
+    "discount": "Military fare discounts and one free checked bag for active duty military; priority boarding for service members and veterans in uniform",
+    "eligibility": "Active duty military with valid orders for fare discounts; all veterans in uniform for priority boarding.",
+    "verification": "Military ID and travel orders at check-in. Book through alaskaair.com or call for military fares.",
+    "website": "https://www.alaskaair.com/content/fly/policies/military",
+    "sourceType": "Travel Company",
+    "verificationConfidence": "verified",
+    "id": "md-081"
+  },
+  {
+    "name": "Hertz Car Rental",
+    "category": "travel",
+    "discount": "Up to 25% off rentals; Gold Plus Rewards military members get complimentary President's Circle status upgrade (skip-the-counter, free car upgrades)",
+    "eligibility": "U.S. military veterans, active duty, National Guard, Reservists, and immediate family. Available worldwide.",
+    "verification": "USAA membership or military ID. Book through usaa.com/hertz or hertz.com military portal.",
+    "website": "https://www.hertz.com/rentacar/privatelabel/index.jsp?targetPage=militaryPage.jsp",
+    "sourceType": "Travel Company",
+    "verificationConfidence": "verified",
+    "id": "md-082"
+  },
+  {
+    "name": "National Car Rental",
+    "category": "travel",
+    "discount": "Military members receive discounted rates and complimentary Emerald Club Executive status (guaranteed vehicle upgrades, dedicated lanes)",
+    "eligibility": "Active duty, veterans, government employees, and military families.",
+    "verification": "Military ID or government rate code at booking. Register for Emerald Club through nationalcar.com.",
+    "website": "https://www.nationalcar.com/en/home.html",
+    "sourceType": "Travel Company",
+    "verificationConfidence": "verified",
+    "id": "md-083"
+  },
+  {
+    "name": "Wyndham Hotels (La Quinta, Days Inn, Ramada, Super 8)",
+    "category": "travel",
+    "discount": "Up to 20% off across all Wyndham brands including La Quinta, Days Inn, Ramada, Super 8, Wingate, Baymont, and Travelodge",
+    "eligibility": "Active duty, veterans, retirees, National Guard, Reservists, and immediate family members.",
+    "verification": "Military ID at check-in or book via veteransadvantage.com/wyndham. Must identify as military at reservation.",
+    "website": "https://www.wyndhamhotels.com/en-us/offers/military-discount",
+    "sourceType": "Travel Company",
+    "verificationConfidence": "verified",
+    "id": "md-084"
+  },
+  {
+    "name": "Best Western Hotels & Resorts",
+    "category": "travel",
+    "discount": "10\u201330% off best available rate; free night certificates available through Best Western Rewards for military members at over 4,700 properties worldwide",
+    "eligibility": "Active duty, veterans, retirees, National Guard, Reservists, and dependents.",
+    "verification": "Military ID at check-in or request military rate at booking. Best Western Rewards membership required for free night benefits.",
+    "website": "https://www.bestwestern.com/en_US/hotels/military-discount.html",
+    "sourceType": "Travel Company",
+    "verificationConfidence": "verified",
+    "id": "md-085"
+  },
+  {
+    "name": "Choice Hotels (Comfort Inn, Quality Inn, Econo Lodge)",
+    "category": "travel",
+    "discount": "Up to 20% off at participating properties; military government rate available at Comfort Inn, Comfort Suites, Quality Inn, Clarion, Econo Lodge, Rodeway Inn, and MainStay Suites",
+    "eligibility": "Active duty military and government employees for government rate; veterans for standard military discount.",
+    "verification": "Military ID or government travel card at check-in. Request military or government rate at booking.",
+    "website": "https://www.choicehotels.com/en-us/deals/government-travel",
+    "sourceType": "Travel Company",
+    "verificationConfidence": "verified",
+    "id": "md-086"
   }
 ]

@@ -66,7 +66,7 @@
           <li class="navbar__submenu">
             <a href="#" class="navbar__submenu-label">Career &amp; Education</a>
             <ul class="navbar__submenu-menu">
-              <li><a href="education.html">Education</a></li>
+              <li><a href="education.html">Tutorials</a></li>
               <li><a href="licensure.html">Licensure &amp; Certifications</a></li>
               <li><a href="licensure.html#va-approved">VA Approved Programs</a></li>
               <li><a href="transition-guide.html">Transition Guide</a></li>
@@ -94,7 +94,7 @@
           <li class="navbar__submenu">
             <a href="#" class="navbar__submenu-label">Advocacy &amp; Network</a>
             <ul class="navbar__submenu-menu">
-              <li><a href="resources.html">Partner Organizations</a></li>
+              <li><a href="resources.html">Associations &amp; Organizations</a></li>
               <li><a href="elected-officials.html">Elected Officials</a></li>
             </ul>
           </li>
@@ -159,6 +159,7 @@
         <button class="mh-pill" data-filter="category" data-value="fitness" onclick="mdTogglePill(this)">Fitness</button>
         <button class="mh-pill" data-filter="category" data-value="finance" onclick="mdTogglePill(this)">Finance</button>
         <button class="mh-pill" data-filter="category" data-value="insurance" onclick="mdTogglePill(this)">Insurance</button>
+        <button class="mh-pill" data-filter="category" data-value="sports_league" onclick="mdTogglePill(this)">Sports &amp; Leagues</button>
       </div>
     </div>
 
@@ -178,6 +179,7 @@
         <button class="mh-pill" data-filter="sourceType" data-value="Fitness/Health" onclick="mdTogglePill(this)">Fitness/Health</button>
         <button class="mh-pill" data-filter="sourceType" data-value="Financial Institution" onclick="mdTogglePill(this)">Financial Institution</button>
         <button class="mh-pill" data-filter="sourceType" data-value="Insurance Company" onclick="mdTogglePill(this)">Insurance Company</button>
+        <button class="mh-pill" data-filter="sourceType" data-value="Sports League" onclick="mdTogglePill(this)">Sports League</button>
       </div>
     </div>
 
@@ -349,7 +351,8 @@ var MD_CATEGORY_META = {
   entertainment:    { label: 'Entertainment',    color: 'discounts' },
   fitness:          { label: 'Fitness',          color: 'community' },
   finance:          { label: 'Finance',          color: 'legal' },
-  insurance:        { label: 'Insurance',        color: 'legal' }
+  insurance:        { label: 'Insurance',        color: 'legal' },
+  sports_league:    { label: 'Sports &amp; Leagues', color: 'community' }
 };
 
 // ── Source type icons ─────────────────────────────────────
@@ -365,7 +368,8 @@ var MD_SOURCE_ICONS = {
   'Software Company':       '&#9733;',
   'Fitness/Health':         '&#9825;',
   'Financial Institution':  '&#9733;',
-  'Insurance Company':      '&#9733;'
+  'Insurance Company':      '&#9733;',
+  'Sports League':          '&#9670;'
 };
 
 // ── Pills (Set-based multi-select) ────────────────────────
