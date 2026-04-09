@@ -413,6 +413,7 @@
                                   profileLines.push('- VA Rating: ' + mem.vaRating + '%');
         if (mem.state)            profileLines.push('- State: ' + mem.state);
         if (mem.employmentStatus) profileLines.push('- Employment: ' + mem.employmentStatus);
+        if (mem.housingStatus)    profileLines.push('- Housing: ' + mem.housingStatus);  // Phase R4.8
         if (mem.currentGoals)     profileLines.push('- Current goal: ' + mem.currentGoals);
         // activeMissions string omitted — Phase 18 ## ACTIVE MISSION block is the canonical source
         if (mem.primaryNeed)      profileLines.push('- Primary need: ' + mem.primaryNeed);
@@ -444,10 +445,30 @@
               _resLines.push('- State context: ' + opts.memoryContext.state + ' (state-specific programs may apply)');
             }
             _resLines.push('Use these categories to guide your recommendations and structure any report sections.');
+
+            // Phase R3.3: Append pre-matched individual resources if available
+            if (opts.matchedResources) {
+              _resLines.push('');
+              _resLines.push('MATCHED RESOURCES \u2014 verified internal data (cite these by name and link):');
+              _resLines.push(opts.matchedResources);
+              _resLines.push('When recommending resources, prefer these matched results over general knowledge. Use the exact page links shown.');
+            }
+
             systemParts.push(_resLines.join('\n'));
             _hasResourceCtx = true;
           }
         } catch (_resErr) { /* skip if resource mapper unavailable */ }
+      }
+
+      // Phase R3.3: Standalone matched resources when no category context exists
+      // (e.g. GENERAL_QUESTION with no profile but keywords matched datasets)
+      if (!_hasResourceCtx && opts.matchedResources) {
+        var _mrLines = ['## RESOURCE CONTEXT'];
+        _mrLines.push('MATCHED RESOURCES \u2014 verified internal data (cite these by name and link):');
+        _mrLines.push(opts.matchedResources);
+        _mrLines.push('When recommending resources, prefer these matched results over general knowledge. Use the exact page links shown.');
+        systemParts.push(_mrLines.join('\n'));
+        _hasResourceCtx = true;
       }
 
       // Prior document continuity — Phase 6

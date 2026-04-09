@@ -244,6 +244,16 @@
           desc: 'goals mention housing or mortgage',
           test: function(p) { return _goalContains(p, ['house', 'home', 'mortgage', 'housing', 'apartment', 'rent', 'buy']); },
           amount: 0.40
+        },
+        {
+          desc: 'currently homeless or in a shelter (Phase R4.8)',
+          test: function(p) { return p.housingStatus === 'homeless'; },
+          amount: 0.40
+        },
+        {
+          desc: 'at risk of eviction or housing loss (Phase R4.8)',
+          test: function(p) { return p.housingStatus === 'at-risk'; },
+          amount: 0.30
         }
       ]
     },

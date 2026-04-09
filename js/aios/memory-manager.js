@@ -338,6 +338,21 @@
       }
     }
 
+    /* ── housingStatus ──────────────────────────────────────
+       Phase R4.8. Whitelist: must be one of the canonical
+       housing status labels.                                   */
+    var VALID_HOUSING_STATUSES = {
+      'homeless':1, 'at-risk':1, 'renting':1,
+      'living-with-family':1, 'homeowner':1
+    };
+    if ('housingStatus' in extracted) {
+      if (VALID_HOUSING_STATUSES[extracted.housingStatus]) {
+        valid.housingStatus = extracted.housingStatus;
+      } else {
+        dropped.push('housingStatus(invalid)');
+      }
+    }
+
     /* ── Log any drops ───────────────────────────────────────*/
     if (dropped.length > 0) {
       console.log('[AIOS][MEMORY] filtered: ' + dropped.join(', '));
@@ -375,7 +390,9 @@
       rank:             null,
       serviceEntryDate: null,
       separationDate:   null,
-      conditions:       null
+      conditions:       null,
+      // Phase R4.8 addition
+      housingStatus:    null
     },
 
 
@@ -417,7 +434,8 @@
         primaryNeed: null, needs: [], documents: [],
         employmentStatus: null, currentGoals: null, activeMissions: null,
         mos: null, dependents: null,
-        rank: null, serviceEntryDate: null, separationDate: null, conditions: null
+        rank: null, serviceEntryDate: null, separationDate: null, conditions: null,
+        housingStatus: null
       };
     },
 
@@ -438,7 +456,8 @@
       var PERSIST_FIELDS = [
         'branch', 'dischargeStatus', 'serviceEra', 'state',
         'employmentStatus', 'vaRating', 'currentGoals', 'activeMissions',
-        'conditions'  // Phase R4.6
+        'conditions',      // Phase R4.6
+        'housingStatus'    // Phase R4.8
       ];
 
       // Build sanitized snapshot — only persist non-null structured fields
@@ -737,6 +756,65 @@
         }
         if (_condFound.length > 0) {
           extracted.conditions = _condFound.join(', ');
+        }
+      }
+
+      // ── Housing status (Phase R4.8) ────────────────────────
+      // Detect housing situation from first-person statements.
+      // Priority order: homeless > at-risk > renting > living-with-family > homeowner.
+      // Most urgent status wins if message contains multiple signals.
+      var HOUSING_PATTERNS = [
+        {
+          label: 'homeless',
+          patterns: [
+            /\b(?:i\s+am|i'm|currently)\s+homeless\b/i,
+            /\bliving\s+(?:on\s+the\s+street|in\s+(?:my\s+)?car|in\s+a\s+shelter|under\s+a\s+bridge)\b/i,
+            /\bcouch\s+surfing\b/i,
+            /\b(?:i\s+am|i'm)\s+(?:living\s+)?(?:on\s+the\s+streets?|unsheltered)\b/i
+          ]
+        },
+        {
+          label: 'at-risk',
+          patterns: [
+            /\b(?:about\s+to\s+be|facing|at\s+risk\s+of)\s+evict(?:ed|ion)\b/i,
+            /\b(?:about\s+to|going\s+to)\s+(?:lose|be\s+kicked\s+out\s+of)\s+(?:my\s+)?(?:house|home|apartment|place)\b/i,
+            /\b(?:i\s+am|i'm)\s+(?:at\s+risk\s+of|in\s+danger\s+of)\s+(?:losing\s+(?:my\s+)?(?:house|home|housing)|homelessness)\b/i
+          ]
+        },
+        {
+          label: 'renting',
+          patterns: [
+            /\b(?:i\s+am|i'm|currently)\s+renting\b/i,
+            /\bi\s+rent\s+(?:a|my)\s+(?:house|home|apartment|place)\b/i,
+            /\bliving\s+(?:in\s+)?(?:a\s+)?(?:rental|rented\s+(?:house|apartment|place))\b/i
+          ]
+        },
+        {
+          label: 'living-with-family',
+          patterns: [
+            /\bliving\s+with\s+(?:my\s+)?(?:family|parents?|(?:mom|dad|mother|father))\b/i,
+            /\b(?:staying|crashing)\s+(?:at|with)\s+(?:my\s+)?(?:family|parents?|(?:mom|dad|brother|sister|friend))\b/i
+          ]
+        },
+        {
+          label: 'homeowner',
+          patterns: [
+            /\b(?:i\s+own|i\s+bought)\s+(?:a|my)\s+(?:house|home|condo)\b/i,
+            /\b(?:i\s+am|i'm)\s+a\s+homeowner\b/i
+          ]
+        }
+      ];
+      for (var _hi = 0; _hi < HOUSING_PATTERNS.length; _hi++) {
+        var _hMatch = false;
+        for (var _hj = 0; _hj < HOUSING_PATTERNS[_hi].patterns.length; _hj++) {
+          if (HOUSING_PATTERNS[_hi].patterns[_hj].test(userMessage)) {
+            _hMatch = true;
+            break;
+          }
+        }
+        if (_hMatch) {
+          extracted.housingStatus = HOUSING_PATTERNS[_hi].label;
+          break;
         }
       }
 
