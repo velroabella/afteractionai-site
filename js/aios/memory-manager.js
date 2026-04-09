@@ -353,6 +353,20 @@
       }
     }
 
+    /* ── separationTimeline ────────────────────────────────────
+       Phase R4.10. Whitelist: must be one of the canonical
+       separation timeline buckets.                              */
+    var VALID_SEP_TIMELINES = {
+      'active-duty':1, 'within-1-year':1, '1-5-years':1, '5-plus-years':1
+    };
+    if ('separationTimeline' in extracted) {
+      if (VALID_SEP_TIMELINES[extracted.separationTimeline]) {
+        valid.separationTimeline = extracted.separationTimeline;
+      } else {
+        dropped.push('separationTimeline(invalid)');
+      }
+    }
+
     /* ── Log any drops ───────────────────────────────────────*/
     if (dropped.length > 0) {
       console.log('[AIOS][MEMORY] filtered: ' + dropped.join(', '));
@@ -392,7 +406,9 @@
       separationDate:   null,
       conditions:       null,
       // Phase R4.8 addition
-      housingStatus:    null
+      housingStatus:    null,
+      // Phase R4.10 addition
+      separationTimeline: null
     },
 
 
@@ -435,7 +451,8 @@
         employmentStatus: null, currentGoals: null, activeMissions: null,
         mos: null, dependents: null,
         rank: null, serviceEntryDate: null, separationDate: null, conditions: null,
-        housingStatus: null
+        housingStatus: null,
+        separationTimeline: null   // Phase R4.10
       };
     },
 
@@ -456,8 +473,9 @@
       var PERSIST_FIELDS = [
         'branch', 'dischargeStatus', 'serviceEra', 'state',
         'employmentStatus', 'vaRating', 'currentGoals', 'activeMissions',
-        'conditions',      // Phase R4.6
-        'housingStatus'    // Phase R4.8
+        'conditions',          // Phase R4.6
+        'housingStatus',       // Phase R4.8
+        'separationTimeline'   // Phase R4.10
       ];
 
       // Build sanitized snapshot — only persist non-null structured fields
@@ -816,6 +834,63 @@
           extracted.housingStatus = HOUSING_PATTERNS[_hi].label;
           break;
         }
+      }
+
+      // ── Phase R4.10: Separation timeline extraction ──────────
+      // 4 buckets: active-duty, within-1-year, 1-5-years, 5-plus-years
+      // Static patterns tested in priority order, then dynamic numeric/year parsing.
+      var _sepTimeline = null;
+
+      // Static: active-duty (still serving overrides all)
+      if (!_sepTimeline && /\b(?:i\s+am|i'm)\s+(?:still\s+)?(?:active\s+duty|serving|in\s+the\s+military|currently\s+serving|on\s+active\s+duty)\b/i.test(userMessage)) {
+        _sepTimeline = 'active-duty';
+      }
+      if (!_sepTimeline && /\b(?:still\s+in|currently\s+in)\s+(?:the\s+)?(?:military|service|army|navy|air\s+force|marines?|coast\s+guard|space\s+force)\b/i.test(userMessage)) {
+        _sepTimeline = 'active-duty';
+      }
+
+      // Static: within-1-year future (getting out soon)
+      if (!_sepTimeline && /\b(?:getting\s+out|separating|transitioning\s+out|ets(?:ing)?|leaving\s+the\s+(?:military|service))\s+(?:in\s+)?(?:soon|next\s+(?:month|few\s+months|year|couple))\b/i.test(userMessage)) {
+        _sepTimeline = 'within-1-year';
+      }
+      if (!_sepTimeline && /\b(?:i\s+(?:get|got)\s+out|i\s+separate|my\s+ets)\s+(?:in\s+)?(?:\d+\s+months?|next\s+(?:month|year))\b/i.test(userMessage)) {
+        _sepTimeline = 'within-1-year';
+      }
+
+      // Static: within-1-year past (just got out)
+      if (!_sepTimeline && /\b(?:just|recently)\s+(?:got\s+out|separated|discharged|retired|left\s+the\s+(?:military|service)|transitioned)\b/i.test(userMessage)) {
+        _sepTimeline = 'within-1-year';
+      }
+
+      // Static: 5-plus-years qualitative
+      if (!_sepTimeline && /\b(?:been\s+out|left\s+the\s+(?:military|service))\s+(?:a\s+long\s+time|for\s+(?:a\s+)?(?:long\s+time|years|decades?|many\s+years))\b/i.test(userMessage)) {
+        _sepTimeline = '5-plus-years';
+      }
+
+      // Dynamic numeric: "got out N years ago" / "been out N years" / "separated N years ago"
+      if (!_sepTimeline) {
+        var _sepNumMatch = userMessage.match(/\b(?:got\s+out|separated|discharged|retired|been\s+out|left\s+the\s+(?:military|service))\s+(\d{1,2})\s+years?\s*(?:ago)?\b/i);
+        if (_sepNumMatch) {
+          var _sepYears = parseInt(_sepNumMatch[1], 10);
+          if (_sepYears <= 1) _sepTimeline = 'within-1-year';
+          else if (_sepYears <= 5) _sepTimeline = '1-5-years';
+          else _sepTimeline = '5-plus-years';
+        }
+      }
+
+      // Dynamic year: "retired in YYYY" / "got out in YYYY" / "separated in YYYY"
+      if (!_sepTimeline) {
+        var _sepYearMatch = userMessage.match(/\b(?:got\s+out|separated|discharged|retired|left\s+the\s+(?:military|service))\s+(?:in\s+)?((?:19|20)\d{2})\b/i);
+        if (_sepYearMatch) {
+          var _sepDelta = new Date().getFullYear() - parseInt(_sepYearMatch[1], 10);
+          if (_sepDelta <= 1) _sepTimeline = 'within-1-year';
+          else if (_sepDelta <= 5) _sepTimeline = '1-5-years';
+          else _sepTimeline = '5-plus-years';
+        }
+      }
+
+      if (_sepTimeline) {
+        extracted.separationTimeline = _sepTimeline;
       }
 
       // Phase 30: validate before returning — only high-confidence fields pass

@@ -414,6 +414,7 @@
         if (mem.state)            profileLines.push('- State: ' + mem.state);
         if (mem.employmentStatus) profileLines.push('- Employment: ' + mem.employmentStatus);
         if (mem.housingStatus)    profileLines.push('- Housing: ' + mem.housingStatus);  // Phase R4.8
+        if (mem.separationTimeline) profileLines.push('- Separation timeline: ' + mem.separationTimeline);  // Phase R4.10
         if (mem.currentGoals)     profileLines.push('- Current goal: ' + mem.currentGoals);
         // activeMissions string omitted — Phase 18 ## ACTIVE MISSION block is the canonical source
         if (mem.primaryNeed)      profileLines.push('- Primary need: ' + mem.primaryNeed);

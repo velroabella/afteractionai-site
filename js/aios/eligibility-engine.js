@@ -162,6 +162,11 @@
           desc: 'goals mention education',
           test: function(p) { return _goalContains(p, ['school', 'college', 'degree', 'educat', 'university', 'certif', 'learn']); },
           amount: 0.35
+        },
+        {
+          desc: 'within 1-5 years of separation — GI Bill window active (Phase R4.10)',
+          test: function(p) { return p.separationTimeline === 'within-1-year' || p.separationTimeline === '1-5-years'; },
+          amount: 0.10
         }
       ]
     },
@@ -195,6 +200,11 @@
         {
           desc: 'actively seeking employment',
           test: function(p) { return p.employmentStatus === 'unemployed' || p.employmentStatus === 'job searching'; },
+          amount: 0.10
+        },
+        {
+          desc: 'within 1-5 years of separation — VR&E window still open (Phase R4.10)',
+          test: function(p) { return p.separationTimeline === 'within-1-year' || p.separationTimeline === '1-5-years'; },
           amount: 0.10
         }
       ]
@@ -288,6 +298,16 @@
           desc: 'goals mention employment or career',
           test: function(p) { return _goalContains(p, ['job', 'work', 'career', 'employ', 'resume', 'hire', 'hiring']); },
           amount: 0.25
+        },
+        {
+          desc: 'active duty or within 1 year of separation (Phase R4.10)',
+          test: function(p) { return p.separationTimeline === 'active-duty' || p.separationTimeline === 'within-1-year'; },
+          amount: 0.15
+        },
+        {
+          desc: '1-5 years since separation (Phase R4.10)',
+          test: function(p) { return p.separationTimeline === '1-5-years'; },
+          amount: 0.08
         }
       ]
     }
