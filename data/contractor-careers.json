@@ -35,7 +35,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 25,
-    "military_friendly_rank": "Top 10"
+    "military_friendly_rank": "Top 10",
+    "website": "https://www.lockheedmartinjobs.com/veterans"
   },
   {
     "id": "cc-002",
@@ -73,7 +74,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://careers.rtx.com/militaryandveterans"
   },
   {
     "id": "cc-003",
@@ -111,7 +113,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 22,
-    "military_friendly_rank": "Top 10"
+    "military_friendly_rank": "Top 10",
+    "website": "https://www.northropgrumman.com/careers/military-veterans/"
   },
   {
     "id": "cc-004",
@@ -150,7 +153,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www.gdit.com/careers/military-veterans/"
   },
   {
     "id": "cc-005",
@@ -187,7 +191,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 15,
-    "military_friendly_rank": "Top 10"
+    "military_friendly_rank": "Top 10",
+    "website": "https://jobs.boeing.com/veterans"
   },
   {
     "id": "cc-006",
@@ -225,7 +230,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 18,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://careers.l3harris.com/military-and-veterans"
   },
   {
     "id": "cc-007",
@@ -263,7 +269,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www.baesystems.com/en/careers/careers-in-the-us/veterans"
   },
   {
     "id": "cc-008",
@@ -298,7 +305,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 25,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www.huntingtoningalls.com/careers/military-veterans/"
   },
   {
     "id": "cc-009",
@@ -337,7 +345,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
-    "military_friendly_rank": "Top 10"
+    "military_friendly_rank": "Top 10",
+    "website": "https://careers.leidos.com/military-veterans"
   },
   {
     "id": "cc-010",
@@ -376,7 +385,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 22,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www.saic.com/careers/military-veterans"
   },
   {
     "id": "cc-011",
@@ -415,7 +425,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 30,
-    "military_friendly_rank": "Top 10"
+    "military_friendly_rank": "Top 10",
+    "website": "https://www.boozallen.com/careers/military.html"
   },
   {
     "id": "cc-012",
@@ -454,7 +465,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 22,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://careers.caci.com/global/en/military-veterans"
   },
   {
     "id": "cc-013",
@@ -492,7 +504,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 25,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www.mantech.com/careers/veterans"
   },
   {
     "id": "cc-014",
@@ -529,7 +542,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.peraton.com/careers/military-veterans/"
   },
   {
     "id": "cc-015",
@@ -563,7 +577,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 18,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.asrcfederal.com/careers/military-veterans/"
   },
   {
     "id": "cc-016",
@@ -598,7 +613,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 20,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www.kbr.com/en/careers/veterans"
   },
   {
     "id": "cc-017",
@@ -632,7 +648,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 15,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www.textronsystems.com/careers/military-veterans"
   },
   {
     "id": "cc-018",
@@ -666,7 +683,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.maxar.com/careers"
   },
   {
     "id": "cc-019",
@@ -702,7 +720,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 15,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www.accenture.com/us-en/careers/military-veterans"
   },
   {
     "id": "cc-020",
@@ -738,7 +757,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": 12,
-    "military_friendly_rank": "Top 25"
+    "military_friendly_rank": "Top 25",
+    "website": "https://www2.deloitte.com/us/en/pages/about-deloitte/articles/military-veterans.html"
   },
   {
     "id": "cc-021",
@@ -765,7 +785,8 @@
     ],
     "source_type": "Job Board",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.clearancejobs.com/"
   },
   {
     "id": "cc-022",
@@ -794,7 +815,8 @@
     "military_friendly_rank": null,
     "affiliate_url": "https://www.clearedjobs.net/jobs/",
     "affiliate_label": "Search Cleared Jobs Now",
-    "affiliate_value": "Veteran-owned board \u2014 10,000+ active cleared postings"
+    "affiliate_value": "Veteran-owned board — 10,000+ active cleared postings",
+    "website": "https://www.clearedjobs.net/"
   },
   {
     "id": "cc-023",
@@ -826,7 +848,8 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.intelligencecareers.gov/"
   },
   {
     "id": "cc-024",
@@ -852,11 +875,12 @@
     ],
     "source_type": "Job Board",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://silentprofessionals.org/"
   },
   {
     "id": "cc-025",
-    "name": "USAJobs \u2014 Security Clearance Filter",
+    "name": "USAJobs — Security Clearance Filter",
     "category": "cleared_job_board",
     "description": "The federal government's official job board includes clearance-level filters. Search for positions requiring Secret, Top Secret, or TS/SCI. Veterans receive hiring preference points.",
     "clearance_types": [
@@ -880,7 +904,8 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.usajobs.gov/Help/working-in-government/unique-hiring-paths/veterans/"
   },
   {
     "id": "cc-026",
@@ -909,7 +934,8 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://skillbridge.osd.mil/locations.htm"
   },
   {
     "id": "cc-027",
@@ -936,7 +962,8 @@
     ],
     "source_type": "Nonprofit",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.hiringourheroes.org/fellowships/"
   },
   {
     "id": "cc-028",
@@ -960,7 +987,8 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://usmap.osd.mil/"
   },
   {
     "id": "cc-029",
@@ -992,7 +1020,8 @@
     "military_friendly_rank": null,
     "affiliate_url": "https://www.comptia.org/training/certmaster-learn/security",
     "affiliate_label": "CompTIA CertMaster Learn",
-    "affiliate_value": "Official interactive course + practice exams for SY0-701"
+    "affiliate_value": "Official interactive course + practice exams for SY0-701",
+    "website": "https://www.comptia.org/certifications/security"
   },
   {
     "id": "cc-030",
@@ -1020,11 +1049,12 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.isc2.org/certifications/cissp"
   },
   {
     "id": "cc-031",
-    "name": "CEH \u2014 Certified Ethical Hacker",
+    "name": "CEH — Certified Ethical Hacker",
     "category": "certification_program",
     "description": "EC-Council certification for penetration testing and offensive security. DoD 8140 CSSP Analyst baseline. Valued by contractors for red team and vulnerability assessment positions.",
     "clearance_types": [
@@ -1047,7 +1077,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.eccouncil.org/programs/certified-ethical-hacker-ceh/"
   },
   {
     "id": "cc-032",
@@ -1075,11 +1106,12 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.comptia.org/certifications/comptia-advanced-security-practitioner"
   },
   {
     "id": "cc-033",
-    "name": "PMP \u2014 Project Management Professional",
+    "name": "PMP — Project Management Professional",
     "category": "certification_program",
     "description": "PMI's gold standard for project management. Not DoD 8140 but extremely high value at every defense contractor for program management and leadership positions. Military leadership translates well.",
     "clearance_types": [
@@ -1104,7 +1136,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.pmi.org/certifications/project-management-pmp"
   },
   {
     "id": "cc-034",
@@ -1131,11 +1164,12 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.cisco.com/site/us/en/learn/training-certifications/certifications/security/index.html"
   },
   {
     "id": "cc-035",
-    "name": "CISM \u2014 Certified Information Security Manager",
+    "name": "CISM — Certified Information Security Manager",
     "category": "certification_program",
     "description": "ISACA certification for IT security management. DoD 8140 IAM Level II/III. Ideal for veterans moving into cybersecurity management and governance roles at defense contractors.",
     "clearance_types": [
@@ -1159,7 +1193,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.isaca.org/credentialing/cism"
   },
   {
     "id": "cc-036",
@@ -1185,7 +1220,8 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.dau.edu/"
   },
   {
     "id": "cc-037",
@@ -1216,7 +1252,8 @@
     "premium_flag": true,
     "premium_url": "https://www.topresume.com/federal-resume-writing",
     "premium_label": "Professional Federal Resume Writing",
-    "premium_value": "Certified writers optimized for USAJobs & defense contractors"
+    "premium_value": "Certified writers optimized for USAJobs & defense contractors",
+    "website": "https://recruitmilitary.com/job-seekers"
   },
   {
     "id": "cc-038",
@@ -1243,7 +1280,8 @@
     ],
     "source_type": "Nonprofit",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.hiringourheroes.org/hiring-events/"
   },
   {
     "id": "cc-039",
@@ -1269,7 +1307,8 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://about.clearancejobs.com/candidates/career-events"
   },
   {
     "id": "cc-040",
@@ -1295,11 +1334,12 @@
     ],
     "source_type": "Corporate",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.talentally.com/"
   },
   {
     "id": "cc-041",
-    "name": "NSA \u2014 National Security Agency",
+    "name": "NSA — National Security Agency",
     "category": "intelligence_community",
     "description": "Signals intelligence and cybersecurity agency. Major employer of veterans with SIGINT, cyber, and language backgrounds. Offers veteran hiring programs and competitive GS pay scales.",
     "clearance_types": [
@@ -1330,11 +1370,12 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.nsa.gov/careers/military-veterans/"
   },
   {
     "id": "cc-042",
-    "name": "CIA \u2014 Central Intelligence Agency",
+    "name": "CIA — Central Intelligence Agency",
     "category": "intelligence_community",
     "description": "Human intelligence and all-source analysis agency. Actively recruits veterans for operations, analysis, STEM, and support positions. Military experience highly valued for paramilitary and operations roles.",
     "clearance_types": [
@@ -1356,11 +1397,12 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.cia.gov/careers/working-at-cia/military-transition/"
   },
   {
     "id": "cc-043",
-    "name": "DIA \u2014 Defense Intelligence Agency",
+    "name": "DIA — Defense Intelligence Agency",
     "category": "intelligence_community",
     "description": "Military intelligence agency providing intelligence to warfighters and defense decision-makers. Natural transition for military intelligence professionals. Veteran preference applies.",
     "clearance_types": [
@@ -1387,11 +1429,12 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.dia.mil/Careers/"
   },
   {
     "id": "cc-044",
-    "name": "NGA \u2014 National Geospatial-Intelligence Agency",
+    "name": "NGA — National Geospatial-Intelligence Agency",
     "category": "intelligence_community",
     "description": "Geospatial intelligence agency providing maps, imagery, and location intelligence. Strong fit for veterans with GEOINT, imagery analysis, and engineering backgrounds.",
     "clearance_types": [
@@ -1419,11 +1462,12 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.nga.mil/careers/"
   },
   {
     "id": "cc-045",
-    "name": "ODNI \u2014 Office of the Director of National Intelligence",
+    "name": "ODNI — Office of the Director of National Intelligence",
     "category": "intelligence_community",
     "description": "Oversees the 18-member U.S. Intelligence Community. Hires for policy, analysis, technology, and management roles. Veterans with IC experience have direct pathway through veteran preference.",
     "clearance_types": [
@@ -1448,11 +1492,12 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.dni.gov/careers"
   },
   {
     "id": "cc-046",
-    "name": "VETS \u2014 Veterans' Employment & Training Service",
+    "name": "VETS — Veterans' Employment & Training Service",
     "category": "federal_resource",
     "description": "Department of Labor service providing employment resources, training programs, and enforcement of veterans' employment rights under USERRA. Oversees JVSG counselors at American Job Centers.",
     "clearance_types": [
@@ -1468,7 +1513,8 @@
     "sectors": [],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.dol.gov/agencies/vets"
   },
   {
     "id": "cc-047",
@@ -1488,11 +1534,12 @@
     "sectors": [],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.va.gov/careers-employment/"
   },
   {
     "id": "cc-048",
-    "name": "Apprenticeship.gov \u2014 Veterans Pathway",
+    "name": "Apprenticeship.gov — Veterans Pathway",
     "category": "federal_resource",
     "description": "Federal apprenticeship portal with dedicated veteran pathway. Connects military skills to registered apprenticeships in IT, cybersecurity, advanced manufacturing, and healthcare.",
     "clearance_types": [
@@ -1512,7 +1559,8 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.apprenticeship.gov/career-seekers/service-members-and-veterans"
   },
   {
     "id": "cc-049",
@@ -1542,7 +1590,8 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.dcma.mil/Careers/Military-Veterans/"
   },
   {
     "id": "cc-050",
@@ -1571,11 +1620,12 @@
     ],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.va.gov/education/about-gi-bill-benefits/how-to-use-benefits/non-college-degree-programs/"
   },
   {
     "id": "cc-051",
-    "name": "VR&E \u2014 Vocational Rehabilitation & Employment",
+    "name": "VR&E — Vocational Rehabilitation & Employment",
     "category": "federal_resource",
     "description": "VA Chapter 31 program providing career counseling, training, education, and job placement for service-connected disabled veterans. Covers certification costs, tools, and support services.",
     "clearance_types": [
@@ -1591,7 +1641,8 @@
     "sectors": [],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.va.gov/careers-employment/vocational-rehabilitation/"
   },
   {
     "id": "cc-052",
@@ -1611,7 +1662,8 @@
     "sectors": [],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.vaforvets.va.gov/"
   },
   {
     "id": "cc-053",
@@ -1631,6 +1683,7 @@
     "sectors": [],
     "source_type": "Federal",
     "veteran_workforce_pct": null,
-    "military_friendly_rank": null
+    "military_friendly_rank": null,
+    "website": "https://www.dodtap.mil/"
   }
 ]

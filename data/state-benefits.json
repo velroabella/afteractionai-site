@@ -22,7 +22,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-dependent-survivor-benefits",
@@ -49,7 +50,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-disabled-veteran-benefits",
@@ -74,7 +76,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-disabled-veteran-property-tax-exemption",
@@ -99,7 +102,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-housing-assistance-program",
@@ -124,7 +128,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-hunting-and-fishing-license-discount",
@@ -149,7 +154,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-professional-license-fee-waiver",
@@ -174,7 +180,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-service-disabled-veteran-business-enterprise",
@@ -199,7 +206,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-state-employment-preference",
@@ -224,7 +232,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-state-veterans-cemetery",
@@ -250,7 +259,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-survivor-education-assistance",
@@ -276,7 +286,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-veteran-license-plates",
@@ -301,7 +312,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "ak-veterans-education-tuition-waiver",
@@ -326,7 +338,8 @@
       "state": "AK",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.alaska.gov/"
   },
   {
     "id": "al-alabama-state-veterans-cemetery",
@@ -352,7 +365,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-alabama-state-veterans-home",
@@ -377,7 +391,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-dependent-survivor-benefits",
@@ -404,7 +419,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-disabled-veteran-benefits",
@@ -429,7 +445,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-disabled-veteran-business-enterprise-program",
@@ -454,7 +471,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-disabled-veteran-property-tax-exemption",
@@ -479,7 +497,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-housing-assistance-program",
@@ -504,7 +523,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-hunting-and-fishing-license-discount",
@@ -529,7 +549,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-military-retirement-pay-exemption",
@@ -554,7 +575,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-professional-license-fee-waiver",
@@ -579,7 +601,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-state-employment-preference",
@@ -604,7 +627,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-tuition-assistance-for-dependents",
@@ -630,7 +654,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "al-veteran-license-plates",
@@ -655,7 +680,8 @@
       "state": "AL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://va.alabama.gov/"
   },
   {
     "id": "ar-arkansas-state-veterans-home",
@@ -680,7 +706,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-dependent-survivor-benefits",
@@ -707,7 +734,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-disabled-veteran-benefits",
@@ -732,7 +760,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-disabled-veteran-property-tax-exemption",
@@ -757,7 +786,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-housing-assistance-program",
@@ -782,7 +812,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-hunting-and-fishing-license-discount",
@@ -807,7 +838,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-military-retirement-pay-exemption",
@@ -832,7 +864,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-professional-license-fee-waiver",
@@ -857,7 +890,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-service-disabled-veteran-business-enterprise",
@@ -882,7 +916,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-state-employment-preference",
@@ -907,7 +942,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-state-veterans-cemetery",
@@ -933,7 +969,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-tuition-waiver-for-dependents",
@@ -958,7 +995,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "ar-veteran-license-plates",
@@ -983,7 +1021,8 @@
       "state": "AR",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.veterans.arkansas.gov/"
   },
   {
     "id": "az-arizona-veterans-home",
@@ -1008,7 +1047,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-dependent-education-benefits",
@@ -1033,7 +1073,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://dvs.az.gov/services/education/state-tuition"
   },
   {
     "id": "az-dependent-survivor-benefits",
@@ -1060,7 +1101,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-disabled-veteran-benefits",
@@ -1085,7 +1127,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-disabled-veteran-property-tax-exemption",
@@ -1110,7 +1153,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-housing-loan-program",
@@ -1135,7 +1179,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-hunting-and-fishing-license-discount",
@@ -1160,7 +1205,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-in-state-tuition-waiver",
@@ -1185,7 +1231,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/services/education/state-tuition"
   },
   {
     "id": "az-professional-license-recognition",
@@ -1210,7 +1257,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-service-disabled-veteran-business-certification",
@@ -1235,7 +1283,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-state-employment-preference",
@@ -1260,7 +1309,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "az-state-veterans-cemetery",
@@ -1286,7 +1336,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/services/cemeteries"
   },
   {
     "id": "az-veteran-license-plates",
@@ -1311,7 +1362,8 @@
       "state": "AZ",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dvs.az.gov/"
   },
   {
     "id": "ca-california-state-veterans-home",
@@ -1336,7 +1388,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/VetHomes"
   },
   {
     "id": "ca-dependent-education-assistance",
@@ -1361,7 +1414,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/VetServices/pages/college-fee-waiver.aspx"
   },
   {
     "id": "ca-dependent-survivor-benefits",
@@ -1388,7 +1442,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/"
   },
   {
     "id": "ca-disabled-veteran-benefits",
@@ -1413,7 +1468,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/"
   },
   {
     "id": "ca-disabled-veteran-property-tax-exemption",
@@ -1438,7 +1494,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/VetServices/Pages/Property-Tax-Exemptions.aspx"
   },
   {
     "id": "ca-free-hunting-and-fishing-licenses",
@@ -1463,7 +1520,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/VetServices/Pages/Fishing-and-Hunting-Licenses.aspx"
   },
   {
     "id": "ca-housing-loan-program",
@@ -1488,7 +1546,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/HomeLoans"
   },
   {
     "id": "ca-in-state-tuition-for-veterans",
@@ -1513,7 +1572,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/VetServices/pages/college-fee-waiver.aspx"
   },
   {
     "id": "ca-professional-license-recognition",
@@ -1538,7 +1598,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/VetServices/Pages/Business-License-Tax-and-Fee-Waiver.aspx"
   },
   {
     "id": "ca-service-disabled-veteran-business-certification",
@@ -1563,7 +1624,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.dgs.ca.gov/PD/Services/Page-Content/Procurement-Division-Services-List-Folder/Certify-or-Re-apply-as-Small-Business-Disabled-Veteran-Business-Enterprise"
   },
   {
     "id": "ca-state-employment-preference",
@@ -1588,7 +1650,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://calcareers.ca.gov/calhrpublic/landing/jobs/veteransinformation.aspx"
   },
   {
     "id": "ca-state-veterans-cemetery",
@@ -1614,7 +1677,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/VetServices/Pages/State-Veterans-Cemeteries.aspx"
   },
   {
     "id": "ca-veteran-entrepreneur-program",
@@ -1639,7 +1703,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/VetServices/Pages/Employment.aspx"
   },
   {
     "id": "ca-veteran-license-plates",
@@ -1664,7 +1729,8 @@
       "state": "CA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.calvet.ca.gov/"
   },
   {
     "id": "co-colorado-state-veterans-home",
@@ -1689,7 +1755,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/"
   },
   {
     "id": "co-dependent-education-benefits",
@@ -1715,7 +1782,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://dmva.colorado.gov/tuition-waiver"
   },
   {
     "id": "co-dependent-survivor-benefits",
@@ -1742,7 +1810,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://dmva.colorado.gov/"
   },
   {
     "id": "co-disabled-veteran-benefits",
@@ -1767,7 +1836,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://dmva.colorado.gov/"
   },
   {
     "id": "co-disabled-veteran-property-tax-exemption",
@@ -1792,7 +1862,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/property-tax-exemption"
   },
   {
     "id": "co-housing-assistance-program",
@@ -1817,7 +1888,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/"
   },
   {
     "id": "co-hunting-and-fishing-license-discount",
@@ -1842,7 +1914,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/"
   },
   {
     "id": "co-in-state-tuition-waiver",
@@ -1867,7 +1940,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dmva.colorado.gov/tuition-waiver"
   },
   {
     "id": "co-military-retirement-pay-exemption",
@@ -1892,7 +1966,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/"
   },
   {
     "id": "co-professional-license-fee-waiver",
@@ -1917,7 +1992,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/"
   },
   {
     "id": "co-service-disabled-veteran-business-enterprise",
@@ -1942,7 +2018,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/"
   },
   {
     "id": "co-state-employment-preference",
@@ -1967,7 +2044,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/"
   },
   {
     "id": "co-state-veterans-cemetery",
@@ -1993,7 +2071,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://dmva.colorado.gov/veterans-memorial-cemetery"
   },
   {
     "id": "co-veteran-license-plates",
@@ -2018,7 +2097,8 @@
       "state": "CO",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://vets.colorado.gov/"
   },
   {
     "id": "ct-connecticut-state-veterans-home",
@@ -2043,7 +2123,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-dependent-education-benefits",
@@ -2069,7 +2150,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-dependent-survivor-benefits",
@@ -2096,7 +2178,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://portal.ct.gov/DVA"
   },
   {
     "id": "ct-disabled-veteran-benefits",
@@ -2121,7 +2204,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/DVA"
   },
   {
     "id": "ct-disabled-veteran-property-tax-exemption",
@@ -2146,7 +2230,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-housing-assistance-program",
@@ -2171,7 +2256,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-hunting-and-fishing-license-discount",
@@ -2196,7 +2282,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-in-state-tuition-waiver",
@@ -2221,7 +2308,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-military-retirement-pay-exemption",
@@ -2246,7 +2334,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-professional-license-fee-waiver",
@@ -2271,7 +2360,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-service-disabled-veteran-business-enterprise",
@@ -2296,7 +2386,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-state-employment-preference",
@@ -2321,7 +2412,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-state-veterans-cemetery",
@@ -2347,7 +2439,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "ct-veteran-license-plates",
@@ -2372,7 +2465,8 @@
       "state": "CT",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://portal.ct.gov/dva"
   },
   {
     "id": "dc-dependent-education-benefits",
@@ -2398,7 +2492,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-dependent-survivor-benefits",
@@ -2425,7 +2520,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://ova.dc.gov/"
   },
   {
     "id": "dc-disabled-veteran-benefits",
@@ -2450,7 +2546,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://ova.dc.gov/"
   },
   {
     "id": "dc-disabled-veteran-property-tax-exemption",
@@ -2475,7 +2572,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-district-of-columbia-state-veterans-home",
@@ -2500,7 +2598,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-housing-assistance-program",
@@ -2525,7 +2624,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-hunting-and-fishing-license-discount",
@@ -2550,7 +2650,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-in-state-tuition-waiver",
@@ -2575,7 +2676,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-military-retirement-pay-exemption",
@@ -2600,7 +2702,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-professional-license-fee-waiver",
@@ -2625,7 +2728,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-service-disabled-veteran-business-enterprise",
@@ -2650,7 +2754,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-state-employment-preference",
@@ -2675,7 +2780,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-state-veterans-cemetery",
@@ -2701,7 +2807,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "dc-veteran-license-plates",
@@ -2726,7 +2833,8 @@
       "state": "DC",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://ovs.dc.gov/"
   },
   {
     "id": "de-delaware-state-veterans-home",
@@ -2751,7 +2859,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-dependent-education-benefits",
@@ -2777,7 +2886,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-dependent-survivor-benefits",
@@ -2804,7 +2914,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-disabled-veteran-benefits",
@@ -2829,7 +2940,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-disabled-veteran-property-tax-exemption",
@@ -2854,7 +2966,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-housing-assistance-program",
@@ -2879,7 +2992,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-hunting-and-fishing-license-discount",
@@ -2904,7 +3018,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-in-state-tuition-waiver",
@@ -2929,7 +3044,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-military-retirement-pay-exemption",
@@ -2954,7 +3070,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-professional-license-fee-waiver",
@@ -2979,7 +3096,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-service-disabled-veteran-business-enterprise",
@@ -3004,7 +3122,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-state-employment-preference",
@@ -3029,7 +3148,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-state-veterans-cemetery",
@@ -3055,7 +3175,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "de-veteran-license-plates",
@@ -3080,7 +3201,8 @@
       "state": "DE",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veteransaffairs.delaware.gov/"
   },
   {
     "id": "fl-dependent-education-benefits",
@@ -3106,7 +3228,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://www.floridastudentfinancialaidsg.org/SAPrint/SAPrint.aspx?ID=55"
   },
   {
     "id": "fl-dependent-survivor-benefits",
@@ -3133,7 +3256,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://www.floridavets.org/"
   },
   {
     "id": "fl-disabled-veteran-benefits",
@@ -3158,14 +3282,15 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.floridavets.org/"
   },
   {
     "id": "fl-disabled-veteran-property-tax-exemption",
     "state": "FL",
     "benefit_name": "Florida Disabled Veteran Property Tax Exemptions",
     "category": "property_tax",
-    "summary": "Florida provides two property tax exemptions for disabled veterans: (1) a $5,000 exemption for veterans with 10% or higher service-connected disability rating, applied against assessed value; (2) a full property tax exemption for veterans with a total and permanent service-connected disability, or who are rated 100% disabled and confined to a wheelchair due to service injury (F.S. \u00a7196.081). Surviving spouses may continue to receive the full exemption after the veteran's death.",
+    "summary": "Florida provides two property tax exemptions for disabled veterans: (1) a $5,000 exemption for veterans with 10% or higher service-connected disability rating, applied against assessed value; (2) a full property tax exemption for veterans with a total and permanent service-connected disability, or who are rated 100% disabled and confined to a wheelchair due to service injury (F.S. §196.081). Surviving spouses may continue to receive the full exemption after the veteran's death.",
     "eligibility": "Florida resident veterans with 10%+ service-connected disability for the $5,000 exemption. Full exemption requires total and permanent service-connected disability or 100% rating with wheelchair confinement. Applied through the county property appraiser, not the DVA.",
     "applies_to": [
       "disabled_veteran"
@@ -3183,7 +3308,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://floridarevenue.com/property/Pages/Veterans.aspx"
   },
   {
     "id": "fl-florida-state-veterans-home",
@@ -3208,7 +3334,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://floridavets.org/benefits-services/veterans-homes/"
   },
   {
     "id": "fl-housing-assistance-program",
@@ -3233,7 +3360,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.floridahousing.org/programs/homebuyer-overview-page/salute-our-soldiers"
   },
   {
     "id": "fl-hunting-and-fishing-license-discount",
@@ -3258,7 +3386,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://myfwc.com/license/recreational/exemptions/"
   },
   {
     "id": "fl-in-state-tuition-waiver",
@@ -3283,14 +3412,15 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.floridastudentfinancialaidsg.org/SAPrint/SAPrint.aspx?ID=39"
   },
   {
     "id": "fl-professional-license-fee-waiver",
     "state": "FL",
     "benefit_name": "Florida Professional License Fee Waivers (DBPR)",
     "category": "licensing",
-    "summary": "Under Florida law (HB 7015 / \u00a7455.02 F.S.), the Department of Business and Professional Regulation (DBPR) waives initial application and licensing fees for honorably discharged veterans and their spouses within 60 months of the veteran's discharge. Covers 20+ regulated professions including real estate, cosmetology, contracting, interior design, and others under DBPR jurisdiction.",
+    "summary": "Under Florida law (HB 7015 / §455.02 F.S.), the Department of Business and Professional Regulation (DBPR) waives initial application and licensing fees for honorably discharged veterans and their spouses within 60 months of the veteran's discharge. Covers 20+ regulated professions including real estate, cosmetology, contracting, interior design, and others under DBPR jurisdiction.",
     "eligibility": "Honorably discharged Florida veterans within 60 months of discharge. Surviving spouses of veterans who died from service-connected disability also eligible. Applies to initial license applications only (not renewals). Eligible professions are those regulated by DBPR.",
     "applies_to": [
       "veteran"
@@ -3308,7 +3438,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.myfloridalicense.com/dbpr/os/"
   },
   {
     "id": "fl-service-disabled-veteran-business-enterprise",
@@ -3323,7 +3454,7 @@
     "disability_threshold": "10%",
     "guard_reserve_eligible": true,
     "spouse_survivor_eligible": false,
-    "administering_agency": "Florida Department of Management Services \u2014 Office of Supplier Diversity (OSD)",
+    "administering_agency": "Florida Department of Management Services — Office of Supplier Diversity (OSD)",
     "official_link": "https://www.dms.myflorida.com/business_operations/state_purchasing/vendor_information/certified_minority_business_enterprise_cmbe",
     "application_link": null,
     "source_url": "https://www.dms.myflorida.com/business_operations/state_purchasing/vendor_information/certified_minority_business_enterprise_cmbe",
@@ -3333,14 +3464,15 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://www.dms.myflorida.com/business_operations/state_purchasing/vendor_information/certified_minority_business_enterprise_cmbe"
   },
   {
     "id": "fl-state-employment-preference",
     "state": "FL",
     "benefit_name": "Florida State Employment Veterans Preference",
     "category": "employment",
-    "summary": "Florida law (\u00a7295, Florida Statutes) grants veterans and eligible family members preference in state government hiring, promotion, and retention. Point credits are added to examination scores: 10 points for veterans with service-connected disability, 5 points for other eligible veterans. Applies to all state agencies, universities, colleges, counties, and municipalities.",
+    "summary": "Florida law (§295, Florida Statutes) grants veterans and eligible family members preference in state government hiring, promotion, and retention. Point credits are added to examination scores: 10 points for veterans with service-connected disability, 5 points for other eligible veterans. Applies to all state agencies, universities, colleges, counties, and municipalities.",
     "eligibility": "Honorably discharged Florida veterans. Additional preference for veterans with service-connected disabilities, spouses of veterans with total and permanent service-connected disabilities, and surviving spouses of veterans who died in service. Must apply through employer's HR using DD-214 as documentation.",
     "applies_to": [
       "veteran"
@@ -3358,7 +3490,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.dms.myflorida.com/workforce_operations/human_resource_management/for_state_personnel_system_hr_practitioners/veterans_preference"
   },
   {
     "id": "fl-state-veterans-cemetery",
@@ -3384,7 +3517,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://floridavets.org/benefits-services/burial/"
   },
   {
     "id": "fl-veteran-license-plates",
@@ -3409,7 +3543,8 @@
       "state": "FL",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://www.flhsmv.gov/motor-vehicles-tags-titles/license-plates/specialty-prestige-plates/"
   },
   {
     "id": "ga-dependent-education-benefits",
@@ -3435,7 +3570,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://veterans.georgia.gov/chapter-35"
   },
   {
     "id": "ga-dependent-survivor-benefits",
@@ -3462,7 +3598,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "dependent"
-    }
+    },
+    "website": "https://veterans.georgia.gov/"
   },
   {
     "id": "ga-disabled-veteran-benefits",
@@ -3487,7 +3624,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veterans.georgia.gov/"
   },
   {
     "id": "ga-disabled-veteran-property-tax-exemption",
@@ -3512,7 +3650,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veterans.georgia.gov/disabled-veteran-homestead-tax-exemption"
   },
   {
     "id": "ga-georgia-state-veterans-home",
@@ -3537,7 +3676,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.ga.gov/"
   },
   {
     "id": "ga-housing-assistance-program",
@@ -3562,7 +3702,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.ga.gov/"
   },
   {
     "id": "ga-hunting-and-fishing-license-discount",
@@ -3587,7 +3728,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veterans.georgia.gov/hunting-and-fishing-licenses"
   },
   {
     "id": "ga-in-state-tuition-waiver",
@@ -3612,7 +3754,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.georgia.gov/services/education-training/educational-benefits"
   },
   {
     "id": "ga-military-retirement-pay-exemption",
@@ -3637,7 +3780,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.ga.gov/"
   },
   {
     "id": "ga-professional-license-fee-waiver",
@@ -3662,7 +3806,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.ga.gov/"
   },
   {
     "id": "ga-service-disabled-veteran-business-enterprise",
@@ -3687,7 +3832,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "disabled_veteran"
-    }
+    },
+    "website": "https://veterans.ga.gov/"
   },
   {
     "id": "ga-state-employment-preference",
@@ -3712,7 +3858,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.ga.gov/"
   },
   {
     "id": "ga-state-veterans-cemetery",
@@ -3738,7 +3885,8 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.georgia.gov/state-veterans-memorial-cemeteries"
   },
   {
     "id": "ga-veteran-license-plates",
@@ -3763,6 +3911,7 @@
       "state": "GA",
       "issue_type": "state_benefit",
       "audience": "veteran"
-    }
+    },
+    "website": "https://veterans.ga.gov/"
   }
 ]
