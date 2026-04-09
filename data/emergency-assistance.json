@@ -7,11 +7,20 @@
     "eligibility": "Veterans and families in financial crisis; income verification required at local office",
     "source_type": "nonprofit",
     "response_time": "1-5 business days",
-    "assistance_type": ["rent", "utilities", "food", "transportation"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "food",
+      "transportation"
+    ],
     "website": "https://www.salvationarmyusa.org/usn/provide-emergency-assistance/",
     "phone": "1-800-725-2769",
     "verification": "verified",
-    "need_type": ["financial", "housing", "food"],
+    "need_type": [
+      "financial",
+      "housing",
+      "food"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -25,11 +34,20 @@
     "eligibility": "All individuals facing financial emergency; no religious requirement; priority for veterans in many locations",
     "source_type": "nonprofit",
     "response_time": "1-7 business days",
-    "assistance_type": ["rent", "utilities", "food", "clothing"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "food",
+      "clothing"
+    ],
     "website": "https://www.catholiccharitiesusa.org/find-help/",
     "phone": "703-549-1390",
     "verification": "verified",
-    "need_type": ["financial", "housing", "food"],
+    "need_type": [
+      "financial",
+      "housing",
+      "food"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -43,11 +61,22 @@
     "eligibility": "All individuals — 211 triages and refers to appropriate local services",
     "source_type": "nonprofit",
     "response_time": "Immediate (phone hotline)",
-    "assistance_type": ["referral", "food", "rent", "utilities", "crisis"],
+    "assistance_type": [
+      "referral",
+      "food",
+      "rent",
+      "utilities",
+      "crisis"
+    ],
     "website": "https://www.211.org/",
     "phone": "211",
     "verification": "verified",
-    "need_type": ["financial", "housing", "food", "mental_health"],
+    "need_type": [
+      "financial",
+      "housing",
+      "food",
+      "mental_health"
+    ],
     "urgency_level": "immediate",
     "disability_relevant": false,
     "family_relevant": true,
@@ -55,17 +84,25 @@
   },
   {
     "id": "ea-004",
+    "canonical_id": "ea-004",
     "name": "DAV Emergency Financial Assistance",
     "description": "Direct emergency financial grants to disabled veterans for rent, utilities, vehicle repair, and medical expenses. No repayment required.",
     "category": "veteran_emergency",
     "eligibility": "Disabled veterans (VA-rated or awaiting rating) experiencing financial hardship",
     "source_type": "nonprofit",
     "response_time": "5-10 business days",
-    "assistance_type": ["rent", "utilities", "vehicle_repair", "medical"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "vehicle_repair",
+      "medical"
+    ],
     "website": "https://www.dav.org/veterans/emergency-financial-assistance/",
     "phone": "1-877-426-2838",
     "verification": "verified",
-    "need_type": ["financial"],
+    "need_type": [
+      "financial"
+    ],
     "urgency_level": "any",
     "disability_relevant": true,
     "family_relevant": false,
@@ -79,11 +116,19 @@
     "eligibility": "Veterans with spinal cord injury/disease or catastrophic disability; PVA membership not required for emergency assistance",
     "source_type": "nonprofit",
     "response_time": "5-15 business days",
-    "assistance_type": ["rent", "utilities", "medical", "transportation"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "medical",
+      "transportation"
+    ],
     "website": "https://pva.org/programs-services/",
     "phone": "1-800-424-8200",
     "verification": "verified",
-    "need_type": ["financial", "medical"],
+    "need_type": [
+      "financial",
+      "medical"
+    ],
     "urgency_level": "any",
     "disability_relevant": true,
     "family_relevant": false,
@@ -91,17 +136,27 @@
   },
   {
     "id": "ea-006",
+    "canonical_id": "FAM-068",
     "name": "VFW Unmet Needs Program",
     "description": "Grants up to $1,500 for military families facing financial hardship due to deployment, injury, or transition. Covers rent, utilities, vehicle repair, medical, and childcare.",
     "category": "veteran_emergency",
     "eligibility": "Active duty, Guard/Reserve, and recently separated veterans (within 36 months); VFW membership NOT required",
     "source_type": "nonprofit",
     "response_time": "10-15 business days",
-    "assistance_type": ["rent", "utilities", "vehicle_repair", "medical", "childcare"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "vehicle_repair",
+      "medical",
+      "childcare"
+    ],
     "website": "https://www.vfw.org/assistance/financial-grants",
     "phone": "1-866-789-6333",
     "verification": "verified",
-    "need_type": ["financial", "family"],
+    "need_type": [
+      "financial",
+      "family"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -115,11 +170,20 @@
     "eligibility": "Minor children of active duty, veterans, or deceased veterans; American Legion membership NOT required for TFA",
     "source_type": "nonprofit",
     "response_time": "10-20 business days",
-    "assistance_type": ["food", "rent", "utilities", "clothing"],
+    "assistance_type": [
+      "food",
+      "rent",
+      "utilities",
+      "clothing"
+    ],
     "website": "https://www.legion.org/financialassistance",
     "phone": "317-630-1212",
     "verification": "verified",
-    "need_type": ["financial", "food", "family"],
+    "need_type": [
+      "financial",
+      "food",
+      "family"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -127,17 +191,24 @@
   },
   {
     "id": "ea-008",
+    "canonical_id": "res-075",
     "name": "Team Red White & Blue Emergency Assistance Fund",
     "description": "Emergency grants for veterans facing sudden financial crisis. Covers rent, utilities, and basic needs. Fast turnaround through local chapter network.",
     "category": "veteran_emergency",
     "eligibility": "Veterans experiencing unexpected financial emergency",
     "source_type": "nonprofit",
     "response_time": "3-10 business days",
-    "assistance_type": ["rent", "utilities", "food"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "food"
+    ],
     "website": "https://www.teamrwb.org/",
     "phone": "904-395-1510",
     "verification": "aggregator",
-    "need_type": ["financial"],
+    "need_type": [
+      "financial"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": false,
@@ -151,11 +222,15 @@
     "eligibility": "Households at or below 150% of federal poverty level or 60% of state median income; veterans receive priority in many states",
     "source_type": "federal",
     "response_time": "2-6 weeks (state processing time)",
-    "assistance_type": ["utilities"],
+    "assistance_type": [
+      "utilities"
+    ],
     "website": "https://www.acf.hhs.gov/ocs/programs/liheap",
     "phone": "Contact state LIHEAP office",
     "verification": "verified",
-    "need_type": ["financial"],
+    "need_type": [
+      "financial"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": false,
@@ -169,11 +244,15 @@
     "eligibility": "Income-eligible households; VA disability compensation is EXCLUDED from SNAP income calculations",
     "source_type": "federal",
     "response_time": "7-30 days from application (expedited 7-day for emergency)",
-    "assistance_type": ["food"],
+    "assistance_type": [
+      "food"
+    ],
     "website": "https://www.fns.usda.gov/snap/supplemental-nutrition-assistance-program",
     "phone": "1-800-221-5689",
     "verification": "verified",
-    "need_type": ["food"],
+    "need_type": [
+      "food"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -187,11 +266,15 @@
     "eligibility": "All veterans and military families; no income verification required at most locations",
     "source_type": "nonprofit",
     "response_time": "Same day (walk-in at distribution sites)",
-    "assistance_type": ["food"],
+    "assistance_type": [
+      "food"
+    ],
     "website": "https://www.feedingamerica.org/find-your-local-foodbank",
     "phone": "1-800-771-2303",
     "verification": "verified",
-    "need_type": ["food"],
+    "need_type": [
+      "food"
+    ],
     "urgency_level": "immediate",
     "disability_relevant": false,
     "family_relevant": true,
@@ -199,17 +282,25 @@
   },
   {
     "id": "ea-012",
+    "canonical_id": "res-061",
     "name": "VA Homeless Veterans Programs (SSVF)",
     "description": "Supportive Services for Veteran Families provides rapid re-housing, homelessness prevention, and emergency housing assistance. Includes rent deposits, moving costs, and temporary financial assistance.",
     "category": "housing_emergency",
     "eligibility": "Veterans and veteran families who are homeless or at imminent risk of homelessness; income must be below 50% area median (some at 30%)",
     "source_type": "federal",
     "response_time": "1-5 business days for assessment",
-    "assistance_type": ["rent", "housing_deposit", "moving_costs", "utilities"],
+    "assistance_type": [
+      "rent",
+      "housing_deposit",
+      "moving_costs",
+      "utilities"
+    ],
     "website": "https://www.va.gov/homeless/ssvf/",
     "phone": "1-877-4AID-VET (1-877-424-3838)",
     "verification": "verified",
-    "need_type": ["housing"],
+    "need_type": [
+      "housing"
+    ],
     "urgency_level": "immediate",
     "disability_relevant": false,
     "family_relevant": true,
@@ -223,11 +314,16 @@
     "eligibility": "Homeless veterans eligible for VA healthcare; priority for chronically homeless veterans",
     "source_type": "federal",
     "response_time": "2-8 weeks for voucher placement",
-    "assistance_type": ["housing_voucher", "case_management"],
+    "assistance_type": [
+      "housing_voucher",
+      "case_management"
+    ],
     "website": "https://www.va.gov/homeless/hud-vash.asp",
     "phone": "1-877-4AID-VET (1-877-424-3838)",
     "verification": "verified",
-    "need_type": ["housing"],
+    "need_type": [
+      "housing"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": false,
@@ -241,11 +337,18 @@
     "eligibility": "All veterans who are homeless or at risk of homelessness",
     "source_type": "federal",
     "response_time": "Immediate (24/7 hotline)",
-    "assistance_type": ["referral", "crisis", "housing"],
+    "assistance_type": [
+      "referral",
+      "crisis",
+      "housing"
+    ],
     "website": "https://www.va.gov/homeless/",
     "phone": "1-877-4AID-VET (1-877-424-3838)",
     "verification": "verified",
-    "need_type": ["housing", "mental_health"],
+    "need_type": [
+      "housing",
+      "mental_health"
+    ],
     "urgency_level": "immediate",
     "disability_relevant": false,
     "family_relevant": false,
@@ -259,11 +362,20 @@
     "eligibility": "Veterans enrolled in VA healthcare experiencing acute financial crisis",
     "source_type": "federal",
     "response_time": "Same day to 3 business days",
-    "assistance_type": ["food", "transportation", "prescriptions", "shelter"],
+    "assistance_type": [
+      "food",
+      "transportation",
+      "prescriptions",
+      "shelter"
+    ],
     "website": "https://www.va.gov/health/socialwork.asp",
     "phone": "Contact your local VAMC social work service",
     "verification": "verified",
-    "need_type": ["financial", "medical", "food"],
+    "need_type": [
+      "financial",
+      "medical",
+      "food"
+    ],
     "urgency_level": "immediate",
     "disability_relevant": true,
     "family_relevant": false,
@@ -277,11 +389,18 @@
     "eligibility": "Individuals earning above poverty level but facing unexpected expense; must be employed or recently separated from military",
     "source_type": "nonprofit",
     "response_time": "10-20 business days",
-    "assistance_type": ["rent", "utilities", "medical", "vehicle_repair"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "medical",
+      "vehicle_repair"
+    ],
     "website": "https://www.modestneeds.org/",
     "phone": "212-463-7042",
     "verification": "verified",
-    "need_type": ["financial"],
+    "need_type": [
+      "financial"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": false,
@@ -295,11 +414,15 @@
     "eligibility": "Income-eligible households; distributed through local food banks and community organizations",
     "source_type": "federal",
     "response_time": "Same day (walk-in at distribution sites)",
-    "assistance_type": ["food"],
+    "assistance_type": [
+      "food"
+    ],
     "website": "https://www.fns.usda.gov/tefap/emergency-food-assistance-program",
     "phone": "Contact local food bank",
     "verification": "verified",
-    "need_type": ["food"],
+    "need_type": [
+      "food"
+    ],
     "urgency_level": "immediate",
     "disability_relevant": false,
     "family_relevant": true,
@@ -313,11 +436,19 @@
     "eligibility": "All individuals in financial distress; no religious requirement; home visit assessment",
     "source_type": "nonprofit",
     "response_time": "3-10 business days",
-    "assistance_type": ["rent", "utilities", "food", "medicine"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "food",
+      "medicine"
+    ],
     "website": "https://www.svdpusa.org/assistance-services/",
     "phone": "314-576-3993",
     "verification": "verified",
-    "need_type": ["financial", "food"],
+    "need_type": [
+      "financial",
+      "food"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": false,
@@ -331,11 +462,19 @@
     "eligibility": "Active duty E-1 to E-6, Guard/Reserve, and recently separated service members (within 36 months)",
     "source_type": "nonprofit",
     "response_time": "5-15 business days",
-    "assistance_type": ["rent", "utilities", "vehicle_repair", "food"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "vehicle_repair",
+      "food"
+    ],
     "website": "https://operationhomefront.org/critical-financial-assistance/",
     "phone": "1-800-722-6098",
     "verification": "verified",
-    "need_type": ["financial", "family"],
+    "need_type": [
+      "financial",
+      "family"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -349,11 +488,17 @@
     "eligibility": "Individuals and families who are homeless or at risk of homelessness; administered through local CoC (Continuum of Care) agencies",
     "source_type": "federal",
     "response_time": "1-4 weeks (varies by local agency)",
-    "assistance_type": ["shelter", "rent", "housing_deposit"],
+    "assistance_type": [
+      "shelter",
+      "rent",
+      "housing_deposit"
+    ],
     "website": "https://www.hud.gov/program_offices/comm_planning/esg",
     "phone": "Contact local CoC or dial 211",
     "verification": "verified",
-    "need_type": ["housing"],
+    "need_type": [
+      "housing"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -361,17 +506,27 @@
   },
   {
     "id": "ea-021",
+    "canonical_id": "FAM-047",
     "name": "Navy-Marine Corps Relief Society (NMCRS)",
     "description": "Interest-free loans and grants for active duty and retired Navy and Marine Corps members. Covers rent, utilities, emergency travel, funeral expenses, and medical bills.",
     "category": "branch_specific",
     "eligibility": "Active duty, retired, and Reserve Navy and Marine Corps; surviving spouses and dependents",
     "source_type": "nonprofit",
     "response_time": "1-5 business days",
-    "assistance_type": ["rent", "utilities", "emergency_travel", "funeral", "medical"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "emergency_travel",
+      "funeral",
+      "medical"
+    ],
     "website": "https://www.nmcrs.org/",
     "phone": "1-800-654-8364",
     "verification": "verified",
-    "need_type": ["financial", "medical"],
+    "need_type": [
+      "financial",
+      "medical"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -379,17 +534,26 @@
   },
   {
     "id": "ea-022",
+    "canonical_id": "FAM-048",
     "name": "Air Force Aid Society (AFAS)",
     "description": "Emergency assistance for Air Force and Space Force members including interest-free loans and grants for basic needs, car repair, and emergency travel.",
     "category": "branch_specific",
     "eligibility": "Active duty, retired, Guard/Reserve Air Force and Space Force; surviving spouses and dependents",
     "source_type": "nonprofit",
     "response_time": "1-3 business days",
-    "assistance_type": ["rent", "utilities", "vehicle_repair", "emergency_travel", "food"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "vehicle_repair",
+      "emergency_travel",
+      "food"
+    ],
     "website": "https://www.afas.org/",
     "phone": "1-800-769-8951",
     "verification": "verified",
-    "need_type": ["financial"],
+    "need_type": [
+      "financial"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -397,17 +561,27 @@
   },
   {
     "id": "ea-023",
+    "canonical_id": "FAM-049",
     "name": "Coast Guard Mutual Assistance (CGMA)",
     "description": "Emergency financial assistance for Coast Guard members and families. Interest-free loans and grants for rent, medical, funeral, and emergency travel.",
     "category": "branch_specific",
     "eligibility": "Active duty, retired, Reserve Coast Guard; civilian employees of Coast Guard; surviving spouses",
     "source_type": "nonprofit",
     "response_time": "1-5 business days",
-    "assistance_type": ["rent", "utilities", "medical", "funeral", "emergency_travel"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "medical",
+      "funeral",
+      "emergency_travel"
+    ],
     "website": "https://www.cgmahq.org/",
     "phone": "1-800-881-2462",
     "verification": "verified",
-    "need_type": ["financial", "medical"],
+    "need_type": [
+      "financial",
+      "medical"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -421,11 +595,19 @@
     "eligibility": "Purple Heart recipients and combat-wounded veterans; proof of combat-related injury required",
     "source_type": "nonprofit",
     "response_time": "5-15 business days",
-    "assistance_type": ["rent", "utilities", "medical", "transportation"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "medical",
+      "transportation"
+    ],
     "website": "https://www.purpleheartfoundation.org/",
     "phone": "703-354-2140",
     "verification": "aggregator",
-    "need_type": ["financial", "medical"],
+    "need_type": [
+      "financial",
+      "medical"
+    ],
     "urgency_level": "any",
     "disability_relevant": true,
     "family_relevant": false,
@@ -439,11 +621,17 @@
     "eligibility": "Post-9/11 combat-wounded service members, veterans, and their families",
     "source_type": "nonprofit",
     "response_time": "5-10 business days",
-    "assistance_type": ["rent", "utilities", "transitional_support"],
+    "assistance_type": [
+      "rent",
+      "utilities",
+      "transitional_support"
+    ],
     "website": "https://www.hopeforthewarriors.org/",
     "phone": "1-877-246-7349",
     "verification": "verified",
-    "need_type": ["financial"],
+    "need_type": [
+      "financial"
+    ],
     "urgency_level": "any",
     "disability_relevant": true,
     "family_relevant": true,
@@ -451,17 +639,23 @@
   },
   {
     "id": "ea-026",
+    "canonical_id": "res-063",
     "name": "Veteran Emergency Car Repair Programs",
     "description": "Multiple nonprofits provide free or low-cost vehicle repair and donated vehicles for veterans. Vehicle loss is a leading cause of job loss for veterans.",
     "category": "transportation",
     "eligibility": "Veterans who need vehicle repair or replacement to maintain employment; varies by program",
     "source_type": "nonprofit",
     "response_time": "1-4 weeks",
-    "assistance_type": ["vehicle_repair", "vehicle_donation"],
+    "assistance_type": [
+      "vehicle_repair",
+      "vehicle_donation"
+    ],
     "website": "https://www.operationhomefront.org/",
     "phone": "Contact local veteran service organization",
     "verification": "aggregator",
-    "need_type": ["financial"],
+    "need_type": [
+      "financial"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": false,
@@ -475,11 +669,16 @@
     "eligibility": "Veterans enrolled in VA healthcare who cannot afford prescriptions or need emergency medication access",
     "source_type": "federal",
     "response_time": "Same day (at VA pharmacy)",
-    "assistance_type": ["prescriptions", "medical"],
+    "assistance_type": [
+      "prescriptions",
+      "medical"
+    ],
     "website": "https://www.va.gov/health-care/about-va-health-benefits/",
     "phone": "Contact your local VAMC pharmacy",
     "verification": "verified",
-    "need_type": ["medical"],
+    "need_type": [
+      "medical"
+    ],
     "urgency_level": "immediate",
     "disability_relevant": true,
     "family_relevant": false,
@@ -493,11 +692,15 @@
     "eligibility": "Veterans with children attending VA medical appointments at participating facilities",
     "source_type": "federal",
     "response_time": "Schedule with appointment",
-    "assistance_type": ["childcare"],
+    "assistance_type": [
+      "childcare"
+    ],
     "website": "https://www.va.gov/health-care/about-va-health-benefits/",
     "phone": "Contact your local VAMC",
     "verification": "verified",
-    "need_type": ["family"],
+    "need_type": [
+      "family"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -511,11 +714,16 @@
     "eligibility": "Veterans not eligible for VA dental who need emergency dental treatment; income criteria vary by program",
     "source_type": "nonprofit",
     "response_time": "1-4 weeks for appointment",
-    "assistance_type": ["dental", "medical"],
+    "assistance_type": [
+      "dental",
+      "medical"
+    ],
     "website": "https://dentallifeline.org/",
     "phone": "1-888-471-6334",
     "verification": "verified",
-    "need_type": ["medical"],
+    "need_type": [
+      "medical"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": false,
@@ -529,11 +737,15 @@
     "eligibility": "Households facing utility disconnection; veterans receive priority in many state programs",
     "source_type": "state",
     "response_time": "1-10 business days (varies by state)",
-    "assistance_type": ["utilities"],
+    "assistance_type": [
+      "utilities"
+    ],
     "website": "https://liheapch.acf.hhs.gov/",
     "phone": "Contact state utility commission or dial 211",
     "verification": "verified",
-    "need_type": ["financial"],
+    "need_type": [
+      "financial"
+    ],
     "urgency_level": "any",
     "disability_relevant": false,
     "family_relevant": true,
@@ -541,17 +753,25 @@
   },
   {
     "id": "ea-031",
+    "canonical_id": "res-034",
     "name": "Veterans Crisis Line (988)",
     "description": "24/7 confidential crisis support for veterans, service members, and their families. Call or text 988 and press 1 for the Veterans Crisis Line. Chat available at veteranscrisisline.net.",
     "category": "veteran_emergency",
     "eligibility": "All veterans, service members, National Guard, Reserve, and their families",
     "source_type": "federal",
     "response_time": "Immediate (24/7 hotline, chat, and text)",
-    "assistance_type": ["crisis", "mental_health", "referral"],
+    "assistance_type": [
+      "crisis",
+      "mental_health",
+      "referral"
+    ],
     "website": "https://www.veteranscrisisline.net",
     "phone": "988",
     "verification": "verified",
-    "need_type": ["mental_health", "crisis"],
+    "need_type": [
+      "mental_health",
+      "crisis"
+    ],
     "urgency_level": "immediate",
     "disability_relevant": false,
     "family_relevant": true,

@@ -939,6 +939,7 @@
   },
   {
     "id": "cc-027",
+    "canonical_id": "res-114",
     "name": "Hiring Our Heroes Corporate Fellowship",
     "category": "skillbridge_partner",
     "description": "12-week fellowship program matching transitioning service members with Fortune 500 companies. Fully paid while still on active duty. One of the highest-placement transition programs with 90%+ hire rate.",
@@ -1111,6 +1112,7 @@
   },
   {
     "id": "cc-033",
+    "canonical_id": "cc-033",
     "name": "PMP — Project Management Professional",
     "category": "certification_program",
     "description": "PMI's gold standard for project management. Not DoD 8140 but extremely high value at every defense contractor for program management and leadership positions. Military leadership translates well.",
@@ -1625,6 +1627,7 @@
   },
   {
     "id": "cc-051",
+    "canonical_id": "res-001",
     "name": "VR&E — Vocational Rehabilitation & Employment",
     "category": "federal_resource",
     "description": "VA Chapter 31 program providing career counseling, training, education, and job placement for service-connected disabled veterans. Covers certification costs, tools, and support services.",
@@ -1667,6 +1670,7 @@
   },
   {
     "id": "cc-053",
+    "canonical_id": "tr-002",
     "name": "Transition Assistance Program (TAP)",
     "category": "federal_resource",
     "description": "DoD-mandated transition program for separating service members. Provides career readiness standards, financial planning, VA benefits briefings, and employer connections. Required attendance.",

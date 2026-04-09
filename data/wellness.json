@@ -40,6 +40,7 @@
   },
   {
     "id": "well-003",
+    "canonical_id": "res-075",
     "name": "Team Red, White & Blue (Team RWB)",
     "category": "Fitness Programs",
     "sub": "Community Fitness",
@@ -365,6 +366,7 @@
   },
   {
     "id": "well-020",
+    "canonical_id": "37",
     "name": "Veterans Yoga Project (VYP)",
     "category": "Yoga & Mindfulness",
     "sub": "Yoga",
@@ -386,6 +388,7 @@
   },
   {
     "id": "well-021",
+    "canonical_id": "106",
     "name": "Warriors at Ease",
     "category": "Yoga & Mindfulness",
     "sub": "Yoga & Meditation",
@@ -617,6 +620,7 @@
   },
   {
     "id": "well-033",
+    "canonical_id": "109",
     "name": "Warrior Surf Foundation",
     "category": "Surf Therapy",
     "sub": "Surf Therapy",

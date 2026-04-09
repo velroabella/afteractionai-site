@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "canonical_id": "res-034",
     "name": "Veterans Crisis Line",
     "category": "Crisis Support",
     "conditions_supported": [
@@ -68,6 +69,7 @@
   },
   {
     "id": 3,
+    "canonical_id": "res-035",
     "name": "Vet Centers (Readjustment Counseling Services)",
     "category": "VA",
     "conditions_supported": [
@@ -132,6 +134,7 @@
   },
   {
     "id": 5,
+    "canonical_id": "5",
     "name": "Cohen Veterans Network",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -164,6 +167,7 @@
   },
   {
     "id": 6,
+    "canonical_id": "res-036",
     "name": "Give an Hour",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -257,6 +261,7 @@
   },
   {
     "id": 9,
+    "canonical_id": "59",
     "name": "TAPS (Tragedy Assistance Program for Survivors)",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -288,6 +293,7 @@
   },
   {
     "id": 10,
+    "canonical_id": "res-075",
     "name": "Team Red, White & Blue",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -319,6 +325,7 @@
   },
   {
     "id": 11,
+    "canonical_id": "res-081",
     "name": "Travis Manion Foundation",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -382,6 +389,7 @@
   },
   {
     "id": 13,
+    "canonical_id": "res-076",
     "name": "The Mission Continues",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -413,6 +421,7 @@
   },
   {
     "id": 14,
+    "canonical_id": "res-134",
     "name": "Blue Star Families",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -443,6 +452,7 @@
   },
   {
     "id": 15,
+    "canonical_id": "15",
     "name": "Military OneSource",
     "category": "VA",
     "conditions_supported": [
@@ -538,6 +548,7 @@
   },
   {
     "id": 18,
+    "canonical_id": "18",
     "name": "Defense and Veterans Brain Injury Center (DVBIC)",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -785,6 +796,7 @@
   },
   {
     "id": 26,
+    "canonical_id": "135",
     "name": "VA PTSD National Center for PTSD",
     "category": "VA",
     "conditions_supported": [
@@ -1118,6 +1130,7 @@
   },
   {
     "id": 37,
+    "canonical_id": "37",
     "name": "Veterans Yoga Project",
     "category": "Alternative Therapy",
     "conditions_supported": [
@@ -1177,6 +1190,7 @@
   },
   {
     "id": 39,
+    "canonical_id": "res-080",
     "name": "DAV (Disabled American Veterans)",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -1205,6 +1219,7 @@
   },
   {
     "id": 40,
+    "canonical_id": "res-078",
     "name": "VFW (Veterans of Foreign Wars)",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -1265,6 +1280,7 @@
   },
   {
     "id": 42,
+    "canonical_id": "res-084",
     "name": "National Veterans Legal Services Program",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -1580,6 +1596,7 @@
   },
   {
     "id": 53,
+    "canonical_id": "res-022",
     "name": "Veterans Benefits Administration",
     "category": "VA",
     "conditions_supported": [
@@ -1748,6 +1765,7 @@
   },
   {
     "id": 59,
+    "canonical_id": "59",
     "name": "Grief Support for Veteran Families",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -1809,6 +1827,7 @@
   },
   {
     "id": 61,
+    "canonical_id": "res-039",
     "name": "VA Caregiver Support Program",
     "category": "VA",
     "conditions_supported": [
@@ -2012,6 +2031,7 @@
   },
   {
     "id": 68,
+    "canonical_id": "15",
     "name": "Military OneSource Parenting Support",
     "category": "VA",
     "conditions_supported": [
@@ -2041,6 +2061,7 @@
   },
   {
     "id": 69,
+    "canonical_id": "res-084",
     "name": "Veterans Legal Services",
     "category": "Nonprofit",
     "conditions_supported": [
@@ -2529,6 +2550,7 @@
   },
   {
     "id": 86,
+    "canonical_id": "142",
     "name": "Mission Within",
     "category": "Psychedelic-Assisted Therapy",
     "conditions_supported": [
@@ -3105,6 +3127,7 @@
   },
   {
     "id": 106,
+    "canonical_id": "106",
     "name": "Warriors at Ease",
     "category": "Holistic/Body-Based",
     "conditions_supported": [
@@ -3195,6 +3218,7 @@
   },
   {
     "id": 109,
+    "canonical_id": "109",
     "name": "Warrior Surf Foundation",
     "category": "Holistic/Body-Based",
     "conditions_supported": [
@@ -3904,6 +3928,7 @@
   },
   {
     "id": 133,
+    "canonical_id": "res-075",
     "name": "Team Red, White & Blue - Meditation Programs",
     "category": "Holistic/Body-Based",
     "conditions_supported": [
@@ -3962,6 +3987,7 @@
   },
   {
     "id": 135,
+    "canonical_id": "135",
     "name": "VA National Center for PTSD",
     "category": "Holistic/Body-Based",
     "conditions_supported": [
@@ -4162,6 +4188,7 @@
   },
   {
     "id": 142,
+    "canonical_id": "142",
     "name": "The Mission Within",
     "category": "Ibogaine/Psychedelic Clinic",
     "conditions_supported": [
@@ -5615,6 +5642,7 @@
   },
   {
     "id": 195,
+    "canonical_id": "195",
     "name": "VA Foreign Medical Program (FMP)",
     "category": "Veterans Healthcare Travel Program",
     "conditions_supported": [

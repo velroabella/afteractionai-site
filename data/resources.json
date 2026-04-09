@@ -1,6 +1,7 @@
 [
   {
     "id": "res-001",
+    "canonical_id": "res-001",
     "name": "VA Vocational Rehabilitation & Employment (VR&E / Chapter 31)",
     "category": "employment",
     "description": "Comprehensive employment services including job training, resume development, job accommodation support, and self-employment assistance for veterans with service-connected disabilities.",
@@ -91,6 +92,7 @@
   },
   {
     "id": "res-010",
+    "canonical_id": "res-010",
     "name": "SkillBridge (DOD)",
     "category": "employment",
     "description": "Allows active duty service members to participate in civilian work experiences during their last 180 days of service while receiving military pay.",
@@ -151,6 +153,7 @@
   },
   {
     "id": "res-016",
+    "canonical_id": "res-016",
     "name": "Survivors & Dependents Educational Assistance (DEA / Chapter 35)",
     "category": "education",
     "description": "Up to 36 months of education benefits for dependents of veterans who are permanently/totally disabled or who died from service-connected conditions.",
@@ -171,6 +174,7 @@
   },
   {
     "id": "res-018",
+    "canonical_id": "res-018",
     "name": "Pat Tillman Foundation Scholarships",
     "category": "education",
     "description": "Scholarship covering tuition, books, and living expenses. Average award $10,000+. Strong alumni network.",
@@ -191,6 +195,7 @@
   },
   {
     "id": "res-020",
+    "canonical_id": "res-020",
     "name": "Folds of Honor Scholarships",
     "category": "education",
     "description": "Educational scholarships up to $5,000/semester for spouses and children of fallen and disabled service members.",
@@ -211,6 +216,7 @@
   },
   {
     "id": "res-022",
+    "canonical_id": "res-022",
     "name": "VA Disability Compensation",
     "category": "benefits",
     "description": "Tax-free monthly payment for service-connected disabilities. Rates from $171/month (10%) to $3,737+/month (100%). Additional for dependents at 30%+.",
@@ -221,6 +227,7 @@
   },
   {
     "id": "res-023",
+    "canonical_id": "res-023",
     "name": "VA Pension (Non-Service-Connected)",
     "category": "benefits",
     "description": "Tax-free monthly benefit for wartime veterans with limited income who are 65+ or permanently disabled.",
@@ -231,6 +238,7 @@
   },
   {
     "id": "res-024",
+    "canonical_id": "res-024",
     "name": "Aid & Attendance / Housebound Benefits",
     "category": "benefits",
     "description": "Additional monthly payment for veterans who need help with daily activities or are substantially confined to their home.",
@@ -241,6 +249,7 @@
   },
   {
     "id": "res-025",
+    "canonical_id": "res-025",
     "name": "Dependency and Indemnity Compensation (DIC)",
     "category": "benefits",
     "description": "Tax-free monthly payment to surviving spouse, children, or parents of service members who died in the line of duty.",
@@ -261,6 +270,7 @@
   },
   {
     "id": "res-027",
+    "canonical_id": "res-022",
     "name": "Combat-Related Special Compensation (CRSC)",
     "category": "benefits",
     "description": "Tax-free payment that restores retired pay offset by VA disability for combat-related disabilities.",
@@ -331,6 +341,7 @@
   },
   {
     "id": "res-034",
+    "canonical_id": "res-034",
     "name": "Veterans Crisis Line",
     "category": "medical",
     "description": "24/7 crisis intervention and support. Available by phone, text, and online chat. Dial 988, Press 1.",
@@ -341,6 +352,7 @@
   },
   {
     "id": "res-035",
+    "canonical_id": "res-035",
     "name": "Vet Centers (Readjustment Counseling)",
     "category": "medical",
     "description": "Community-based counseling for PTSD, MST, bereavement, and group therapy in a non-clinical setting.",
@@ -351,6 +363,7 @@
   },
   {
     "id": "res-036",
+    "canonical_id": "res-036",
     "name": "Give an Hour",
     "category": "medical",
     "description": "Network of 7,000+ licensed mental health professionals providing free therapy to veterans and families.",
@@ -381,6 +394,7 @@
   },
   {
     "id": "res-039",
+    "canonical_id": "res-039",
     "name": "VA Caregiver Support Program",
     "category": "medical",
     "description": "Training, support, and financial stipend for family caregivers. Includes health insurance, mental health, and respite care.",
@@ -391,6 +405,7 @@
   },
   {
     "id": "res-040",
+    "canonical_id": "res-040",
     "name": "Headstrong Project",
     "category": "medical",
     "description": "Free, confidential, stigma-free mental health treatment. Partners with licensed therapists in communities nationwide.",
@@ -441,6 +456,7 @@
   },
   {
     "id": "res-045",
+    "canonical_id": "res-045",
     "name": "Homes for Our Troops",
     "category": "equipment",
     "description": "Builds and donates mortgage-free specially adapted custom homes for severely injured post-9/11 veterans.",
@@ -451,6 +467,7 @@
   },
   {
     "id": "res-046",
+    "canonical_id": "res-046",
     "name": "Specially Adapted Housing (SAH) Grant",
     "category": "equipment",
     "description": "VA grant up to $109,986 to build, buy, or modify a home to meet adaptive needs.",
@@ -571,6 +588,7 @@
   },
   {
     "id": "res-058",
+    "canonical_id": "res-058",
     "name": "VA Home Loan (Chapter 37)",
     "category": "housing",
     "description": "Mortgage loan guaranteed by VA — no down payment, no PMI, competitive rates. Available for purchase, refinance, and adapted housing.",
@@ -601,6 +619,7 @@
   },
   {
     "id": "res-061",
+    "canonical_id": "res-061",
     "name": "SSVF (Supportive Services for Veteran Families)",
     "category": "housing",
     "description": "Rapid re-housing and prevention: rental assistance, utility payments, moving costs, and case management.",
@@ -621,6 +640,7 @@
   },
   {
     "id": "res-063",
+    "canonical_id": "res-063",
     "name": "Operation Homefront — Transitional Housing",
     "category": "housing",
     "description": "Transitional housing for wounded veterans and critical financial assistance for rent and mortgage.",
@@ -631,6 +651,7 @@
   },
   {
     "id": "res-064",
+    "canonical_id": "res-064",
     "name": "National Veterans Foundation",
     "category": "housing",
     "description": "Emergency financial assistance for housing, utilities, and basic needs. Lifeline for Vets: 1-888-777-4443.",
@@ -681,6 +702,7 @@
   },
   {
     "id": "res-069",
+    "canonical_id": "res-069",
     "name": "National Park Service — America the Beautiful Pass",
     "category": "discounts",
     "description": "Free lifetime access to all national parks, forests, wildlife refuges, and federal recreation lands.",
@@ -741,6 +763,7 @@
   },
   {
     "id": "res-075",
+    "canonical_id": "res-075",
     "name": "Team Red White & Blue (RWB)",
     "category": "community",
     "description": "Community connecting through physical and social activities — runs, yoga, social events, and service.",
@@ -751,6 +774,7 @@
   },
   {
     "id": "res-076",
+    "canonical_id": "res-076",
     "name": "The Mission Continues",
     "category": "community",
     "description": "Empowers veterans to continue serving through fellowships, service platoons, and community projects.",
@@ -771,6 +795,7 @@
   },
   {
     "id": "res-078",
+    "canonical_id": "res-078",
     "name": "VFW (Veterans of Foreign Wars)",
     "category": "community",
     "description": "6,000+ posts nationwide. Camaraderie, legislative advocacy, community service, and free claims help.",
@@ -791,6 +816,7 @@
   },
   {
     "id": "res-080",
+    "canonical_id": "res-080",
     "name": "Disabled American Veterans (DAV)",
     "category": "community",
     "description": "1.3M+ members. Free claims assistance, transportation, employment resources, and legislative advocacy.",
@@ -801,6 +827,7 @@
   },
   {
     "id": "res-081",
+    "canonical_id": "res-081",
     "name": "Travis Manion Foundation",
     "category": "community",
     "description": "Character development programs, community leadership, and mentoring for veterans and families of the fallen.",
@@ -831,6 +858,7 @@
   },
   {
     "id": "res-084",
+    "canonical_id": "res-084",
     "name": "National Veterans Legal Services Program (NVLSP)",
     "category": "legal",
     "description": "Free legal representation before the VA and federal courts. Trains attorneys in veterans law.",
@@ -1131,6 +1159,7 @@
   },
   {
     "id": "res-114",
+    "canonical_id": "res-114",
     "name": "Hiring Our Heroes Corporate Fellowship",
     "category": "employment",
     "description": "12-week fellowship placing service members at Fortune 500 companies. Five days/week plus Friday professional development.",
@@ -1311,6 +1340,7 @@
   },
   {
     "id": "res-132",
+    "canonical_id": "res-132",
     "name": "Veterati",
     "category": "community",
     "description": "Unlimited free 1-hour career mentorship calls with successful professionals across industries.",
@@ -1331,6 +1361,7 @@
   },
   {
     "id": "res-134",
+    "canonical_id": "res-134",
     "name": "Blue Star Families",
     "category": "community",
     "description": "Career development resources, community connections, and family support. Annual Military Family Lifestyle Survey.",

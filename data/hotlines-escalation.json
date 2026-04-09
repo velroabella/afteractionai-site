@@ -1,6 +1,7 @@
 [
   {
     "id": "hotline-veterans-crisis",
+    "canonical_id": "res-034",
     "name": "Veterans Crisis Line",
     "issue_type": "crisis",
     "description": "24/7 crisis support for veterans in emotional or suicidal crisis. Confidential peer support available immediately.",
@@ -13,7 +14,10 @@
     "source_url": "https://www.va.gov/mental-health/veterans-crisis-line/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "crisis", "urgency_type": "immediate"}
+    "tags": {
+      "issue_type": "crisis",
+      "urgency_type": "immediate"
+    }
   },
   {
     "id": "hotline-va-benefits",
@@ -29,7 +33,10 @@
     "source_url": "https://www.va.gov/contact-us/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "benefits_complaint",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-va-health-benefits",
@@ -45,7 +52,10 @@
     "source_url": "https://www.va.gov/health-care/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "healthcare", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "healthcare",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-white-house-va",
@@ -61,7 +71,10 @@
     "source_url": "https://www.va.gov/contact-us/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "complaint", "urgency_type": "escalation"}
+    "tags": {
+      "issue_type": "complaint",
+      "urgency_type": "escalation"
+    }
   },
   {
     "id": "hotline-va-oig",
@@ -77,7 +90,10 @@
     "source_url": "https://www.va.gov/oig/hotline/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "ig", "urgency_type": "escalation"}
+    "tags": {
+      "issue_type": "ig",
+      "urgency_type": "escalation"
+    }
   },
   {
     "id": "hotline-dod-oig",
@@ -93,7 +109,10 @@
     "source_url": "https://www.dodig.mil/hotline/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "ig", "urgency_type": "escalation"}
+    "tags": {
+      "issue_type": "ig",
+      "urgency_type": "escalation"
+    }
   },
   {
     "id": "hotline-champva",
@@ -109,10 +128,14 @@
     "source_url": "https://www.va.gov/champva/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "healthcare", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "healthcare",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-caregiver-support",
+    "canonical_id": "res-039",
     "name": "Caregiver Support Hotline",
     "issue_type": "benefits_complaint",
     "description": "Support resources for family members caring for veterans. Includes counseling, respite care info, and support groups.",
@@ -125,7 +148,10 @@
     "source_url": "https://www.caregiver.va.gov/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "benefits_complaint",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-homeless-veterans",
@@ -141,7 +167,10 @@
     "source_url": "https://www.va.gov/homeless/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "housing", "urgency_type": "immediate"}
+    "tags": {
+      "issue_type": "housing",
+      "urgency_type": "immediate"
+    }
   },
   {
     "id": "hotline-patient-advocate",
@@ -157,7 +186,10 @@
     "source_url": "https://www.va.gov/health-care/how-to-file-a-complaint/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "complaint", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "complaint",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-myva411",
@@ -173,7 +205,10 @@
     "source_url": "https://www.va.gov/contact-us/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "benefits_complaint",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-userra",
@@ -189,7 +224,10 @@
     "source_url": "https://www.esgr.mil/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "legal", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "legal",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-state-vso",
@@ -205,7 +243,10 @@
     "source_url": "https://www.va.gov/vso/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "benefits_complaint",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-va-health-crisis",
@@ -221,10 +262,14 @@
     "source_url": "https://www.va.gov/mental-health/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "crisis", "urgency_type": "immediate"}
+    "tags": {
+      "issue_type": "crisis",
+      "urgency_type": "immediate"
+    }
   },
   {
     "id": "hotline-vba-disability",
+    "canonical_id": "res-022",
     "name": "VA Disability Benefits Hotline",
     "issue_type": "benefits_complaint",
     "description": "Specific hotline for disability compensation and pension questions. Claims status and appeals.",
@@ -237,7 +282,10 @@
     "source_url": "https://www.va.gov/disability/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "benefits_complaint",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-education-benefits",
@@ -253,10 +301,14 @@
     "source_url": "https://www.va.gov/education/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "benefits_complaint",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-voc-rehab",
+    "canonical_id": "res-001",
     "name": "Vocational Rehabilitation & Employment Hotline",
     "issue_type": "employment",
     "description": "Support for VR&E programs for disabled veterans. Career counseling and training assistance.",
@@ -269,7 +321,10 @@
     "source_url": "https://www.va.gov/vocrehab/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "employment", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "employment",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-home-loans",
@@ -285,7 +340,10 @@
     "source_url": "https://www.va.gov/housing-assistance/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "housing", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "housing",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-life-insurance",
@@ -301,10 +359,14 @@
     "source_url": "https://www.va.gov/life-insurance/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "benefits_complaint", "urgency_type": "standard"}
+    "tags": {
+      "issue_type": "benefits_complaint",
+      "urgency_type": "standard"
+    }
   },
   {
     "id": "hotline-nvf",
+    "canonical_id": "res-064",
     "name": "National Veterans Foundation Hotline",
     "issue_type": "crisis",
     "description": "Crisis line and supportive services for veterans in emotional distress.",
@@ -317,6 +379,9 @@
     "source_url": "https://www.nvf.org/",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"issue_type": "crisis", "urgency_type": "immediate"}
+    "tags": {
+      "issue_type": "crisis",
+      "urgency_type": "immediate"
+    }
   }
 ]

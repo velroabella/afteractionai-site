@@ -23,6 +23,7 @@
   },
   {
     "id": "tr-002",
+    "canonical_id": "tr-002",
     "name": "Transition Assistance Program (TAP)",
     "description": "DoD-mandated transition program providing career readiness, financial planning, and VA benefits briefings. Required for all separating service members.",
     "section": "getting_started",
@@ -150,6 +151,7 @@
   },
   {
     "id": "tr-007",
+    "canonical_id": "res-010",
     "name": "SkillBridge — Start While Still Serving",
     "description": "DoD program that lets you intern at civilian companies during your last 180 days of service while still receiving military pay. Hundreds of employers participate.",
     "section": "education_training",
@@ -177,6 +179,7 @@
   },
   {
     "id": "tr-008",
+    "canonical_id": "res-001",
     "name": "Vocational Rehabilitation (VR&E / Chapter 31)",
     "description": "If you have a service-connected disability, VR&E provides career counseling, training, education, and job placement. Can pay for certifications, tools, and even self-employment startup costs.",
     "section": "education_training",
@@ -246,6 +249,7 @@
   },
   {
     "id": "tr-011",
+    "canonical_id": "hb-016",
     "name": "Veterans Preference in Federal Hiring",
     "description": "Veterans get 5-10 point hiring preference for federal jobs. Disabled veterans get additional priority. USAJobs is the primary portal.",
     "section": "career_launch",
@@ -269,6 +273,7 @@
   },
   {
     "id": "tr-012",
+    "canonical_id": "res-114",
     "name": "Hiring Our Heroes Corporate Fellowship",
     "description": "12-week fellowship program matching transitioning service members with Fortune 500 companies. Fully paid while still on active duty. One of the highest-placement transition programs.",
     "section": "career_launch",
@@ -295,6 +300,7 @@
   },
   {
     "id": "tr-013",
+    "canonical_id": "res-058",
     "name": "VA Home Loan — Zero Down Mortgage",
     "description": "The VA loan benefit requires zero down payment, no PMI, and offers competitive rates. One of the most powerful financial tools for transitioning veterans.",
     "section": "housing_setup",
@@ -322,6 +328,7 @@
   },
   {
     "id": "tr-014",
+    "canonical_id": "res-061",
     "name": "SSVF — Supportive Services for Veteran Families",
     "description": "Temporary financial assistance for rent, utilities, and deposits. Available to very low-income veteran families at risk of homelessness.",
     "section": "housing_setup",
@@ -503,6 +510,7 @@
   },
   {
     "id": "tr-022",
+    "canonical_id": "res-035",
     "name": "Vet Centers — Free Readjustment Counseling",
     "description": "300+ Vet Centers nationwide offer free counseling for combat veterans, sexual trauma survivors, and bereaved families. No VA enrollment required.",
     "section": "wellbeing",
@@ -546,6 +554,7 @@
   },
   {
     "id": "tr-024",
+    "canonical_id": "15",
     "name": "Family Support During Transition",
     "description": "Transition affects the whole family. Spouses need career support, children need school transitions, and everyone needs a support network. Connect with family programs.",
     "section": "community_network",
@@ -614,6 +623,7 @@
   },
   {
     "id": "tr-026",
+    "canonical_id": "res-010",
     "name": "Defense Contractor Careers",
     "description": "Leverage your security clearance, military training, and mission experience for high-paying defense contractor positions. Browse 20+ major contractors, cleared job boards, certification roadmaps, and career fairs.",
     "section": "career_launch",

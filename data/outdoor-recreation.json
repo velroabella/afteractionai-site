@@ -1,7 +1,8 @@
 [
   {
     "id": "or-001",
-    "name": "America the Beautiful \u2014 Military Lifetime Pass",
+    "canonical_id": "res-069",
+    "name": "America the Beautiful — Military Lifetime Pass",
     "category": "federal_access",
     "description": "Free lifetime entrance pass to 2,000+ federal recreation sites including national parks, national wildlife refuges, national forests, and BLM lands. Covers entrance and standard amenity fees for the pass holder and passengers in a single, private, non-commercial vehicle.",
     "benefit_type": "free_access",
@@ -57,7 +58,7 @@
   },
   {
     "id": "or-004",
-    "name": "BLM Public Lands \u2014 Free Veteran Access",
+    "name": "BLM Public Lands — Free Veteran Access",
     "category": "federal_access",
     "description": "Free lifetime access to over 245 million acres of Bureau of Land Management public lands for recreation including hiking, camping, fishing, hunting, off-roading, and rock climbing.",
     "benefit_type": "free_access",
@@ -75,7 +76,7 @@
   },
   {
     "id": "or-005",
-    "name": "US Army Corps of Engineers \u2014 Free Day Use",
+    "name": "US Army Corps of Engineers — Free Day Use",
     "category": "federal_access",
     "description": "Free day-use access at Army Corps of Engineers recreation areas nationwide. Over 400 lake and river projects with campgrounds, beaches, hiking trails, and boat ramps.",
     "benefit_type": "free_access",
@@ -86,14 +87,14 @@
     "verification": "America the Beautiful Military Lifetime Pass.",
     "website": "https://www.usace.army.mil/Missions/Civil-Works/Recreation/",
     "source_type": "Federal",
-    "annual_value": "$5\u2013$30 per visit saved",
+    "annual_value": "$5–$30 per visit saved",
     "covers_dependents": true,
     "seasonal": false,
     "cross_ref": null
   },
   {
     "id": "or-006",
-    "name": "US Fish & Wildlife Service \u2014 Free Refuge Access",
+    "name": "US Fish & Wildlife Service — Free Refuge Access",
     "category": "federal_access",
     "description": "Free entrance to 560+ National Wildlife Refuges for hiking, wildlife viewing, photography, fishing, and hunting. Covered by the America the Beautiful Military Lifetime Pass.",
     "benefit_type": "free_access",
@@ -111,7 +112,7 @@
   },
   {
     "id": "or-007",
-    "name": "Recreation.gov \u2014 Federal Campground Reservations",
+    "name": "Recreation.gov — Federal Campground Reservations",
     "category": "camping",
     "description": "Central reservation system for federal campgrounds, cabins, day-use areas, and permits across National Parks, National Forests, BLM, and Corps of Engineers sites. Veterans with the Access Pass receive 50% off camping fees.",
     "benefit_type": "discount_percentage",
@@ -122,7 +123,7 @@
     "verification": "Access Pass displayed at campground. Online booking may require calling the reservation line to apply discount.",
     "website": "https://www.recreation.gov/",
     "source_type": "Federal",
-    "annual_value": "$10\u2013$20 saved per night",
+    "annual_value": "$10–$20 saved per night",
     "covers_dependents": true,
     "seasonal": false,
     "cross_ref": null
@@ -140,7 +141,7 @@
     "verification": "Apply via California Department of Parks and Recreation with VA disability letter and CA residency proof.",
     "website": "https://www.parks.ca.gov/?page_id=30958",
     "source_type": "State",
-    "annual_value": "$200\u2013$500+ in park fees saved",
+    "annual_value": "$200–$500+ in park fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -151,7 +152,7 @@
     "id": "or-009",
     "name": "Texas Veterans Parklands Passport",
     "category": "state_parks",
-    "description": "Free entry to all Texas state parks for honorably discharged veterans with 60%+ VA disability rating. Waives daily entrance fee ($2\u2013$7 per adult) for the pass holder.",
+    "description": "Free entry to all Texas state parks for honorably discharged veterans with 60%+ VA disability rating. Waives daily entrance fee ($2–$7 per adult) for the pass holder.",
     "benefit_type": "free_access",
     "eligibility": "Texas resident veterans with 60%+ service-connected disability. Must have honorable or general discharge.",
     "disability_required": true,
@@ -160,7 +161,7 @@
     "verification": "Apply at any Texas state park or by mail with DD-214 and VA disability letter.",
     "website": "https://tpwd.texas.gov/state-parks/park-information/passes/texas-parklands-passports",
     "source_type": "State",
-    "annual_value": "$100\u2013$300 in entrance fees saved",
+    "annual_value": "$100–$300 in entrance fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -169,7 +170,7 @@
   },
   {
     "id": "or-010",
-    "name": "Florida State Parks \u2014 Veteran Discounts",
+    "name": "Florida State Parks — Veteran Discounts",
     "category": "state_parks",
     "description": "25% discount on annual entrance passes for all veterans. Free lifetime military pass for veterans with service-connected disabilities. Florida has 175 state parks.",
     "benefit_type": "discount_percentage",
@@ -180,7 +181,7 @@
     "verification": "Military ID, DD-214, or veteran designation on FL driver license at any state park entrance.",
     "website": "https://www.floridastateparks.org/learn/florida-state-parks-appreciate-veterans",
     "source_type": "State",
-    "annual_value": "$30\u2013$120 saved on annual passes",
+    "annual_value": "$30–$120 saved on annual passes",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -200,7 +201,7 @@
     "verification": "Apply online or at any state park with DD-214 and NY residency proof.",
     "website": "https://veterans.ny.gov/lifetime-liberty-pass",
     "source_type": "State",
-    "annual_value": "$65\u2013$200 in park fees saved",
+    "annual_value": "$65–$200 in park fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -220,7 +221,7 @@
     "verification": "Apply at parks.wa.gov with VA disability letter and WA residency proof.",
     "website": "https://parks.wa.gov/passes-permits/get-park-pass/lifetime-disabled-veteran-pass",
     "source_type": "State",
-    "annual_value": "$150\u2013$500+ saved annually",
+    "annual_value": "$150–$500+ saved annually",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -240,7 +241,7 @@
     "verification": "Apply at any Oregon state park or online with VA disability letter.",
     "website": "https://stateparks.oregon.gov/?do=v.page&id=19",
     "source_type": "State",
-    "annual_value": "$200\u2013$600+ saved annually",
+    "annual_value": "$200–$600+ saved annually",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -269,7 +270,7 @@
   },
   {
     "id": "or-015",
-    "name": "Colorado \u2014 Free Lifetime Hunting & Fishing License",
+    "name": "Colorado — Free Lifetime Hunting & Fishing License",
     "category": "hunting_fishing",
     "description": "Free lifetime combination small game, fishing, and fur bearer license for qualified disabled veterans and Purple Heart recipients.",
     "benefit_type": "free_license",
@@ -280,7 +281,7 @@
     "verification": "Apply through Colorado Parks and Wildlife with VA disability letter or Purple Heart documentation.",
     "website": "https://cpw.state.co.us/buyapply/Pages/MilitaryLicenses.aspx",
     "source_type": "State",
-    "annual_value": "$50\u2013$100+ in license fees saved",
+    "annual_value": "$50–$100+ in license fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -289,7 +290,7 @@
   },
   {
     "id": "or-016",
-    "name": "Illinois \u2014 Free Veteran Hunting & Fishing License",
+    "name": "Illinois — Free Veteran Hunting & Fishing License",
     "category": "hunting_fishing",
     "description": "Free hunting and fishing license for veterans receiving compensation for service-connected disability of 10% or more, or total disability.",
     "benefit_type": "free_license",
@@ -300,7 +301,7 @@
     "verification": "Apply through Illinois Department of Natural Resources with VA benefit verification letter.",
     "website": "https://veterans.illinois.gov/services-benefits/permits.html",
     "source_type": "State",
-    "annual_value": "$30\u2013$75 in license fees saved",
+    "annual_value": "$30–$75 in license fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -309,7 +310,7 @@
   },
   {
     "id": "or-017",
-    "name": "Idaho \u2014 Disabled American Veteran Hunt/Fish License",
+    "name": "Idaho — Disabled American Veteran Hunt/Fish License",
     "category": "hunting_fishing",
     "description": "Reduced-fee combination hunting and fishing license for disabled veterans. Idaho also offers a free big game tag for veterans with 40%+ disability.",
     "benefit_type": "reduced_fee",
@@ -320,7 +321,7 @@
     "verification": "Apply through Idaho Fish & Game with VA disability documentation.",
     "website": "https://idfg.idaho.gov/licenses/dav-programs",
     "source_type": "State",
-    "annual_value": "$50\u2013$150 in license/tag fees saved",
+    "annual_value": "$50–$150 in license/tag fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -329,7 +330,7 @@
   },
   {
     "id": "or-018",
-    "name": "New Jersey \u2014 Free Disabled Veteran Hunting & Fishing",
+    "name": "New Jersey — Free Disabled Veteran Hunting & Fishing",
     "category": "hunting_fishing",
     "description": "Free resident hunting, fishing, and trapping licenses plus all permits and stamps for veterans with any service-connected disability.",
     "benefit_type": "free_license",
@@ -340,7 +341,7 @@
     "verification": "Apply through NJ Division of Fish and Wildlife with VA disability letter and NJ residency proof.",
     "website": "https://dep.nj.gov/njfw/licenses-and-permits/disabled-veteran-license-information/",
     "source_type": "State",
-    "annual_value": "$40\u2013$100+ in license and permit fees saved",
+    "annual_value": "$40–$100+ in license and permit fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -349,7 +350,7 @@
   },
   {
     "id": "or-019",
-    "name": "Georgia \u2014 One-Time Veterans Hunting & Fishing License",
+    "name": "Georgia — One-Time Veterans Hunting & Fishing License",
     "category": "hunting_fishing",
     "description": "Free one-year hunting and fishing license for honorably discharged Georgia veterans who served 90+ days on active duty. Available once per lifetime.",
     "benefit_type": "free_license",
@@ -360,7 +361,7 @@
     "verification": "Apply through Georgia Department of Natural Resources with DD-214.",
     "website": "https://georgiawildlife.com/licenses-permits-passes/veterans",
     "source_type": "State",
-    "annual_value": "$15\u2013$50 saved (one-time)",
+    "annual_value": "$15–$50 saved (one-time)",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -369,7 +370,7 @@
   },
   {
     "id": "or-020",
-    "name": "Utah \u2014 Discounted Disabled Veteran Hunting & Fishing",
+    "name": "Utah — Discounted Disabled Veteran Hunting & Fishing",
     "category": "hunting_fishing",
     "description": "Discounted combination hunting and fishing license for resident veterans with 20%+ service-connected disability.",
     "benefit_type": "reduced_fee",
@@ -380,7 +381,7 @@
     "verification": "Apply through Utah Division of Wildlife Resources with VA disability documentation.",
     "website": "https://wildlife.utah.gov/application-for-a-disabled-veteran-license.html",
     "source_type": "State",
-    "annual_value": "$20\u2013$40 saved on license fees",
+    "annual_value": "$20–$40 saved on license fees",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -389,7 +390,7 @@
   },
   {
     "id": "or-021",
-    "name": "Kansas \u2014 Free Lifetime Hunting & Fishing License",
+    "name": "Kansas — Free Lifetime Hunting & Fishing License",
     "category": "hunting_fishing",
     "description": "Free permanent resident combination hunting and fishing license for Kansas veterans with 30%+ service-connected disability.",
     "benefit_type": "free_license",
@@ -400,7 +401,7 @@
     "verification": "Apply through Kansas Department of Wildlife & Parks with VA disability letter.",
     "website": "https://ksoutdoors.com/Fishing/Licenses-Permits",
     "source_type": "State",
-    "annual_value": "$30\u2013$60 saved annually (permanent)",
+    "annual_value": "$30–$60 saved annually (permanent)",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -409,7 +410,7 @@
   },
   {
     "id": "or-022",
-    "name": "Louisiana \u2014 Free Lifetime Combo License",
+    "name": "Louisiana — Free Lifetime Combo License",
     "category": "hunting_fishing",
     "description": "Free lifetime combination basic hunting and fishing license for Louisiana veterans with 50%+ service-connected disability.",
     "benefit_type": "free_license",
@@ -420,7 +421,7 @@
     "verification": "Apply through Louisiana Department of Wildlife and Fisheries with VA disability documentation.",
     "website": "https://www.wlf.louisiana.gov/page/license-types-prices",
     "source_type": "State",
-    "annual_value": "$40\u2013$80 saved annually (permanent)",
+    "annual_value": "$40–$80 saved annually (permanent)",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -429,7 +430,7 @@
   },
   {
     "id": "or-023",
-    "name": "Oregon \u2014 Free Disabled Veteran Hunting & Fishing",
+    "name": "Oregon — Free Disabled Veteran Hunting & Fishing",
     "category": "hunting_fishing",
     "description": "Free resident and non-resident hunting and fishing permits for disabled veterans in Oregon. Additional to standard license requirement.",
     "benefit_type": "free_license",
@@ -440,7 +441,7 @@
     "verification": "Apply through Oregon Department of Fish and Wildlife with VA disability documentation.",
     "website": "https://myodfw.com/articles/hunters-and-anglers-disabilities",
     "source_type": "State",
-    "annual_value": "$20\u2013$50 in permit fees saved",
+    "annual_value": "$20–$50 in permit fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -449,7 +450,7 @@
   },
   {
     "id": "or-024",
-    "name": "Bass Pro Shops & Cabela's \u2014 Legendary Salute Military Discount",
+    "name": "Bass Pro Shops & Cabela's — Legendary Salute Military Discount",
     "category": "equipment_retail",
     "description": "10% off most items (5% on firearms and ammunition) at all Bass Pro Shops and Cabela's locations. The largest outdoor retailer military discount program in the US.",
     "benefit_type": "discount_percentage",
@@ -460,14 +461,14 @@
     "verification": "Military ID, DD-214, or ID.me verification at checkout. Available in-store and online.",
     "website": "https://about.basspro.com/community/military-and-veterans/",
     "source_type": "Corporate",
-    "annual_value": "$50\u2013$500+ depending on purchases",
+    "annual_value": "$50–$500+ depending on purchases",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": null
   },
   {
     "id": "or-025",
-    "name": "Vail Resorts \u2014 Military Epic Pass",
+    "name": "Vail Resorts — Military Epic Pass",
     "category": "ski_snow",
     "description": "Heavily discounted Epic Pass for military. Active duty/retired: $200. Veterans/adult dependents: $640. Covers 40+ resorts including Vail, Beaver Creek, Breckenridge, Keystone, Park City, and Whistler.",
     "benefit_type": "discount_flat",
@@ -478,14 +479,14 @@
     "verification": "GovX ID verification required during purchase. One pass per verified individual.",
     "website": "https://www.epicpass.com/passes/military-epic-pass",
     "source_type": "Corporate",
-    "annual_value": "$400\u2013$700 saved vs standard Epic Pass",
+    "annual_value": "$400–$700 saved vs standard Epic Pass",
     "covers_dependents": true,
     "seasonal": true,
     "cross_ref": null
   },
   {
     "id": "or-026",
-    "name": "Ikon Pass \u2014 Military Pricing",
+    "name": "Ikon Pass — Military Pricing",
     "category": "ski_snow",
     "description": "Discounted Ikon Pass and Ikon Base Pass pricing for military members. Covers 50+ ski destinations including Aspen, Jackson Hole, Mammoth, Steamboat, and Big Sky.",
     "benefit_type": "discount_flat",
@@ -496,14 +497,14 @@
     "verification": "GovX or ID.me verification during purchase.",
     "website": "https://www.ikonpass.com/en/military",
     "source_type": "Corporate",
-    "annual_value": "$200\u2013$400 saved vs standard Ikon Pass",
+    "annual_value": "$200–$400 saved vs standard Ikon Pass",
     "covers_dependents": true,
     "seasonal": true,
     "cross_ref": null
   },
   {
     "id": "or-027",
-    "name": "Big Bear Mountain Resort \u2014 Military Lift Ticket Discount",
+    "name": "Big Bear Mountain Resort — Military Lift Ticket Discount",
     "category": "ski_snow",
     "description": "25% off window rate on single-day lift tickets at Big Bear Mountain Resort and Snow Summit in Southern California.",
     "benefit_type": "discount_percentage",
@@ -514,14 +515,14 @@
     "verification": "Military ID presented at ticket window.",
     "website": "https://www.bigbearmountainresort.com/plan-your-trip/deals-and-passes",
     "source_type": "Corporate",
-    "annual_value": "$15\u2013$40 saved per visit",
+    "annual_value": "$15–$40 saved per visit",
     "covers_dependents": true,
     "seasonal": true,
     "cross_ref": null
   },
   {
     "id": "or-028",
-    "name": "KOA Campgrounds \u2014 Military Discount",
+    "name": "KOA Campgrounds — Military Discount",
     "category": "camping",
     "description": "10% off nightly camping rates at participating KOA campgrounds nationwide. KOA operates 500+ campgrounds across North America.",
     "benefit_type": "discount_percentage",
@@ -532,7 +533,7 @@
     "verification": "Present military ID at check-in. Discount varies by location and season; call ahead to confirm.",
     "website": "https://koa.com/blog/koa-discounts/",
     "source_type": "Corporate",
-    "annual_value": "$5\u2013$15 saved per night",
+    "annual_value": "$5–$15 saved per night",
     "covers_dependents": true,
     "seasonal": false,
     "cross_ref": null
@@ -550,14 +551,14 @@
     "verification": "Self-identification as veteran or military family member during registration.",
     "website": "https://www.sierraclub.org/military-outdoors",
     "source_type": "Nonprofit",
-    "annual_value": "$200\u2013$1,000+ in trip costs covered",
+    "annual_value": "$200–$1,000+ in trip costs covered",
     "covers_dependents": true,
     "seasonal": false,
     "cross_ref": null
   },
   {
     "id": "or-030",
-    "name": "Wounded Warrior Project \u2014 Soldier Ride & Outdoor Adventures",
+    "name": "Wounded Warrior Project — Soldier Ride & Outdoor Adventures",
     "category": "nonprofit_programs",
     "description": "Free multi-day cycling events, adaptive sports, skiing, snowboarding, and outdoor adventure programs for wounded, ill, and injured veterans.",
     "benefit_type": "free_program",
@@ -568,14 +569,14 @@
     "verification": "Register at woundedwarriorproject.org. Must be post-9/11 era and have service-connected condition.",
     "website": "https://www.woundedwarriorproject.org/programs/soldier-ride",
     "source_type": "Nonprofit",
-    "annual_value": "Fully covered events ($500\u2013$2,000+ value)",
+    "annual_value": "Fully covered events ($500–$2,000+ value)",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": null
   },
   {
     "id": "or-031",
-    "name": "Team Rubicon \u2014 Disaster Response & Outdoor Service",
+    "name": "Team Rubicon — Disaster Response & Outdoor Service",
     "category": "nonprofit_programs",
     "description": "Free disaster response operations and outdoor service projects. All meals, lodging, transportation, and equipment provided during deployments. Veterans gain purpose, community, and outdoor experience.",
     "benefit_type": "free_program",
@@ -611,7 +612,7 @@
   },
   {
     "id": "or-033",
-    "name": "Higher Ground \u2014 Adaptive Outdoor Sports",
+    "name": "Higher Ground — Adaptive Outdoor Sports",
     "category": "adaptive_outdoor",
     "description": "Adaptive skiing, snowboarding, cycling, paddling, and outdoor programs for veterans with physical disabilities and cognitive injuries. Professional adaptive instructors and equipment provided free of charge.",
     "benefit_type": "free_program",
@@ -622,14 +623,14 @@
     "verification": "Apply at highergroundusa.org. Must provide documentation of disability or service-connected condition.",
     "website": "https://www.highergroundusa.org/",
     "source_type": "Nonprofit",
-    "annual_value": "Fully covered adaptive programs ($500\u2013$2,000+ value)",
+    "annual_value": "Fully covered adaptive programs ($500–$2,000+ value)",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": null
   },
   {
     "id": "or-034",
-    "name": "Warriors and Quiet Waters \u2014 Fly Fishing",
+    "name": "Warriors and Quiet Waters — Fly Fishing",
     "category": "adaptive_outdoor",
     "description": "Free multi-day fly fishing retreats in Montana for post-9/11 combat veterans. Includes lodging, meals, equipment, guided fishing, and peer support.",
     "benefit_type": "free_program",
@@ -647,7 +648,7 @@
   },
   {
     "id": "or-035",
-    "name": "Project Healing Waters \u2014 Fly Fishing for Disabled Vets",
+    "name": "Project Healing Waters — Fly Fishing for Disabled Vets",
     "category": "adaptive_outdoor",
     "description": "Free fly fishing and outdoor education programs for disabled active military and veterans. Operates in 200+ locations nationwide with volunteer guides.",
     "benefit_type": "free_program",
@@ -665,7 +666,7 @@
   },
   {
     "id": "or-036",
-    "name": "Killington/Pico \u2014 Military Express Card",
+    "name": "Killington/Pico — Military Express Card",
     "category": "ski_snow",
     "description": "Up to 50% off lift tickets for military. Free skiing on Veterans Day and Memorial Day at Killington and Pico resorts in Vermont.",
     "benefit_type": "discount_percentage",
@@ -676,14 +677,14 @@
     "verification": "Military ID at ticket window. Express Card may be purchased for season-long discounts.",
     "website": "https://www.killington.com/plan-your-trip/deals-packages",
     "source_type": "Corporate",
-    "annual_value": "$50\u2013$200 saved per visit",
+    "annual_value": "$50–$200 saved per visit",
     "covers_dependents": true,
     "seasonal": true,
     "cross_ref": null
   },
   {
     "id": "or-037",
-    "name": "Grand Targhee Resort \u2014 Military Discount",
+    "name": "Grand Targhee Resort — Military Discount",
     "category": "ski_snow",
     "description": "30% discount on lift tickets for military at Grand Targhee Resort in Wyoming. One of the steepest military discounts in western skiing.",
     "benefit_type": "discount_percentage",
@@ -694,14 +695,14 @@
     "verification": "Military ID at ticket window.",
     "website": "https://www.grandtarghee.com/tickets-passes/",
     "source_type": "Corporate",
-    "annual_value": "$30\u2013$60 saved per visit",
+    "annual_value": "$30–$60 saved per visit",
     "covers_dependents": true,
     "seasonal": true,
     "cross_ref": null
   },
   {
     "id": "or-038",
-    "name": "Maine \u2014 Free Veteran Hunting, Fishing & Trapping",
+    "name": "Maine — Free Veteran Hunting, Fishing & Trapping",
     "category": "hunting_fishing",
     "description": "Free hunting, fishing, trapping, and guide license for Maine resident veterans with 50%+ service-connected disability.",
     "benefit_type": "free_license",
@@ -712,7 +713,7 @@
     "verification": "Apply through Maine Department of Inland Fisheries and Wildlife with VA disability documentation.",
     "website": "https://www.maine.gov/ifw/fishing-boating/fishing/fishing-licenses.html",
     "source_type": "State",
-    "annual_value": "$30\u2013$100+ in license fees saved",
+    "annual_value": "$30–$100+ in license fees saved",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": [
@@ -723,7 +724,7 @@
     "id": "or-039",
     "name": "National Disabled Veterans Winter Sports Clinic",
     "category": "adaptive_outdoor",
-    "description": "World's largest adaptive winter sports event, hosted by the VA in Snowmass Village, Colorado. Veterans with disabilities learn alpine skiing, snowboarding, sit-skiing, and other winter sports over six days \u2014 fully covered including travel, lodging, meals, and adaptive instruction.",
+    "description": "World's largest adaptive winter sports event, hosted by the VA in Snowmass Village, Colorado. Veterans with disabilities learn alpine skiing, snowboarding, sit-skiing, and other winter sports over six days — fully covered including travel, lodging, meals, and adaptive instruction.",
     "benefit_type": "free_program",
     "eligibility": "Veterans with spinal cord injury, visual impairment, amputation, neurological conditions, or TBI. Must be enrolled in VA health care.",
     "disability_required": true,
@@ -732,7 +733,7 @@
     "verification": "Refer through VA social worker or physical therapist. Applications open each fall through VA Recreational Therapy.",
     "website": "https://www.va.gov/adaptivesports/winter-sports-clinic.asp",
     "source_type": "Government",
-    "annual_value": "Fully covered event ($2,500\u2013$4,000+ value including travel/lodging)",
+    "annual_value": "Fully covered event ($2,500–$4,000+ value including travel/lodging)",
     "covers_dependents": false,
     "seasonal": true,
     "cross_ref": null
@@ -757,7 +758,7 @@
   },
   {
     "id": "or-041",
-    "name": "Invictus Games \u2014 USA Team Trials",
+    "name": "Invictus Games — USA Team Trials",
     "category": "adaptive_outdoor",
     "description": "U.S. trials and selection process for the Invictus Games, the international adaptive multi-sport competition founded by Prince Harry for wounded, injured, and ill service members and veterans. Team USA competes in 10+ sports including wheelchair basketball, swimming, track, and cycling.",
     "benefit_type": "free_program",
@@ -768,14 +769,14 @@
     "verification": "Apply through DoD Warrior Games selection process or VA Recreational Therapy. Competition held biennially internationally.",
     "website": "https://invictusgamesfoundation.org/",
     "source_type": "Nonprofit",
-    "annual_value": "Fully covered \u2014 travel, lodging, coaching, and equipment provided",
+    "annual_value": "Fully covered — travel, lodging, coaching, and equipment provided",
     "covers_dependents": false,
     "seasonal": true,
     "cross_ref": null
   },
   {
     "id": "or-042",
-    "name": "Valor Games \u2014 Adaptive Sports Competition",
+    "name": "Valor Games — Adaptive Sports Competition",
     "category": "adaptive_outdoor",
     "description": "Free regional and national adaptive sports competitions for disabled veterans. Events include wheelchair basketball, sitting volleyball, swimming, handcycling, archery, and track. Operated by Shepherd Center and partners across multiple U.S. regions.",
     "benefit_type": "free_program",
@@ -793,7 +794,7 @@
   },
   {
     "id": "or-043",
-    "name": "Achilles International \u2014 Veterans Track & Road Racing",
+    "name": "Achilles International — Veterans Track & Road Racing",
     "category": "adaptive_outdoor",
     "description": "Free running, track, and road racing program pairing disabled veterans with volunteer guides for 5Ks, half marathons, marathons, and triathlons. New York City Marathon, Boston Marathon, and major races included. Equipment (hand cycles, racing wheelchairs) and training provided.",
     "benefit_type": "free_program",
@@ -804,7 +805,7 @@
     "verification": "Register at achillesinternational.org. Chapters in major U.S. cities. New York flagship program offers most comprehensive veteran services.",
     "website": "https://achillesinternational.org/",
     "source_type": "Nonprofit",
-    "annual_value": "Free program; race entry fees waived at partner events (value $50\u2013$200+)",
+    "annual_value": "Free program; race entry fees waived at partner events (value $50–$200+)",
     "covers_dependents": false,
     "seasonal": false,
     "cross_ref": null

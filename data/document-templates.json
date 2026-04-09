@@ -412,6 +412,7 @@
   },
   {
     "id": "debt-hardship-letter",
+    "canonical_id": "fr-018",
     "title": "Debt Hardship Letter",
     "description": "Write a professional hardship letter to creditors requesting modified payment terms or debt relief.",
     "category": "financial",
@@ -442,7 +443,7 @@
       },
       {
         "id": "accountNumber",
-        "label": "Account number (optional \u2014 helps identify your account)",
+        "label": "Account number (optional — helps identify your account)",
         "type": "text",
         "required": false
       },
@@ -476,9 +477,9 @@
         "label": "Are you a veteran or active service member?",
         "type": "select",
         "options": [
-          "Yes \u2014 veteran",
-          "Yes \u2014 active duty",
-          "Yes \u2014 Guard/Reserve",
+          "Yes — veteran",
+          "Yes — active duty",
+          "Yes — Guard/Reserve",
           "No"
         ],
         "required": true
@@ -753,7 +754,7 @@
       },
       {
         "id": "financialInfo",
-        "label": "Key financial info (bank name, insurance provider \u2014 no account numbers)",
+        "label": "Key financial info (bank name, insurance provider — no account numbers)",
         "type": "textarea",
         "required": false
       },
@@ -898,7 +899,7 @@
       },
       {
         "id": "ssn_last4",
-        "label": "Last 4 of SSN (for record matching \u2014 optional)",
+        "label": "Last 4 of SSN (for record matching — optional)",
         "type": "text",
         "required": false
       },
@@ -1033,7 +1034,7 @@
       },
       {
         "id": "serviceDates",
-        "label": "Dates of service (start \u2014 end)",
+        "label": "Dates of service (start — end)",
         "type": "text",
         "required": true
       },
@@ -1045,7 +1046,7 @@
       },
       {
         "id": "duties",
-        "label": "Key duties, accomplishments, and responsibilities (be detailed \u2014 federal resumes are long)",
+        "label": "Key duties, accomplishments, and responsibilities (be detailed — federal resumes are long)",
         "type": "textarea",
         "required": true
       },
@@ -1153,6 +1154,7 @@
   },
   {
     "id": "credit-dispute-letter",
+    "canonical_id": "fr-019",
     "title": "Credit Dispute Letter",
     "description": "Draft a formal dispute letter to credit bureaus for inaccurate items on your credit report.",
     "category": "financial",
@@ -1229,9 +1231,9 @@
         "label": "Are you a veteran or active service member?",
         "type": "select",
         "options": [
-          "Yes \u2014 veteran",
-          "Yes \u2014 active duty",
-          "Yes \u2014 Guard/Reserve",
+          "Yes — veteran",
+          "Yes — active duty",
+          "Yes — Guard/Reserve",
           "No"
         ],
         "required": true
@@ -1455,9 +1457,9 @@
         "type": "select",
         "options": [
           "Post-9/11 (after Sep 10, 2001)",
-          "Gulf War (Aug 1990 \u2013 Sep 2001)",
-          "Vietnam Era (1964\u20131975)",
-          "Korean War (1950\u20131955)",
+          "Gulf War (Aug 1990 – Sep 2001)",
+          "Vietnam Era (1964–1975)",
+          "Korean War (1950–1955)",
           "Peacetime",
           "Other"
         ],
@@ -1528,7 +1530,7 @@
         "label": "Have you used GI Bill benefits?",
         "type": "select",
         "options": [
-          "No \u2014 haven't used any",
+          "No — haven't used any",
           "Partially used",
           "Fully used",
           "Not eligible"
@@ -1542,8 +1544,8 @@
         "options": [
           "Employed full-time",
           "Employed part-time",
-          "Unemployed \u2014 looking",
-          "Unemployed \u2014 not looking",
+          "Unemployed — looking",
+          "Unemployed — not looking",
           "Retired",
           "Student",
           "Self-employed"
@@ -1699,9 +1701,9 @@
         "label": "Do you have competing offers or alternative options?",
         "type": "select",
         "options": [
-          "Yes \u2014 another offer",
-          "Yes \u2014 current job is fine",
-          "No \u2014 this is my only option",
+          "Yes — another offer",
+          "Yes — current job is fine",
+          "No — this is my only option",
           "Prefer not to say"
         ],
         "required": true
@@ -1761,7 +1763,7 @@
         "type": "select",
         "options": [
           "Yes",
-          "No \u2014 need to get one",
+          "No — need to get one",
           "Not sure"
         ],
         "required": true
@@ -1805,8 +1807,8 @@
         "type": "select",
         "options": [
           "Yes",
-          "No \u2014 first time using VA loan",
-          "No \u2014 have used VA loan before"
+          "No — first time using VA loan",
+          "No — have used VA loan before"
         ],
         "required": true
       },
@@ -1905,7 +1907,7 @@
       },
       {
         "id": "reference1",
-        "label": "Reference 1 (name, phone, relationship \u2014 e.g., former landlord, supervisor)",
+        "label": "Reference 1 (name, phone, relationship — e.g., former landlord, supervisor)",
         "type": "text",
         "required": true
       },

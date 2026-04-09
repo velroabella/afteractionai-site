@@ -28,6 +28,7 @@
   "resources": [
     {
       "id": "FAM-001",
+      "canonical_id": "59",
       "name": "Tragedy Assistance Program for Survivors (TAPS)",
       "audience": [
         "gold_star_families",
@@ -184,6 +185,7 @@
     },
     {
       "id": "FAM-007",
+      "canonical_id": "res-081",
       "name": "Travis Manion Foundation",
       "audience": [
         "gold_star_families",
@@ -210,6 +212,7 @@
     },
     {
       "id": "FAM-008",
+      "canonical_id": "res-020",
       "name": "Folds of Honor Foundation",
       "audience": [
         "gold_star_families",
@@ -371,6 +374,7 @@
     },
     {
       "id": "FAM-014",
+      "canonical_id": "res-063",
       "name": "Operation Homefront",
       "audience": [
         "gold_star_families",
@@ -455,6 +459,7 @@
     },
     {
       "id": "FAM-017",
+      "canonical_id": "res-018",
       "name": "Pat Tillman Foundation",
       "audience": [
         "gold_star_families",
@@ -510,6 +515,7 @@
     },
     {
       "id": "FAM-019",
+      "canonical_id": "res-134",
       "name": "Blue Star Families",
       "audience": [
         "military_spouses",
@@ -563,6 +569,7 @@
     },
     {
       "id": "FAM-021",
+      "canonical_id": "res-036",
       "name": "Give an Hour",
       "audience": [
         "military_spouses",
@@ -591,6 +598,7 @@
     },
     {
       "id": "FAM-022",
+      "canonical_id": "res-025",
       "name": "VA Dependency and Indemnity Compensation (DIC)",
       "audience": [
         "surviving_spouses",
@@ -698,6 +706,7 @@
     },
     {
       "id": "FAM-026",
+      "canonical_id": "15",
       "name": "Military OneSource",
       "audience": [
         "military_spouses",
@@ -754,6 +763,7 @@
     },
     {
       "id": "FAM-028",
+      "canonical_id": "res-039",
       "name": "VA Caregiver Support Program (PCAFC)",
       "audience": [
         "caregivers"
@@ -781,6 +791,7 @@
     },
     {
       "id": "FAM-029",
+      "canonical_id": "res-039",
       "name": "VA Caregiver Support Line",
       "audience": [
         "caregivers",
@@ -964,6 +975,7 @@
     },
     {
       "id": "FAM-036",
+      "canonical_id": "res-132",
       "name": "Veterati",
       "audience": [
         "military_spouses",
@@ -1049,6 +1061,7 @@
     },
     {
       "id": "FAM-039",
+      "canonical_id": "5",
       "name": "Cohen Veterans Network",
       "audience": [
         "military_spouses",
@@ -1134,6 +1147,7 @@
     },
     {
       "id": "FAM-042",
+      "canonical_id": "res-040",
       "name": "Headstrong Project",
       "audience": [
         "military_spouses",
@@ -1160,6 +1174,7 @@
     },
     {
       "id": "FAM-043",
+      "canonical_id": "res-034",
       "name": "Veterans Crisis Line - Family & Friends",
       "audience": [
         "military_spouses",
@@ -1271,6 +1286,7 @@
     },
     {
       "id": "FAM-047",
+      "canonical_id": "FAM-047",
       "name": "Navy-Marine Corps Relief Society (NMCRS)",
       "audience": [
         "military_spouses",
@@ -1299,6 +1315,7 @@
     },
     {
       "id": "FAM-048",
+      "canonical_id": "FAM-048",
       "name": "Air Force Aid Society (AFAS)",
       "audience": [
         "military_spouses",
@@ -1327,6 +1344,7 @@
     },
     {
       "id": "FAM-049",
+      "canonical_id": "FAM-049",
       "name": "Coast Guard Mutual Assistance (CGMA)",
       "audience": [
         "military_spouses",
@@ -1383,6 +1401,7 @@
     },
     {
       "id": "FAM-051",
+      "canonical_id": "res-045",
       "name": "Homes for Our Troops",
       "audience": [
         "veteran_families",
@@ -1460,6 +1479,7 @@
     },
     {
       "id": "FAM-054",
+      "canonical_id": "res-063",
       "name": "Operation Homefront - Transitional Housing Villages",
       "audience": [
         "military_spouses",
@@ -1486,6 +1506,7 @@
     },
     {
       "id": "FAM-055",
+      "canonical_id": "res-084",
       "name": "National Veterans Legal Services Program (NVLSP)",
       "audience": [
         "surviving_spouses",
@@ -1835,6 +1856,7 @@
     },
     {
       "id": "FAM-068",
+      "canonical_id": "FAM-068",
       "name": "VFW - Unmet Needs Program",
       "audience": [
         "military_spouses",
@@ -1920,6 +1942,7 @@
     },
     {
       "id": "FAM-071",
+      "canonical_id": "res-080",
       "name": "DAV (Disabled American Veterans) - Auxiliary",
       "audience": [
         "military_spouses",
@@ -2084,6 +2107,7 @@
     },
     {
       "id": "FAM-077",
+      "canonical_id": "18",
       "name": "Defense and Veterans Brain Injury Center (DVBIC)",
       "audience": [
         "caregivers",
@@ -2361,6 +2385,7 @@
     },
     {
       "id": "FAM-087",
+      "canonical_id": "res-035",
       "name": "VA Vet Center Program - Family Counseling",
       "audience": [
         "military_spouses",
@@ -2520,6 +2545,7 @@
     },
     {
       "id": "FAM-093",
+      "canonical_id": "res-024",
       "name": "VA Aid & Attendance Benefit",
       "audience": [
         "surviving_spouses",

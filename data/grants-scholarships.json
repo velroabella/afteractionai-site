@@ -1,6 +1,7 @@
 [
   {
     "id": "grant-pat-tillman",
+    "canonical_id": "res-018",
     "program_name": "Pat Tillman Foundation Military Scholars Program",
     "provider": "Pat Tillman Foundation",
     "category": "education",
@@ -22,6 +23,7 @@
   },
   {
     "id": "grant-folds-of-honor",
+    "canonical_id": "res-020",
     "program_name": "Folds of Honor Scholarships",
     "provider": "Folds of Honor Foundation",
     "category": "education",
@@ -64,6 +66,7 @@
   },
   {
     "id": "grant-dav",
+    "canonical_id": "res-080",
     "program_name": "DAV Scholarships for Veterans",
     "provider": "Disabled American Veterans",
     "category": "education",
@@ -85,6 +88,7 @@
   },
   {
     "id": "grant-vfw",
+    "canonical_id": "res-078",
     "program_name": "VFW Veterans' Educational Assistance",
     "provider": "Veterans of Foreign Wars",
     "category": "education",
@@ -274,6 +278,7 @@
   },
   {
     "id": "grant-military-spouse-education",
+    "canonical_id": "15",
     "program_name": "Military Spouse Education Assistance Program",
     "provider": "Department of Defense",
     "category": "education",
@@ -379,6 +384,7 @@
   },
   {
     "id": "grant-caregiver-support",
+    "canonical_id": "res-039",
     "program_name": "Program of Comprehensive Assistance for Family Caregivers",
     "provider": "Department of Veterans Affairs",
     "category": "hardship",
@@ -421,6 +427,7 @@
   },
   {
     "id": "grant-guard-reserve-education",
+    "canonical_id": "15",
     "program_name": "Guard and Reserve Education Benefits",
     "provider": "Department of Defense",
     "category": "education",
@@ -442,6 +449,7 @@
   },
   {
     "id": "grant-va-independent-living",
+    "canonical_id": "res-001",
     "program_name": "VA Vocational Rehabilitation and Employment (VR&E)",
     "provider": "Department of Veterans Affairs",
     "category": "education",
@@ -463,6 +471,7 @@
   },
   {
     "id": "grant-military-nonprofit-loans",
+    "canonical_id": "res-063",
     "program_name": "Operation Homefront Emergency Financial Assistance",
     "provider": "Operation Homefront",
     "category": "hardship",
@@ -484,6 +493,7 @@
   },
   {
     "id": "grant-military-child-education",
+    "canonical_id": "15",
     "program_name": "Military Child Education Program",
     "provider": "Multiple Organizations",
     "category": "education",

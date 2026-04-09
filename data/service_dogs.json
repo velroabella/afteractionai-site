@@ -1031,6 +1031,7 @@
   },
   {
     "id": "sd-financial-2",
+    "canonical_id": "res-001",
     "category": "financial_assistance",
     "name": "VR&E (Chapter 31) — Service Dog Funding",
     "description": "VA Vocational Rehabilitation and Employment (VR&E) may fund service dog acquisition or owner-training costs as part of a veteran's rehabilitation plan, if the dog is determined necessary for employment goals. Eligibility requires a service-connected disability and participation in VR&E.",
