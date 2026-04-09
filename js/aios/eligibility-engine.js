@@ -128,6 +128,11 @@
           desc: 'VA rating present but under 50%',
           test: function(p) { return p.vaRating !== null && p.vaRating !== undefined && p.vaRating > 0 && p.vaRating < 50; },
           amount: 0.10
+        },
+        {
+          desc: 'medical/mental health conditions disclosed (Phase R4.6)',
+          test: function(p) { return !!p.conditions; },
+          amount: 0.15
         }
       ]
     },

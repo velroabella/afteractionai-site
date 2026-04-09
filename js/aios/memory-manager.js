@@ -326,6 +326,18 @@
       }
     }
 
+    /* ── conditions ──────────────────────────────────────────
+       Phase R4.6. Comma-separated condition labels: 2–120 chars,
+       ≥ 1 letter. Produced by the conditions extractor.         */
+    if ('conditions' in extracted) {
+      var _cond = (typeof extracted.conditions === 'string') ? extracted.conditions.trim() : '';
+      if (_cond.length >= 2 && _cond.length <= 120 && /[a-zA-Z]/.test(_cond)) {
+        valid.conditions = _cond;
+      } else {
+        dropped.push('conditions(invalid)');
+      }
+    }
+
     /* ── Log any drops ───────────────────────────────────────*/
     if (dropped.length > 0) {
       console.log('[AIOS][MEMORY] filtered: ' + dropped.join(', '));
@@ -425,7 +437,8 @@
     save: function() {
       var PERSIST_FIELDS = [
         'branch', 'dischargeStatus', 'serviceEra', 'state',
-        'employmentStatus', 'vaRating', 'currentGoals', 'activeMissions'
+        'employmentStatus', 'vaRating', 'currentGoals', 'activeMissions',
+        'conditions'  // Phase R4.6
       ];
 
       // Build sanitized snapshot — only persist non-null structured fields
@@ -702,6 +715,28 @@
         if (DEPENDENT_PATTERNS[dp].rx.test(userMessage)) {
           extracted.dependents = DEPENDENT_PATTERNS[dp].label;
           break;
+        }
+      }
+
+      // ── Conditions (Phase R4.6) ─────────────────────────
+      // Extract medical/mental health conditions from first-person statements.
+      // Requires explicit self-identification: "I have PTSD", "diagnosed with TBI".
+      // Does NOT match informational queries: "what is PTSD", "tell me about TBI".
+      var CONDITION_LABELS = [
+        'ptsd', 'tbi', 'mst', 'depression', 'anxiety', 'chronic pain',
+        'hearing loss', 'back injury', 'sleep apnea', 'burn pit exposure'
+      ];
+      var _condFirstPerson = /\b(?:i\s+have|i\s+was\s+diagnosed\s+with|diagnosed\s+(?:me\s+)?with|i\s+suffer\s+from|i(?:'m|\s+am)\s+(?:dealing|living|struggling)\s+with|my\s+condition(?:s)?\s+(?:is|are|include)|service[- ]connected\s+for)\s+/i;
+      if (_condFirstPerson.test(userMessage)) {
+        var _condFound = [];
+        for (var _ci = 0; _ci < CONDITION_LABELS.length; _ci++) {
+          var _condEsc = CONDITION_LABELS[_ci].replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+          if (new RegExp('\\b' + _condEsc + '\\b', 'i').test(userMessage)) {
+            _condFound.push(CONDITION_LABELS[_ci].toUpperCase());
+          }
+        }
+        if (_condFound.length > 0) {
+          extracted.conditions = _condFound.join(', ');
         }
       }
 
