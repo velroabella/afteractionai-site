@@ -542,15 +542,36 @@
                 page:       ds.page,
                 dataset:    dsKey,
                 confidence: Math.round(confidence * 100) / 100,
-                website:    record.website || record.official_link || record.application_link || null
+                website:    record.website || record.official_link || record.application_link || null,
+                _dedupKey:  record.canonical_id || record.id || null
               });
             }
           }
         }
 
-        // Sort by confidence descending, cap results
+        // Sort by confidence descending
         results.sort(function(a, b) { return b.confidence - a.confidence; });
-        return results.slice(0, MAX_RESULTS);
+
+        // ── Canonical dedup (Phase R2.3) ──────────────────────
+        // When multiple results share the same canonical_id,
+        // keep only the highest-scoring one (already first after
+        // sort). If scores tie, the sort is stable so the record
+        // from the first-loaded dataset wins — DATASETS puts
+        // 'resources' first, matching the preferred canonical.
+        var seen = {};
+        var deduped = [];
+        for (var di = 0; di < results.length; di++) {
+          var key = results[di]._dedupKey;
+          if (key && seen[key]) continue;   // skip duplicate
+          if (key) seen[key] = true;
+          deduped.push(results[di]);
+        }
+        // Clean internal field before returning
+        for (var ci = 0; ci < deduped.length; ci++) {
+          delete deduped[ci]._dedupKey;
+        }
+
+        return deduped.slice(0, MAX_RESULTS);
       });
     },
 
