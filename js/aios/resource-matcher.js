@@ -577,6 +577,305 @@
 
 
     /**
+     * Pre-response resource matching — runs BEFORE the AI call.
+     * Uses the user's message (not AI response) to find relevant
+     * resources from internal datasets. Results are injected into
+     * the system prompt so the AI can cite real, verified data.
+     *
+     * Reuses all existing internals: _extractSignals, _loadDataset,
+     * _scoreRecord, canonical dedup. Does NOT modify match().
+     *
+     * @param {string} userMessage  — the user's raw input text
+     * @param {Object} profile      — AIOS.Memory.getProfile() output (optional)
+     * @param {Object} routeResult  — Router.routeAIOSIntent() output (optional)
+     * @returns {Promise<{resources: Array, promptBlock: string}>}
+     */
+    preMatch: function(userMessage, profile, routeResult) {
+      if (!userMessage || typeof userMessage !== 'string' || userMessage.trim().length < 3) {
+        return Promise.resolve({ resources: [], promptBlock: '' });
+      }
+
+      // ── Phase R3.5: Synonym expansion for pre-response matching ──
+      // User vocabulary differs from resource names/descriptions.
+      // "job" ≠ "employment", "school" ≠ "education", etc.
+      // Expand user text with common veteran-domain synonyms so
+      // _scoreRecord sees more overlap. Only used in preMatch.
+      var _SYNONYMS = {
+        'job':         ['employment', 'career', 'hiring', 'work', 'vocation'],
+        'work':        ['employment', 'career', 'hiring'],
+        'school':      ['education', 'training', 'college', 'university', 'degree', 'tuition'],
+        'college':     ['education', 'university', 'degree'],
+        'disability':  ['disabled', 'service-connected', 'compensation', 'claim'],
+        'benefits':    ['benefit', 'entitlement', 'eligibility'],
+        'money':       ['financial', 'funds', 'grant'],
+        'financial':   ['funds', 'grant', 'monetary'],
+        'emergency':   ['urgent', 'crisis', 'immediate'],
+        'help':        ['support', 'aid'],
+        'military':    ['veteran', 'servicemember'],
+        'leaving':     ['transition', 'separating', 'separation', 'post-military'],
+        'housing':     ['home', 'rent', 'mortgage', 'shelter', 'homeless'],
+        'family':      ['spouse', 'dependent', 'survivor', 'caregiver'],
+        'mental':      ['psychological', 'ptsd', 'counseling', 'therapy'],
+        'health':      ['healthcare', 'medical', 'treatment'],
+        'training':    ['education', 'certification', 'course', 'credential'],
+        'resume':      ['career', 'employment', 'hiring', 'interview']
+      };
+
+      var _rawLower = userMessage.toLowerCase();
+      var _expandedParts = [_rawLower];
+      var _rawWords = _rawLower.split(/\s+/);
+      for (var _si = 0; _si < _rawWords.length; _si++) {
+        var _sw = _rawWords[_si].replace(/[^a-z]/g, '');
+        if (_SYNONYMS[_sw]) {
+          _expandedParts.push(_SYNONYMS[_sw].join(' '));
+        }
+      }
+      var _expandedText = _expandedParts.join(' ');
+
+      // Build synthetic contract from user message for _extractSignals
+      var syntheticContract = {
+        raw: userMessage,
+        summary: (routeResult && routeResult.intent) ? routeResult.intent.replace(/_/g, ' ').toLowerCase() : '',
+        recommended_actions: null,
+        follow_up_question: null
+      };
+
+      var signals = _extractSignals(syntheticContract);
+
+      // Intent boost: ensure intent-relevant datasets are always queried
+      var _INTENT_DATASETS = {
+        DISABILITY_CLAIM:       ['medical_resources', 'resources', 'hidden_benefits'],
+        EMPLOYMENT_TRANSITION:  ['transition_resources', 'contractor_careers', 'licensure'],
+        FAMILY_SURVIVOR:        ['families', 'resources'],
+        STATE_BENEFITS:         ['state_benefits'],
+        CRISIS_SUPPORT:         ['hotlines', 'emergency_assistance'],
+        BENEFITS_DISCOVERY:     ['resources', 'hidden_benefits', 'grants'],
+        AT_RISK_SUPPORT:        ['hotlines', 'emergency_assistance'],
+        NEXT_STEP:              ['resources', 'hidden_benefits']
+      };
+      // Track which datasets were added by intent (not keyword match)
+      var _intentBoostedDs = {};
+      if (routeResult && routeResult.intent && _INTENT_DATASETS[routeResult.intent]) {
+        var intentDs = _INTENT_DATASETS[routeResult.intent];
+        for (var ib = 0; ib < intentDs.length; ib++) {
+          var alreadyPresent = false;
+          for (var ic = 0; ic < signals.relevantDatasets.length; ic++) {
+            if (signals.relevantDatasets[ic] === intentDs[ib]) { alreadyPresent = true; break; }
+          }
+          if (!alreadyPresent) {
+            signals.relevantDatasets.push(intentDs[ib]);
+            _intentBoostedDs[intentDs[ib]] = true;
+          }
+        }
+      }
+
+      if (signals.relevantDatasets.length === 0) {
+        return Promise.resolve({ resources: [], promptBlock: '' });
+      }
+
+      var stateFilter = (profile && profile.state) ? profile.state : null;
+
+      // ── Phase R4.4: Eligibility-based dataset boosting ──────────
+      // Compute eligibility scores from the veteran's profile and convert
+      // to a dataset boost map. Records in eligibility-aligned datasets
+      // get a small additive confidence boost, promoting them in ranking.
+      // Empty/unknown profiles produce an empty map → zero boost.
+      var _eligBoosts = {};
+      var _Elig = window.AIOS && window.AIOS.Eligibility;
+      if (_Elig && profile && _Elig.hasUsefulSignal(profile)) {
+        var _eligScores = _Elig.score(profile);
+
+        var _ELIG_DATASET_MAP = {
+          VA_DISABILITY:      ['resources', 'hidden_benefits', 'medical_resources'],
+          VA_HEALTHCARE:      ['medical_resources', 'wellness', 'service_dogs'],
+          GI_BILL:            ['resources', 'grants', 'hidden_benefits'],
+          VR_E:               ['transition_resources', 'licensure', 'contractor_careers'],
+          STATE_BENEFITS:     ['state_benefits'],
+          HOUSING_SUPPORT:    ['resources', 'grants', 'financial_resources'],
+          EMPLOYMENT_SUPPORT: ['transition_resources', 'contractor_careers', 'licensure', 'resources']
+        };
+
+        var _eligCats = Object.keys(_eligScores);
+        for (var _ei = 0; _ei < _eligCats.length; _ei++) {
+          var _eCat = _eligCats[_ei];
+          var _eScore = _eligScores[_eCat];
+          var _eDatasets = _ELIG_DATASET_MAP[_eCat];
+          if (!_eDatasets || _eScore < 0.30) continue;
+
+          // Scale: 0.30 → +0.00, 0.90 → +0.10 (linear interpolation)
+          var _eBoost = Math.round((((_eScore - 0.30) / 0.60) * 0.10) * 100) / 100;
+
+          for (var _ej = 0; _ej < _eDatasets.length; _ej++) {
+            var _eDsKey = _eDatasets[_ej];
+            if (!_eligBoosts[_eDsKey] || _eligBoosts[_eDsKey] < _eBoost) {
+              _eligBoosts[_eDsKey] = _eBoost;
+            }
+          }
+        }
+      }
+
+      var PRE_MAX = 8;   // R3.5: raised from 5 → 8 for broader coverage
+
+      var loadPromises = [];
+      for (var i = 0; i < signals.relevantDatasets.length; i++) {
+        loadPromises.push(
+          (function(dsKey) {
+            return _loadDataset(dsKey).then(function(records) {
+              return { key: dsKey, records: records };
+            });
+          })(signals.relevantDatasets[i])
+        );
+      }
+
+      return Promise.all(loadPromises).then(function(loaded) {
+        var results = [];
+        var MIN_CONFIDENCE = 0.08;  // R3.5: lowered from 0.15 → 0.08
+
+        for (var li = 0; li < loaded.length; li++) {
+          var dsKey = loaded[li].key;
+          var records = loaded[li].records;
+          var ds = DATASETS[dsKey];
+          if (!ds || !records) continue;
+
+          for (var ri = 0; ri < records.length; ri++) {
+            var record = records[ri];
+
+            if (dsKey === 'state_benefits' && stateFilter) {
+              if (record.state && record.state !== stateFilter) continue;
+            }
+
+            // ── Phase R3.5: Enhanced pre-response scoring ──
+            // Uses synonym-expanded text and boosted description weight.
+            // Does NOT modify _scoreRecord (post-response match() untouched).
+            var _preName = (record[ds.nameField] || '').toLowerCase();
+            var _preDesc = (record[ds.descField] || '').toLowerCase();
+            var confidence = 0;
+
+            // Exact name match in expanded text: very strong signal
+            if (_preName.length > 3 && _expandedText.indexOf(_preName) !== -1) {
+              confidence += 0.6;
+            }
+
+            // Name word overlap with multi-word tolerance:
+            // Names with many words (e.g. "VA Vocational Rehabilitation & Employment
+            // (VR&E / Chapter 31)") are penalized by dividing hits/total. Cap the
+            // divisor at 4 so 1 hit on a 8-word name = 0.25*(1/4) = 0.0625, not 0.031.
+            var _preNameWords = _preName.split(/\s+/).filter(function(w) { return w.length > 3; });
+            var _preWordHits = 0;
+            for (var _ni = 0; _ni < _preNameWords.length; _ni++) {
+              if (_expandedText.indexOf(_preNameWords[_ni]) !== -1) _preWordHits++;
+            }
+            if (_preNameWords.length > 0) {
+              var _nameDivisor = Math.min(_preNameWords.length, 4);
+              confidence += 0.25 * (_preWordHits / _nameDivisor);
+            }
+
+            // Description overlap: boosted weight (0.25 vs 0.15), more words sampled
+            // (40 vs 20), lower word-length filter (>3 vs >5).
+            var _preDescWords = _preDesc.split(/\s+/).filter(function(w) { return w.length > 3; });
+            var _preDescSample = _preDescWords.slice(0, 40);
+            var _preDescHits = 0;
+            for (var _di = 0; _di < _preDescSample.length; _di++) {
+              if (_expandedText.indexOf(_preDescSample[_di]) !== -1) _preDescHits++;
+            }
+            if (_preDescSample.length > 0) {
+              confidence += 0.25 * (_preDescHits / _preDescSample.length);
+            }
+
+            confidence = Math.min(confidence, 1.0);
+
+            // Intent-dataset boost: records from intent-mapped datasets get +0.06
+            if (_intentBoostedDs[dsKey]) {
+              confidence = Math.min(confidence + 0.06, 1.0);
+            }
+
+            // Phase R4.4: Eligibility-based dataset boost
+            if (_eligBoosts[dsKey]) {
+              confidence = Math.min(confidence + _eligBoosts[dsKey], 1.0);
+            }
+
+            // Category hint boost (same as before)
+            for (var fi = 0; fi < signals.matchedFamilies.length; fi++) {
+              var fam = signals.matchedFamilies[fi];
+              if (fam.family.categoryHint) {
+                var recCat = (record[ds.catField] || '').toLowerCase();
+                if (recCat === fam.family.categoryHint ||
+                    recCat.indexOf(fam.family.categoryHint) !== -1) {
+                  confidence = Math.min(confidence + 0.1, 1.0);
+                  break;
+                }
+              }
+            }
+
+            if (confidence >= MIN_CONFIDENCE) {
+              var rName = record[ds.nameField] || record.name || 'Unknown';
+              var rDesc = record[ds.descField] || '';
+              results.push({
+                name:       rName,
+                category:   record[ds.catField] || '',
+                page:       ds.page,
+                dataset:    dsKey,
+                confidence: Math.round(confidence * 100) / 100,
+                website:    record.website || record.official_link || record.application_link || null,
+                description: rDesc,
+                _dedupKey:  record.canonical_id || record.id || null
+              });
+            }
+          }
+        }
+
+        // Sort by confidence descending
+        results.sort(function(a, b) { return b.confidence - a.confidence; });
+
+        // Canonical dedup (same as match)
+        var seen = {};
+        var deduped = [];
+        for (var di = 0; di < results.length; di++) {
+          var key = results[di]._dedupKey;
+          if (key && seen[key]) continue;
+          if (key) seen[key] = true;
+          deduped.push(results[di]);
+        }
+        for (var ci = 0; ci < deduped.length; ci++) {
+          delete deduped[ci]._dedupKey;
+        }
+
+        var top = deduped.slice(0, PRE_MAX);
+
+        // Build formatted prompt block
+        var lines = [];
+        for (var pi = 0; pi < top.length; pi++) {
+          var r = top[pi];
+          var descSnippet = '';
+          if (r.description) {
+            var firstSentence = r.description.split(/[.!?]\s/)[0];
+            descSnippet = firstSentence.length > 120
+              ? firstSentence.substring(0, 117) + '...'
+              : firstSentence;
+          }
+          var line = '- [' + r.name + '](/' + r.page + ')';
+          if (descSnippet) line += ' — ' + descSnippet;
+          line += ' (' + r.confidence.toFixed(2) + ')';
+          lines.push(line);
+        }
+
+        // Clean description from returned resources (not needed downstream)
+        for (var qi = 0; qi < top.length; qi++) {
+          delete top[qi].description;
+        }
+
+        return {
+          resources: top,
+          promptBlock: lines.join('\n')
+        };
+      }).catch(function(err) {
+        console.warn('[AIOS][PRE-MATCH] error:', err.message || err);
+        return { resources: [], promptBlock: '' };
+      });
+    },
+
+
+    /**
      * Bridge map: resource-mapper category ID → action-engine issue key.
      * Used by openResourcePage to resolve destinations from the canonical
      * ISSUE_TO_RESOURCES in action-engine.js (single source of truth).
