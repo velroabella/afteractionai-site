@@ -1498,6 +1498,14 @@
           if (state) _showResumeBanner();
         });
       }
+      // Phase R4.2: Load persisted veteran profile from Supabase for returning users.
+      // Same timing as ExecutionState.load() — auth.js session check must complete first.
+      // Memory.load() internally gates on isLoggedIn() and merges safely (no overwrite of valid data).
+      if (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.load === 'function') {
+        window.AIOS.Memory.load().catch(function(_r42Err) {
+          console.warn('[AIOS][R4.2] Memory.load on init failed:', _r42Err && _r42Err.message ? _r42Err.message : _r42Err);
+        });
+      }
     }, 150);
 
     // PHASE 2 INTEGRATION - Step 4
@@ -1518,6 +1526,13 @@
             _showResumeBanner();
           });
         }
+        // Phase R4.2: Load persisted veteran profile on mid-session sign-in.
+        // Merges Supabase data into whatever the user already provided this session.
+        if (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.load === 'function') {
+          window.AIOS.Memory.load().catch(function(_r42Err) {
+            console.warn('[AIOS][R4.2] Memory.load on sign-in failed:', _r42Err && _r42Err.message ? _r42Err.message : _r42Err);
+          });
+        }
       } else {
         // User signed out — clear case context so next session starts fresh
         _activeCaseId   = null;
@@ -1533,6 +1548,10 @@
         // Phase 9: Reset execution state on sign-out
         if (window.AIOS && window.AIOS.ExecutionState) {
           window.AIOS.ExecutionState._reset();
+        }
+        // Phase R4.2: Reset memory profile on sign-out so next session starts clean
+        if (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.reset === 'function') {
+          window.AIOS.Memory.reset();
         }
         _hideResumeBanner();
         // PHASE 2 DEBUG HELPER — keep shared namespace in sync with private var
@@ -2048,28 +2067,48 @@
         : {};
       if (!_vFreshId.name)   delete _vSessionProfile.name;
       if (!_vFreshId.branch) delete _vSessionProfile.branch;
-      var _vReq = window.AIOS.RequestBuilder.buildAIOSRequest({
-        userMessage:   transcript,
-        routeResult:   _vRoute,
-        skillConfig:   _vSkillCfg,
-        memoryContext: _vSessionProfile,
-        pageContext:   _vPageCtx
-      });
 
-      // ── 5. Inject via session.update ──────────────────
-      // session.update replaces the live session instructions on OpenAI's side.
-      // This affects the CURRENT response in flight (if not yet complete) and
-      // all subsequent responses — same semantics as topic-bubble injection.
-      if (_vReq && _vReq.system && _vReq.system.length > 0) {
-        RealtimeVoice.sendEvent({
-          type: 'session.update',
-          session: { type: 'realtime', instructions: _vReq.system }
-        });
-        log('AIOS:VOICE', 'session.update SENT | systemLen=' + _vReq.system.length +
-          ' | skill=' + _vReq.meta.skill +
-          ' | hasMemory=' + _vReq.meta.hasMemory +
-          ' | hasMission=' + _vReq.meta.hasMission);
-      }
+      // Phase R3.3: Pre-response resource matching for voice path.
+      // Fire-and-forget chain: preMatch → buildAIOSRequest → session.update.
+      // If preMatch fails, proceeds with null matchedResources (no crash).
+      var _vPreMatchP = (window.AIOS.ResourceMatcher && typeof window.AIOS.ResourceMatcher.preMatch === 'function')
+        ? window.AIOS.ResourceMatcher.preMatch(transcript, _vSessionProfile, _vRoute)
+            .catch(function() { return { resources: [], promptBlock: '' }; })
+        : Promise.resolve({ resources: [], promptBlock: '' });
+
+      _vPreMatchP.then(function(_vPreRes) {
+        try {
+          var _vMatchedRes = (_vPreRes && _vPreRes.promptBlock) ? _vPreRes.promptBlock : null;
+          if (_vMatchedRes) {
+            console.log('[AIOS][VOICE-PRE-MATCH] found ' + _vPreRes.resources.length + ' resources');
+          }
+          var _vReq = window.AIOS.RequestBuilder.buildAIOSRequest({
+            userMessage:   transcript,
+            routeResult:   _vRoute,
+            skillConfig:   _vSkillCfg,
+            memoryContext: _vSessionProfile,
+            pageContext:   _vPageCtx,
+            matchedResources: _vMatchedRes
+          });
+
+          // ── 5. Inject via session.update ──────────────────
+          // session.update replaces the live session instructions on OpenAI's side.
+          // This affects the CURRENT response in flight (if not yet complete) and
+          // all subsequent responses — same semantics as topic-bubble injection.
+          if (_vReq && _vReq.system && _vReq.system.length > 0) {
+            RealtimeVoice.sendEvent({
+              type: 'session.update',
+              session: { type: 'realtime', instructions: _vReq.system }
+            });
+            log('AIOS:VOICE', 'session.update SENT | systemLen=' + _vReq.system.length +
+              ' | skill=' + _vReq.meta.skill +
+              ' | hasMemory=' + _vReq.meta.hasMemory +
+              ' | hasMission=' + _vReq.meta.hasMission);
+          }
+        } catch (_vR3Err) {
+          console.warn('[AIOS][VOICE-PRE-MATCH] build/inject error:', _vR3Err.message || _vR3Err);
+        }
+      });
 
     } catch (_aiosVErr) {
       // AIOS failure is silent — voice transport continues unaffected
@@ -4615,6 +4654,7 @@
 
     var systemPrompt = SYSTEM_PROMPT;  // already a string (joined at definition)
     var aiosActive = false;
+    var _r3PreMatchP = null;  // Phase R3.3: pre-response resource matching Promise
 
     try {
       if (window.AIOS && window.AIOS.Router && window.AIOS.RequestBuilder) {
@@ -4660,6 +4700,17 @@
           // Phase 32: Telemetry — escalation tier (text path)
           if (routeResult.tier !== 'STANDARD' && window.AIOS && window.AIOS.Telemetry) {
             window.AIOS.Telemetry.record('escalation_triggered', { tier: routeResult.tier, path: 'text' });
+          }
+
+          // Phase R3.3: Fire pre-response resource matching (async, non-blocking).
+          // Result is consumed AFTER the try/catch, injected into systemPrompt before the API call.
+          if (window.AIOS.ResourceMatcher && typeof window.AIOS.ResourceMatcher.preMatch === 'function') {
+            var _r3Prof = (window.AIOS.Memory) ? window.AIOS.Memory.getProfile() : null;
+            _r3PreMatchP = window.AIOS.ResourceMatcher.preMatch(lastUserMsg, _r3Prof, routeResult)
+              .catch(function(_r3Err) {
+                console.warn('[AIOS][PRE-MATCH] failed:', _r3Err.message || _r3Err);
+                return { resources: [], promptBlock: '' };
+              });
           }
 
           // 2. Only activate AIOS when a specific skill is routed.
@@ -4800,7 +4851,32 @@
       } catch (e) { /* never let telemetry break the fallback path */ }
       systemPrompt = SYSTEM_PROMPT;
       aiosActive = false;
+      _r3PreMatchP = null;  // Phase R3.3: discard on AIOS error
     }
+
+    // Phase R3.3: Resolve preMatch, inject into prompt, then build payload and send.
+    // preMatch runs in parallel with the synchronous AIOS block above (skill loading,
+    // profile guards, buildAIOSRequest). By this point systemPrompt is fully assembled.
+    // We now wait for the matcher, inject matched resources into the existing
+    // ## RESOURCE CONTEXT section, then proceed to the API call.
+    var _r3ResolvedP = (_r3PreMatchP && aiosActive) ? _r3PreMatchP : Promise.resolve(null);
+    return _r3ResolvedP.then(function(_r3Res) {
+      if (_r3Res && _r3Res.promptBlock) {
+        var _r3Block = '\n\nMATCHED RESOURCES \u2014 verified internal data (cite these by name and link):\n' +
+          _r3Res.promptBlock +
+          '\nWhen recommending resources, prefer these matched results over general knowledge. Use the exact page links shown.';
+        var _r3Idx = systemPrompt.indexOf('## RESOURCE CONTEXT');
+        if (_r3Idx !== -1) {
+          // Insert before the next section (## heading) or end of string
+          var _r3NextSec = systemPrompt.indexOf('\n\n## ', _r3Idx + 19);
+          if (_r3NextSec === -1) _r3NextSec = systemPrompt.length;
+          systemPrompt = systemPrompt.slice(0, _r3NextSec) + _r3Block + systemPrompt.slice(_r3NextSec);
+        } else {
+          // No resource context section — add a complete one
+          systemPrompt += '\n\n## RESOURCE CONTEXT' + _r3Block;
+        }
+        console.log('[AIOS][PRE-MATCH] injected ' + _r3Res.resources.length + ' matched resources into prompt | systemLen=' + systemPrompt.length);
+      }
 
     // Build request payload
     var payload = {
@@ -4874,6 +4950,8 @@
         throw err;
       });
     }, 'callChatEndpoint');
+
+    }); // Phase R3.3: end _r3ResolvedP.then()
   }
 
   // ── Phase 4.1: Build ResponseContract from structured tool output ──────────
