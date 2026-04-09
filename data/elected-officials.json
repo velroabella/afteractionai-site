@@ -1,21 +1,5 @@
 [
   {
-    "id": "sen-scott-alabama",
-    "full_name": "Tim Scott",
-    "title": "Senator",
-    "chamber": "Senate",
-    "party": "R",
-    "state": "AL",
-    "phone": "(202) 224-6688",
-    "website": "https://www.scott.senate.gov",
-    "contact_form": "https://www.scott.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Banking, Housing, and Urban Affairs"],
-    "source_url": "https://www.senate.gov/senators/senators-list.htm",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "AL", "issue_type": "elected_official", "audience": "all_veterans"}
-  },
-  {
     "id": "sen-britt-alabama",
     "full_name": "Katie Britt",
     "title": "Senator",
@@ -25,11 +9,18 @@
     "phone": "(202) 224-4124",
     "website": "https://www.britt.senate.gov",
     "contact_form": "https://www.britt.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Small Business and Entrepreneurship"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Small Business and Entrepreneurship"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-murkowski-alaska",
@@ -41,11 +32,18 @@
     "phone": "(202) 224-6665",
     "website": "https://www.murkowski.senate.gov",
     "contact_form": "https://www.murkowski.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AK", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AK",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-sullivan-alaska",
@@ -57,11 +55,18 @@
     "phone": "(202) 224-3004",
     "website": "https://www.sullivan.senate.gov",
     "contact_form": "https://www.sullivan.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Appropriations"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AK", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AK",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-sinema-arizona",
@@ -73,11 +78,18 @@
     "phone": "(202) 224-4521",
     "website": "https://www.sinema.senate.gov",
     "contact_form": "https://www.sinema.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Appropriations"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AZ",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-gallego-arizona",
@@ -89,11 +101,18 @@
     "phone": "(202) 224-2235",
     "website": "https://www.kelly.senate.gov",
     "contact_form": "https://www.kelly.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Veterans' Affairs"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Veterans' Affairs"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AZ",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-boozman-arkansas",
@@ -105,11 +124,18 @@
     "phone": "(202) 224-4843",
     "website": "https://www.boozman.senate.gov",
     "contact_form": "https://www.boozman.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Veterans' Affairs"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Veterans' Affairs"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AR", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AR",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-cotton-arkansas",
@@ -121,11 +147,18 @@
     "phone": "(202) 224-2353",
     "website": "https://www.cotton.senate.gov",
     "contact_form": "https://www.cotton.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Appropriations"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AR", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AR",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-padilla-california",
@@ -137,11 +170,18 @@
     "phone": "(202) 224-3553",
     "website": "https://www.padilla.senate.gov",
     "contact_form": "https://www.padilla.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-schiff-california",
@@ -153,11 +193,18 @@
     "phone": "(202) 224-3841",
     "website": "https://www.schiff.senate.gov",
     "contact_form": "https://www.schiff.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Appropriations"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-hickenlooper-colorado",
@@ -169,11 +216,18 @@
     "phone": "(202) 224-5941",
     "website": "https://www.hickenlooper.senate.gov",
     "contact_form": "https://www.hickenlooper.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Appropriations"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CO", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CO",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-allard-colorado",
@@ -185,11 +239,17 @@
     "phone": "(202) 224-5542",
     "website": "https://www.allard.senate.gov",
     "contact_form": "https://www.allard.senate.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CO", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CO",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-blumenthal-connecticut",
@@ -201,11 +261,18 @@
     "phone": "(202) 224-2823",
     "website": "https://www.blumenthal.senate.gov",
     "contact_form": "https://www.blumenthal.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Veterans' Affairs"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Veterans' Affairs"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-murphy-connecticut",
@@ -217,11 +284,18 @@
     "phone": "(202) 224-4041",
     "website": "https://www.murphy.senate.gov",
     "contact_form": "https://www.murphy.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-carper-delaware",
@@ -233,11 +307,18 @@
     "phone": "(202) 224-2441",
     "website": "https://www.carper.senate.gov",
     "contact_form": "https://www.carper.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "DE", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "DE",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-coons-delaware",
@@ -249,11 +330,18 @@
     "phone": "(202) 224-5042",
     "website": "https://www.coons.senate.gov",
     "contact_form": "https://www.coons.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "DE", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "DE",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-rubio-florida",
@@ -265,11 +353,18 @@
     "phone": "(202) 224-3041",
     "website": "https://www.rubio.senate.gov",
     "contact_form": "https://www.rubio.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "FL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-scott-florida",
@@ -281,11 +376,18 @@
     "phone": "(202) 224-5274",
     "website": "https://www.rickscott.senate.gov",
     "contact_form": "https://www.rickscott.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "FL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-ossoff-georgia",
@@ -297,11 +399,18 @@
     "phone": "(202) 224-3521",
     "website": "https://www.ossoff.senate.gov",
     "contact_form": "https://www.ossoff.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "GA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-warnock-georgia",
@@ -313,11 +422,18 @@
     "phone": "(202) 224-3643",
     "website": "https://www.warnock.senate.gov",
     "contact_form": "https://www.warnock.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Veterans' Affairs"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Veterans' Affairs"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "GA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-schatz-hawaii",
@@ -329,11 +445,18 @@
     "phone": "(202) 224-3934",
     "website": "https://www.schatz.senate.gov",
     "contact_form": "https://www.schatz.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "HI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-hirono-hawaii",
@@ -345,11 +468,18 @@
     "phone": "(202) 224-6361",
     "website": "https://www.hirono.senate.gov",
     "contact_form": "https://www.hirono.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "HI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-crapo-idaho",
@@ -361,11 +491,18 @@
     "phone": "(202) 224-6142",
     "website": "https://www.crapo.senate.gov",
     "contact_form": "https://www.crapo.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "ID", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "ID",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-risch-idaho",
@@ -377,11 +514,18 @@
     "phone": "(202) 224-2752",
     "website": "https://www.risch.senate.gov",
     "contact_form": "https://www.risch.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "ID", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "ID",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-durbin-illinois",
@@ -393,11 +537,18 @@
     "phone": "(202) 224-2152",
     "website": "https://www.durbin.senate.gov",
     "contact_form": "https://www.durbin.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-tammy-illinois",
@@ -409,11 +560,18 @@
     "phone": "(202) 224-2854",
     "website": "https://www.duckworth.senate.gov",
     "contact_form": "https://www.duckworth.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-braun-indiana",
@@ -425,27 +583,18 @@
     "phone": "(202) 224-4814",
     "website": "https://www.braun.senate.gov",
     "contact_form": "https://www.braun.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IN", "issue_type": "elected_official", "audience": "all_veterans"}
-  },
-  {
-    "id": "sen-vance-indiana",
-    "full_name": "J.D. Vance",
-    "title": "Senator",
-    "chamber": "Senate",
-    "party": "R",
-    "state": "IN",
-    "phone": "(202) 224-3121",
-    "website": "https://www.vance.senate.gov",
-    "contact_form": "https://www.vance.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Appropriations"],
-    "source_url": "https://www.senate.gov/senators/senators-list.htm",
-    "last_verified": "2026-03-22",
-    "manual_review": true,
-    "tags": {"state": "IN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-grassley-iowa",
@@ -457,11 +606,18 @@
     "phone": "(202) 224-3744",
     "website": "https://www.grassley.senate.gov",
     "contact_form": "https://www.grassley.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-ernst-iowa",
@@ -473,11 +629,18 @@
     "phone": "(202) 224-3254",
     "website": "https://www.ernst.senate.gov",
     "contact_form": "https://www.ernst.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-marshall-kansas",
@@ -489,11 +652,18 @@
     "phone": "(202) 224-4774",
     "website": "https://www.marshall.senate.gov",
     "contact_form": "https://www.marshall.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "KS", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "KS",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-moran-kansas",
@@ -505,11 +675,18 @@
     "phone": "(202) 224-6521",
     "website": "https://www.moran.senate.gov",
     "contact_form": "https://www.moran.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "KS", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "KS",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-mcconnell-kentucky",
@@ -521,11 +698,18 @@
     "phone": "(202) 224-2541",
     "website": "https://www.mcconnell.senate.gov",
     "contact_form": "https://www.mcconnell.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "KY", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "KY",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-paul-kentucky",
@@ -537,11 +721,18 @@
     "phone": "(202) 224-4343",
     "website": "https://www.paul.senate.gov",
     "contact_form": "https://www.paul.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "KY", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "KY",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-cassidy-louisiana",
@@ -553,11 +744,18 @@
     "phone": "(202) 224-5824",
     "website": "https://www.cassidy.senate.gov",
     "contact_form": "https://www.cassidy.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "LA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "LA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-kennedy-louisiana",
@@ -569,11 +767,18 @@
     "phone": "(202) 224-4623",
     "website": "https://www.kennedy.senate.gov",
     "contact_form": "https://www.kennedy.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "LA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "LA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-collins-maine",
@@ -585,11 +790,18 @@
     "phone": "(202) 224-2523",
     "website": "https://www.collins.senate.gov",
     "contact_form": "https://www.collins.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "ME", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "ME",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-king-maine",
@@ -601,11 +813,18 @@
     "phone": "(202) 224-5141",
     "website": "https://www.king.senate.gov",
     "contact_form": "https://www.king.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "ME", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "ME",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-cardin-maryland",
@@ -617,11 +836,18 @@
     "phone": "(202) 224-2524",
     "website": "https://www.cardin.senate.gov",
     "contact_form": "https://www.cardin.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MD", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MD",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-van-hollen-maryland",
@@ -633,11 +859,18 @@
     "phone": "(202) 224-4654",
     "website": "https://www.vanhollen.senate.gov",
     "contact_form": "https://www.vanhollen.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MD", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MD",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-warren-massachusetts",
@@ -649,11 +882,18 @@
     "phone": "(202) 224-4543",
     "website": "https://www.warren.senate.gov",
     "contact_form": "https://www.warren.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Appropriations"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-markey-massachusetts",
@@ -665,11 +905,17 @@
     "phone": "(202) 224-2742",
     "website": "https://www.markey.senate.gov",
     "contact_form": "https://www.markey.senate.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-peters-michigan",
@@ -681,11 +927,18 @@
     "phone": "(202) 224-6221",
     "website": "https://www.peters.senate.gov",
     "contact_form": "https://www.peters.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-stabenow-michigan",
@@ -697,11 +950,18 @@
     "phone": "(202) 224-4822",
     "website": "https://www.stabenow.senate.gov",
     "contact_form": "https://www.stabenow.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-klobuchar-minnesota",
@@ -713,11 +973,18 @@
     "phone": "(202) 224-3244",
     "website": "https://www.klobuchar.senate.gov",
     "contact_form": "https://www.klobuchar.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-smith-minnesota",
@@ -729,11 +996,18 @@
     "phone": "(202) 224-5344",
     "website": "https://www.smith.senate.gov",
     "contact_form": "https://www.smith.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Veterans' Affairs"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Veterans' Affairs"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-wicker-mississippi",
@@ -745,11 +1019,18 @@
     "phone": "(202) 224-6253",
     "website": "https://www.wicker.senate.gov",
     "contact_form": "https://www.wicker.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MS", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MS",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-hyde-smith-mississippi",
@@ -761,11 +1042,18 @@
     "phone": "(202) 224-5054",
     "website": "https://www.hydesmith.senate.gov",
     "contact_form": "https://www.hydesmith.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MS", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MS",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-hawley-missouri",
@@ -777,11 +1065,18 @@
     "phone": "(202) 224-6154",
     "website": "https://www.hawley.senate.gov",
     "contact_form": "https://www.hawley.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MO", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MO",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-schmitt-missouri",
@@ -793,11 +1088,17 @@
     "phone": "(202) 224-5721",
     "website": "https://www.schmitt.senate.gov",
     "contact_form": "https://www.schmitt.senate.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MO", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MO",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-daines-montana",
@@ -809,11 +1110,18 @@
     "phone": "(202) 224-2651",
     "website": "https://www.daines.senate.gov",
     "contact_form": "https://www.daines.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-tester-montana",
@@ -825,11 +1133,18 @@
     "phone": "(202) 224-2644",
     "website": "https://www.tester.senate.gov",
     "contact_form": "https://www.tester.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-sasse-nebraska",
@@ -841,11 +1156,18 @@
     "phone": "(202) 224-6551",
     "website": "https://www.ricketts.senate.gov",
     "contact_form": "https://www.ricketts.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NE", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NE",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-fischer-nebraska",
@@ -857,11 +1179,18 @@
     "phone": "(202) 224-6551",
     "website": "https://www.fischer.senate.gov",
     "contact_form": "https://www.fischer.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NE", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NE",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-laxalt-nevada",
@@ -873,11 +1202,17 @@
     "phone": "(202) 224-6244",
     "website": "https://www.laxalt.senate.gov",
     "contact_form": "https://www.laxalt.senate.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NV", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NV",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-cortez-masto-nevada",
@@ -889,11 +1224,18 @@
     "phone": "(202) 224-3542",
     "website": "https://www.cortezmasto.senate.gov",
     "contact_form": "https://www.cortezmasto.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Appropriations"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NV", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NV",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-shaheen-newhampshire",
@@ -905,11 +1247,18 @@
     "phone": "(202) 224-2841",
     "website": "https://www.shaheen.senate.gov",
     "contact_form": "https://www.shaheen.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NH", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NH",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-hassan-newhampshire",
@@ -921,11 +1270,18 @@
     "phone": "(202) 224-3324",
     "website": "https://www.hassan.senate.gov",
     "contact_form": "https://www.hassan.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NH", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NH",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-menendez-newjersey",
@@ -937,11 +1293,18 @@
     "phone": "(202) 224-4744",
     "website": "https://www.menendez.senate.gov",
     "contact_form": "https://www.menendez.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NJ", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NJ",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-booker-newjersey",
@@ -953,11 +1316,18 @@
     "phone": "(202) 224-3224",
     "website": "https://www.booker.senate.gov",
     "contact_form": "https://www.booker.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NJ", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NJ",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-heinrich-newmexico",
@@ -969,11 +1339,18 @@
     "phone": "(202) 224-5521",
     "website": "https://www.heinrich.senate.gov",
     "contact_form": "https://www.heinrich.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NM", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NM",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-lujan-newmexico",
@@ -985,11 +1362,18 @@
     "phone": "(202) 224-6621",
     "website": "https://www.lujan.senate.gov",
     "contact_form": "https://www.lujan.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NM", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NM",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-schumer-newyork",
@@ -1001,11 +1385,18 @@
     "phone": "(202) 224-6542",
     "website": "https://www.schumer.senate.gov",
     "contact_form": "https://www.schumer.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NY", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NY",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-gillibrand-newyork",
@@ -1017,11 +1408,18 @@
     "phone": "(202) 224-4451",
     "website": "https://www.gillibrand.senate.gov",
     "contact_form": "https://www.gillibrand.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NY", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NY",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-tillis-northcarolina",
@@ -1033,11 +1431,18 @@
     "phone": "(202) 224-6362",
     "website": "https://www.tillis.senate.gov",
     "contact_form": "https://www.tillis.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NC", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NC",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-budd-northcarolina",
@@ -1049,11 +1454,17 @@
     "phone": "(202) 224-3154",
     "website": "https://www.budd.senate.gov",
     "contact_form": "https://www.budd.senate.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "NC", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "NC",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-hoeven-northdakota",
@@ -1065,11 +1476,18 @@
     "phone": "(202) 224-2551",
     "website": "https://www.hoeven.senate.gov",
     "contact_form": "https://www.hoeven.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "ND", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "ND",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-cramer-northdakota",
@@ -1081,11 +1499,18 @@
     "phone": "(202) 224-2043",
     "website": "https://www.cramer.senate.gov",
     "contact_form": "https://www.cramer.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "ND", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "ND",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-sherrod-ohio",
@@ -1097,11 +1522,18 @@
     "phone": "(202) 224-2315",
     "website": "https://www.brown.senate.gov",
     "contact_form": "https://www.brown.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "OH", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "OH",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-vance-ohio",
@@ -1113,11 +1545,17 @@
     "phone": "(202) 224-3353",
     "website": "https://www.vance.senate.gov",
     "contact_form": "https://www.vance.senate.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "OH", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "OH",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-inhofe-oklahoma",
@@ -1129,11 +1567,18 @@
     "phone": "(202) 224-5754",
     "website": "https://www.lankford.senate.gov",
     "contact_form": "https://www.lankford.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "OK", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "OK",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-mullin-oklahoma",
@@ -1145,11 +1590,17 @@
     "phone": "(202) 224-5754",
     "website": "https://www.mullin.senate.gov",
     "contact_form": "https://www.mullin.senate.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "OK", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "OK",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-merkley-oregon",
@@ -1161,11 +1612,18 @@
     "phone": "(202) 224-3753",
     "website": "https://www.merkley.senate.gov",
     "contact_form": "https://www.merkley.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "OR", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "OR",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-wyden-oregon",
@@ -1177,11 +1635,18 @@
     "phone": "(202) 224-5244",
     "website": "https://www.wyden.senate.gov",
     "contact_form": "https://www.wyden.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "OR", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "OR",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-casey-pennsylvania",
@@ -1193,11 +1658,18 @@
     "phone": "(202) 224-6324",
     "website": "https://www.casey.senate.gov",
     "contact_form": "https://www.casey.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "PA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "PA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-fetterman-pennsylvania",
@@ -1209,11 +1681,17 @@
     "phone": "(202) 224-4254",
     "website": "https://www.fetterman.senate.gov",
     "contact_form": "https://www.fetterman.senate.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "PA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "PA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-reed-rhodeisland",
@@ -1225,11 +1703,18 @@
     "phone": "(202) 224-4642",
     "website": "https://www.reed.senate.gov",
     "contact_form": "https://www.reed.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "RI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "RI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-whitehouse-rhodeisland",
@@ -1241,11 +1726,18 @@
     "phone": "(202) 224-2921",
     "website": "https://www.whitehouse.senate.gov",
     "contact_form": "https://www.whitehouse.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "RI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "RI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-scott-southcarolina",
@@ -1257,11 +1749,18 @@
     "phone": "(202) 224-6688",
     "website": "https://www.scott.senate.gov",
     "contact_form": "https://www.scott.senate.gov/contact",
-    "committees": ["Committee on Armed Services", "Committee on Banking, Housing, and Urban Affairs"],
+    "committees": [
+      "Committee on Armed Services",
+      "Committee on Banking, Housing, and Urban Affairs"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "SC", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "SC",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-graham-southcarolina",
@@ -1273,11 +1772,18 @@
     "phone": "(202) 224-5972",
     "website": "https://www.graham.senate.gov",
     "contact_form": "https://www.graham.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "SC", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "SC",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-thune-southdakota",
@@ -1289,11 +1795,18 @@
     "phone": "(202) 224-2321",
     "website": "https://www.thune.senate.gov",
     "contact_form": "https://www.thune.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "SD", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "SD",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-rounds-southdakota",
@@ -1305,11 +1818,18 @@
     "phone": "(202) 224-5842",
     "website": "https://www.rounds.senate.gov",
     "contact_form": "https://www.rounds.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "SD", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "SD",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-alexander-tennessee",
@@ -1321,11 +1841,18 @@
     "phone": "(202) 224-3344",
     "website": "https://www.blackburn.senate.gov",
     "contact_form": "https://www.blackburn.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "TN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "TN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-hagerty-tennessee",
@@ -1337,11 +1864,18 @@
     "phone": "(202) 224-4944",
     "website": "https://www.hagerty.senate.gov",
     "contact_form": "https://www.hagerty.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "TN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "TN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-cornyn-texas",
@@ -1353,11 +1887,18 @@
     "phone": "(202) 224-2934",
     "website": "https://www.cornyn.senate.gov",
     "contact_form": "https://www.cornyn.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "TX",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-cruz-texas",
@@ -1369,11 +1910,17 @@
     "phone": "(202) 224-5922",
     "website": "https://www.cruz.senate.gov",
     "contact_form": "https://www.cruz.senate.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "TX", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "TX",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-lee-utah",
@@ -1385,11 +1932,18 @@
     "phone": "(202) 224-5444",
     "website": "https://www.lee.senate.gov",
     "contact_form": "https://www.lee.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "UT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "UT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-romney-utah",
@@ -1401,11 +1955,18 @@
     "phone": "(202) 224-5251",
     "website": "https://www.romney.senate.gov",
     "contact_form": "https://www.romney.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "UT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "UT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-leahy-vermont",
@@ -1417,11 +1978,18 @@
     "phone": "(202) 224-4651",
     "website": "https://www.welch.senate.gov",
     "contact_form": "https://www.welch.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "VT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "VT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-sanders-vermont",
@@ -1433,11 +2001,18 @@
     "phone": "(202) 224-5141",
     "website": "https://www.sanders.senate.gov",
     "contact_form": "https://www.sanders.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "VT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "VT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-warner-virginia",
@@ -1449,11 +2024,18 @@
     "phone": "(202) 224-2023",
     "website": "https://www.warner.senate.gov",
     "contact_form": "https://www.warner.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "VA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "VA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-kaine-virginia",
@@ -1465,11 +2047,18 @@
     "phone": "(202) 224-4024",
     "website": "https://www.kaine.senate.gov",
     "contact_form": "https://www.kaine.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "VA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "VA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-cantwell-washington",
@@ -1481,11 +2070,18 @@
     "phone": "(202) 224-3441",
     "website": "https://www.cantwell.senate.gov",
     "contact_form": "https://www.cantwell.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "WA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "WA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-murray-washington",
@@ -1497,11 +2093,18 @@
     "phone": "(202) 224-2621",
     "website": "https://www.murray.senate.gov",
     "contact_form": "https://www.murray.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "WA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "WA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-manchin-westvirginia",
@@ -1513,11 +2116,18 @@
     "phone": "(202) 224-3954",
     "website": "https://www.manchin.senate.gov",
     "contact_form": "https://www.manchin.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "WV", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "WV",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-capito-westvirginia",
@@ -1529,11 +2139,18 @@
     "phone": "(202) 224-6472",
     "website": "https://www.capito.senate.gov",
     "contact_form": "https://www.capito.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "WV", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "WV",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-baldwin-wisconsin",
@@ -1545,11 +2162,18 @@
     "phone": "(202) 224-5653",
     "website": "https://www.baldwin.senate.gov",
     "contact_form": "https://www.baldwin.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "WI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "WI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-johnson-wisconsin",
@@ -1561,11 +2185,18 @@
     "phone": "(202) 224-5323",
     "website": "https://www.ronjohnson.senate.gov",
     "contact_form": "https://www.ronjohnson.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "WI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "WI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-barrasso-wyoming",
@@ -1577,11 +2208,18 @@
     "phone": "(202) 224-6441",
     "website": "https://www.barrasso.senate.gov",
     "contact_form": "https://www.barrasso.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "WY", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "WY",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "sen-enzi-wyoming",
@@ -1593,11 +2231,18 @@
     "phone": "(202) 224-6770",
     "website": "https://www.lummis.senate.gov",
     "contact_form": "https://www.lummis.senate.gov/contact",
-    "committees": ["Committee on Appropriations", "Committee on Armed Services"],
+    "committees": [
+      "Committee on Appropriations",
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.senate.gov/senators/senators-list.htm",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "WY", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "WY",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-carl-alabama",
@@ -1609,11 +2254,17 @@
     "phone": "(202) 225-4931",
     "website": "https://www.carl.house.gov",
     "contact_form": "https://www.carl.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-sewell-alabama",
@@ -1625,11 +2276,17 @@
     "phone": "(202) 225-2665",
     "website": "https://www.sewell.house.gov",
     "contact_form": "https://www.sewell.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-peltola-alaska",
@@ -1641,11 +2298,17 @@
     "phone": "(202) 225-0849",
     "website": "https://www.peltola.house.gov",
     "contact_form": "https://www.peltola.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AK", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AK",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-biggs-arizona",
@@ -1657,11 +2320,17 @@
     "phone": "(202) 225-2307",
     "website": "https://www.biggs.house.gov",
     "contact_form": "https://www.biggs.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AZ",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-stanton-arizona",
@@ -1673,11 +2342,17 @@
     "phone": "(202) 225-9888",
     "website": "https://www.gregstanton.house.gov",
     "contact_form": "https://www.gregstanton.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AZ", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AZ",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-westmoreland-arkansas",
@@ -1689,11 +2364,17 @@
     "phone": "(202) 225-4076",
     "website": "https://www.crawford.house.gov",
     "contact_form": "https://www.crawford.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AR", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AR",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-hill-arkansas",
@@ -1705,11 +2386,17 @@
     "phone": "(202) 225-4301",
     "website": "https://www.womack.house.gov",
     "contact_form": "https://www.womack.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "AR", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "AR",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-torres-california",
@@ -1721,11 +2408,17 @@
     "phone": "(202) 225-3336",
     "website": "https://www.duarte.house.gov",
     "contact_form": "https://www.duarte.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-valadao-california",
@@ -1737,11 +2430,17 @@
     "phone": "(202) 225-3341",
     "website": "https://www.costa.house.gov",
     "contact_form": "https://www.costa.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-carbajal-california",
@@ -1753,11 +2452,17 @@
     "phone": "(202) 225-2986",
     "website": "https://www.carbajal.house.gov",
     "contact_form": "https://www.carbajal.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-lamborn-colorado",
@@ -1769,11 +2474,17 @@
     "phone": "(202) 225-4422",
     "website": "https://www.lamborn.house.gov",
     "contact_form": "https://www.lamborn.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CO", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CO",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-neguse-colorado",
@@ -1785,11 +2496,17 @@
     "phone": "(202) 225-2161",
     "website": "https://www.neguse.house.gov",
     "contact_form": "https://www.neguse.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CO", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CO",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-himes-connecticut",
@@ -1801,11 +2518,17 @@
     "phone": "(202) 225-5541",
     "website": "https://www.himes.house.gov",
     "contact_form": "https://www.himes.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-rose-connecticut",
@@ -1817,11 +2540,17 @@
     "phone": "(202) 225-3121",
     "website": "https://www.maxrose.house.gov",
     "contact_form": "https://www.maxrose.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "CT", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "CT",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-phillips-florida",
@@ -1833,11 +2562,17 @@
     "phone": "(202) 225-1252",
     "website": "https://www.scott-franklin.house.gov",
     "contact_form": "https://www.scott-franklin.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "FL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-demings-florida",
@@ -1849,11 +2584,17 @@
     "phone": "(202) 225-2176",
     "website": "https://www.demings.house.gov",
     "contact_form": "https://www.demings.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "FL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-bishop-georgia",
@@ -1865,11 +2606,17 @@
     "phone": "(202) 225-3101",
     "website": "https://www.bishop.house.gov",
     "contact_form": "https://www.bishop.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "GA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-greene-georgia",
@@ -1881,11 +2628,17 @@
     "phone": "(202) 225-5901",
     "website": "https://www.clyde.house.gov",
     "contact_form": "https://www.clyde.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "GA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "GA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-case-hawaii",
@@ -1897,11 +2650,17 @@
     "phone": "(202) 225-4906",
     "website": "https://www.case.house.gov",
     "contact_form": "https://www.case.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "HI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "HI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-obrien-idaho",
@@ -1913,11 +2672,17 @@
     "phone": "(202) 225-5531",
     "website": "https://www.simpson.house.gov",
     "contact_form": "https://www.simpson.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "ID", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "ID",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-quigley-illinois",
@@ -1929,11 +2694,17 @@
     "phone": "(202) 225-4061",
     "website": "https://www.quigley.house.gov",
     "contact_form": "https://www.quigley.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-bost-illinois",
@@ -1945,11 +2716,17 @@
     "phone": "(202) 225-5661",
     "website": "https://www.bost.house.gov",
     "contact_form": "https://www.bost.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-banks-indiana",
@@ -1961,11 +2738,17 @@
     "phone": "(202) 225-3915",
     "website": "https://www.banks.house.gov",
     "contact_form": "https://www.banks.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-mrvan-indiana",
@@ -1977,11 +2760,17 @@
     "phone": "(202) 225-3915",
     "website": "https://www.mrvan.house.gov",
     "contact_form": "https://www.mrvan.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-miller-meeks-iowa",
@@ -1993,11 +2782,17 @@
     "phone": "(202) 225-3301",
     "website": "https://www.millermeeks.house.gov",
     "contact_form": "https://www.millermeeks.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "IA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "IA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-nunn-kansas",
@@ -2009,11 +2804,17 @@
     "phone": "(202) 225-6601",
     "website": "https://www.laturner.house.gov",
     "contact_form": "https://www.laturner.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "KS", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "KS",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-barr-kentucky",
@@ -2025,11 +2826,17 @@
     "phone": "(202) 225-4601",
     "website": "https://www.barr.house.gov",
     "contact_form": "https://www.barr.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "KY", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "KY",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-rojas-louisiana",
@@ -2041,11 +2848,17 @@
     "phone": "(202) 225-0376",
     "website": "https://www.higgins.house.gov",
     "contact_form": "https://www.higgins.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "LA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "LA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-strickland-maine",
@@ -2057,11 +2870,17 @@
     "phone": "(202) 225-6306",
     "website": "https://www.pingree.house.gov",
     "contact_form": "https://www.pingree.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "ME", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "ME",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-ruppersberger-maryland",
@@ -2073,11 +2892,17 @@
     "phone": "(202) 225-3061",
     "website": "https://www.ruppersberger.house.gov",
     "contact_form": "https://www.ruppersberger.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MD", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MD",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-harris-maryland",
@@ -2089,11 +2914,17 @@
     "phone": "(202) 225-5311",
     "website": "https://www.harris.house.gov",
     "contact_form": "https://www.harris.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MD", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MD",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-moulton-massachusetts",
@@ -2105,11 +2936,17 @@
     "phone": "(202) 225-8020",
     "website": "https://www.moulton.house.gov",
     "contact_form": "https://www.moulton.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MA", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MA",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-waltz-florida",
@@ -2121,11 +2958,17 @@
     "phone": "(202) 225-2706",
     "website": "https://www.waltz.house.gov",
     "contact_form": "https://www.waltz.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "FL", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "FL",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-pence-michigan",
@@ -2137,11 +2980,17 @@
     "phone": "(202) 225-3611",
     "website": "https://www.kildee.house.gov",
     "contact_form": "https://www.kildee.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MI", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MI",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-stauber-minnesota",
@@ -2153,11 +3002,17 @@
     "phone": "(202) 225-6211",
     "website": "https://www.stauber.house.gov",
     "contact_form": "https://www.stauber.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-thompson-mississippi",
@@ -2169,11 +3024,17 @@
     "phone": "(202) 225-5876",
     "website": "https://www.thompson.house.gov",
     "contact_form": "https://www.thompson.house.gov/contact",
-    "committees": ["Committee on Armed Services"],
+    "committees": [
+      "Committee on Armed Services"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MS", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MS",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-cleaver-missouri",
@@ -2185,11 +3046,17 @@
     "phone": "(202) 225-4535",
     "website": "https://www.cleaver.house.gov",
     "contact_form": "https://www.cleaver.house.gov/contact",
-    "committees": ["Committee on Appropriations"],
+    "committees": [
+      "Committee on Appropriations"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MO", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MO",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   },
   {
     "id": "rep-rooney-montana",
@@ -2201,10 +3068,16 @@
     "phone": "(202) 225-6631",
     "website": "https://www.walz.house.gov",
     "contact_form": "https://www.walz.house.gov/contact",
-    "committees": ["Committee on Veterans' Affairs"],
+    "committees": [
+      "Committee on Veterans' Affairs"
+    ],
     "source_url": "https://www.house.gov",
     "last_verified": "2026-03-22",
     "manual_review": true,
-    "tags": {"state": "MN", "issue_type": "elected_official", "audience": "all_veterans"}
+    "tags": {
+      "state": "MN",
+      "issue_type": "elected_official",
+      "audience": "all_veterans"
+    }
   }
 ]
