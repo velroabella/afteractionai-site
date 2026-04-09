@@ -1,5 +1,6 @@
 [
   {
+    "id": "res-001",
     "name": "VA Vocational Rehabilitation & Employment (VR&E / Chapter 31)",
     "category": "employment",
     "description": "Comprehensive employment services including job training, resume development, job accommodation support, and self-employment assistance for veterans with service-connected disabilities.",
@@ -9,6 +10,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-002",
     "name": "Hire Heroes USA",
     "category": "employment",
     "description": "Free career coaching, resume writing, mentoring, and job placement assistance. Provides personalized one-on-one support from dedicated transition specialists.",
@@ -18,6 +20,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-003",
     "name": "American Corporate Partners (ACP)",
     "category": "employment",
     "description": "Year-long mentoring program pairing veterans with corporate professionals. Provides career guidance, networking, and professional development through Fortune 500 mentors.",
@@ -27,6 +30,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-004",
     "name": "Veterans Employment and Training Service (VETS)",
     "category": "employment",
     "description": "DOL program providing employment resources, job training grants, and enforcement of USERRA rights.",
@@ -36,6 +40,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-005",
     "name": "Helmets to Hardhats",
     "category": "employment",
     "description": "Connects veterans with careers in the building and construction trades. Provides apprenticeship placement in union trades.",
@@ -45,6 +50,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-006",
     "name": "RecruitMilitary",
     "category": "employment",
     "description": "Operates the largest veteran-specific job board and hosts career fairs nationwide.",
@@ -54,6 +60,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-007",
     "name": "FourBlock",
     "category": "employment",
     "description": "Career readiness program offered through universities. Provides career transition curriculum, networking events, and employer connections.",
@@ -63,6 +70,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-008",
     "name": "USO Pathfinder",
     "category": "employment",
     "description": "Transition assistance program providing career preparation, employment readiness, and connections to local resources.",
@@ -72,6 +80,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-009",
     "name": "Orion Talent",
     "category": "employment",
     "description": "Military recruiting firm that matches veterans with careers in manufacturing, engineering, maintenance, and technical fields.",
@@ -81,6 +90,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-010",
     "name": "SkillBridge (DOD)",
     "category": "employment",
     "description": "Allows active duty service members to participate in civilian work experiences during their last 180 days of service while receiving military pay.",
@@ -90,6 +100,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-011",
     "name": "Wounded Warrior Project Warriors to Work",
     "category": "employment",
     "description": "Career counseling, job placement, and networking for wounded veterans.",
@@ -99,6 +110,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-012",
     "name": "Post-9/11 GI Bill (Chapter 33)",
     "category": "education",
     "description": "Covers tuition and fees at public schools, provides monthly housing allowance (BAH E-5 rate), and $1,000/year book stipend. Transferable to dependents. Up to 36 months.",
@@ -108,6 +120,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-013",
     "name": "Montgomery GI Bill (Chapter 30)",
     "category": "education",
     "description": "Up to 36 months of education benefits for degree and certificate programs, flight training, apprenticeship/OJT, and correspondence courses.",
@@ -117,6 +130,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-014",
     "name": "VET TEC Program",
     "category": "education",
     "description": "Covers tuition for high-tech training in computer software, data processing, and programming. Includes housing allowance. Does NOT use GI Bill entitlement.",
@@ -126,6 +140,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-015",
     "name": "Yellow Ribbon Program",
     "category": "education",
     "description": "Participating schools cover tuition above the GI Bill cap. VA matches the school's contribution. Eliminates out-of-pocket costs at private schools.",
@@ -135,6 +150,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-016",
     "name": "Survivors & Dependents Educational Assistance (DEA / Chapter 35)",
     "category": "education",
     "description": "Up to 36 months of education benefits for dependents of veterans who are permanently/totally disabled or who died from service-connected conditions.",
@@ -144,6 +160,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-017",
     "name": "Scholarships for Military Children",
     "category": "education",
     "description": "Annual $2,000 scholarship through the Defense Commissary Agency for children of military members.",
@@ -153,6 +170,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-018",
     "name": "Pat Tillman Foundation Scholarships",
     "category": "education",
     "description": "Scholarship covering tuition, books, and living expenses. Average award $10,000+. Strong alumni network.",
@@ -162,6 +180,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-019",
     "name": "AMVETS National Scholarships",
     "category": "education",
     "description": "Multiple scholarship programs for veterans and families. Awards range from $1,000 to $12,000.",
@@ -171,6 +190,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-020",
     "name": "Folds of Honor Scholarships",
     "category": "education",
     "description": "Educational scholarships up to $5,000/semester for spouses and children of fallen and disabled service members.",
@@ -180,7 +200,8 @@
     "sourceType": "Nonprofit"
   },
   {
-    "name": "Syracuse University IVMF \u2014 Onward to Opportunity",
+    "id": "res-021",
+    "name": "Syracuse University IVMF — Onward to Opportunity",
     "category": "education",
     "description": "Free career skills training in IT, business management, customer service, and cybersecurity. Includes industry certifications.",
     "eligibility": "Transitioning service members, veterans (within 5 years), and military spouses.",
@@ -189,6 +210,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-022",
     "name": "VA Disability Compensation",
     "category": "benefits",
     "description": "Tax-free monthly payment for service-connected disabilities. Rates from $171/month (10%) to $3,737+/month (100%). Additional for dependents at 30%+.",
@@ -198,6 +220,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-023",
     "name": "VA Pension (Non-Service-Connected)",
     "category": "benefits",
     "description": "Tax-free monthly benefit for wartime veterans with limited income who are 65+ or permanently disabled.",
@@ -207,6 +230,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-024",
     "name": "Aid & Attendance / Housebound Benefits",
     "category": "benefits",
     "description": "Additional monthly payment for veterans who need help with daily activities or are substantially confined to their home.",
@@ -216,6 +240,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-025",
     "name": "Dependency and Indemnity Compensation (DIC)",
     "category": "benefits",
     "description": "Tax-free monthly payment to surviving spouse, children, or parents of service members who died in the line of duty.",
@@ -225,6 +250,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-026",
     "name": "Special Monthly Compensation (SMC)",
     "category": "benefits",
     "description": "Additional tax-free compensation beyond standard rates for severe disabilities including loss of limbs or blindness.",
@@ -234,6 +260,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-027",
     "name": "Combat-Related Special Compensation (CRSC)",
     "category": "benefits",
     "description": "Tax-free payment that restores retired pay offset by VA disability for combat-related disabilities.",
@@ -243,6 +270,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-028",
     "name": "Concurrent Retirement & Disability Pay (CRDP)",
     "category": "benefits",
     "description": "Receive both full military retirement pay and VA disability compensation without offset.",
@@ -252,6 +280,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-029",
     "name": "VA Claims Insider (VACI)",
     "category": "benefits",
     "description": "Veteran-owned company providing education, coaching, and medical evidence development for VA disability claims.",
@@ -261,6 +290,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-030",
     "name": "Veterans Benefits Banking Program (VBBP)",
     "category": "benefits",
     "description": "Partners with banks to provide financial services tailored to veterans receiving VA benefits.",
@@ -270,6 +300,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-031",
     "name": "Camp Lejeune Justice Act Claims",
     "category": "benefits",
     "description": "Allows those who lived/worked at Camp Lejeune (1953-1987) to file claims for harm from contaminated water.",
@@ -279,6 +310,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-032",
     "name": "VA Health Care",
     "category": "medical",
     "description": "Comprehensive system with 1,298 facilities covering primary care, mental health, specialty care, prescriptions, and preventive services.",
@@ -288,6 +320,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-033",
     "name": "Community Care (VA MISSION Act)",
     "category": "medical",
     "description": "Allows eligible veterans to receive care from community providers when VA can't provide timely access.",
@@ -297,6 +330,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-034",
     "name": "Veterans Crisis Line",
     "category": "medical",
     "description": "24/7 crisis intervention and support. Available by phone, text, and online chat. Dial 988, Press 1.",
@@ -306,6 +340,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-035",
     "name": "Vet Centers (Readjustment Counseling)",
     "category": "medical",
     "description": "Community-based counseling for PTSD, MST, bereavement, and group therapy in a non-clinical setting.",
@@ -315,6 +350,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-036",
     "name": "Give an Hour",
     "category": "medical",
     "description": "Network of 7,000+ licensed mental health professionals providing free therapy to veterans and families.",
@@ -324,6 +360,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-037",
     "name": "Cohen Veterans Network (CVN)",
     "category": "medical",
     "description": "Steven A. Cohen Military Family Clinics providing mental health care for post-9/11 veterans and families.",
@@ -333,6 +370,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-038",
     "name": "TRICARE (Retiree & Reserve)",
     "category": "medical",
     "description": "Military health insurance for retirees and Reserve/Guard. Multiple plan options including Prime, Select, and For Life.",
@@ -342,6 +380,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-039",
     "name": "VA Caregiver Support Program",
     "category": "medical",
     "description": "Training, support, and financial stipend for family caregivers. Includes health insurance, mental health, and respite care.",
@@ -351,6 +390,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-040",
     "name": "Headstrong Project",
     "category": "medical",
     "description": "Free, confidential, stigma-free mental health treatment. Partners with licensed therapists in communities nationwide.",
@@ -360,6 +400,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-041",
     "name": "PatientsLikeMe Veterans Platform",
     "category": "medical",
     "description": "Online health community to track symptoms, share experiences, and learn from others managing similar conditions.",
@@ -369,6 +410,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-042",
     "name": "VA Prosthetic and Sensory Aids",
     "category": "equipment",
     "description": "Provides prosthetic limbs, hearing aids, eyeglasses, wheelchairs, home oxygen, and other durable medical equipment.",
@@ -378,6 +420,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-043",
     "name": "DAV Transportation",
     "category": "equipment",
     "description": "Free rides to and from VA medical facilities. Fleet of vehicles driven by volunteer drivers.",
@@ -387,6 +430,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-044",
     "name": "Adaptive Sports Grant Program (VA)",
     "category": "equipment",
     "description": "Funding for adaptive sports activities and equipment for disabled veterans.",
@@ -396,6 +440,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-045",
     "name": "Homes for Our Troops",
     "category": "equipment",
     "description": "Builds and donates mortgage-free specially adapted custom homes for severely injured post-9/11 veterans.",
@@ -405,6 +450,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-046",
     "name": "Specially Adapted Housing (SAH) Grant",
     "category": "equipment",
     "description": "VA grant up to $109,986 to build, buy, or modify a home to meet adaptive needs.",
@@ -414,6 +460,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-047",
     "name": "Special Housing Adaptation (SHA) Grant",
     "category": "equipment",
     "description": "VA grant up to $44,299 to modify an existing home for veterans with specific disabilities.",
@@ -423,6 +470,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-048",
     "name": "Automobile Allowance & Adaptive Equipment",
     "category": "equipment",
     "description": "One-time payment up to $22,036 toward a vehicle plus adaptive equipment (hand controls, wheelchair lifts, etc.).",
@@ -432,6 +480,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-049",
     "name": "Assistive Technology for Veterans",
     "category": "equipment",
     "description": "Screen readers, voice recognition, environmental controls, and cognitive aids through VA rehabilitation services.",
@@ -441,6 +490,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-050",
     "name": "SBA Veterans Advantage Loan Program",
     "category": "entrepreneurship",
     "description": "SBA-backed loans with reduced fees. Includes 7(a) loans up to $5M and Express loans up to $500K with faster processing.",
@@ -450,6 +500,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-051",
     "name": "Boots to Business (SBA)",
     "category": "entrepreneurship",
     "description": "Two-day entrepreneurship course covering business fundamentals, feasibility analysis, and business plan development.",
@@ -459,6 +510,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-052",
     "name": "V-WISE",
     "category": "entrepreneurship",
     "description": "Three-phase entrepreneurship training for women veterans: online coursework, 3-day conference, and ongoing mentorship.",
@@ -468,6 +520,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-053",
     "name": "Bunker Labs",
     "category": "entrepreneurship",
     "description": "Network, programming, and resources for veteran entrepreneurs. Launch Lab accelerator and CEOcircle for scaling.",
@@ -477,6 +530,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-054",
     "name": "StreetShares Foundation Awards",
     "category": "entrepreneurship",
     "description": "Quarterly business grants of $15,000, $6,000, and $4,000 for veteran small business owners.",
@@ -486,6 +540,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-055",
     "name": "SCORE Mentoring for Veterans",
     "category": "entrepreneurship",
     "description": "Free business mentoring from experienced entrepreneurs with veteran-focused mentors.",
@@ -495,15 +550,17 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-056",
     "name": "VetFran (IFA)",
     "category": "entrepreneurship",
-    "description": "Franchise discounts \u2014 reduced fees, special financing, and mentoring for veteran franchise owners. 1,200+ brands.",
+    "description": "Franchise discounts — reduced fees, special financing, and mentoring for veteran franchise owners. 1,200+ brands.",
     "eligibility": "Honorably discharged veterans and military spouses.",
     "website": "https://www.vetfran.org/",
     "cost": "Discounted fees",
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-057",
     "name": "Dog Tag Bakery Fellowship",
     "category": "entrepreneurship",
     "description": "Five-month fellowship: Georgetown MBA coursework plus hands-on bakery business experience.",
@@ -513,15 +570,17 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-058",
     "name": "VA Home Loan (Chapter 37)",
     "category": "housing",
-    "description": "Mortgage loan guaranteed by VA \u2014 no down payment, no PMI, competitive rates. Available for purchase, refinance, and adapted housing.",
+    "description": "Mortgage loan guaranteed by VA — no down payment, no PMI, competitive rates. Available for purchase, refinance, and adapted housing.",
     "eligibility": "Veterans with qualifying service, active duty, Guard/Reserve with 6+ years, and surviving spouses.",
     "website": "https://www.va.gov/housing-assistance/home-loans/",
     "cost": "No down payment",
     "sourceType": "Government"
   },
   {
+    "id": "res-059",
     "name": "Native American Direct Loan (NADL)",
     "category": "housing",
     "description": "VA direct home loan for Native American veterans on Federal Trust Land. No down payment or PMI.",
@@ -531,6 +590,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-060",
     "name": "HUD-VASH",
     "category": "housing",
     "description": "Combines HUD voucher rental assistance with VA supportive services including health care and counseling.",
@@ -540,6 +600,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-061",
     "name": "SSVF (Supportive Services for Veteran Families)",
     "category": "housing",
     "description": "Rapid re-housing and prevention: rental assistance, utility payments, moving costs, and case management.",
@@ -549,6 +610,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-062",
     "name": "Habitat for Humanity Veterans Build",
     "category": "housing",
     "description": "Builds and repairs homes for veteran families. Affordable mortgage with 0% interest.",
@@ -558,7 +620,8 @@
     "sourceType": "Nonprofit"
   },
   {
-    "name": "Operation Homefront \u2014 Transitional Housing",
+    "id": "res-063",
+    "name": "Operation Homefront — Transitional Housing",
     "category": "housing",
     "description": "Transitional housing for wounded veterans and critical financial assistance for rent and mortgage.",
     "eligibility": "Wounded/injured service members and military families facing financial hardship.",
@@ -567,6 +630,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-064",
     "name": "National Veterans Foundation",
     "category": "housing",
     "description": "Emergency financial assistance for housing, utilities, and basic needs. Lifeline for Vets: 1-888-777-4443.",
@@ -576,6 +640,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-065",
     "name": "Veterans Inc.",
     "category": "housing",
     "description": "Comprehensive housing from emergency shelter through permanent supportive housing (New England).",
@@ -585,6 +650,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-066",
     "name": "Veterans Advantage",
     "category": "discounts",
     "description": "Membership with 400+ brand discounts including Amtrak (15%), Dell, Under Armour, and more.",
@@ -594,6 +660,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-067",
     "name": "ID.me Military Verification",
     "category": "discounts",
     "description": "Free military verification unlocking 500+ retailer discounts: Apple (10%), Samsung, Nike, T-Mobile, and more.",
@@ -603,6 +670,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-068",
     "name": "Home Depot / Lowe's Military Discount",
     "category": "discounts",
     "description": "10% military discount on eligible purchases. In-store and online.",
@@ -612,7 +680,8 @@
     "sourceType": "Civilian Company"
   },
   {
-    "name": "National Park Service \u2014 America the Beautiful Pass",
+    "id": "res-069",
+    "name": "National Park Service — America the Beautiful Pass",
     "category": "discounts",
     "description": "Free lifetime access to all national parks, forests, wildlife refuges, and federal recreation lands.",
     "eligibility": "All US veterans with DD-214 and Gold Star family members.",
@@ -621,6 +690,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-070",
     "name": "Space Available (Space-A) Travel",
     "category": "discounts",
     "description": "Free military flights worldwide on DOD aircraft when seats are available.",
@@ -630,6 +700,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-071",
     "name": "USAA Financial Services",
     "category": "discounts",
     "description": "Full-service banking, insurance, and investments designed for military. Competitive rates, no fees.",
@@ -639,6 +710,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-072",
     "name": "Verizon / AT&T / T-Mobile Military Plans",
     "category": "discounts",
     "description": "15-40% off standard wireless plans for military and veterans.",
@@ -648,6 +720,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-073",
     "name": "GovX Military Discount Marketplace",
     "category": "discounts",
     "description": "Exclusive military pricing on tactical gear, apparel, electronics, and event tickets. 20-50% savings.",
@@ -657,6 +730,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-074",
     "name": "Team Rubicon",
     "category": "community",
     "description": "Veteran-led disaster response organization. Veterans deploy for relief domestically and internationally.",
@@ -666,15 +740,17 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-075",
     "name": "Team Red White & Blue (RWB)",
     "category": "community",
-    "description": "Community connecting through physical and social activities \u2014 runs, yoga, social events, and service.",
-    "eligibility": "Open to all \u2014 veterans, active duty, and community members.",
+    "description": "Community connecting through physical and social activities — runs, yoga, social events, and service.",
+    "eligibility": "Open to all — veterans, active duty, and community members.",
     "website": "https://www.teamrwb.org/",
     "cost": "Free",
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-076",
     "name": "The Mission Continues",
     "category": "community",
     "description": "Empowers veterans to continue serving through fellowships, service platoons, and community projects.",
@@ -684,6 +760,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-077",
     "name": "Iraq and Afghanistan Veterans of America (IAVA)",
     "category": "community",
     "description": "Largest post-9/11 veteran advocacy org. Policy advocacy, community, mental health, and peer support.",
@@ -693,6 +770,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-078",
     "name": "VFW (Veterans of Foreign Wars)",
     "category": "community",
     "description": "6,000+ posts nationwide. Camaraderie, legislative advocacy, community service, and free claims help.",
@@ -702,6 +780,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-079",
     "name": "American Legion",
     "category": "community",
     "description": "12,000+ posts. Community activities, youth programs, advocacy, and VA claims assistance.",
@@ -711,6 +790,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-080",
     "name": "Disabled American Veterans (DAV)",
     "category": "community",
     "description": "1.3M+ members. Free claims assistance, transportation, employment resources, and legislative advocacy.",
@@ -720,6 +800,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-081",
     "name": "Travis Manion Foundation",
     "category": "community",
     "description": "Character development programs, community leadership, and mentoring for veterans and families of the fallen.",
@@ -729,15 +810,17 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-082",
     "name": "Vet Tix (Veteran Ticket Foundation)",
     "category": "community",
-    "description": "Free event tickets \u2014 sporting events, concerts, performing arts, and family events.",
+    "description": "Free event tickets — sporting events, concerts, performing arts, and family events.",
     "eligibility": "All veterans, active duty, Guard, Reserve, and families.",
     "website": "https://www.vettix.org/",
     "cost": "Free",
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-083",
     "name": "Veterans Legal Services Organizations",
     "category": "legal",
     "description": "Free legal clinics and representation at VA regional offices and Board of Veterans' Appeals.",
@@ -747,6 +830,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-084",
     "name": "National Veterans Legal Services Program (NVLSP)",
     "category": "legal",
     "description": "Free legal representation before the VA and federal courts. Trains attorneys in veterans law.",
@@ -756,15 +840,17 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-085",
     "name": "Stateside Legal",
     "category": "legal",
-    "description": "Online resource connecting military members with free legal help \u2014 legal aid orgs, JAG offices, pro bono attorneys.",
+    "description": "Online resource connecting military members with free legal help — legal aid orgs, JAG offices, pro bono attorneys.",
     "eligibility": "All service members, veterans, and military families.",
     "website": "https://statesidelegal.org/",
     "cost": "Free",
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-086",
     "name": "Veterans Consortium Pro Bono Program",
     "category": "legal",
     "description": "Free legal representation at the US Court of Appeals for Veterans Claims. 83% success rate.",
@@ -774,6 +860,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-087",
     "name": "Legal Services Corporation (Military/Veteran)",
     "category": "legal",
     "description": "Nationwide network of legal aid for civil issues including housing, family law, and consumer issues.",
@@ -783,6 +870,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-088",
     "name": "ABA Military Pro Bono Project",
     "category": "legal",
     "description": "ABA program connecting active duty with free legal representation for civil issues.",
@@ -792,6 +880,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-089",
     "name": "Veterans Defense Program (NVLSP)",
     "category": "legal",
     "description": "Helps veterans with less-than-honorable discharges upgrade their discharge status.",
@@ -801,6 +890,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-090",
     "name": "USERRA Rights Enforcement",
     "category": "legal",
     "description": "Protects reemployment rights after military service. DOL investigates complaints.",
@@ -810,6 +900,7 @@
     "sourceType": "Government"
   },
   {
+    "id": "res-091",
     "name": "Apple Military Pricing",
     "category": "discounts",
     "description": "Exclusive military pricing on Mac, iPad, and accessories. Typically 6-10% off retail through Apple's military store.",
@@ -819,6 +910,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-092",
     "name": "Samsung Military Discount",
     "category": "discounts",
     "description": "Up to 30% off select Samsung TVs, Galaxy phones, tablets, appliances, and wearables.",
@@ -828,15 +920,17 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-093",
     "name": "Nike Military Discount",
     "category": "discounts",
-    "description": "10% off most items online and in-store \u2014 footwear, apparel, and equipment.",
+    "description": "10% off most items online and in-store — footwear, apparel, and equipment.",
     "eligibility": "Active duty, veterans, retirees, Guard, Reserve, and spouses. SheerID verification.",
     "website": "https://www.nike.com/help/a/military-discount",
     "cost": "10% off",
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-094",
     "name": "Under Armour Military Discount",
     "category": "discounts",
     "description": "20% off full-price items and 10% off sale items through UA's dedicated military store.",
@@ -846,6 +940,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-095",
     "name": "The North Face Military Discount",
     "category": "discounts",
     "description": "10% off online and in-store on outerwear, gear, and accessories year-round.",
@@ -855,6 +950,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-096",
     "name": "Lululemon Military Discount",
     "category": "discounts",
     "description": "15% off in-store purchases on full-price items at all locations.",
@@ -864,6 +960,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-097",
     "name": "Verizon Military Plans",
     "category": "discounts",
     "description": "Up to $25/line off select unlimited plans. Also partnered with ForgiveCo for veteran medical debt relief.",
@@ -873,6 +970,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-098",
     "name": "T-Mobile Military Plans",
     "category": "discounts",
     "description": "Up to 50% off family wireless plans with Go5G Military. Most aggressive wireless military discount.",
@@ -882,6 +980,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-099",
     "name": "AT&T Military Discount",
     "category": "discounts",
     "description": "25% off unlimited wireless plans plus $150 per line activation credit on select plans.",
@@ -891,6 +990,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-100",
     "name": "Chevrolet Military Discount",
     "category": "discounts",
     "description": "Military appreciation cash allowance on eligible new Chevy vehicles. Typically $500-$1,000+.",
@@ -900,6 +1000,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-101",
     "name": "Ford Military Bonus Cash",
     "category": "discounts",
     "description": "Up to $500 bonus cash on eligible new Ford vehicles. Stackable with dealer incentives.",
@@ -909,6 +1010,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-102",
     "name": "Caesars Military Discount",
     "category": "discounts",
     "description": "Up to 30% off hotels, resorts, and entertainment at Caesars properties nationwide. Year-round.",
@@ -918,6 +1020,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-103",
     "name": "Amtrak Military Discount",
     "category": "discounts",
     "description": "10% off most train tickets. 15% off on select California routes.",
@@ -927,6 +1030,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-104",
     "name": "Amazon Military Hiring",
     "category": "employment",
     "description": "Employs 40,000+ veterans. Military Fellowship and Apprenticeship programs. Pledged 100,000 veteran hires by 2026.",
@@ -936,6 +1040,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-105",
     "name": "JPMorgan Chase Veterans",
     "category": "employment",
     "description": "Hired 20,000 service members since 2011. Co-founded Veteran Jobs Mission coalition (1M+ total veteran hires).",
@@ -945,6 +1050,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-106",
     "name": "Lockheed Martin Veteran Hiring",
     "category": "employment",
     "description": "1 in 5 of 114,000 employees are veterans. Dedicated recruiting team, military skills translator, and veteran ERG.",
@@ -954,6 +1060,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-107",
     "name": "Starbucks Military Commitment",
     "category": "employment",
     "description": "Committed to 25,000 veteran/spouse hires. Military Family Stores near bases with pro bono legal support.",
@@ -963,6 +1070,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-108",
     "name": "Salesforce Military Alliance",
     "category": "employment",
     "description": "#1 Forbes 2025 Best Employer for Veterans. Dedicated military hiring, veteran ERG, and career coaching.",
@@ -972,6 +1080,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-109",
     "name": "Boeing Veteran Hiring",
     "category": "employment",
     "description": "15% veteran workforce. Military Skills Translator and SkillBridge partnerships for transition roles.",
@@ -981,6 +1090,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-110",
     "name": "Walmart Guaranteed Veteran Hire",
     "category": "employment",
     "description": "Guaranteed employment for any honorably discharged veteran within 12 months. 265,000+ hired since 2013.",
@@ -990,6 +1100,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-111",
     "name": "Booz Allen Hamilton Veterans",
     "category": "employment",
     "description": "30%+ veteran workforce. Extensive SkillBridge program and dedicated veteran transition team.",
@@ -999,6 +1110,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-112",
     "name": "Deloitte CORE Program",
     "category": "employment",
     "description": "Career Opportunity Readiness & Employment program with mentoring, skills translation, and veteran recruiters.",
@@ -1008,6 +1120,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-113",
     "name": "Google Veteran Hiring",
     "category": "employment",
     "description": "Dedicated military hiring team, VetNet ERG, and Hiring Our Heroes partnerships. Career certificate pipeline.",
@@ -1017,6 +1130,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-114",
     "name": "Hiring Our Heroes Corporate Fellowship",
     "category": "employment",
     "description": "12-week fellowship placing service members at Fortune 500 companies. Five days/week plus Friday professional development.",
@@ -1026,6 +1140,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-115",
     "name": "McKinsey Military Fellowship",
     "category": "employment",
     "description": "10-week consulting internship through SkillBridge at the world's top consulting firm. High conversion to full-time.",
@@ -1035,6 +1150,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-116",
     "name": "Northrop Grumman Veteran Hiring",
     "category": "employment",
     "description": "20%+ veteran workforce. SkillBridge, veteran mentorship, military spouse hiring, and VETS ERG.",
@@ -1044,6 +1160,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-117",
     "name": "Bank of America Military Hiring",
     "category": "employment",
     "description": "10,000+ veteran hires since 2014. Military Support ERG, dedicated military talent acquisition.",
@@ -1053,6 +1170,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-118",
     "name": "Capital One Military Initiatives",
     "category": "employment",
     "description": "Salute ERG, military skills translation, mentorship programs, and veteran hiring partnerships.",
@@ -1062,6 +1180,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-119",
     "name": "Delta Air Lines Veteran Hiring",
     "category": "employment",
     "description": "FREEDOM ERG, military leave policies, and pilot career pathway for veteran aviators.",
@@ -1071,6 +1190,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-120",
     "name": "Salesforce Trailhead Military",
     "category": "education",
     "description": "Free self-paced Salesforce certification training. Leads to in-demand Admin and Developer certifications.",
@@ -1080,6 +1200,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-121",
     "name": "Microsoft MSSA",
     "category": "education",
     "description": "Free 17-week intensive training in cloud development or server administration. Microsoft certifications. Guaranteed interviews.",
@@ -1089,6 +1210,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-122",
     "name": "AWS Military Training",
     "category": "education",
     "description": "Free cloud computing courses and labs. Certification exam reimbursement. Cloud Practitioner to Solutions Architect.",
@@ -1098,6 +1220,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-123",
     "name": "IBM SkillsBuild for Veterans",
     "category": "education",
     "description": "1,000+ free courses in AI, cybersecurity, cloud, data science, and business. Includes digital credentials.",
@@ -1107,6 +1230,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-124",
     "name": "Google Career Certificates (Military)",
     "category": "education",
     "description": "Free certificates in IT Support, Data Analytics, UX Design, Project Management, and Cybersecurity.",
@@ -1116,6 +1240,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-125",
     "name": "Cisco Networking Academy for Veterans",
     "category": "education",
     "description": "Free networking and cybersecurity training leading to CCNA and CyberOps certifications.",
@@ -1125,6 +1250,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-126",
     "name": "Fortinet Veterans Cybersecurity Program",
     "category": "education",
     "description": "Free NSE (Network Security Expert) certification training levels 1-3. Cybersecurity career pathway.",
@@ -1134,6 +1260,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-127",
     "name": "Splunk Work+ for Veterans",
     "category": "education",
     "description": "Free Splunk certification training and exam vouchers. Data analytics and cybersecurity pathway.",
@@ -1143,6 +1270,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-128",
     "name": "LinkedIn Premium for Veterans",
     "category": "education",
     "description": "One year free LinkedIn Premium including 16,000+ LinkedIn Learning courses, InMail, and job search tools.",
@@ -1152,6 +1280,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-129",
     "name": "Coursera Veteran Access",
     "category": "education",
     "description": "Free access to 7,000+ courses and professional certificates from Google, IBM, Meta, and top universities.",
@@ -1161,6 +1290,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-130",
     "name": "SANS VetSuccess Academy",
     "category": "education",
     "description": "Free cybersecurity training and GIAC certification preparation. One of the most prestigious cybersecurity programs.",
@@ -1170,6 +1300,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-131",
     "name": "Tooling U-SME Manufacturing Training",
     "category": "education",
     "description": "Free manufacturing skills training and certifications. 500+ courses in CNC, welding, quality, and automation.",
@@ -1179,6 +1310,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-132",
     "name": "Veterati",
     "category": "community",
     "description": "Unlimited free 1-hour career mentorship calls with successful professionals across industries.",
@@ -1188,6 +1320,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-133",
     "name": "RallyPoint",
     "category": "community",
     "description": "Military professional networking platform with 2M+ members. Job board, mentoring, and community forums.",
@@ -1197,6 +1330,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-134",
     "name": "Blue Star Families",
     "category": "community",
     "description": "Career development resources, community connections, and family support. Annual Military Family Lifestyle Survey.",
@@ -1206,6 +1340,7 @@
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-135",
     "name": "50strong",
     "category": "community",
     "description": "Free digital platform connecting veterans with employers. Transition guidance, industry insights, and employer matching.",
@@ -1215,6 +1350,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-136",
     "name": "OpenAI ChatGPT Plus for Veterans",
     "category": "community",
     "description": "One-year free ChatGPT Plus subscription ($240 value). AI assistant for resume building, job search, and research.",
@@ -1224,6 +1360,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-137",
     "name": "Purepost Military Skills Translator",
     "category": "employment",
     "description": "AI platform translating military skills into civilian job qualifications and matching veterans with careers.",
@@ -1233,6 +1370,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-138",
     "name": "ResuMade",
     "category": "employment",
     "description": "AI-powered resume builder designed for military-to-civilian translation. Converts military experience to civilian language.",
@@ -1242,6 +1380,7 @@
     "sourceType": "Civilian Company"
   },
   {
+    "id": "res-139",
     "name": "Special Forces Association (SFA)",
     "category": "community",
     "description": "Fraternal organization for Army Special Forces with 85+ chapters worldwide, reunions, casualty assistance fund, mentorship programs, and quarterly magazine 'The Drop'. 9,700+ members.",
@@ -1251,6 +1390,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-140",
     "name": "Green Beret Foundation",
     "category": "benefits",
     "description": "Emergency financial assistance, casualty support, healthcare funding, educational scholarships, spouse grants, VA disability claims assistance, and $2,500 immediate medevac support. VA-accredited.",
@@ -1260,6 +1400,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-141",
     "name": "Special Forces Charitable Trust",
     "category": "community",
     "description": "Personalized support for SF community including Mettle & Moxie Weekend for families, 45+ educational grants, Beyond the Battlefield program, and MIA/KIA repatriation funding.",
@@ -1269,6 +1410,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-142",
     "name": "Special Forces Foundation",
     "category": "medical",
     "description": "Crisis response, emergency financial assistance, mental health partnerships, 'Next Ridgeline' social network for SF veterans, Bennie Adkins Scholarship, and family care programs.",
@@ -1278,6 +1420,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-143",
     "name": "U.S. Army Ranger Association (USARA)",
     "category": "community",
     "description": "Ranger Assistance Fund, Michael B. Ranger Legacy Scholarship, Annual Ranger Muster, regional events, and mentorship programs for the Ranger community.",
@@ -1287,6 +1430,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-144",
     "name": "Three Rangers Foundation",
     "category": "employment",
     "description": "Transition counselors embedded at each Ranger Battalion providing mentorship, networking, education support, financial wellness, VA benefits assistance, and holistic fitness programs.",
@@ -1296,6 +1440,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-145",
     "name": "Army Ranger Lead The Way Fund",
     "category": "benefits",
     "description": "Wounded Warrior Grants ($3,500 immediate), Homes that Heal program, Collegiate Access Program, family readiness funding, and Gold Star wives assistance.",
@@ -1305,6 +1450,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-146",
     "name": "Sua Sponte Foundation",
     "category": "benefits",
     "description": "Rapid financial assistance during crisis, 1/75 Memorial maintenance, morale events, and emergency support. All-volunteer organization named after the 75th RR motto.",
@@ -1314,6 +1460,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-147",
     "name": "Night Stalker Association",
     "category": "community",
     "description": "College grants and loans, special financial assistance, camaraderie events, personal guidance, fallen soldier family support, and multiple regional chapters for 160th SOAR.",
@@ -1323,6 +1470,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-148",
     "name": "Night Stalker Foundation",
     "category": "community",
     "description": "Family Resiliency Programs, children scholarships, Gold Star family support, history preservation, and SOAR Family Collaborative for 160th SOAR families.",
@@ -1332,6 +1480,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-149",
     "name": "Navy SEAL Foundation",
     "category": "benefits",
     "description": "Educational programs (certificates up to $3K, school support up to $6K), mental health via Headstrong partnership, medical care, veteran assistance grants, and warrior care for NSW community.",
@@ -1341,6 +1490,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-150",
     "name": "UDT-SEAL Association",
     "category": "community",
     "description": "Veteran Support Program with VA navigation, scholarships for dependents, heritage programs, wellness programs, and brotherhood events for Naval Special Warfare community.",
@@ -1350,6 +1500,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-151",
     "name": "National Navy UDT-SEAL Museum",
     "category": "community",
     "description": "Trident House respite facility, scholarship programs (Marlee Foundation, Trident Tuition), K9 Project for veterans, and public education exhibits honoring Navy SEALs.",
@@ -1359,6 +1510,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-152",
     "name": "SEAL Legacy Foundation",
     "category": "education",
     "description": "Honored SEAL Legacy Scholarship ($5K annual), financial grants for health/living/childcare, mental health support via Home Base partnership, and Gold Star family support.",
@@ -1368,6 +1520,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-153",
     "name": "SEAL Future Foundation",
     "category": "employment",
     "description": "Lifetime career mentoring, networking groups, education/tuition assistance, traditional and alternative health support, and FOB community network for post-service SEALs.",
@@ -1377,6 +1530,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-154",
     "name": "SEAL Family Foundation",
     "category": "community",
     "description": "Quick response financial assistance, Spouse Third Location Decompression seminars, community building events, and Gold Star family support. 90%+ of funding goes to direct services.",
@@ -1386,6 +1540,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-155",
     "name": "C4 Foundation",
     "category": "medical",
     "description": "Nature-based therapeutic programs at 560-acre ranch in Southern California for Navy SEALs. Includes family decompression, spouse deployment support, and marriage counseling.",
@@ -1395,15 +1550,17 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-156",
     "name": "Combatant Craft Crewman Association",
     "category": "community",
-    "description": "Veteran and family support, history preservation, brotherhood advocacy, and fraternal events for SWCC operators \u2014 the only dedicated SWCC organization (1964-present).",
+    "description": "Veteran and family support, history preservation, brotherhood advocacy, and fraternal events for SWCC operators — the only dedicated SWCC organization (1964-present).",
     "eligibility": "SWCC operators and supporters.",
     "website": "https://combatantcraftcrewman.org/",
     "cost": "Membership dues",
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-157",
     "name": "Marine Raider Foundation",
     "category": "benefits",
     "description": "Raider Support (medical/equipment), Tragedy Assistance, Family Resiliency, Legacy Preservation (WWII Raiders), transition grants, wounded rehab, and childcare funding. $8.5M+ in support.",
@@ -1413,6 +1570,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-158",
     "name": "U.S. Marine Raider Association",
     "category": "community",
     "description": "History and tradition preservation for Marine Raiders (WWII and modern MARSOC), reunions/forums, artifact/museum maintenance, genealogical research support, and Raider registry.",
@@ -1422,6 +1580,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-159",
     "name": "Air Commando Association",
     "category": "community",
     "description": "Professional association for Air Force Special Operations (AFSOC) including Air Commando Journal, children/grandchildren scholarships, annual convention, and professional development.",
@@ -1431,6 +1590,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-160",
     "name": "Air Commando Foundation",
     "category": "benefits",
     "description": "Financial assistance for Air Commandos and families with unmet needs. Covers emergency aid, medical expenses, and family support for AFSOC community.",
@@ -1440,6 +1600,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-161",
     "name": "Combat Control Foundation",
     "category": "benefits",
     "description": "FT4 Wellness (critical injury aid), FT4 Resiliency (rent, home repair, medical travel), and FT4 Education (family scholarships) for the Combat Controller community.",
@@ -1449,6 +1610,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-162",
     "name": "Combat Control Association",
     "category": "community",
     "description": "Fraternal association for Combat Controllers providing reunions, heritage preservation, and community connections for active, retired, and former CCT operators.",
@@ -1458,6 +1620,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-163",
     "name": "Pararescue Association",
     "category": "community",
     "description": "Fraternal organization for Pararescuemen (PJ) and Combat Rescue Officers providing bi-annual reunions, PJ Rodeos, event sponsorship, and memorial funding.",
@@ -1467,6 +1630,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-164",
     "name": "Pararescue Foundation",
     "category": "medical",
     "description": "Resiliency programs addressing the extreme physical and psychological demands of PJ/CRO service. Evidence-based health programming, tragedy and transition assistance.",
@@ -1476,6 +1640,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-165",
     "name": "Special Operations Warrior Foundation",
     "category": "education",
     "description": "'Cradle to Career' full educational funding for children of ALL fallen SOF across every branch. Medal of Honor family support and immediate financial assistance to wounded SOF. Gold standard since 1980.",
@@ -1485,6 +1650,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-166",
     "name": "The Honor Foundation",
     "category": "employment",
     "description": "Three-month intensive executive education program (120 hrs) with career coaching and nationwide professional network. 7 campus locations + virtual. 97% alumni fulfillment rate.",
@@ -1494,6 +1660,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-167",
     "name": "Special Operators Transition Foundation",
     "category": "employment",
     "description": "Tailored transition programs for SOF leaders with individual and family support planning, private enterprise connections. 93-95% placement retention rate.",
@@ -1503,6 +1670,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-168",
     "name": "Operation Healing Forces",
     "category": "medical",
     "description": "Week-long therapeutic retreats for SOF couples, SOAR crisis support (financial help within 24hrs), wellness coaching, and caregiver retreats. Official USSOCOM Warrior Care partner.",
@@ -1512,6 +1680,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-169",
     "name": "Special Operations Care Fund (SOC-F)",
     "category": "medical",
     "description": "Cutting-edge treatments including MeRT therapy for trauma, psychedelic-assisted therapy for PTSD/TBI, substance abuse treatment, marriage intensives, and Gold Star family programs.",
@@ -1521,6 +1690,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-170",
     "name": "Special Operations Association of America",
     "category": "community",
     "description": "Fraternal organization providing professional networking with business and government leaders, memorial events, and zero-cost activities for SOF veterans across all branches.",
@@ -1530,6 +1700,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-171",
     "name": "Special Operations Fund (SOFund)",
     "category": "education",
     "description": "Educational scholarships ($3K/yr up to 3 yrs), preschool scholarships, and Phillips Exeter summer program ($10.7K). $19M+ granted since 1992 for Gold Star SOF families.",
@@ -1539,6 +1710,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-172",
     "name": "SOF Support Foundation",
     "category": "medical",
     "description": "Discrete mental health services, family support for unexpected challenges, and advocacy for public understanding of SOF-specific needs and sacrifices.",
@@ -1548,6 +1720,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-173",
     "name": "The Station Foundation",
     "category": "community",
     "description": "Family reconnection programs, Gold Star sons/daughters support, and legacy projects honoring fallen SOF warriors. Focuses on the often-overlooked SOF spouse and child population.",
@@ -1557,6 +1730,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-174",
     "name": "Navy Special Operations Foundation",
     "category": "community",
     "description": "Warrior care and resilience programs, family retreat events, transition resources, and memorial project for Navy EOD and Diver community.",
@@ -1566,6 +1740,7 @@
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-175",
     "name": "Order of the Daedalians",
     "category": "community",
     "description": "Fellowship organization for military aviators and pilots providing professional development, scholarships, and heritage preservation. Founded 1934.",
@@ -1575,6 +1750,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-176",
     "name": "Red River Valley Fighter Pilots Association",
     "category": "community",
     "description": "Camaraderie and professional networking for fighter pilots and aircrew, MIA/KIA family support, and scholarships. ~4,500 members. Founded 1967.",
@@ -1584,6 +1760,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-177",
     "name": "Army Aviation Association of America (Quad-A)",
     "category": "community",
     "description": "Premier Army aviation professional organization with annual summit, 35 national awards, 250+ scholarships/year, 78 chapters worldwide, and professional networking. 20,000+ members.",
@@ -1593,6 +1770,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-178",
     "name": "Naval Helicopter Association",
     "category": "community",
     "description": "Annual symposium (premier vertical lift gathering), mentorship, transition assistance, and NHA Scholarship Fund for Navy/Marine/Coast Guard rotary-wing and tiltrotor community. Founded 1971.",
@@ -1602,6 +1780,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-179",
     "name": "Combat Helicopter Pilots Association",
     "category": "community",
     "description": "Professional organization for combat helicopter pilots providing camaraderie, social and charitable activities. 501(c)(19). Founded 2005.",
@@ -1611,6 +1790,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-180",
     "name": "USMC Combat Helicopter & Tiltrotor Assn (Pop A Smoke)",
     "category": "community",
     "description": "Camaraderie preservation for Marine Corps helicopter/tiltrotor community with biennial reunions and member database. 5,700+ members.",
@@ -1620,6 +1800,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-181",
     "name": "Professional Loadmaster Association",
     "category": "community",
     "description": "Professional association for military loadmasters with newsletters (The LOADER 3x/yr), annual scholarships, chapter meetings, and professional networking.",
@@ -1629,15 +1810,17 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-182",
     "name": "EOD Warrior Foundation",
     "category": "benefits",
     "description": "Only organization dedicated to ALL EOD across all branches. Provides prosthetics and adaptive technology funding, children scholarships for fallen EOD, and quality of life improvements. Founded 2013.",
-    "eligibility": "EOD personnel and families (wounded, disabled, fallen) \u2014 all services.",
+    "eligibility": "EOD personnel and families (wounded, disabled, fallen) — all services.",
     "website": "https://eod-wf.org/",
     "cost": "Free",
     "sourceType": "SOF Organization"
   },
   {
+    "id": "res-183",
     "name": "Association of Former Intelligence Officers (AFIO)",
     "category": "community",
     "description": "Professional advocacy, educational programs, networking, and 24 active chapters for current and former intelligence professionals. 5,000 members. Founded 1975.",
@@ -1647,6 +1830,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-184",
     "name": "Air Force Security Forces Association",
     "category": "community",
     "description": "Professional development and pride preservation for Security Forces professionals with multiple chapters. 501(c)(19). Founded 1986.",
@@ -1656,6 +1840,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-185",
     "name": "USAF Police Alumni Association",
     "category": "community",
     "description": "Virtual museum, memorial, history preservation, reunions, and networking for Air Police, Security Police, and Security Forces alumni. Founded 2014.",
@@ -1665,6 +1850,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-186",
     "name": "Military Police Regimental Association",
     "category": "community",
     "description": "Quarterly 'Dragoon' magazine, MP museum at Ft Leonard Wood, scholarships, MPRAid benevolent fund, Order of the Marechaussee awards, and 10% gift shop discount.",
@@ -1674,6 +1860,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-187",
     "name": "Retired Military Police Officers Association",
     "category": "community",
     "description": "Free membership directory, periodic digest publication, annual reunion, and informal networking. Completely volunteer-run with no bureaucracy.",
@@ -1683,6 +1870,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-188",
     "name": "Military Chaplains Association",
     "category": "community",
     "description": "Professional development, networking, educational forum, and advocacy for military chaplains across all branches. Database of 8,600+ chaplains.",
@@ -1692,6 +1880,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-189",
     "name": "U.S. Army Chaplain Corps Regimental Association",
     "category": "community",
     "description": "Scholarship programs, networking chapters, and chaplain resources for the Army Chaplain Corps community.",
@@ -1701,6 +1890,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-190",
     "name": "Judge Advocates Association",
     "category": "legal",
     "description": "Networking events, education programs, 'Jobs for JAGs' transition seminar, and ABA affiliation for military legal professionals across all branches.",
@@ -1710,6 +1900,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-191",
     "name": "Association of Military Legal Administrators",
     "category": "legal",
     "description": "Teaching, coaching, mentoring, leadership development, transition assistance, veteran success program, and scholarships for military legal administrators.",
@@ -1719,6 +1910,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-192",
     "name": "Association of Quartermasters",
     "category": "community",
     "description": "Professional development, mentoring tools, esprit de corps building, and Colonel Alexander Davis Memorial Scholarship Fund for the Quartermaster community.",
@@ -1728,6 +1920,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-193",
     "name": "Civil Affairs Association",
     "category": "community",
     "description": "Professional networking, education/training links, business opportunities, 1-year AUSA membership, publications, and research library for Civil Affairs professionals.",
@@ -1737,6 +1930,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-194",
     "name": "U.S. Army PSYOP Veterans Association (POVA)",
     "category": "community",
     "description": "Only organization for the PSYOP/MISO community. Reconnection, reunions, philanthropic support, historical recognition, and resource preservation. Free for active duty.",
@@ -1746,6 +1940,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-195",
     "name": "AFCEA International",
     "category": "employment",
     "description": "138 chapters worldwide, SIGNAL magazine, $2M annual scholarships/grants, training/certification discounts, and major networking events for comms/cyber/intel professionals.",
@@ -1755,6 +1950,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-196",
     "name": "Air Traffic Control Association",
     "category": "community",
     "description": "Civil-military networking, CMAC summits, and professional development for air traffic controllers and aviation professionals. Founded 1956.",
@@ -1764,6 +1960,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-197",
     "name": "Army Engineer Association",
     "category": "community",
     "description": "Professional development, networking, Career Bridge Program for civilian opportunities, events, and publications for Army engineer community.",
@@ -1773,6 +1970,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-198",
     "name": "Sapper Association",
     "category": "community",
     "description": "Essayons scholarships, Sapper Hall of Fame, history preservation, and member discounts. Gold Star families receive free membership.",
@@ -1782,6 +1980,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-199",
     "name": "United States Field Artillery Association",
     "category": "community",
     "description": "Field Artillery Journal (quarterly), 65 worldwide chapters, blogs, podcasts, Order of Molly Pitcher and Order of Saint Barbara awards for Field Artillery.",
@@ -1791,6 +1990,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-200",
     "name": "National Infantry Association",
     "category": "community",
     "description": "Infantry camaraderie, resource connections, Order of Saint Maurice awards, National Infantry Museum support, and Infantry Bugler quarterly publication.",
@@ -1800,6 +2000,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-201",
     "name": "U.S. Cavalry and Armor Association",
     "category": "community",
     "description": "Armor magazine (professional journal), 6,000+ worldwide membership, professional development, and traditions preservation for Armor and Cavalry.",
@@ -1809,6 +2010,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-202",
     "name": "Blackhorse Association (11th ACR)",
     "category": "community",
     "description": "Free AUSA membership, exclusive scholarships for families, national reunions, family support, and history preservation. Free membership for all eligible members.",
@@ -1818,6 +2020,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-203",
     "name": "Corpsman.com Community",
     "category": "community",
     "description": "Online community for Navy Corpsmen providing networking, information sharing, and career resources for current and former corpsmen.",
@@ -1827,6 +2030,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-204",
     "name": "IAFF Federal & Military Fire Services",
     "category": "community",
     "description": "Union representation, networking, and collective voice for federal and military fire personnel with professional standards advocacy.",
@@ -1836,6 +2040,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-205",
     "name": "Air & Space Forces Association",
     "category": "community",
     "description": "Scholarships, wounded warrior grants, Medicare support, professional development, and member discounts for Air Force and Space Force community.",
@@ -1845,6 +2050,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-206",
     "name": "Association of the United States Army (AUSA)",
     "category": "community",
     "description": "ARMY Magazine, professional development publications, networking events, and advocacy for the entire Army community across all career fields.",
@@ -1854,6 +2060,7 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-207",
     "name": "Navy League of the United States",
     "category": "community",
     "description": "Networking, scholarships for families, veteran employment support, and 245+ councils worldwide for sea service members and veterans. Founded 1902.",
@@ -1863,15 +2070,17 @@
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-208",
     "name": "Non Commissioned Officers Association",
     "category": "benefits",
     "description": "Scholarships ($1.3M since 1970), Capitol Hill advocacy, and quality of life improvements for enlisted and NCO community across all branches. Founded 1960.",
-    "eligibility": "Current, separated, retired enlisted (honorable discharge) \u2014 all branches.",
+    "eligibility": "Current, separated, retired enlisted (honorable discharge) — all branches.",
     "website": "https://www.ncoausa.org/",
     "cost": "Membership dues",
     "sourceType": "Professional Association"
   },
   {
+    "id": "res-209",
     "name": "Enlisted Association of the National Guard (EANGUS)",
     "category": "benefits",
     "description": "Capitol Hill and Pentagon advocacy, member benefits partnerships, and 55 state/territory associations for National Guard enlisted members.",
@@ -1881,7 +2090,8 @@
     "sourceType": "Professional Association"
   },
   {
-    "name": "Amputee Coalition \u2014 National Peer Network",
+    "id": "res-210",
+    "name": "Amputee Coalition — National Peer Network",
     "category": "equipment",
     "description": "Largest peer support network for amputees and limb difference veterans. Provides peer visitor programs, national helpline, resource guides, and clinical care referrals. Also hosts National Conference with veteran-specific programming.",
     "eligibility": "Veterans and civilians with limb loss or limb difference. No cost to access peer support or resources.",
@@ -1890,15 +2100,17 @@
     "sourceType": "Nonprofit"
   },
   {
-    "name": "Challenged Athletes Foundation (CAF) \u2014 Equipment Grants",
+    "id": "res-211",
+    "name": "Challenged Athletes Foundation (CAF) — Equipment Grants",
     "category": "equipment",
     "description": "Provides equipment grants to veterans and athletes with physical disabilities for high-performance prosthetics, racing wheelchairs, handcycles, adaptive sports gear, and recreational equipment beyond what VA covers.",
-    "eligibility": "Veterans and athletes with physical disabilities. Grant amounts vary; typically $1,000\u2013$10,000 for adaptive sports equipment.",
+    "eligibility": "Veterans and athletes with physical disabilities. Grant amounts vary; typically $1,000–$10,000 for adaptive sports equipment.",
     "website": "https://www.challengedathletes.org/apply-for-funding/",
     "cost": "Free (grant funding)",
     "sourceType": "Nonprofit"
   },
   {
+    "id": "res-212",
     "name": "Orthotic & Prosthetic Activities Foundation (OPAF)",
     "category": "equipment",
     "description": "Provides direct financial assistance and prosthetic care access to veterans and civilians with limb loss. Partners with O&P clinicians nationally to offset patient costs and facilitate access to advanced prosthetic technology.",
@@ -1908,25 +2120,28 @@
     "sourceType": "Nonprofit"
   },
   {
-    "name": "Space-A Travel \u2014 Military Airlift Flights",
+    "id": "res-213",
+    "name": "Space-A Travel — Military Airlift Flights",
     "category": "benefits",
     "description": "Department of Defense program (Space Available/Space-A) allowing retired veterans, their families, and certain reservists to fly free or low-cost on military aircraft when seats are available. Over 40 CONUS and OCONUS terminals. International flights including Europe, Pacific, and Hawaii regularly available.",
     "eligibility": "Retired veterans (20+ years), 100% P&T disabled veterans, Medal of Honor recipients, and active duty on leave. Dependents may travel unaccompanied for retired category.",
     "website": "https://www.amc.af.mil/Home/AMC-Travel-Site/",
-    "cost": "Free (pay only taxes/fees, typically $5\u2013$50 per flight)",
+    "cost": "Free (pay only taxes/fees, typically $5–$50 per flight)",
     "sourceType": "Government"
   },
   {
+    "id": "res-214",
     "name": "Armed Forces Recreation Centers (AFRC)",
     "category": "benefits",
-    "description": "DOD-operated resort hotels at premium locations worldwide: Shades of Green (Walt Disney World, FL), Hale Koa Hotel (Waikiki, HI), Dragon Hill Lodge (Seoul, Korea), and Edelweiss Lodge & Resort (Bavaria, Germany). Rates 60\u201380% below comparable civilian hotels.",
+    "description": "DOD-operated resort hotels at premium locations worldwide: Shades of Green (Walt Disney World, FL), Hale Koa Hotel (Waikiki, HI), Dragon Hill Lodge (Seoul, Korea), and Edelweiss Lodge & Resort (Bavaria, Germany). Rates 60–80% below comparable civilian hotels.",
     "eligibility": "Active duty, retired military, DoD civilians, and veterans in some categories. Priority by military status category.",
     "website": "https://www.afrc.com/",
-    "cost": "Paid (60\u201380% below civilian rates)",
+    "cost": "Paid (60–80% below civilian rates)",
     "sourceType": "Government"
   },
   {
-    "name": "Veterans Airlift Command \u2014 Free Medical Flights",
+    "id": "res-215",
+    "name": "Veterans Airlift Command — Free Medical Flights",
     "category": "medical",
     "description": "Nonprofit coordinating free long-distance air transportation for post-9/11 combat wounded, ill, and injured veterans and their families traveling to medical appointments, treatment facilities, or rehabilitation centers.",
     "eligibility": "Post-9/11 combat-related wounded, ill, or injured veterans rated 50%+ or on active medical status. Travel must be for medical purposes.",
