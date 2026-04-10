@@ -22,6 +22,8 @@
     FAMILY_SURVIVOR:       'family-survivor-support',  // Phase 38
     EMPLOYMENT_TRANSITION: 'next-action-planner',      // Phase 39
     LEGAL_DOCUMENTS:       'document-analyzer',        // Phase 39
+    EDUCATION:             'education-benefits',       // Phase R5
+    PACT_ACT:              'pact-act-toxic-exposure',  // Phase R5.3
     GENERAL_QUESTION:      null   // no skill — handled by core prompt
   };
 
@@ -41,6 +43,8 @@
     NEXT_STEP:             '/hidden-benefits.html?auto=1&goal=see_everything',
     EMPLOYMENT_TRANSITION: '/contractor-careers.html?auto=1&goal=get_hired',
     FAMILY_SURVIVOR:       '/hidden-benefits.html?auto=1&goal=see_everything',
+    EDUCATION:             '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5
+    PACT_ACT:              '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.3
     LEGAL_DOCUMENTS:       null,
     DOCUMENT_ANALYSIS:     null,
     CRISIS_SUPPORT:        null,   // safety flow — never include execution links
@@ -176,23 +180,61 @@
         'va 21-', '21-526', '21-4142', '21-0781'
       ]
     },
+    // ── Education / GI Bill (Phase R5) ──────────────────────
+    // Dedicated education skill — intercepts education keywords before
+    // they dissolve into the generic benefits path. Covers GI Bill
+    // chapters, VR&E, VET TEC, school selection, entitlement questions.
+    {
+      intent: 'EDUCATION',
+      keywords: [
+        'gi bill', 'education benefits', 'chapter 33', 'chapter 31',
+        'vocational rehabilitation', 'vocational rehab', 'vr&e',
+        'yellow ribbon', 'fry scholarship', 'vet tec', 'vettec',
+        'going back to school', 'go back to school',
+        'want to go to school', 'want to go to college',
+        'paying for school', 'finish my degree', 'tuition assistance',
+        'stem scholarship', 'book stipend', 'school benefit',
+        'post 9/11 gi bill', 'montgomery gi bill', 'chapter 30',
+        'education entitlement', 'gi bill transfer', 'transfer gi bill',
+        'gi bill housing allowance', 'bah for school',
+        'certification program', 'certification', 'trade school benefits',
+        'apprenticeship program', 'ojt benefits',
+        'housing allowance'
+      ]
+    },
+    // ── PACT Act / Toxic Exposure (Phase R5.3) ───────────
+    // Dedicated toxic exposure skill — intercepts PACT Act and
+    // toxic exposure keywords before they dissolve into the generic
+    // benefits path. Must sit before BENEFITS_DISCOVERY.
+    {
+      intent: 'PACT_ACT',
+      keywords: [
+        // Core PACT Act terms
+        'pact act', 'toxic exposure', 'burn pit', 'burn pits',
+        'agent orange', 'blue water navy', 'thailand exposure',
+        'camp lejeune', 'gulf war illness', 'gulf war syndrome',
+        'radiation exposure', 'atomic veteran', 'toxic water',
+        'chemical exposure', 'airborne hazards', 'particulate matter',
+        'smoke exposure',
+        // Plain-language veteran phrasing
+        'exposed to burn pits', 'exposed to agent orange',
+        'was at camp lejeune', 'served in vietnam and got sick',
+        'served in thailand and got sick', 'exposed to radiation',
+        'toxic stuff in service', 'burn pit registry',
+        'toxic exposure screening'
+      ]
+    },
     // ── Benefits discovery — broadest catch-all ───────────
-    // Phase 39: expanded with education (GI Bill / VR&E) and
-    // housing (VA loan, HUD-VASH, rental assistance) keyword sets
-    // so these don't fall silently to GENERAL_QUESTION.
+    // Phase 39: expanded with housing (VA loan, HUD-VASH, rental
+    // assistance) keyword sets. Education keywords moved to EDUCATION
+    // intent above in Phase R5.
     {
       intent: 'BENEFITS_DISCOVERY',
       keywords: [
         'benefits', 'eligible', 'qualify', 'entitled', 'what can i get',
-        'what am i eligible', 'gi bill', 'education benefits', 'healthcare',
+        'what am i eligible', 'healthcare',
         'housing', 'va loan', 'pension', 'aid and attendance',
-        'caregiver', 'vocational rehab', 'vr&e', 'vet center',
-        // Phase 39 — education / GI Bill
-        'chapter 33', 'chapter 31', 'vocational rehabilitation',
-        'yellow ribbon', 'fry scholarship', 'vet tec', 'vettec',
-        'going back to school', 'want to go to school', 'want to go to college',
-        'paying for school', 'finish my degree', 'tuition assistance',
-        'stem scholarship', 'book stipend', 'school benefit',
+        'caregiver', 'vet center',
         // Phase 39 — housing (non-crisis)
         'help with rent', 'rental assistance', 'hud-vash', 'hud vash', 'ssvf',
         'va home loan', 'adapted housing', 'housing grant',
