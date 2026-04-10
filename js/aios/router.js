@@ -16,6 +16,7 @@
     AT_RISK_SUPPORT:       'crisis-support',       // Phase 22: same skill, AT_RISK tier
     BENEFITS_DISCOVERY:    'benefit-path-finder',
     DISABILITY_CLAIM:      'va-disability-claim',
+    TDIU:                  'tdiu',                           // Phase R5.8
     STATE_BENEFITS:        'state-benefits',
     NEXT_STEP:             'next-action-planner',
     DOCUMENT_ANALYSIS:     'document-analyzer',
@@ -42,6 +43,7 @@
   var EXECUTION_URLS = {
     BENEFITS_DISCOVERY:    '/hidden-benefits.html?auto=1&goal=see_everything',
     DISABILITY_CLAIM:      '/hidden-benefits.html?auto=1&goal=see_everything',
+    TDIU:                  '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.8
     STATE_BENEFITS:        '/hidden-benefits.html?auto=1&goal=see_everything',
     NEXT_STEP:             '/hidden-benefits.html?auto=1&goal=see_everything',
     EMPLOYMENT_TRANSITION: '/contractor-careers.html?auto=1&goal=get_hired',
@@ -81,6 +83,39 @@
         'statement in support of claim', 'intent to file',
         'notice of disagreement', 'substantive appeal',
         'informal hearing presentation'
+      ]
+    },
+    // ── TDIU / Individual Unemployability (Phase R5.8) ────
+    // Checked immediately after DISABILITY_CLAIM. TDIU phrases
+    // are distinct from generic claim language — specific work
+    // incapacity, form numbers, and unemployability terms ensure
+    // no collision with DISABILITY_CLAIM above or EMPLOYMENT_TRANSITION below.
+    {
+      intent: 'TDIU',
+      keywords: [
+        // Core TDIU terms
+        'tdiu', 'individual unemployability', 'unemployability',
+        'total disability based on individual unemployability',
+        'substantially gainful employment',
+        // Work incapacity — TDIU-specific phrasing
+        'cannot work because of my disabilities',
+        "can't work because of my disabilities",
+        'cannot keep a job because of my disabilities',
+        "can't keep a job because of my disabilities",
+        'i cannot work because of my service connected conditions',
+        'i had to stop working because of my conditions',
+        'i was fired because of my service connected disabilities',
+        'i only work part time because of my disabilities',
+        'i work in a protected job',
+        // Employment situation terms
+        'marginal employment', 'sheltered employment',
+        'family business because of my disabilities',
+        // Forms
+        '21-8940', '21-4192',
+        // Decision / filing language
+        'i was denied tdiu', 'should i file for tdiu',
+        'file for tdiu', 'apply for tdiu', 'tdiu claim',
+        'tdiu denied', 'denied tdiu', 'unemployability claim'
       ]
     },
     // ── State benefits ────────────────────────────────────
