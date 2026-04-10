@@ -26,6 +26,7 @@
     PACT_ACT:              'pact-act-toxic-exposure',  // Phase R5.3
     VA_HEALTHCARE:         'va-healthcare',             // Phase R5.4
     HOUSING_SUPPORT:       'housing-benefits',          // Phase R5.5
+    MENTAL_HEALTH:         'mental-health',             // Phase R5.6
     GENERAL_QUESTION:      null   // no skill — handled by core prompt
   };
 
@@ -49,6 +50,7 @@
     PACT_ACT:              '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.3
     VA_HEALTHCARE:         '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.4
     HOUSING_SUPPORT:       '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.5
+    MENTAL_HEALTH:         '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.6
     LEGAL_DOCUMENTS:       null,
     DOCUMENT_ANALYSIS:     null,
     CRISIS_SUPPORT:        null,   // safety flow — never include execution links
@@ -233,7 +235,9 @@
     // priority group, Vet Center, dental, community care, and mental
     // health access keywords before they dissolve into BENEFITS_DISCOVERY.
     // Must sit before BENEFITS_DISCOVERY. 'healthcare' and 'vet center'
-    // removed from BENEFITS_DISCOVERY to prevent overlap.
+    // removed from BENEFITS_DISCOVERY to prevent overlap. Mental health
+    // phrases ('vet center', 'va mental health', 'therapy through the va',
+    // 'counseling through the va') moved to MENTAL_HEALTH in Phase R5.6.
     {
       intent: 'VA_HEALTHCARE',
       keywords: [
@@ -242,14 +246,13 @@
         'enroll in va health care', 'va medical', 'va hospital',
         'va clinic', 'priority group', 'va enrollment', '10-10ez',
         // Care access types
-        'vet center', 'therapy through the va', 'counseling through the va',
-        'va mental health', 'va dental', 'community care', 'urgent care', 'urgent care va',
+        'va dental', 'community care', 'urgent care', 'urgent care va',
         'women veteran care', 'woman veteran', 'primary care through va',
         // Plain-language phrasing
         'can i get va healthcare', 'how do i get va healthcare',
-        'how do i sign up for the va', 'can i get therapy from the va',
+        'how do i sign up for the va',
         'can i use community care', 'can i get va dental',
-        'what priority group am i', 'can i go to a vet center'
+        'what priority group am i'
       ]
     },
     // ── Housing / VA Home Loan (Phase R5.5) ──────────────
@@ -280,11 +283,47 @@
         'i am living in my car'
       ]
     },
+    // ── Mental Health / Non-Crisis (Phase R5.6) ────────────
+    // Dedicated mental health skill — intercepts PTSD, anxiety,
+    // depression, counseling, therapy, Vet Center, and trauma
+    // keywords before they dissolve into BENEFITS_DISCOVERY.
+    // Does NOT include suicidal phrases — CRISIS intercepts first.
+    // Mental-health phrases removed from VA_HEALTHCARE below.
+    {
+      intent: 'MENTAL_HEALTH',
+      keywords: [
+        // PTSD and trauma
+        'ptsd', 'post-traumatic stress', 'post traumatic stress',
+        'flashbacks', 'flashback', 'trauma', 'combat trauma',
+        'combat stress', 'hypervigilant', 'hypervigilance',
+        'intrusive thoughts', 'moral injury',
+        // Mood disorders
+        'depression', 'depressed', 'anxiety', 'anxious',
+        'panic attacks', 'panic attack', 'stress', 'overwhelmed',
+        // Sleep
+        'nightmares', 'insomnia', "can't sleep", 'trouble sleeping',
+        'sleep problems', 'not sleeping',
+        // MST
+        'military sexual trauma', 'mst', 'sexual assault',
+        'sexual harassment',
+        // Care-seeking
+        'counseling', 'therapy', 'therapist',
+        'talk to someone', 'need to talk', 'someone to talk to',
+        'mental health', 'mental health help', 'mental health support',
+        'vet center',
+        // Plain-language phrasing
+        'i need someone to talk to', 'i am struggling mentally',
+        'i feel overwhelmed', 'i cannot sleep',
+        'i keep having nightmares', 'i am anxious all the time',
+        'i feel depressed', 'i need counseling', 'i want therapy'
+      ]
+    },
     // ── Benefits discovery — broadest catch-all ───────────
     // Phase 39: expanded with housing keyword sets. Education keywords
     // moved to EDUCATION in Phase R5. Healthcare / vet center moved to
     // VA_HEALTHCARE in Phase R5.4. Housing keywords moved to
-    // HOUSING_SUPPORT in Phase R5.5.
+    // HOUSING_SUPPORT in Phase R5.5. Mental health phrases moved to
+    // MENTAL_HEALTH in Phase R5.6.
     {
       intent: 'BENEFITS_DISCOVERY',
       keywords: [
