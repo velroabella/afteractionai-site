@@ -24,6 +24,7 @@
     LEGAL_DOCUMENTS:       'document-analyzer',        // Phase 39
     EDUCATION:             'education-benefits',       // Phase R5
     PACT_ACT:              'pact-act-toxic-exposure',  // Phase R5.3
+    VA_HEALTHCARE:         'va-healthcare',             // Phase R5.4
     GENERAL_QUESTION:      null   // no skill — handled by core prompt
   };
 
@@ -45,6 +46,7 @@
     FAMILY_SURVIVOR:       '/hidden-benefits.html?auto=1&goal=see_everything',
     EDUCATION:             '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5
     PACT_ACT:              '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.3
+    VA_HEALTHCARE:         '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.4
     LEGAL_DOCUMENTS:       null,
     DOCUMENT_ANALYSIS:     null,
     CRISIS_SUPPORT:        null,   // safety flow — never include execution links
@@ -224,17 +226,42 @@
         'toxic exposure screening'
       ]
     },
+    // ── VA Healthcare Enrollment (Phase R5.4) ─────────────
+    // Dedicated healthcare skill — intercepts VA healthcare, enrollment,
+    // priority group, Vet Center, dental, community care, and mental
+    // health access keywords before they dissolve into BENEFITS_DISCOVERY.
+    // Must sit before BENEFITS_DISCOVERY. 'healthcare' and 'vet center'
+    // removed from BENEFITS_DISCOVERY to prevent overlap.
+    {
+      intent: 'VA_HEALTHCARE',
+      keywords: [
+        // Core enrollment / access terms
+        'va healthcare', 'va health care', 'enroll in va healthcare',
+        'enroll in va health care', 'va medical', 'va hospital',
+        'va clinic', 'priority group', 'va enrollment', '10-10ez',
+        // Care access types
+        'vet center', 'therapy through the va', 'counseling through the va',
+        'va mental health', 'va dental', 'community care', 'urgent care', 'urgent care va',
+        'women veteran care', 'woman veteran', 'primary care through va',
+        // Plain-language phrasing
+        'can i get va healthcare', 'how do i get va healthcare',
+        'how do i sign up for the va', 'can i get therapy from the va',
+        'can i use community care', 'can i get va dental',
+        'what priority group am i', 'can i go to a vet center'
+      ]
+    },
     // ── Benefits discovery — broadest catch-all ───────────
     // Phase 39: expanded with housing (VA loan, HUD-VASH, rental
     // assistance) keyword sets. Education keywords moved to EDUCATION
-    // intent above in Phase R5.
+    // intent above in Phase R5. Healthcare / vet center moved to
+    // VA_HEALTHCARE intent above in Phase R5.4.
     {
       intent: 'BENEFITS_DISCOVERY',
       keywords: [
         'benefits', 'eligible', 'qualify', 'entitled', 'what can i get',
-        'what am i eligible', 'healthcare',
+        'what am i eligible',
         'housing', 'va loan', 'pension', 'aid and attendance',
-        'caregiver', 'vet center',
+        'caregiver',
         // Phase 39 — housing (non-crisis)
         'help with rent', 'rental assistance', 'hud-vash', 'hud vash', 'ssvf',
         'va home loan', 'adapted housing', 'housing grant',
