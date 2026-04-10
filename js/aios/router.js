@@ -25,6 +25,7 @@
     EDUCATION:             'education-benefits',       // Phase R5
     PACT_ACT:              'pact-act-toxic-exposure',  // Phase R5.3
     VA_HEALTHCARE:         'va-healthcare',             // Phase R5.4
+    HOUSING_SUPPORT:       'housing-benefits',          // Phase R5.5
     GENERAL_QUESTION:      null   // no skill — handled by core prompt
   };
 
@@ -47,6 +48,7 @@
     EDUCATION:             '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5
     PACT_ACT:              '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.3
     VA_HEALTHCARE:         '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.4
+    HOUSING_SUPPORT:       '/hidden-benefits.html?auto=1&goal=see_everything',  // Phase R5.5
     LEGAL_DOCUMENTS:       null,
     DOCUMENT_ANALYSIS:     null,
     CRISIS_SUPPORT:        null,   // safety flow — never include execution links
@@ -250,23 +252,45 @@
         'what priority group am i', 'can i go to a vet center'
       ]
     },
+    // ── Housing / VA Home Loan (Phase R5.5) ──────────────
+    // Dedicated housing skill — intercepts VA home loan, rental
+    // assistance, homelessness, and housing instability keywords
+    // before they dissolve into BENEFITS_DISCOVERY. Hard domain
+    // split enforced in skill: loan path ≠ crisis/rent path.
+    // Housing phrases removed from BENEFITS_DISCOVERY below.
+    {
+      intent: 'HOUSING_SUPPORT',
+      keywords: [
+        // VA home loan / ownership
+        'va loan', 'va home loan', 'mortgage', 'refinance',
+        'coe', 'certificate of eligibility', 'funding fee',
+        'buy a house', 'buy a home', 'home loan',
+        // Housing instability
+        'behind on rent', 'rent help', 'rental assistance',
+        'eviction', 'eviction notice', 'notice to vacate',
+        'homeless', 'housing help', 'housing assistance',
+        'living in my car', 'no place to stay',
+        'transitional housing', 'hud-vash', 'ssvf', 'gpd',
+        'foreclosure',
+        // Plain-language phrasing
+        'can i use a va loan', 'can i buy a house with a va loan',
+        'i am behind on rent', 'i might get evicted',
+        'i am homeless', 'i need housing help',
+        'i need help paying rent', 'i need transitional housing',
+        'i am living in my car'
+      ]
+    },
     // ── Benefits discovery — broadest catch-all ───────────
-    // Phase 39: expanded with housing (VA loan, HUD-VASH, rental
-    // assistance) keyword sets. Education keywords moved to EDUCATION
-    // intent above in Phase R5. Healthcare / vet center moved to
-    // VA_HEALTHCARE intent above in Phase R5.4.
+    // Phase 39: expanded with housing keyword sets. Education keywords
+    // moved to EDUCATION in Phase R5. Healthcare / vet center moved to
+    // VA_HEALTHCARE in Phase R5.4. Housing keywords moved to
+    // HOUSING_SUPPORT in Phase R5.5.
     {
       intent: 'BENEFITS_DISCOVERY',
       keywords: [
         'benefits', 'eligible', 'qualify', 'entitled', 'what can i get',
         'what am i eligible',
-        'housing', 'va loan', 'pension', 'aid and attendance',
-        'caregiver',
-        // Phase 39 — housing (non-crisis)
-        'help with rent', 'rental assistance', 'hud-vash', 'hud vash', 'ssvf',
-        'va home loan', 'adapted housing', 'housing grant',
-        'transitional housing', 'mortgage assistance',
-        'homeless veteran program',
+        'pension', 'aid and attendance', 'caregiver',
         // Phase 7B: financial distress phrases missed in sample validation
         'help paying', 'paying bills', 'pay my bills', 'struggling financially',
         'financial assistance', 'money help', 'need money', 'help with bills',
@@ -295,11 +319,7 @@
   var AT_RISK_KEYWORDS = [
     'losing my home', 'losing my house', 'about to lose my home',
     'facing eviction', 'being evicted', 'got evicted', 'getting evicted',
-    'foreclosure', "can't pay rent", "can't afford rent",
-    'behind on rent', 'behind on my mortgage',
-    'living in my car', 'sleeping in my car', 'sleeping outside',
-    'no place to live', "i'm homeless", 'i am homeless',
-    'became homeless', 'just lost my housing',
+    'sleeping outside',
     "can't pay my bills", "can't afford food", "can't afford to eat",
     'behind on bills', 'about to lose everything', 'losing everything',
     'completely alone', 'no one to turn to',
