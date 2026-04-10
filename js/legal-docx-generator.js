@@ -1635,40 +1635,278 @@
     ];
   }
 
+  /* ---------- PHASE 4: RESUME DATA VALIDATION --------------------------------
+     Checks completeness before any document is built.
+     Returns { valid: boolean, issues: string[] }.
+     ---------------------------------------------------------------- */
+  function validateResumeData(data) {
+    var _vPh     = '[NOT PROVIDED]';
+    var issues   = [];
+
+    // Rule 1 — Core identity: must have a real name
+    if (!data.fullName || data.fullName === _vPh) {
+      issues.push('Name is missing');
+    }
+
+    // Rule 2 — Contact: must have at least one of email or phone
+    var _hasEmail = data.email && data.email.length > 0;
+    var _hasPhone = data.phone && data.phone.length > 0;
+    if (!_hasEmail && !_hasPhone) {
+      issues.push('Contact information is missing (no email or phone provided)');
+    }
+
+    // Rule 3 — Experience: at least one experience field must be present
+    var _hasAccomp  = data.accomplishments   && data.accomplishments.length   > 0;
+    var _hasExpSum  = data.experienceSummary && data.experienceSummary.length > 0;
+    var _hasPrior   = data.priorRoles        && data.priorRoles.length        > 0;
+    if (!_hasAccomp && !_hasExpSum && !_hasPrior) {
+      issues.push('Experience details are missing (no accomplishments, experience summary, or prior roles found)');
+    }
+
+    // Rule 4 — Skills: must have at least 3 meaningful skill terms
+    var _skillTerms = [];
+    if (data.keySkills && data.keySkills !== _vPh) {
+      _skillTerms = data.keySkills.split(/[|,;]/)
+        .map(function(s) { return s.trim(); })
+        .filter(function(s) { return s.length >= 2; });
+    }
+    if (_skillTerms.length < 3) {
+      issues.push('Skills are insufficient (fewer than 3 skill terms identified — add more to your profile)');
+    }
+
+    return { valid: issues.length === 0, issues: issues };
+  }
+
+  /* ---------- PHASE 5: RESUME AUTO-FILL BRIDGE --------------------------------
+     Attempts to derive missing fields from existing data before validation.
+     Returns a shallow-copy enriched object. Never mutates the original.
+     Never guesses contact info. Only transforms data already present.
+     ---------------------------------------------------------------- */
+  function attemptResumeAutoFill(data) {
+    // Shallow copy — do not mutate the caller's object
+    var d = {};
+    for (var _k in data) {
+      if (Object.prototype.hasOwnProperty.call(data, _k)) d[_k] = data[_k];
+    }
+    var _afPh = '[NOT PROVIDED]';
+
+    // ── Experience: derive accomplishments from experienceSummary or priorRoles ──
+    if (!d.accomplishments) {
+      if (d.experienceSummary && d.experienceSummary.length > 0) {
+        // Sentence-split experienceSummary into 1–2 bullet-ready strings
+        var _afSentences = d.experienceSummary
+          .replace(/\.\s+/g, '.|')
+          .split('|')
+          .map(function(s) { return s.trim().replace(/\.$/, ''); })
+          .filter(function(s) { return s.length > 10; })
+          .slice(0, 2);
+        if (_afSentences.length > 0) {
+          d.accomplishments = _afSentences.join(' | ');
+        }
+      } else if (d.priorRoles && d.priorRoles.length > 0) {
+        // Convert priorRoles into a minimal accomplishment-style string
+        d.accomplishments = 'Previous role: ' + d.priorRoles;
+      }
+    }
+
+    // ── Skills: build from certifications → awards → MOS → branch map ──
+    var _afSkillCount = 0;
+    if (d.keySkills && d.keySkills !== _afPh) {
+      _afSkillCount = d.keySkills.split(/[|,;]/)
+        .map(function(s) { return s.trim(); })
+        .filter(function(s) { return s.length >= 2; }).length;
+    }
+
+    if (_afSkillCount < 3) {
+      var _extra = [];
+
+      // Source 1 — certifications: each term is a direct skill signal
+      if (d.certifications && d.certifications.length > 0) {
+        var _cTerms = d.certifications.split(/[|,;\n]/)
+          .map(function(s) { return s.trim(); })
+          .filter(function(s) { return s.length >= 2 && s.length < 60; })
+          .slice(0, 4);
+        for (var _ci = 0; _ci < _cTerms.length; _ci++) _extra.push(_cTerms[_ci]);
+      }
+
+      // Source 2 — awards: short terms only (skip long generic award names)
+      if (d.awards && d.awards.length > 0 && _extra.length < 4) {
+        var _aTerms = d.awards.split(/[,;\n]/)
+          .map(function(s) { return s.trim(); })
+          .filter(function(s) { return s.length >= 3 && s.length < 40; })
+          .slice(0, 2);
+        for (var _ai2 = 0; _ai2 < _aTerms.length; _ai2++) _extra.push(_aTerms[_ai2]);
+      }
+
+      // Source 3 — MOS: extract the plain-English descriptor after the code prefix
+      if (d.mos && d.mos !== _afPh && _extra.length < 4) {
+        var _mosDesc = d.mos.replace(/^\d+[A-Za-z]?\d*\s*[-–]\s*/, '').trim();
+        if (_mosDesc.length > 2) _extra.push(_mosDesc);
+      }
+
+      // Source 4 — branch map: deterministic fallback terms per service branch
+      if (_extra.length < 3) {
+        var _branchMap = {
+          'army':         'Leadership | Operations Management | Logistics | Mission Planning | Training',
+          'navy':         'Maritime Operations | Leadership | Navigation | Team Development | Communications',
+          'air force':    'Aviation Operations | Leadership | Technical Systems | Mission Planning | Communications',
+          'marine corps': 'Combat Operations | Leadership | Logistics | Mission Planning | Training',
+          'coast guard':  'Maritime Law Enforcement | Leadership | Search and Rescue | Navigation | Communications',
+          'space force':  'Space Operations | Technical Systems | Leadership | Communications | Mission Planning'
+        };
+        var _bKey = (d.branch || '').toLowerCase().trim();
+        var _bSkills = _branchMap[_bKey] ||
+          'Leadership | Operations Management | Team Development | Mission Planning | Communications';
+        var _bTerms = _bSkills.split(' | ');
+        for (var _bi = 0; _bi < _bTerms.length; _bi++) _extra.push(_bTerms[_bi]);
+      }
+
+      // Merge existing keySkills with derived extras, deduplicated, maintain order
+      var _base = (d.keySkills && d.keySkills !== _afPh)
+        ? d.keySkills.split(/[|,;]/).map(function(s) { return s.trim(); }).filter(Boolean)
+        : [];
+      var _seen = {};
+      var _merged = [];
+      var _all = _base.concat(_extra);
+      for (var _mi = 0; _mi < _all.length; _mi++) {
+        var _sk = _all[_mi];
+        var _skKey = _sk.toLowerCase();
+        if (_sk.length >= 2 && !_seen[_skKey]) {
+          _seen[_skKey] = true;
+          _merged.push(_sk);
+        }
+      }
+      if (_merged.length >= 3) {
+        d.keySkills = _merged.join(' | ');
+      }
+    }
+
+    return d;
+  }
+
   /* ---------- PHASE 2: TEMPLATE-DRIVEN RESUME FROM STRUCTURED DATA ----------
      Produces a complete .docx resume using pre-gathered profile data.
      No AI round-trip — every field is filled from the data object.
      ---------------------------------------------------------------- */
   function buildResumeFromData(D, data) {
+    // Phase 5 — Auto-fill then re-validate; shadow data with enriched copy
+    data = attemptResumeAutoFill(data);
+    var _vResult = validateResumeData(data);
+    if (!_vResult.valid) {
+      var _vName = (data.fullName && data.fullName !== '[NOT PROVIDED]') ? data.fullName : 'Resume';
+      var _vChildren = [
+        heading(D, 1, _vName),
+        spacer(D),
+        heading(D, 2, 'Additional Information Required'),
+        para(D, 'Additional information is required to generate a complete resume. Please provide the following:'),
+        spacer(D)
+      ];
+      for (var _vi = 0; _vi < _vResult.issues.length; _vi++) {
+        _vChildren.push(new D.Paragraph({
+          bullet: { level: 0 }, spacing: { after: 40 },
+          children: [new D.TextRun({ text: _vResult.issues[_vi], size: 22, font: 'Arial' })]
+        }));
+      }
+      _vChildren.push(spacer(D));
+      _vChildren.push(para(D, 'Please update your profile with the missing information and generate your resume again.'));
+      return _vChildren;
+    }
+
     var _ph = '[NOT PROVIDED]';
+    // fullName stays with _ph so a missing name is visible in the heading
     var fullName      = data.fullName      || _ph;
-    var branch        = data.branch        || _ph;
-    var mos           = data.mos           || _ph;
-    var rank          = data.rank          || _ph;
-    var yearsService  = data.yearsService  || _ph;
-    var targetRole    = data.targetRole    || _ph;
-    var keySkills     = data.keySkills     || _ph;
-    var education     = data.education     || _ph;
+    // All text-output fields use '' when absent — never print the placeholder token
+    var branch        = (data.branch       && data.branch       !== _ph) ? data.branch       : '';
+    var mos           = (data.mos          && data.mos          !== _ph) ? data.mos          : '';
+    var rank          = (data.rank         && data.rank         !== _ph) ? data.rank         : '';
+    var yearsService  = (data.yearsService && data.yearsService !== _ph) ? data.yearsService : '';
+    var targetRole    = (data.targetRole   && data.targetRole   !== _ph) ? data.targetRole   : '';
+    var keySkills     = (data.keySkills    && data.keySkills    !== _ph) ? data.keySkills    : '';
+    var education     = (data.education   && data.education    !== _ph) ? data.education    : '';
     var state         = data.state         || '';
     var entryDate     = data.serviceEntryDate || '';
     var sepDate       = data.separationDate   || '';
     var vaRating      = data.vaRating      || null;
+    var phone         = data.phone         || '';
+    var email         = data.email         || '';
+    // Phase 2 enrichment fields — null when absent
+    var certifications    = data.certifications    || null;
+    var awards            = data.awards            || null;
+    var accomplishments   = data.accomplishments   || null;
+    var experienceSummary = data.experienceSummary || null;
+    var priorRoles        = data.priorRoles        || null;
+
+    // Build contact line from available values — no placeholders
+    var contactParts = [];
+    if (state) contactParts.push(state);
+    if (phone) contactParts.push('Phone: ' + phone);
+    if (email) contactParts.push('Email: ' + email);
+    var contactLine = contactParts.join(' | ');
 
     // Build service date range string
     var dateRange = '';
     if (entryDate && entryDate !== _ph) dateRange += entryDate;
     if (sepDate && sepDate !== _ph) dateRange += (dateRange ? ' – ' : '') + sepDate;
-    if (!dateRange) dateRange = yearsService + ' years';
+    if (!dateRange) dateRange = yearsService ? yearsService + ' years of service' : '';
 
-    // Professional summary
-    var summary = 'Results-driven professional with ' + yearsService + ' years of military service in the ' +
-      branch + ' (' + mos + '). Proven track record of leadership, mission execution, and team development.';
-    if (targetRole !== _ph) {
-      summary += ' Seeking to leverage military expertise in a civilian ' + targetRole + ' role.';
+    // FIX 1 — Build summary from richer inputs in priority order; no [NOT PROVIDED] tokens
+    var summary;
+    if (experienceSummary) {
+      // Mined duties/responsibilities block is the richest base
+      summary = experienceSummary;
+      if (targetRole) summary += ' Seeking a ' + targetRole + ' role.';
+    } else {
+      // Build from structured service fields — only include what exists
+      var _sBase;
+      if (yearsService && branch && mos) {
+        _sBase = 'Results-driven professional with ' + yearsService + ' years of military service in the ' +
+          branch + ' (' + mos + '). Proven track record of leadership, mission execution, and team development.';
+      } else if (yearsService && branch) {
+        _sBase = 'Results-driven ' + branch + ' veteran with ' + yearsService +
+          ' years of service. Proven track record of leadership, mission execution, and team development.';
+      } else if (branch) {
+        _sBase = 'Dedicated ' + branch +
+          ' veteran with a proven track record of leadership and mission execution.';
+      } else {
+        _sBase = 'Dedicated military veteran with a proven track record of leadership, mission execution, and team development.';
+      }
+      // Append first accomplishment as a concrete example if available
+      if (accomplishments) {
+        var _acSnippet = accomplishments.split(' | ')[0].trim();
+        if (_acSnippet && _acSnippet.length > 10) _sBase += ' ' + _acSnippet + '.';
+      }
+      // Append target role or a skills hook
+      if (targetRole) {
+        _sBase += ' Seeking to leverage military expertise in a civilian ' + targetRole + ' role.';
+      } else if (keySkills) {
+        var _firstSkill = keySkills.split(/[|,;]/)[0].trim();
+        if (_firstSkill && _firstSkill.length > 2) {
+          _sBase += ' Key strengths include ' + _firstSkill + ' and related competencies.';
+        }
+      }
+      summary = _sBase;
     }
 
-    // Build skill items as bullet paragraphs
-    var skillLines = keySkills.split(/[|,;]/).map(function(s) { return s.trim(); }).filter(Boolean);
+    // FIX 2 — Build competency items: keySkills first, supplement with certifications when thin
+    var _skillSource = keySkills || '';
+    if (certifications) {
+      var _skillCount = _skillSource ? _skillSource.split(/[|,;]/).filter(Boolean).length : 0;
+      if (_skillCount < 5) {
+        // Append up to 3 cert terms as additional competency bullets
+        var _certTerms = certifications.split(/[|,;\n]/)
+          .map(function(s) { return s.trim(); })
+          .filter(function(s) { return s.length > 3 && s.length < 60; })
+          .slice(0, 3);
+        if (_certTerms.length) {
+          _skillSource = _skillSource
+            ? _skillSource + ' | ' + _certTerms.join(' | ')
+            : _certTerms.join(' | ');
+        }
+      }
+    }
+    var skillLines = _skillSource
+      ? _skillSource.split(/[|,;]/).map(function(s) { return s.trim(); }).filter(Boolean)
+      : [];
     var skillParagraphs = [];
     for (var i = 0; i < skillLines.length; i++) {
       skillParagraphs.push(new D.Paragraph({
@@ -1680,7 +1918,6 @@
 
     var children = [
       heading(D, 1, fullName),
-      para(D, (state ? state + ' | ' : '') + 'Phone: [PHONE] | Email: [EMAIL]'),
       spacer(D),
 
       heading(D, 2, 'Professional Summary'),
@@ -1689,39 +1926,90 @@
 
       heading(D, 2, 'Core Competencies'),
     ];
+    if (contactLine) children.splice(1, 0, para(D, contactLine));
     children = children.concat(skillParagraphs);
     children.push(spacer(D));
 
     children.push(heading(D, 2, 'Professional Experience'));
     children.push(spacer(D));
-    children.push(boldPara(D, branch + ' — ' + (rank ? rank + ', ' : '') + mos));
-    children.push(para(D, dateRange));
+
+    // FIX 3 — Experience header: avoid printing [NOT PROVIDED] in the bold line
+    var _branchDisplay = branch || 'Military Service';
+    var _expHeaderParts = [_branchDisplay];
+    if (rank || mos) _expHeaderParts.push((rank ? rank + (mos ? ', ' : '') : '') + (mos || ''));
+    children.push(boldPara(D, _expHeaderParts.join(' — ')));
+    if (dateRange) children.push(para(D, dateRange));
     children.push(para(D, 'Key accomplishments and responsibilities:'));
-    children.push(new D.Paragraph({
-      bullet: { level: 0 }, spacing: { after: 40 },
-      children: [new D.TextRun({ text: 'Led and managed teams in support of mission-critical operations', size: 22, font: 'Arial' })]
-    }));
-    children.push(new D.Paragraph({
-      bullet: { level: 0 }, spacing: { after: 40 },
-      children: [new D.TextRun({ text: 'Developed and executed training programs for personnel readiness', size: 22, font: 'Arial' })]
-    }));
-    children.push(new D.Paragraph({
-      bullet: { level: 0 }, spacing: { after: 40 },
-      children: [new D.TextRun({ text: 'Maintained accountability for equipment and resources valued at $[AMOUNT]', size: 22, font: 'Arial' })]
-    }));
-    children.push(new D.Paragraph({
-      bullet: { level: 0 }, spacing: { after: 40 },
-      children: [new D.TextRun({ text: '[ADD YOUR SPECIFIC ACCOMPLISHMENTS — quantify results where possible]', size: 22, font: 'Arial', italics: true })]
-    }));
+
+    // FIX 3 — Experience bullets: accomplishments → experienceSummary → generic fallback
+    if (accomplishments) {
+      var _accBullets = accomplishments.split(' | ')
+        .map(function(s) { return s.trim(); })
+        .filter(function(s) { return s.length > 5; })
+        .slice(0, 4);
+      for (var _ai = 0; _ai < _accBullets.length; _ai++) {
+        children.push(new D.Paragraph({
+          bullet: { level: 0 }, spacing: { after: 40 },
+          children: [new D.TextRun({ text: _accBullets[_ai], size: 22, font: 'Arial' })]
+        }));
+      }
+      // Pad to minimum 2 bullets with a generic if accomplishments only yielded one
+      if (_accBullets.length < 2) {
+        children.push(new D.Paragraph({
+          bullet: { level: 0 }, spacing: { after: 40 },
+          children: [new D.TextRun({ text: 'Led and managed teams in support of mission-critical operations', size: 22, font: 'Arial' })]
+        }));
+      }
+    } else if (experienceSummary) {
+      // Split summary into sentence-level bullets (safe split, no lookbehind)
+      var _expBullets = experienceSummary
+        .replace(/\.\s+/g, '.|')
+        .split('|')
+        .map(function(s) { return s.trim().replace(/\.$/, ''); })
+        .filter(function(s) { return s.length > 10; })
+        .slice(0, 3);
+      if (_expBullets.length) {
+        for (var _ei = 0; _ei < _expBullets.length; _ei++) {
+          children.push(new D.Paragraph({
+            bullet: { level: 0 }, spacing: { after: 40 },
+            children: [new D.TextRun({ text: _expBullets[_ei], size: 22, font: 'Arial' })]
+          }));
+        }
+      } else {
+        children.push(para(D, experienceSummary.slice(0, 300)));
+      }
+    } else {
+      // Generic fallback — only fires when no richer data exists
+      children.push(new D.Paragraph({
+        bullet: { level: 0 }, spacing: { after: 40 },
+        children: [new D.TextRun({ text: 'Led and managed teams in support of mission-critical operations', size: 22, font: 'Arial' })]
+      }));
+      children.push(new D.Paragraph({
+        bullet: { level: 0 }, spacing: { after: 40 },
+        children: [new D.TextRun({ text: 'Developed and executed training programs for personnel readiness', size: 22, font: 'Arial' })]
+      }));
+    }
+
+    // Surface prior civilian roles if available
+    if (priorRoles) {
+      children.push(para(D, 'Additional Experience: ' + priorRoles));
+    }
     children.push(spacer(D));
 
+    // FIX 5 — Education: only render body when real content exists
     children.push(heading(D, 2, 'Education'));
-    children.push(para(D, education));
+    if (education) children.push(para(D, education));
     children.push(spacer(D));
 
-    children.push(heading(D, 2, 'Certifications & Training'));
-    children.push(para(D, '[LIST RELEVANT CERTIFICATIONS AND MILITARY TRAINING TRANSLATED TO CIVILIAN EQUIVALENTS]'));
-    children.push(spacer(D));
+    // FIX 4 — Certifications & Training: render only when real content exists
+    var _hasCerts  = certifications && certifications.length > 2;
+    var _hasAwards = awards && awards.length > 2;
+    if (_hasCerts || _hasAwards) {
+      children.push(heading(D, 2, 'Certifications & Training'));
+      if (_hasCerts)  children.push(para(D, certifications));
+      if (_hasAwards) children.push(para(D, (_hasCerts ? 'Awards & Decorations: ' : '') + awards));
+      children.push(spacer(D));
+    }
 
     if (vaRating) {
       children.push(heading(D, 2, 'Veteran Status'));

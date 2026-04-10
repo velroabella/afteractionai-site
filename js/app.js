@@ -621,6 +621,46 @@
         var _ed = text.match(/(?:separation\s+date|date\s+of\s+separation|release\s+(?:from\s+)?active\s+duty)\s*[:\-]?\s*(\d{1,2}[\/-]\d{1,2}[\/-]\d{2,4}|\d{4}[-\/]\d{1,2}[-\/]\d{1,2}|\w+\s+\d{1,2},?\s+\d{4})/i);
         if (_ed) updates.separationDate = _ed[1].trim();
       }
+
+      // ── Education ──
+      if (!profile.education && !updates.education) {
+        var _eduM = text.match(/(?:bachelor(?:'?s)?|master(?:'?s)?|associate(?:'?s)?|ph\.?d\.?|doctorate|degree)\s*(?:of|in)?\s*[A-Za-z\s,&'-]{3,60}/i)
+          || text.match(/(?:graduated?|graduation)\b[^\n]{0,30}?(?:from|,)\s*[A-Za-z\s,&'-]{3,60}/i);
+        if (_eduM) updates.education = _eduM[0].trim().replace(/\s+/g, ' ');
+      }
+
+      // ── Certifications & Training (DD-214 Item 14 and similar blocks) ──
+      if (!profile.certifications && !updates.certifications) {
+        var _certBlock = text.match(/(?:item\s*14|military\s+education|formal\s+(?:military|civilian)\s+education|training\s+attended\s+or\s+completed)\s*[:\-]?\s*([^\n]{10,300})/i);
+        if (_certBlock) {
+          updates.certifications = _certBlock[1].trim().replace(/\s+/g, ' ');
+        } else {
+          var _certMatches = text.match(/\b(?:complet(?:ed|ing)|attended?|certified|qualified|graduated)\b[^\n]{5,80}/gi);
+          if (_certMatches && _certMatches.length) {
+            updates.certifications = _certMatches.slice(0, 5)
+              .map(function(s) { return s.trim().replace(/\s+/g, ' '); })
+              .join(' | ');
+          }
+        }
+      }
+
+      // ── Awards & Decorations (DD-214 Item 13) ──
+      if (!profile.awards && !updates.awards) {
+        var _awM = text.match(/(?:item\s*13|decorations[,\s]*medals?|awards?\s+and\s+decorations?|military\s+awards?|honors?\s+and\s+awards?)\s*[:\-]?\s*([^\n]{5,300})/i);
+        if (_awM) updates.awards = _awM[1].trim().replace(/\s+/g, ' ');
+      }
+
+      // ── Civilian Tools & Technology Skills ──
+      if (!profile.civilianSkills && !updates.civilianSkills) {
+        var _tsM = text.match(/(?:tools?\s*(?:used|proficient\s+(?:in|with))|software\s*(?:experience|skills?)?|systems?\s*(?:experience|skills?)?|platforms?|technologies|technical\s+skills?)\s*[:\-]\s*([^\n]{10,150})/i);
+        if (_tsM) updates.civilianSkills = _tsM[1].trim().replace(/\s+/g, ' ');
+      }
+
+      // ── Prior Roles / Experience Hints ──
+      if (!profile.priorRoles && !updates.priorRoles) {
+        var _prM = text.match(/(?:position(?:s?\s+held)?|(?:current|previous|last)\s+(?:job\s+)?title|civilian\s+(?:position|role|employer))\s*[:\-]\s*([A-Za-z][A-Za-z\s,\/&'-]{2,60})/i);
+        if (_prM) updates.priorRoles = _prM[1].trim().replace(/\s+/g, ' ');
+      }
     }
 
     if (Object.keys(updates).length > 0) {
@@ -3665,6 +3705,17 @@
 
     var _ph = '[NOT PROVIDED]';
 
+    // Phase 2: Gather all uploaded doc text for direct extraction
+    var _uploadedText = '';
+    try {
+      var _uctx = window.AIOS && window.AIOS._dashboardContext;
+      if (_uctx && _uctx.uploadedDocs && _uctx.uploadedDocs.length) {
+        _uploadedText = _uctx.uploadedDocs
+          .map(function(d) { return d.extracted_text || ''; })
+          .join('\n');
+      }
+    } catch (e) { /* non-fatal — proceed without doc text */ }
+
     // Calculate years of service from dates if available
     var yearsService = _ph;
     if (profile.serviceEntryDate && profile.separationDate) {
@@ -3697,7 +3748,25 @@
       if (_eduMatch) education = _eduMatch[0].trim();
     }
 
-    // Translate MOS to civilian-friendly skills if we don't have explicit ones
+    // FIX 2 — Education priority chain: profile (mined from docs) → uploaded text → conversation above
+    if (!education && profile.education) {
+      education = profile.education;
+    }
+    if (!education && _uploadedText) {
+      var _docEduM = _uploadedText.match(/(?:bachelor(?:'?s)?|master(?:'?s)?|associate(?:'?s)?|ph\.?d\.?|degree)\s*(?:of|in)?\s*[A-Za-z\s,&'-]{3,60}/i);
+      if (_docEduM) education = _docEduM[0].trim().replace(/\s+/g, ' ');
+    }
+
+    // FIX 3 — keySkills priority chain: conversation above → uploaded text → profile.civilianSkills → MOS generic fallback
+    if (!keySkills && _uploadedText) {
+      var _docSkillM = _uploadedText.match(/(?:skills?|competenc(?:ies|y)|qualifications?|technical\s+skills?|proficienc(?:y|ies))\s*[:\-–]\s*([^\n]{10,200})/i);
+      if (_docSkillM) keySkills = _docSkillM[1].trim();
+    }
+    if (!keySkills && profile.civilianSkills) {
+      keySkills = profile.civilianSkills;
+    }
+
+    // Translate MOS to civilian-friendly skills only when nothing better was found
     if (!keySkills && profile.mos) {
       keySkills = 'Leadership | Operations Management | Team Development | ' +
         'Mission Planning | Training & Mentoring | Process Improvement | ' +
@@ -3706,20 +3775,59 @@
     if (!keySkills) keySkills = _ph;
     if (!education) education = _ph;
 
+    // FIX 2 — Certifications: profile (mined from DD-214 Item 14) → direct doc text
+    var certifications = profile.certifications || null;
+    if (!certifications && _uploadedText) {
+      var _certDocM = _uploadedText.match(/(?:item\s*14|military\s+education|certif(?:ication|ied)s?|training\s+(?:attended|completed))\s*[:\-]?\s*([^\n]{10,200})/i);
+      if (_certDocM) certifications = _certDocM[1].trim().replace(/\s+/g, ' ');
+    }
+
+    // FIX 4 — Accomplishments: mine quantified / action-verb sentences from uploaded docs
+    var accomplishments = null;
+    if (_uploadedText) {
+      var _acMatches = _uploadedText.match(/[A-Z][^\n.]{20,140}(?:\d+\s*(?:%|percent|personnel|soldiers?|troops?|vehicles?|missions?|systems?|Soldiers?)|(?:managed|led|trained|supervised|coordinated|directed|achieved|improved|reduced|increased))[^\n.]{0,80}/g);
+      if (_acMatches && _acMatches.length) {
+        accomplishments = _acMatches.slice(0, 4)
+          .map(function(s) { return s.trim().replace(/\s+/g, ' '); })
+          .join(' | ');
+      }
+    }
+
+    // FIX 4 — Experience summary: duties/responsibilities block from uploaded docs
+    var experienceSummary = null;
+    if (_uploadedText) {
+      var _expM = _uploadedText.match(/(?:duties\s+and\s+responsibilities|duties\s+performed|job\s+description|civilian\s+(?:job|position|work)\s+history)\s*[:\-]?\s*([^\n]{20,400})/i);
+      if (_expM) experienceSummary = _expM[1].trim().replace(/\s+/g, ' ').slice(0, 400);
+    }
+
+    var authEmail = '';
+    try {
+      var _authUser = window.AAAI && window.AAAI.auth && typeof window.AAAI.auth.getUser === 'function'
+        ? window.AAAI.auth.getUser() : null;
+      if (_authUser && _authUser.email) authEmail = _authUser.email;
+    } catch (e) { /* leave authEmail empty */ }
+
     return {
-      fullName:          profile.name || _ph,
-      branch:            profile.branch || _ph,
-      mos:               profile.mos || _ph,
-      rank:              profile.rank || _ph,
-      yearsService:      yearsService,
-      targetRole:        targetRole,
-      keySkills:         keySkills,
-      education:         education,
-      state:             profile.state || _ph,
-      serviceEntryDate:  profile.serviceEntryDate || _ph,
-      separationDate:    profile.separationDate || _ph,
-      vaRating:          profile.vaRating || null,
-      employmentStatus:  profile.employmentStatus || null
+      fullName:           profile.name           || _ph,
+      branch:             profile.branch         || _ph,
+      mos:                profile.mos            || _ph,
+      rank:               profile.rank           || _ph,
+      yearsService:       yearsService,
+      targetRole:         targetRole,
+      keySkills:          keySkills,
+      education:          education,
+      certifications:     certifications,
+      awards:             profile.awards         || null,
+      accomplishments:    accomplishments,
+      experienceSummary:  experienceSummary,
+      priorRoles:         profile.priorRoles     || null,
+      state:              profile.state          || _ph,
+      email:              authEmail              || null,
+      phone:              profile.phone          || null,
+      serviceEntryDate:   profile.serviceEntryDate || _ph,
+      separationDate:     profile.separationDate || _ph,
+      vaRating:           profile.vaRating       || null,
+      employmentStatus:   profile.employmentStatus || null
     };
   }
 
@@ -4083,7 +4191,7 @@
           }
         }
       } catch (_memErr) {
-        console.warn('[AIOS][MEMORY] extraction error:', _memErr.message || _memErr);
+        console.warn('[AIOS][MEMORY][ERROR] extraction:', _memErr.message || _memErr);
       }
     }
 
@@ -4655,6 +4763,7 @@
     var systemPrompt = SYSTEM_PROMPT;  // already a string (joined at definition)
     var aiosActive = false;
     var _r3PreMatchP = null;  // Phase R3.3: pre-response resource matching Promise
+    var _rilResult = null;    // Phase E-C.5: RIL result; populated after skill.run()
 
     try {
       if (window.AIOS && window.AIOS.Router && window.AIOS.RequestBuilder) {
@@ -4667,7 +4776,7 @@
         if (lastUserMsg) {
           // 1. Route — classify intent and select skill
           var routeResult = window.AIOS.Router.routeAIOSIntent(lastUserMsg);
-          console.log('[AIOS][ROUTER] intent=' + routeResult.intent + ' | skill=' + (routeResult.skill || 'none') + ' | confidence=' + routeResult.confidence + (routeResult.matched ? ' | matched="' + routeResult.matched + '"' : ''));
+          console.log('[AIOS][ROUTER][MATCH] intent=' + routeResult.intent + ' | skill=' + (routeResult.skill || 'none') + ' | confidence=' + routeResult.confidence + (routeResult.matched ? ' | matched="' + routeResult.matched + '"' : ''));
 
           // Phase 9 — D1 FIX: Record routing intent as execution state.
           // save() is called at routing time (not at execution engine completion)
@@ -4742,6 +4851,25 @@
               if (skillConfig && skillConfig.data && skillConfig.data.chain && window.AIOS.Chain) {
                 window.AIOS.Chain.set(skillConfig.data.chain, routeResult.tier || 'STANDARD');
                 console.log('[AIOS][CHAIN] queued nextSkill=' + skillConfig.data.chain.nextSkill);
+              }
+
+              // Phase E-C.5: RIL integration hook.
+              // After skill.run() returns and chain is registered, route the skill
+              // envelope through the Response Intelligence Layer. If shaped text is
+              // produced it will bypass the API call inside _r3ResolvedP.then().
+              // No-op when Engine is absent or flag is off (Engine.runSkill returns
+              // empty shapedText → legacy path continues unchanged).
+              if (window.AIOS.Engine &&
+                  typeof window.AIOS.Engine.runSkill === 'function' &&
+                  window.AIOS.Memory &&
+                  typeof window.AIOS.Memory.getSkillContext === 'function') {
+                var _memCtx = window.AIOS.Memory.getSkillContext();
+                _rilResult = window.AIOS.Engine.runSkill({
+                  routeResult: routeResult,
+                  skillConfig:  skillConfig,
+                  profile:      _memCtx.profile,
+                  session:      _memCtx.session
+                });
               }
 
               // 3. Build AIOS request — core prompt + skill + memory + page context
@@ -4876,6 +5004,27 @@
           systemPrompt += '\n\n## RESOURCE CONTEXT' + _r3Block;
         }
         console.log('[AIOS][PRE-MATCH] injected ' + _r3Res.resources.length + ' matched resources into prompt | systemLen=' + systemPrompt.length);
+      }
+
+      // Phase E-C.5: RIL bypass check.
+      // If the engine produced shaped text this turn, return it directly —
+      // no API call, no payload assembly. Raw envelope and trace are preserved
+      // on the result object for debug/audit panel consumption.
+      // If shapedText is empty (unsupported intent, flag off, or shaper fallback),
+      // fall through to the existing payload + API call path unchanged.
+      if (_rilResult && _rilResult.shapedText && _rilResult.shapedText.length > 0) {
+        console.log('[AIOS][APP][OUTPUT] RIL | tone=' + _rilResult.rilTone + ' | intent=' + (routeResult ? routeResult.intent : 'unknown'));
+        return Promise.resolve({
+          text:        _rilResult.shapedText,
+          structured:  null,
+          rawEnvelope: _rilResult.rawEnvelope,
+          rilTrace:    _rilResult.rilTrace,
+          rilTone:     _rilResult.rilTone,
+          rilEnabled:  _rilResult.rilEnabled
+        });
+      }
+      if (_rilResult !== null) {
+        console.log('[AIOS][APP][OUTPUT] legacy | intent=' + (routeResult ? routeResult.intent : 'unknown'));
       }
 
     // Build request payload
