@@ -354,6 +354,7 @@
      ──────────────────────────────────────────────────────── */
   function _determineAssistanceType(housingTrack, urgencyLevel, profile, userInput) {
     if (housingTrack === 'va-home-loan') return 'none';
+    if (housingTrack === 'needs-intake') return 'none';
 
     var corpus = _buildCorpus(profile, userInput);
 
@@ -721,6 +722,15 @@
       var userInput  = (context && context.userInput) ? context.userInput : '';
       var historyLen = (context && context.history)   ? context.history.length : 0;
 
+      // Phase R6.8: read session context (read-only)
+      var _ctx = (window.AIOS && window.AIOS.Memory &&
+                  typeof window.AIOS.Memory.getSkillContext === 'function')
+        ? window.AIOS.Memory.getSkillContext()
+        : { profile: {}, session: { symptoms: [], goals: [], lastActiveSkill: null,
+            atRiskSignal: { flagged: false, turn: null, subtype: null } } };
+      var _ctxProfile = _ctx.profile;
+      var _ctxSession = _ctx.session;
+
       // ── Step 1: Determine urgency level ───────────────
       var urgencyLevel = _determineUrgencyLevel(profile, userInput);
 
@@ -764,6 +774,20 @@
       };
 
       if (unknown.length) { data.unknownFields = unknown; }
+
+      // Phase R6.8: AT_RISK housing escalation — unshift hotline as first action (read-only)
+      if (_ctxSession.atRiskSignal.flagged === true &&
+          _ctxSession.atRiskSignal.subtype === 'housing') {
+        var _hotlineAction = {
+          priority: 'URGENT',
+          label:    'Call the VA National Call Center for Homeless Veterans',
+          detail:   '1-877-4AID-VET (1-877-424-3838) — 24/7, immediate housing crisis support',
+          url:      'https://www.va.gov/homeless/'
+        };
+        nextActions.unshift(_hotlineAction);
+        data.atRiskEscalation = true;
+        console.log('[AIOS][SKILL][HOUSING] AT_RISK housing escalation: hotline prepended to nextActions');
+      }
 
       // ── Eligibility engine integration ────────────────
       var Elig = window.AIOS && window.AIOS.Eligibility;

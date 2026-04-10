@@ -79,10 +79,19 @@
         'my claim was denied', 'claim decision', 'pending claim',
         'va appeal', 'appeal status',
         // Phase 39: claim-support documents
-        'buddy statement', 'nexus letter', 'buddy letter', 'lay statement',
+        'buddy statement', 'buddy letter', 'lay statement',
         'statement in support of claim', 'intent to file',
         'notice of disagreement', 'substantive appeal',
-        'informal hearing presentation'
+        'informal hearing presentation',
+        // Phase R6.3.1: plain-language rating-challenge and appeal phrasing
+        'higher rating', 'higher va rating', 'raise my rating', 'bump my rating',
+        'appeal my decision', 'appeal my rating', 'appeal my claim',
+        'my decision was wrong', 'my rating is wrong', 'they got it wrong',
+        'lowballed my rating', 'rating is too low', 'rating too low',
+        // Phase R6.7: bare rating statement — "I have a 70% rating", "my rating is 60%"
+        '% rating', '% va rating', '% combined',
+        'have a rating', 'my rating is',
+        'i got rated', 'got a rating', 'was rated at'
       ]
     },
     // ── TDIU / Individual Unemployability (Phase R5.8) ────
@@ -115,7 +124,18 @@
         // Decision / filing language
         'i was denied tdiu', 'should i file for tdiu',
         'file for tdiu', 'apply for tdiu', 'tdiu claim',
-        'tdiu denied', 'denied tdiu', 'unemployability claim'
+        'tdiu denied', 'denied tdiu', 'unemployability claim',
+        // Phase R6.3.1: plain-language work-incapacity phrasing
+        "can't work because of", 'cannot work because of',
+        'my disabilities keep me from working',
+        "can't hold a job", 'cannot hold a job',
+        'only work a little', 'barely able to work',
+        'stop me from working', 'prevent me from working',
+        // Phase R6.4: truncated natural work-incapacity form
+        'my conditions stop me',
+        // Phase R6.7: job retention phrasing
+        "can't keep a job", 'cannot keep a job', 'hard to keep a job',
+        "can't keep employment", 'lose jobs because'
       ]
     },
     // ── State benefits ────────────────────────────────────
@@ -143,7 +163,11 @@
       keywords: [
         'action plan', 'next steps', 'what should i do', 'where do i start',
         'priorities', 'checklist', 'after action', 'my report', 'summary',
-        'what now', 'most important', 'first thing'
+        'what now', 'most important', 'first thing',
+        // Phase R6.7: urgency-peak action request phrasing
+        'what do i do right now', 'need help right now',
+        'help me right now', 'what happens next for me',
+        'where do i go from here'
       ]
     },
     // ── Family / Survivor (Phase 38) ──────────────────────
@@ -171,7 +195,11 @@
         'taps grief', 'tragedy assistance',
         // Phase 39: caregiver / spouse-helping context
         'my caregiver', 'helping me navigate my benefits',
-        'spouse is helping me', 'wife is helping me', 'husband is helping me'
+        'spouse is helping me', 'wife is helping me', 'husband is helping me',
+        // Phase R6.3.2: plain-language loss and family-need phrasing
+        'my spouse died', 'my husband died', 'my wife died',
+        'my spouse passed', 'he passed', 'she passed',
+        'can my family get', 'family va benefits', 'my family get help'
       ]
     },
     // ── Employment / Career Transition (Phase 39) ─────────
@@ -202,7 +230,18 @@
         'get a contractor', 'find a contractor job',
         // Phase R5.7.1: separation timeline phrasing + trade terms
         'separate in', 'separating in', 'get out in',
-        'electrician', 'hvac', 'plumber', 'skilled trade', 'trade job'
+        'electrician', 'hvac', 'plumber', 'skilled trade', 'trade job',
+        // Phase R6.3.1: plain-language separation and job-seeking phrasing
+        'need work', 'find work',
+        'get out soon', 'getting out soon',
+        'i get out', 'when i get out',
+        'military background', 'military experience',
+        'what can i do with my',
+        'want a trade', 'want to learn a trade',
+        // Phase R6.4: bare trade-learning phrasing
+        'learn a trade',
+        // Phase R6.7.1: want-a-job phrasing gap
+        'want a job', 'want to find a job', 'want to get a job'
       ]
     },
     // ── Legal Documents / Forms (Phase 39) ────────────────
@@ -221,7 +260,9 @@
         'medical records release', 'release of information',
         'jag officer', 'judge advocate', 'legal aid',
         'legal assistance office', 'legal help', 'va form 21',
-        'va 21-', '21-526', '21-4142', '21-0781'
+        'va 21-', '21-526', '21-4142', '21-0781',
+        // Phase R6.3.3: plain-language will/testament phrasing
+        'i need a will', 'need a will', 'make a will', 'get a will'
       ]
     },
     // ── Education / GI Bill (Phase R5) ──────────────────────
@@ -241,9 +282,12 @@
         'post 9/11 gi bill', 'montgomery gi bill', 'chapter 30',
         'education entitlement', 'gi bill transfer', 'transfer gi bill',
         'gi bill housing allowance', 'bah for school',
-        'certification program', 'certification', 'trade school benefits',
+        'certification program', 'trade school benefits',
         'apprenticeship program', 'ojt benefits',
-        'housing allowance'
+        // Phase R6.3.2: plain-language question-form constructions
+        'pay for school', 'pay for college',
+        'can the va pay', 'will the va pay for',
+        'i want training', 'want job training', 'want vocational training'
       ]
     },
     // ── PACT Act / Toxic Exposure (Phase R5.3) ───────────
@@ -265,7 +309,21 @@
         'was at camp lejeune', 'served in vietnam and got sick',
         'served in thailand and got sick', 'exposed to radiation',
         'toxic stuff in service', 'burn pit registry',
-        'toxic exposure screening'
+        'toxic exposure screening',
+        // Phase R6.3.3: plain-language smoke/exposure phrasing
+        'toxic smoke', 'burn pit smoke', 'smoke from burn pits',
+        // Phase R6.7: plain-language respiratory + deployment phrasing
+        'breathing issue', 'breathing problem', 'breathing difficulty',
+        'lung issue', 'lung problem', 'respiratory issue', 'respiratory problem',
+        'shortness of breath from service',
+        'breathing since i served', 'breathing since my deployment',
+        'iraq and breathing', 'afghanistan and breathing',
+        // Phase R6.7.1: no-diagnosis phrasing restricted to service/exposure context (collision fix)
+        'no diagnosis for my exposure', 'no diagnosis from my service',
+        'not diagnosed for my condition from service',
+        "haven't been diagnosed for my exposure",
+        'waiting on a diagnosis for my condition',
+        'no service-connected diagnosis'
       ]
     },
     // ── VA Healthcare Enrollment (Phase R5.4) ─────────────
@@ -290,7 +348,10 @@
         'can i get va healthcare', 'how do i get va healthcare',
         'how do i sign up for the va',
         'can i use community care', 'can i get va dental',
-        'what priority group am i'
+        'what priority group am i',
+        // Phase R6.3.2: plain-language provider and eligibility phrasing
+        'va doctor', 'see a va doctor', 'va doctor visit',
+        'what group am i', 'eligible for va care', 'qualify for va care'
       ]
     },
     // ── Housing / VA Home Loan (Phase R5.5) ──────────────
@@ -318,7 +379,11 @@
         'i am behind on rent', 'i might get evicted',
         'i am homeless', 'i need housing help',
         'i need help paying rent', 'i need transitional housing',
-        'i am living in my car'
+        'i am living in my car',
+        // Phase R6.3.2: plain-language rent-help need-statement
+        'help with rent', 'need help with rent',
+        // Phase R6.4: rent assistance synonym gap
+        'rent assistance'
       ]
     },
     // ── Mental Health / Non-Crisis (Phase R5.6) ────────────
@@ -384,7 +449,11 @@
     'no reason to live', 'can\'t go on', 'cannot go on', 'hopeless',
     'self-harm', 'hurt myself', 'don\'t want to be here',
     'give up on life', 'better off dead', 'end my life',
-    'not worth living', 'nothing left', 'no way out'
+    'not worth living', 'nothing left', 'no way out',
+    // Phase R6.2: phrasing variants and gerund forms
+    'ending my life', 'end it', 'ending it', 'own life',
+    'do not want to live', "don't want to live",
+    'done with life'
   ];
 
   /* ────────────────────────────────────────────────────────
@@ -404,7 +473,30 @@
     'drinking problem', 'alcohol problem', 'drug problem',
     "can't stop drinking", "i'm an addict",
     'being abused', 'domestic violence',
-    'unsafe at home', 'afraid to go home'
+    'unsafe at home', 'afraid to go home',
+    // Phase R6.2 SF-2: domestic safety phrasing variants
+    'not safe at home', 'do not feel safe at home', "don't feel safe at home",
+    'in danger at home',
+    // Phase R6.2 SF-3: housing distress phrasing + sync with skill AT_RISK_TRIGGERS
+    'was evicted', 'living in my car', 'sleeping in my car',
+    'behind on rent', 'behind on my mortgage',
+    "can't pay rent", "can't afford rent",
+    'no place to live', 'just lost my housing',
+    'i am homeless', "i'm homeless", 'became homeless',
+    'foreclosure',
+    // Phase R6.2 SF-4: substance distress phrasing variants
+    'drinking too much', 'struggling with alcohol',
+    'struggling with drugs', 'using drugs',
+    // Phase R6.2 SF-5: isolation phrasing variants
+    'totally alone', 'all alone',
+    // Phase R6.2 FINAL — SF-R2: domestic safety location variant
+    'not safe where',
+    // Phase R6.2 FINAL — SF-R3: rent phrasing gaps
+    'behind on my rent', 'cannot pay rent', 'cannot pay my rent',
+    // Phase R6.3.2: housing loss phrasing — fires before HOUSING_SUPPORT keyword scan
+    'lose my place', 'might lose my place',
+    // Phase R6.4: pre-eviction distress — safety-first layer precedence
+    'i might get evicted'
   ];
 
 
@@ -479,6 +571,156 @@
   }
 
   /* ────────────────────────────────────────────────────────
+     Phase R6.8 helpers
+     ──────────────────────────────────────────────────────── */
+
+  /**
+   * Map an AT_RISK matched phrase to a housing/mental-health/financial subtype.
+   * Used by writeAtRiskSignal so session context carries structured signal.
+   * @param  {string} phrase - the phrase that triggered AT_RISK tier
+   * @returns {string} 'housing' | 'mental-health' | 'financial'
+   */
+  function _detectAtRiskSubtype(phrase) {
+    var _p = phrase.toLowerCase();
+
+    var _HOUSING = [
+      'evict', 'homeless', 'rent', 'mortgage', 'foreclosure',
+      'my home', 'my house', 'my place', 'my housing',
+      'living in my car', 'sleeping in my car', 'sleeping outside',
+      'no place to live', 'lost my housing'
+    ];
+    var _MH = [
+      'alone', 'alcohol', 'drug', 'drink', 'addict',
+      'abuse', 'violence', 'unsafe', 'safe', 'danger',
+      'isolated', 'no one', 'nobody'
+    ];
+
+    for (var _h = 0; _h < _HOUSING.length; _h++) {
+      if (_p.indexOf(_HOUSING[_h]) !== -1) return 'housing';
+    }
+    for (var _m = 0; _m < _MH.length; _m++) {
+      if (_p.indexOf(_MH[_m]) !== -1) return 'mental-health';
+    }
+    return 'financial';
+  }
+
+  /**
+   * Phase R6.8 — CONTEXT_CONTINUATION_LAYER
+   * Fires ONLY when KEYWORD_RULES scan produced no match (would fall to GENERAL_QUESTION).
+   * Evaluates 4 context rules in priority order. First match wins.
+   * All guards read the skill context envelope from AIOS.Memory — read-only.
+   *
+   * Rules:
+   *   C1 — PACT_ACT continuation (resolves ARCH-4)
+   *   C2 — symptom-driven VA_HEALTHCARE routing (resolves ARCH-3)
+   *   C3 — employment persistence to TDIU (resolves ARCH-2)
+   *   C4 — AT_RISK housing specificity bridge (resolves ARCH-6)
+   *
+   * @param  {string} txt - lowercased, trimmed user message
+   * @returns {string|null} intent constant, or null if no rule fires
+   */
+  function _runContextContinuationLayer(txt) {
+    if (!window.AIOS || !window.AIOS.Memory ||
+        typeof window.AIOS.Memory.getSkillContext !== 'function') {
+      return null;
+    }
+
+    var ctx = window.AIOS.Memory.getSkillContext();
+    var s   = ctx.session;
+    var p   = ctx.profile;
+
+    // ── C1: PACT_ACT continuation ───────────────────────────────────────────
+    // Guard: lastActiveSkill=PACT_ACT (getSkillContext nulls this if >2 turns stale)
+    //        + input contains vague-continuation phrase
+    if (s.lastActiveSkill === 'PACT_ACT') {
+      var _c1 = ['no diagnosis', 'not diagnosed', 'diagnosis yet', 'what now', 'next step'];
+      for (var _c1i = 0; _c1i < _c1.length; _c1i++) {
+        if (txt.indexOf(_c1[_c1i]) !== -1) {
+          console.log('[AIOS][CTX] C1 fired | target: PACT_ACT | fallback would have been: GENERAL_QUESTION');
+          return 'PACT_ACT';
+        }
+      }
+    }
+
+    // ── C2: symptom-driven VA_HEALTHCARE ────────────────────────────────────
+    // Guard: session.symptoms contains mental-health or respiratory category
+    //        + input contains a healthcare-access verb
+    var _c2Symptom = false;
+    for (var _c2s = 0; _c2s < s.symptoms.length; _c2s++) {
+      var _cat = s.symptoms[_c2s].category;
+      if (_cat === 'mental-health' || _cat === 'respiratory') { _c2Symptom = true; break; }
+    }
+    if (_c2Symptom) {
+      var _c2 = ['va care', 'doctor', 'treatment', 'appointment', 'healthcare'];
+      for (var _c2i = 0; _c2i < _c2.length; _c2i++) {
+        if (txt.indexOf(_c2[_c2i]) !== -1) {
+          console.log('[AIOS][CTX] C2 fired | target: VA_HEALTHCARE | fallback would have been: GENERAL_QUESTION');
+          return 'VA_HEALTHCARE';
+        }
+      }
+    }
+
+    // ── C3: employment goal persistence → TDIU ──────────────────────────────
+    // Guard: profile.vaRating present (extracted by main engine)
+    //        + session goals include EMPLOYMENT
+    //        + input contains rating/condition context
+    var _c3Goal = false;
+    for (var _c3g = 0; _c3g < s.goals.length; _c3g++) {
+      if (s.goals[_c3g].intent === 'EMPLOYMENT') { _c3Goal = true; break; }
+    }
+    if ((p.vaRating !== null && p.vaRating !== undefined) && _c3Goal) {
+      var _c3 = ['my conditions', 'because of', 'rating', 'work'];
+      for (var _c3i = 0; _c3i < _c3.length; _c3i++) {
+        if (txt.indexOf(_c3[_c3i]) !== -1) {
+          console.log('[AIOS][CTX] C3 fired | target: TDIU | fallback would have been: GENERAL_QUESTION');
+          return 'TDIU';
+        }
+      }
+    }
+
+    // ── C4: AT_RISK housing specificity bridge ──────────────────────────────
+    // Guard: atRiskSignal is active and subtype is housing
+    //        + input contains a specificity/help request
+    if (s.atRiskSignal.flagged === true && s.atRiskSignal.subtype === 'housing') {
+      var _c4 = ['what do i do', 'help me', 'where do i go', 'right now'];
+      for (var _c4i = 0; _c4i < _c4.length; _c4i++) {
+        if (txt.indexOf(_c4[_c4i]) !== -1) {
+          console.log('[AIOS][CTX] C4 fired | target: HOUSING_SUPPORT | fallback would have been: GENERAL_QUESTION');
+          return 'HOUSING_SUPPORT';
+        }
+      }
+    }
+
+    // ── C5: MENTAL_HEALTH continuation on vague help-seeking input ──────────
+    if (s.lastActiveSkill === 'MENTAL_HEALTH') {
+      var hasMHSymptom = false;
+      for (var i = 0; i < s.symptoms.length; i++) {
+        if (s.symptoms[i].category === 'mental-health') {
+          hasMHSymptom = true;
+          break;
+        }
+      }
+      if (hasMHSymptom) {
+        var tokens = [
+          'i need help',
+          'need help',
+          'help me',
+          'please help'
+        ];
+        for (var j = 0; j < tokens.length; j++) {
+          if (txt.indexOf(tokens[j]) !== -1) {
+            console.log('[AIOS][CTX] C5 fired | target: MENTAL_HEALTH | fallback would have been: GENERAL_QUESTION');
+            return 'MENTAL_HEALTH';
+          }
+        }
+      }
+    }
+
+    return null;
+  }
+
+
+  /* ────────────────────────────────────────────────────────
      Router
      ──────────────────────────────────────────────────────── */
   var Router = {
@@ -503,25 +745,88 @@
 
       var text = userMessage.toLowerCase().trim();
 
+      // ── Phase R6.8: extract session signals before keyword evaluation ──────
+      // Must run before KEYWORD_RULES so symptoms/goals are available to the
+      // context layer if keywords produce no match this turn.
+      if (window.AIOS && window.AIOS.Memory &&
+          typeof window.AIOS.Memory.extractSessionSignals === 'function') {
+        window.AIOS.Memory.extractSessionSignals(userMessage);
+      }
+
       // ── 1. Crisis override (always first) ──────────────
       var crisisMatch = matchPhrase(text, CRISIS_KEYWORDS);
       if (crisisMatch) {
         return result('CRISIS_SUPPORT', 1.0, crisisMatch, 'CRISIS');
       }
 
-      // ── 1.5 AT_RISK check (Phase 22 — only if not crisis) ─
+      // ── 1.5 AT_RISK check (Phase 22 — only if not crisis) ─────────────────
+      // Phase R6.8: tag session with subtype before returning so context layer
+      // can distinguish housing vs mental-health vs financial AT_RISK in later turns.
       var atRiskMatch = matchPhrase(text, AT_RISK_KEYWORDS);
       if (atRiskMatch) {
+        if (window.AIOS && window.AIOS.Memory &&
+            typeof window.AIOS.Memory.writeAtRiskSignal === 'function') {
+          window.AIOS.Memory.writeAtRiskSignal(_detectAtRiskSubtype(atRiskMatch));
+        }
         return result('AT_RISK_SUPPORT', 0.9, atRiskMatch, 'AT_RISK');
       }
 
-      // ── 2. Keyword-based intent matching ───────────────
+      // ── 2. Keyword-based intent matching ───────────────────────────────────
+      // Phase R6.8: record matched intent to session before returning so
+      // context-continuation rules can see lastActiveSkill on subsequent turns.
       for (var i = 0; i < KEYWORD_RULES.length; i++) {
         var rule = KEYWORD_RULES[i];
         var match = matchPhrase(text, rule.keywords);
         if (match) {
-          return attachPartnerMeta(result(rule.intent, 0.8, match));
+          // Phase R6.8.1: controlled context override.
+          // Runs on EVERY keyword match before returning. Only two specific
+          // weak-match scenarios are eligible for override; all others fall
+          // through and return the original keyword intent unchanged.
+          var _finalIntent = rule.intent;
+          var _overrideResult = _runContextContinuationLayer(text);
+
+          if (_overrideResult) {
+            // Override 1 — NEXT_STEP + active housing AT_RISK → HOUSING_SUPPORT
+            // "what do I do right now" is a generic urgency phrase. When the session
+            // holds a housing crisis signal, HOUSING_SUPPORT is the correct skill.
+            if (rule.intent === 'NEXT_STEP' && _overrideResult === 'HOUSING_SUPPORT') {
+              console.log('[AIOS][CTX_OVERRIDE] original: NEXT_STEP → overridden: HOUSING_SUPPORT');
+              _finalIntent = 'HOUSING_SUPPORT';
+            }
+            // Override 2 — DISABILITY_CLAIM + TDIU context + work-impact phrasing → TDIU
+            // Bare rating statements route to DISABILITY_CLAIM. When the session also
+            // holds an EMPLOYMENT goal and the input contains explicit work-incapacity
+            // language, TDIU is the more specific and correct skill.
+            else if (rule.intent === 'DISABILITY_CLAIM' && _overrideResult === 'TDIU') {
+              var _workImpact = ["can't work", 'cannot work', 'stop me', 'because of my conditions'];
+              for (var _wi = 0; _wi < _workImpact.length; _wi++) {
+                if (text.indexOf(_workImpact[_wi]) !== -1) {
+                  console.log('[AIOS][CTX_OVERRIDE] original: DISABILITY_CLAIM → overridden: TDIU');
+                  _finalIntent = 'TDIU';
+                  break;
+                }
+              }
+            }
+          }
+
+          if (window.AIOS && window.AIOS.Memory &&
+              typeof window.AIOS.Memory.writeLastActiveSkill === 'function') {
+            window.AIOS.Memory.writeLastActiveSkill(_finalIntent);
+          }
+          return attachPartnerMeta(result(_finalIntent, 0.8, match));
         }
+      }
+
+      // ── 2.5 Phase R6.8: CONTEXT_CONTINUATION_LAYER ────────────────────────
+      // Only reached when KEYWORD_RULES produced no match (would be GENERAL_QUESTION).
+      // Evaluates context rules C1–C4. First rule match returns a non-null intent.
+      var _ctxIntent = _runContextContinuationLayer(text);
+      if (_ctxIntent) {
+        if (window.AIOS && window.AIOS.Memory &&
+            typeof window.AIOS.Memory.writeLastActiveSkill === 'function') {
+          window.AIOS.Memory.writeLastActiveSkill(_ctxIntent);
+        }
+        return attachPartnerMeta(result(_ctxIntent, 0.7, 'context-layer'));
       }
 
       // ── 3. Short-input handling ─────────────────────────

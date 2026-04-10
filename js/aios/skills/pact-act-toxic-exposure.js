@@ -320,12 +320,12 @@
     switch (exposureType) {
 
       case 'burn-pit-exposure': {
-        var hasEra = (era === ERA.POST_9_11 || era === ERA.GULF_WAR || hasLoc); // location confirms era for burn pits
         var hasLoc = _hasKeyword(corpus, [
           'iraq', 'afghanistan', 'djibouti', 'kuwait', 'qatar', 'uae', 'bahrain',
           'saudi', 'syria', 'jordan', 'yemen', 'somalia', 'uzbekistan', 'philippines',
           'burn pit', 'southwest asia', 'airborne hazard'
         ]);
+        var hasEra = (era === ERA.POST_9_11 || era === ERA.GULF_WAR || hasLoc); // location confirms era for burn pits
         var hasCond = (profile.conditions && profile.conditions.length > 0) ||
           _hasKeyword(corpus, [
             'cancer', 'respiratory', 'bronchiolitis', 'lung', 'sinus', 'asthma',
@@ -337,7 +337,9 @@
             status: 'YES',
             reasoning: 'Service in a PACT Act-covered location during Gulf War or post-9/11 era ' +
               'with a respiratory or cancer condition meets all three presumptive thresholds. ' +
-              'No nexus letter required — service connection established by law.'
+              'No separate nexus letter is needed once a qualifying diagnosis is confirmed — ' +
+              'service connection may be established by law. ' +
+              'If you are describing symptoms only, you will need a medical diagnosis before filing.'
           };
         }
         if (hasEra || hasLoc) {
@@ -373,7 +375,9 @@
           return {
             status: 'YES',
             reasoning: 'Vietnam-era service location confirmed with a listed Agent Orange presumptive condition. ' +
-              'Service connection is established by law — no nexus letter or proof of direct herbicide exposure required.'
+              'Service connection may be established by law once a qualifying diagnosis is confirmed — ' +
+              'no separate nexus letter or proof of direct herbicide exposure required. ' +
+              'If you are describing symptoms only, you will need a medical diagnosis before filing.'
           };
         }
         if (hasAOEra || hasAOLoc) {
@@ -408,8 +412,10 @@
           return {
             status: 'YES',
             reasoning: 'Southwest Asia theater service confirmed with chronic multisymptom or ' +
-              'functional illness. VA presumes these conditions are connected to Gulf War service — ' +
-              'no proof of specific cause required. Theater remains active with no end date.'
+              'functional illness. VA may presume these conditions are connected to Gulf War service ' +
+              'once a qualifying diagnosis is confirmed — no proof of specific cause required. ' +
+              'Theater remains active with no end date. ' +
+              'If you are describing symptoms only, you will need a medical diagnosis before filing.'
           };
         }
         if (hasGWEra || hasGWLoc) {
@@ -438,8 +444,10 @@
           return {
             status: 'YES',
             reasoning: 'Camp Lejeune service with a covered condition. ' +
-              'PACT Act establishes presumptive service connection for all 8 listed cancers and additional conditions. ' +
-              'Service period Aug 1, 1953 – Dec 31, 1987 (minimum 30 days) must be confirmed by service records.'
+              'PACT Act may establish presumptive service connection for all 8 listed cancers and additional conditions ' +
+              'once a qualifying diagnosis is confirmed. ' +
+              'Service period Aug 1, 1953 – Dec 31, 1987 (minimum 30 days) must be confirmed by service records. ' +
+              'If you are describing symptoms only, you will need a medical diagnosis before filing.'
           };
         }
         if (hasCLLoc) {
@@ -473,8 +481,9 @@
           return {
             status: 'YES',
             reasoning: 'Service at a nuclear testing or ionizing radiation exposure location ' +
-              'with a radiogenic disease qualifies under 38 CFR 3.309(d). ' +
-              'No nexus letter required — the VA presumes radiation caused the condition.'
+              'with a radiogenic disease may qualify under 38 CFR 3.309(d) once a qualifying diagnosis is confirmed. ' +
+              'No separate nexus letter is needed — the VA may presume radiation caused the condition. ' +
+              'If you are describing symptoms only, you will need a medical diagnosis before filing.'
           };
         }
         if (hasRadLoc) {
@@ -740,8 +749,37 @@
       var userInput  = (context && context.userInput) ? context.userInput : '';
       var historyLen = (context && context.history)   ? context.history.length : 0;
 
+      // ── Phase R6.8: read session context (read-only) ──────────────────────
+      var _ctx = (window.AIOS && window.AIOS.Memory &&
+                  typeof window.AIOS.Memory.getSkillContext === 'function')
+        ? window.AIOS.Memory.getSkillContext()
+        : { profile: {}, session: { symptoms: [], goals: [], lastActiveSkill: null,
+            atRiskSignal: { flagged: false, turn: null, subtype: null } } };
+      var _ctxProfile = _ctx.profile;
+      var _ctxSession = _ctx.session;
+
       // ── Step 1: Classify exposure type ────────────────
       var exposureType = _classifyExposure(profile, userInput);
+
+      // ── Phase R6.8: exposure context fallback from session ─────────────────
+      // If classification is 'needs-intake' but a prior turn captured an exposure
+      // type via extractSessionSignals, use it to maintain PACT_ACT reasoning
+      // instead of falling through to the generic unknown response.
+      if (exposureType === 'needs-intake' &&
+          _ctxProfile.exposureContext && _ctxProfile.exposureContext.type) {
+        var _expTypeMap = {
+          'burn-pit':     'burn-pit-exposure',
+          'agent-orange': 'agent-orange-exposure',
+          'camp-lejeune': 'camp-lejeune',
+          'gulf-war':     'gulf-war-illness',
+          'radiation':    'radiation-exposure'
+        };
+        var _mapped = _expTypeMap[_ctxProfile.exposureContext.type];
+        if (_mapped) {
+          exposureType = _mapped;
+          console.log('[AIOS][SKILL][PACT_ACT] Context fallback: needs-intake → ' + exposureType);
+        }
+      }
 
       // ── Step 2: Assess presumptive status ─────────────
       var presumptiveResult = _assessPresumptiveStatus(exposureType, profile, userInput);

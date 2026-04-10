@@ -801,6 +801,15 @@
       var userInput  = (context && context.userInput) ? context.userInput : '';
       var historyLen = (context && context.history)   ? context.history.length : 0;
 
+      // Phase R6.8: read session context (read-only)
+      var _ctx = (window.AIOS && window.AIOS.Memory &&
+                  typeof window.AIOS.Memory.getSkillContext === 'function')
+        ? window.AIOS.Memory.getSkillContext()
+        : { profile: {}, session: { symptoms: [], goals: [], lastActiveSkill: null,
+            atRiskSignal: { flagged: false, turn: null, subtype: null } } };
+      var _ctxProfile = _ctx.profile;
+      var _ctxSession = _ctx.session;
+
       var corpus = [
         userInput || '',
         (profile.conditions || []).join(' ')
@@ -817,6 +826,18 @@
 
       // ── Step 4: Determine care type ────────────────────
       var careType = _determineCareType(profile, userInput, severityLevel, mstSensitive);
+
+      // Phase R6.8: skip intake if session already has MH symptoms — override needs-intake
+      if (careType === 'needs-intake') {
+        for (var _mhi = 0; _mhi < _ctxSession.symptoms.length; _mhi++) {
+          if (_ctxSession.symptoms[_mhi].category === 'mental-health') {
+            careType = 'va-mental-health';
+            console.log('[AIOS][SKILL][MENTAL_HEALTH] Context override: needs-intake → va-mental-health' +
+              ' | session symptom: ' + _ctxSession.symptoms[_mhi].token);
+            break;
+          }
+        }
+      }
 
       // ── Step 5: Build reasoning ───────────────────────
       var reasoning = _buildReasoning(careType, severityLevel, mstSensitive, sleepIssue, profile);

@@ -684,8 +684,9 @@
         actions.push(
           'SCHEDULE A HIRING AUTHORITY: At your ' + rating + '% VA rating, you qualify for Schedule A ' +
           'non-competitive appointment — meaning you can be hired directly without competing with the ' +
-          'general public. Obtain a Schedule A letter from the VA (va.gov/careers-employment/vocational-rehabilitation/) ' +
-          'and send it with your resume directly to the hiring manager or agency VEC (Veteran Employment Coordinator). ' +
+          'general public. Schedule A letters are typically provided by a licensed medical professional, ' +
+          'VA provider, or vocational rehabilitation counselor. Send the letter with your resume directly ' +
+          'to the hiring manager or agency VEC (Veteran Employment Coordinator). ' +
           'Find agency VECs: fedshirevets.gov/hiring-officials/agency-veteran-employment-managers/'
         );
       }

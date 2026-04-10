@@ -58,7 +58,22 @@
     'drinking problem', 'alcohol problem', 'drug problem',
     "can't stop drinking", "i'm an addict",
     'being abused', 'domestic violence',
-    'unsafe at home', 'afraid to go home'
+    'unsafe at home', 'afraid to go home',
+    // Phase R6.2.1: sync with router AT_RISK_KEYWORDS additions
+    'not safe at home', 'do not feel safe at home', "don't feel safe at home",
+    'in danger at home',
+    'was evicted',
+    'drinking too much', 'struggling with alcohol',
+    'struggling with drugs', 'using drugs',
+    'totally alone', 'all alone',
+    // Phase R6.2 FINAL — SF-R1/R2/R3 sync with router
+    'ending it',
+    'not safe where',
+    'behind on my rent', 'cannot pay rent', 'cannot pay my rent',
+    // Phase R6.3.2: housing loss phrasing — mirrored from router AT_RISK_KEYWORDS
+    'lose my place', 'might lose my place',
+    // Phase R6.4: pre-eviction distress — mirrored from router AT_RISK_KEYWORDS
+    'i might get evicted'
   ];
 
   var CrisisSupport = {

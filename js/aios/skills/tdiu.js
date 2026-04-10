@@ -630,8 +630,10 @@
       parts.push(
         'The veteran\'s rating structure' + rStr +
         (conds ? ' with service-connected conditions (' + conds + ')' : '') +
-        ' satisfies the 38 CFR 4.16(a) schedular threshold for TDIU.' +
-        ' The focus now is on demonstrating that these conditions prevent substantially gainful employment.'
+        ' meets the 38 CFR 4.16(a) schedular threshold — one of two required elements for TDIU.' +
+        ' The second and equally required element is demonstrating that these service-connected conditions' +
+        ' prevent the veteran from maintaining substantially gainful employment.' +
+        ' Both prongs must be established for TDIU to be granted.'
       );
     } else if (thresholdStatus === 'possible-extraschedular') {
       parts.push(
@@ -1127,6 +1129,15 @@
       var userInput  = (context && context.userInput) ? context.userInput : '';
       var historyLen = (context && context.history)   ? context.history.length : 0;
 
+      // Phase R6.8: read session context (read-only)
+      var _ctx = (window.AIOS && window.AIOS.Memory &&
+                  typeof window.AIOS.Memory.getSkillContext === 'function')
+        ? window.AIOS.Memory.getSkillContext()
+        : { profile: {}, session: { symptoms: [], goals: [], lastActiveSkill: null,
+            atRiskSignal: { flagged: false, turn: null, subtype: null } } };
+      var _ctxProfile = _ctx.profile;
+      var _ctxSession = _ctx.session;
+
       // ── Step 1: Determine threshold status ────────────
       var thresholdStatus = _determineThresholdStatus(profile, userInput);
 
@@ -1177,6 +1188,21 @@
       };
 
       if (unknown.length) { data.unknownFields = unknown; }
+
+      // Phase R6.8: inject session employment goal context into reasoning (read-only)
+      var _hasEmploymentGoal = false;
+      for (var _gi = 0; _gi < _ctxSession.goals.length; _gi++) {
+        if (_ctxSession.goals[_gi].signal === 'EMPLOYMENT') { _hasEmploymentGoal = true; break; }
+      }
+      if (_hasEmploymentGoal && _ctxProfile.vaRating !== null && _ctxProfile.vaRating !== undefined) {
+        var _empNote = 'Session context — veteran has indicated work limitations with a ' +
+          _ctxProfile.vaRating + '% rating. Reinforce TDIU path without re-collecting employment history.';
+        tdiuResult.reasoning = tdiuResult.reasoning
+          ? tdiuResult.reasoning + ' ' + _empNote : _empNote;
+        data.sessionEmploymentContext = _empNote;
+        console.log('[AIOS][SKILL][TDIU] Session employment context injected | rating:' +
+          _ctxProfile.vaRating);
+      }
 
       // ── Eligibility engine integration ────────────────
       var Elig = window.AIOS && window.AIOS.Eligibility;

@@ -408,7 +408,20 @@
       // Phase R4.8 addition
       housingStatus:    null,
       // Phase R4.10 addition
-      separationTimeline: null
+      separationTimeline: null,
+      // Phase R6.8 addition
+      exposureContext: null
+    },
+
+    /** In-session context tracking (ephemeral, cleared on reset) — Phase R6.8 */
+    sessionContext: {
+      symptoms:              [],
+      goals:                 [],
+      lastActiveSkill:       null,
+      lastActiveSkillTurn:   null,
+      lastRoutingConfidence: null,
+      turnCount:             0,
+      atRiskSignal:          { flagged: false, turn: null, subtype: null }
     },
 
 
@@ -452,7 +465,14 @@
         mos: null, dependents: null,
         rank: null, serviceEntryDate: null, separationDate: null, conditions: null,
         housingStatus: null,
-        separationTimeline: null   // Phase R4.10
+        separationTimeline: null,  // Phase R4.10
+        exposureContext: null      // Phase R6.8
+      };
+      MemoryManager.sessionContext = {
+        symptoms: [], goals: [],
+        lastActiveSkill: null, lastActiveSkillTurn: null,
+        lastRoutingConfidence: null, turnCount: 0,
+        atRiskSignal: { flagged: false, turn: null, subtype: null }
       };
     },
 
@@ -1021,6 +1041,257 @@
 
       if (parts.length === 0) return '';
       return 'Veteran profile — ' + parts.join(' | ') + '.';
+    },
+
+
+    /* ── Phase R6.8: Session signal extraction ──────────── */
+
+    /**
+     * Extract session-level signals from a user message.
+     * Must be called BEFORE router classification on every turn.
+     * Mutates sessionContext (symptoms, goals, turnCount) and
+     * profile.exposureContext (persistent once detected).
+     *
+     * Uses simple substring indexOf matching — no external libraries.
+     *
+     * @param {string} userMessage
+     */
+    extractSessionSignals: function(userMessage) {
+      var sc = MemoryManager.sessionContext;
+      sc.turnCount++;
+
+      if (typeof userMessage !== 'string' || !userMessage.trim()) return;
+
+      var txt = userMessage.toLowerCase();
+
+      // ── Symptom extraction ─────────────────────────────
+      // Token list ordered from most-specific to least-specific within each category.
+      // Accumulate + de-dup by token. No decay here — read-time filtering in getSkillContext.
+      var _SYMPTOM_TOKENS = [
+        { token: 'shortness of breath', category: 'respiratory'     },
+        { token: 'chest tightness',     category: 'respiratory'     },
+        { token: 'cannot breathe',      category: 'respiratory'     },
+        { token: "can't breathe",       category: 'respiratory'     },
+        { token: 'respiratory',         category: 'respiratory'     },
+        { token: 'breathing',           category: 'respiratory'     },
+        { token: 'lung',                category: 'respiratory'     },
+        { token: 'panic attack',        category: 'mental-health'   },
+        { token: 'cannot sleep',        category: 'mental-health'   },
+        { token: "can't sleep",         category: 'mental-health'   },
+        { token: 'nightmares',          category: 'mental-health'   },
+        { token: 'depression',          category: 'mental-health'   },
+        { token: 'depressed',           category: 'mental-health'   },
+        { token: 'anxiety',             category: 'mental-health'   },
+        { token: 'anxious',             category: 'mental-health'   },
+        { token: 'ptsd',                category: 'mental-health'   },
+        { token: 'chronic pain',        category: 'musculoskeletal' },
+        { token: 'shoulder pain',       category: 'musculoskeletal' },
+        { token: 'joint pain',          category: 'musculoskeletal' },
+        { token: 'knee pain',           category: 'musculoskeletal' },
+        { token: 'back pain',           category: 'musculoskeletal' },
+        { token: 'memory problems',     category: 'cognitive'       },
+        { token: 'cannot focus',        category: 'cognitive'       },
+        { token: "can't focus",         category: 'cognitive'       },
+        { token: 'brain fog',           category: 'cognitive'       }
+      ];
+
+      var _seenTokens = {};
+      for (var _et = 0; _et < sc.symptoms.length; _et++) {
+        _seenTokens[sc.symptoms[_et].token] = 1;
+      }
+      for (var _si = 0; _si < _SYMPTOM_TOKENS.length; _si++) {
+        var _st = _SYMPTOM_TOKENS[_si];
+        if (!_seenTokens[_st.token] && txt.indexOf(_st.token) !== -1) {
+          sc.symptoms.push({ token: _st.token, category: _st.category, turn: sc.turnCount });
+          _seenTokens[_st.token] = 1;
+        }
+      }
+
+      // ── Goal extraction ────────────────────────────────
+      // Accumulate + de-dup by intent. Goals persist until marked resolved.
+      var _GOAL_SIGNALS = [
+        { intent: 'EMPLOYMENT', tokens: [
+            'want a job', 'need a job', 'find a job', 'get a job',
+            'looking for work', 'find employment', 'want to work', 'want employment'
+        ]},
+        { intent: 'HOUSING', tokens: [
+            'need a place', 'need housing', 'losing my housing', 'lose my home',
+            'losing my home', 'find housing', 'need somewhere to live',
+            'need a home', 'need somewhere'
+        ]},
+        { intent: 'HEALTHCARE', tokens: [
+            'need healthcare', 'see a doctor', 'need treatment', 'get healthcare',
+            'enroll in va', 'see a va doctor', 'need medical'
+        ]},
+        { intent: 'CLAIM', tokens: [
+            'file a claim', 'increase my rating', 'file for disability',
+            'submit a claim', 'disability claim', 'va claim', 'file an appeal'
+        ]},
+        { intent: 'EDUCATION', tokens: [
+            'go to school', 'use my gi bill', 'gi bill', 'get a degree',
+            'school benefits', 'education benefits', 'want to go to college'
+        ]}
+      ];
+
+      var _seenGoals = {};
+      for (var _eg = 0; _eg < sc.goals.length; _eg++) {
+        _seenGoals[sc.goals[_eg].intent] = 1;
+      }
+      for (var _gi = 0; _gi < _GOAL_SIGNALS.length; _gi++) {
+        var _gs = _GOAL_SIGNALS[_gi];
+        if (_seenGoals[_gs.intent]) continue;
+        for (var _gti = 0; _gti < _gs.tokens.length; _gti++) {
+          if (txt.indexOf(_gs.tokens[_gti]) !== -1) {
+            sc.goals.push({ intent: _gs.intent, turn: sc.turnCount, resolved: false });
+            _seenGoals[_gs.intent] = 1;
+            break;
+          }
+        }
+      }
+
+      // ── Exposure context extraction ────────────────────
+      // Writes to profile.exposureContext (persistent).
+      // OVERWRITE rule: only sets if currently null; does not overwrite existing type.
+      var _EXPOSURE_SIGNALS = [
+        { type: 'burn-pit',     tokens: ['burn pit', 'burn-pit', 'kbr', 'joint base balad', 'camp victory', 'camp anaconda', 'open air burn'] },
+        { type: 'agent-orange', tokens: ['agent orange'] },
+        { type: 'camp-lejeune', tokens: ['camp lejeune', 'tarawa terrace', 'hadnot point'] },
+        { type: 'gulf-war',     tokens: ['gulf war', 'desert storm', 'desert shield'] },
+        { type: 'radiation',    tokens: ['nuclear test', 'radiation exposure', 'enewetak', 'marshall islands', 'palomares'] }
+      ];
+
+      if (!MemoryManager.profile.exposureContext || MemoryManager.profile.exposureContext.type === null) {
+        for (var _xi = 0; _xi < _EXPOSURE_SIGNALS.length; _xi++) {
+          var _xs = _EXPOSURE_SIGNALS[_xi];
+          for (var _xti = 0; _xti < _xs.tokens.length; _xti++) {
+            if (txt.indexOf(_xs.tokens[_xti]) !== -1) {
+              MemoryManager.profile.exposureContext = {
+                type: _xs.type,
+                locations: [],
+                confirmedDiagnosis: null
+              };
+              break;
+            }
+          }
+          if (MemoryManager.profile.exposureContext && MemoryManager.profile.exposureContext.type) break;
+        }
+      }
+
+      // ── Unstable employment signals ────────────────────
+      // Captures TDIU-relevant inability to maintain employment —
+      // not covered by the profile extractor which targets simple status labels.
+      // Writes employmentStatus 'unemployed' only if no status already set.
+      // Also pushes EMPLOYMENT goal into session if not present.
+      var _UNSTABLE_TOKENS = [
+        "can't keep a job", 'cannot keep a job', 'hard to keep a job',
+        'lose jobs because', "can't keep employment", 'keep getting fired',
+        'fired again', 'trouble keeping a job', 'difficulty keeping a job',
+        'cannot maintain employment'
+      ];
+      for (var _ui = 0; _ui < _UNSTABLE_TOKENS.length; _ui++) {
+        if (txt.indexOf(_UNSTABLE_TOKENS[_ui]) !== -1) {
+          if (!MemoryManager.profile.employmentStatus) {
+            MemoryManager.profile.employmentStatus = 'unemployed';
+          }
+          if (!_seenGoals['EMPLOYMENT']) {
+            sc.goals.push({ intent: 'EMPLOYMENT', turn: sc.turnCount, resolved: false });
+            _seenGoals['EMPLOYMENT'] = 1;
+          }
+          break;
+        }
+      }
+
+      console.log('[AIOS][SESSION] T' + sc.turnCount +
+        ' | symptoms:' + sc.symptoms.length +
+        ' | goals:' + sc.goals.length +
+        ' | lastSkill:' + (sc.lastActiveSkill || 'none'));
+    },
+
+
+    /**
+     * Record the intent the router selected for this turn.
+     * Called by router.js immediately after final intent is determined.
+     * Phase R6.8.
+     *
+     * @param {string} intent  - Router intent constant (e.g. 'PACT_ACT')
+     */
+    writeLastActiveSkill: function(intent) {
+      var sc = MemoryManager.sessionContext;
+      if (typeof intent === 'string' && intent) {
+        sc.lastActiveSkill     = intent;
+        sc.lastActiveSkillTurn = sc.turnCount;
+      }
+    },
+
+
+    /**
+     * Record an at-risk signal captured by the router's AT_RISK tier.
+     * Called by router.js when AT_RISK tier fires before keyword scan.
+     * Phase R6.8.
+     *
+     * @param {string|null} subtype  - 'housing' | 'mental-health' | 'financial' | null
+     */
+    writeAtRiskSignal: function(subtype) {
+      var sc = MemoryManager.sessionContext;
+      sc.atRiskSignal = {
+        flagged: true,
+        turn:    sc.turnCount,
+        subtype: (typeof subtype === 'string' && subtype) ? subtype : null
+      };
+    },
+
+
+    /**
+     * Return the read-only context envelope delivered to each skill invocation.
+     * Applies read-time decay rules:
+     *   symptoms[]     — entries older than turnCount - 5 are excluded
+     *   atRiskSignal   — cleared if flagged more than 3 turns ago
+     *   lastActiveSkill — nulled if set more than 2 turns ago
+     * Skills consume but MUST NOT mutate this object.
+     * Phase R6.8.
+     *
+     * @returns {{ profile: Object, session: Object }}
+     */
+    getSkillContext: function() {
+      var sc = MemoryManager.sessionContext;
+
+      // symptoms: read-time decay — keep only entries from last 5 turns
+      var _decayFloor      = sc.turnCount - 5;
+      var _filteredSymptoms = [];
+      for (var _fs = 0; _fs < sc.symptoms.length; _fs++) {
+        if (sc.symptoms[_fs].turn > _decayFloor) {
+          _filteredSymptoms.push(sc.symptoms[_fs]);
+        }
+      }
+
+      // atRiskSignal: active only within 3 turns of detection
+      var _ar = sc.atRiskSignal;
+      var _arActive = (
+        _ar.flagged === true &&
+        _ar.turn !== null &&
+        (sc.turnCount - _ar.turn) <= 3
+      );
+
+      // lastActiveSkill: valid only within 2 turns
+      var _lastSkillValid = (
+        sc.lastActiveSkill !== null &&
+        sc.lastActiveSkillTurn !== null &&
+        (sc.turnCount - sc.lastActiveSkillTurn) <= 2
+      );
+
+      return {
+        profile: Object.assign({}, MemoryManager.profile),
+        session: {
+          symptoms:              _filteredSymptoms,
+          goals:                 sc.goals.filter(function(g) { return !g.resolved; }),
+          lastActiveSkill:       _lastSkillValid ? sc.lastActiveSkill : null,
+          lastActiveSkillTurn:   sc.lastActiveSkillTurn,
+          lastRoutingConfidence: sc.lastRoutingConfidence,
+          atRiskSignal:          _arActive
+            ? { flagged: true,  turn: _ar.turn, subtype: _ar.subtype }
+            : { flagged: false, turn: null,      subtype: null }
+        }
+      };
     }
 
   };

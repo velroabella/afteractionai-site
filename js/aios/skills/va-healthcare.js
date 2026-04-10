@@ -426,17 +426,31 @@
 
       case 'urgent-care-guidance':
         actions.push(
-          'For emergencies: Go to the nearest VA Emergency Room or call 911. ' +
-          'Locate nearest VA ER at va.gov/find-locations.'
+          'For life-threatening emergencies: Call 911 or go to the nearest emergency room — ' +
+          'VA or non-VA. The VA can cover non-VA emergency care in many cases; report the visit ' +
+          'to the VA within 72 hours. Locate nearest VA ER at va.gov/find-locations.'
         );
+        if (enrollmentStatus === 'enrolled' || enrollmentStatus === 'likely-eligible') {
+          actions.push(
+            'For non-emergency urgent care (enrolled veterans): You can use approved ' +
+            'community urgent care providers under the VA community care urgent care benefit. ' +
+            'Find one at va.gov/find-locations/?facilityType=urgent_care. ' +
+            'Bring your Veterans Health Identification Card (VHIC). ' +
+            'Confirm visit limits and any copays with your VAMC.'
+          );
+        } else {
+          actions.push(
+            'For non-emergency urgent care (not yet enrolled): Your fastest options are ' +
+            '(1) walk in to the nearest VA Medical Center and ask to be seen, ' +
+            '(2) use any community urgent care clinic (self-pay or private insurance may apply, ' +
+            'as community urgent care benefits generally require VA enrollment first), or ' +
+            '(3) start your VA healthcare enrollment now at va.gov/health-care/apply ' +
+            '(VA Form 10-10EZ) so future urgent care visits can be covered.'
+          );
+        }
         actions.push(
-          'For non-emergency urgent care: Enrolled veterans get 3 visits/year at approved ' +
-          'community urgent care providers. Find one at va.gov/find-locations/?facilityType=urgent_care. ' +
-          'Bring your Veterans Health Identification Card (VHIC).'
-        );
-        actions.push(
-          'Mental health crisis: Call 988, Press 1 (Veterans Crisis Line). ' +
-          'Every VA Medical Center provides same-day mental health services — no appointment needed.'
+          'Not sure where to go? Call the VA at 1-877-222-VETS (1-877-222-8387) ' +
+          'to speak with a representative who can route you to the right service.'
         );
         break;
 
@@ -562,8 +576,16 @@
     // ── Dental callout when relevant ──
     if (dentalStatus === 'likely-eligible') {
       actions.push(
-        'Dental: You are likely eligible for VA dental care. Contact the dental clinic ' +
-        'at your assigned VAMC to schedule. Full dental benefits included with your eligibility category.'
+        'Dental: You may be eligible for VA dental care depending on your eligibility class. ' +
+        'VA dental benefits are organized into six classes (Class I through Class VI) based on factors ' +
+        'such as VA rating, POW status, service-connected dental conditions, and participation in ' +
+        'specific VA programs. Class I (100% P&T or unemployability) receives comprehensive care; ' +
+        'other classes cover only service-connected dental conditions. ' +
+        'Veterans separating from active duty also have a one-time 180-day post-discharge dental window — ' +
+        'apply within 180 days of separation for a full course of dental treatment. ' +
+        'To apply: complete VA Form 10-10EZD (Application for Extended Care Services) or contact ' +
+        'the dental clinic at your assigned VAMC. ' +
+        'Confirm your eligibility class before scheduling to avoid unexpected costs.'
       );
     } else if (dentalStatus === 'likely-not-eligible') {
       actions.push(
@@ -642,7 +664,7 @@
         } else if (discharge.indexOf('honorable') !== -1 || discharge.indexOf('general') !== -1) {
           parts.push('Honorable/General discharge confirms basic healthcare eligibility.');
         } else {
-          parts.push('Service history signals indicate healthcare eligibility — enrollment recommended.');
+          parts.push('Your service history may qualify you for VA healthcare, but eligibility depends on discharge status, service details, and enrollment status.');
         }
         break;
       case 'likely-eligible-needs-priority-review':
@@ -727,6 +749,15 @@
       var userInput  = (context && context.userInput) ? context.userInput : '';
       var historyLen = (context && context.history)   ? context.history.length : 0;
 
+      // Phase R6.8: read session context (read-only)
+      var _ctx = (window.AIOS && window.AIOS.Memory &&
+                  typeof window.AIOS.Memory.getSkillContext === 'function')
+        ? window.AIOS.Memory.getSkillContext()
+        : { profile: {}, session: { symptoms: [], goals: [], lastActiveSkill: null,
+            atRiskSignal: { flagged: false, turn: null, subtype: null } } };
+      var _ctxProfile = _ctx.profile;
+      var _ctxSession = _ctx.session;
+
       // ── Step 1: Determine enrollment status ───────────
       var enrollmentStatus = _determineEnrollmentStatus(profile, userInput);
 
@@ -771,6 +802,25 @@
       };
 
       if (unknown.length) { data.unknownFields = unknown; }
+
+      // Phase R6.8: inject session symptom context into reasoning (read-only)
+      var _mhSymptoms = [], _respSymptoms = [];
+      for (var _si = 0; _si < _ctxSession.symptoms.length; _si++) {
+        var _sym = _ctxSession.symptoms[_si];
+        if (_sym.category === 'mental-health')  { _mhSymptoms.push(_sym.token); }
+        if (_sym.category === 'respiratory')    { _respSymptoms.push(_sym.token); }
+      }
+      if (_mhSymptoms.length > 0 || _respSymptoms.length > 0) {
+        var _symNote = 'Session context — symptoms already shared: ';
+        if (_mhSymptoms.length)   { _symNote += 'Mental health: '  + _mhSymptoms.join(', ')  + '. '; }
+        if (_respSymptoms.length) { _symNote += 'Respiratory: ' + _respSymptoms.join(', ') + '. '; }
+        _symNote += 'Address these directly — do not re-ask for symptom intake.';
+        healthcareResult.reasoning = healthcareResult.reasoning
+          ? healthcareResult.reasoning + ' ' + _symNote : _symNote;
+        data.sessionSymptomContext = _symNote;
+        console.log('[AIOS][SKILL][VA_HEALTHCARE] Session symptom context injected | mh:' +
+          _mhSymptoms.length + ' resp:' + _respSymptoms.length);
+      }
 
       // ── Eligibility engine integration ────────────────
       var Elig = window.AIOS && window.AIOS.Eligibility;

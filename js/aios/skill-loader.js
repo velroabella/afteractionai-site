@@ -18,7 +18,14 @@
     'crisis-support',
     'next-action-planner',
     'document-analyzer',
-    'family-survivor-support'   // Phase 38
+    'family-survivor-support',  // Phase 38
+    'employment-transition',    // Phase R5.7
+    'education-benefits',       // Phase R5
+    'pact-act-toxic-exposure',  // Phase R5.3
+    'va-healthcare',            // Phase R5.4
+    'housing-benefits',         // Phase R5.5
+    'mental-health',            // Phase R5.6
+    'tdiu'                      // Phase R5.8
   ];
 
 
