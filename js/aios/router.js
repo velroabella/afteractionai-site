@@ -20,7 +20,7 @@
     NEXT_STEP:             'next-action-planner',
     DOCUMENT_ANALYSIS:     'document-analyzer',
     FAMILY_SURVIVOR:       'family-survivor-support',  // Phase 38
-    EMPLOYMENT_TRANSITION: 'next-action-planner',      // Phase 39
+    EMPLOYMENT_TRANSITION: 'employment-transition',    // Phase R5.7
     LEGAL_DOCUMENTS:       'document-analyzer',        // Phase 39
     EDUCATION:             'education-benefits',       // Phase R5
     PACT_ACT:              'pact-act-toxic-exposure',  // Phase R5.3
@@ -164,7 +164,10 @@
         'contractor job', 'contracting job', 'defense contractor', 'cleared job',
         'security clearance', 'have a clearance', 'clearance holder',
         'dod contractor', 'government contractor', 'need a contractor',
-        'get a contractor', 'find a contractor job'
+        'get a contractor', 'find a contractor job',
+        // Phase R5.7.1: separation timeline phrasing + trade terms
+        'separate in', 'separating in', 'get out in',
+        'electrician', 'hvac', 'plumber', 'skilled trade', 'trade job'
       ]
     },
     // ── Legal Documents / Forms (Phase 39) ────────────────
