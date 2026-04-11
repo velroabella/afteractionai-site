@@ -3703,8 +3703,6 @@
       ? window.AIOS.Memory.getProfile()
       : {};
 
-    var _ph = '[NOT PROVIDED]';
-
     // Phase 2: Gather all uploaded doc text for direct extraction
     var _uploadedText = '';
     try {
@@ -3717,7 +3715,7 @@
     } catch (e) { /* non-fatal — proceed without doc text */ }
 
     // Calculate years of service from dates if available
-    var yearsService = _ph;
+    var yearsService = null;
     if (profile.serviceEntryDate && profile.separationDate) {
       try {
         var _entry = new Date(profile.serviceEntryDate);
@@ -3725,11 +3723,11 @@
         if (!isNaN(_entry) && !isNaN(_sep)) {
           yearsService = String(Math.max(1, Math.round((_sep - _entry) / (365.25 * 24 * 60 * 60 * 1000))));
         }
-      } catch (e) { /* fall through to placeholder */ }
+      } catch (e) { /* fall through to null */ }
     }
 
     // Mine conversation history for target role / skills / education
-    var targetRole = _ph;
+    var targetRole = null;
     var keySkills  = '';
     var education  = '';
     if (conversationHistory && conversationHistory.length) {
@@ -3772,8 +3770,8 @@
         'Mission Planning | Training & Mentoring | Process Improvement | ' +
         'Problem Solving | Communication';
     }
-    if (!keySkills) keySkills = _ph;
-    if (!education) education = _ph;
+    if (!keySkills) keySkills = null;
+    if (!education) education = null;
 
     // FIX 2 — Certifications: profile (mined from DD-214 Item 14) → direct doc text
     var certifications = profile.certifications || null;
@@ -3808,10 +3806,10 @@
     } catch (e) { /* leave authEmail empty */ }
 
     return {
-      fullName:           profile.name           || _ph,
-      branch:             profile.branch         || _ph,
-      mos:                profile.mos            || _ph,
-      rank:               profile.rank           || _ph,
+      fullName:           profile.name           || null,
+      branch:             profile.branch         || null,
+      mos:                profile.mos            || null,
+      rank:               profile.rank           || null,
       yearsService:       yearsService,
       targetRole:         targetRole,
       keySkills:          keySkills,
@@ -3821,14 +3819,639 @@
       accomplishments:    accomplishments,
       experienceSummary:  experienceSummary,
       priorRoles:         profile.priorRoles     || null,
-      state:              profile.state          || _ph,
+      state:              profile.state          || null,
       email:              authEmail              || null,
       phone:              profile.phone          || null,
-      serviceEntryDate:   profile.serviceEntryDate || _ph,
-      separationDate:     profile.separationDate || _ph,
+      serviceEntryDate:   profile.serviceEntryDate || null,
+      separationDate:     profile.separationDate || null,
       vaRating:           profile.vaRating       || null,
       employmentStatus:   profile.employmentStatus || null
     };
+  }
+
+  /**
+   * Phase R-2 — Rental Application data builder.
+   *
+   * Returns a plain object mirroring the fields consumed by
+   * buildRentalApplicationPacket(D, data). All fields default to `null`
+   * when no deterministic source is available — NO placeholders, NO
+   * [NOT PROVIDED] sentinels, NO AI calls. Extraction is pure regex /
+   * string match against:
+   *   1. window.AIOS.Memory.getProfile()
+   *   2. window.AIOS._dashboardContext.uploadedDocs[].extracted_text
+   *   3. conversationHistory[].content
+   *
+   * Fields:
+   *   fullName, phone, email, currentAddress, propertyAddress,
+   *   monthlyIncome, primaryIncomeSource, employmentStatus,
+   *   reasonForMoving, householdMembers, references
+   */
+  function _buildRentalApplicationData() {
+    var profile = (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.getProfile === 'function')
+      ? window.AIOS.Memory.getProfile()
+      : {};
+
+    // ── Source 2: uploaded document text ──
+    var _uploadedText = '';
+    try {
+      var _uctx = window.AIOS && window.AIOS._dashboardContext;
+      if (_uctx && _uctx.uploadedDocs && _uctx.uploadedDocs.length) {
+        _uploadedText = _uctx.uploadedDocs
+          .map(function (d) { return d.extracted_text || ''; })
+          .join('\n');
+      }
+    } catch (e) { /* non-fatal — proceed without doc text */ }
+
+    // ── Source 3: conversation history text ──
+    var _convoText = '';
+    if (typeof conversationHistory !== 'undefined' && conversationHistory && conversationHistory.length) {
+      _convoText = conversationHistory.map(function (m) { return m.content || ''; }).join('\n');
+    }
+    var _allText = _convoText + '\n' + _uploadedText;
+
+    // ── Auth email ──
+    var authEmail = '';
+    try {
+      var _authUser = window.AAAI && window.AAAI.auth && typeof window.AAAI.auth.getUser === 'function'
+        ? window.AAAI.auth.getUser() : null;
+      if (_authUser && _authUser.email) authEmail = _authUser.email;
+    } catch (e) { /* leave authEmail empty */ }
+
+    // ── currentAddress ──
+    // Priority: uploaded docs (street-style match) → conversation hint phrase.
+    var currentAddress = null;
+    if (_uploadedText) {
+      var _addrDocRx = /\b\d{1,6}\s+[A-Z][A-Za-z0-9.\s'\-]{2,40}\s+(?:Street|St|Avenue|Ave|Boulevard|Blvd|Road|Rd|Drive|Dr|Lane|Ln|Way|Court|Ct|Place|Pl|Parkway|Pkwy|Circle|Cir|Terrace|Ter|Highway|Hwy)\b\.?(?:,?\s+(?:Apt|Apartment|Unit|Ste|Suite)\.?\s*[A-Z0-9\-]{1,8})?(?:,?\s+[A-Z][A-Za-z\s]{1,30})?(?:,?\s+[A-Z]{2}\s+\d{5}(?:-\d{4})?)?/;
+      var _addrDocM = _uploadedText.match(_addrDocRx);
+      if (_addrDocM) currentAddress = _addrDocM[0].trim().replace(/\s+/g, ' ');
+    }
+    if (!currentAddress && _convoText) {
+      var _addrConvoM = _convoText.match(/(?:current\s+address|i\s+live\s+at|living\s+at|home\s+address|my\s+address\s+is)\s*[:\-]?\s*([0-9][^\n,]{5,80})/i);
+      if (_addrConvoM) currentAddress = _addrConvoM[1].trim();
+    }
+
+    // ── propertyAddress ── (target rental)
+    // Mined from conversation only — profile has no concept of target rental.
+    var propertyAddress = null;
+    if (_convoText) {
+      var _propM = _convoText.match(/(?:renting|interested\s+in\s+renting|applying\s+(?:for|to)|property\s+at|the\s+(?:property|rental|home|apartment|unit)\s+at)\s*[:\-]?\s*([0-9][^\n,]{5,80})/i);
+      if (_propM) propertyAddress = _propM[1].trim();
+    }
+
+    // ── monthlyIncome ──
+    var monthlyIncome = null;
+    if (_convoText) {
+      var _incConvoM = _convoText.match(/(?:monthly\s+(?:gross\s+)?income|i\s+(?:make|earn|bring\s+home)|income\s+of|take[- ]home|bring\s+in)\s*(?:is|=)?\s*[:\-]?\s*\$?\s*([0-9][0-9,]{2,10}(?:\.[0-9]{1,2})?)\s*(?:\/?\s*(?:month|mo|monthly))?/i);
+      if (_incConvoM) monthlyIncome = _incConvoM[1].replace(/,/g, '').trim();
+    }
+    if (!monthlyIncome && _uploadedText) {
+      var _incDocM = _uploadedText.match(/(?:monthly\s+(?:gross\s+)?income|gross\s+monthly|monthly\s+pay|base\s+pay|monthly\s+benefit)\s*[:\-]?\s*\$?\s*([0-9][0-9,]{2,10}(?:\.[0-9]{1,2})?)/i);
+      if (_incDocM) monthlyIncome = _incDocM[1].replace(/,/g, '').trim();
+    }
+
+    // ── primaryIncomeSource ──
+    var primaryIncomeSource = null;
+    var _hasVADisability =
+      /\bva\s+(?:disability|compensation|benefits)\b/i.test(_allText) ||
+      /\bservice[- ]connected\s+(?:disability|compensation)\b/i.test(_allText) ||
+      (profile.vaRating && parseInt(profile.vaRating, 10) > 0);
+    if (_convoText) {
+      var _srcConvoM = _convoText.match(/(?:income\s+(?:source|from|comes\s+from)|i\s+(?:make\s+money|earn)\s+from|source\s+of\s+income)\s*[:\-]?\s*([A-Za-z][^\n.]{3,80})/i);
+      if (_srcConvoM) primaryIncomeSource = _srcConvoM[1].trim();
+    }
+    if (!primaryIncomeSource) {
+      if (_hasVADisability && profile.employmentStatus === 'employed') {
+        primaryIncomeSource = 'Employment income and VA disability compensation';
+      } else if (_hasVADisability) {
+        primaryIncomeSource = 'VA disability compensation';
+      } else if (profile.employmentStatus === 'employed') {
+        primaryIncomeSource = 'Employment income';
+      }
+    }
+
+    // ── employmentStatus ──
+    var employmentStatus = profile.employmentStatus || null;
+
+    // ── reasonForMoving ──
+    var reasonForMoving = null;
+    if (_convoText) {
+      if (/\bpcs\s+orders?\b|\bpermanent\s+change\s+of\s+station\b/i.test(_convoText)) {
+        reasonForMoving = 'PCS orders';
+      } else if (/\bets(?:ing|\s+out)?\b|\bend\s+of\s+(?:term\s+of\s+)?service\b|\bseparating\s+from\s+(?:active\s+duty|service)\b/i.test(_convoText)) {
+        reasonForMoving = 'Separation from active duty';
+      } else if (/\bretir(?:ing|ement)\s+from\s+(?:service|military|active\s+duty)\b/i.test(_convoText)) {
+        reasonForMoving = 'Retirement from military service';
+      } else if (/\bmedical(?:ly)?\s+(?:retired|discharged|separat)/i.test(_convoText)) {
+        reasonForMoving = 'Medical separation';
+      } else {
+        var _rmConvoM = _convoText.match(/(?:moving\s+(?:because|due\s+to|for)|relocating\s+(?:because|due\s+to|for)|reason\s+for\s+moving)\s*[:\-]?\s*([A-Za-z][^\n.]{5,120})/i);
+        if (_rmConvoM) reasonForMoving = _rmConvoM[1].trim();
+      }
+    }
+
+    // ── householdMembers ──
+    var householdMembers = null;
+    if (_convoText) {
+      var _hhM = _convoText.match(/(?:household\s+(?:of|members|size)|(?:family|household)\s+of)\s*[:\-]?\s*(\d{1,2})/i);
+      if (_hhM) householdMembers = parseInt(_hhM[1], 10);
+    }
+    if (householdMembers === null && _convoText) {
+      // Derive from spouse/dependent mentions (applicant counts as 1)
+      var _hhCount = 1;
+      if (/\b(?:my\s+)?(?:wife|husband|spouse|partner)\b/i.test(_convoText)) _hhCount += 1;
+      var _kidCountM = _convoText.match(/(\d{1,2})\s+(?:kids|children|dependents|sons|daughters)\b/i);
+      if (_kidCountM) {
+        _hhCount += parseInt(_kidCountM[1], 10);
+      } else if (/\b(?:my\s+)?(?:kid|child|son|daughter|dependent)s?\b/i.test(_convoText)) {
+        _hhCount += 1;
+      }
+      if (_hhCount > 1) householdMembers = _hhCount;
+    }
+
+    // ── references ──
+    // Mine uploaded docs for an explicit references section; else null.
+    var references = null;
+    if (_uploadedText) {
+      var _refM = _uploadedText.match(/references?\s*[:\-]\s*([^\n]{10,400})/i);
+      if (_refM) references = _refM[1].trim().replace(/\s+/g, ' ').slice(0, 400);
+    }
+
+    return {
+      fullName:            profile.name              || null,
+      phone:               profile.phone             || null,
+      email:               authEmail                 || null,
+      currentAddress:      currentAddress,
+      propertyAddress:     propertyAddress,
+      monthlyIncome:       monthlyIncome,
+      primaryIncomeSource: primaryIncomeSource,
+      employmentStatus:    employmentStatus,
+      reasonForMoving:     reasonForMoving,
+      householdMembers:    householdMembers,
+      references:          references
+    };
+  }
+
+  /**
+   * Phase Fed-4 — Safe deterministic autofill for federal resume data.
+   *
+   * Accepts the raw object produced by _buildFederalResumeData(), applies
+   * nine normalization/derivation passes, and returns a shallow copy.
+   * The caller's object is NEVER mutated.
+   *
+   * Allowed derivations (deterministic only — no AI, no fabrication):
+   *   1. employmentStatus  — alias → canonical string
+   *   2. branch            — informal → "U.S. Army" etc.
+   *   3. veteransPreference — variant spellings → canonical label
+   *   4. securityClearance  — variant spellings → canonical label
+   *   5. citizenship        — variant spellings → "U.S. Citizen" etc.
+   *   6. yearsService       — strip trailing text, keep numeric part
+   *   7. keySkills          — derive from certifications when null
+   *   8. accomplishments    — extract action-verb sentences from experienceSummary when null
+   *   9. string field trim  — collapse internal whitespace, trim edges
+   */
+  function attemptFederalResumeAutoFill(data) {
+    // ── Shallow copy — never mutate caller's object ──
+    var d = {};
+    for (var _afk in data) {
+      if (Object.prototype.hasOwnProperty.call(data, _afk)) d[_afk] = data[_afk];
+    }
+
+    var _afHas = function (k) {
+      var v = d[k];
+      if (v === null || typeof v === 'undefined') return false;
+      if (typeof v === 'number') return !isNaN(v);
+      if (typeof v === 'string') return v.trim().length > 0;
+      return false;
+    };
+
+    // ── Derivation 1: employmentStatus normalization ──
+    if (_afHas('employmentStatus')) {
+      var _afEs = d.employmentStatus.trim().toLowerCase();
+      if (/\bfull[\s\-]?time\b/.test(_afEs))             d.employmentStatus = 'Full-Time';
+      else if (/\bpart[\s\-]?time\b/.test(_afEs))        d.employmentStatus = 'Part-Time';
+      else if (/\bself[\s\-]?employ/.test(_afEs))        d.employmentStatus = 'Self-Employed';
+      else if (/\bcontract(or|ing)?\b/.test(_afEs))      d.employmentStatus = 'Contractor';
+      else if (/\bunemploy/.test(_afEs))                 d.employmentStatus = 'Unemployed';
+      else if (/\bretir/.test(_afEs))                    d.employmentStatus = 'Retired';
+      else if (/\bstudent\b/.test(_afEs))                d.employmentStatus = 'Student';
+    }
+
+    // ── Derivation 2: branch normalization ──
+    if (_afHas('branch')) {
+      var _afBr = d.branch.trim().toLowerCase().replace(/\s+/g, ' ');
+      if (/\barmy\b/.test(_afBr) && !/u\.s\.\s*army/.test(_afBr))          d.branch = 'U.S. Army';
+      else if (/\bnavy\b/.test(_afBr) && !/u\.s\.\s*navy/.test(_afBr))     d.branch = 'U.S. Navy';
+      else if (/\bmarine/.test(_afBr) && !/u\.s\.\s*marine/.test(_afBr))   d.branch = 'U.S. Marine Corps';
+      else if (/\bair\s+force\b/.test(_afBr) && !/u\.s\.\s*air/.test(_afBr)) d.branch = 'U.S. Air Force';
+      else if (/\bspace\s+force\b/.test(_afBr) && !/u\.s\.\s*space/.test(_afBr)) d.branch = 'U.S. Space Force';
+      else if (/\bcoast\s+guard\b/.test(_afBr) && !/u\.s\.\s*coast/.test(_afBr)) d.branch = 'U.S. Coast Guard';
+      else if (/\bguard\b/.test(_afBr) && !/coast/.test(_afBr))            d.branch = 'National Guard';
+      else if (/\breserve\b/.test(_afBr))                                   d.branch = 'Reserve';
+    }
+
+    // ── Derivation 3: veteransPreference normalization ──
+    if (_afHas('veteransPreference')) {
+      var _afVp = d.veteransPreference.trim().toLowerCase();
+      if (/10[\s\-]?pt|10[\s\-]?point|disabled\s+vet/.test(_afVp))
+        d.veteransPreference = '10-Point (Disabled Veteran)';
+      else if (/5[\s\-]?pt|5[\s\-]?point/.test(_afVp))
+        d.veteransPreference = '5-Point';
+      else if (/\bnone\b|\bno\s+pref/.test(_afVp))
+        d.veteransPreference = 'None';
+    }
+
+    // ── Derivation 4: securityClearance normalization ──
+    if (_afHas('securityClearance')) {
+      var _afCl = d.securityClearance.trim().toLowerCase().replace(/\s+/g, ' ');
+      if (/ts\s*\/\s*sci|top\s+secret\s*\/\s*sci/.test(_afCl))
+        d.securityClearance = 'Top Secret/SCI';
+      else if (/top\s+secret/.test(_afCl) && !/sci/.test(_afCl))
+        d.securityClearance = 'Top Secret';
+      else if (/\bsecret\b/.test(_afCl) && !/top/.test(_afCl))
+        d.securityClearance = 'Secret';
+      else if (/\bconfidential\b/.test(_afCl))
+        d.securityClearance = 'Confidential';
+      else if (/\bpublic\s+trust\b/.test(_afCl))
+        d.securityClearance = 'Public Trust';
+    }
+
+    // ── Derivation 5: citizenship normalization ──
+    if (_afHas('citizenship')) {
+      var _afCit = d.citizenship.trim().toLowerCase();
+      if (/\bu\.?s\.?\s+cit|\bunited\s+states\s+cit|american\s+cit/.test(_afCit))
+        d.citizenship = 'U.S. Citizen';
+      else if (/\bpermanent\s+resid|\bgreen\s+card|\blpr\b/.test(_afCit))
+        d.citizenship = 'Permanent Resident';
+      else if (/\bnatural/.test(_afCit))
+        d.citizenship = 'Naturalized Citizen';
+    }
+
+    // ── Derivation 6: yearsService normalization — keep numeric portion only ──
+    if (_afHas('yearsService')) {
+      var _afYsStr = String(d.yearsService).trim();
+      var _afYsM = _afYsStr.match(/^(\d+(?:\.\d+)?)/);
+      if (_afYsM) d.yearsService = _afYsM[1];
+    }
+
+    // ── Derivation 7: keySkills from certifications when keySkills is null ──
+    if (!_afHas('keySkills') && _afHas('certifications')) {
+      // Extract the first few comma/semicolon-delimited tokens as skill candidates
+      var _afCertTokens = d.certifications
+        .split(/[,;|]+/)
+        .map(function (s) { return s.trim().replace(/\s+/g, ' '); })
+        .filter(function (s) { return s.length > 1 && s.length < 60; });
+      if (_afCertTokens.length > 0) {
+        d.keySkills = _afCertTokens.slice(0, 6).join(', ');
+      }
+    }
+
+    // ── Derivation 8: accomplishments from experienceSummary when null ──
+    // Extract sentences that begin with a past-tense action verb followed by a measurable result
+    if (!_afHas('accomplishments') && _afHas('experienceSummary')) {
+      var _afActionVerbs = /^(led|managed|developed|built|created|designed|implemented|established|trained|supervised|coordinated|executed|achieved|reduced|increased|improved|delivered|launched|authored|directed|oversaw|mentored|spearheaded|streamlined|deployed|maintained|operated)/i;
+      var _afResultSignals = /\b(\d+|percent|%|award|recogni|reduc|increas|improv|save|cost|budget|mission|success|complet)/i;
+      var _afSents = d.experienceSummary
+        .replace(/([.!?])\s+/g, '$1\n')
+        .split('\n')
+        .map(function (s) { return s.trim(); })
+        .filter(function (s) { return s.length > 20 && _afActionVerbs.test(s) && _afResultSignals.test(s); });
+      if (_afSents.length > 0) {
+        d.accomplishments = _afSents.slice(0, 3).join(' | ');
+      }
+    }
+
+    // ── Derivation 9: string field trim / whitespace normalization ──
+    var _afStringFields = [
+      'fullName', 'phone', 'email', 'currentLocation', 'targetRole',
+      'citizenship', 'veteransPreference', 'securityClearance',
+      'branch', 'rank', 'mos', 'yearsService', 'employmentStatus',
+      'education', 'institution', 'certifications', 'awards',
+      'keySkills', 'experienceSummary', 'accomplishments', 'priorRoles'
+    ];
+    for (var _afSi = 0; _afSi < _afStringFields.length; _afSi++) {
+      var _afSf = _afStringFields[_afSi];
+      if (typeof d[_afSf] === 'string') {
+        d[_afSf] = d[_afSf].replace(/[ \t]+/g, ' ').trim();
+        if (d[_afSf].length === 0) d[_afSf] = null;
+      }
+    }
+
+    return d;
+  }
+
+  /**
+   * Phase Fed-2 — Federal Resume USAJobs data builder.
+   *
+   * Returns a plain object mirroring the fields consumed by
+   * buildFederalResumeUsajobs(D, data). All fields default to `null`
+   * when no deterministic source is available — NO placeholders, NO
+   * sentinels, NO AI calls. Extraction is pure regex / string match
+   * against, in priority order:
+   *   1. window.AIOS.Memory.getProfile()
+   *   2. window.AIOS._dashboardContext.uploadedDocs[].extracted_text
+   *   3. conversationHistory[].content
+   *   4. AAAI.auth.getUser().email
+   *
+   * Fields:
+   *   fullName, phone, email, currentLocation, targetRole,
+   *   citizenship, veteransPreference, securityClearance,
+   *   branch, rank, mos, yearsService, employmentStatus,
+   *   education, institution, certifications, awards,
+   *   keySkills, experienceSummary, accomplishments, priorRoles
+   */
+  function _buildFederalResumeData() {
+    // ── Source 1: profile ──
+    var profile = (window.AIOS && window.AIOS.Memory && typeof window.AIOS.Memory.getProfile === 'function')
+      ? window.AIOS.Memory.getProfile()
+      : {};
+
+    // ── Source 2: uploaded document text ──
+    var _frdUploadedText = '';
+    try {
+      var _frdCtx = window.AIOS && window.AIOS._dashboardContext;
+      if (_frdCtx && _frdCtx.uploadedDocs && _frdCtx.uploadedDocs.length) {
+        _frdUploadedText = _frdCtx.uploadedDocs
+          .map(function (d) { return d.extracted_text || ''; })
+          .join('\n');
+      }
+    } catch (e) { /* non-fatal — proceed without doc text */ }
+
+    // ── Source 3: conversation history text ──
+    var _frdConvoText = '';
+    if (typeof conversationHistory !== 'undefined' && conversationHistory && conversationHistory.length) {
+      _frdConvoText = conversationHistory.map(function (m) { return m.content || ''; }).join('\n');
+    }
+    var _frdAllText = _frdConvoText + '\n' + _frdUploadedText;
+
+    // ── Source 4: auth email ──
+    var _frdAuthEmail = null;
+    try {
+      var _frdAuthUser = window.AAAI && window.AAAI.auth && typeof window.AAAI.auth.getUser === 'function'
+        ? window.AAAI.auth.getUser() : null;
+      if (_frdAuthUser && _frdAuthUser.email) _frdAuthEmail = _frdAuthUser.email;
+    } catch (e) { /* leave null */ }
+
+    // ── fullName ──
+    // Priority: profile → docs (name label pattern)
+    var _frdFullName = profile.name || null;
+    if (!_frdFullName && _frdUploadedText) {
+      var _frdNameM = _frdUploadedText.match(/(?:^|\n)\s*(?:name|soldier|service\s+member)\s*[:\-]\s*([A-Z][A-Za-z'.'\-]+(?:[ \t]+[A-Z][A-Za-z'.'\-]+){1,5})/i);
+      if (_frdNameM) _frdFullName = _frdNameM[1].trim();
+    }
+
+    // ── phone ──
+    // Priority: profile → docs (phone label pattern)
+    var _frdPhone = profile.phone || null;
+    if (!_frdPhone && _frdUploadedText) {
+      var _frdPhoneM = _frdUploadedText.match(/(?:phone|telephone|cell|mobile)\s*[:\-]?\s*(\(?\d{3}\)?[\s.\-]?\d{3}[\s.\-]?\d{4})/i);
+      if (_frdPhoneM) _frdPhone = _frdPhoneM[1].trim();
+    }
+
+    // ── currentLocation (city, state — NOT full street) ──
+    // Priority: profile.state → docs city+state pattern → convo city+state pattern
+    var _frdCurrentLocation = null;
+    if (profile.state) {
+      _frdCurrentLocation = profile.state;
+    }
+    if (!_frdCurrentLocation && _frdUploadedText) {
+      var _frdLocDocM = _frdUploadedText.match(/(?:city|location|home\s+of\s+record)\s*[:\-]\s*([A-Za-z][A-Za-z\s\.\-]{2,40}),?\s*([A-Z]{2})\s*\d{5}/i);
+      if (_frdLocDocM) _frdCurrentLocation = _frdLocDocM[1].trim() + ', ' + _frdLocDocM[2];
+    }
+    if (!_frdCurrentLocation && _frdConvoText) {
+      var _frdLocConvoM = _frdConvoText.match(/(?:i\s+(?:live|am)\s+(?:in|based\s+in)|located\s+in|currently\s+in)\s+([A-Za-z][A-Za-z\s\.\-]{2,30}),?\s*([A-Z]{2})\b/i);
+      if (_frdLocConvoM) _frdCurrentLocation = _frdLocConvoM[1].trim() + ', ' + _frdLocConvoM[2];
+    }
+
+    // ── targetRole ──
+    // Priority: convo intent match → docs desired position label
+    var _frdTargetRole = null;
+    if (_frdConvoText) {
+      var _frdRoleM = _frdConvoText.match(/(?:target(?:ing)?|seeking|interested\s+in|want(?:s|ing)?\s+(?:a|to\s+be))\s+(?:a\s+)?([A-Za-z\s\/&\-]{3,50})\s+(?:role|position|job|career)/i);
+      if (_frdRoleM) _frdTargetRole = _frdRoleM[1].trim();
+    }
+    if (!_frdTargetRole && _frdUploadedText) {
+      var _frdRoleDocM = _frdUploadedText.match(/(?:desired\s+(?:job|position|occupation)|job\s+objective|applying\s+for)\s*[:\-]\s*([A-Za-z][^\n]{3,80})/i);
+      if (_frdRoleDocM) _frdTargetRole = _frdRoleDocM[1].trim().replace(/\s+/g, ' ').slice(0, 80);
+    }
+
+    // ── veteransPreference ──
+    // Computed early; citizenship deferred until after _frdBranch is resolved.
+    // 10-point: VA disability rating >= 10% or explicit disabled-vet signal
+    // 5-point:  any service/discharge signal, no disability
+    // null:     no service signal found
+    var _frdVARating = profile.vaRating ? parseInt(profile.vaRating, 10) : 0;
+    var _frdDisabledVet =
+      (_frdVARating >= 10) ||
+      /\b(?:service[- ]connected\s+disability|disabled\s+veteran|10[- ]point\s+(?:veterans?'?\s+)?preference)\b/i.test(_frdAllText);
+    var _frdHasServiceSignal =
+      !!(profile.branch) ||
+      /\b(?:honorable\s+discharge|general\s+discharge|served\s+(?:in|on)\s+the|active\s+duty|military\s+service|u\.?s\.?\s+veteran)\b/i.test(_frdAllText);
+    var _frdVetPref = null;
+    if (_frdDisabledVet) {
+      _frdVetPref = '10-Point (Disabled Veteran)';
+    } else if (_frdHasServiceSignal) {
+      _frdVetPref = '5-Point';
+    }
+
+    // ── securityClearance ──
+    // Matched in descending specificity; "secret" required near "clearance"
+    // to avoid false positives from unrelated context.
+    // Also detects "TS/SCI" abbreviation form.
+    var _frdClearance = null;
+    if (_frdAllText) {
+      if (/\btop\s+secret\s*\/\s*sci\b|\bts\s*\/\s*sci\b/i.test(_frdAllText)) {
+        _frdClearance = 'Top Secret/SCI';
+      } else if (/\btop\s+secret\b/i.test(_frdAllText)) {
+        _frdClearance = 'Top Secret';
+      } else if (/\bsecret\s+(?:security\s+)?clearance\b|\bsecurity\s+clearance\s*[:\-]?\s*secret\b/i.test(_frdAllText)) {
+        _frdClearance = 'Secret';
+      } else if (/\bconfidential\s+(?:security\s+)?clearance\b/i.test(_frdAllText)) {
+        _frdClearance = 'Confidential';
+      } else if (/\bpublic\s+trust\b/i.test(_frdAllText)) {
+        _frdClearance = 'Public Trust';
+      }
+    }
+
+    // ── branch ──
+    // Priority: profile → docs (branch name pattern)
+    var _frdBranch = profile.branch || null;
+    if (!_frdBranch && _frdUploadedText) {
+      var _frdBranchM = _frdUploadedText.match(/\b(Army|Navy|Marine\s+Corps|Air\s+Force|Coast\s+Guard|Space\s+Force|National\s+Guard)\b/i);
+      if (_frdBranchM) _frdBranch = _frdBranchM[1].trim();
+    }
+
+    // ── citizenship ──
+    // Explicit text assertion first; then infer from confirmed branch value.
+    // (US federal military service requires US citizenship.)
+    // Placed after _frdBranch is fully resolved so doc-mined branch counts.
+    var _frdCitizenship = null;
+    if (/\b(?:u\.?s\.?\s+citizen|united\s+states\s+citizen|american\s+citizen|citizenship\s*[:\-]\s*(?:yes|u\.?s\.?|united\s+states))\b/i.test(_frdAllText)) {
+      _frdCitizenship = 'U.S. Citizen';
+    } else if (_frdBranch) {
+      // Active/prior US military service members must hold US citizenship
+      _frdCitizenship = 'U.S. Citizen';
+    }
+
+    // ── rank ──
+    // Priority: profile → docs (grade/rank label)
+    var _frdRank = profile.rank || null;
+    if (!_frdRank && _frdUploadedText) {
+      var _frdRankM = _frdUploadedText.match(/(?:grade|rank)\s*[:\-]\s*([A-Z]\d?[A-Z]?[-]?\d{0,2}|[A-Z]{1,3}\s+[A-Za-z]+)/);
+      if (_frdRankM) _frdRank = _frdRankM[1].trim();
+    }
+
+    // ── mos ──
+    // Priority: profile → docs (MOS/AFSC/Rating label)
+    var _frdMos = profile.mos || null;
+    if (!_frdMos && _frdUploadedText) {
+      var _frdMosM = _frdUploadedText.match(/(?:mos|afsc|rating|military\s+occupational\s+specialty)\s*[:\-]\s*([A-Z0-9]{2,5}[A-Z]?\s+[A-Za-z][^\n]{3,60})/i);
+      if (_frdMosM) _frdMos = _frdMosM[1].trim().replace(/\s+/g, ' ').slice(0, 80);
+    }
+
+    // ── yearsService ──
+    // Priority: calculate from dates → regex for explicit "X years of service"
+    var _frdYearsService = null;
+    if (profile.serviceEntryDate && profile.separationDate) {
+      try {
+        var _frdEntry = new Date(profile.serviceEntryDate);
+        var _frdSep   = new Date(profile.separationDate);
+        if (!isNaN(_frdEntry) && !isNaN(_frdSep)) {
+          var _frdYrs = Math.max(1, Math.round((_frdSep - _frdEntry) / (365.25 * 24 * 60 * 60 * 1000)));
+          _frdYearsService = String(_frdYrs);
+        }
+      } catch (e) { /* leave null */ }
+    }
+    if (!_frdYearsService && _frdAllText) {
+      var _frdYsM = _frdAllText.match(/(\d{1,2})\s+years?\s+(?:of\s+)?(?:active\s+duty\s+|military\s+)?service\b/i);
+      if (_frdYsM) _frdYearsService = _frdYsM[1];
+    }
+
+    // ── employmentStatus ──
+    // Priority: profile → convo keyword scan
+    var _frdEmpStatus = profile.employmentStatus || null;
+    if (!_frdEmpStatus && _frdConvoText) {
+      if (/\b(?:currently\s+employed|working\s+(?:at|for)|i\s+work\s+(?:at|for))\b/i.test(_frdConvoText)) {
+        _frdEmpStatus = 'employed';
+      } else if (/\b(?:unemployed|not\s+(?:currently\s+)?working|looking\s+for\s+work)\b/i.test(_frdConvoText)) {
+        _frdEmpStatus = 'unemployed';
+      } else if (/\b(?:active\s+duty|currently\s+serving|on\s+active\s+duty)\b/i.test(_frdConvoText)) {
+        _frdEmpStatus = 'active duty';
+      } else if (/\b(?:retired\s+from|in\s+retirement|post-retirement)\b/i.test(_frdConvoText)) {
+        _frdEmpStatus = 'retired';
+      }
+    }
+
+    // ── education ──
+    // Priority: convo degree mention → profile → docs degree mention
+    var _frdEducation = null;
+    if (_frdConvoText) {
+      var _frdEduConvoM = _frdConvoText.match(/(?:degree|bachelor|master|associate|diploma|certificate|B\.?S\.?|M\.?S\.?|B\.?A\.?|M\.?B\.?A\.?)\s*(?:in|of)?\s*([^\n]{3,100})/i);
+      if (_frdEduConvoM) _frdEducation = _frdEduConvoM[0].trim().replace(/\s+/g, ' ');
+    }
+    if (!_frdEducation && profile.education) {
+      _frdEducation = profile.education;
+    }
+    if (!_frdEducation && _frdUploadedText) {
+      var _frdEduDocM = _frdUploadedText.match(/(?:bachelor(?:'?s)?|master(?:'?s)?|associate(?:'?s)?|ph\.?d\.?|degree)\s*(?:of|in)?\s*[A-Za-z\s,&'\-]{3,60}/i);
+      if (_frdEduDocM) _frdEducation = _frdEduDocM[0].trim().replace(/\s+/g, ' ');
+    }
+
+    // ── institution ──
+    // Mine docs first (structured text), then convo attended/graduated phrases
+    var _frdInstitution = null;
+    if (_frdUploadedText) {
+      var _frdInstDocM = _frdUploadedText.match(/(?:[A-Z][A-Za-z\s]+\s+(?:University|College|Institute|Academy|School)|(?:University|College|Institute|Academy)\s+of\s+[A-Za-z\s]{3,50})\b/);
+      if (_frdInstDocM) _frdInstitution = _frdInstDocM[0].trim().replace(/\s+/g, ' ');
+    }
+    if (!_frdInstitution && _frdConvoText) {
+      var _frdInstConvoM = _frdConvoText.match(/(?:attended|graduated\s+from|studied\s+at|went\s+to)\s+([A-Z][A-Za-z\s]{3,60}(?:University|College|Institute|Academy))/i);
+      if (_frdInstConvoM) _frdInstitution = _frdInstConvoM[1].trim();
+    }
+
+    // ── certifications ──
+    // Priority: profile (mined from DD-214 Item 14) → docs training block
+    var _frdCertifications = profile.certifications || null;
+    if (!_frdCertifications && _frdUploadedText) {
+      var _frdCertDocM = _frdUploadedText.match(/(?:item\s*14|military\s+education|certif(?:ication|ied)s?|training\s+(?:attended|completed))\s*[:\-]?\s*([^\n]{10,200})/i);
+      if (_frdCertDocM) _frdCertifications = _frdCertDocM[1].trim().replace(/\s+/g, ' ');
+    }
+
+    // ── awards ──
+    // Priority: profile (mined from DD-214 Item 13) → docs awards block
+    var _frdAwards = profile.awards || null;
+    if (!_frdAwards && _frdUploadedText) {
+      var _frdAwardsM = _frdUploadedText.match(/(?:awards?\s+and\s+decorations?|military\s+awards?|honors?\s+and\s+awards?|item\s*13)\s*[:\-]?\s*([^\n]{10,300})/i);
+      if (_frdAwardsM) _frdAwards = _frdAwardsM[1].trim().replace(/\s+/g, ' ').slice(0, 300);
+    }
+
+    // ── keySkills ──
+    // Priority: convo skills block → docs skills/qualifications block → profile.civilianSkills
+    // NO generic MOS fallback — return null rather than fabricate content.
+    var _frdKeySkills = null;
+    if (_frdConvoText) {
+      var _frdSkillConvoM = _frdConvoText.match(/(?:skills?|competenc(?:ies|y)|strengths?)\s*[:—\-]\s*([^\n]{10,200})/i);
+      if (_frdSkillConvoM) _frdKeySkills = _frdSkillConvoM[1].trim();
+    }
+    if (!_frdKeySkills && _frdUploadedText) {
+      var _frdSkillDocM = _frdUploadedText.match(/(?:skills?|competenc(?:ies|y)|qualifications?|technical\s+skills?|proficienc(?:y|ies))\s*[:\-]\s*([^\n]{10,200})/i);
+      if (_frdSkillDocM) _frdKeySkills = _frdSkillDocM[1].trim();
+    }
+    if (!_frdKeySkills && profile.civilianSkills) {
+      _frdKeySkills = profile.civilianSkills;
+    }
+
+    // ── experienceSummary ──
+    // Mine docs for duties/job description block only
+    var _frdExpSummary = null;
+    if (_frdUploadedText) {
+      var _frdExpM = _frdUploadedText.match(/(?:duties\s+and\s+responsibilities|duties\s+performed|job\s+description|civilian\s+(?:job|position|work)\s+history)\s*[:\-]?\s*([^\n]{20,400})/i);
+      if (_frdExpM) _frdExpSummary = _frdExpM[1].trim().replace(/\s+/g, ' ').slice(0, 400);
+    }
+
+    // ── accomplishments ──
+    // Mine docs for quantified action-verb sentences
+    var _frdAccomplishments = null;
+    if (_frdUploadedText) {
+      var _frdAcM = _frdUploadedText.match(/[A-Z][^\n.]{20,140}(?:\d+\s*(?:%|percent|personnel|soldiers?|troops?|vehicles?|missions?|systems?|Soldiers?)|(?:managed|led|trained|supervised|coordinated|directed|achieved|improved|reduced|increased))[^\n.]{0,80}/g);
+      if (_frdAcM && _frdAcM.length) {
+        _frdAccomplishments = _frdAcM.slice(0, 4)
+          .map(function (s) { return s.trim().replace(/\s+/g, ' '); })
+          .join(' | ');
+      }
+    }
+
+    // ── priorRoles ──
+    // Priority: profile → docs employment/work history label
+    var _frdPriorRoles = profile.priorRoles || null;
+    if (!_frdPriorRoles && _frdUploadedText) {
+      var _frdPriorM = _frdUploadedText.match(/(?:prior\s+(?:positions?|roles?|experience)|work\s+history|employment\s+history)\s*[:\-]?\s*([^\n]{10,300})/i);
+      if (_frdPriorM) _frdPriorRoles = _frdPriorM[1].trim().replace(/\s+/g, ' ').slice(0, 300);
+    }
+
+    var _frdRaw = {
+      fullName:           _frdFullName,
+      phone:              _frdPhone,
+      email:              _frdAuthEmail,
+      currentLocation:    _frdCurrentLocation,
+      targetRole:         _frdTargetRole,
+      citizenship:        _frdCitizenship,
+      veteransPreference: _frdVetPref,
+      securityClearance:  _frdClearance,
+      branch:             _frdBranch,
+      rank:               _frdRank,
+      mos:                _frdMos,
+      yearsService:       _frdYearsService,
+      employmentStatus:   _frdEmpStatus,
+      education:          _frdEducation,
+      institution:        _frdInstitution,
+      certifications:     _frdCertifications,
+      awards:             _frdAwards,
+      keySkills:          _frdKeySkills,
+      experienceSummary:  _frdExpSummary,
+      accomplishments:    _frdAccomplishments,
+      priorRoles:         _frdPriorRoles
+    };
+    return attemptFederalResumeAutoFill(_frdRaw);
   }
 
   /**
@@ -4002,7 +4625,7 @@
           // Save to dashboard
           var output = {
             template_type: 'resume-builder',
-            title: 'Resume — ' + (resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'Veteran'),
+            title: 'Resume — ' + (resumeData.fullName ? resumeData.fullName : 'Veteran'),
             content: result.contentText,
             metadata: {
               source: 'template_driven',
@@ -4020,7 +4643,7 @@
 
             // Show confirmation in chat
             clearAIWorkingState();
-            var _name = resumeData.fullName !== '[NOT PROVIDED]' ? resumeData.fullName : 'your';
+            var _name = resumeData.fullName ? resumeData.fullName : 'your';
             var _confirmMsg = '✅ **Resume — ' + _name + '** has been generated and saved to your dashboard.\n\n' +
               'The .docx file has also been downloaded to your device.\n\n' +
               'You can view, edit, or re-download it from your **[Profile → Generated Documents](/profile.html)** page.\n\n' +
@@ -5657,6 +6280,73 @@
     btn.addEventListener('click', function () {
       AAAI.legal.requireAcknowledgment(formType, function (confirmedFormType) {
         if (typeof AAAI !== 'undefined' && AAAI.legalDocx && AAAI.legalDocx.generate) {
+          // ── Phase R-3: RENTAL STRUCTURED-DATA PATH ──────────────
+          // Rental application packet is now built from structured data,
+          // not AI markdown. This bypasses _parseMarkdownToDocx and runs
+          // the validation gate inside buildRentalApplicationPacket so an
+          // incomplete profile yields a failure doc instead of leaking
+          // bracket placeholders.
+          if (confirmedFormType === 'rental-application-packet' &&
+              AAAI.legalDocx.generateFromData &&
+              typeof _buildRentalApplicationData === 'function') {
+            try {
+              var _rentalData = _buildRentalApplicationData();
+              console.log('[Rental] structured data:', _rentalData);
+              AAAI.legalDocx.generateFromData('rental-application-packet', _rentalData)
+                .then(function () {
+                  activeDocumentType = null;
+                  console.log('[DOC RESET] activeDocumentType cleared after rental generation');
+                })
+                .catch(function (err) {
+                  var msg = err && err.message ? err.message : String(err || 'Rental DOCX generation failed');
+                  console.error('[LegalBtn] rental generateFromData failed:', err);
+                  if (typeof showToast === 'function') { showToast(msg, 'error'); }
+                  else { alert('Document generation error: ' + msg); }
+                });
+              return;
+            } catch (_rentalErr) {
+              console.error('[LegalBtn] rental data build failed, falling back to generate():', _rentalErr);
+              // Fall through to markdown path
+            }
+          }
+          // ────────────────────────────────────────────────────────
+
+          // ── Phase RESUME-HARDEN: RESUME STRUCTURED-DATA PATH ────
+          // Resume is always built from structured profile data via the
+          // hardened generateFromData path. This intercept prevents any
+          // rawText / markdown path from bypassing _buildResumeData,
+          // attemptResumeAutoFill, validateResumeData, and
+          // buildResumeFromData. Unlike rental, there is NO fallthrough
+          // to the markdown path on error — resume-builder must never
+          // reach generateLegalDocx().
+          if (confirmedFormType === 'resume-builder' &&
+              AAAI.legalDocx.generateFromData &&
+              typeof _buildResumeData === 'function') {
+            try {
+              var _resumeData = _buildResumeData();
+              console.log('[LegalBtn] resume structured data:', JSON.stringify(_resumeData).substring(0, 200));
+              AAAI.legalDocx.generateFromData('resume-builder', _resumeData)
+                .then(function () {
+                  activeDocumentType = null;
+                  console.log('[DOC RESET] activeDocumentType cleared after resume generation');
+                })
+                .catch(function (err) {
+                  var msg = err && err.message ? err.message : String(err || 'Resume DOCX generation failed');
+                  console.error('[LegalBtn] resume generateFromData failed:', err);
+                  if (typeof showToast === 'function') { showToast(msg, 'error'); }
+                  else { alert('Document generation error: ' + msg); }
+                });
+            } catch (_resumeErr) {
+              console.error('[LegalBtn] resume data build failed:', _resumeErr);
+              var _resumeErrMsg = _resumeErr && _resumeErr.message
+                ? _resumeErr.message : 'Resume generation failed. Please try again.';
+              if (typeof showToast === 'function') { showToast(_resumeErrMsg, 'error'); }
+              else { alert('Resume generation error: ' + _resumeErrMsg); }
+            }
+            return; // hard stop — resume-builder must never reach the markdown path
+          }
+          // ────────────────────────────────────────────────────────
+
           // ── DOCX CONTENT RESOLUTION ────────────────────────────
           // rawText is captured at button-injection time, which may be a
           // transitional message ("I've got your info...") instead of the

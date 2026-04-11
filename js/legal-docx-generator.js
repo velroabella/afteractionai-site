@@ -1340,69 +1340,333 @@
     ];
   }
 
-  function buildRentalApplicationPacket(D) {
-    return [
-      heading(D, 1, 'Rental Application Packet'),
-      spacer(D),
-      boldPara(D, 'TEMPLATE NOTICE: This packet helps organize your rental application materials. It does not guarantee application approval. Landlord requirements vary by property and jurisdiction. Use this as a starting point and customize for your situation. Fill in all [BRACKETED] fields before use.'),
-      spacer(D),
-      heading(D, 2, 'Cover Letter'),
-      para(D, '[DATE]'),
-      spacer(D),
-      para(D, 'Dear Property Manager,'),
-      spacer(D),
-      para(D, 'My name is [YOUR FULL NAME] and I am writing to express my interest in renting the property at [PROPERTY ADDRESS]. I am a [VETERAN / ACTIVE DUTY / GUARD/RESERVE / MILITARY SPOUSE] and I am relocating due to [REASON FOR MOVING].'),
-      spacer(D),
-      para(D, 'I have a stable monthly income of $[AMOUNT] from [PRIMARY INCOME SOURCE]. I have a strong rental history, reliable references, and a track record of maintaining properties in excellent condition.'),
-      spacer(D),
-      para(D, '[OPTIONAL: ADD ANY ADDITIONAL INFORMATION ABOUT YOURSELF THAT WOULD STRENGTHEN YOUR APPLICATION]'),
-      spacer(D),
-      para(D, 'I would welcome the opportunity to discuss my application with you. I am available at [PHONE] or [EMAIL].'),
-      spacer(D),
-      para(D, 'Sincerely,'),
-      para(D, '[YOUR FULL NAME]'),
-      spacer(D),
-      heading(D, 2, 'Applicant Information'),
-      para(D, 'Full Name: [YOUR FULL NAME]'),
-      para(D, 'Phone: [PHONE NUMBER]'),
-      para(D, 'Email: [EMAIL ADDRESS]'),
-      para(D, 'Current Address: [CURRENT ADDRESS]'),
-      para(D, 'Reason for Moving: [REASON]'),
-      para(D, 'Veteran Status: [VETERAN / ACTIVE DUTY / GUARD/RESERVE / MILITARY SPOUSE]'),
-      para(D, 'Pets: [TYPE AND NUMBER, OR NONE]'),
-      spacer(D),
-      heading(D, 2, 'Income Verification'),
-      para(D, 'Monthly Gross Income: $[AMOUNT]'),
-      para(D, 'Income Sources:'),
-      para(D, '- [SOURCE 1]'),
-      para(D, '- [SOURCE 2]'),
-      spacer(D),
-      para(D, 'Documentation Provided:'),
-      para(D, '- Recent pay stubs (30 days)'),
-      para(D, '- [If veteran: VA benefits award letter]'),
-      para(D, '- Bank statements (2 months)'),
-      para(D, '- Employment verification letter'),
-      spacer(D),
-      heading(D, 2, 'References'),
-      para(D, 'Reference 1: [NAME, PHONE, RELATIONSHIP]'),
-      para(D, 'Reference 2: [NAME, PHONE, RELATIONSHIP]'),
-      spacer(D),
-      heading(D, 2, 'Supporting Documents Checklist'),
-      para(D, '[ ] This cover letter'),
-      para(D, '[ ] Completed rental application (landlord\u2019s form)'),
-      para(D, '[ ] Copy of government-issued photo ID'),
-      para(D, '[ ] Proof of income (pay stubs, VA award letter, bank statements)'),
-      para(D, '[ ] Prior landlord references'),
-      para(D, '[ ] Copy of DD-214 or military ID (establishes credibility)'),
-      para(D, '[ ] Credit report (optional \u2014 shows proactive transparency)'),
-      para(D, '[ ] Employment verification letter'),
-      spacer(D),
-      heading(D, 2, 'Tips for Veterans Renting'),
-      para(D, '- SCRA provides protections for military tenants, including early lease termination for PCS orders or deployment'),
-      para(D, '- VA disability income counts as income and cannot be discriminated against'),
-      para(D, '- Service dogs are not "pets" under the Fair Housing Act and cannot be subject to pet deposits'),
-      para(D, '- Consider requesting a military clause in your lease for early termination with orders'),
-    ];
+  /* ---------- PHASE R-3: RENTAL APPLICATION VALIDATION ----------------------
+     Checks completeness before any rental packet is built.
+     Rules:
+       1. fullName required
+       2. At least one contact method (email OR phone)
+       3. At least one housing field (currentAddress OR propertyAddress OR reasonForMoving)
+       4. At least one financial field (monthlyIncome OR primaryIncomeSource OR employmentStatus)
+     Returns { valid: boolean, issues: string[] }.
+     ---------------------------------------------------------------- */
+  function validateRentalApplicationData(data) {
+    var _rPh   = '[NOT PROVIDED]';
+    var issues = [];
+    data       = data || {};
+
+    var _hasVal = function (k) {
+      var v = data[k];
+      if (v === null || typeof v === 'undefined') return false;
+      if (typeof v === 'number') return true;
+      if (typeof v === 'string') return v.length > 0 && v !== _rPh;
+      return false;
+    };
+
+    // Rule 1 — Core identity
+    if (!_hasVal('fullName')) {
+      issues.push('Full legal name is missing');
+    }
+
+    // Rule 2 — Contact
+    if (!_hasVal('email') && !_hasVal('phone')) {
+      issues.push('Contact information is missing (no email or phone provided)');
+    }
+
+    // Rule 3 — Housing context
+    if (!_hasVal('currentAddress') && !_hasVal('propertyAddress') && !_hasVal('reasonForMoving')) {
+      issues.push('Housing details are missing (no current address, target property, or reason for moving provided)');
+    }
+
+    // Rule 4 — Financial context
+    if (!_hasVal('monthlyIncome') && !_hasVal('primaryIncomeSource') && !_hasVal('employmentStatus')) {
+      issues.push('Income details are missing (no monthly income, income source, or employment status provided)');
+    }
+
+    return { valid: issues.length === 0, issues: issues };
+  }
+
+  /* ---------- PHASE R-4: RENTAL AUTO-FILL BRIDGE --------------------------
+     Derives missing fields from ALREADY PRESENT structured data fields.
+     NEVER guesses income values, addresses, references, or contact info.
+     NEVER mines raw text — that responsibility lives in _buildRentalApplicationData (app.js).
+     Returns a shallow copy; never mutates the caller's object.
+
+     ALLOWED derivations only:
+       1. primaryIncomeSource — from vaRating + employmentStatus signals
+       2. reasonForMoving     — from employmentStatus keyword: pcs / separat / retir
+       3. householdMembers    — from a 'householdHint' numeric field if present
+       4. employmentStatus    — normalized from common alias values
+     ---------------------------------------------------------------- */
+  function attemptRentalApplicationAutoFill(data) {
+    // Shallow copy — never mutate the caller's object
+    var d = {};
+    for (var _rk in data) {
+      if (Object.prototype.hasOwnProperty.call(data, _rk)) d[_rk] = data[_rk];
+    }
+    var _rafPh = '[NOT PROVIDED]';
+
+    var _rafHas = function (k) {
+      var v = d[k];
+      if (v === null || typeof v === 'undefined') return false;
+      if (typeof v === 'number') return true;
+      if (typeof v === 'string') return v.length > 0 && v !== _rafPh;
+      return false;
+    };
+
+    // ── Derivation 1: primaryIncomeSource ──────────────────────────────
+    // Only when NOT already set. Derive deterministically from two
+    // structured signals: vaRating (numeric/string) and employmentStatus.
+    // Rule: vaRating present AND > 0 → VA signal present.
+    //       employmentStatus === 'employed' → employment signal present.
+    // Combined: "Employment income and VA disability compensation"
+    if (!_rafHas('primaryIncomeSource')) {
+      var _rafVA  = _rafHas('vaRating') && parseInt(d.vaRating, 10) > 0;
+      var _rafEmp = _rafHas('employmentStatus') &&
+                    /\bemployed\b/i.test(String(d.employmentStatus));
+      if (_rafVA && _rafEmp) {
+        d.primaryIncomeSource = 'Employment income and VA disability compensation';
+      } else if (_rafVA) {
+        d.primaryIncomeSource = 'VA disability compensation';
+      } else if (_rafEmp) {
+        d.primaryIncomeSource = 'Employment income';
+      }
+      // All other employmentStatus values (unemployed, retired, separated)
+      // are NOT safe income-source assumptions — leave null.
+    }
+
+    // ── Derivation 2: reasonForMoving ──────────────────────────────────
+    // Only when NOT already set. Checks employmentStatus for high-confidence
+    // military-relocation keyword signals. These are only present if the
+    // calling context explicitly placed them there — never guessed.
+    if (!_rafHas('reasonForMoving') && _rafHas('employmentStatus')) {
+      var _rafES = String(d.employmentStatus);
+      if (/\bpcs\b|permanent\s+change\s+of\s+station/i.test(_rafES)) {
+        d.reasonForMoving = 'PCS orders';
+      } else if (/\bseparat/i.test(_rafES)) {
+        d.reasonForMoving = 'Separation from active duty';
+      } else if (/\bretir/i.test(_rafES)) {
+        d.reasonForMoving = 'Retirement from military service';
+      } else if (/\bmedical\s+(?:ret|sep|dis)/i.test(_rafES)) {
+        d.reasonForMoving = 'Medical separation';
+      }
+      // 'employed', 'unemployed', 'student', etc. → no derivation.
+    }
+
+    // ── Derivation 3: householdMembers ────────────────────────────────
+    // Only when NOT already set. Accept a pre-computed 'householdHint'
+    // numeric field that a caller may supply (e.g. from a form that
+    // collects household size separately). Never infer from name or other data.
+    if (!_rafHas('householdMembers') && _rafHas('householdHint')) {
+      var _rafHH = parseInt(d.householdHint, 10);
+      if (!isNaN(_rafHH) && _rafHH >= 1) {
+        d.householdMembers = _rafHH;
+      }
+    }
+
+    // ── Derivation 4: employmentStatus normalisation ───────────────────
+    // If a caller supplies a well-known alias, normalise to the canonical
+    // value so downstream rules (including Derivation 1) fire reliably.
+    // ONLY exact-match aliases — never guess.
+    if (_rafHas('employmentStatus')) {
+      var _rafESNorm = String(d.employmentStatus).toLowerCase().trim();
+      var _rafESMap = {
+        'full-time':   'employed',
+        'full time':   'employed',
+        'part-time':   'employed',
+        'part time':   'employed',
+        'self-employed':'employed',
+        'self employed':'employed',
+        'contractor':  'employed',
+        'active duty': 'employed',
+        'active-duty': 'employed'
+      };
+      if (_rafESMap[_rafESNorm]) {
+        d.employmentStatus = _rafESMap[_rafESNorm];
+        // Re-derive primaryIncomeSource if normalisation changed status
+        // to 'employed' and source was just set in Derivation 1.
+        // (Only re-derive if still unset or already set by our rule above.)
+        if (!data.primaryIncomeSource) {
+          var _rafVA2  = _rafHas('vaRating') && parseInt(d.vaRating, 10) > 0;
+          if (_rafVA2) {
+            d.primaryIncomeSource = 'Employment income and VA disability compensation';
+          } else if (!_rafHas('primaryIncomeSource')) {
+            d.primaryIncomeSource = 'Employment income';
+          }
+        }
+      }
+    }
+
+    return d;
+  }
+
+  function buildRentalApplicationPacket(D, data) {
+    // Phase 6.4 — literal placeholder tokens for the 7 target fields
+    // ([YOUR FULL NAME], [PROPERTY ADDRESS], [PHONE], [EMAIL],
+    //  [PRIMARY INCOME SOURCE], [REASON FOR MOVING], [AMOUNT]) have been
+    // removed. Lines that previously emitted those tokens are now either
+    // rendered dynamically from `data` or omitted entirely when no data
+    // is present. Builder signature now accepts an optional `data` object;
+    // dispatch path (generateLegalDocx) still routes through _isRealContent
+    // and _parseMarkdownToDocx for the normal AI-content flow.
+    data = data || {};
+
+    // Phase R-4 — Auto-fill bridge: derive what we can from present fields
+    // BEFORE the validation gate runs. Matches attemptResumeAutoFill pattern.
+    data = attemptRentalApplicationAutoFill(data);
+
+    // Phase R-3 — Validation gate. Invalid data → failure doc (never a
+    // partially-filled rental packet). Matches buildResumeFromData pattern.
+    var _rvResult = validateRentalApplicationData(data);
+    if (!_rvResult.valid) {
+      var _rvChildren = [
+        heading(D, 1, 'Rental Application Packet'),
+        spacer(D),
+        heading(D, 2, 'Additional Information Required'),
+        para(D, 'Additional information is required to generate a complete rental application packet. Please provide the following:'),
+        spacer(D)
+      ];
+      for (var _rvi = 0; _rvi < _rvResult.issues.length; _rvi++) {
+        _rvChildren.push(new D.Paragraph({
+          bullet: { level: 0 }, spacing: { after: 40 },
+          children: [new D.TextRun({ text: _rvResult.issues[_rvi], size: 22, font: 'Arial' })]
+        }));
+      }
+      _rvChildren.push(spacer(D));
+      _rvChildren.push(para(D, 'Please update your profile and provide the missing details in chat, then request your rental application packet again.'));
+      return _rvChildren;
+    }
+
+    var _has = function (k) {
+      return typeof data[k] === 'string' && data[k].trim().length > 0;
+    };
+
+    var children = [];
+    children.push(heading(D, 1, 'Rental Application Packet'));
+    children.push(spacer(D));
+    children.push(boldPara(D, 'TEMPLATE NOTICE: This packet helps organize your rental application materials. It does not guarantee application approval. Landlord requirements vary by property and jurisdiction. Use this as a starting point and customize for your situation. Fill in any remaining fields before use.'));
+    children.push(spacer(D));
+
+    /* ---- Cover Letter ---- */
+    children.push(heading(D, 2, 'Cover Letter'));
+    children.push(para(D, '[DATE]'));
+    children.push(spacer(D));
+    children.push(para(D, 'Dear Property Manager,'));
+    children.push(spacer(D));
+
+    // Opening sentence — built from name + property address + reason.
+    // Omits any segment whose backing data is missing; never emits a token.
+    var _openParts = [];
+    if (_has('fullName')) {
+      _openParts.push('My name is ' + data.fullName.trim() + ' and I am writing to express my interest in renting');
+    } else {
+      _openParts.push('I am writing to express my interest in renting');
+    }
+    if (_has('propertyAddress')) {
+      _openParts.push(' the property at ' + data.propertyAddress.trim() + '.');
+    } else {
+      _openParts.push(' your property.');
+    }
+    var _opener = _openParts.join('');
+    if (_has('reasonForMoving')) {
+      _opener += ' I am relocating due to ' + data.reasonForMoving.trim() + '.';
+    }
+    children.push(para(D, _opener));
+    children.push(spacer(D));
+
+    // Income sentence — uses monthlyIncome / primaryIncomeSource when present.
+    var _incomeLine;
+    if (_has('monthlyIncome') && _has('primaryIncomeSource')) {
+      _incomeLine = 'I have a stable monthly income of $' + data.monthlyIncome.trim() +
+        ' from ' + data.primaryIncomeSource.trim() + '.';
+    } else if (_has('monthlyIncome')) {
+      _incomeLine = 'I have a stable monthly income of $' + data.monthlyIncome.trim() + '.';
+    } else if (_has('primaryIncomeSource')) {
+      _incomeLine = 'I have stable income from ' + data.primaryIncomeSource.trim() + '.';
+    } else {
+      _incomeLine = '';
+    }
+    var _closer = 'I have a strong rental history, reliable references, and a track record of maintaining properties in excellent condition.';
+    children.push(para(D, (_incomeLine ? _incomeLine + ' ' : '') + _closer));
+    children.push(spacer(D));
+
+    children.push(para(D, 'I would welcome the opportunity to discuss my application with you.'));
+    // Contact sentence — only if at least one value present.
+    if (_has('phone') && _has('email')) {
+      children.push(para(D, 'I am available at ' + data.phone.trim() + ' or ' + data.email.trim() + '.'));
+    } else if (_has('phone')) {
+      children.push(para(D, 'I am available at ' + data.phone.trim() + '.'));
+    } else if (_has('email')) {
+      children.push(para(D, 'I am available at ' + data.email.trim() + '.'));
+    }
+    children.push(spacer(D));
+
+    children.push(para(D, 'Sincerely,'));
+    if (_has('fullName')) {
+      children.push(para(D, data.fullName.trim()));
+    }
+    children.push(spacer(D));
+
+    /* ---- Applicant Information ---- */
+    children.push(heading(D, 2, 'Applicant Information'));
+    if (_has('fullName')) children.push(para(D, 'Full Name: ' + data.fullName.trim()));
+    if (_has('phone'))    children.push(para(D, 'Phone: '     + data.phone.trim()));
+    if (_has('email'))    children.push(para(D, 'Email: '     + data.email.trim()));
+    if (_has('currentAddress')) {
+      children.push(para(D, 'Current Address: ' + data.currentAddress.trim()));
+    }
+    if (_has('reasonForMoving')) {
+      children.push(para(D, 'Reason for Moving: ' + data.reasonForMoving.trim()));
+    }
+    if (_has('veteranStatus')) {
+      children.push(para(D, 'Veteran Status: ' + data.veteranStatus.trim()));
+    }
+    if (_has('pets')) {
+      children.push(para(D, 'Pets: ' + data.pets.trim()));
+    }
+    children.push(spacer(D));
+
+    /* ---- Income Verification ---- */
+    children.push(heading(D, 2, 'Income Verification'));
+    if (_has('monthlyIncome')) {
+      children.push(para(D, 'Monthly Gross Income: $' + data.monthlyIncome.trim()));
+    }
+    if (_has('primaryIncomeSource')) {
+      children.push(para(D, 'Income Sources:'));
+      children.push(para(D, '- ' + data.primaryIncomeSource.trim()));
+    }
+    children.push(spacer(D));
+    children.push(para(D, 'Documentation to Provide:'));
+    children.push(para(D, '- Recent pay stubs (30 days)'));
+    children.push(para(D, '- VA benefits award letter (if applicable)'));
+    children.push(para(D, '- Bank statements (2 months)'));
+    children.push(para(D, '- Employment verification letter'));
+    children.push(spacer(D));
+
+    /* ---- References ---- */
+    children.push(heading(D, 2, 'References'));
+    children.push(para(D, 'List prior landlord and personal references here with name, phone, and relationship.'));
+    children.push(spacer(D));
+
+    /* ---- Supporting Documents Checklist ---- */
+    children.push(heading(D, 2, 'Supporting Documents Checklist'));
+    children.push(para(D, '\u25A1 This cover letter'));
+    children.push(para(D, '\u25A1 Completed rental application (landlord\u2019s form)'));
+    children.push(para(D, '\u25A1 Copy of government-issued photo ID'));
+    children.push(para(D, '\u25A1 Proof of income (pay stubs, VA award letter, bank statements)'));
+    children.push(para(D, '\u25A1 Prior landlord references'));
+    children.push(para(D, '\u25A1 Copy of DD-214 or military ID (establishes credibility)'));
+    children.push(para(D, '\u25A1 Credit report (optional \u2014 shows proactive transparency)'));
+    children.push(para(D, '\u25A1 Employment verification letter'));
+    children.push(spacer(D));
+
+    /* ---- Tips ---- */
+    children.push(heading(D, 2, 'Tips for Veterans Renting'));
+    children.push(para(D, '- SCRA provides protections for military tenants, including early lease termination for PCS orders or deployment'));
+    children.push(para(D, '- VA disability income counts as income and cannot be discriminated against'));
+    children.push(para(D, '- Service dogs are not "pets" under the Fair Housing Act and cannot be subject to pet deposits'));
+    children.push(para(D, '- Consider requesting a military clause in your lease for early termination with orders'));
+
+    return children;
   }
 
   /* ---------- CAREER / GUIDANCE CONTENT BUILDERS ---------- */
@@ -1520,72 +1784,188 @@
     ];
   }
 
-  function buildFederalResumeUsajobs(D) {
-    return [
-      heading(D, 1, 'Federal Resume (USAJobs Format)'),
-      spacer(D),
-      boldPara(D, 'TEMPLATE NOTICE: This resume template is for career preparation purposes only. It does not guarantee federal employment or selection for any position. Federal hiring follows specific rules and procedures. Tailor this resume for each job announcement. Fill in all [BRACKETED] fields before use.'),
-      spacer(D),
-      heading(D, 2, 'Contact Information'),
-      para(D, '[YOUR FULL NAME]'),
-      para(D, '[STREET ADDRESS]'),
-      para(D, '[CITY, STATE ZIP]'),
-      para(D, 'Phone: [PHONE NUMBER]'),
-      para(D, 'Email: [EMAIL ADDRESS]'),
-      para(D, 'Citizenship: [U.S. CITIZEN / OTHER]'),
-      para(D, 'Veterans Preference: [5-POINT / 10-POINT / NONE]'),
-      para(D, 'Highest Civilian Grade Held: [GRADE / N/A]'),
-      para(D, 'Security Clearance: [LEVEL, OR N/A]'),
-      spacer(D),
-      heading(D, 2, 'Objective'),
-      para(D, 'Seeking the position of [JOB TITLE], Announcement Number [ANNOUNCEMENT #], Grade [GS-LEVEL], with [AGENCY NAME].'),
-      spacer(D),
-      heading(D, 2, 'Professional Summary'),
-      para(D, '[WRITE A 3\u20135 SENTENCE SUMMARY highlighting your most relevant qualifications, years of experience, and key strengths for this specific position. Reference the job announcement keywords.]'),
-      spacer(D),
-      heading(D, 2, 'Military Experience'),
-      para(D, '[BRANCH OF SERVICE] \u2014 [MOS/AFSC/RATING]'),
-      para(D, 'Rank: [RANK]'),
-      para(D, 'Dates: [START DATE] to [END DATE]'),
-      para(D, 'Hours per week: [TYPICALLY 40+]'),
-      spacer(D),
-      boldPara(D, 'Duties and Accomplishments:'),
-      para(D, '[DESCRIBE YOUR KEY DUTIES IN DETAIL. Federal resumes require significantly more detail than civilian resumes. Include specific accomplishments with measurable results. Use the CCAR format: Context, Challenge, Action, Result.]'),
-      spacer(D),
-      para(D, '[ADD ADDITIONAL POSITIONS AS NEEDED \u2014 federal resumes typically include all relevant positions with full detail]'),
-      spacer(D),
-      heading(D, 2, 'Education'),
-      para(D, '[DEGREE], [MAJOR]'),
-      para(D, '[INSTITUTION NAME], [CITY, STATE]'),
-      para(D, 'Graduation Date: [DATE]'),
-      para(D, 'GPA: [GPA, if 3.0+]'),
-      para(D, 'Credits Earned: [NUMBER] semester hours'),
-      spacer(D),
-      heading(D, 2, 'Certifications, Licenses & Training'),
-      para(D, '[LIST CERTIFICATIONS WITH DATES AND ISSUING ORGANIZATIONS]'),
-      para(D, '[INCLUDE MILITARY TRAINING COURSES WITH DATES]'),
-      spacer(D),
-      heading(D, 2, 'Awards & Recognition'),
-      para(D, '[LIST MILITARY AND CIVILIAN AWARDS, MEDALS, AND COMMENDATIONS WITH DATES]'),
-      spacer(D),
-      heading(D, 2, 'Volunteer & Community Service'),
-      para(D, '[LIST RELEVANT VOLUNTEER WORK, ESPECIALLY LEADERSHIP ROLES]'),
-      spacer(D),
-      heading(D, 2, 'Key Differences: Federal vs. Civilian Resume'),
-      para(D, '- Federal resumes are typically 3\u20135 pages (not 1\u20132)'),
-      para(D, '- Include hours per week for each position'),
-      para(D, '- Include supervisor name and contact information'),
-      para(D, '- Reference the specific job announcement and grade'),
-      para(D, '- Use keywords from the job announcement'),
-      para(D, '- Include all relevant positions, not just the most recent'),
-      spacer(D),
-      heading(D, 2, 'Next Steps'),
-      para(D, '1. Create or update your USAJobs profile at usajobs.gov'),
-      para(D, '2. Upload this resume to your USAJobs account'),
-      para(D, '3. Tailor the resume for each specific job announcement'),
-      para(D, '4. Apply to positions where you meet the minimum qualifications'),
-      para(D, '5. Consider attending a federal resume workshop at your local VA or American Job Center'),
-    ];
+  // ── Phase Fed-3 (revised): Validation gate ────────────────────────────────
+  // validateFederalResumeData(data) → { valid: boolean, issues: [] }
+  // Four rules. Never throws. Federal-context check removed per contract update.
+  function validateFederalResumeData(data) {
+    var issues = [];
+    data = data || {};
+    var _fvHas = function (k) {
+      var v = data[k];
+      if (v === null || typeof v === 'undefined') return false;
+      if (typeof v === 'number') return !isNaN(v);
+      if (typeof v === 'string') return v.trim().length > 0;
+      return false;
+    };
+    // Rule 1: full legal name required
+    if (!_fvHas('fullName')) {
+      issues.push('Full legal name is missing');
+    }
+    // Rule 2: at least one contact method
+    if (!_fvHas('email') && !_fvHas('phone')) {
+      issues.push('Contact information is missing (no email or phone provided)');
+    }
+    // Rule 3: at least one experience signal
+    if (!_fvHas('accomplishments') && !_fvHas('experienceSummary') && !_fvHas('priorRoles')) {
+      issues.push('Work experience is missing (no accomplishments, experience summary, or prior roles provided)');
+    }
+    // Rule 4: at least one capability signal
+    if (!_fvHas('keySkills') && !_fvHas('certifications')) {
+      issues.push('Skills information is missing (no key skills or certifications provided)');
+    }
+    return { valid: issues.length === 0, issues: issues };
+  }
+
+  function buildFederalResumeUsajobs(D, data) {
+    // Phase Fed-3 (revised) — Zero bracket tokens, zero instructional text.
+    // Every section is conditional; nothing renders without real data.
+    // Validation gate returns a failure document on invalid input.
+    data = data || {};
+
+    // ── Validation gate ──────────────────────────────────────────────────
+    var _fvResult = validateFederalResumeData(data);
+    if (!_fvResult.valid) {
+      var _fvChildren = [
+        heading(D, 1, 'Federal Resume (USAJobs Format)'),
+        spacer(D),
+        heading(D, 2, 'Additional Information Required'),
+        spacer(D),
+        para(D, 'The following information is needed to generate your federal resume:')
+      ];
+      for (var _fvi = 0; _fvi < _fvResult.issues.length; _fvi++) {
+        _fvChildren.push(new D.Paragraph({
+          bullet: { level: 0 },
+          children: [new D.TextRun({ text: _fvResult.issues[_fvi] })]
+        }));
+      }
+      _fvChildren.push(spacer(D));
+      _fvChildren.push(para(D, 'Once this information is available, your federal resume will be generated automatically.'));
+      return _fvChildren;
+    }
+
+    // ── _has: true when field is a non-empty string or valid number ───────
+    var _has = function (k) {
+      var v = data[k];
+      if (v === null || typeof v === 'undefined') return false;
+      if (typeof v === 'number') return !isNaN(v);
+      if (typeof v === 'string') return v.trim().length > 0;
+      return false;
+    };
+
+    var children = [];
+    children.push(heading(D, 1, 'Federal Resume (USAJobs Format)'));
+    children.push(spacer(D));
+
+    /* ---- Contact / Header ---- */
+    children.push(heading(D, 2, 'Contact Information'));
+    if (_has('fullName'))           children.push(para(D, data.fullName.trim()));
+    if (_has('currentLocation'))    children.push(para(D, data.currentLocation.trim()));
+    if (_has('phone'))              children.push(para(D, 'Phone: ' + data.phone.trim()));
+    if (_has('email'))              children.push(para(D, 'Email: ' + data.email.trim()));
+    children.push(spacer(D));
+
+    /* ---- Eligibility & Federal Context ---- */
+    // Only render this section when at least one eligibility field is present.
+    if (_has('citizenship') || _has('veteransPreference') || _has('securityClearance')) {
+      children.push(heading(D, 2, 'Federal Eligibility'));
+      if (_has('citizenship'))        children.push(para(D, 'Citizenship: ' + data.citizenship.trim()));
+      if (_has('veteransPreference')) children.push(para(D, 'Veterans\u2019 Preference: ' + data.veteransPreference.trim()));
+      if (_has('securityClearance'))  children.push(para(D, 'Security Clearance: ' + data.securityClearance.trim()));
+      children.push(spacer(D));
+    }
+
+    /* ---- Objective ---- */
+    // Only render when targetRole is known; no bracket tokens emitted.
+    if (_has('targetRole')) {
+      children.push(heading(D, 2, 'Objective'));
+      children.push(para(D, data.targetRole.trim()));
+      children.push(spacer(D));
+    }
+
+    /* ---- Professional Summary ---- */
+    // Only render when experienceSummary is present.
+    if (_has('experienceSummary')) {
+      children.push(heading(D, 2, 'Professional Summary'));
+      children.push(para(D, data.experienceSummary.trim()));
+      children.push(spacer(D));
+    }
+
+    /* ---- Military Service ---- */
+    // Only render when at least one military field is present.
+    var _hasMilitary = _has('branch') || _has('mos') || _has('rank') || _has('yearsService');
+    if (_hasMilitary || _has('accomplishments')) {
+      children.push(heading(D, 2, 'Military Service'));
+      // Service identification line
+      var _milLine = null;
+      if (_has('branch') && _has('mos')) {
+        _milLine = data.branch.trim() + ' \u2014 ' + data.mos.trim();
+      } else if (_has('branch')) {
+        _milLine = data.branch.trim();
+      } else if (_has('mos')) {
+        _milLine = data.mos.trim();
+      }
+      if (_milLine) children.push(para(D, _milLine));
+      if (_has('rank'))         children.push(para(D, 'Rank: ' + data.rank.trim()));
+      if (_has('yearsService')) children.push(para(D, 'Years of Service: ' + String(data.yearsService).trim()));
+      // Accomplishments as bullet list — only when present
+      if (_has('accomplishments')) {
+        children.push(spacer(D));
+        children.push(boldPara(D, 'Key Accomplishments:'));
+        var _acItems = data.accomplishments.split(' | ');
+        for (var _faci = 0; _faci < _acItems.length; _faci++) {
+          if (_acItems[_faci].trim()) {
+            children.push(new D.Paragraph({
+              bullet: { level: 0 },
+              children: [new D.TextRun({ text: _acItems[_faci].trim() })]
+            }));
+          }
+        }
+      }
+      children.push(spacer(D));
+    }
+
+    /* ---- Work Experience ---- */
+    // Only render when priorRoles is present.
+    if (_has('priorRoles')) {
+      children.push(heading(D, 2, 'Work Experience'));
+      children.push(para(D, data.priorRoles.trim()));
+      children.push(spacer(D));
+    }
+
+    /* ---- Key Skills ---- */
+    // Only render when keySkills is present.
+    if (_has('keySkills')) {
+      children.push(heading(D, 2, 'Key Skills'));
+      children.push(para(D, data.keySkills.trim()));
+      children.push(spacer(D));
+    }
+
+    /* ---- Education ---- */
+    // Only render when at least one education field is present.
+    if (_has('education') || _has('institution')) {
+      children.push(heading(D, 2, 'Education'));
+      if (_has('education'))   children.push(para(D, data.education.trim()));
+      if (_has('institution')) children.push(para(D, data.institution.trim()));
+      children.push(spacer(D));
+    }
+
+    /* ---- Certifications & Training ---- */
+    // Only render when certifications is present.
+    if (_has('certifications')) {
+      children.push(heading(D, 2, 'Certifications & Training'));
+      children.push(para(D, data.certifications.trim()));
+      children.push(spacer(D));
+    }
+
+    /* ---- Awards & Recognition ---- */
+    // Only render when awards is present.
+    if (_has('awards')) {
+      children.push(heading(D, 2, 'Awards & Recognition'));
+      children.push(para(D, data.awards.trim()));
+      children.push(spacer(D));
+    }
+
+    return children;
   }
 
   // ---------- LEGACY BUILDER NEUTRALIZED (Phase 6 follow-up) ----------
@@ -1619,16 +1999,16 @@
     }
 
     // Rule 2 — Contact: must have at least one of email or phone
-    var _hasEmail = data.email && data.email.length > 0;
-    var _hasPhone = data.phone && data.phone.length > 0;
+    var _hasEmail = data.email && data.email !== _vPh && data.email.length > 0;
+    var _hasPhone = data.phone && data.phone !== _vPh && data.phone.length > 0;
     if (!_hasEmail && !_hasPhone) {
       issues.push('Contact information is missing (no email or phone provided)');
     }
 
     // Rule 3 — Experience: at least one experience field must be present
-    var _hasAccomp  = data.accomplishments   && data.accomplishments.length   > 0;
-    var _hasExpSum  = data.experienceSummary && data.experienceSummary.length > 0;
-    var _hasPrior   = data.priorRoles        && data.priorRoles.length        > 0;
+    var _hasAccomp  = data.accomplishments   && data.accomplishments   !== _vPh && data.accomplishments.length   > 0;
+    var _hasExpSum  = data.experienceSummary && data.experienceSummary !== _vPh && data.experienceSummary.length > 0;
+    var _hasPrior   = data.priorRoles        && data.priorRoles        !== _vPh && data.priorRoles.length        > 0;
     if (!_hasAccomp && !_hasExpSum && !_hasPrior) {
       issues.push('Experience details are missing (no accomplishments, experience summary, or prior roles found)');
     }
@@ -1793,18 +2173,18 @@
     var targetRole    = (data.targetRole   && data.targetRole   !== _ph) ? data.targetRole   : '';
     var keySkills     = (data.keySkills    && data.keySkills    !== _ph) ? data.keySkills    : '';
     var education     = (data.education   && data.education    !== _ph) ? data.education    : '';
-    var state         = data.state         || '';
+    var state         = (data.state         && data.state         !== _ph) ? data.state         : '';
     var entryDate     = data.serviceEntryDate || '';
     var sepDate       = data.separationDate   || '';
     var vaRating      = data.vaRating      || null;
-    var phone         = data.phone         || '';
-    var email         = data.email         || '';
-    // Phase 2 enrichment fields — null when absent
-    var certifications    = data.certifications    || null;
-    var awards            = data.awards            || null;
-    var accomplishments   = data.accomplishments   || null;
-    var experienceSummary = data.experienceSummary || null;
-    var priorRoles        = data.priorRoles        || null;
+    var phone         = (data.phone         && data.phone         !== _ph) ? data.phone         : '';
+    var email         = (data.email         && data.email         !== _ph) ? data.email         : '';
+    // Phase 2 enrichment fields — null when absent; reject sentinel if present
+    var certifications    = (data.certifications    && data.certifications    !== _ph) ? data.certifications    : null;
+    var awards            = (data.awards            && data.awards            !== _ph) ? data.awards            : null;
+    var accomplishments   = (data.accomplishments   && data.accomplishments   !== _ph) ? data.accomplishments   : null;
+    var experienceSummary = (data.experienceSummary && data.experienceSummary !== _ph) ? data.experienceSummary : null;
+    var priorRoles        = (data.priorRoles        && data.priorRoles        !== _ph) ? data.priorRoles        : null;
 
     // Build contact line from available values — no placeholders
     var contactParts = [];
@@ -1966,10 +2346,12 @@
     }
     children.push(spacer(D));
 
-    // FIX 5 — Education: only render body when real content exists
-    children.push(heading(D, 2, 'Education'));
-    if (education) children.push(para(D, education));
-    children.push(spacer(D));
+    // FIX 5 — Education: only render section when real content exists
+    if (education) {
+      children.push(heading(D, 2, 'Education'));
+      children.push(para(D, education));
+      children.push(spacer(D));
+    }
 
     // FIX 4 — Certifications & Training: render only when real content exists
     var _hasCerts  = certifications && certifications.length > 2;
@@ -2011,15 +2393,21 @@
     var D = getDocx();
     var normalized = formType.toLowerCase().replace(/[\s_]+/g, '-');
 
-    // Currently only resume-builder is supported for template-driven generation
+    // Template-driven generation dispatch
     var formContent;
+    var _isRental = false;
     if (normalized === 'resume-builder') {
       formContent = buildResumeFromData(D, data);
+    } else if (normalized === 'rental-application-packet') {
+      // Phase R-3 — rental data path. Validation is enforced inside the
+      // builder; invalid data returns a failure doc (never a broken packet).
+      formContent = buildRentalApplicationPacket(D, data);
+      _isRental = true;
     } else {
       throw new Error('[LegalDocx] generateFromData: unsupported formType: ' + formType);
     }
 
-    // Select career header/footer (resume is a career document)
+    // Select header/footer. Resume and rental both use the career chrome.
     var header = buildCareerHeader(D);
     var footer = buildCareerFooter(D);
     var notice = buildCareerNoticeSection(D);
@@ -2057,14 +2445,40 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 5000);
 
     // Build a plain-text version for saving to template_outputs
-    var contentText = '# Resume — ' + (data.fullName || 'Veteran') + '\n\n' +
-      '## Professional Summary\n' + (data.fullName || '') + '\n' +
-      'Results-driven professional with ' + (data.yearsService || '') + ' years of military service in the ' +
-      (data.branch || '') + ' (' + (data.mos || '') + ').\n\n' +
-      '## Core Competencies\n' + (data.keySkills || '') + '\n\n' +
-      '## Professional Experience\n' + (data.branch || '') + ' — ' + (data.rank || '') + ', ' + (data.mos || '') + '\n' +
-      (data.serviceEntryDate || '') + ' – ' + (data.separationDate || '') + '\n\n' +
-      '## Education\n' + (data.education || '') + '\n';
+    var contentText;
+    if (_isRental) {
+      // Phase R-3 — rental packet plain-text summary. Only includes fields
+      // that are actually populated; never emits bracket placeholders.
+      var _rLines = ['# Rental Application Packet — ' + (data.fullName || 'Applicant'), ''];
+      _rLines.push('## Applicant Information');
+      if (data.fullName)        _rLines.push('Full Name: ' + data.fullName);
+      if (data.phone)           _rLines.push('Phone: ' + data.phone);
+      if (data.email)           _rLines.push('Email: ' + data.email);
+      if (data.currentAddress)  _rLines.push('Current Address: ' + data.currentAddress);
+      if (data.propertyAddress) _rLines.push('Target Property: ' + data.propertyAddress);
+      if (data.reasonForMoving) _rLines.push('Reason for Moving: ' + data.reasonForMoving);
+      if (data.householdMembers) _rLines.push('Household Size: ' + data.householdMembers);
+      _rLines.push('');
+      _rLines.push('## Income');
+      if (data.monthlyIncome)       _rLines.push('Monthly Gross Income: $' + data.monthlyIncome);
+      if (data.primaryIncomeSource) _rLines.push('Primary Income Source: ' + data.primaryIncomeSource);
+      if (data.employmentStatus)    _rLines.push('Employment Status: ' + data.employmentStatus);
+      if (data.references) {
+        _rLines.push('');
+        _rLines.push('## References');
+        _rLines.push(data.references);
+      }
+      contentText = _rLines.join('\n') + '\n';
+    } else {
+      contentText = '# Resume — ' + (data.fullName || 'Veteran') + '\n\n' +
+        '## Professional Summary\n' + (data.fullName || '') + '\n' +
+        'Results-driven professional with ' + (data.yearsService || '') + ' years of military service in the ' +
+        (data.branch || '') + ' (' + (data.mos || '') + ').\n\n' +
+        '## Core Competencies\n' + (data.keySkills || '') + '\n\n' +
+        '## Professional Experience\n' + (data.branch || '') + ' — ' + (data.rank || '') + ', ' + (data.mos || '') + '\n' +
+        (data.serviceEntryDate || '') + ' – ' + (data.separationDate || '') + '\n\n' +
+        '## Education\n' + (data.education || '') + '\n';
+    }
 
     return { fileName: fileName, blob: blob, contentText: contentText };
   }
