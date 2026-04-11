@@ -131,7 +131,7 @@
     var formType = detectLegalFormType(reportText);
     if (!formType) return false;
 
-    handleLegalGeneration(formType);
+    handleLegalGeneration(formType, reportText);
     return true;
   }
 

@@ -1588,51 +1588,21 @@
     ];
   }
 
+  // ---------- LEGACY BUILDER NEUTRALIZED (Phase 6 follow-up) ----------
+  // The original buildResumeBuilder emitted bracket-placeholder content
+  // ([YOUR FULL NAME], [PHONE NUMBER], [EMAIL ADDRESS], [YEARS], [BRANCH],
+  // [MOS/AFSC/RATING], [TARGET ROLE], [DEGREE], etc.) whenever the BUILDERS
+  // registry entry for 'resume-builder' was hit via generateLegalDocx with
+  // non-real content. That is a hard placeholder-leak regression.
+  //
+  // This neutralized version routes every call through buildResumeFromData
+  // with an empty data object. The Phase 4 validation gate then returns the
+  // "Additional Information Required" failure doc instead of leaking any
+  // bracket placeholders. The primary chat/voice/text flow still uses
+  // generateFromData('resume-builder', resumeData) with real user data, so
+  // this change only affects the legacy fallback path.
   function buildResumeBuilder(D) {
-    return [
-      heading(D, 1, 'Resume'),
-      spacer(D),
-      boldPara(D, 'TEMPLATE NOTICE: This resume template is for career preparation purposes only. It does not guarantee employment, interviews, or hiring decisions. Customize this document for each job application and have it reviewed by a career counselor or mentor. Fill in all [BRACKETED] fields before use.'),
-      spacer(D),
-      heading(D, 2, 'Contact Information'),
-      para(D, '[YOUR FULL NAME]'),
-      para(D, '[CITY, STATE ZIP]'),
-      para(D, 'Phone: [PHONE NUMBER] | Email: [EMAIL ADDRESS]'),
-      para(D, 'LinkedIn: [LINKEDIN URL]'),
-      spacer(D),
-      heading(D, 2, 'Professional Summary'),
-      para(D, '[WRITE A 2\u20133 SENTENCE SUMMARY. Example: "Results-driven professional with [YEARS] years of military service in the [BRANCH] ([MOS/AFSC]). Proven track record of leadership, mission execution, and team development. Seeking to leverage military expertise in a civilian [TARGET ROLE] role."]'),
-      spacer(D),
-      heading(D, 2, 'Core Competencies'),
-      para(D, '[LIST 8\u201312 KEY SKILLS IN CIVILIAN LANGUAGE]'),
-      para(D, 'Examples: Project Management | Team Leadership | Operations Management | Logistics | Training & Development | Process Improvement | Data Analysis | Budget Management | Compliance | Communication'),
-      spacer(D),
-      heading(D, 2, 'Professional Experience'),
-      spacer(D),
-      boldPara(D, 'Military Experience'),
-      para(D, '[BRANCH OF SERVICE] \u2014 [MOS/AFSC/RATING]'),
-      para(D, 'Years of Service: [YEARS]'),
-      para(D, '[DESCRIBE KEY ACCOMPLISHMENTS AND RESPONSIBILITIES USING CIVILIAN LANGUAGE. Use action verbs and quantify results where possible.]'),
-      spacer(D),
-      boldPara(D, '[ADDITIONAL POSITION TITLE]'),
-      para(D, '[ORGANIZATION], [CITY, STATE] \u2014 [DATES]'),
-      para(D, '[DESCRIBE RESPONSIBILITIES AND ACCOMPLISHMENTS]'),
-      spacer(D),
-      heading(D, 2, 'Education'),
-      para(D, '[DEGREE], [MAJOR]'),
-      para(D, '[INSTITUTION NAME], [CITY, STATE] \u2014 [GRADUATION DATE]'),
-      spacer(D),
-      heading(D, 2, 'Certifications & Training'),
-      para(D, '[LIST RELEVANT CERTIFICATIONS AND MILITARY TRAINING TRANSLATED TO CIVILIAN EQUIVALENTS]'),
-      spacer(D),
-      heading(D, 2, 'Resume Tips for Veterans'),
-      para(D, '- Translate all military jargon into civilian language'),
-      para(D, '- Use the AfterAction AI Military Skills Translator to help'),
-      para(D, '- Quantify results: "Managed team of 30" not "Led platoon"'),
-      para(D, '- Keep to 1\u20132 pages for civilian roles (3\u20135 for federal)'),
-      para(D, '- Tailor for each job by matching keywords from the job posting'),
-      para(D, '- Use a clean, ATS-friendly format (no graphics or columns)'),
-    ];
+    return buildResumeFromData(D, {});
   }
 
   /* ---------- PHASE 4: RESUME DATA VALIDATION --------------------------------
@@ -2452,8 +2422,11 @@
       console.log('[LegalDocx] Using AI-generated content (' + userData.length + ' chars) instead of template builder');
       formContent = _parseMarkdownToDocx(D, userData);
     } else if (builder) {
-      console.log('[LegalDocx] No AI content provided — falling back to template builder for:', normalized);
-      formContent = builder(D);
+      console.error('[LegalDocx] Refusing to emit template for:', normalized);
+      throw new Error(
+        'Cannot generate ' + normalized + ': no content provided. ' +
+        'Please regenerate the document from chat.'
+      );
     } else {
       throw new Error('[LegalDocx] Unknown form type and no content provided: ' + formType);
     }
@@ -2521,7 +2494,6 @@
   window.AAAI.legalDocx = {
     generate:         generateLegalDocx,
     generateFromData: generateFromData,
-    BUILDERS:         BUILDERS,
     SUPPORTED_TYPES:  Object.keys(BUILDERS)
   };
 
