@@ -3780,7 +3780,9 @@
       if (_certDocM) certifications = _certDocM[1].trim().replace(/\s+/g, ' ');
     }
 
-    // FIX 4 — Accomplishments: mine quantified / action-verb sentences from uploaded docs
+    // FIX 4 — Accomplishments: mine uploaded docs — two passes
+    // Pass 1 (original): mid-sentence quantified metric or action verb (NCOER/OER narrative)
+    // Pass 2 (new): action-verb-first sentences — standard military bullet format
     var accomplishments = null;
     if (_uploadedText) {
       var _acMatches = _uploadedText.match(/[A-Z][^\n.]{20,140}(?:\d+\s*(?:%|percent|personnel|soldiers?|troops?|vehicles?|missions?|systems?|Soldiers?)|(?:managed|led|trained|supervised|coordinated|directed|achieved|improved|reduced|increased))[^\n.]{0,80}/g);
@@ -3789,13 +3791,46 @@
           .map(function(s) { return s.trim().replace(/\s+/g, ' '); })
           .join(' | ');
       }
+      // Pass 2 — verb-first sentences (catches "Led 30 soldiers...", "Managed 15 personnel...")
+      if (!accomplishments) {
+        var _acVerbFirst = _uploadedText.match(/\b(?:Led|Managed|Trained|Supervised|Coordinated|Planned|Executed|Directed|Supported|Maintained|Operated|Commanded|Mentored|Advised|Reduced|Improved|Increased|Deployed|Administered|Developed|Established|Achieved|Conducted|Oversaw|Spearheaded)\b[^\n.]{5,150}/g);
+        if (_acVerbFirst && _acVerbFirst.length) {
+          accomplishments = _acVerbFirst.slice(0, 4)
+            .map(function(s) { return s.trim().replace(/\s+/g, ' '); })
+            .join(' | ');
+        }
+      }
+    }
+    // Pass 3 — conversation history: extract accomplishment statements from user messages only
+    // User-only: AI-generated text must never be treated as user experience
+    if (!accomplishments && conversationHistory && conversationHistory.length) {
+      var _convText = conversationHistory
+        .filter(function(m) { return m.role === 'user'; })
+        .map(function(m) { return m.content || ''; })
+        .join('\n');
+      var _convAcV = _convText.match(/\b(?:Led|Managed|Trained|Supervised|Coordinated|Planned|Executed|Directed|Supported|Maintained|Operated|Commanded|Mentored|Advised|Reduced|Improved|Increased|Deployed|Administered|Developed|Established|Achieved|Conducted|Oversaw|Spearheaded)\b[^\n.]{5,150}/g);
+      if (_convAcV && _convAcV.length) {
+        accomplishments = _convAcV.slice(0, 4)
+          .map(function(s) { return s.trim().replace(/\s+/g, ' '); })
+          .join(' | ');
+      }
     }
 
     // FIX 4 — Experience summary: duties/responsibilities block from uploaded docs
+    // Also check conversation history (user messages only) when uploaded docs yield nothing
     var experienceSummary = null;
     if (_uploadedText) {
-      var _expM = _uploadedText.match(/(?:duties\s+and\s+responsibilities|duties\s+performed|job\s+description|civilian\s+(?:job|position|work)\s+history)\s*[:\-]?\s*([^\n]{20,400})/i);
+      var _expM = _uploadedText.match(/(?:duties\s+and\s+responsibilities|duties\s+performed|job\s+description|civilian\s+(?:job|position\s+|work)\s+history)\s*[:\-]?\s*([^\n]{20,400})/i);
       if (_expM) experienceSummary = _expM[1].trim().replace(/\s+/g, ' ').slice(0, 400);
+    }
+    // Conversation fallback: user messages only — AI-generated text is never a valid experience source
+    if (!experienceSummary && conversationHistory && conversationHistory.length) {
+      var _convExpText = conversationHistory
+        .filter(function(m) { return m.role === 'user'; })
+        .map(function(m) { return m.content || ''; })
+        .join('\n');
+      var _convExpM = _convExpText.match(/(?:served\s+as|responsible\s+for|experience\s+(?:includes?|in)|background\s+(?:includes?|in)|worked\s+as)[^\n]{20,300}/i);
+      if (_convExpM) experienceSummary = _convExpM[0].trim().replace(/\s+/g, ' ').slice(0, 400);
     }
 
     var authEmail = '';

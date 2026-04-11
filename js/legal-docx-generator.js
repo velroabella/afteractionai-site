@@ -2059,6 +2059,59 @@
       }
     }
 
+    // ── Experience fallback — mirrors skills branch-map pattern ──────────
+    // Fires ONLY when all three experience fields are still null after the
+    // derivation attempt above. Constructs a generic experienceSummary from
+    // available service identity fields (branch/rank/mos/yearsService).
+    // Never overwrites real data. Never guesses contact, name, or location.
+    if (!d.accomplishments && !d.experienceSummary && !d.priorRoles) {
+      var _hasBranch = d.branch && d.branch !== _afPh;
+      var _hasRank   = d.rank   && d.rank   !== _afPh;
+      var _hasMos    = d.mos    && d.mos    !== _afPh;
+      if (_hasBranch || _hasRank || _hasMos) {
+        var _expFallback = '';
+        // Opening: rank + branch, or whichever is available
+        if (_hasRank && _hasBranch) {
+          _expFallback = 'Served as ' + d.rank + ' in the ' + d.branch;
+        } else if (_hasBranch) {
+          _expFallback = 'Served in the ' + d.branch;
+        } else if (_hasRank) {
+          _expFallback = 'Served as ' + d.rank;
+        } else {
+          // MOS-only path — strip numeric prefix to get civilian-readable title
+          var _mosCivilian = d.mos
+            ? d.mos.replace(/^\d+[A-Za-z]?\d*\s*[-\u2013]\s*/, '').trim()
+            : '';
+          if (_mosCivilian && _mosCivilian.length > 2) {
+            _expFallback = 'Served as a ' + _mosCivilian;
+          } else {
+            _expFallback = '';
+          }
+        }
+        // Specialty
+        if (_hasMos) {
+          _expFallback += ', with specialty in ' + d.mos;
+        }
+        // Duration
+        if (d.yearsService && /^\d+$/.test(String(d.yearsService).trim())) {
+          _expFallback += ', for ' + d.yearsService + ' years';
+        }
+        // Closing — branch-appropriate
+        var _branchLower = (d.branch || '').toLowerCase();
+        if (/navy|coast\s*guard/.test(_branchLower)) {
+          _expFallback += '. Responsible for maritime operations, crew leadership, and maintaining mission readiness.';
+        } else if (/air\s*force|space\s*force/.test(_branchLower)) {
+          _expFallback += '. Responsible for technical operations, personnel leadership, and mission support.';
+        } else {
+          _expFallback += '. Responsible for leading personnel, executing mission-critical operations, and maintaining unit readiness.';
+        }
+        if (_expFallback.length >= 40) {
+          d.experienceSummary = _expFallback;
+        }
+      }
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
     // ── Skills: build from certifications → awards → MOS → branch map ──
     var _afSkillCount = 0;
     if (d.keySkills && d.keySkills !== _afPh) {
@@ -2424,8 +2477,9 @@
         headers: { default: header },
         footers: { default: footer },
         children: [
-          ...notice,
-          spacer(D),
+          // Resume uses career header chrome only — body notice block is
+          // redundant alongside buildCareerHeader and must not appear in output.
+          ...(normalized !== 'resume-builder' ? [...notice, spacer(D)] : []),
           ...formContent
         ]
       }]
