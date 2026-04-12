@@ -2124,10 +2124,15 @@
       var _extra = [];
 
       // Source 1 — certifications: each term is a direct skill signal
+      // Quality gate: reject sentence fragments (punctuation, >5 words, >50 chars)
       if (d.certifications && d.certifications.length > 0) {
         var _cTerms = d.certifications.split(/[|,;\n]/)
           .map(function(s) { return s.trim(); })
-          .filter(function(s) { return s.length >= 2 && s.length < 60; })
+          .filter(function(s) {
+            return s.length >= 2 && s.length < 50
+              && s.split(/\s+/).length <= 5
+              && !/[.!?;:]/.test(s);
+          })
           .slice(0, 4);
         for (var _ci = 0; _ci < _cTerms.length; _ci++) _extra.push(_cTerms[_ci]);
       }
@@ -2423,12 +2428,7 @@
       children.push(spacer(D));
     }
 
-    children.push(heading(D, 2, 'Resume Tips'));
-    children.push(para(D, '• Translate all military jargon into civilian language'));
-    children.push(para(D, '• Quantify results: "Managed team of 30" not "Led platoon"'));
-    children.push(para(D, '• Keep to 1–2 pages for civilian roles (3–5 for federal)'));
-    children.push(para(D, '• Tailor for each job by matching keywords from the job posting'));
-    children.push(para(D, '• Use the AfterAction AI Military Skills Translator to help'));
+    // Resume Tips section REMOVED — guidance text should not appear in generated DOCX output
 
     return children;
   }

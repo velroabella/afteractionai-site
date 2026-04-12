@@ -596,11 +596,15 @@
         }
       }
 
-      // ── Rank (DD-214 Item 4a) ──
+      // ── Rank (DD-214 Item 4a) ── hardened: literal space only (no \s newline crossing), word-count + format validation
       if (!profile.rank && !updates.rank) {
-        var _rm = text.match(/(?:grade[,\s]*rate[,\s]*(?:or\s+)?rank|pay\s+grade)\s*[:\-]?\s*([A-Z][A-Za-z\/\s]{1,25})/i);
+        var _rm = text.match(/(?:grade[,\s]*rate[,\s]*(?:or\s+)?rank|pay\s+grade)\s*[:\-]?\s*([A-Z][A-Za-z\/ ]{1,25})/i);
         if (_rm) {
-          updates.rank = _rm[1].trim().replace(/\s+$/, '');
+          var _rankCandidate = _rm[1].trim().replace(/\s+/g, ' ');
+          var _rankWords = _rankCandidate.split(/\s+/);
+          if (_rankWords.length <= 4 && _rankCandidate.length >= 2 && /^[A-Za-z]/.test(_rankCandidate) && !/[.!?]/.test(_rankCandidate)) {
+            updates.rank = _rankCandidate;
+          }
         }
       }
 
@@ -630,17 +634,11 @@
       }
 
       // ── Certifications & Training (DD-214 Item 14 and similar blocks) ──
+      // Broad "completed/attended" fallback REMOVED — too many false positives on raw doc text
       if (!profile.certifications && !updates.certifications) {
-        var _certBlock = text.match(/(?:item\s*14|military\s+education|formal\s+(?:military|civilian)\s+education|training\s+attended\s+or\s+completed)\s*[:\-]?\s*([^\n]{10,300})/i);
+        var _certBlock = text.match(/(?:item\s*14|military\s+education|formal\s+(?:military|civilian)\s+education|training\s+attended\s+or\s+completed)\s*[:\-]?\s*([^\n]{10,120})/i);
         if (_certBlock) {
           updates.certifications = _certBlock[1].trim().replace(/\s+/g, ' ');
-        } else {
-          var _certMatches = text.match(/\b(?:complet(?:ed|ing)|attended?|certified|qualified|graduated)\b[^\n]{5,80}/gi);
-          if (_certMatches && _certMatches.length) {
-            updates.certifications = _certMatches.slice(0, 5)
-              .map(function(s) { return s.trim().replace(/\s+/g, ' '); })
-              .join(' | ');
-          }
         }
       }
 
@@ -3731,7 +3729,9 @@
     var keySkills  = '';
     var education  = '';
     if (conversationHistory && conversationHistory.length) {
-      var _allText = conversationHistory.map(function(m) { return m.content || ''; }).join('\n');
+      var _allText = conversationHistory
+        .filter(function(m) { return m.role === 'user'; })
+        .map(function(m) { return m.content || ''; }).join('\n');
 
       // Target role: look for explicit mentions
       var _roleMatch = _allText.match(/(?:target(?:ing)?|seeking|interested in|want(?:s|ing)?\s+(?:a|to\s+be))\s+(?:a\s+)?([A-Za-z\s/&-]{3,40})\s+(?:role|position|job|career)/i);
@@ -3741,18 +3741,28 @@
       var _skillMatch = _allText.match(/(?:skills?|competenc(?:ies|y)|strengths?)\s*[:—–-]\s*([^\n]{10,200})/i);
       if (_skillMatch) keySkills = _skillMatch[1].trim();
 
-      // Education: extract mentions
-      var _eduMatch = _allText.match(/(?:degree|bachelor|master|associate|diploma|certificate|B\.?S\.?|M\.?S\.?|B\.?A\.?|M\.?B\.?A\.?)\s*(?:in|of)?\s*([^\n]{3,100})/i);
-      if (_eduMatch) education = _eduMatch[0].trim();
+      // Education: extract mentions (honorific Ms./Mrs./Mr. rejection added)
+      var _eduMatch = _allText.match(/(?:degree|bachelor(?:'?s)?|master(?:'?s)?|associate(?:'?s)?|diploma|certificate|B\.?S\.?\s+(?:in|of)|M\.?S\.?\s+(?:in|of)|B\.?A\.?\s+(?:in|of)|M\.?B\.?A\.?)\s*(?:in|of)?\s*([^\n]{3,100})/i);
+      if (_eduMatch) {
+        var _eduCandidate = _eduMatch[0].trim();
+        if (!/^m(?:rs?|s)\.?\s/i.test(_eduCandidate) || /\b(?:degree|science|arts|engineering|business|education|nursing|technology)\b/i.test(_eduCandidate)) {
+          education = _eduCandidate;
+        }
+      }
     }
 
-    // FIX 2 — Education priority chain: profile (mined from docs) → uploaded text → conversation above
-    if (!education && profile.education) {
+    // Education priority: profile (structured extraction) ALWAYS wins over conversation mining
+    if (profile.education) {
       education = profile.education;
     }
     if (!education && _uploadedText) {
       var _docEduM = _uploadedText.match(/(?:bachelor(?:'?s)?|master(?:'?s)?|associate(?:'?s)?|ph\.?d\.?|degree)\s*(?:of|in)?\s*[A-Za-z\s,&'-]{3,60}/i);
-      if (_docEduM) education = _docEduM[0].trim().replace(/\s+/g, ' ');
+      if (_docEduM) {
+        var _docEduCandidate = _docEduM[0].trim().replace(/\s+/g, ' ');
+        if (!/^m(?:rs?|s)\.?\s/i.test(_docEduCandidate) || /\b(?:degree|science|arts|engineering|business|education|nursing|technology)\b/i.test(_docEduCandidate)) {
+          education = _docEduCandidate;
+        }
+      }
     }
 
     // FIX 3 — keySkills priority chain: conversation above → uploaded text → profile.civilianSkills → MOS generic fallback
@@ -3776,7 +3786,7 @@
     // FIX 2 — Certifications: profile (mined from DD-214 Item 14) → direct doc text
     var certifications = profile.certifications || null;
     if (!certifications && _uploadedText) {
-      var _certDocM = _uploadedText.match(/(?:item\s*14|military\s+education|certif(?:ication|ied)s?|training\s+(?:attended|completed))\s*[:\-]?\s*([^\n]{10,200})/i);
+      var _certDocM = _uploadedText.match(/(?:item\s*14|military\s+education|certif(?:ication|ied)s?|training\s+(?:attended|completed))\s*[:\-]?\s*([^\n]{10,120})/i);
       if (_certDocM) certifications = _certDocM[1].trim().replace(/\s+/g, ' ');
     }
 
