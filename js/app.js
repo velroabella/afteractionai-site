@@ -630,7 +630,19 @@
       if (!profile.education && !updates.education) {
         var _eduM = text.match(/(?:bachelor(?:'?s)?|master(?:'?s)?|associate(?:'?s)?|ph\.?d\.?|doctorate|degree)\s*(?:of|in)?\s*[A-Za-z\s,&'-]{3,60}/i)
           || text.match(/(?:graduated?|graduation)\b[^\n]{0,30}?(?:from|,)\s*[A-Za-z\s,&'-]{3,60}/i);
-        if (_eduM) updates.education = _eduM[0].trim().replace(/\s+/g, ' ');
+        if (_eduM) {
+          var _eduCandidate2 = _eduM[0].trim().replace(/\s+/g, ' ');
+          // Must contain real degree indicators (e.g. "Master of Science", "Bachelor in Arts")
+          var _isRealDegree =
+            /\b(bachelor|master|associate|doctor|phd|mba|ms|bs|ba)\b/i.test(_eduCandidate2) &&
+            /\b(of|in)\b/i.test(_eduCandidate2);
+          // Reject military titles and rank-related phrases
+          var _isMilitaryTitle =
+            /\b(superintendent|sergeant|chief|gunnery|petty|corporal|airman)\b/i.test(_eduCandidate2);
+          if (_isRealDegree && !_isMilitaryTitle) {
+            updates.education = _eduCandidate2;
+          }
+        }
       }
 
       // ── Certifications & Training (DD-214 Item 14 and similar blocks) ──
@@ -638,7 +650,13 @@
       if (!profile.certifications && !updates.certifications) {
         var _certBlock = text.match(/(?:item\s*14|military\s+education|formal\s+(?:military|civilian)\s+education|training\s+attended\s+or\s+completed)\s*[:\-]?\s*([^\n]{10,120})/i);
         if (_certBlock) {
-          updates.certifications = _certBlock[1].trim().replace(/\s+/g, ' ');
+          var _certVal = _certBlock[1].trim().replace(/\s+/g, ' ');
+          // Reject raw DD214 administrative text: parens, all-caps-only, column headers
+          if (!/[()]/.test(_certVal) &&
+              !/^[A-Z\s,\-\/0-9]+$/.test(_certVal) &&
+              !/\b(?:course\s+title|number\s+of\s+weeks?|column|item\s*\d)\b/i.test(_certVal)) {
+            updates.certifications = _certVal;
+          }
         }
       }
 
