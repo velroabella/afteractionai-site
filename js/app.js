@@ -3534,7 +3534,10 @@
     // Two triggers:
     //  A) Cold-start: explicit "build/generate/create my resume" even without prior context
     //  B) Confirmation: lighter keywords ("yes", "go") when already in a resume context
-    var _typedResumeColdStart = /\b(build|generate|create|write|make|draft|prepare)\b.{0,30}\b(my\s+)?(resume|cv)\b/i.test(trimmed);
+    var _typedResumeColdStart = /\b(build|generate|create|write|make|draft|prepare)\b.{0,30}\b(my\s+)?(resume|cv)\b/i.test(trimmed) ||
+      /\b(need|want|help|do|get)\b.{0,30}\b(my\s+|a\s+)?(resume|cv)\b/i.test(trimmed) ||
+      /\b(resume|cv)\b.{0,20}\b(for\s+me|please|now)\b/i.test(trimmed) ||
+      /\bfederal\s+resume\b/i.test(trimmed);
     var _typedResumeConfirm = /\b(build|generate|create|write|start|yes|go ahead|do it|make)\b.*\b(resume|cv)\b/i.test(trimmed) ||
       /\b(resume|cv)\b.*\b(now|please|yes|go|build|generate)\b/i.test(trimmed);
     var _typedResumeCtx = (activeDocumentType && /resume/i.test(activeDocumentType)) ||
