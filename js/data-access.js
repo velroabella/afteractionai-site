@@ -586,7 +586,7 @@
       if (!db) return Promise.resolve({ data: null, error: 'No Supabase client' });
       return wrap(
         db.from('documents')
-          .select('id, file_name, document_type, status, created_at, mission_id, extracted_text')
+          .select('id, file_name, document_type, status, created_at, mission_id, extracted_text, analysis_result')
           .eq('case_id', caseId)
           .order('created_at', { ascending: false })
       );

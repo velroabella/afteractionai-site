@@ -79,6 +79,18 @@
         /transcript/i, /course\s+completion/i, /military\s+education/i,
         /joint\s+service\s+transcript/i, /jst\b/i, /aarts\b/i, /smart\b/i
       ]
+    },
+    {
+      id: 'resume',
+      label: 'Civilian Resume or CV',
+      patterns: [
+        /\bresume\b/i,
+        /\bcurriculum\s+vitae\b/i,
+        /\bprofessional\s+(?:summary|experience|profile)\b/i,
+        /\bwork\s+(?:experience|history)\b/i,
+        /\bemployment\s+history\b/i,
+        /\bobjective\b[:\s]/i
+      ]
     }
   ];
 
@@ -313,6 +325,28 @@
         /branch[:\s]+(army|navy|air\s+force|marine\s+corps|coast\s+guard|space\s+force|national\s+guard)/i,
         /(?:service\s+component|military\s+service)[:\s]+(army|navy|air\s+force|marine\s+corps|coast\s+guard|space\s+force|national\s+guard)/i
       ]
+    },
+
+    'resume': {
+      name: [
+        /^([A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,3})\s*\n/m
+      ],
+      education: [
+        /(?:education|academic\s+background)\s*[:\n]\s*([^\n]{10,120})/i,
+        /(?:bachelor(?:'?s)?|master(?:'?s)?|associate(?:'?s)?|ph\.?d\.?|mba|b\.?s\.?|m\.?s\.?|b\.?a\.?)\s*(?:of|in)?\s*[A-Za-z\s,&'-]{3,60}/i
+      ],
+      experienceSummary: [
+        /(?:professional\s+summary|career\s+summary|profile)\s*[:\n]\s*([^\n]{20,300})/i
+      ],
+      priorRoles: [
+        /(?:experience|employment|work\s+history)\s*[:\n]\s*([^\n]{20,120})/i
+      ],
+      civilianSkills: [
+        /(?:skills?|technical\s+skills?|core\s+competencies)\s*[:\n]\s*([^\n]{10,200})/i
+      ],
+      certifications: [
+        /(?:certifications?|licenses?|credentials?)\s*[:\n]\s*([^\n]{10,120})/i
+      ]
     }
 
   };
@@ -448,6 +482,16 @@
               break;
             } else if (fieldName === 'conditions') {
               result.conditions = val.trim();
+              break;
+            } else if (
+              fieldName === 'name' ||
+              fieldName === 'education' ||
+              fieldName === 'experienceSummary' ||
+              fieldName === 'priorRoles' ||
+              fieldName === 'civilianSkills' ||
+              fieldName === 'certifications'
+            ) {
+              result[fieldName] = val;
               break;
             } else {
               // MOS and other code-style fields — uppercase

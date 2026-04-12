@@ -1242,6 +1242,32 @@
             extracted_text: d.extracted_text || null
           };
         });
+
+        // Phase 7.1: Reanalyze old docs that were stored as 'unknown' before
+        // the resume (and other) extraction maps existed. Runs only on docs
+        // with type='unknown' that still have extracted_text in the DB.
+        // mergeDocumentMemory() is safe-merge — null never overwrites existing.
+        if (window.AIOS && window.AIOS.Skills &&
+            window.AIOS.Skills['document-analyzer'] && window.AIOS.Memory) {
+          var _da = window.AIOS.Skills['document-analyzer'];
+          ctx.uploadedDocs.forEach(function(doc) {
+            if (doc.type === 'unknown' && doc.extracted_text) {
+              try {
+                var typeId = _da.detectType(doc.extracted_text);
+                if (typeId && typeId !== 'unknown') {
+                  var fields = _da.extractDocumentFields(typeId, doc.extracted_text);
+                  if (fields && Object.keys(fields).length) {
+                    window.AIOS.Memory.mergeDocumentMemory(fields);
+                    doc.type = typeId;
+                    console.log('[Reanalysis] ' + doc.file + ' \u2192 ' + typeId);
+                  }
+                }
+              } catch (err) {
+                console.warn('[Reanalysis] failed for', doc.file, err);
+              }
+            }
+          });
+        }
       }
 
       window.AIOS = window.AIOS || {};
@@ -3841,6 +3867,11 @@
         .join('\n');
       var _convExpM = _convExpText.match(/(?:served\s+as|responsible\s+for|experience\s+(?:includes?|in)|background\s+(?:includes?|in)|worked\s+as)[^\n]{20,300}/i);
       if (_convExpM) experienceSummary = _convExpM[0].trim().replace(/\s+/g, ' ').slice(0, 400);
+    }
+
+    // Profile priority: structured resume extraction wins
+    if (profile.experienceSummary) {
+      experienceSummary = profile.experienceSummary;
     }
 
     var authEmail = '';
