@@ -6473,6 +6473,35 @@
           }
           console.log('[DOCX INPUT] content preview:', actualContent.substring(0, 150).replace(/\n/g, '\\n'));
           // ───────────────────────────────────────────────────────
+
+          // ── RESUME CONTENT SAFETY NET ──────────────────────
+          // If the content looks like a resume but confirmedFormType is
+          // something else (due to activeDocumentType lock from an earlier
+          // message), force-route through the structured resume builder.
+          // This prevents resume content from ever reaching the markdown path.
+          var _looksLikeResume = confirmedFormType !== 'resume-builder' &&
+            /\b(resume|curriculum\s+vitae|professional\s+(?:summary|experience))\b/i.test(actualContent) &&
+            /\b(work\s+(?:experience|history)|education|skills?|certifications?)\b/i.test(actualContent);
+          if (_looksLikeResume &&
+              AAAI.legalDocx.generateFromData &&
+              typeof _buildResumeData === 'function') {
+            console.warn('[LegalBtn] SAFETY NET — forcing resume builder');
+            try {
+              var _resumeData = _buildResumeData();
+              AAAI.legalDocx.generateFromData('resume-builder', _resumeData)
+                .then(function () {
+                  activeDocumentType = null;
+                })
+                .catch(function (err) {
+                  console.error('[LegalBtn] safety net failed:', err);
+                });
+            } catch (_err) {
+              console.error('[LegalBtn] safety net data build failed:', _err);
+            }
+            return;
+          }
+          // ────────────────────────────────────────────────────
+
           AAAI.legalDocx.generate(confirmedFormType, actualContent).then(function () {
             activeDocumentType = null;
             console.log('[DOC RESET] activeDocumentType cleared after generation');
