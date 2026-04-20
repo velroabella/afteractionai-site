@@ -783,6 +783,15 @@
     /* ── 4. Assemble text ────────────────────────────── */
     var text = _assemble(filledSlots);
 
+    /* ── 4a. Post-filter slotsUsed — one-Q rule sync ────
+       _assemble() suppresses CLOSER when MISSING_FIELD is
+       present. Mirror that here so slotsUsed accurately
+       reflects what was rendered, not what was filled.   */
+    if (slotsUsed.indexOf('MISSING_FIELD') !== -1) {
+      slotsUsed = slotsUsed.filter(function(s) { return s !== 'CLOSER'; });
+      delete templateKeys['CLOSER'];
+    }
+
     /* ── 5. De-duplicate protected field list ────────── */
     var seen     = {};
     var uniquePF = [];
@@ -807,7 +816,7 @@
     }).join(', ');
 
     console.log(
-      '[AIOS][RIL] tone:' + toneMode +
+      '[AIOS][RIL][SHAPE] tone:' + toneMode +
       ' slots:[' + slotsUsed.join(',') + ']' +
       ' templates:[' + tplList + ']' +
       ' protected:[' + uniquePF.join(',') + ']'

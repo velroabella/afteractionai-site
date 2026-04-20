@@ -284,7 +284,7 @@
         /(?:\bmos\b|\bafsc\b|\bnec\b)[:\s]+([A-Z0-9]{2,10})/i
       ],
       rank: [
-        /(?:grade|rank|rate)[,:\s]+([A-Za-z][A-Za-z0-9\s\/\-]{1,30}?)(?:\s*[-\n]|\s{2,}|,|$)/i,
+        /(?:grade|rank|rate)[,:\s]+([A-Za-z][A-Za-z0-9 \/\-]{1,30}?)(?:\s*[-\n]|\s{2,}|,|$)/i,
         /pay\s+grade[:\s]+((?:E|O|W)-?\d{1,2})/i
       ],
       serviceEntryDate: [

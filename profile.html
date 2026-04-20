@@ -12,7 +12,9 @@
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <!-- Fix 7: docx library + generator for .docx downloads from profile -->
   <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.min.js"></script>
+  <script src="js/legal-acknowledgment.js"></script>
   <script src="js/legal-docx-generator.js"></script>
+  <script src="js/document-pipeline.js"></script><!-- Phase G+ — single doc-gen entry point -->
 </head>
 <body>
 
@@ -565,20 +567,27 @@
           card.classList.toggle('expanded');
         });
 
-        // Fix 7 (corrected): Download as .docx via AAAI.legalDocx.generate
+        // Phase G+: Download as .docx via the single document pipeline.
+        // Direct calls to AAAI.legalDocx.generate are not permitted.
         card.querySelector('[data-act="dl-docx"]').addEventListener('click', function(e) {
           e.stopPropagation();
-          if (window.AAAI && AAAI.legalDocx && typeof AAAI.legalDocx.generate === 'function') {
+          if (window.AAAI && AAAI.docPipeline && typeof AAAI.docPipeline.generate === 'function') {
             // Normalize type slug to match BUILDERS keys (e.g. benefits_report → benefits-report)
             var normalized = type.toLowerCase().replace(/[\s_]+/g, '-');
-            AAAI.legalDocx.generate(normalized, card._content).then(function(fileName) {
-              console.log('[Profile] .docx downloaded:', fileName);
+            AAAI.docPipeline.generate(normalized, card._content, { mode: 'raw' }).then(function(result) {
+              if (result && result.ok) {
+                console.log('[Profile] .docx downloaded:', result.file_name);
+              } else {
+                var msg = (result && result.error) ? result.error : 'Pipeline rejected';
+                console.warn('[Profile] .docx generation failed, falling back to .txt:', msg);
+                _downloadText(doc.title, card._content, type);
+              }
             }).catch(function(err) {
-              console.warn('[Profile] .docx generation failed, falling back to .txt:', err);
+              console.warn('[Profile] pipeline error, falling back to .txt:', err);
               _downloadText(doc.title, card._content, type);
             });
           } else {
-            console.warn('[Profile] AAAI.legalDocx not available, falling back to .txt');
+            console.warn('[Profile] AAAI.docPipeline not available, falling back to .txt');
             _downloadText(doc.title, card._content, type);
           }
         });

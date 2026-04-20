@@ -369,7 +369,7 @@
 
     /* ── Log any drops ───────────────────────────────────────*/
     if (dropped.length > 0) {
-      console.log('[AIOS][MEMORY] filtered: ' + dropped.join(', '));
+      console.log('[AIOS][MEMORY][FILTER] ' + dropped.join(', '));
     }
 
     return valid;
@@ -522,7 +522,7 @@
       }
 
       return window.AAAI.auth.saveAIOSMemory(snapshot).catch(function(err) {
-        console.warn('[AIOS][MEMORY] save error:', err && err.message ? err.message : err);
+        console.warn('[AIOS][MEMORY][ERROR] save:', err && err.message ? err.message : err);
         return { error: err };
       });
     },
@@ -553,12 +553,12 @@
           // but null/unknown values never overwrite existing valid data
           var merged = MemoryManager.mergeMemory(MemoryManager.profile, result.data);
           MemoryManager.profile = merged;
-          console.log('[AIOS][MEMORY] Loaded from Supabase — ' +
+          console.log('[AIOS][MEMORY][LOAD] Supabase — ' +
             (MemoryManager.buildMemorySummary(MemoryManager.profile) || 'no fields set'));
         }
         return result;
       }).catch(function(err) {
-        console.warn('[AIOS][MEMORY] load error:', err && err.message ? err.message : err);
+        console.warn('[AIOS][MEMORY][ERROR] load:', err && err.message ? err.message : err);
         return null;
       });
     },
@@ -1013,7 +1013,7 @@
       if (!extractedFields || typeof extractedFields !== 'object') return;
       if (Object.keys(extractedFields).length === 0) return;
       MemoryManager.profile = MemoryManager.mergeMemory(MemoryManager.profile, extractedFields);
-      console.log('[AIOS][MEMORY] Document merge — ' +
+      console.log('[AIOS][MEMORY][MERGE] ' +
         (MemoryManager.buildMemorySummary(MemoryManager.profile) || 'no fields set'));
     },
 
@@ -1201,7 +1201,7 @@
         }
       }
 
-      console.log('[AIOS][SESSION] T' + sc.turnCount +
+      console.log('[AIOS][MEMORY][SESSION] T' + sc.turnCount +
         ' | symptoms:' + sc.symptoms.length +
         ' | goals:' + sc.goals.length +
         ' | lastSkill:' + (sc.lastActiveSkill || 'none'));
@@ -1287,6 +1287,7 @@
           lastActiveSkill:       _lastSkillValid ? sc.lastActiveSkill : null,
           lastActiveSkillTurn:   sc.lastActiveSkillTurn,
           lastRoutingConfidence: sc.lastRoutingConfidence,
+          turnCount:             sc.turnCount,
           atRiskSignal:          _arActive
             ? { flagged: true,  turn: _ar.turn, subtype: _ar.subtype }
             : { flagged: false, turn: null,      subtype: null }

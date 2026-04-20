@@ -83,9 +83,9 @@
         ],
 
         CONFIDENT: [
-          'Picking up from your PACT Act question —',
-          'Continuing from what you shared earlier about your exposure —',
-          'Building on your exposure history —'
+          'Picking up from your PACT Act question, here is what applies to your situation.',
+          'Based on what you have shared about your exposure history, here is what the PACT Act means for your claim.',
+          'Building on your exposure history, here is the most relevant information for where you are in the process.'
         ]
 
       },
@@ -374,7 +374,7 @@
 
         ADVISORY: [
           'Priority groups are assigned based on service-connected disability rating, income, and combat veteran status — they determine your copay level, not whether you can access care at all.',
-          'Veterans with a service-connected disability rating of {{protected:vaRating}}% or higher receive priority enrollment and pay no copay for service-connected treatment.',
+          'Veterans with service-connected disabilities generally receive priority enrollment in VA healthcare, and your eligibility tier determines your cost-sharing.',
           'Even if your income is above the VA threshold, a service-connected disability rating typically overrides the income-based limitation and places you in the priority enrollment groups.'
         ],
 
@@ -391,9 +391,9 @@
       ACTION: {
 
         CRISIS: [
-          'Call the Veterans Crisis Line now: dial 988 and press 1.',
-          'Text 838255 right now to reach the Veterans Crisis Line — no account needed, available immediately.',
-          'Go to VeteransCrisisLine.net to chat live with a counselor — available 24 hours a day.'
+          'You can also connect with a Veterans Crisis Line counselor by chat at VeteransCrisisLine.net — available 24 hours a day if calling is not possible.',
+          'Go to your nearest VA emergency department — VA facilities are required to provide emergency care regardless of your enrollment status.',
+          'Send an urgent message to your VA care team through My HealtheVet at myhealth.va.gov if you have an existing VA care relationship and need immediate clinical contact.'
         ],
 
         AT_RISK: [
@@ -505,7 +505,7 @@
         ],
 
         AT_RISK: [
-          'Your housing situation is urgent and there are people whose job it is to help veterans in exactly this situation right now.',
+          'Your housing situation is urgent and there are people whose job it is to help veterans facing what you are facing right now.',
           'Given what you shared, the priority is connecting you to immediate support — benefits paperwork comes second.',
           'There is help available for veterans facing what you are facing. Here is where to start right now.'
         ],
@@ -646,10 +646,17 @@
           'housingStatus',
           'dischargeStatus',
           'vaRating',
-          'income'
+          'income',
+          'assistanceType'
         ],
 
         FIELDS: {
+
+          assistanceType: [
+            'What kind of housing help are you looking for — a VA home loan, emergency rental assistance, or help finding a place to stay right now?',
+            'Are you trying to purchase a home, get help with rent or utilities, or access crisis housing support? That determines which VA program is the right fit.',
+            'Is this about buying or refinancing a home, or do you need rental assistance or emergency housing support? The VA has different programs for each, and knowing which applies helps me point you to the right one.'
+          ],
 
           housingStatus: [
             'To point you to the right program: are you looking to buy a home, trying to prevent eviction or housing loss, or do you need somewhere to stay right now?',

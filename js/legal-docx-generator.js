@@ -2131,7 +2131,9 @@
           .filter(function(s) {
             return s.length >= 2 && s.length < 50
               && s.split(/\s+/).length <= 5
-              && !/[.!?;:]/.test(s);
+              && !/[.!?;:()]/.test(s)
+              && !/^[A-Z\s\-\/]+$/.test(s)
+              && !/\b(?:weeks?|badges?|items?|column|title|number)\b/i.test(s);
           })
           .slice(0, 4);
         for (var _ci = 0; _ci < _cTerms.length; _ci++) _extra.push(_cTerms[_ci]);

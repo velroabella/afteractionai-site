@@ -154,15 +154,27 @@
       return;
     }
 
-    // Show acknowledgment gate → on confirm → generate docx
-    AAAI.legal.requireAcknowledgment(formType, async function (confirmedFormType) {
-      try {
-        const fileName = await AAAI.legalDocx.generate(confirmedFormType, userData);
-        showSuccess(fileName, confirmedFormType);
-      } catch (err) {
-        console.error('[LegalIntegration] Generation failed:', err);
-        showError(err.message);
+    // Route through the single document pipeline.
+    // Pipeline performs: acknowledgment gate + pre-validation + dispatch
+    // + post-validation + canonical save record. Direct calls to
+    // AAAI.legalDocx.generate are NOT permitted outside document-pipeline.js.
+    if (!window.AAAI.docPipeline || typeof window.AAAI.docPipeline.generate !== 'function') {
+      console.error('[LegalIntegration] AAAI.docPipeline is unavailable at call time.');
+      showError('Document pipeline is unavailable. Please refresh the page and try again.');
+      return;
+    }
+
+    window.AAAI.docPipeline.generate(formType, userData).then(function (result) {
+      if (result && result.ok) {
+        showSuccess(result.file_name, result.form_type);
+      } else {
+        var msg = (result && result.error) ? result.error : 'Generation failed';
+        console.error('[LegalIntegration] Pipeline rejected:', result);
+        showError(msg);
       }
+    }).catch(function (err) {
+      console.error('[LegalIntegration] Pipeline error:', err);
+      showError(err && err.message ? err.message : 'Pipeline error');
     });
   }
 

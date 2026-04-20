@@ -4701,9 +4701,12 @@
       }
       // ── END Phase 2.4 DATA SANITY ─────────────────────────────────────
 
-      // ── Generate .docx via legal-docx-generator ──
-      if (!window.AAAI || !window.AAAI.legalDocx || typeof window.AAAI.legalDocx.generateFromData !== 'function') {
-        console.error('[RESUME-GEN] generateFromData not available — NO AI fallback (Phase 2.3)');
+      // ── Generate .docx via the single document pipeline ──
+      // Routed through AAAI.docPipeline so acknowledgment gate, required-field
+      // check, enum whitelist, and placeholder leak scan run before the blob
+      // is ever downloaded. No direct call to AAAI.legalDocx here.
+      if (!window.AAAI || !window.AAAI.docPipeline || typeof window.AAAI.docPipeline.generate !== 'function') {
+        console.error('[RESUME-GEN] docPipeline not available — NO AI fallback (Phase 2.3)');
         clearAIWorkingState();
         addMessage('⚠️ The resume builder is temporarily unavailable. Please refresh the page and try again.', 'ai');
         isProcessing = false;
@@ -4713,10 +4716,16 @@
         return;  // handled — no AI fallback
       }
 
-      // Async: generate docx blob, save to dashboard, show confirmation
-      window.AAAI.legalDocx.generateFromData('resume-builder', resumeData)
-        .then(function(result) {
-          // result = { fileName, blob, contentText }
+      // Async: pipeline validates + generates + builds save record
+      window.AAAI.docPipeline.generate('resume-builder', resumeData, { mode: 'structured' })
+        .then(function(pipelineResult) {
+          if (!pipelineResult || !pipelineResult.ok) {
+            var _pipeErr = (pipelineResult && pipelineResult.error) ? pipelineResult.error : 'Pipeline validation failed';
+            throw new Error(_pipeErr);
+          }
+          // Normalize pipeline output shape to the legacy variable name `result`
+          // so the downstream save / confirmation logic continues to work.
+          var result = { fileName: pipelineResult.file_name, contentText: pipelineResult.content_text };
           console.log('[RESUME-GEN] .docx generated: ' + result.fileName + ' (' + result.contentText.length + ' chars)');
 
           // Save to dashboard
@@ -6375,151 +6384,147 @@
       'font-size:13px;font-weight:600;cursor:pointer;letter-spacing:0.01em;';
 
     btn.addEventListener('click', function () {
-      AAAI.legal.requireAcknowledgment(formType, function (confirmedFormType) {
-        if (typeof AAAI !== 'undefined' && AAAI.legalDocx && AAAI.legalDocx.generate) {
-          // ── Phase R-3: RENTAL STRUCTURED-DATA PATH ──────────────
-          // Rental application packet is now built from structured data,
-          // not AI markdown. This bypasses _parseMarkdownToDocx and runs
-          // the validation gate inside buildRentalApplicationPacket so an
-          // incomplete profile yields a failure doc instead of leaking
-          // bracket placeholders.
-          if (confirmedFormType === 'rental-application-packet' &&
-              AAAI.legalDocx.generateFromData &&
-              typeof _buildRentalApplicationData === 'function') {
-            try {
-              var _rentalData = _buildRentalApplicationData();
-              console.log('[Rental] structured data:', _rentalData);
-              AAAI.legalDocx.generateFromData('rental-application-packet', _rentalData)
-                .then(function () {
-                  activeDocumentType = null;
-                  console.log('[DOC RESET] activeDocumentType cleared after rental generation');
-                })
-                .catch(function (err) {
-                  var msg = err && err.message ? err.message : String(err || 'Rental DOCX generation failed');
-                  console.error('[LegalBtn] rental generateFromData failed:', err);
-                  if (typeof showToast === 'function') { showToast(msg, 'error'); }
-                  else { alert('Document generation error: ' + msg); }
-                });
-              return;
-            } catch (_rentalErr) {
-              console.error('[LegalBtn] rental data build failed, falling back to generate():', _rentalErr);
-              // Fall through to markdown path
-            }
-          }
-          // ────────────────────────────────────────────────────────
+      // ── PIPELINE-ONLY ENTRY ───────────────────────────────────
+      // All generation routes through AAAI.docPipeline.generate().
+      // The pipeline runs the acknowledgment gate + pre/post validation
+      // internally, so the outer requireAcknowledgment wrapper is gone
+      // and no call reaches AAAI.legalDocx.generate[FromData] directly.
+      if (!AAAI || !AAAI.docPipeline || typeof AAAI.docPipeline.generate !== 'function') {
+        console.error('[LegalBtn] AAAI.docPipeline is unavailable at click time.');
+        if (typeof showToast === 'function') { showToast('Document pipeline is unavailable. Please refresh the page and try again.', 'error'); }
+        else { alert('Document pipeline is unavailable. Please refresh the page and try again.'); }
+        return;
+      }
 
-          // ── Phase RESUME-HARDEN: RESUME STRUCTURED-DATA PATH ────
-          // Resume is always built from structured profile data via the
-          // hardened generateFromData path. This intercept prevents any
-          // rawText / markdown path from bypassing _buildResumeData,
-          // attemptResumeAutoFill, validateResumeData, and
-          // buildResumeFromData. Unlike rental, there is NO fallthrough
-          // to the markdown path on error — resume-builder must never
-          // reach generateLegalDocx().
-          if (confirmedFormType === 'resume-builder' &&
-              AAAI.legalDocx.generateFromData &&
-              typeof _buildResumeData === 'function') {
-            try {
-              var _resumeData = _buildResumeData();
-              console.log('[LegalBtn] resume structured data:', JSON.stringify(_resumeData).substring(0, 200));
-              AAAI.legalDocx.generateFromData('resume-builder', _resumeData)
-                .then(function () {
-                  activeDocumentType = null;
-                  console.log('[DOC RESET] activeDocumentType cleared after resume generation');
-                })
-                .catch(function (err) {
-                  var msg = err && err.message ? err.message : String(err || 'Resume DOCX generation failed');
-                  console.error('[LegalBtn] resume generateFromData failed:', err);
-                  if (typeof showToast === 'function') { showToast(msg, 'error'); }
-                  else { alert('Document generation error: ' + msg); }
-                });
-            } catch (_resumeErr) {
-              console.error('[LegalBtn] resume data build failed:', _resumeErr);
-              var _resumeErrMsg = _resumeErr && _resumeErr.message
-                ? _resumeErr.message : 'Resume generation failed. Please try again.';
-              if (typeof showToast === 'function') { showToast(_resumeErrMsg, 'error'); }
-              else { alert('Resume generation error: ' + _resumeErrMsg); }
-            }
-            return; // hard stop — resume-builder must never reach the markdown path
-          }
-          // ────────────────────────────────────────────────────────
-
-          // ── DOCX CONTENT RESOLUTION ────────────────────────────
-          // rawText is captured at button-injection time, which may be a
-          // transitional message ("I've got your info...") instead of the
-          // actual completed document. At click time, scan conversationHistory
-          // backwards for the longest recent assistant message — that is the
-          // real document content the veteran expects to download.
-          var actualContent = rawText; // default: use what was captured
-          try {
-            var _best = null;
-            var _bestLen = 0;
-            // Scan last 6 assistant messages for the actual document
-            for (var _ci = conversationHistory.length - 1; _ci >= 0 && _ci >= conversationHistory.length - 12; _ci--) {
-              var _msg = conversationHistory[_ci];
-              if (_msg.role !== 'assistant' || !_msg.content) continue;
-              var _len = _msg.content.length;
-              // Must be substantial (>400 chars) and longer than what we already have
-              if (_len > 400 && _len > _bestLen) {
-                _best = _msg.content;
-                _bestLen = _len;
-              }
-            }
-            if (_best && _bestLen > rawText.length) {
-              actualContent = _best;
-              console.log('[DOCX INPUT] Upgraded from rawText (' + rawText.length + ' chars) to conversationHistory match (' + _bestLen + ' chars)');
-            } else {
-              console.log('[DOCX INPUT] Using rawText (' + rawText.length + ' chars) — no better match in history');
-            }
-          } catch (_scanErr) {
-            console.warn('[DOCX INPUT] History scan failed, using rawText:', _scanErr);
-          }
-          console.log('[DOCX INPUT] content preview:', actualContent.substring(0, 150).replace(/\n/g, '\\n'));
-          // ───────────────────────────────────────────────────────
-
-          // ── RESUME CONTENT SAFETY NET ──────────────────────
-          // If the content looks like a resume but confirmedFormType is
-          // something else (due to activeDocumentType lock from an earlier
-          // message), force-route through the structured resume builder.
-          // This prevents resume content from ever reaching the markdown path.
-          var _looksLikeResume = confirmedFormType !== 'resume-builder' &&
-            /\b(resume|curriculum\s+vitae|professional\s+(?:summary|experience))\b/i.test(actualContent) &&
-            /\b(work\s+(?:experience|history)|education|skills?|certifications?)\b/i.test(actualContent);
-          if (_looksLikeResume &&
-              AAAI.legalDocx.generateFromData &&
-              typeof _buildResumeData === 'function') {
-            console.warn('[LegalBtn] SAFETY NET — forcing resume builder');
-            try {
-              var _resumeData = _buildResumeData();
-              AAAI.legalDocx.generateFromData('resume-builder', _resumeData)
-                .then(function () {
-                  activeDocumentType = null;
-                })
-                .catch(function (err) {
-                  console.error('[LegalBtn] safety net failed:', err);
-                });
-            } catch (_err) {
-              console.error('[LegalBtn] safety net data build failed:', _err);
-            }
-            return;
-          }
-          // ────────────────────────────────────────────────────
-
-          AAAI.legalDocx.generate(confirmedFormType, actualContent).then(function () {
+      // Shared post-generation success handler.
+      function _onPipelineSuccess(label) {
+        return function (pipelineResult) {
+          if (pipelineResult && pipelineResult.ok) {
             activeDocumentType = null;
-            console.log('[DOC RESET] activeDocumentType cleared after generation');
-          }).catch(function (err) {
-            var msg = err && err.message ? err.message : String(err || 'DOCX generation failed');
-            console.error('[LegalBtn] AAAI.legalDocx.generate failed:', err);
+            console.log('[DOC RESET] activeDocumentType cleared after ' + label + ' generation');
+          } else {
+            var msg = (pipelineResult && pipelineResult.error) ? pipelineResult.error : (label + ' DOCX generation failed');
+            console.error('[LegalBtn] ' + label + ' pipeline rejected:', pipelineResult);
             if (typeof showToast === 'function') { showToast(msg, 'error'); }
             else { alert('Document generation error: ' + msg); }
-          });
-        } else {
-          console.error('[LegalBtn] AAAI.legalDocx is unavailable at click time.');
-          if (typeof showToast === 'function') { showToast('DOCX generator is unavailable. Please refresh the page and try again.', 'error'); }
-          else { alert('DOCX generator is unavailable. Please refresh the page and try again.'); }
+          }
+        };
+      }
+      function _onPipelineReject(label) {
+        return function (err) {
+          var msg = err && err.message ? err.message : String(err || (label + ' DOCX generation failed'));
+          console.error('[LegalBtn] ' + label + ' pipeline error:', err);
+          if (typeof showToast === 'function') { showToast(msg, 'error'); }
+          else { alert('Document generation error: ' + msg); }
+        };
+      }
+
+      // ── Phase R-3: RENTAL STRUCTURED-DATA PATH ──────────────
+      // Rental application packet is now built from structured data,
+      // not AI markdown. This bypasses _parseMarkdownToDocx and runs
+      // the pipeline's required-field + placeholder guards so an
+      // incomplete profile yields a failure result instead of leaking
+      // bracket placeholders.
+      if (formType === 'rental-application-packet' &&
+          typeof _buildRentalApplicationData === 'function') {
+        try {
+          var _rentalData = _buildRentalApplicationData();
+          console.log('[Rental] structured data:', _rentalData);
+          AAAI.docPipeline.generate('rental-application-packet', _rentalData, { mode: 'structured' })
+            .then(_onPipelineSuccess('rental'))
+            .catch(_onPipelineReject('rental'));
+          return;
+        } catch (_rentalErr) {
+          console.error('[LegalBtn] rental data build failed, falling back to raw path:', _rentalErr);
+          // Fall through to raw path
         }
-      });
+      }
+      // ────────────────────────────────────────────────────────
+
+      // ── Phase RESUME-HARDEN: RESUME STRUCTURED-DATA PATH ────
+      // Resume is always built from structured profile data via the
+      // hardened structured-mode pipeline call. This intercept prevents
+      // any raw / markdown path from bypassing _buildResumeData,
+      // attemptResumeAutoFill, validateResumeData, and
+      // buildResumeFromData. Unlike rental, there is NO fallthrough
+      // to the raw path on error — resume-builder must never reach
+      // the markdown dispatch.
+      if (formType === 'resume-builder' &&
+          typeof _buildResumeData === 'function') {
+        try {
+          var _resumeData = _buildResumeData();
+          console.log('[LegalBtn] resume structured data:', JSON.stringify(_resumeData).substring(0, 200));
+          AAAI.docPipeline.generate('resume-builder', _resumeData, { mode: 'structured' })
+            .then(_onPipelineSuccess('resume'))
+            .catch(_onPipelineReject('resume'));
+        } catch (_resumeErr) {
+          console.error('[LegalBtn] resume data build failed:', _resumeErr);
+          var _resumeErrMsg = _resumeErr && _resumeErr.message
+            ? _resumeErr.message : 'Resume generation failed. Please try again.';
+          if (typeof showToast === 'function') { showToast(_resumeErrMsg, 'error'); }
+          else { alert('Resume generation error: ' + _resumeErrMsg); }
+        }
+        return; // hard stop — resume-builder must never reach the raw path
+      }
+      // ────────────────────────────────────────────────────────
+
+      // ── DOCX CONTENT RESOLUTION ────────────────────────────
+      // rawText is captured at button-injection time, which may be a
+      // transitional message ("I've got your info...") instead of the
+      // actual completed document. At click time, scan conversationHistory
+      // backwards for the longest recent assistant message — that is the
+      // real document content the veteran expects to download.
+      var actualContent = rawText; // default: use what was captured
+      try {
+        var _best = null;
+        var _bestLen = 0;
+        for (var _ci = conversationHistory.length - 1; _ci >= 0 && _ci >= conversationHistory.length - 12; _ci--) {
+          var _msg = conversationHistory[_ci];
+          if (_msg.role !== 'assistant' || !_msg.content) continue;
+          var _len = _msg.content.length;
+          if (_len > 400 && _len > _bestLen) {
+            _best = _msg.content;
+            _bestLen = _len;
+          }
+        }
+        if (_best && _bestLen > rawText.length) {
+          actualContent = _best;
+          console.log('[DOCX INPUT] Upgraded from rawText (' + rawText.length + ' chars) to conversationHistory match (' + _bestLen + ' chars)');
+        } else {
+          console.log('[DOCX INPUT] Using rawText (' + rawText.length + ' chars) — no better match in history');
+        }
+      } catch (_scanErr) {
+        console.warn('[DOCX INPUT] History scan failed, using rawText:', _scanErr);
+      }
+      console.log('[DOCX INPUT] content preview:', actualContent.substring(0, 150).replace(/\n/g, '\\n'));
+      // ───────────────────────────────────────────────────────
+
+      // ── RESUME CONTENT SAFETY NET ──────────────────────
+      // If the content looks like a resume but formType is something
+      // else (due to activeDocumentType lock from an earlier message),
+      // force-route through the structured resume pipeline. This
+      // prevents resume content from ever reaching the raw path.
+      var _looksLikeResume = formType !== 'resume-builder' &&
+        /\b(resume|curriculum\s+vitae|professional\s+(?:summary|experience))\b/i.test(actualContent) &&
+        /\b(work\s+(?:experience|history)|education|skills?|certifications?)\b/i.test(actualContent);
+      if (_looksLikeResume && typeof _buildResumeData === 'function') {
+        console.warn('[LegalBtn] SAFETY NET — forcing resume builder');
+        try {
+          var _safetyResumeData = _buildResumeData();
+          AAAI.docPipeline.generate('resume-builder', _safetyResumeData, { mode: 'structured' })
+            .then(_onPipelineSuccess('resume-safety'))
+            .catch(_onPipelineReject('resume-safety'));
+        } catch (_err) {
+          console.error('[LegalBtn] safety net data build failed:', _err);
+        }
+        return;
+      }
+      // ────────────────────────────────────────────────────
+
+      // ── DEFAULT RAW-CONTENT PATH ─────────────────────────
+      AAAI.docPipeline.generate(formType, actualContent, { mode: 'raw' })
+        .then(_onPipelineSuccess('raw'))
+        .catch(_onPipelineReject('raw'));
     });
 
     messageDiv.appendChild(btn);
